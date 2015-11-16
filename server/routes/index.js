@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
 var authorize = require('../lib/session');
+var session = require('../lib/session');
 
 /* GET home page. */
-router.get('/', authorize, function(req, res, next) {
+router.get('/', session.authorize, function(req, res, next) {
     res.render('index', { title: 'Express' });
 });
 

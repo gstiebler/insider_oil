@@ -17,10 +17,25 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    token: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     underscored: true,
-    tableName: 'users'
+    tableName: 'users',
+    instanceMethods: {
+        generateToken: function( callback ) {
+            user = this;
+            require('crypto').randomBytes(48, function(ex, buf) {
+                user.token = buf.toString('hex');
+                user.save().then( function() {
+                    callback( user.token );
+                });
+            });
+        }
+      }
     }
   );
   return User;

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
+var session = require('../lib/session');
 
 router.get('/', function(req, res, next) {
     res.render('login', { title: 'Login' });
@@ -8,13 +8,15 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err)
-        return next(err);
-    if (!user) 
+    session.login( req.body.username, req.body.password, loginOk, loginError );
+    
+    function loginOk(token) {
+        return res.redirect('/?token=' + token);
+    }
+    
+    function loginError() {
         return res.redirect('/login');
-    return res.redirect('/');
-  })(req, res, next);
+    }
 });
 
 module.exports = router;

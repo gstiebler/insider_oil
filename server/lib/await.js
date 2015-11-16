@@ -1,3 +1,4 @@
+var Sync = require('sync');
 
 function transPro( promise, callback ) {
     promise.then( function(result) {
