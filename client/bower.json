@@ -1,0 +1,13 @@
+{
+    "name": "client",
+    "version": "1.0.0",
+	"dependencies": {
+		"angular": "1.4.7",
+		"bootstrap": "latest",
+		"angular-route": "latest",
+		"angular-bootstrap": "latest",
+		"angular-resource": "latest",
+		"angular-mocks": "latest",	
+		"angular-cookies": "latest"	
+	}
+}
