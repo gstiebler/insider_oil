@@ -2,10 +2,11 @@ extends layout
 
 block content
     div(class="container")
-        form(class="form-signin")
+        form(class="form-signin" action="/login" method="post")
             h2(class="form-signin-heading") Digite seus dados
             label(for="inputUser" class="sr-only") Usuário
             input(id="inputUser" 
+                  name="username"
                   class="form-control" 
                   placeholder="Usuário" 
                   required 
@@ -13,6 +14,7 @@ block content
             label(for="inputPassword" class="sr-only") Senha
             input(type="password" 
                   id="inputPassword" 
+                  name="password"
                   class="form-control" 
                   placeholder="Senha" 
                   required)
