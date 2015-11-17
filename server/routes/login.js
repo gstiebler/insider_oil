@@ -11,7 +11,7 @@ router.post('/', function(req, res, next) {
     session.login( req.body.username, req.body.password, loginOk, loginError );
     
     function loginOk(token) {
-        return res.redirect('/?token=' + token);
+        return res.redirect('/app/templates/index.html?token=' + token);
     }
     
     function loginError() {

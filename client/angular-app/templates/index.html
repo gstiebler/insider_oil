@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<base href="/">
+
+	<title>Insider Oil</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="app/libs/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="stylesheets/style.css">
+
+	<!-- JS -->
+	<script src="app/libs/angular/angular.js"></script>
+	<script src="app/libs/angular-bootstrap/ui-bootstrap.js"></script>
+	<script src="app/libs/angular-route/angular-route.js"></script>
+	<script src="app/libs/jquery/dist/jquery.js"></script>
+
+	<!-- ANGULAR CUSTOM -->
+	<script src="app/controllers/MainCtrl.js"></script>
+	<script src="app/controllers/WellsCtrl.js"></script>
+	<script src="app/controllers/DrillingRigsCtrl.js"></script>
+	<script src="app/app.js"></script>
+	<script src="app/appRoutes.js"></script>
+</head>
+<body ng-app="InsiderOilApp" ng-controller="MainController">
+<div class="container">
+	
+	<!-- HEADER -->
+	<nav class="navbar navbar-default">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">Insider Oil</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a href="/wells">Poços</a></li>
+			<li><a href="/drilling_rigs">Sondas</a></li>
+		</ul>
+	</nav>
+
+	<!-- ANGULAR DYNAMIC CONTENT -->
+	<div ng-view></div>
+
+</div>
+</body>
+</html>
