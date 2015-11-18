@@ -14,6 +14,7 @@
 	<script src="app/libs/angular/angular.js"></script>
 	<script src="app/libs/angular-bootstrap/ui-bootstrap.js"></script>
 	<script src="app/libs/angular-route/angular-route.js"></script>
+	<script src="app/libs/angular-cookies/angular-cookies.js"></script>
 	<script src="app/libs/jquery/dist/jquery.js"></script>
 
 	<!-- ANGULAR CUSTOM -->
@@ -22,6 +23,7 @@
 	<script src="app/controllers/DrillingRigsCtrl.js"></script>
 	<script src="app/app.js"></script>
 	<script src="app/appRoutes.js"></script>
+	<script src="app/services/session.js"></script>
 </head>
 <body ng-app="InsiderOilApp" ng-controller="MainController">
 <div class="container">
@@ -37,6 +39,7 @@
 		</ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="#">{{username}}</a></li>
+            <li><a href="#" ng-click="logout()">Logout</a></li>
         </ul>
 	</nav>
 

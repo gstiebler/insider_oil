@@ -17,3 +17,9 @@ exports.makeLogin = function(req, res, next) {
         return res.redirect('/login');
     }
 };
+
+
+exports.logout = function(req, res, next) {
+    session.logout(req.user);
+    res.json( { msg: 'Usuário deslogado.' } );
+}

@@ -33,7 +33,11 @@ exports.authorizeHTML = function(req, res, next) {
 
 
 exports.authorize = function(req, res, next) {
-    var user = userFromToken( req.query.token, callback );
+    var token = req.query.token;
+    if( !token )
+        token = req.body.params.token;
+        
+    userFromToken( token, callback );
     
     function callback( user ) {
         if( user ) {
@@ -42,4 +46,10 @@ exports.authorize = function(req, res, next) {
         } else
             res.status(401).json({ errorMsg: 'Invalid token'});
     }
+}
+
+
+exports.logout = function( user ) {
+    user.token = '';
+    user.save();
 }
