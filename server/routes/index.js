@@ -1,9 +1,9 @@
 var session = require('../lib/session');
 
-var mainController = require('../controllers/main');
-var loginController = require('../controllers/login');
+var mainController = require('../controllers/mainController');
+var loginController = require('../controllers/loginController');
 var dbServerController = require('../controllers/dbServerController');
-var usersController = require('../controllers/users');
+var usersController = require('../controllers/usersController');
 
 module.exports = function(app) {
     // Main route
