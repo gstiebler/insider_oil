@@ -2,6 +2,9 @@ var db = require( '../db/models' );
 var await = require('./await');
 
 function userFromToken( token, callback ) {
+    if(token == '')
+        callback(null);
+      
     db.User.findOne({ where: { token: token } }).then(callback);
 }
 
@@ -37,6 +40,9 @@ exports.authorize = function(req, res, next) {
     if( !token )
         token = req.body.params.token;
         
+    if( !token )
+        invalidToken();
+        
     userFromToken( token, callback );
     
     function callback( user ) {
@@ -44,7 +50,11 @@ exports.authorize = function(req, res, next) {
             req.user = user;
             next();
         } else
-            res.status(401).json({ errorMsg: 'Invalid token'});
+            invalidToken()
+    }
+    
+    function invalidToken() {
+        res.status(401).json({ errorMsg: 'Invalid token'});
     }
 }
 
