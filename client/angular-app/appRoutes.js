@@ -3,17 +3,17 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 	$routeProvider
 
 		// home page
-		.when('/', {
+		.when('/app/', {
 			templateUrl: 'app/templates/home.html',
 			controller: 'MainController'
 		})
 
-		.when('/wells', {
+		.when('/app/wells', {
 			templateUrl: 'app/templates/wells.html',
 			controller: 'WellsController'
 		})
 
-		.when('/drilling_rigs', {
+		.when('/app/drilling_rigs', {
 			templateUrl: 'app/templates/drilling_rigs.html',
 			controller: 'DrillingRigsController'	
 		});
