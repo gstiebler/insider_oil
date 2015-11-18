@@ -1,5 +1,7 @@
-angular.module('MainCtrl', []).controller('MainController', function($scope) {
+angular.module('MainCtrl', []).controller('MainController', ['$scope', '$routeParams', '$location', function($scope, $routeParams, $location) {
 
-	$scope.tagline = 'To the moon and back!';	
+	$scope.tagline = 'To the moon and back!';
 
-});
+    console.log( "token: "  + $location.search().token );
+
+} ] );
