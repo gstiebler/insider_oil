@@ -19,15 +19,27 @@ exports.login = function( username, password, loginOk, loginError ) {
 }
 
 
-exports.authorize = function(req, res, next) {
+exports.authorizeHTML = function(req, res, next) {
     var user = userFromToken( req.query.token, callback );
     
     function callback( user ) {
         if( user ) {
-            next.user = user;
+            req.user = user;
             next();
         } else
             res.redirect('/login');
     }
 }
 
+
+exports.authorize = function(req, res, next) {
+    var user = userFromToken( req.query.token, callback );
+    
+    function callback( user ) {
+        if( user ) {
+            req.user = user;
+            next();
+        } else
+            res.status(401).json({ errorMsg: 'Invalid token'});
+    }
+}

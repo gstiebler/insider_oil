@@ -5,6 +5,6 @@ var login = require('../routes/login');
 
 module.exports = function(app) {
     app.use('/', main);
-    app.use('/users', users);
+    app.use('/user', users);
     app.use('/login', login);
 }
