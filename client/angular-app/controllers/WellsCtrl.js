@@ -6,14 +6,10 @@ angular.module('WellsCtrl', []).controller('WellsController',
     
     function showWell(wells) {
         $scope.wells = wells;
-        console.log('Wells: ' + wells);
     }
     
     function showError(error) {
         $scope.error = error;
         console.log('Erros: ' + error);
     }
-    
-	$scope.tagline = 'Aqui os poços irão brilhar';	
-
 }]);
