@@ -16,6 +16,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 		.when('/app/drilling_rigs', {
 			templateUrl: 'app/templates/drilling_rigs.html',
 			controller: 'DrillingRigsController'	
+		})
+
+		.when('/app/map', {
+			templateUrl: 'app/templates/map.html',
+			controller: 'MapController'	
 		});
 
 	$locationProvider.html5Mode(true);

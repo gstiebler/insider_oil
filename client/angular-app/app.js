@@ -4,5 +4,6 @@ angular.module('InsiderOilApp', [
     'ngCookies',
     'MainCtrl', 
     'ModelViewCtrl', 
-    'DrillingRigsCtrl'
+    'DrillingRigsCtrl', 
+    'MapCtrl'
 ]);

@@ -1,17 +1,15 @@
-<div class="container">
-	<h1>{{viewParams.tableLabel}}</h1>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th ng-repeat="gridField in viewParams.gridFields">{{viewParams.fields[gridField].label}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="record in records">
-                    <td ng-repeat="gridField in viewParams.gridFields">{{record[gridField]}}</td>
-                </tr>
-            </tbody>     
-        </table>
-    </div>
+<h1>{{viewParams.tableLabel}}</h1>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th ng-repeat="gridField in viewParams.gridFields">{{viewParams.fields[gridField].label}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="record in records">
+                <td ng-repeat="gridField in viewParams.gridFields">{{record[gridField]}}</td>
+            </tr>
+        </tbody>     
+    </table>
 </div>
