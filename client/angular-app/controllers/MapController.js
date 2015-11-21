@@ -33,7 +33,4 @@ angular.module('MapCtrl', []).controller('MapController',
         $scope.error = error;
         console.log('Erros: ' + error);
     }
-
-    
-
 }]);
