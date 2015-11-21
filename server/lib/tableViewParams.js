@@ -16,7 +16,8 @@ exports.Well = function() {
         },
         labelField: "name",
         gridFields: ["name", "operator", "state", "bacia"],
-        tableLabel: "Poços"
+        tableLabel: "Poços",
+        hasMap: true
     };
     
     return wellsParams;

@@ -1,8 +1,9 @@
 angular.module('ModelViewCtrl', []).controller('ModelViewController', 
-                ['$scope', 'server', '$routeParams',
-        function($scope, server, $routeParams) {
+                ['$scope', 'server', '$routeParams', '$location',
+        function($scope, server, $routeParams, $location) {
 
-    server.getTable($routeParams.model, showModel, showError );
+    var modelName = $routeParams.model;
+    server.getTable(modelName, showModel, showError );
     
     function showModel(model) {
         $scope.viewParams = model.viewParams;
@@ -12,5 +13,9 @@ angular.module('ModelViewCtrl', []).controller('ModelViewController',
     function showError(error) {
         $scope.error = error;
         console.log('Erros: ' + error);
+    }
+    
+    $scope.showMap = function() {
+         $location.path("/app/map").search({ model: modelName });
     }
 }]);
