@@ -19,19 +19,25 @@ function createWells() {
             name: "1A 0001 BA",
             operator: "Petrobrás",
             state: "BA",
-            bacia: "Recôncavo"
+            bacia: "Recôncavo",
+            lat: -12.79429444,
+            lng: -38.43638167
         },
         {
             name: "1AGIP1RJS",
             operator: "Eni Oil",
             state: "RJ",
-            bacia: "Santos"
+            bacia: "Santos",
+            lat: -4.91808556,
+            lng: -37.22464472
         },
         {
             name: "1AJ 0001 BA",
             operator: "Recôncavo E&P",
             state: "BA",
-            bacia: "Recôncavo"
+            bacia: "Recôncavo",
+            lat: -9.98799556,
+            lng: -38.67655583
         }
     ]);
 }
