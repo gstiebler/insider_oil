@@ -22,6 +22,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 		.when('/app/map', {
 			templateUrl: 'app/templates/map.html',
 			controller: 'MapController'	
+		})
+
+		.when('/app/chart', {
+			templateUrl: 'app/templates/chart.html',
+			controller: 'ChartController'	
 		});
 
 	$locationProvider.html5Mode(true);
