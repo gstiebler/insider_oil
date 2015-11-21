@@ -30,18 +30,20 @@
 <div class="container">
 	
 	<!-- HEADER -->
-	<nav class="navbar navbar-default" ng-controller="MainController">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="/app/">Insider Oil</a>
-		</div>
-		<ul class="nav navbar-nav">
-			<li><a href="/app/wells">Poços</a></li>
-			<li><a href="/app/drilling_rigs">Sondas</a></li>
-		</ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">{{username}}</a></li>
-            <li><a href="#" ng-click="logout()">Logout</a></li>
-        </ul>
+	<nav class="navbar navbar-default navbar-custom navbar-fixed-top" ng-controller="MainController">
+        <div class="container-fluid">
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand" href="/app/">Insider Oil</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/app/wells">Poços</a></li>
+                <li><a href="/app/drilling_rigs">Sondas</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">{{username}}</a></li>
+                <li><a href="#" ng-click="logout()">Logout</a></li>
+            </ul>
+        </div>
 	</nav>
 
 	<!-- ANGULAR DYNAMIC CONTENT -->
