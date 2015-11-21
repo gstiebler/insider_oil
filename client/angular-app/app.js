@@ -3,6 +3,6 @@ angular.module('InsiderOilApp', [
     'appRoutes', 
     'ngCookies',
     'MainCtrl', 
-    'WellsCtrl', 
+    'ModelViewCtrl', 
     'DrillingRigsCtrl'
 ]);

@@ -10,7 +10,7 @@ app.service('server', ['$http',
         
         $http.get('/db_server/', { params: params }).
         then(function(response) {
-            okCallback(response.data.records);
+            okCallback(response.data);
         }, function(response) {
             errorCallback(response);
         });
