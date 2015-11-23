@@ -1,6 +1,6 @@
 var db  = require('../db/models');
 var tableViewParams = require('../lib/tableViewParams');
-var Busboy = require('busboy');
+var fileUpload = require('../lib/fileUpload');
 
 exports.main = function(req, res, next) {
     var model = req.query.table;
@@ -18,36 +18,15 @@ exports.main = function(req, res, next) {
 
 
 exports.uploadFile = function(req, res, next) {
-    var busboy = new Busboy({ headers: req.headers });
-    var allData = [];
-    var dataLen = 0; 
+    fileUpload.receive( req, onFile, onFinish );
+
+    function onFile(fileName, buf) {
+        console.log( "File name: " + fileName );
+        console.log( "Buffer length: " + buf.length); 
+    }
     
-    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-        console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
-      
-        file.on('data', function(data) {
-            allData.push(data);
-            dataLen += data.length;
-            
-            console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
-            console.log(data.toString('utf-8'));
-        });
-      
-        file.on('end', function() {
-            var buf = new Buffer(dataLen); 
-            for (var i=0, pos = 0; i < allData.length; i++) { 
-                allData[i].copy(buf, pos); 
-                pos += allData[i].length; 
-            } 
-            console.log(buf.length); 
-            console.log('File [' + fieldname + '] Finished');
-        });
-    });
-    
-    busboy.on('finish', function() {
+    function onFinish() {
         console.log('Done parsing form!');
         res.json( { msg:"OK" } );
-    });
-    
-    req.pipe(busboy);
+    };
 }
