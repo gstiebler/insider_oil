@@ -16,6 +16,7 @@ module.exports = function(app) {
     
     // DB Server
     app.get('/db_server/',                         dbServerController.main);
+    app.post('/db_server/upload_file',             dbServerController.uploadFile);
     
     // Users
     app.get('/user/',           session.authorize, usersController.main );
