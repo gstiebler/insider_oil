@@ -1,4 +1,4 @@
-var db  = require('../models');
+var db  = require('../../db/models');
 var await = require('../../lib/await');
 
 function createUsers() {
