@@ -1,11 +1,14 @@
-exports.DrillingRigs =  {
-    var params = {};
-    params["tipo"] = "type";
-    params["sonda"] = "name";
-    params["contratada"] = "contractor";
-    params["status"] = "status";
-    params["lda"] = "lda";
-    params["início"] = "start";
-    params["fim"] = "end";
+exports.DrillingRig = function() {
+    var params = {
+        fields: {},
+        keyField: "sonda"
+    };
+    params.fields["tipo"] = "type";
+    params.fields["sonda"] = "name";
+    params.fields["contratada"] = "contractor";
+    params.fields["status"] = "status";
+    params.fields["lda"] = "lda";
+    params.fields["inÃ­cio"] = "start";
+    params.fields["fim"] = "end";
     return params;
 }

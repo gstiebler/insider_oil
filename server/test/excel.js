@@ -7,10 +7,19 @@ var importExcel = require('../lib/importExcel');
 var group = {
 
 first: function(test) {
-    test.equal( 7, 7 ); 
+    var fixtureCount = 3;
+    test.equal( fixtureCount, await( db.DrillingRig.findAndCountAll() ).count );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
-    importExcel(excelBuf);
-    test.done();
+    try {
+        importExcel(excelBuf, 'DrillingRig', onImportDone);
+    } catch(err) {
+        console.log(err);
+    }
+    
+    function onImportDone() {
+        test.equal( 98, await( db.DrillingRig.findAndCountAll() ).count );  
+        test.done();
+    }
 },
 
 
