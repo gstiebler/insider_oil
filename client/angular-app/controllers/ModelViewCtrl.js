@@ -35,6 +35,8 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
                 $timeout(function () {
                     file.result = response.data;
                     console.log(response.data);
+                    $scope.fileUploadStatus = response.data.status;
+                    server.getTable(modelName, showModel, showError );  
                 });
             }, function (response) {
                 if (response.status > 0) {

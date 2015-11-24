@@ -12,7 +12,11 @@ function getRowValues(worksheet, row) {
     var lastCol = range.e.c;
     for( var col = firstCol; col <= lastCol; col++ ) {
         var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
-        rowValues.push( worksheet[cellAddress].v );
+        var cell = worksheet[cellAddress];
+        if( cell )
+            rowValues.push( cell.v );
+        else
+            rowValues.push("");
     }
     
     return rowValues;
