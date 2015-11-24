@@ -68,14 +68,22 @@ module.exports = function(excelBuf, modelName, onOk, onError) {
                 record = await( model.findOne({ where: searchParams }) );
                 if( record ) {
                     setRecord(record, header, excelParams.fields, rowValues);
-                    record.save();
+                    record.save().catch( function(err) {
+                        onError(err);
+                    });
+                    updatedRecords++;
                 } else {
                     var record = {};
                     setRecord(record, header, excelParams.fields, rowValues);
-                    model.create(record);
+                    model.create(record).catch( function(err) {
+                        onError(err);
+                    });
+                    insertedRecords++;
                 }
             }
-            onOk();
+            var status = "Registros criados: " + insertedRecords;
+            status += "\nRegistros atualizados: " + updatedRecords;
+            onOk(status);
         } catch(err) {
             console.log(err);
             onError();
