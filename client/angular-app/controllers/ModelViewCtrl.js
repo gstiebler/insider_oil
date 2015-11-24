@@ -25,7 +25,10 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
         if (file) {
             file.upload = Upload.upload({
                 url: '/db_server/upload_file',
-                data: {file: file}
+                data: { file: file },
+                params: {
+                    table: modelName
+                }
             });
 
             file.upload.then(function (response) {

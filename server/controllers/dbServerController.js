@@ -1,7 +1,7 @@
 var db  = require('../db/models');
 var tableViewParams = require('../lib/tableViewParams');
 var fileUpload = require('../lib/fileUpload');
-var importExcel = require('./importExcel');
+var importExcel = require('../lib/importExcel');
 
 exports.main = function(req, res, next) {
     var model = req.query.table;
@@ -23,12 +23,19 @@ exports.uploadFile = function(req, res, next) {
 
     function onFile(fileName, buf) {
         console.log( "File name: " + fileName );
-        console.log( "Buffer length: " + buf.length); 
-        importExcel(buf);
+        var model = req.query.table;
+        importExcel(buf, model, onOk, onError);
+        
+        function onOk(status) {
+            res.json( { status: status } );
+        }
+        
+        function onError(err) {
+            res.json( { errorMsg: err } );
+        }
     }
-    
+      
     function onFinish() {
         console.log('Done parsing form!');
-        res.json( { msg:"OK" } );
     };
 }
