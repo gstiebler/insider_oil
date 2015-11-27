@@ -25,5 +25,15 @@ app.service('server', ['$http',
             okCallback(response.data.fields);
         }, errorCallback);
     }
+    
+    
+    this.createNewItem = function( modelName, newItemData, onSave, onError ) {
+        params = {
+            model: modelName,
+            newItemData: newItemData
+        };
+        
+        $http.post('/create_item/', { params: params }).then(onSave, onError);
+    }
         
 }]);

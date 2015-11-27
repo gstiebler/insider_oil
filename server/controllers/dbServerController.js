@@ -74,3 +74,19 @@ exports.recordValues = function(req, res, next) {
         res.status(404).json( { errorMsg: "Registro não encontrado" } );
     }
 }
+
+
+exports.createItem = function(req, res, next) {
+    var newItemData = req.body.params.newItemData;
+    var modelName = req.body.params.model;
+    var model = db[modelName];     
+    model.create(newItemData).then(onSave).catch(onError);
+    
+    function onSave() {
+        res.json( { msg: "OK" } );
+    }
+    
+    function onError(error) {
+        res.status(404).json( { errorMsg: "Não foi possível criar o registro. " + error } );
+    }
+}
