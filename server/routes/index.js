@@ -16,6 +16,8 @@ module.exports = function(app) {
     
     // DB Server
     app.get('/db_server/',                         dbServerController.main);
+    app.get('/model_fields/',                      dbServerController.modelFields);
+    app.get('/record_values/',                     dbServerController.recordValues);
     app.post('/db_server/upload_file',             dbServerController.uploadFile);
     
     // Users

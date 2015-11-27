@@ -11,9 +11,19 @@ app.service('server', ['$http',
         $http.get('/db_server/', { params: params }).
         then(function(response) {
             okCallback(response.data);
-        }, function(response) {
-            errorCallback(response);
-        });
+        }, errorCallback);
+    }
+    
+    
+    this.getModelFields = function( model, okCallback, errorCallback ) {
+        params = { 
+            model: model
+        };
+        
+        $http.get('/model_fields/', { params: params }).
+        then(function(response) {
+            okCallback(response.data.fields);
+        }, errorCallback);
     }
         
 }]);

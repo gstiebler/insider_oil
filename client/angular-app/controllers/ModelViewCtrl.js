@@ -49,4 +49,9 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
             });
         }   
     }
+    
+    $scope.createItem = function() {
+         $location.path("/app/create_item").search({ model: modelName });
+    }
+    
 }]);
