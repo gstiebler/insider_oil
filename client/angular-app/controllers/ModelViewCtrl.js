@@ -6,8 +6,27 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
     server.getTable(modelName, showModel, showError );
     
     function showModel(model) {
-        $scope.viewParams = model.viewParams;
-        $scope.records = model.records;
+        var columns = [];
+        for( var i = 0; i < model.viewParams.gridFields.length; i++) {
+            var field = model.viewParams.gridFields[i];
+            columns.push( { title: field } );
+        }
+        
+        var dataSet = [];
+        for( var i = 0; i < model.records.length; i++) {
+            var record = model.records[i];
+            var recordItem = [];
+            for( var j = 0; j < columns.length; j++) {
+                recordItem.push( record[columns[j].title] );
+            }
+            dataSet.push(recordItem);
+        }
+        
+        var mainTable = $('#mainTable');
+        mainTable.DataTable( {
+            data: dataSet,
+            columns: columns
+        } );
     }
     
     function showError(error) {
