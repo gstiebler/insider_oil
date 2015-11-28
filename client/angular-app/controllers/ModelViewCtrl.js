@@ -29,7 +29,10 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
         var mainTable = $('#mainTable');
         mainTable.DataTable( {
             data: dataSet,
-            columns: columns
+            columns: columns,
+            language: {
+                url: "http://cdn.datatables.net/plug-ins/1.10.10/i18n/Portuguese-Brasil.json"
+            }
         } );
     }
     
