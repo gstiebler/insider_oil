@@ -5,14 +5,29 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
     var modelName = $routeParams.model;
     server.getTable(modelName, showModel, showError );
     
+    var datatableInitialized = false;
+    var dataTableElement = $('#mainTable');
+
     function showModel(model) {
-        var columns = [];
-        for( var i = 0; i < model.viewParams.gridFields.length; i++) {
-            var fieldName = model.viewParams.gridFields[i];
-            var fieldLabel = model.viewParams.fields[fieldName].label;
-            columns.push({ 
-                title: fieldLabel
-            });
+    
+        if(!datatableInitialized) {
+            
+            var columns = [];
+            for( var i = 0; i < model.viewParams.gridFields.length; i++) {
+                var fieldName = model.viewParams.gridFields[i];
+                var fieldLabel = model.viewParams.fields[fieldName].label;
+                columns.push({ 
+                    title: fieldLabel
+                });
+            }
+            
+            dataTableElement.DataTable( {
+                columns: columns,
+                language: {
+                    url: "http://cdn.datatables.net/plug-ins/1.10.10/i18n/Portuguese-Brasil.json"
+                }
+            } );
+            datatableInitialized = true;
         }
         
         var dataSet = [];
@@ -26,14 +41,9 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
             dataSet.push(recordItem);
         }
         
-        var mainTable = $('#mainTable');
-        mainTable.DataTable( {
-            data: dataSet,
-            columns: columns,
-            language: {
-                url: "http://cdn.datatables.net/plug-ins/1.10.10/i18n/Portuguese-Brasil.json"
-            }
-        } );
+        var oTable = dataTableElement.dataTable();
+        oTable.fnClearTable();
+        oTable.fnAddData( dataSet );
     }
     
     function showError(error) {
