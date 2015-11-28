@@ -8,16 +8,20 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
     function showModel(model) {
         var columns = [];
         for( var i = 0; i < model.viewParams.gridFields.length; i++) {
-            var field = model.viewParams.gridFields[i];
-            columns.push( { title: field } );
+            var fieldName = model.viewParams.gridFields[i];
+            var fieldLabel = model.viewParams.fields[fieldName].label;
+            columns.push({ 
+                title: fieldLabel
+            });
         }
         
         var dataSet = [];
         for( var i = 0; i < model.records.length; i++) {
             var record = model.records[i];
             var recordItem = [];
-            for( var j = 0; j < columns.length; j++) {
-                recordItem.push( record[columns[j].title] );
+            for( var j = 0; j < model.viewParams.gridFields.length; j++) {
+                var fieldName = model.viewParams.gridFields[j];
+                recordItem.push( record[fieldName] );
             }
             dataSet.push(recordItem);
         }
