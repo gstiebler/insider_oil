@@ -28,3 +28,38 @@ exports.Well = function() {
     
     return wellsParams;
 }
+
+
+exports.DrillingRig = function() {
+    var drillingRigsParams = {
+        fields: {
+            name: {
+                label: "Sonda"
+            },
+            contractor: {
+                label: "Contratante"
+            },
+            type: {
+                label: "Tipo"
+            },
+            status: {
+                label: "Status"
+            },
+            lda: {
+                label: "LDA"
+            },
+            start: {
+                label: "Início"
+            },
+            end: {
+                label: "Fim"
+            }
+        },
+        labelField: "name",
+        gridFields: ["name", "contractor", "type", "status", "lda", "start", "end"],
+        tableLabel: "Sondas",
+        hasMap: false
+    };
+    
+    return drillingRigsParams;
+}
