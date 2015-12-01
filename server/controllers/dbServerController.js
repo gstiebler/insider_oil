@@ -91,3 +91,15 @@ exports.createItem = function(req, res, next) {
         res.status(404).json( { errorMsg: "Não foi possível criar o registro. " + error } );
     }
 }
+
+
+exports.deleteItem = function(req, res) {
+    var id = req.query.id;
+    var modelName = req.query.model;
+    var model = db[modelName];     
+    model.destroy({ where: { id: id } }).then( function() {
+        res.json( { msg: "OK" } );
+    }).catch( function(err) {
+        res.status(404).json( { errorMsg: "Não foi possível apagar o registro. " + error } );
+    });
+}

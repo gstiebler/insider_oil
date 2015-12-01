@@ -66,7 +66,13 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
     }
     
     $scope.deleteRecord = function(id) {
-        console.log('delete id: ' + id);
+        if(confirm("Deseja realmente apagar o registro?")){
+            server.deleteItem( modelName, id, onDelete, showError );
+            
+            function onDelete() {
+                server.getTable(modelName, showModel, showError );  
+            }
+        }
     }
     
     $scope.showMap = function() {

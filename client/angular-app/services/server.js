@@ -35,5 +35,15 @@ app.service('server', ['$http',
         
         $http.post('/create_item/', { params: params }).then(onSave, onError);
     }
+    
+    
+    this.deleteItem = function( modelName, id, onDelete, onError ) {
+        params = {
+            model: modelName,
+            id: id
+        };
+        
+        $http.delete('/delete_item/', { params: params }).then(onDelete, onError);
+    }
         
 }]);
