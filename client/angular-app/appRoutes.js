@@ -19,6 +19,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'CreateItemController'
 		})
 
+		.when('/app/edit_item', {
+			templateUrl: 'app/templates/edit_item.html',
+			controller: 'EditItemController'
+		})
+
 		.when('/app/drilling_rigs', {
 			templateUrl: 'app/templates/drilling_rigs.html',
 			controller: 'DrillingRigsController'	

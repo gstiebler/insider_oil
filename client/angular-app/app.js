@@ -5,6 +5,7 @@ angular.module('InsiderOilApp', [
     'MainCtrl', 
     'ModelViewCtrl', 
     'CreateItemCtrl', 
+    'EditItemCtrl', 
     'DrillingRigsCtrl', 
     'MapCtrl', 
     'ChartCtrl'

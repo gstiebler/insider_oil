@@ -42,8 +42,7 @@ exports.uploadFile = function(req, res, next) {
 }
 
 
-exports.modelFields = function(req, res, next) {
-    var modelName = req.query.model;
+function getModelFields(modelName) {
     var model = db[modelName];
     var viewParams = tableViewParams[modelName]();
     var fields = [];
@@ -57,6 +56,14 @@ exports.modelFields = function(req, res, next) {
             type: model.attributes[attribute].type.toString()
         } );
     }
+    
+    return fields;
+}
+
+
+exports.modelFields = function(req, res, next) {
+    var modelName = req.query.model;
+    var fields = getModelFields(modelName);
     res.json( { fields: fields } );
 }
 
@@ -68,7 +75,11 @@ exports.recordValues = function(req, res, next) {
     model.findById(id).then(onRecord).catch(onError);
     
     function onRecord(record) {
-        res.json( { values: record } );
+        var fields = getModelFields(modelName);
+        res.json({ 
+            values: record,
+            fields: fields
+        });
     }
     
     function onError(err) {
@@ -89,6 +100,25 @@ exports.createItem = function(req, res, next) {
     
     function onError(error) {
         res.status(404).json( { errorMsg: "Não foi possível criar o registro. " + error } );
+    }
+}
+
+
+exports.saveItem = function(req, res, next) {
+    var modelName = req.body.params.model;
+    var recordData = req.body.params.record;
+    var model = db[modelName];     
+    var record = model.findById( recordData.id );
+    for(attributeName in recordData)
+        record[attributeName] = recordData[attributeName];
+    record.save().then(onSave).catch(onError);
+    
+    function onSave() {
+        res.json( { msg: "OK" } );
+    }
+    
+    function onError(error) {
+        res.status(404).json( { errorMsg: "Não foi possível salvar o registro. " + error } );
     }
 }
 

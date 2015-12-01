@@ -62,7 +62,9 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
     }
     
     $scope.editRecord = function(id) {
-        console.log('edit id: ' + id);
+        $location.path("/app/edit_item").search({ modelName: modelName, id: id });
+        // I don't know why the line below should be here for the redirect to work
+        server.getTable(modelName, showModel, showError ); 
     }
     
     $scope.deleteRecord = function(id) {
@@ -70,7 +72,7 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
             server.deleteItem( modelName, id, onDelete, showError );
             
             function onDelete() {
-                server.getTable(modelName, showModel, showError );  
+                server.getTable(modelName, showModel, showError ); 
             }
         }
     }

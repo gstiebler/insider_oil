@@ -45,5 +45,28 @@ app.service('server', ['$http',
         
         $http.delete('/delete_item/', { params: params }).then(onDelete, onError);
     }
+    
+   
+    this.getModelFieldsAndValues = function( modelName, id, okCallback, errorCallback ) {
+        params = { 
+            model: modelName,
+            id: id
+        };
+        
+        $http.get('/record_values/', { params: params }).
+        then(function(response) {
+            okCallback(response.data);
+        }, errorCallback);
+    }
+    
+    
+    this.saveItem = function( modelName, record, onSave, onError ) {
+        params = {
+            model: modelName,
+            record: record
+        };
+        
+        $http.delete('/save_item/', { params: params }).then(onDelete, onError);
+    }
         
 }]);
