@@ -9,6 +9,7 @@ exports.main = function(req, res, next) {
     
     function sendRecords(records) {
         var viewParams = tableViewParams[model]();
+        viewParams.gridFields.push('id');
         var responseObj = {
             records: records,
             viewParams: viewParams

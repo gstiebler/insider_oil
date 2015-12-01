@@ -15,11 +15,15 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
             var columns = [];
             for( var i = 0; i < model.viewParams.gridFields.length; i++) {
                 var fieldName = model.viewParams.gridFields[i];
+                if(fieldName == 'id') continue;
                 var fieldLabel = model.viewParams.fields[fieldName].label;
                 columns.push({ 
                     title: fieldLabel
                 });
             }
+            
+            columns.push( { title: "Editar" } );
+            columns.push( { title: "Apagar" } );
             
             dataTableElement.DataTable( {
                 columns: columns,
@@ -36,8 +40,14 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
             var recordItem = [];
             for( var j = 0; j < model.viewParams.gridFields.length; j++) {
                 var fieldName = model.viewParams.gridFields[j];
+                if(fieldName == 'id') continue;
                 recordItem.push( record[fieldName] );
             }
+            var prelude = "angular.element(document.getElementById('angularContainer')).scope().";
+            var editFuncStr = prelude + "editRecord(" + record.id + ")";
+            var deleteFuncStr = prelude + "deleteRecord(" + record.id + ")";
+            recordItem.push('<a class="btn btn-large btn-primary" onclick="' + editFuncStr + '")">Editar</a>');
+            recordItem.push('<button class="btn btn-large btn-danger" onclick="' + deleteFuncStr + '">Apagar</button>');
             dataSet.push(recordItem);
         }
         
@@ -49,6 +59,14 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
     function showError(error) {
         $scope.error = error;
         console.log('Erros: ' + error);
+    }
+    
+    $scope.editRecord = function(id) {
+        console.log('edit id: ' + id);
+    }
+    
+    $scope.deleteRecord = function(id) {
+        console.log('delete id: ' + id);
     }
     
     $scope.showMap = function() {
