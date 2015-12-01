@@ -35,9 +35,5 @@ angular.module('CreateItemCtrl', []).controller('CreateItemController',
     function onSave() {
          $location.path("/app/model_view").search({ model: modelName });
     }
-    
-    function onError(error) {
-        console.log(error);
-    }
         
 }]);

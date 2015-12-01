@@ -108,10 +108,13 @@ exports.saveItem = function(req, res, next) {
     var modelName = req.body.params.model;
     var recordData = req.body.params.record;
     var model = db[modelName];     
-    var record = model.findById( recordData.id );
-    for(attributeName in recordData)
-        record[attributeName] = recordData[attributeName];
-    record.save().then(onSave).catch(onError);
+    model.findById( recordData.id ).then(onFindRecord).catch(onError);
+    
+    function onFindRecord(record) {
+        for(attributeName in recordData)
+            record[attributeName] = recordData[attributeName];
+        record.save().then(onSave).catch(onError);
+    }
     
     function onSave() {
         res.json( { msg: "OK" } );

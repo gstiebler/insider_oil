@@ -66,7 +66,7 @@ app.service('server', ['$http',
             record: record
         };
         
-        $http.delete('/save_item/', { params: params }).then(onDelete, onError);
+        $http.put('/save_item/', { params: params }).then(onSave, onError);
     }
         
 }]);
