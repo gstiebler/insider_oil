@@ -8,7 +8,11 @@
     "storage": "./db.test.sqlite",
     "logging": false
   },
-  "production": {
-    "use_env_variable": "CLEARDB_DATABASE_URL"
+  "production": {    
+    "username": "bc996f008eadda",
+    "password": 76671337,
+    "database": "heroku_bf9cc835b37a928",
+    "host": "us-cdbr-iron-east-03.cleardb.net",
+    "dialect": "mysql"
   }
 }
