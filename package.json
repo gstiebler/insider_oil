@@ -18,10 +18,14 @@
     "serve-favicon": "~2.3.0",
     "xlsx": "^0.8.0",
     "sync": "^0.2.5",
-    "fibers": "^1.0.7"
+    "fibers": "^1.0.7",
+    "bower": "1.5.3"
   },
   "devDependencies": {
     "selenium-webdriver": "^2.48.2",
     "sqlite3": "^3.1.1"
+  },
+  "scripts": {
+    "postinstall": "cd client && ../node_modules/bower/bin/bower install"
   }
 }
