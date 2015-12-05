@@ -9,10 +9,12 @@
     "logging": false
   },
   "production": {    
+    "port": 3306,
     "username": "bc996f008eadda",
-    "password": 76671337,
+    "password": "76671337",
     "database": "heroku_bf9cc835b37a928",
     "host": "us-cdbr-iron-east-03.cleardb.net",
+    "protocol": "mysql",
     "dialect": "mysql"
   }
 }
