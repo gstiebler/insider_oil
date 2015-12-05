@@ -19,8 +19,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/app/libs', express.static(path.join(__dirname, '../client/bower_components')));
-app.use('/app', express.static(path.join(__dirname, '../client/angular-app')));
+app.use('/app/libs', express.static(path.join(__dirname, './client/bower_components')));
+app.use('/app', express.static(path.join(__dirname, './client/angular-app')));
 
 routes(app);
 
