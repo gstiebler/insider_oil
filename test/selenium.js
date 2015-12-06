@@ -28,40 +28,15 @@ function setUpServer() {
     
     return server;
 }
-    
-var group = {
 
-first: function(test) {
-    var server = setUpServer();
-    
-    driver.get('http://localhost:' + port);
-    test.equal('Login', await( driver.getTitle() ));
-    
-    // login
+function makeLogin(test) {
     driver.findElement(By.name('username')).sendKeys('gstiebler');
     driver.findElement(By.name('password')).sendKeys('guilherme');
     driver.findElement(By.id('buttonOk')).click();
     test.equal('Insider Oil', await( driver.getTitle() ));
-    
-    //basic check on main page
-    test.ok( await( driver.isElementPresent(By.id('navbar')) ) );
-    test.ok( !await( driver.isElementPresent(By.id('foca')) ) );
-    test.ok( !await( driver.isElementPresent(elementByText('Focas'))) );
-    test.ok( await( driver.isElementPresent(elementByText('Sondas'))) );
-    test.ok( await( driver.isElementPresent(elementByText('gstiebler'))) );
-    test.ok( await( driver.isElementPresent(elementByText('Logout'))) );
-    
-    //show wells
-    driver.findElement(elementByText('Poços')).click();
-    driver.sleep(500);
-    test.equal( '1A 0001 BA', getTableValue(0, 0) );
-    test.equal( 'Petrobrás', getTableValue(0, 1) );
-    test.equal( 'Recôncavo', getTableValue(0, 3) );
-    test.equal( '1AJ 0001 BA', getTableValue(2, 0) );
-    test.equal( 'Recôncavo E&P', getTableValue(2, 1) );
-    test.equal( 'Recôncavo', getTableValue(2, 3) );
-    
-    // add well
+}
+
+function addWell(test) {
     driver.findElement(elementByText('Adicionar')).click();
     driver.sleep(200);
     test.ok( await( driver.isElementPresent(elementByText('Poço:'))) );
@@ -81,8 +56,29 @@ first: function(test) {
     test.equal( 'Operador Petrobrás', getTableValue(3, 1) );
     test.equal( 'AC', getTableValue(3, 2) );
     test.equal( 'Bacia do Selenium', getTableValue(3, 3) );
-    
-    // edit well
+}
+
+function showWells(test) {
+    driver.findElement(elementByText('Poços')).click();
+    driver.sleep(500);
+    test.equal( '1A 0001 BA', getTableValue(0, 0) );
+    test.equal( 'Petrobrás', getTableValue(0, 1) );
+    test.equal( 'Recôncavo', getTableValue(0, 3) );
+    test.equal( '1AJ 0001 BA', getTableValue(2, 0) );
+    test.equal( 'Recôncavo E&P', getTableValue(2, 1) );
+    test.equal( 'Recôncavo', getTableValue(2, 3) );
+}
+
+function checkMainPage(test) {
+    test.ok( await( driver.isElementPresent(By.id('navbar')) ) );
+    test.ok( !await( driver.isElementPresent(By.id('foca')) ) );
+    test.ok( !await( driver.isElementPresent(elementByText('Focas'))) );
+    test.ok( await( driver.isElementPresent(elementByText('Sondas'))) );
+    test.ok( await( driver.isElementPresent(elementByText('gstiebler'))) );
+    test.ok( await( driver.isElementPresent(elementByText('Logout'))) );
+}
+
+function editWell(test) {
     var editBtn = getTableCell(2, 4).findElement(By.xpath("a"));
     editBtn.click();
     driver.sleep(200);
@@ -93,19 +89,37 @@ first: function(test) {
     test.equal( '1AJ 0001 BA', getTableValue(2, 0) );
     test.equal( 'Operador Elvis Foca', getTableValue(2, 1) );
     test.equal( 'Recôncavo', getTableValue(2, 3) );
-    
-    // delete well
+}
+
+function deleteWell(test) {
     var deleteBtn = getTableCell(2, 5).findElement(By.xpath("button"));
     deleteBtn.click();
     driver.switchTo().alert().accept();
     driver.sleep(tableLoadTime);
     test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 3 de 3 registros'))) );
     test.ok( !await( driver.isElementPresent(elementByText('Operador Elvis Foca'))) );
-   
-    // logout
+}
+
+function logout(test) {
     driver.findElement(elementByText('Logout')).click();
     test.equal('Login', await( driver.getTitle() ));
+}
     
+var group = {
+
+first: function(test) {
+    var server = setUpServer();
+    
+    driver.get('http://localhost:' + port);
+    test.equal('Login', await( driver.getTitle() ));
+    
+    makeLogin(test);
+    checkMainPage(test);
+    showWells(test);
+    addWell(test);
+    editWell(test);
+    deleteWell(test);
+    logout(test);
     
     server.close();
     driver.quit();
