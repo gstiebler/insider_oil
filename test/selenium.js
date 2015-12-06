@@ -35,11 +35,13 @@ first: function(test) {
     driver.get('http://localhost:' + port);
     test.equal('Login', await( driver.getTitle() ));
     
+    // login
     driver.findElement(webdriver.By.name('username')).sendKeys('gstiebler');
     driver.findElement(webdriver.By.name('password')).sendKeys('guilherme');
     driver.findElement(webdriver.By.id('buttonOk')).click();
     test.equal('Insider Oil', await( driver.getTitle() ));
     
+    //basic check on main page
     test.ok( isElementPresentSync(webdriver.By.id('navbar')) );
     test.ok( !isElementPresentSync(webdriver.By.id('foca')) );
     test.ok( !isElementPresentSync( elementByText('Focas') ) );
@@ -47,16 +49,33 @@ first: function(test) {
     test.ok( isElementPresentSync( elementByText('Sondas') ) );
     test.ok( isElementPresentSync( elementByText('gstiebler') ) );
     test.ok( isElementPresentSync( elementByText('Logout') ) );
+    
+    //show wells
     driver.findElement(elementByText('Poços')).click();
     sleep.sync(null, 500);
     test.ok( isElementPresentSync( elementByText('Mostrando de 1 até 3 de 3 registros') ) );
+    
+    // add well
     driver.findElement(elementByText('Adicionar')).click();
     sleep.sync(null, 200);
     test.ok( isElementPresentSync( elementByText('Poço:') ) );
     test.ok( isElementPresentSync( elementByText('Operador:') ) );
     test.ok( isElementPresentSync( elementByText('Longitude') ) );
     test.ok( isElementPresentSync( elementByText('Salvar') ) );
-    sleep.sync(null, 2000);
+    driver.findElement(webdriver.By.id('html_id_Poço')).sendKeys('Novo poço Selenium');
+    driver.findElement(webdriver.By.id('html_id_Operador')).sendKeys('Operador Petrobrás');
+    driver.findElement(webdriver.By.id('html_id_Estado')).sendKeys('AC');
+    driver.findElement(webdriver.By.id('html_id_Bacia')).sendKeys('Bacia do Selenium');
+    driver.findElement(webdriver.By.id('html_id_Latitude')).sendKeys('1234');
+    driver.findElement(webdriver.By.id('html_id_Longitude')).sendKeys('3334321');
+    driver.findElement(elementByText('Salvar')).click();
+    sleep.sync(null, 800);
+    test.ok( isElementPresentSync( elementByText('Mostrando de 1 até 4 de 4 registros') ) );
+    
+    // logout
+    driver.findElement(elementByText('Logout')).click();
+    test.equal('Login', await( driver.getTitle() ));
+    
     
     server.close();
     driver.quit();
