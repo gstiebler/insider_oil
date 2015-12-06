@@ -52,9 +52,12 @@ first: function(test) {
     //show wells
     driver.findElement(elementByText('Poços')).click();
     driver.sleep(500);
-    test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 3 de 3 registros'))) );
-    //var trs = await( driver.findDomElement(By.xpath("id('mainTable')/tbody/tr[0]/td")) );
-    //console.log('trs: ', trs);
+    test.equal( '1A 0001 BA', getTableValue(0, 0) );
+    test.equal( 'Petrobrás', getTableValue(0, 1) );
+    test.equal( 'Recôncavo', getTableValue(0, 3) );
+    test.equal( '1AJ 0001 BA', getTableValue(2, 0) );
+    test.equal( 'Recôncavo E&P', getTableValue(2, 1) );
+    test.equal( 'Recôncavo', getTableValue(2, 3) );
     
     // add well
     driver.findElement(elementByText('Adicionar')).click();
@@ -72,6 +75,10 @@ first: function(test) {
     driver.findElement(elementByText('Salvar')).click();
     driver.sleep(800);
     test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 4 de 4 registros'))) );
+    test.equal( 'Novo poço Selenium', getTableValue(3, 0) );
+    test.equal( 'Operador Petrobrás', getTableValue(3, 1) );
+    test.equal( 'AC', getTableValue(3, 2) );
+    test.equal( 'Bacia do Selenium', getTableValue(3, 3) );
     
     // logout
     driver.findElement(elementByText('Logout')).click();
@@ -84,6 +91,19 @@ first: function(test) {
 }
 
 };
+
+
+function getTableRows() {
+    return await( driver.findElements(By.xpath("id('mainTable')/tbody/tr")) );
+}
+
+
+function getTableValue(row, columnn) {
+    var tds = await( getTableRows()[row].findElements(By.xpath("td")) );
+    var text = await( tds[columnn].getText() );
+    return text;
+}
+
 
 function elementByText(text) {
     var str = "//*[contains(text(), '" + text + "')]";
