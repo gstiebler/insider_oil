@@ -1,10 +1,10 @@
-var app  = require(__dirname + '/../app');
-var http = require('http');
-var port = 3333;
-
 var fiberTests = require('./lib/fiberTests');
 var Sync = require('sync');
 var await = require(__dirname + '/../lib/await');
+
+var app  = require(__dirname + '/../app');
+var http = require('http');
+var port = 3333;
 
 var webdriver = require('selenium-webdriver'),
     By = webdriver.By,
@@ -80,6 +80,19 @@ first: function(test) {
     test.equal( 'AC', getTableValue(3, 2) );
     test.equal( 'Bacia do Selenium', getTableValue(3, 3) );
     
+    // edit well
+    var well2Row = getTableCell(2, 4);
+    var editBtn = well2Row.findElement(By.xpath("a"));
+    editBtn.click();
+    driver.sleep(2000);
+    driver.findElement(By.id('html_id_Operador')).clear();
+    driver.findElement(By.id('html_id_Operador')).sendKeys('Operador Elvis Foca');
+    driver.findElement(elementByText('Salvar')).click();
+    driver.sleep(800);
+    test.equal( '1AJ 0001 BA', getTableValue(2, 0) );
+    test.equal( 'Operador Elvis Foca', getTableValue(2, 1) );
+    test.equal( 'Recôncavo', getTableValue(2, 3) );
+    
     // logout
     driver.findElement(elementByText('Logout')).click();
     test.equal('Login', await( driver.getTitle() ));
@@ -98,9 +111,14 @@ function getTableRows() {
 }
 
 
-function getTableValue(row, columnn) {
+function getTableCell(row, columnn) {
     var tds = await( getTableRows()[row].findElements(By.xpath("td")) );
-    var text = await( tds[columnn].getText() );
+    return tds[columnn]
+}
+
+
+function getTableValue(row, columnn) {
+    var text = await( getTableCell(row, columnn).getText() );
     return text;
 }
 
