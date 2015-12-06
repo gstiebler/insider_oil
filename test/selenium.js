@@ -1,9 +1,10 @@
-var fiberTests = require('./lib/fiberTests');
-var db = require('../db/models');
-var await = require('../lib/await');
-var app  = require(__dirname + '/../app.js');
-var port = 3333;
+var app  = require(__dirname + '/../app');
 var http = require('http');
+var port = 3333;
+
+var fiberTests = require('./lib/fiberTests');
+var Sync = require('sync');
+var await = require(__dirname + '/../lib/await');
 
 var webdriver = require('selenium-webdriver'),
     By = webdriver.By,
@@ -13,10 +14,7 @@ var driver = new webdriver.Builder()
     .forBrowser('firefox')
     .build();
     
-    
-var group = {
-
-first: function(test) {
+function setUpServer() {
     app.set('port', port);
     var server = http.createServer(app);
     server.listen(port);
@@ -26,13 +24,20 @@ first: function(test) {
         console.log(error);
     }
     
-    driver.get('http://www.google.com/ncr');
-    driver.findElement(By.name('q')).sendKeys('webdriver');
-    driver.findElement(By.name('btnG')).click();
-    driver.wait(until.titleIs('webdriver - Google Search'), 1000);
-    driver.quit();
+    return server;
+}
     
+var group = {
+
+first: function(test) {
+    var server = setUpServer();
+    
+    driver.get('http://localhost:' + port);
+    var title = await( driver.getTitle() );
+    console.log('title: ' + title);
+    test.equal('Login', title);
     server.close();
+    driver.quit();
     test.done();
 }
 
