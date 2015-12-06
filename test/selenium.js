@@ -14,6 +14,8 @@ var driver = new webdriver.Builder()
     .forBrowser('firefox')
     .build();
     
+var tableLoadTime = 800;
+    
 function setUpServer() {
     app.set('port', port);
     var server = http.createServer(app);
@@ -73,7 +75,7 @@ first: function(test) {
     driver.findElement(By.id('html_id_Latitude')).sendKeys('1234');
     driver.findElement(By.id('html_id_Longitude')).sendKeys('3334321');
     driver.findElement(elementByText('Salvar')).click();
-    driver.sleep(800);
+    driver.sleep(tableLoadTime);
     test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 4 de 4 registros'))) );
     test.equal( 'Novo poço Selenium', getTableValue(3, 0) );
     test.equal( 'Operador Petrobrás', getTableValue(3, 1) );
@@ -81,18 +83,25 @@ first: function(test) {
     test.equal( 'Bacia do Selenium', getTableValue(3, 3) );
     
     // edit well
-    var well2Row = getTableCell(2, 4);
-    var editBtn = well2Row.findElement(By.xpath("a"));
+    var editBtn = getTableCell(2, 4).findElement(By.xpath("a"));
     editBtn.click();
-    driver.sleep(2000);
+    driver.sleep(200);
     driver.findElement(By.id('html_id_Operador')).clear();
     driver.findElement(By.id('html_id_Operador')).sendKeys('Operador Elvis Foca');
     driver.findElement(elementByText('Salvar')).click();
-    driver.sleep(800);
+    driver.sleep(tableLoadTime);
     test.equal( '1AJ 0001 BA', getTableValue(2, 0) );
     test.equal( 'Operador Elvis Foca', getTableValue(2, 1) );
     test.equal( 'Recôncavo', getTableValue(2, 3) );
     
+    // delete well
+    var deleteBtn = getTableCell(2, 5).findElement(By.xpath("button"));
+    deleteBtn.click();
+    driver.switchTo().alert().accept();
+    driver.sleep(tableLoadTime);
+    test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 3 de 3 registros'))) );
+    test.ok( !await( driver.isElementPresent(elementByText('Operador Elvis Foca'))) );
+   
     // logout
     driver.findElement(elementByText('Logout')).click();
     test.equal('Login', await( driver.getTitle() ));

@@ -91,11 +91,11 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
     
     $scope.deleteRecord = function(id) {
         if(confirm("Deseja realmente apagar o registro?")){
-            server.deleteItem( modelName, id, onDelete, showError );
-            
             function onDelete() {
                 server.getTable(modelName, showModel, showError ); 
             }
+            
+            server.deleteItem( modelName, id, onDelete, showError );
         }
     }
     
