@@ -32,7 +32,7 @@ exports.uploadFile = function(req, res, next) {
         }
         
         function onError(err) {
-            res.json( { errorMsg: err } );
+            res.status(404).json( { errorMsg: err } );
         }
     }
       

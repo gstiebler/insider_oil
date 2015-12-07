@@ -12,6 +12,7 @@ module.exports = function(app) {
     // Login
     app.get('/login/',                             loginController.loginPage );
     app.post('/login/',                            loginController.makeLogin );
+    app.post('/login_rest/',                       loginController.makeLoginREST );
     app.put('/login/logout',    session.authorize, loginController.logout );
     
     // DB Server

@@ -19,6 +19,19 @@ exports.makeLogin = function(req, res, next) {
 };
 
 
+exports.makeLoginREST = function(req, res, next) {
+    session.login( req.body.username, req.body.password, loginOk, loginError );
+    
+    function loginOk(token) {
+        res.json( { token: token } );
+    }
+    
+    function loginError() {
+        res.status(404).json( { msg: 'Erro no login' } );
+    }
+};
+
+
 exports.logout = function(req, res, next) {
     session.logout(req.user);
     res.json( { msg: 'Usuário deslogado.' } );
