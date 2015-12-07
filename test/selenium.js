@@ -102,9 +102,11 @@ function showDrillingRigs(test, driver) {
     test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
     test.equal( 'Etesco', getTableValue(0, 1, driver) );
     test.equal( 'Em operação', getTableValue(0, 3, driver) );
+    test.equal( '2011-06-05T00:00:00.000Z', getTableValue(0, 5, driver) );
     test.equal( 'Paragon DPDS3', getTableValue(1, 0, driver) );
     test.equal( 'Paragon', getTableValue(1, 1, driver) );
     test.equal( 'Em operação', getTableValue(1, 3, driver) );
+    test.equal( '2005-04-13T00:00:00.000Z', getTableValue(1, 5, driver) );
 }
 
 function uploadExcelFile(test, driver) {
