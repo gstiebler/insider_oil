@@ -2,28 +2,15 @@ var fiberTests = require('./lib/fiberTests');
 var Sync = require('sync');
 var await = require(__dirname + '/../lib/await');
 
-var app  = require(__dirname + '/../app');
-var http = require('http');
 var port = 3333;
+var InitializeServer = require('./lib/InitializeServer');
 
 var webdriver = require('selenium-webdriver'),
     By = webdriver.By,
     until = webdriver.until;
     
 var tableLoadTime = 1000;
-    
-function setUpServer() {
-    app.set('port', port);
-    var server = http.createServer(app);
-    server.listen(port);
-    server.on('error', onError);
-    
-    function onError(error) {
-        console.log(error);
-    }
-    
-    return server;
-}
+
 
 function makeLogin(test, driver) {
     driver.get('http://localhost:' + port);
@@ -125,7 +112,7 @@ function logout(test, driver) {
 var group = {
 
 first: function(test) {
-    var server = setUpServer();
+    var server = InitializeServer(port);
     
     var driver = new webdriver.Builder()
         .forBrowser('firefox')
@@ -147,7 +134,7 @@ first: function(test) {
 },
 
 uploadExcelFiles: function(test) {
-    var server = setUpServer();
+    var server = InitializeServer(port);
     
     var driver = new webdriver.Builder()
         .forBrowser('firefox')
@@ -164,7 +151,7 @@ uploadExcelFiles: function(test) {
 },
 
 mapAndChart: function(test) {
-    var server = setUpServer();
+    var server = InitializeServer(port);
     
     var driver = new webdriver.Builder()
         .forBrowser('firefox')
@@ -186,7 +173,7 @@ mapAndChart: function(test) {
 },
 
 arbitraryUrl: function(test) {
-    var server = setUpServer();
+    var server = InitializeServer(port);
     
     var driver = new webdriver.Builder()
         .forBrowser('firefox')
