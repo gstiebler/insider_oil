@@ -96,8 +96,22 @@ function deleteWell(test, driver) {
     test.ok( !await( driver.isElementPresent(elementByText('Operador Elvis Foca'))) );
 }
 
+function showDrillingRigs(test, driver) {
+    driver.findElement(elementByText('Sondas')).click();
+    driver.sleep(500);
+    test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
+    test.equal( 'Etesco', getTableValue(0, 1, driver) );
+    test.equal( 'Em operação', getTableValue(0, 3, driver) );
+    test.equal( 'Paragon DPDS3', getTableValue(1, 0, driver) );
+    test.equal( 'Paragon', getTableValue(1, 1, driver) );
+    test.equal( 'Em operação', getTableValue(1, 3, driver) );
+}
+
 function uploadExcelFile(test, driver) {
-    
+    console.log('uploadExcelFile');
+    driver.findElement(By.id('uploadExcelButton')).sendKeys('C:\\Projetos\\node\\InsiderOil\\test\\data\\drilling_rigs.xlsx');
+    driver.sleep(tableLoadTime);
+    test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 10 de 98 registros'))) );
 }
 
 function logout(test, driver) {
@@ -142,7 +156,7 @@ uploadExcelFiles: function(test) {
         
     makeLogin(test, driver);
     
-    showWells(test, driver);
+    showDrillingRigs(test, driver);
     uploadExcelFile(test, driver);
     
     server.close();

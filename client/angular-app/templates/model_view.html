@@ -8,7 +8,7 @@
 <button class="btn btn-large btn-success" ng-click="showMap()" ng-show="viewParams.hasMap">Mapa</button>
 <br><br><br>
  <h4>Enviar arquivo Excel</h4>
-  <button class="btn btn-large btn-success" type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+  <input id="uploadExcelButton" class="btn btn-large btn-success" type="file" ngf-select="uploadFiles($file, $invalidFiles)"
           ngf-pattern="'.xls,.xlsx,.txt,.jpg" ngf-max-height="1000" ngf-max-size="10MB">
       Escolha o arquivo</button>
   <br><br>
