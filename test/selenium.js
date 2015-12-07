@@ -109,7 +109,7 @@ function showDrillingRigs(test, driver) {
 
 function uploadExcelFile(test, driver) {
     console.log('uploadExcelFile');
-    driver.findElement(By.id('uploadExcelButton')).sendKeys('C:\\Projetos\\node\\InsiderOil\\test\\data\\drilling_rigs.xlsx');
+    driver.findElement(By.id('uploadExcelButton')).sendKeys('C:\\Projetos\\node\\InsiderOil\\test\\data\\drilling_rigs.xls');
     driver.sleep(tableLoadTime);
     test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 10 de 98 registros'))) );
 }
