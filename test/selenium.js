@@ -56,9 +56,7 @@ function addWell(test, driver) {
     test.equal( 'Bacia do Selenium', getTableValue(3, 3, driver) );
 }
 
-function showWells(test, driver) {
-    driver.findElement(elementByText('Poços')).click();
-    driver.sleep(500);
+function checkWells(test, driver) {
     test.equal( '1A 0001 BA', getTableValue(0, 0, driver) );
     test.equal( 'Petrobrás', getTableValue(0, 1, driver) );
     test.equal( 'Recôncavo', getTableValue(0, 3, driver) );
@@ -115,7 +113,7 @@ function uploadExcelFile(test, driver) {
     console.log('uploadExcelFile');
     var fileName = __dirname + '\\data\\drilling_rigs.xls';
     driver.findElement(By.id('uploadExcelButton')).sendKeys(fileName);
-    driver.sleep(tableLoadTime);
+    driver.sleep(tableLoadTime + 500);
     test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 10 de 98 registros'))) );
 }
 
@@ -135,7 +133,9 @@ first: function(test) {
     
     makeLogin(test, driver);
     checkMainPage(test, driver);
-    showWells(test, driver);
+    driver.findElement(elementByText('Poços')).click();
+    driver.sleep(500);
+    checkWells(test, driver);
     addWell(test, driver);
     editWell(test, driver);
     deleteWell(test, driver);
@@ -179,6 +179,28 @@ mapAndChart: function(test) {
     driver.get('http://localhost:' + port + '/app/chart');
     test.equal('Insider Oil', await( driver.getTitle() ));
     test.ok( await( driver.isElementPresent(By.xpath("id('curve_chart')/div/div/div"))) );
+    
+    server.close();
+    driver.quit();
+    test.done();
+},
+
+arbitraryUrl: function(test) {
+    var server = setUpServer();
+    
+    var driver = new webdriver.Builder()
+        .forBrowser('firefox')
+        .build();
+    
+    driver.get('http://localhost:' + port + '/app/model_view?model=Well');
+    test.equal('Insider Oil', await( driver.getTitle() ));
+    test.ok( !await( driver.isElementPresent(elementByText('resultados por página'))) );
+        
+    makeLogin(test, driver);
+    
+    driver.get('http://localhost:' + port + '/app/model_view?model=Well');
+    test.equal('Insider Oil', await( driver.getTitle() ));
+    checkWells(test, driver);
     
     server.close();
     driver.quit();

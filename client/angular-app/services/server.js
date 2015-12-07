@@ -1,11 +1,12 @@
  var app = angular.module('InsiderOilApp');
 
-app.service('server', ['$http', 
-               function($http) {
+app.service('server', ['$http', 'session',
+               function($http, session) {
     
     this.getTable = function( table, okCallback, errorCallback ) {
         params = { 
-            table: table
+            table: table,
+            token: session.getToken()
         };
         
         $http.get('/db_server/', { params: params }).

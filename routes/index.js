@@ -15,7 +15,7 @@ module.exports = function(app) {
     app.put('/login/logout',    session.authorize, loginController.logout );
     
     // DB Server
-    app.get('/db_server/',                         dbServerController.main);
+    app.get('/db_server/', session.authorize,      dbServerController.main);
     app.get('/model_fields/',                      dbServerController.modelFields);
     app.get('/record_values/',                     dbServerController.recordValues);
     app.post('/create_item/',                      dbServerController.createItem);
