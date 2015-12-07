@@ -34,7 +34,7 @@ app.service('server', ['$http', 'session',
             newItemData: newItemData
         };
         
-        $http.post('/create_item/', { params: params }).then(onSave, onError);
+        $http.post('/create_item/', params ).then(onSave, onError);
     }
     
     
@@ -67,7 +67,7 @@ app.service('server', ['$http', 'session',
             record: record
         };
         
-        $http.put('/save_item/', { params: params }).then(onSave, onError);
+        $http.put('/save_item/', params ).then(onSave, onError);
     }
         
 }]);

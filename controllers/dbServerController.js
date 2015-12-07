@@ -89,8 +89,8 @@ exports.recordValues = function(req, res, next) {
 
 
 exports.createItem = function(req, res, next) {
-    var newItemData = req.body.params.newItemData;
-    var modelName = req.body.params.model;
+    var newItemData = req.body.newItemData;
+    var modelName = req.body.model;
     var model = db[modelName];     
     model.create(newItemData).then(onSave).catch(onError);
     
@@ -105,8 +105,8 @@ exports.createItem = function(req, res, next) {
 
 
 exports.saveItem = function(req, res, next) {
-    var modelName = req.body.params.model;
-    var recordData = req.body.params.record;
+    var modelName = req.body.model;
+    var recordData = req.body.record;
     var model = db[modelName];     
     model.findById( recordData.id ).then(onFindRecord).catch(onError);
     
