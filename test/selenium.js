@@ -26,6 +26,8 @@ function setUpServer() {
 }
 
 function makeLogin(test, driver) {
+    driver.get('http://localhost:' + port);
+    test.equal('Login', await( driver.getTitle() ));
     driver.findElement(By.name('username')).sendKeys('gstiebler');
     driver.findElement(By.name('password')).sendKeys('guilherme');
     driver.findElement(By.id('buttonOk')).click();
@@ -131,9 +133,6 @@ first: function(test) {
         .forBrowser('firefox')
         .build();
     
-    driver.get('http://localhost:' + port);
-    test.equal('Login', await( driver.getTitle() ));
-    
     makeLogin(test, driver);
     checkMainPage(test, driver);
     showWells(test, driver);
@@ -153,14 +152,33 @@ uploadExcelFiles: function(test) {
     var driver = new webdriver.Builder()
         .forBrowser('firefox')
         .build();
-    
-    driver.get('http://localhost:' + port);
-    test.equal('Login', await( driver.getTitle() ));
         
     makeLogin(test, driver);
     
     showDrillingRigs(test, driver);
     uploadExcelFile(test, driver);
+    
+    server.close();
+    driver.quit();
+    test.done();
+},
+
+mapAndChart: function(test) {
+    var server = setUpServer();
+    
+    var driver = new webdriver.Builder()
+        .forBrowser('firefox')
+        .build();
+        
+    makeLogin(test, driver);
+    
+    driver.get('http://localhost:' + port + '/app/map?model=Well');
+    test.equal('Insider Oil', await( driver.getTitle() ));
+    test.ok( await( driver.isElementPresent(By.xpath("id('map')/div/div/div"))) );
+    
+    driver.get('http://localhost:' + port + '/app/chart');
+    test.equal('Insider Oil', await( driver.getTitle() ));
+    test.ok( await( driver.isElementPresent(By.xpath("id('curve_chart')/div/div/div"))) );
     
     server.close();
     driver.quit();
