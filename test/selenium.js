@@ -10,7 +10,7 @@ var webdriver = require('selenium-webdriver'),
     By = webdriver.By,
     until = webdriver.until;
     
-var tableLoadTime = 800;
+var tableLoadTime = 1000;
     
 function setUpServer() {
     app.set('port', port);
@@ -109,7 +109,8 @@ function showDrillingRigs(test, driver) {
 
 function uploadExcelFile(test, driver) {
     console.log('uploadExcelFile');
-    driver.findElement(By.id('uploadExcelButton')).sendKeys('C:\\Projetos\\node\\InsiderOil\\test\\data\\drilling_rigs.xls');
+    var fileName = __dirname + '\\data\\drilling_rigs.xls';
+    driver.findElement(By.id('uploadExcelButton')).sendKeys(fileName);
     driver.sleep(tableLoadTime);
     test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 10 de 98 registros'))) );
 }
