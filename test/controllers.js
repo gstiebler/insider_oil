@@ -25,7 +25,7 @@ createWell: function(test) {
             model: 'Well',
             newItemData: {
                 name: 'Novo poço',
-                operator: 'Novo operador',
+                operator_id: 4,
                 state: 'AC',
                 bacia: 'Bacia nova',
                 lat: 333,
@@ -43,8 +43,11 @@ createWell: function(test) {
     dbServerController.main(req2, res);
     
     function jsonRes(response) {
+        var str = JSON.stringify(response);
+        var objBack = JSON.parse(str);
         test.equal(4, response.records.length);
-        test.equal('Novo poço', response.records[3].name);
+        test.equal('Novo poço', objBack.records[3].name);
+        test.equal('Statoil', objBack.records[3].operator_name);
         test.done();
     }
 },
@@ -57,7 +60,7 @@ editWell: function(test) {
             record: {
                 id: 2,
                 name: 'Novo poço',
-                operator: 'Novo operador',
+                operator_id: 4,
                 state: 'AC',
                 bacia: 'Bacia nova',
                 lat: 333,
@@ -81,7 +84,7 @@ editWell: function(test) {
     
     function jsonRes(response) {
         test.equal('Novo poço', response.values.name);
-        test.equal('Novo operador', response.values.operator);
+        test.equal(4, response.values.operator_id);
         test.equal(444, response.values.lng);
         test.done();
     }

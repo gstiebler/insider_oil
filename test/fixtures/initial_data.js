@@ -14,11 +14,31 @@ function createUsers() {
 }
 
 
+function createCompanies() {
+    return db.Company.bulkCreate([
+        {
+            name: "Petrobrás",
+            address: "Rua no Centro"
+        },
+        {
+            name: "Eni Oil"
+        },
+        {
+            name: "Recôncavo E&P"
+        },
+        {
+            name: "Statoil",
+            address: "Rua em Botafogo"
+        }
+    ]);
+}
+
+
 function createWells() {
     return db.Well.bulkCreate([
         {
             name: "1A 0001 BA",
-            operator: "Petrobrás",
+            operator_id: 1,
             state: "BA",
             bacia: "Recôncavo",
             lat: -12.79429444,
@@ -26,7 +46,7 @@ function createWells() {
         },
         {
             name: "1AGIP1RJS",
-            operator: "Eni Oil",
+            operator_id: 2,
             state: "RJ",
             bacia: "Santos",
             lat: -4.91808556,
@@ -34,7 +54,7 @@ function createWells() {
         },
         {
             name: "1AJ 0001 BA",
-            operator: "Recôncavo E&P",
+            operator_id: 3,
             state: "BA",
             bacia: "Recôncavo",
             lat: -9.98799556,
@@ -78,6 +98,7 @@ function createDrillingRigs() {
 
 function createFixtures() {
     await( createUsers() );
+    await( createCompanies() );
     await( createWells() );
     await( createDrillingRigs() );
 };

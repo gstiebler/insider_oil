@@ -4,10 +4,6 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.STRING,
           allowNull: false
         },
-        operator: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         state: {
           type: DataTypes.STRING,
           allowNull: false
@@ -27,8 +23,30 @@ module.exports = function(sequelize, DataTypes) {
     }, 
     {
         underscored: true,
-        tableName: 'wells'
+        tableName: 'wells',
+        classMethods: {
+            associate: function(models) {
+                Well.companyAssociation = Well.belongsTo(models.Company, { as: 'operator' } );
+            },
+            findAllCustom: function(options) {
+                options = options ? options : {};
+                options.include = [{ model: sequelize.models.Company, as: 'operator' }];
+                return Well.findAll(options);
+            },
+            simplifyArray: function(array) {
+                for(var i = 0; i < array.length; i++) {
+                    array[i].simplifyItem()
+                }
+                return array;
+            }
+        },
+        instanceMethods: {
+            simplifyItem: function() {
+                this.dataValues.operator_name = this.operator.name;
+            }
+        }
     }
   );
+  
   return Well;
 };

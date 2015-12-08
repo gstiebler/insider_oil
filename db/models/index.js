@@ -31,6 +31,8 @@ Object.keys(db).forEach(function(modelName) {
   }
 });
 
+db.Well.associate(db);
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
