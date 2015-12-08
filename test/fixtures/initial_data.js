@@ -29,6 +29,15 @@ function createCompanies() {
         {
             name: "Statoil",
             address: "Rua em Botafogo"
+        },
+        {
+            name: "Etesco"
+        },
+        {
+            name: "Schahin"
+        },
+        {
+            name: "Paragon"
         }
     ]);
 }
@@ -69,7 +78,7 @@ function createDrillingRigs() {
         {
             name: "Aban Abraham",
             type: "NS",
-            contractor: "Etesco",
+            contractor_id: 4,
             status: "Em operação",
             lda: 1900,
             start: "2011-06-05",
@@ -78,7 +87,7 @@ function createDrillingRigs() {
         {
             name: "S.C. Lancer",
             type: "NS",
-            contractor: "Schahin",
+            contractor_id: 5,
             status: "Em operação",
             lda: 1500,
             start: "2002-08-16",
@@ -87,7 +96,7 @@ function createDrillingRigs() {
         {
             name: "Paragon DPDS3",
             type: "NS",
-            contractor: "Paragon",
+            contractor_id: 6,
             status: "Em operação",
             lda: 2200,
             start: "2005-04-13",

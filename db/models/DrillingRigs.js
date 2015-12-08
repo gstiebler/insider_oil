@@ -8,10 +8,6 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.STRING,
           allowNull: false
         },
-        contractor: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         status: {
           type: DataTypes.STRING,
           allowNull: false
@@ -30,7 +26,28 @@ module.exports = function(sequelize, DataTypes) {
         }                  
     }, {
         underscored: true,
-        tableName: 'drilling_rigs'
+        tableName: 'drilling_rigs',
+        classMethods: {
+            associate: function(models) {
+                DrillingRig.companyAssociation = DrillingRig.belongsTo(models.Company, { as: 'contractor' } );
+            },
+            findAllCustom: function(options) {
+                options = options ? options : {};
+                options.include = [{ model: sequelize.models.Company, as: 'contractor' }];
+                return DrillingRig.findAll(options);
+            },
+            simplifyArray: function(array) {
+                for(var i = 0; i < array.length; i++) {
+                    array[i].simplifyItem()
+                }
+                return array;
+            }
+        },
+        instanceMethods: {
+            simplifyItem: function() {
+                this.dataValues.contractor_name = this.contractor.name;
+            }
+        }
     });
     return DrillingRig;
 };
