@@ -133,6 +133,6 @@ exports.deleteItem = function(req, res) {
     model.destroy({ where: { id: id } }).then( function() {
         res.json( { msg: "OK" } );
     }).catch( function(err) {
-        res.status(404).json( { errorMsg: "Não foi possível apagar o registro. " + error } );
+        res.status(404).json( { errorMsg: "Não foi possível apagar o registro. " + err } );
     });
 }
