@@ -78,16 +78,21 @@ modelFields: function(test) {
         test.equal(6, json.fields.length);
         
         test.equal('name', json.fields[0].name);
-        test.equal('operator', json.fields[1].name);
-        test.equal('lng', json.fields[5].name);
+        test.equal('state', json.fields[1].name);
+        test.equal('lng', json.fields[4].name);
+        test.equal('operator_id', json.fields[5].name);
         
         test.equal('Poço', json.fields[0].label);
-        test.equal('Operador', json.fields[1].label);
-        test.equal('Longitude', json.fields[5].label);
+        test.equal('Estado', json.fields[1].label);
+        test.equal('Longitude', json.fields[4].label);
+        test.equal('Operador', json.fields[5].label);
         
         test.equal('VARCHAR(255)', json.fields[0].type);
         test.equal('VARCHAR(255)', json.fields[1].type);
-        test.equal('DECIMAL', json.fields[5].type);
+        test.equal('DECIMAL', json.fields[4].type);
+        test.equal('ref', json.fields[5].type);
+        
+        test.equal('Company', json.fields[5].model);
         
         server.close();
         test.done();
@@ -105,7 +110,7 @@ recordValues: function(test) {
         test.equal(6, json.fields.length);
         
         test.equal('1AGIP1RJS', json.values.name);
-        test.equal('Eni Oil', json.values.operator);
+        test.equal(2, json.values.operator_id);
         test.equal('RJ', json.values.state);
         test.equal('Santos', json.values.bacia);
         test.equal(-4.91808556, json.values.lat);
