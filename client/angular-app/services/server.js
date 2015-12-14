@@ -18,7 +18,8 @@ app.service('server', ['$http', 'session',
     
     this.getModelFields = function( model, okCallback, errorCallback ) {
         params = { 
-            model: model
+            model: model,
+            token: session.getToken()
         };
         
         $http.get('/model_fields/', { params: params }).
@@ -31,7 +32,8 @@ app.service('server', ['$http', 'session',
     this.createNewItem = function( modelName, newItemData, onSave, onError ) {
         params = {
             model: modelName,
-            newItemData: newItemData
+            newItemData: newItemData,
+            token: session.getToken()
         };
         
         $http.post('/create_item/', params ).then(onSave, onError);
@@ -41,7 +43,8 @@ app.service('server', ['$http', 'session',
     this.deleteItem = function( modelName, id, onDelete, onError ) {
         params = {
             model: modelName,
-            id: id
+            id: id,
+            token: session.getToken()
         };
         
         $http.delete('/delete_item/', { params: params }).then(onDelete, onError);
@@ -51,7 +54,8 @@ app.service('server', ['$http', 'session',
     this.getModelFieldsAndValues = function( modelName, id, okCallback, errorCallback ) {
         params = { 
             model: modelName,
-            id: id
+            id: id,
+            token: session.getToken()
         };
         
         $http.get('/record_values/', { params: params }).
@@ -64,10 +68,24 @@ app.service('server', ['$http', 'session',
     this.saveItem = function( modelName, record, onSave, onError ) {
         params = {
             model: modelName,
-            record: record
+            record: record,
+            token: session.getToken()
         };
         
         $http.put('/save_item/', params ).then(onSave, onError);
+    }
+    
+    
+    this.getComboValues = function(modelName, okCallback, onError) {
+        params = { 
+            model: modelName,
+            token: session.getToken()
+        };
+        
+        $http.get('/combo_values/', { params: params }).
+        then(function(response) {
+            okCallback(response.data);
+        }, onError);
     }
         
 }]);

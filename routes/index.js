@@ -22,6 +22,7 @@ module.exports = function(app) {
     app.post('/create_item/',                      dbServerController.createItem);
     app.put('/save_item/',                         dbServerController.saveItem);
     app.delete('/delete_item/',                    dbServerController.deleteItem);
+    app.get('/combo_values/', session.authorize,   dbServerController.getComboValues);
     app.post('/db_server/upload_file',             dbServerController.uploadFile);
     
     // Users

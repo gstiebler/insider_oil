@@ -2,18 +2,28 @@ angular.module('CreateItemCtrl', []).controller('CreateItemController',
                 ['$scope', 'server', '$routeParams', '$location',
         function($scope, server, $routeParams, $location) {
 
+    function onError(err) {
+        console.log(err);
+    }
+    
     var modelName = $routeParams.model;
     server.getModelFields(modelName, fieldsArrived, onError);
     
     function fieldsArrived(fields) {
-        for( var i = 0; i < fields.length; i++ ) 
-            fields[i].htmlId =  getHtmlId(fields[i]);
+        for( var i = 0; i < fields.length; i++ ) {
+            fields[i].htmlId = getHtmlId(fields[i]);
+            fields[i].hasRef = fields[i].type == 'ref';
+            if( fields[i].hasRef ) {
+                var field = fields[i];
+                function onValues(values) {
+                    field.values = values;
+                }
+                
+                server.getComboValues( field.model, onValues, onError );
+            }
+        }
     
         $scope.fields = fields;
-    }
-    
-    function onError(err) {
-        console.log(err);
     }
     
     function getHtmlId(field) {
