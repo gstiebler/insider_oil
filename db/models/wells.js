@@ -26,11 +26,13 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'wells',
         classMethods: {
             associate: function(models) {
-                Well.companyAssociation = Well.belongsTo(models.Company, { as: 'operator' } );
+                Well.belongsTo(models.Company, { as: 'operator' } );
             },
             findAllCustom: function(options) {
                 options = options ? options : {};
-                options.include = [{ model: sequelize.models.Company, as: 'operator' }];
+                options.include = [];
+                for( att in Well.associations )
+                    options.include.push( Well.associations[att] );
                 return Well.findAll(options);
             },
             simplifyArray: function(array) {

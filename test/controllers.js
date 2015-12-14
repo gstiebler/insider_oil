@@ -12,8 +12,11 @@ listWells: function(test) {
     dbServerController.main(req, res);
     
     function jsonRes(response) {
-        test.equal(3, response.records.length);
-        test.equal('1A 0001 BA', response.records[0].name);
+        var str = JSON.stringify(response);
+        var objBack = JSON.parse(str);
+        test.equal(3, objBack.records.length);
+        test.equal('1A 0001 BA', objBack.records[0].name);
+        test.equal('Petrobrás', objBack.records[0].operator_name);
         test.done();
     }
 },

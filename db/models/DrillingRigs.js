@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'drilling_rigs',
         classMethods: {
             associate: function(models) {
-                DrillingRig.companyAssociation = DrillingRig.belongsTo(models.Company, { as: 'contractor' } );
+                DrillingRig.belongsTo(models.Company, { as: 'contractor' } );
             },
             findAllCustom: function(options) {
                 options = options ? options : {};
