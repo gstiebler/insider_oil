@@ -137,7 +137,7 @@ exports.saveItem = function(req, res, next) {
     model.findById( recordData.id ).then(onFindRecord).catch(onError);
     
     function onFindRecord(record) {
-        for(attributeName in recordData)
+        for(var attributeName in recordData)
             record[attributeName] = recordData[attributeName];
         record.save().then(onSave).catch(onError);
     }
@@ -147,6 +147,7 @@ exports.saveItem = function(req, res, next) {
     }
     
     function onError(error) {
+        console.log(error);
         res.status(404).json( { errorMsg: "Não foi possível salvar o registro. " + error } );
     }
 }

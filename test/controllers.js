@@ -38,7 +38,6 @@ modelFields: function(test) {
     dbServerController.modelFields(req, res)
     
     function jsonRes(response) {
-        console.log(response);
         test.equal( 'name', response.fields[0].name );
         test.equal( 'Poço', response.fields[0].label );
         test.equal( 'VARCHAR(255)', response.fields[0].type );
@@ -49,7 +48,6 @@ modelFields: function(test) {
         test.equal( 'Operador', response.fields[5].label );
         test.equal( 'ref', response.fields[5].type );
         test.equal( 'Company', response.fields[5].model );
-        console.log(response);
         test.done();
     }
 },
