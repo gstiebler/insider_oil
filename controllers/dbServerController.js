@@ -2,13 +2,11 @@ var db  = require('../db/models');
 var tableViewParams = require('../lib/tableViewParams');
 var fileUpload = require('../lib/fileUpload');
 var importExcel = require('../lib/importExcel');
+var dbUtils = require('../lib/dbUtils');
 
 exports.main = function(req, res, next) {
     var model = req.query.table;
-    var findAllFunc = db[model].findAll;
-    if(db[model].findAllCustom)
-        findAllFunc = db[model].findAllCustom
-    findAllFunc().then(sendRecords).catch(onError);
+    dbUtils.findAllCustom(db[model]).then(sendRecords).catch(onError);
     
     function sendRecords(records) {
         var viewParams = tableViewParams[model]();

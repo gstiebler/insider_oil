@@ -31,11 +31,6 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 DrillingRig.belongsTo(models.Company, { as: 'contractor' } );
             },
-            findAllCustom: function(options) {
-                options = options ? options : {};
-                options.include = [{ model: sequelize.models.Company, as: 'contractor' }];
-                return DrillingRig.findAll(options);
-            },
             simplifyArray: function(array) {
                 for(var i = 0; i < array.length; i++) {
                     array[i].simplifyItem()

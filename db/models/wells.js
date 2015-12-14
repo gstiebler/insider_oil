@@ -28,13 +28,6 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 Well.belongsTo(models.Company, { as: 'operator' } );
             },
-            findAllCustom: function(options) {
-                options = options ? options : {};
-                options.include = [];
-                for( att in Well.associations )
-                    options.include.push( Well.associations[att] );
-                return Well.findAll(options);
-            },
             simplifyArray: function(array) {
                 for(var i = 0; i < array.length; i++) {
                     array[i].simplifyItem()
