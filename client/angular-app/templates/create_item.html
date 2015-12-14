@@ -6,7 +6,7 @@
                 <input ng-if="!field.hasRef" type="text" class="form-control" id="{{field.htmlId}}"/>
 
                 <select ng-if="field.hasRef" class="form-control" id="{{field.htmlId}}" >
-                    <option ng-repeat="value in field.values">{{value.label}}</option>
+                    <option ng-repeat="value in field.values" value="{{value.id}}" >{{value.label}}</option>
                  </select>
             </div>
         </div>
