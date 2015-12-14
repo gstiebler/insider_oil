@@ -1,3 +1,4 @@
+"use strict";
 var fiberTests = require('./lib/fiberTests');
 var dbServerController = require('../controllers/dbServerController');
 
@@ -14,9 +15,41 @@ listWells: function(test) {
     function jsonRes(response) {
         var str = JSON.stringify(response);
         var objBack = JSON.parse(str);
+        // records
         test.equal(3, objBack.records.length);
         test.equal('1A 0001 BA', objBack.records[0].name);
         test.equal('Petrobrás', objBack.records[0].operator_name);
+        // view params
+        test.equal( 'Poços', response.viewParams.tableLabel );
+        test.equal( 'name', response.viewParams.labelField );
+        test.equal( 'Poço', response.viewParams.fields.name.label );
+        test.equal( 'Operador', response.viewParams.fields.operator_name.label );
+        test.equal( 'Latitude', response.viewParams.fields.lat.label );
+        test.done();
+    }
+},
+
+
+modelFields: function(test) {
+    const req = {
+        query: { model: 'Well' }
+    };
+    const res = { json: jsonRes };
+    dbServerController.modelFields(req, res)
+    
+    function jsonRes(response) {
+        console.log(response);
+        test.equal( 'name', response.fields[0].name );
+        test.equal( 'Poço', response.fields[0].label );
+        test.equal( 'VARCHAR(255)', response.fields[0].type );
+        test.equal( 'lat', response.fields[3].name );
+        test.equal( 'Latitude', response.fields[3].label );
+        test.equal( 'DECIMAL', response.fields[3].type );
+        test.equal( 'operator_id', response.fields[5].name );
+        test.equal( 'Operador', response.fields[5].label );
+        test.equal( 'ref', response.fields[5].type );
+        test.equal( 'Company', response.fields[5].model );
+        console.log(response);
         test.done();
     }
 },
