@@ -11,10 +11,10 @@ angular.module('CreateItemCtrl', []).controller('CreateItemController',
     
     function fieldsArrived(fields) {
         for( var i = 0; i < fields.length; i++ ) {
-            fields[i].htmlId = getHtmlId(fields[i]);
-            fields[i].hasRef = fields[i].type == 'ref';
-            if( fields[i].hasRef ) {
-                var field = fields[i];
+            var field = fields[i];
+            field.htmlId = getHtmlId(field);
+            field.hasRef = field.type == 'ref';
+            if( field.hasRef ) {
                 function onValues(values) {
                     field.values = values;
                 }
@@ -27,7 +27,7 @@ angular.module('CreateItemCtrl', []).controller('CreateItemController',
     }
     
     function getHtmlId(field) {
-        return "html_id_" + field.label;
+        return "html_id_" + field.name;
     }
     
     $scope.createNewItem = function() {
