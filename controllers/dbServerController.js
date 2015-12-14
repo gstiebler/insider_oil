@@ -5,15 +5,14 @@ var importExcel = require('../lib/importExcel');
 var dbUtils = require('../lib/dbUtils');
 
 exports.main = function(req, res, next) {
-    var model = req.query.table;
-    dbUtils.findAllCustom(db[model]).then(sendRecords).catch(onError);
+    var modelName = req.query.table;
+    model = db[modelName];
+    dbUtils.findAllCustom(model).then(sendRecords).catch(onError);
     
     function sendRecords(records) {
-        var viewParams = tableViewParams[model]();
+        var viewParams = tableViewParams[modelName]();
         viewParams.gridFields.push('id');
-        if(db[model].simplifyArray) {
-            records = db[model].simplifyArray(records);
-        }
+        dbUtils.simplifyArray( model, records );
         var responseObj = {
             records: records,
             viewParams: viewParams

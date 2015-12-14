@@ -30,17 +30,6 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 DrillingRig.belongsTo(models.Company, { as: 'contractor' } );
-            },
-            simplifyArray: function(array) {
-                for(var i = 0; i < array.length; i++) {
-                    array[i].simplifyItem()
-                }
-                return array;
-            }
-        },
-        instanceMethods: {
-            simplifyItem: function() {
-                this.dataValues.contractor_name = this.contractor.name;
             }
         }
     });

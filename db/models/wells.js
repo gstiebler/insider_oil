@@ -27,17 +27,6 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 Well.belongsTo(models.Company, { as: 'operator' } );
-            },
-            simplifyArray: function(array) {
-                for(var i = 0; i < array.length; i++) {
-                    array[i].simplifyItem()
-                }
-                return array;
-            }
-        },
-        instanceMethods: {
-            simplifyItem: function() {
-                this.dataValues.operator_name = this.operator.name;
             }
         }
     }
