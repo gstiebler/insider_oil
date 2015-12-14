@@ -53,6 +53,28 @@ modelFields: function(test) {
 },
 
 
+getComboValues: function(test) {
+    const req = {
+        query: { model: 'Company' }
+    };
+    const res = { json: jsonRes };
+    dbServerController.getComboValues(req, res)
+    
+    function jsonRes(response) {
+        test.equal( 1, response[0].id );
+        test.equal( 2, response[1].id );
+        test.equal( 6, response[5].id );
+        test.equal( 7, response[6].id );
+        
+        test.equal( 'Petrobrás', response[0].label );
+        test.equal( 'Eni Oil', response[1].label );
+        test.equal( 'Schahin', response[5].label );
+        test.equal( 'Paragon', response[6].label );
+        test.done();
+    }
+},
+
+
 createWell: function(test) {
     const req = {
         body: { 

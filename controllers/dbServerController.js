@@ -163,3 +163,26 @@ exports.deleteItem = function(req, res) {
         res.status(404).json( { errorMsg: "Não foi possível apagar o registro. " + err } );
     });
 }
+
+
+exports.getComboValues = function(req, res) {
+    var modelName = req.query.model;
+    var model = db[modelName];     
+    model.findAll().then(onValues).catch(onError);
+    
+    function onValues(values) {
+        var valuesArray = [];
+        values.forEach( function(value) {
+            valuesArray.push( {
+                id: value.id, 
+                label: value.dataValues.name
+            });
+        });
+        res.json(valuesArray);
+    }
+    
+    function onError(error) {
+        console.log(error);
+        res.status(404).json( { errorMsg: "Não foi possível salvar o registro. " + error } );
+    }
+}
