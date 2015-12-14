@@ -17,6 +17,7 @@ angular.module('EditItemCtrl', []).controller('EditItemController',
             field.htmlId = getHtmlId(fields[i]);
             field.hasRef = field.type == 'ref';
             if( field.hasRef ) {
+                data.values[field.name] = data.values[field.name].toString();
                 function onValues(values) {
                     field.values = values;
                 }
