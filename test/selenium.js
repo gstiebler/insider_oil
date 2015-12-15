@@ -21,6 +21,25 @@ function makeLogin(test, driver) {
     test.equal('Insider Oil', await( driver.getTitle() ));
 }
 
+
+function checkCompaniesComboBox(companiesComboBox, test) {
+    var optionElements = await( companiesComboBox.findElements(By.xpath("option")) );
+    test.equal( 7, optionElements.length );
+    test.equal( "Petrobrás", await( optionElements[0].getText() ) );
+    test.equal( "Eni Oil", await( optionElements[1].getText() ) );
+    test.equal( "Paragon", await( optionElements[6].getText() ) );
+}
+
+
+function selectComboBoxItem(comboBox, itemName)
+{
+    comboBox.click();
+    var optionElem = comboBox.findElement(elementByText(itemName));
+    optionElem.click();
+    comboBox.click();
+}
+
+
 function addWell(test, driver) {
     driver.findElement(elementByText('Adicionar')).click();
     driver.sleep(200);
@@ -28,17 +47,21 @@ function addWell(test, driver) {
     test.ok( await( driver.isElementPresent(elementByText('Operador:'))) );
     test.ok( await( driver.isElementPresent(elementByText('Longitude:'))) );
     test.ok( await( driver.isElementPresent(elementByText('Salvar'))) );
-    driver.findElement(By.id('html_id_Poço')).sendKeys('Novo poço Selenium');
-    driver.findElement(By.id('html_id_Operador')).sendKeys('Operador Petrobrás');
-    driver.findElement(By.id('html_id_Estado')).sendKeys('AC');
-    driver.findElement(By.id('html_id_Bacia')).sendKeys('Bacia do Selenium');
-    driver.findElement(By.id('html_id_Latitude')).sendKeys('1234');
-    driver.findElement(By.id('html_id_Longitude')).sendKeys('3334321');
+    driver.findElement(By.id('html_id_name')).sendKeys('Novo poço Selenium');
+    var companiesCombo = driver.findElement(By.id('html_id_operator_id'));
+    checkCompaniesComboBox(companiesCombo, test);
+    selectComboBoxItem(companiesCombo, 'Statoil');
+    driver.findElement(By.id('html_id_state')).sendKeys('AC');
+    driver.findElement(By.id('html_id_bacia')).sendKeys('Bacia do Selenium');
+    driver.findElement(By.id('html_id_lat')).sendKeys('1234');
+    driver.findElement(By.id('html_id_lng')).sendKeys('3334321');
     driver.findElement(elementByText('Salvar')).click();
     driver.sleep(tableLoadTime);
-    test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 4 de 4 registros'))) );
+    var a = elementByText('Mostrando de 1 até 4 de 4 registros');
+    var b = driver.isElementPresent(a);
+    test.ok( await( b ) );
     test.equal( 'Novo poço Selenium', getTableValue(3, 0, driver) );
-    test.equal( 'Operador Petrobrás', getTableValue(3, 1, driver) );
+    test.equal( 'Statoil', getTableValue(3, 1, driver) );
     test.equal( 'AC', getTableValue(3, 2, driver) );
     test.equal( 'Bacia do Selenium', getTableValue(3, 3, driver) );
 }
@@ -65,13 +88,16 @@ function editWell(test, driver) {
     var editBtn = getTableCell(2, 4, driver).findElement(By.xpath("a"));
     editBtn.click();
     driver.sleep(200);
-    driver.findElement(By.id('html_id_Operador')).clear();
-    driver.findElement(By.id('html_id_Operador')).sendKeys('Operador Elvis Foca');
+    driver.findElement(By.id('html_id_bacia')).clear();
+    driver.findElement(By.id('html_id_bacia')).sendKeys('Bacia Elvis Foca');
+    var companiesCombo = driver.findElement(By.id('html_id_operator_id'));
+    checkCompaniesComboBox(companiesCombo, test);
+    selectComboBoxItem(companiesCombo, 'Etesco');
     driver.findElement(elementByText('Salvar')).click();
     driver.sleep(tableLoadTime);
     test.equal( '1AJ 0001 BA', getTableValue(2, 0, driver) );
-    test.equal( 'Operador Elvis Foca', getTableValue(2, 1, driver) );
-    test.equal( 'Recôncavo', getTableValue(2, 3, driver) );
+    test.equal( 'Etesco', getTableValue(2, 1, driver) );
+    test.equal( 'Bacia Elvis Foca', getTableValue(2, 3, driver) );
 }
 
 function deleteWell(test, driver) {
@@ -87,17 +113,16 @@ function showDrillingRigs(test, driver) {
     driver.findElement(elementByText('Sondas')).click();
     driver.sleep(500);
     test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
-    test.equal( 'Etesco', getTableValue(0, 1, driver) );
+    test.equal( 'Statoil', getTableValue(0, 1, driver) );
     test.equal( 'Em operação', getTableValue(0, 3, driver) );
     test.equal( '2011-06-05T00:00:00.000Z', getTableValue(0, 5, driver) );
     test.equal( 'Paragon DPDS3', getTableValue(1, 0, driver) );
-    test.equal( 'Paragon', getTableValue(1, 1, driver) );
+    test.equal( 'Schahin', getTableValue(1, 1, driver) );
     test.equal( 'Em operação', getTableValue(1, 3, driver) );
     test.equal( '2005-04-13T00:00:00.000Z', getTableValue(1, 5, driver) );
 }
 
 function uploadExcelFile(test, driver) {
-    console.log('uploadExcelFile');
     var fileName = __dirname + '\\data\\drilling_rigs.xls';
     driver.findElement(By.id('uploadExcelButton')).sendKeys(fileName);
     driver.sleep(tableLoadTime + 500);
