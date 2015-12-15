@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.DATE,
           allowNull: true
         }/*, another option of validation
-        operator_id: {
+        contractor_id: {
             type: DataTypes.INTEGER,
             allowNull: false
         }*/
@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'drilling_rigs',
         validate: {
             operatorNotNull: function() {
-                if( !this.operator_id )
+                if( !this.contractor_id )
                     throw new Error('Operador não pode ser nulo');
             }
         },

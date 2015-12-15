@@ -72,7 +72,7 @@ function getModelFields(modelName) {
         fields[fieldName] = {
             label: att.label,
             type: 'ref',
-            model: association.target.name
+            model: association.target.name 
         };
     }
     
@@ -175,7 +175,7 @@ exports.getComboValues = function(req, res) {
         values.forEach( function(value) {
             valuesArray.push( {
                 id: value.id, 
-                label: value.dataValues.name
+                label: value.dataValues.name // TODO using 'name' as field. Should change for label field configuration
             });
         });
         res.json(valuesArray);

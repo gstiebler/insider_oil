@@ -23,17 +23,23 @@ first: function(test) {
         console.log(err);
     }
     
-    function onImportDone(status) {
+    function onImportDone(status, invalidRecordsStatus) {
         var rows = await( dbUtils.findAllCustom(db.DrillingRig));
-        test.equal( 98, rows.length );  
-        var expectedStatus = "Registros criados: 95";
+        test.equal( 13, rows.length );  
+        var expectedStatus = "Registros criados: 10";
         expectedStatus += "\nRegistros atualizados: 3";
+        expectedStatus += "\nRegistros inválidos: 85";
         test.equal( expectedStatus, status );
+        test.equal( "Valor 'Brasdril' do campo 'contratada' não encontrado.", invalidRecordsStatus[0] );
+        test.equal( "Valor 'Transocean' do campo 'contratada' não encontrado.", invalidRecordsStatus[1] );
+        test.equal( "Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[83] );
+        test.equal( "Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[84] );
         
-        test.equal(rows[0].name, "Aban");
-        test.equal(rows[0].contractor.name, "Paragon");
-        test.equal(rows[10].name, "Aban");
-        test.equal(rows[10].contractor.name, "Paragon");
+        test.equal(rows[0].name, "Aban Abraham");
+        test.equal(rows[0].contractor.name, "Etesco");
+        test.equal(rows[10].name, "Pantanal (Schahin I)");
+        test.equal(rows[10].contractor.name, "Schahin");
+        
         test.done();
     }
 },
