@@ -5,6 +5,7 @@ var await = require('../lib/await');
 var fs = require('fs');
 var importExcel = require('../lib/importExcel');
 var XLSX = require('xlsx');
+var dbUtils = require('../lib/dbUtils');
 
 function onError(error) {
     console.error(error.stack);
@@ -14,7 +15,7 @@ var group = {
 
 first: function(test) {
     var fixtureCount = 3;
-    test.equal( fixtureCount, await( db.DrillingRig.findAndCountAll() ).count );  
+    test.equal( fixtureCount, await( db.DrillingRig.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
     try {
         importExcel(excelBuf, 'DrillingRig', onImportDone, onError);
@@ -23,10 +24,16 @@ first: function(test) {
     }
     
     function onImportDone(status) {
-        test.equal( 98, await( db.DrillingRig.findAndCountAll() ).count );  
+        var rows = await( dbUtils.findAllCustom(db.DrillingRig));
+        test.equal( 98, rows.length );  
         var expectedStatus = "Registros criados: 95";
         expectedStatus += "\nRegistros atualizados: 3";
         test.equal( expectedStatus, status );
+        
+        test.equal(rows[0].name, "Aban");
+        test.equal(rows[0].contractor.name, "Paragon");
+        test.equal(rows[10].name, "Aban");
+        test.equal(rows[10].contractor.name, "Paragon");
         test.done();
     }
 },
