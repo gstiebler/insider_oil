@@ -1,3 +1,4 @@
+"use strict";
 var fiberTests = require('./lib/fiberTests');
 var Sync = require('sync');
 var await = require(__dirname + '/../lib/await');

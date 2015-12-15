@@ -23,13 +23,23 @@ module.exports = function(sequelize, DataTypes) {
         end: {
           type: DataTypes.DATE,
           allowNull: true
-        }                  
+        }/*, another option of validation
+        operator_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }*/
     }, {
         underscored: true,
         tableName: 'drilling_rigs',
+        validate: {
+            operatorNotNull: function() {
+                if( !this.operator_id )
+                    throw new Error('Operador não pode ser nulo');
+            }
+        },
         classMethods: {
             associate: function(models) {
-                DrillingRig.belongsTo(models.Company, { as: 'contractor' } );
+                DrillingRig.belongsTo(models.Company, { as: 'contractor', allowNull: false } );
             }
         }
     });

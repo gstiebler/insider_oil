@@ -1,9 +1,14 @@
+"use strict";
 var fiberTests = require('./lib/fiberTests');
 var db = require('../db/models');
 var await = require('../lib/await');
 var fs = require('fs');
 var importExcel = require('../lib/importExcel');
 var XLSX = require('xlsx');
+
+function onError(error) {
+    console.error(error.stack);
+}
 
 var group = {
 
@@ -12,7 +17,7 @@ first: function(test) {
     test.equal( fixtureCount, await( db.DrillingRig.findAndCountAll() ).count );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
     try {
-        importExcel(excelBuf, 'DrillingRig', onImportDone);
+        importExcel(excelBuf, 'DrillingRig', onImportDone, onError);
     } catch(err) {
         console.log(err);
     }
