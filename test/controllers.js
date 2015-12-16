@@ -33,9 +33,16 @@ var group = {
 
 listWells: function(test) {
     const req = {
-        query: { table: 'Well' }
-    };
+        query: { table: 'Well2' }
+    };    
     
+    /*const errorResponse = getJsonResponse.sync(null, dbServerController.createItem, req);
+    test.equal( 400, errorResponse.code ); // test HTTP error code
+    test.equal( "Não foi possível criar o registro.", errorResponse.error.errorMsg );
+    test.equal( 1, errorResponse.error.errors.length );
+    test.equal( "Nome não pode ser nulo", errorResponse.error.errors[0].message );*/
+    
+    req.query.table = 'Well';
     const response = getJsonResponse.sync(null, dbServerController.main, req);
     // records
     test.equal(3, response.records.length);
@@ -133,7 +140,7 @@ editWell: function(test) {
             model: 'Well',
             record: {
                 id: 2,
-                name: 'Novo poço',
+                name: '',
                 operator_id: 4,
                 state: 'AC',
                 bacia: 'Bacia nova',
@@ -142,7 +149,14 @@ editWell: function(test) {
             }
         }
     };
+        
+    const errorResponse = getJsonResponse.sync(null, dbServerController.saveItem, req);
+    test.equal( 400, errorResponse.code ); // test HTTP error code
+    test.equal( "Não foi possível salvar o registro.", errorResponse.error.errorMsg );
+    test.equal( 1, errorResponse.error.errors.length );
+    test.equal( "Nome não pode ser nulo", errorResponse.error.errors[0].message );
     
+    req.body.record.name = 'Novo poço';
     const response = getJsonResponse.sync(null, dbServerController.saveItem, req);
     test.equal('OK', response.msg);
     
