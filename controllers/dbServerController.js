@@ -125,7 +125,7 @@ exports.createItem = function(req, res, next) {
     }
     
     function onError(error) {
-        res.status(404).json( { errorMsg: "Não foi possível criar o registro. " + error } );
+        res.status(400).json( { errorMsg: "Não foi possível criar o registro. " + error } );
     }
 }
 
@@ -148,7 +148,7 @@ exports.saveItem = function(req, res, next) {
     
     function onError(error) {
         console.log(error);
-        res.status(404).json( { errorMsg: "Não foi possível salvar o registro. " + error } );
+        res.status(400).json( { errorMsg: "Não foi possível salvar o registro. " + error } );
     }
 }
 
@@ -183,6 +183,6 @@ exports.getComboValues = function(req, res) {
     
     function onError(error) {
         console.log(error);
-        res.status(404).json( { errorMsg: "Não foi possível salvar o registro. " + error } );
+        res.status(500).json( { errorMsg: "Não foi possível carregar os registros. " + error } );
     }
 }
