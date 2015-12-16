@@ -55,7 +55,7 @@ exports.uploadFile = function(req, res, next) {
         }
         
         function onError(err) {
-            res.status(404).json( { errorMsg: err } );
+            res.status(400).json( { errorMsg: err } );
         }
     }
       

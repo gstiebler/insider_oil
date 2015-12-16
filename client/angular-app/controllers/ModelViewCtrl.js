@@ -1,6 +1,6 @@
-angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewController', 
-                ['$scope', 'server', '$routeParams', '$location', 'Upload', '$timeout', 'showError',
-        function($scope, server, $routeParams, $location, Upload, $timeout, showError) {
+angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelViewController', 
+                ['$scope', 'server', '$routeParams', '$location', 'Upload', '$timeout', 'showError', 'Flash',
+        function($scope, server, $routeParams, $location, Upload, $timeout, showError, Flash) {
 
     var modelName = $routeParams.model;
     server.getTable(modelName, showModel, showError.show );
@@ -114,13 +114,12 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
                 $timeout(function () {
                     file.result = response.data;
                     console.log(response.data);
-                    $scope.fileUploadStatus = response.data.status;
+                    Flash.create('success', response.data.status.replace(/\n/g, '<br>'));
                     server.getTable(modelName, showModel, showError.show );  
                 });
             }, function (response) {
                 if (response.status > 0) {
-                    $scope.errorMsg = response.status + ': ' + response.data;
-                    console.log(response.data);
+                    Flash.create('danger', response.data.errorMsg);
                 }
             }, function (evt) {
                 file.progress = Math.min(100, parseInt(100.0 * 
