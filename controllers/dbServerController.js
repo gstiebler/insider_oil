@@ -12,9 +12,9 @@ function getErrorFunc(res, errorCode, msg) {
 }
 
 
-function getOkFunc(res) {
+function getOkFunc(res, msg) {
     return function returnOkJson() {
-        res.json( { msg: "OK" } );
+        res.json( { msg: msg } );
     }
 }
 
@@ -48,7 +48,11 @@ exports.uploadFile = function(req, res, next) {
     function onFile(fileName, buf) {
         console.log( "File name: " + fileName );
         var model = req.query.table;
-        importExcel(buf, model, onOk, onError);
+        try {
+            importExcel(buf, model, onOk, onError);
+        } catch(err) {
+            res.status(400).json( { errorMsg: err } );
+        }
         
         function onOk(status, recordsStatus) {
             res.json( { status: status, recordsStatus: recordsStatus } );
@@ -131,7 +135,7 @@ exports.createItem = function(req, res, next) {
     var modelName = req.body.model;
     var model = db[modelName];     
     model.create(newItemData)
-        .then(getOkFunc(res))
+        .then(getOkFunc(res, "Registro criado com sucesso."))
         .catch(getErrorFunc(res, 400, "Não foi possível criar o registro."));
 }
 
@@ -148,7 +152,7 @@ exports.saveItem = function(req, res, next) {
         for(var attributeName in recordData)
             record[attributeName] = recordData[attributeName];
         record.save()
-            .then(getOkFunc(res))
+            .then(getOkFunc(res, "Registro salvo com sucesso."))
             .catch(getErrorFunc(res, 400, "Não foi possível salvar o registro."));
     }
 }
@@ -159,7 +163,7 @@ exports.deleteItem = function(req, res) {
     var modelName = req.query.model;
     var model = db[modelName];     
     model.destroy({ where: { id: id } })
-        .then(getOkFunc(res))
+        .then(getOkFunc(res, 'Registro apagado com sucesso'))
         .catch( getErrorFunc(res, 404, "Não foi possível apagar o registro.") );
 }
 

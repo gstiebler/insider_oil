@@ -154,6 +154,9 @@ function uploadExcelFile(test, driver) {
     var fileName = __dirname + '\\data\\drilling_rigs.xls';
     driver.findElement(By.id('uploadExcelButton')).sendKeys(fileName);
     driver.sleep(tableLoadTime + 500);
+    test.equal( "Registros criados: 10", getFlashMessage(driver, 0) );
+    test.equal( "Registros atualizados: 3", getFlashMessage(driver, 1) );
+    test.equal( "Registros inválidos: 85", getFlashMessage(driver, 2) );
     test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 10 de 13 registros'))) );
     test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
     test.equal( 'Etesco', getTableValue(0, 1, driver) );

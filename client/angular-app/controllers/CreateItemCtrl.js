@@ -38,8 +38,8 @@ angular.module('CreateItemCtrl', ['flash']).controller('CreateItemController',
         server.createNewItem( modelName, itemData, onSave, showError.show );
     }
     
-    function onSave() {
-        Flash.create('success', 'Registro criado com sucesso.');
+    function onSave(status) {
+        Flash.create('success', status.data.msg);
         $location.path("/app/model_view").search({ model: modelName });
     }
         

@@ -42,8 +42,8 @@ angular.module('EditItemCtrl', ['flash']).controller('EditItemController',
         server.saveItem( modelName, itemData, onSave, showError.show );
     }
     
-    function onSave() {
-        Flash.create('success', 'Registro salvo com sucesso.');
+    function onSave(status) {
+        Flash.create('success', status.data.msg);
         $location.path("/app/model_view").search({ model: modelName });
     }
     

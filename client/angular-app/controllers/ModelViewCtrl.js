@@ -86,7 +86,8 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
     
     $scope.deleteRecord = function(id) {
         if(confirm("Deseja realmente apagar o registro?")){
-            function onDelete() {
+            function onDelete(status) {
+                Flash.create('success', status.data.msg );
                 server.getTable(modelName, showModel, showError.show ); 
             }
             

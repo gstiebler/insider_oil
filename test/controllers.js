@@ -157,7 +157,7 @@ editWell: function(test) {
     
     req.body.record.name = 'Novo poço';
     const response = getJsonResponse.sync(null, dbServerController.saveItem, req);
-    test.equal('OK', response.msg);
+    test.equal('Registro salvo com sucesso.', response.msg);
     
     const req2 = {
         query: { 
@@ -181,7 +181,7 @@ deleteWell: function(test) {
         }
     };
     const response = getJsonResponse.sync(null, dbServerController.deleteItem, req);
-    test.equal('OK', response.msg);
+    test.equal('Registro apagado com sucesso', response.msg);
     
     const req2 = {
         query: { table: 'Well' }
