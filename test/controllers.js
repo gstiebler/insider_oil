@@ -36,11 +36,10 @@ listWells: function(test) {
         query: { table: 'Well2' }
     };    
     
-    /*const errorResponse = getJsonResponse.sync(null, dbServerController.createItem, req);
-    test.equal( 400, errorResponse.code ); // test HTTP error code
-    test.equal( "Não foi possível criar o registro.", errorResponse.error.errorMsg );
-    test.equal( 1, errorResponse.error.errors.length );
-    test.equal( "Nome não pode ser nulo", errorResponse.error.errors[0].message );*/
+    const errorResponse = getJsonResponse.sync(null, dbServerController.main, req);
+    test.equal( 500, errorResponse.code ); // test HTTP error code
+    test.equal( "Modelo não encontrado", errorResponse.error.errorMsg );
+    test.ok( !errorResponse.error.errors );
     
     req.query.table = 'Well';
     const response = getJsonResponse.sync(null, dbServerController.main, req);
