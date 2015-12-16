@@ -5,8 +5,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 
 		// home page
 		.when('/app/', {
-			templateUrl: 'app/templates/home.html',
-			controller: 'MainController'
+			templateUrl: 'app/templates/home.html'
 		})
 
 		.when('/app/model_view', {
