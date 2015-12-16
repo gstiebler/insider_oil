@@ -127,7 +127,15 @@ function uploadExcelFile(test, driver) {
     var fileName = __dirname + '\\data\\drilling_rigs.xls';
     driver.findElement(By.id('uploadExcelButton')).sendKeys(fileName);
     driver.sleep(tableLoadTime + 500);
-    test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 10 de 98 registros'))) );
+    test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 10 de 13 registros'))) );
+    test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
+    test.equal( 'Etesco', getTableValue(0, 1, driver) );
+    test.equal( 'Amazônia', getTableValue(1, 0, driver) );
+    test.equal( 'Schahin', getTableValue(1, 1, driver) );
+    test.equal( 'S.C. Lancer', getTableValue(8, 0, driver) );
+    test.equal( 'Schahin', getTableValue(8, 1, driver) );
+    test.equal( 'Schahin Cerrado', getTableValue(9, 0, driver) );
+    test.equal( 'Schahin', getTableValue(9, 1, driver) );
 }
 
 function logout(test, driver) {

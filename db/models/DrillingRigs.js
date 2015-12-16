@@ -32,9 +32,9 @@ module.exports = function(sequelize, DataTypes) {
         underscored: true,
         tableName: 'drilling_rigs',
         validate: {
-            operatorNotNull: function() {
+            contractorNotNull: function() {
                 if( !this.contractor_id )
-                    throw new Error('Operador não pode ser nulo');
+                    throw new Error('Contratante não pode ser nulo');
             }
         },
         classMethods: {
