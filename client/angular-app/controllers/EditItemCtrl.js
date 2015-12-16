@@ -1,14 +1,10 @@
 angular.module('EditItemCtrl', []).controller('EditItemController', 
-                ['$scope', 'server', '$routeParams', '$location',
-        function($scope, server, $routeParams, $location) {
-        
-    function onError(err) {
-        console.log(err);
-    }
+                ['$scope', 'server', '$routeParams', '$location', 'showError',
+        function($scope, server, $routeParams, $location, showError) {
     
     var modelName = $routeParams.modelName;
     var id = $routeParams.id;
-    server.getModelFieldsAndValues(modelName, id, valuesArrived, onError);
+    server.getModelFieldsAndValues(modelName, id, valuesArrived, showError.show);
     
     function valuesArrived(data) {
         var fields = data.fields;
@@ -22,7 +18,7 @@ angular.module('EditItemCtrl', []).controller('EditItemController',
                     field.values = values;
                 }
                 
-                server.getComboValues( field.model, onValues, onError );
+                server.getComboValues( field.model, onValues, showError.show );
             }
         }
     
@@ -43,7 +39,7 @@ angular.module('EditItemCtrl', []).controller('EditItemController',
             itemData[field.name] = htmlElement.value;
         }
         itemData.id = id;    
-        server.saveItem( modelName, itemData, onSave, onError );
+        server.saveItem( modelName, itemData, onSave, showError.show );
     }
     
     function onSave() {

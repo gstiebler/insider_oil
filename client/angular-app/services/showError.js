@@ -6,10 +6,12 @@ app.service('showError', ['Flash',
     this.show = function(err) {
         var errorStr = err.data.errorMsg;
         console.log(err.data.errors);
-        for( var i = 0; i < err.data.errors.length; i++ )
-            errorStr += '\n' + err.data.errors[i].message;
-        console.log(errorStr);
-        Flash.create('warning', errorStr);
+        if(err.data.errors) {
+            for( var i = 0; i < err.data.errors.length; i++ )
+                errorStr += '<br>' + err.data.errors[i].message;
+            console.log(errorStr);
+        }
+        Flash.create('danger', errorStr);
     }
 
 }]);

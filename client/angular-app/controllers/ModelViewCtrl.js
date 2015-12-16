@@ -1,9 +1,9 @@
 angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewController', 
-                ['$scope', 'server', '$routeParams', '$location', 'Upload', '$timeout',
-        function($scope, server, $routeParams, $location, Upload, $timeout) {
+                ['$scope', 'server', '$routeParams', '$location', 'Upload', '$timeout', 'showError',
+        function($scope, server, $routeParams, $location, Upload, $timeout, showError) {
 
     var modelName = $routeParams.model;
-    server.getTable(modelName, showModel, showError );
+    server.getTable(modelName, showModel, showError.show );
     
     var datatableInitialized = false;
     var dataTableElement = $('#mainTable');
@@ -78,24 +78,19 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
         oTable.fnAddData( dataSet );
     }
     
-    function showError(error) {
-        $scope.error = error;
-        console.log('Erros: ' + error);
-    }
-    
     $scope.editRecord = function(id) {
         $location.path("/app/edit_item").search({ modelName: modelName, id: id });
         // I don't know why the line below should be here for the redirect to work
-        server.getTable(modelName, showModel, showError ); 
+        server.getTable(modelName, showModel, showError.show ); 
     }
     
     $scope.deleteRecord = function(id) {
         if(confirm("Deseja realmente apagar o registro?")){
             function onDelete() {
-                server.getTable(modelName, showModel, showError ); 
+                server.getTable(modelName, showModel, showError.show ); 
             }
             
-            server.deleteItem( modelName, id, onDelete, showError );
+            server.deleteItem( modelName, id, onDelete, showError.show );
         }
     }
     
@@ -120,7 +115,7 @@ angular.module('ModelViewCtrl', ['ngFileUpload']).controller('ModelViewControlle
                     file.result = response.data;
                     console.log(response.data);
                     $scope.fileUploadStatus = response.data.status;
-                    server.getTable(modelName, showModel, showError );  
+                    server.getTable(modelName, showModel, showError.show );  
                 });
             }, function (response) {
                 if (response.status > 0) {

@@ -22,6 +22,10 @@ function getOkFunc(res) {
 exports.main = function(req, res, next) {
     var modelName = req.query.table;
     var model = db[modelName];
+    if(!model) {
+        getErrorFunc(res, 500, "Modelo não encontrado")({});
+        return;
+    }
     dbUtils.findAllCustom(model).then(sendRecords)
         .catch(getErrorFunc(res, 500, "Erro"));
     
