@@ -5,10 +5,25 @@ var fileUpload = require('../lib/fileUpload');
 var importExcel = require('../lib/importExcel');
 var dbUtils = require('../lib/dbUtils');
 
+function getErrorFunc(res, errorCode, msg) {
+    return function(error) { 
+        res.status(errorCode).json( { errorMsg: msg, errors: error.errors } )
+    };
+}
+
+
+function getOkFunc(res) {
+    return function returnOkJson() {
+        res.json( { msg: "OK" } );
+    }
+}
+
+
 exports.main = function(req, res, next) {
     var modelName = req.query.table;
     var model = db[modelName];
-    dbUtils.findAllCustom(model).then(sendRecords).catch(onError);
+    dbUtils.findAllCustom(model).then(sendRecords)
+        .catch(getErrorFunc(res, 500, "Erro"));
     
     function sendRecords(records) {
         var viewParams = tableViewParams[modelName]();
@@ -19,10 +34,6 @@ exports.main = function(req, res, next) {
             viewParams: viewParams
         };
         res.json( responseObj );
-    }
-    
-    function onError(err) {
-        console.log(err);
     }
 }
 
@@ -98,7 +109,8 @@ exports.recordValues = function(req, res, next) {
     var modelName = req.query.model;
     var id = req.query.id;
     var model = db[modelName];
-    model.findById(id).then(onRecord).catch(onError);
+    model.findById(id).then(onRecord)
+        .catch(getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) {
         var fields = getModelFields(modelName);
@@ -107,10 +119,6 @@ exports.recordValues = function(req, res, next) {
             fields: fields
         });
     }
-    
-    function onError(err) {
-        res.status(404).json( { errorMsg: "Registro não encontrado" } );
-    }
 }
 
 
@@ -118,15 +126,9 @@ exports.createItem = function(req, res, next) {
     var newItemData = req.body.newItemData;
     var modelName = req.body.model;
     var model = db[modelName];     
-    model.create(newItemData).then(onSave).catch(onError);
-    
-    function onSave() {
-        res.json( { msg: "OK" } );
-    }
-    
-    function onError(error) {
-        res.status(400).json( { errorMsg: "Não foi possível criar o registro. " + error } );
-    }
+    model.create(newItemData)
+        .then(getOkFunc(res))
+        .catch(getErrorFunc(res, 400, "Não foi possível criar o registro."));
 }
 
 
@@ -134,21 +136,16 @@ exports.saveItem = function(req, res, next) {
     var modelName = req.body.model;
     var recordData = req.body.record;
     var model = db[modelName];     
-    model.findById( recordData.id ).then(onFindRecord).catch(onError);
+    model.findById( recordData.id )
+        .then(onFindRecord)
+        .catch(getErrorFunc(res, 404, "Não foi possível encontrar o registro."));
     
     function onFindRecord(record) {
         for(var attributeName in recordData)
             record[attributeName] = recordData[attributeName];
-        record.save().then(onSave).catch(onError);
-    }
-    
-    function onSave() {
-        res.json( { msg: "OK" } );
-    }
-    
-    function onError(error) {
-        console.log(error);
-        res.status(400).json( { errorMsg: "Não foi possível salvar o registro. " + error } );
+        record.save()
+            .then(getOkFunc(res))
+            .catch(getErrorFunc(res, 400, "Não foi possível salvar o registro."));
     }
 }
 
@@ -157,18 +154,17 @@ exports.deleteItem = function(req, res) {
     var id = req.query.id;
     var modelName = req.query.model;
     var model = db[modelName];     
-    model.destroy({ where: { id: id } }).then( function() {
-        res.json( { msg: "OK" } );
-    }).catch( function(err) {
-        res.status(404).json( { errorMsg: "Não foi possível apagar o registro. " + err } );
-    });
+    model.destroy({ where: { id: id } })
+        .then(getOkFunc(res))
+        .catch( getErrorFunc(res, 404, "Não foi possível apagar o registro.") );
 }
 
 
 exports.getComboValues = function(req, res) {
     var modelName = req.query.model;
     var model = db[modelName];     
-    model.findAll().then(onValues).catch(onError);
+    model.findAll().then(onValues)
+        .catch(getErrorFunc(res, 500, "Não foi possível carregar os registros."));
     
     function onValues(values) {
         var valuesArray = [];
@@ -179,10 +175,5 @@ exports.getComboValues = function(req, res) {
             });
         });
         res.json(valuesArray);
-    }
-    
-    function onError(error) {
-        console.log(error);
-        res.status(500).json( { errorMsg: "Não foi possível carregar os registros. " + error } );
     }
 }

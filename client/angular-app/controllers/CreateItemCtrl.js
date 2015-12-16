@@ -3,8 +3,12 @@ angular.module('CreateItemCtrl', ['flash']).controller('CreateItemController',
         function($scope, server, $routeParams, $location, Flash) {
 
     function onError(err) {
-        console.log(err.data.errorMsg);
-        Flash.create('warning', err.data.errorMsg);
+        var errorStr = err.data.errorMsg;
+        console.log(err.data.errors);
+        for( var i = 0; i < err.data.errors.length; i++ )
+            errorStr += '\n' + err.data.errors[i].message;
+        console.log(errorStr);
+        Flash.create('warning', errorStr);
     }
     
     var modelName = $routeParams.model;
