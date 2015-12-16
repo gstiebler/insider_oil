@@ -114,7 +114,13 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
                 $timeout(function () {
                     file.result = response.data;
                     console.log(response.data);
-                    Flash.create('success', response.data.status.replace(/\n/g, '<br>'));
+                    var statusStr = response.data.status.replace(/\n/g, '<br>');
+                    if(response.data.recordsStatus) {
+                        for( var i = 0; i < response.data.recordsStatus.length; i++ ) {
+                            statusStr += '<br>' + response.data.recordsStatus[i];
+                        }
+                    }
+                    Flash.create('success', statusStr );
                     server.getTable(modelName, showModel, showError.show );  
                 });
             }, function (response) {

@@ -50,8 +50,8 @@ exports.uploadFile = function(req, res, next) {
         var model = req.query.table;
         importExcel(buf, model, onOk, onError);
         
-        function onOk(status) {
-            res.json( { status: status } );
+        function onOk(status, recordsStatus) {
+            res.json( { status: status, recordsStatus: recordsStatus } );
         }
         
         function onError(err) {
