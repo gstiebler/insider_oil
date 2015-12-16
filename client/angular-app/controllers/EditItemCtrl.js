@@ -1,6 +1,6 @@
-angular.module('EditItemCtrl', []).controller('EditItemController', 
-                ['$scope', 'server', '$routeParams', '$location', 'showError',
-        function($scope, server, $routeParams, $location, showError) {
+angular.module('EditItemCtrl', ['flash']).controller('EditItemController', 
+                ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
+        function($scope, server, $routeParams, $location, showError, Flash) {
     
     var modelName = $routeParams.modelName;
     var id = $routeParams.id;
@@ -43,7 +43,8 @@ angular.module('EditItemCtrl', []).controller('EditItemController',
     }
     
     function onSave() {
-         $location.path("/app/model_view").search({ model: modelName });
+        Flash.create('success', 'Registro salvo com sucesso.');
+        $location.path("/app/model_view").search({ model: modelName });
     }
     
 }]);

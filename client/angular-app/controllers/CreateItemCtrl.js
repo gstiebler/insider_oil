@@ -1,6 +1,6 @@
-angular.module('CreateItemCtrl', []).controller('CreateItemController', 
-                ['$scope', 'server', '$routeParams', '$location', 'showError',
-        function($scope, server, $routeParams, $location, showError) {
+angular.module('CreateItemCtrl', ['flash']).controller('CreateItemController', 
+                ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
+        function($scope, server, $routeParams, $location, showError, Flash) {
     
     var modelName = $routeParams.model;
     server.getModelFields(modelName, fieldsArrived, showError.show);
@@ -39,7 +39,8 @@ angular.module('CreateItemCtrl', []).controller('CreateItemController',
     }
     
     function onSave() {
-         $location.path("/app/model_view").search({ model: modelName });
+        Flash.create('success', 'Registro criado com sucesso.');
+        $location.path("/app/model_view").search({ model: modelName });
     }
         
 }]);

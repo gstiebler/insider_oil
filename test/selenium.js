@@ -73,6 +73,7 @@ function addWell(test, driver) {
     driver.findElement(By.id('html_id_name')).sendKeys('Novo poço Selenium');
     driver.findElement(elementByText('Salvar')).click();
     driver.sleep(tableLoadTime);
+    test.equal( "Registro criado com sucesso.", getFlashMessage(driver, 0) );
     var a = elementByText('Mostrando de 1 até 4 de 4 registros');
     var b = driver.isElementPresent(a);
     test.ok( await( b ) );
@@ -121,6 +122,7 @@ function editWell(test, driver) {
     driver.findElement(By.id('html_id_name')).sendKeys('1AJ 0001 BA');
     driver.findElement(elementByText('Salvar')).click();
     driver.sleep(tableLoadTime);
+    test.equal( "Registro salvo com sucesso.", getFlashMessage(driver, 0) );
     test.equal( '1AJ 0001 BA', getTableValue(2, 0, driver) );
     test.equal( 'Etesco', getTableValue(2, 1, driver) );
     test.equal( 'Bacia Elvis Foca', getTableValue(2, 3, driver) );
