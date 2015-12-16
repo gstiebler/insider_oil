@@ -10,6 +10,7 @@
     "angular-resource": "1.4.8",
     "angular-mocks": "1.4.8",
     "angular-cookies": "1.4.8",
-    "ng-file-upload": "~10.0.2"
+    "ng-file-upload": "~10.0.2",
+    "angular-flash-alert": "1.1.1"
   }
 }
