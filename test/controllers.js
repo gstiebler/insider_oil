@@ -20,10 +20,9 @@ function getJsonResponse(func, req, callback) {
     }
     
     function status(code) {
-        console.log('code:', code);
         const result = { 
             json: function(response) { 
-                callback(null, code, deStringify(response) );
+                callback(null, { code: code, error: deStringify(response) } );
             } 
         };
         return result;
@@ -98,7 +97,7 @@ createWell: function(test) {
         body: { 
             model: 'Well',
             newItemData: {
-                name: 'Novo poço',
+                name: '',
                 operator_id: 4,
                 state: 'AC',
                 bacia: 'Bacia nova',
@@ -108,6 +107,13 @@ createWell: function(test) {
         }
     };
     
+    const errorResponse = getJsonResponse.sync(null, dbServerController.createItem, req);
+    test.equal( 400, errorResponse.code ); // test HTTP error code
+    test.equal( "Não foi possível criar o registro.", errorResponse.error.errorMsg );
+    test.equal( 1, errorResponse.error.errors.length );
+    test.equal( "Nome não pode ser nulo", errorResponse.error.errors[0].message );
+    
+    req.body.newItemData.name = 'Novo poço';
     getJsonResponse.sync(null, dbServerController.createItem, req);
     
     const req2 = {
