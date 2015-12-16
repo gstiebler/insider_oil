@@ -24,6 +24,12 @@ module.exports = function(sequelize, DataTypes) {
     {
         underscored: true,
         tableName: 'wells',
+        validate: {
+            nameNotNull: function() {
+                if( !this.name )
+                    throw new Error('Nome não pode ser nulo');
+            }
+        },
         classMethods: {
             associate: function(models) {
                 Well.belongsTo(models.Company, { as: 'operator' } );
