@@ -1,9 +1,10 @@
-angular.module('CreateItemCtrl', []).controller('CreateItemController', 
-                ['$scope', 'server', '$routeParams', '$location',
-        function($scope, server, $routeParams, $location) {
+angular.module('CreateItemCtrl', ['flash']).controller('CreateItemController', 
+                ['$scope', 'server', '$routeParams', '$location', 'Flash',
+        function($scope, server, $routeParams, $location, Flash) {
 
     function onError(err) {
-        console.log(err);
+        console.log(err.data.errorMsg);
+        Flash.create('warning', err.data.errorMsg);
     }
     
     var modelName = $routeParams.model;
