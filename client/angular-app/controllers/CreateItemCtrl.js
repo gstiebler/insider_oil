@@ -1,18 +1,9 @@
-angular.module('CreateItemCtrl', ['flash']).controller('CreateItemController', 
-                ['$scope', 'server', '$routeParams', '$location', 'Flash',
-        function($scope, server, $routeParams, $location, Flash) {
-
-    function onError(err) {
-        var errorStr = err.data.errorMsg;
-        console.log(err.data.errors);
-        for( var i = 0; i < err.data.errors.length; i++ )
-            errorStr += '\n' + err.data.errors[i].message;
-        console.log(errorStr);
-        Flash.create('warning', errorStr);
-    }
+angular.module('CreateItemCtrl', []).controller('CreateItemController', 
+                ['$scope', 'server', '$routeParams', '$location', 'showError',
+        function($scope, server, $routeParams, $location, showError) {
     
     var modelName = $routeParams.model;
-    server.getModelFields(modelName, fieldsArrived, onError);
+    server.getModelFields(modelName, fieldsArrived, showError.show);
     
     function fieldsArrived(fields) {
         for( var i = 0; i < fields.length; i++ ) {
@@ -24,7 +15,7 @@ angular.module('CreateItemCtrl', ['flash']).controller('CreateItemController',
                     field.values = values;
                 }
                 
-                server.getComboValues( field.model, onValues, onError );
+                server.getComboValues( field.model, onValues, showError.show );
             }
         }
     
@@ -44,7 +35,7 @@ angular.module('CreateItemCtrl', ['flash']).controller('CreateItemController',
             itemData[field.name] = htmlElement.value;
         }
             
-        server.createNewItem( modelName, itemData, onSave, onError );
+        server.createNewItem( modelName, itemData, onSave, showError.show );
     }
     
     function onSave() {
