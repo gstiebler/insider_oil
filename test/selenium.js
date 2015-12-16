@@ -41,6 +41,13 @@ function selectComboBoxItem(comboBox, itemName)
 }
 
 
+function getFlashMessage(driver, index) {
+    var elements = await( driver.findElements(By.xpath('//*[@id="flashMessage"]/div/span/span')) );
+    var text = await( elements[index].getText() );
+    return text;
+}
+
+
 function addWell(test, driver) {
     driver.findElement(elementByText('Adicionar')).click();
     driver.sleep(200);
@@ -48,7 +55,8 @@ function addWell(test, driver) {
     test.ok( await( driver.isElementPresent(elementByText('Operador:'))) );
     test.ok( await( driver.isElementPresent(elementByText('Longitude:'))) );
     test.ok( await( driver.isElementPresent(elementByText('Salvar'))) );
-    driver.findElement(By.id('html_id_name')).sendKeys('Novo poço Selenium');
+    
+    // test adding well without name
     var companiesCombo = driver.findElement(By.id('html_id_operator_id'));
     checkCompaniesComboBox(companiesCombo, test);
     selectComboBoxItem(companiesCombo, 'Statoil');
@@ -56,6 +64,13 @@ function addWell(test, driver) {
     driver.findElement(By.id('html_id_bacia')).sendKeys('Bacia do Selenium');
     driver.findElement(By.id('html_id_lat')).sendKeys('1234');
     driver.findElement(By.id('html_id_lng')).sendKeys('3334321');
+    driver.findElement(elementByText('Salvar')).click();
+    driver.sleep(200);
+    test.equal( "Não foi possível criar o registro.", getFlashMessage(driver, 0) );
+    test.equal( "Nome não pode ser nulo", getFlashMessage(driver, 1) );
+    
+    // test save correct well
+    driver.findElement(By.id('html_id_name')).sendKeys('Novo poço Selenium');
     driver.findElement(elementByText('Salvar')).click();
     driver.sleep(tableLoadTime);
     var a = elementByText('Mostrando de 1 até 4 de 4 registros');
@@ -94,6 +109,16 @@ function editWell(test, driver) {
     var companiesCombo = driver.findElement(By.id('html_id_operator_id'));
     checkCompaniesComboBox(companiesCombo, test);
     selectComboBoxItem(companiesCombo, 'Etesco');
+    
+    // test save well with error
+    driver.findElement(By.id('html_id_name')).clear();
+    driver.findElement(elementByText('Salvar')).click();
+    driver.sleep(200);
+    test.equal( "Não foi possível salvar o registro.", getFlashMessage(driver, 0) );
+    test.equal( "Nome não pode ser nulo", getFlashMessage(driver, 1) );
+    
+    // test save correct well
+    driver.findElement(By.id('html_id_name')).sendKeys('1AJ 0001 BA');
     driver.findElement(elementByText('Salvar')).click();
     driver.sleep(tableLoadTime);
     test.equal( '1AJ 0001 BA', getTableValue(2, 0, driver) );
