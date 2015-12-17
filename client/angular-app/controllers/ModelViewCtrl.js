@@ -41,13 +41,18 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
                 var fieldName = model.viewParams.gridFields[i];
                 if(fieldName == 'id') continue;
                 var fieldLabel = model.viewParams.fields[fieldName].label;
-                columns.push({ 
-                    title: fieldLabel
-                });
+                var columnObj = { 
+                    title: fieldLabel,
+                    data: fieldName
+                };
+                /*if(model.types[fieldName] == "DATETIME")
+                    columnObj.type = 'date';*/
+                    
+                columns.push(columnObj);
             }
             
-            columns.push( { title: "Editar" } );
-            columns.push( { title: "Apagar" } );
+            columns.push( { title: "Editar", data: 'edit' } );
+            columns.push( { title: "Apagar", data: 'delete' } );
             
             dataTableElement.DataTable( {
                 columns: columns,
@@ -59,18 +64,12 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
         var dataSet = [];
         for( var i = 0; i < model.records.length; i++) {
             var record = model.records[i];
-            var recordItem = [];
-            for( var j = 0; j < model.viewParams.gridFields.length; j++) {
-                var fieldName = model.viewParams.gridFields[j];
-                if(fieldName == 'id') continue;
-                recordItem.push( record[fieldName] );
-            }
             var prelude = "angular.element(document.getElementById('angularContainer')).scope().";
             var editFuncStr = prelude + "editRecord(" + record.id + ")";
             var deleteFuncStr = prelude + "deleteRecord(" + record.id + ")";
-            recordItem.push('<a class="btn btn-large btn-primary" onclick="' + editFuncStr + '")">Editar</a>');
-            recordItem.push('<button class="btn btn-large btn-danger" onclick="' + deleteFuncStr + '">Apagar</button>');
-            dataSet.push(recordItem);
+            record.edit = '<a class="btn btn-large btn-primary" onclick="' + editFuncStr + '")">Editar</a>';
+            record.delete = '<button class="btn btn-large btn-danger" onclick="' + deleteFuncStr + '">Apagar</button>';
+            dataSet.push(record);
         }
         
         var oTable = dataTableElement.dataTable();

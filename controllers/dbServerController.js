@@ -20,7 +20,7 @@ function getOkFunc(res, msg) {
 
 
 exports.main = function(req, res, next) {
-    var modelName = req.query.table;
+    const modelName = req.query.table;
     var model = db[modelName];
     if(!model) {
         getErrorFunc(res, 500, "Modelo não encontrado")({});
@@ -30,12 +30,17 @@ exports.main = function(req, res, next) {
         .catch(getErrorFunc(res, 500, "Erro"));
     
     function sendRecords(records) {
-        var viewParams = tableViewParams[modelName]();
+        const viewParams = tableViewParams[modelName]();
         viewParams.gridFields.push('id');
         dbUtils.simplifyArray( model, records );
-        var responseObj = {
+        const fields = getModelFields(modelName);
+        const types = {};
+        for( var i = 0; i < fields.length; i++)
+            types[fields[i].name] = fields[i].type;
+        const responseObj = {
             records: records,
-            viewParams: viewParams
+            viewParams: viewParams,
+            types: types
         };
         res.json( responseObj );
     }
