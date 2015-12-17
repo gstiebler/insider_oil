@@ -1,4 +1,3 @@
-"use strict";
 angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, showError, Flash) {
@@ -8,16 +7,18 @@ angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemCo
     server.getModelFieldsAndValues(modelName, id, valuesArrived, showError.show);
     
     function valuesArrived(data) {
+        function onValues(values) {
+            field.values = values;
+        }
+        
         var fields = data.fields;
         for( var i = 0; i < fields.length; i++ ) {
             var field = fields[i];
+            field.htmlId = getHtmlId(field);
             field.hasRef = field.type == 'ref';
             field.isDate = field.type == 'DATETIME';
             if( field.hasRef ) {
                 data.values[field.name] = data.values[field.name].toString();
-                function onValues(values) {
-                    field.values = values;
-                }
                 
                 server.getComboValues( field.model, onValues, showError.show );
             }
@@ -33,6 +34,11 @@ angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemCo
         $scope.fields = fields;
         $scope.values = data.values;
     }
+    
+    function getHtmlId(field) {
+        return "html_id_" + field.name;
+    }
+    
     
     $scope.saveItem = function() {
         var itemData = {};

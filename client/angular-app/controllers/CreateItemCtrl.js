@@ -7,21 +7,27 @@ angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateIt
     
     $scope.values = {};
     function fieldsArrived(fields) {
+        function onValues(values) {
+            field.values = values;
+        }
+        
         for( var i = 0; i < fields.length; i++ ) {
             var field = fields[i];
             $scope.values[field.name] = "";
+            field.htmlId = getHtmlId(field);
             field.hasRef = field.type == 'ref';
             field.isDate = field.type == 'DATETIME';
             if( field.hasRef ) {
-                function onValues(values) {
-                    field.values = values;
-                }
                 
                 server.getComboValues( field.model, onValues, showError.show );
             }
         }
     
         $scope.fields = fields;
+    }
+    
+    function getHtmlId(field) {
+        return "html_id_" + field.name;
     }
     
     $scope.saveItem = function() {

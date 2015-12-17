@@ -6,9 +6,9 @@
             <div class="col-sm-10">
                 <div ng-if="!field.hasRef" >
                     <input ng-if="!field.isDate" type="text" class="form-control" id="{{field.htmlId}}" ng-model="values[field.name]"/>
-                    <input ng-if="field.isDate" type="date" class="form-control" uib-datepicker-popup ng-model="values[field.name]" datepicker-options="dateOptions" ng-required="true" />
+                    <input ng-if="field.isDate" type="date" class="form-control" id="{{field.htmlId}}" uib-datepicker-popup ng-model="values[field.name]" datepicker-options="dateOptions" ng-required="true" />
                 </div>
-                <select ng-if="field.hasRef" class="form-control" ng-model="values[field.name]" >
+                <select ng-if="field.hasRef" class="form-control" ng-model="values[field.name]" id="{{field.htmlId}}"  >
                     <option ng-repeat="value in field.values" value="{{value.id}}" >{{value.label}}</option>
                 </select>
             </div>
