@@ -10,7 +10,6 @@ angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemCo
         var fields = data.fields;
         for( var i = 0; i < fields.length; i++ ) {
             var field = fields[i];
-            field.htmlId = getHtmlId(fields[i]);
             field.hasRef = field.type == 'ref';
             field.isDate = field.type == 'DATETIME';
             if( field.hasRef ) {
@@ -26,10 +25,6 @@ angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemCo
         $scope.fields = fields;
         $scope.values = data.values;
     }
-    
-    function getHtmlId(field) {
-        return "html_id_" + field.name;
-    }    
     
     $scope.saveItem = function() {
         var itemData = {};

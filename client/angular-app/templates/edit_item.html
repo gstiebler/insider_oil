@@ -8,7 +8,7 @@
                     <input ng-if="!field.isDate" type="text" class="form-control" id="{{field.htmlId}}" ng-model="values[field.name]"/>
                     <input ng-if="field.isDate" type="date" class="form-control" uib-datepicker-popup ng-model="dt" datepicker-options="dateOptions" ng-required="true" />
                 </div>
-                <select ng-if="field.hasRef" class="form-control" id="{{field.htmlId}}" ng-model="values[field.name]" >
+                <select ng-if="field.hasRef" class="form-control" ng-model="values[field.name]" >
                     <option ng-repeat="value in field.values" value="{{value.id}}" >{{value.label}}</option>
                 </select>
             </div>
