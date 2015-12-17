@@ -29,7 +29,7 @@ angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateIt
         return "html_id_" + field.name;
     }
     
-    $scope.createNewItem = function() {
+    $scope.saveItem = function() {
         var itemData = {};
         for( var i = 0; i < $scope.fields.length; i++ )  {
             var field = $scope.fields[i];

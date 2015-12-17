@@ -35,9 +35,7 @@ angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemCo
         var itemData = {};
         for( var i = 0; i < $scope.fields.length; i++ )  {
             var field = $scope.fields[i];
-            
-            var htmlElement = document.getElementById( getHtmlId(field) );
-            itemData[field.name] = htmlElement.value;
+            itemData[field.name] = $scope.values[field.name];
         }
         itemData.id = id;    
         server.saveItem( modelName, itemData, onSave, showError.show );

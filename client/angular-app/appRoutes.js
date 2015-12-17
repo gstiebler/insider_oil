@@ -14,7 +14,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 		})
 
 		.when('/app/create_item', {
-			templateUrl: 'app/templates/create_item.html',
+			templateUrl: 'app/templates/edit_item.html',
 			controller: 'CreateItemController'
 		})
 
