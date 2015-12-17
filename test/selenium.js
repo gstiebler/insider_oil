@@ -143,11 +143,11 @@ function showDrillingRigs(test, driver) {
     test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
     test.equal( 'Statoil', getTableValue(0, 1, driver) );
     test.equal( 'Em operação', getTableValue(0, 3, driver) );
-    test.equal( '2011-06-05T00:00:00.000Z', getTableValue(0, 5, driver) );
+    test.equal( '05/06/2011', getTableValue(0, 5, driver) );
     test.equal( 'Paragon DPDS3', getTableValue(1, 0, driver) );
     test.equal( 'Schahin', getTableValue(1, 1, driver) );
     test.equal( 'Em operação', getTableValue(1, 3, driver) );
-    test.equal( '2005-04-13T00:00:00.000Z', getTableValue(1, 5, driver) );
+    test.equal( '13/04/2005', getTableValue(1, 5, driver) );
 }
 
 function uploadExcelFile(test, driver) {
@@ -252,6 +252,35 @@ arbitraryUrl: function(test) {
     driver.get('http://localhost:' + port + '/app/model_view?model=Well');
     test.equal('Insider Oil', await( driver.getTitle() ));
     checkWells(test, driver);
+    
+    server.close();
+    driver.quit();
+    test.done();
+},
+
+
+testDates: function(test) {
+    var server = InitializeServer(port);
+    
+    var driver = new webdriver.Builder()
+        .forBrowser('firefox')
+        .build();
+    
+    makeLogin(test, driver);
+    driver.get('http://localhost:' + port + '/app/model_view?model=DrillingRig');
+    test.equal('Insider Oil', await( driver.getTitle() ));
+    
+    test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
+    test.equal( 'Paragon DPDS3', getTableValue(1, 0, driver) );
+    test.equal( 'S.C. Lancer', getTableValue(2, 0, driver) );
+    
+    test.equal( '05/06/2011', getTableValue(0, 5, driver) );
+    test.equal( '13/04/2005', getTableValue(1, 5, driver) );
+    test.equal( '16/08/2002', getTableValue(2, 5, driver) );
+    
+    test.equal( '02/06/2016', getTableValue(0, 6, driver) );
+    test.equal( '10/03/2016', getTableValue(1, 6, driver) );
+    test.equal( '11/08/2016', getTableValue(2, 6, driver) );
     
     server.close();
     driver.quit();
