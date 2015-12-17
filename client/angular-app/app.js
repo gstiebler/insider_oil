@@ -7,7 +7,6 @@ angular.module('InsiderOilApp', [
     'ModelViewCtrl', 
     'CreateItemCtrl', 
     'EditItemCtrl', 
-    'DrillingRigsCtrl', 
     'MapCtrl', 
     'ChartCtrl'
 ]);

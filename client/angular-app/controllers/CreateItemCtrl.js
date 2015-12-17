@@ -1,3 +1,4 @@
+'use strict';
 angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateItemController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, showError, Flash) {

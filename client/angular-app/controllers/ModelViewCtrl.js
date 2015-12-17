@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelViewController', 
                 ['$scope', 'server', '$routeParams', '$location', 'Upload', '$timeout', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, Upload, $timeout, showError, Flash) {
@@ -90,12 +91,13 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
         server.getTable(modelName, showModel, showError.show ); 
     }
     
+    function onDelete(status) {
+        Flash.create('success', status.data.msg );
+        server.getTable(modelName, showModel, showError.show ); 
+    }
+    
     $scope.deleteRecord = function(id) {
         if(confirm("Deseja realmente apagar o registro?")){
-            function onDelete(status) {
-                Flash.create('success', status.data.msg );
-                server.getTable(modelName, showModel, showError.show ); 
-            }
             
             server.deleteItem( modelName, id, onDelete, showError.show );
         }

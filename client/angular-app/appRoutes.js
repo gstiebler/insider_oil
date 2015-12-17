@@ -23,11 +23,6 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'EditItemController'
 		})
 
-		.when('/app/drilling_rigs', {
-			templateUrl: 'app/templates/drilling_rigs.html',
-			controller: 'DrillingRigsController'	
-		})
-
 		.when('/app/map', {
 			templateUrl: 'app/templates/map.html',
 			controller: 'MapController'	

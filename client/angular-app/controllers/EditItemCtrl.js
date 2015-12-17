@@ -1,3 +1,4 @@
+'use strict';
 angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, showError, Flash) {
