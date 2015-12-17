@@ -1,9 +1,11 @@
-angular.module('CreateItemCtrl', ['flash']).controller('CreateItemController', 
+angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateItemController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, showError, Flash) {
     
     var modelName = $routeParams.model;
     server.getModelFields(modelName, fieldsArrived, showError.show);
+    
+    $scope.dt = new Date();
     
     function fieldsArrived(fields) {
         for( var i = 0; i < fields.length; i++ ) {
