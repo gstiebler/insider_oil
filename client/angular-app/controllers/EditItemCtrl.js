@@ -1,3 +1,4 @@
+"use strict";
 angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, showError, Flash) {
@@ -19,6 +20,13 @@ angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemCo
                 }
                 
                 server.getComboValues( field.model, onValues, showError.show );
+            }
+            if(field.isDate) {
+                const dateStr = data.values[field.name];
+                const date = new Date(dateStr);
+                date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 ); // correction for timezone
+                console.log(dateStr, date);
+                data.values[field.name] = date;
             }
         }
     

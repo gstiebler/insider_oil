@@ -5,7 +5,6 @@ angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateIt
     var modelName = $routeParams.model;
     server.getModelFields(modelName, fieldsArrived, showError.show);
     
-    $scope.dt = new Date();
     $scope.values = {};
     function fieldsArrived(fields) {
         for( var i = 0; i < fields.length; i++ ) {
