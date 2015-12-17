@@ -1,4 +1,4 @@
-angular.module('EditItemCtrl', ['flash']).controller('EditItemController', 
+angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, showError, Flash) {
     
@@ -12,6 +12,7 @@ angular.module('EditItemCtrl', ['flash']).controller('EditItemController',
             var field = fields[i];
             field.htmlId = getHtmlId(fields[i]);
             field.hasRef = field.type == 'ref';
+            field.isDate = field.type == 'DATETIME';
             if( field.hasRef ) {
                 data.values[field.name] = data.values[field.name].toString();
                 function onValues(values) {

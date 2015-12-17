@@ -12,6 +12,7 @@ angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateIt
             var field = fields[i];
             field.htmlId = getHtmlId(field);
             field.hasRef = field.type == 'ref';
+            field.isDate = field.type == 'DATETIME';
             if( field.hasRef ) {
                 function onValues(values) {
                     field.values = values;
