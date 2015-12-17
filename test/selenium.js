@@ -23,15 +23,6 @@ function makeLogin(test, driver) {
 }
 
 
-function checkCompaniesComboBox(companiesComboBox, test) {
-    var optionElements = await( companiesComboBox.findElements(By.xpath("option")) );
-    test.equal( 7, optionElements.length );
-    test.equal( "Petrobrás", await( optionElements[0].getText() ) );
-    test.equal( "Eni Oil", await( optionElements[1].getText() ) );
-    test.equal( "Paragon", await( optionElements[6].getText() ) );
-}
-
-
 function selectComboBoxItem(comboBox, itemName)
 {
     comboBox.click();
@@ -58,7 +49,13 @@ function addWell(test, driver) {
     
     // test adding well without name
     var companiesCombo = driver.findElement(By.id('html_id_operator_id'));
-    checkCompaniesComboBox(companiesCombo, test);
+    var optionElements = await( companiesCombo.findElements(By.xpath("option")) );
+    test.equal( 8, optionElements.length );
+    test.equal( "", await( optionElements[0].getText() ) );
+    test.equal( "Petrobrás", await( optionElements[1].getText() ) );
+    test.equal( "Eni Oil", await( optionElements[2].getText() ) );
+    test.equal( "Paragon", await( optionElements[7].getText() ) );
+    
     selectComboBoxItem(companiesCombo, 'Statoil');
     driver.findElement(By.id('html_id_state')).sendKeys('AC');
     driver.findElement(By.id('html_id_bacia')).sendKeys('Bacia do Selenium');
@@ -108,7 +105,12 @@ function editWell(test, driver) {
     driver.findElement(By.id('html_id_bacia')).clear();
     driver.findElement(By.id('html_id_bacia')).sendKeys('Bacia Elvis Foca');
     var companiesCombo = driver.findElement(By.id('html_id_operator_id'));
-    checkCompaniesComboBox(companiesCombo, test);
+    var optionElements = await( companiesCombo.findElements(By.xpath("option")) );
+    test.equal( 7, optionElements.length );
+    test.equal( "Petrobrás", await( optionElements[0].getText() ) );
+    test.equal( "Eni Oil", await( optionElements[1].getText() ) );
+    test.equal( "Paragon", await( optionElements[6].getText() ) );
+    
     selectComboBoxItem(companiesCombo, 'Etesco');
     
     // test save well with error
@@ -127,6 +129,7 @@ function editWell(test, driver) {
     test.equal( 'Etesco', getTableValue(2, 1, driver) );
     test.equal( 'Bacia Elvis Foca', getTableValue(2, 3, driver) );
 }
+
 
 function deleteWell(test, driver) {
     var deleteBtn = getTableCell(2, 5, driver).findElement(By.xpath("button"));
@@ -196,6 +199,45 @@ first: function(test) {
     driver.quit();
     test.done();
 },
+
+/*
+editDrillingRig: function(test) {
+    var server = InitializeServer(port);
+    
+    var driver = new webdriver.Builder()
+        .forBrowser('firefox')
+        .build();
+    
+    makeLogin(test, driver);
+    test.equal('Insider Oil', await( driver.getTitle() ));
+    driver.sleep(1000);
+    driver.findElement(By.id('homeLink')).click();
+    driver.sleep(3000);
+    driver.findElement(elementByText('Sondas')).click();
+    driver.sleep(1000);
+    driver.findElement(elementByText('Adicionar')).click();
+    driver.sleep(1000);
+    driver.findElement(By.id('html_id_name')).sendKeys('nova sonda');
+    driver.findElement(By.id('html_id_type')).sendKeys('novo tipo');
+    driver.findElement(By.id('html_id_status')).sendKeys('novo status');
+    driver.findElement(By.id('html_id_lda')).sendKeys('333');
+    driver.findElement(By.id('html_id_start')).sendKeys('25122015');
+    driver.findElement(By.id('html_id_end')).sendKeys('26122015');
+    var contractorCombo = driver.findElement(By.id('html_id_contractor_id'));
+    selectComboBoxItem(contractorCombo, 'Etesco');
+    driver.findElement(elementByText('Salvar')).click();
+    driver.sleep(tableLoadTime);
+    
+    test.equal( 'nova sonda', getTableValue(1, 0, driver) );
+    test.equal( '15/12/2015', getTableValue(1, 5, driver) );
+    test.equal( '26/12/2015', getTableValue(1, 6, driver) );
+    console.log(1);
+    
+    server.close();
+    driver.quit();
+    test.done();
+},
+*/
 
 uploadExcelFiles: function(test) {
     var server = InitializeServer(port);
