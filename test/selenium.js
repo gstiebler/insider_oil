@@ -282,6 +282,50 @@ testDates: function(test) {
     test.equal( '10/03/2016', getTableValue(1, 6, driver) );
     test.equal( '11/08/2016', getTableValue(2, 6, driver) );
     
+    // click order by start
+    driver.findElement(By.xpath('//*[@id="mainTable"]/thead/tr/th[6]')).click();
+    
+    test.equal( 'S.C. Lancer', getTableValue(0, 0, driver) );
+    test.equal( 'Paragon DPDS3', getTableValue(1, 0, driver) );
+    test.equal( 'Aban Abraham', getTableValue(2, 0, driver) );
+    
+    test.equal( '16/08/2002', getTableValue(0, 5, driver) );
+    test.equal( '13/04/2005', getTableValue(1, 5, driver) );
+    test.equal( '05/06/2011', getTableValue(2, 5, driver) );
+    
+    test.equal( '11/08/2016', getTableValue(0, 6, driver) );
+    test.equal( '10/03/2016', getTableValue(1, 6, driver) );
+    test.equal( '02/06/2016', getTableValue(2, 6, driver) );
+    
+    // click order by start desc
+    driver.findElement(By.xpath('//*[@id="mainTable"]/thead/tr/th[6]')).click();
+    
+    test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
+    test.equal( 'Paragon DPDS3', getTableValue(1, 0, driver) );
+    test.equal( 'S.C. Lancer', getTableValue(2, 0, driver) );
+    
+    test.equal( '05/06/2011', getTableValue(0, 5, driver) );
+    test.equal( '13/04/2005', getTableValue(1, 5, driver) );
+    test.equal( '16/08/2002', getTableValue(2, 5, driver) );
+    
+    test.equal( '02/06/2016', getTableValue(0, 6, driver) );
+    test.equal( '10/03/2016', getTableValue(1, 6, driver) );
+    test.equal( '11/08/2016', getTableValue(2, 6, driver) );  
+    
+    // click order by end
+    driver.findElement(By.xpath('//*[@id="mainTable"]/thead/tr/th[7]')).click();
+    test.equal( 'Paragon DPDS3', getTableValue(0, 0, driver) );
+    test.equal( 'Aban Abraham', getTableValue(1, 0, driver) );
+    test.equal( 'S.C. Lancer', getTableValue(2, 0, driver) );
+    
+    test.equal( '13/04/2005', getTableValue(0, 5, driver) );
+    test.equal( '05/06/2011', getTableValue(1, 5, driver) );
+    test.equal( '16/08/2002', getTableValue(2, 5, driver) );
+    
+    test.equal( '10/03/2016', getTableValue(0, 6, driver) );
+    test.equal( '02/06/2016', getTableValue(1, 6, driver) );
+    test.equal( '11/08/2016', getTableValue(2, 6, driver) ); 
+    
     server.close();
     driver.quit();
     test.done();
