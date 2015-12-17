@@ -6,10 +6,11 @@ angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateIt
     server.getModelFields(modelName, fieldsArrived, showError.show);
     
     $scope.dt = new Date();
-    
+    $scope.values = {};
     function fieldsArrived(fields) {
         for( var i = 0; i < fields.length; i++ ) {
             var field = fields[i];
+            $scope.values[field.name] = "";
             field.htmlId = getHtmlId(field);
             field.hasRef = field.type == 'ref';
             field.isDate = field.type == 'DATETIME';
@@ -33,9 +34,7 @@ angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateIt
         var itemData = {};
         for( var i = 0; i < $scope.fields.length; i++ )  {
             var field = $scope.fields[i];
-            
-            var htmlElement = document.getElementById( getHtmlId(field) );
-            itemData[field.name] = htmlElement.value;
+            itemData[field.name] = $scope.values[field.name];
         }
             
         server.createNewItem( modelName, itemData, onSave, showError.show );
