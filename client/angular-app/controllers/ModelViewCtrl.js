@@ -31,6 +31,13 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
             "sSortDescending": ": Ordenar colunas de forma descendente"
         }
     };
+    
+    function dateFormat(dateStr) {
+        if(!dateStr)
+            return '';
+        const strParts = dateStr.substring(0, 10).split('-');;
+        return strParts[2] + '/' + strParts[1] + '/' + strParts[0];
+    }
 
     function showModel(model) {
     
@@ -45,8 +52,8 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
                     title: fieldLabel,
                     data: fieldName
                 };
-                /*if(model.types[fieldName] == "DATETIME")
-                    columnObj.type = 'date';*/
+                if(model.types[fieldName] == "DATETIME")
+                    columnObj.render = dateFormat;
                     
                 columns.push(columnObj);
             }
