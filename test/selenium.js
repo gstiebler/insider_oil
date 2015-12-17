@@ -200,7 +200,7 @@ first: function(test) {
     test.done();
 },
 
-/*
+
 editDrillingRig: function(test) {
     var server = InitializeServer(port);
     
@@ -210,34 +210,39 @@ editDrillingRig: function(test) {
     
     makeLogin(test, driver);
     test.equal('Insider Oil', await( driver.getTitle() ));
-    driver.sleep(1000);
     driver.findElement(By.id('homeLink')).click();
-    driver.sleep(3000);
     driver.findElement(elementByText('Sondas')).click();
-    driver.sleep(1000);
     driver.findElement(elementByText('Adicionar')).click();
-    driver.sleep(1000);
+    driver.sleep(200);
     driver.findElement(By.id('html_id_name')).sendKeys('nova sonda');
     driver.findElement(By.id('html_id_type')).sendKeys('novo tipo');
     driver.findElement(By.id('html_id_status')).sendKeys('novo status');
     driver.findElement(By.id('html_id_lda')).sendKeys('333');
-    driver.findElement(By.id('html_id_start')).sendKeys('25122015');
-    driver.findElement(By.id('html_id_end')).sendKeys('26122015');
+    driver.findElement(By.id('html_id_start')).sendKeys('25/12/2015');
+    driver.findElement(By.id('html_id_end')).sendKeys('26/12/2015');
     var contractorCombo = driver.findElement(By.id('html_id_contractor_id'));
     selectComboBoxItem(contractorCombo, 'Etesco');
     driver.findElement(elementByText('Salvar')).click();
     driver.sleep(tableLoadTime);
     
     test.equal( 'nova sonda', getTableValue(1, 0, driver) );
-    test.equal( '15/12/2015', getTableValue(1, 5, driver) );
+    test.equal( '25/12/2015', getTableValue(1, 5, driver) );
     test.equal( '26/12/2015', getTableValue(1, 6, driver) );
-    console.log(1);
+    
+    var editBtn = getTableCell(1, 7, driver).findElement(By.xpath("a"));
+    editBtn.click();
+    driver.sleep(200);
+    driver.findElement(By.id('html_id_start')).clear();
+    driver.findElement(By.id('html_id_start')).sendKeys('24/12/2015');
+    driver.findElement(elementByText('Salvar')).click();
+    driver.sleep(tableLoadTime);
+    test.equal( '24/12/2015', getTableValue(1, 5, driver) );
     
     server.close();
     driver.quit();
     test.done();
 },
-*/
+
 
 uploadExcelFiles: function(test) {
     var server = InitializeServer(port);

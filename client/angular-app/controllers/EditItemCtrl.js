@@ -7,6 +7,8 @@ angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemCo
     var id = $routeParams.id;
     server.getModelFieldsAndValues(modelName, id, valuesArrived, showError.show);
     
+    $scope.dateFormat = 'dd/MM/yyyy';
+    
     function valuesArrived(data) {
         function onValues(values) {
             field.values = values;
@@ -27,7 +29,6 @@ angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemCo
                 const dateStr = data.values[field.name];
                 const date = new Date(dateStr);
                 date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 ); // correction for timezone
-                console.log(dateStr, date);
                 data.values[field.name] = date;
             }
         }

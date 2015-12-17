@@ -6,6 +6,8 @@ angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateIt
     var modelName = $routeParams.model;
     server.getModelFields(modelName, fieldsArrived, showError.show);
     
+    $scope.dateFormat = 'dd/MM/yyyy';
+    
     $scope.values = {};
     function fieldsArrived(fields) {
         function onValues(values) {
@@ -19,7 +21,6 @@ angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateIt
             field.hasRef = field.type == 'ref';
             field.isDate = field.type == 'DATETIME';
             if( field.hasRef ) {
-                
                 server.getComboValues( field.model, onValues, showError.show );
             }
         }
