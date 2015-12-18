@@ -2,6 +2,8 @@ extends layout
 
 block content
     div(class="container")
+        if(errorMsg)
+            div(class="alert alert-danger" role="alert") #{errorMsg}
         form(class="form-signin" action="/login" method="post")
             h2(class="form-signin-heading") Digite seus dados
             label(for="inputUser" class="sr-only") Usuário
