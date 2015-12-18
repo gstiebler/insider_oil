@@ -35,10 +35,20 @@ first: function(test) {
         test.equal( "Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[83] );
         test.equal( "Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[84] );
         
-        test.equal(rows[0].name, "Aban Abraham");
-        test.equal(rows[0].contractor.name, "Etesco");
-        test.equal(rows[10].name, "Pantanal (Schahin I)");
-        test.equal(rows[10].contractor.name, "Schahin");
+        test.equal("Aban Abraham", rows[0].name);
+        test.equal("Etesco", rows[0].contractor.name);
+        test.equal("NS", rows[0].type);
+        test.equal("Em operação", rows[0].status);
+        test.equal(1900, rows[0].lda);
+        test.equal("2011-06-05", rows[0].start.toLocaleDateString());
+        test.equal("2016-06-02", rows[0].end.toLocaleDateString());
+        test.equal("Pantanal (Schahin I)", rows[10].name);
+        test.equal("Schahin", rows[10].contractor.name);
+        test.equal("SS", rows[10].type);
+        test.equal("Em operação", rows[10].status);
+        test.equal(2400, rows[10].lda);
+        test.equal("2011-06-06", rows[10].start.toLocaleDateString());
+        test.equal("2018-06-03", rows[10].end.toLocaleDateString());
         
         test.done();
     }
