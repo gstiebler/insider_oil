@@ -1,6 +1,7 @@
 "use strict";
 var fiberTests = require('./lib/fiberTests');
 var dbServerController = require('../controllers/dbServerController');
+var loginController = require('../controllers/loginController');
 //var Sync = require('sync');
 
 function deStringify(json) {
@@ -26,6 +27,13 @@ function getJsonResponse(func, req, callback) {
             } 
         };
         return result;
+    }
+}
+
+function testRenderFn(test, errorMsg) {
+    return function render(viewName, params) {
+        test.equal('login', viewName);
+        test.equal( errorMsg, params.errorMsg );
     }
 }
 
@@ -189,6 +197,35 @@ deleteWell: function(test) {
     const response2 = getJsonResponse.sync(null, dbServerController.main, req2);
     test.equal(2, response2.records.length);
     test.done();
+},
+
+
+loginHTML: function(test) {
+    const req = {
+        body: { 
+            username: 'lasdfkh',
+            password: 'adgfagasdf'
+        }
+    };
+    
+    // test invalid user
+    const res = { render: testRenderFn(test, 'Usuário não existe') };
+    loginController.makeLogin(req, res);
+    
+    // test invalid password
+    const res2 = { render: testRenderFn(test, 'A senha está incorreta') };
+    req.body.username = 'gstiebler';
+    loginController.makeLogin(req, res2);
+    
+    // test everything ok
+    req.body.password = 'guilherme';
+    const res3 = { redirect: redirect };
+    loginController.makeLogin(req, res3);
+    
+    function redirect(url) {
+        test.equal( '/app/templates/index.html?token', url.split('=')[0] );
+        test.done();
+    }
 }
 
 };
