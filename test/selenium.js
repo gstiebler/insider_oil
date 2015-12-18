@@ -163,12 +163,20 @@ function uploadExcelFile(test, driver) {
     test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 10 de 13 registros'))) );
     test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
     test.equal( 'Etesco', getTableValue(0, 1, driver) );
+    test.equal( '05/06/2011', getTableValue(0, 5, driver) );
+    test.equal( '02/06/2016', getTableValue(0, 6, driver) );
     test.equal( 'Amazônia', getTableValue(1, 0, driver) );
     test.equal( 'Schahin', getTableValue(1, 1, driver) );
+    test.equal( '10/02/2012', getTableValue(1, 5, driver) );
+    test.equal( '07/02/2017', getTableValue(1, 6, driver) );
     test.equal( 'S.C. Lancer', getTableValue(8, 0, driver) );
     test.equal( 'Schahin', getTableValue(8, 1, driver) );
+    test.equal( '16/08/2002', getTableValue(8, 5, driver) );
+    test.equal( '11/08/2016', getTableValue(8, 6, driver) );
     test.equal( 'Schahin Cerrado', getTableValue(9, 0, driver) );
-    test.equal( 'Schahin', getTableValue(9, 1, driver) );
+    test.equal( 'Schahin', getTableValue(9, 1, driver) )
+    test.equal( '21/03/2012', getTableValue(9, 5, driver) );
+    test.equal( '25/07/2015', getTableValue(9, 6, driver) );;
 }
 
 function logout(test, driver) {
