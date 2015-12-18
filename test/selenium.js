@@ -209,6 +209,43 @@ first: function(test) {
 },
 
 
+loginError: function(test) {
+    var server = InitializeServer(port);
+    
+    var driver = new webdriver.Builder()
+        .forBrowser('firefox')
+        .build();
+    
+    // test invalid user
+    driver.get('http://localhost:' + port);
+    test.equal('Login', await( driver.getTitle() ));
+    driver.findElement(By.name('username')).sendKeys('asdfasf');
+    driver.findElement(By.name('password')).sendKeys('asdfasdf');
+    driver.findElement(By.id('buttonOk')).click();
+    var alertElem = await( driver.findElement(By.xpath("/html/body/div/div")) );
+    test.equal( 'Usuário não existe', await( alertElem.getText() ) );
+    
+    //test invalid password
+    test.equal('Login', await( driver.getTitle() ));
+    driver.findElement(By.name('username')).sendKeys('gstiebler');
+    driver.findElement(By.name('password')).sendKeys('asdfasdf');
+    driver.findElement(By.id('buttonOk')).click();
+    var alertElem = await( driver.findElement(By.xpath("/html/body/div/div")) );
+    test.equal( 'A senha está incorreta', await( alertElem.getText() ) );
+    
+    // test login ok
+    test.equal('Login', await( driver.getTitle() ));
+    driver.findElement(By.name('username')).sendKeys('gstiebler');
+    driver.findElement(By.name('password')).sendKeys('guilherme');
+    driver.findElement(By.id('buttonOk')).click();
+    test.equal('Insider Oil', await( driver.getTitle() ));
+    
+    server.close();
+    driver.quit();
+    test.done();  
+},
+
+
 editDrillingRig: function(test) {
     var server = InitializeServer(port);
     

@@ -2,7 +2,7 @@ var session = require('../lib/session');
 
 
 exports.loginPage = function(req, res, next) {
-    res.render('login');
+    res.render('login', { title: 'Login'} );
 };
 
 
@@ -14,7 +14,7 @@ exports.makeLogin = function(req, res, next) {
     }
     
     function loginError(errorMsg) {
-        res.render('login', { errorMsg: errorMsg });
+        res.render('login', { title: 'Login', errorMsg: errorMsg });
     }
 };
 
