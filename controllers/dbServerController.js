@@ -190,3 +190,26 @@ exports.getComboValues = function(req, res) {
         res.json(valuesArray);
     }
 }
+
+
+exports.viewRecord = function(req, res, next) {
+    var dataSource = req.query.dataSource;
+    var id = req.query.id;
+    var model = db[dataSource];
+    model.findById(id).then(onRecord)
+        .catch(getErrorFunc(res, 404, "Registro não encontrado"));
+    
+    function onRecord(record) {
+        var fields = getModelFields(dataSource);
+        var result = [];
+        for( var i = 0; i < fields.length; i++ ) {
+            var item = {
+                label: fields[i].label,
+                value: record[fields[i].name]
+            };
+            result.push(item);
+        }
+        
+        res.json(result);
+    }
+}

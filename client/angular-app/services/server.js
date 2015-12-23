@@ -94,5 +94,14 @@ app.service('server', ['$http', 'session',
     this.getTree = function(okCallback, onError) {
         http({}, $http.get, '/tree/', okCallback, onError);
     }
+    
+    
+    this.viewRecord = function(dataSource, id, okCallback, onError) {
+        params = { 
+            dataSource: dataSource,
+            id: id
+        };
+        http(params, $http.get, '/view_record/', okCallback, onError);
+    }
         
 }]);

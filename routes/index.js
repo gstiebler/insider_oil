@@ -20,6 +20,7 @@ module.exports = function(app) {
     app.get('/db_server/', session.authorize,      dbServerController.main);
     app.get('/model_fields/',                      dbServerController.modelFields);
     app.get('/record_values/',                     dbServerController.recordValues);
+    app.get('/view_record/',                       dbServerController.viewRecord);
     app.post('/create_item/',                      dbServerController.createItem);
     app.put('/save_item/',                         dbServerController.saveItem);
     app.delete('/delete_item/',                    dbServerController.deleteItem);

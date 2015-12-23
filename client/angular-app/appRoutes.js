@@ -23,6 +23,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'EditItemController'
 		})
 
+		.when('/app/view_record', {
+			templateUrl: 'app/templates/view_record.html',
+			controller: 'ViewRecordController'
+		})
+
 		.when('/app/tree', {
 			templateUrl: 'app/templates/tree.html',
 			controller: 'TreeController'	
