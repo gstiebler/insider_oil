@@ -5,26 +5,42 @@ angular.module('TreeCtrl', ['flash', 'ui.bootstrap']).controller('TreeController
     
     var nodeId = $routeParams.nodeId;
     
-    function findItemById(tree) {
-        if(!nodeId)
+    function makeItem(subTree) {
+        return {
+            label: subTree.label,
+            id: subTree.id
+        };
+    }
+    
+    function findItemById(tree, stack) {
+        if(!nodeId || tree.id == nodeId) {
+            stack.push( makeItem(tree) );
             return tree;
-            
-        if(tree.id == nodeId)
-            return tree;
+        }
             
         if(tree.children) {
             for(var i = 0; i < tree.children.length; i++) {
-                var result = findItemById(tree.children[i]);
-                if(result)
+                var result = findItemById(tree.children[i], stack);
+                if(result) {
+                    stack.push( makeItem(tree) );
                     return result;
+                }
             }
         }
         
-        return null;
+        return false;
     }
     
     function showTree(tree) {
-        var subTree = findItemById(tree, nodeId);
+        var stack = [];
+        var subTree = findItemById(tree, stack);
+        stack.reverse();
+        $scope.stack = stack;
+        if(!subTree || !subTree.children) {
+            var errorObj = { data: { errorMsg: 'Item da árvore não encontrado' } };
+            showError.show(errorObj);
+            return;
+        }
         var items = [];
         for(var i = 0; i < subTree.children.length; i++) {
             var item = {

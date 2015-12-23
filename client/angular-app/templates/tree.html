@@ -1,3 +1,9 @@
+<div flash-message="5000" id="flashMessage" ></div> 
 <h1>Árvore</h1>
 <br>
+<span ng-repeat="item in stack">
+    >
+    <a href="/app/tree?nodeId={{item.id}}">{{item.label}}</a>
+</span>
+<br><br>
 <p ng-repeat="item in items"><a href="/app/tree?nodeId={{item.id}}">{{item.label}}</a></p>
