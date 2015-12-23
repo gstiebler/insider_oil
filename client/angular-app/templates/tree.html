@@ -1,1 +1,3 @@
-<p ng-repeat="label in labels"><a href="/app/tree">{{label}}</a></p>
+<h1>Árvore</h1>
+<br>
+<p ng-repeat="item in items"><a href="/app/tree?nodeId={{item.id}}">{{item.label}}</a></p>
