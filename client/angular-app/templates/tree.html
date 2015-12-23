@@ -6,4 +6,9 @@
     <a href="/app/tree?nodeId={{item.id}}">{{item.label}}</a>
 </span>
 <br><br>
-<p ng-repeat="item in items"><a href="/app/tree?nodeId={{item.id}}">{{item.label}}</a></p>
+<p ng-repeat="item in items">
+    <a href="/app/tree?nodeId={{item.id}}">{{item.label}}</a>
+</p>
+<p ng-repeat="record in records">
+    <a href="/app/view_record?source={{source}}&id={{record.id}}">{{record.name}}</a>
+</p>

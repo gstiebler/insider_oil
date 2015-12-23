@@ -26,7 +26,7 @@ angular.module('TreeCtrl', ['flash', 'ui.bootstrap']).controller('TreeController
                     return result;
                 }
             }
-        }
+        } 
         
         return false;
     }
@@ -36,20 +36,29 @@ angular.module('TreeCtrl', ['flash', 'ui.bootstrap']).controller('TreeController
         var subTree = findItemById(tree, stack);
         stack.reverse();
         $scope.stack = stack;
-        if(!subTree || !subTree.children) {
+        if(!subTree) {
             var errorObj = { data: { errorMsg: 'Item da árvore não encontrado' } };
             showError.show(errorObj);
             return;
         }
-        var items = [];
-        for(var i = 0; i < subTree.children.length; i++) {
-            var item = {
-                label: subTree.children[i].label,
-                id: subTree.children[i].id
-            };
-            items.push( item );
+        if(subTree.children) {
+            var items = [];
+            for(var i = 0; i < subTree.children.length; i++) {
+                var item = {
+                    label: subTree.children[i].label,
+                    id: subTree.children[i].id
+                };
+                items.push( item );
+            }
+            $scope.items = items;
+        } else if (subTree.child) {
+            server.getTable( subTree.child.source, function(values) {
+                $scope.records = values.records;
+            }, showError.show );
+        } else {
+            var errorObj = { data: { errorMsg: 'Item da árvore não encontrado' } };
+            showError.show(errorObj);
         }
-        $scope.items = items;
     }
     
     server.getTree(showTree, showError.show);
