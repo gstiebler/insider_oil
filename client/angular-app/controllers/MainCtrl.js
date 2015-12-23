@@ -28,5 +28,7 @@ angular.module('MainCtrl', []).controller('MainController',
             
             
     $scope.logout = session.logout; // functions
+    
+    $location.path("/app");
 
 } ] );

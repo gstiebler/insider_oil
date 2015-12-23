@@ -23,6 +23,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'EditItemController'
 		})
 
+		.when('/app/tree', {
+			templateUrl: 'app/templates/tree.html',
+			controller: 'TreeController'	
+		})
+
 		.when('/app/map', {
 			templateUrl: 'app/templates/map.html',
 			controller: 'MapController'	

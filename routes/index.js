@@ -4,6 +4,7 @@ var mainController = require('../controllers/mainController');
 var loginController = require('../controllers/loginController');
 var dbServerController = require('../controllers/dbServerController');
 var usersController = require('../controllers/usersController');
+var treeController = require('../controllers/TreeController');
 
 module.exports = function(app) {
     // Main route
@@ -28,6 +29,9 @@ module.exports = function(app) {
     // Users
     app.get('/user/',           session.authorize, usersController.main );
     app.get('/user/details',    session.authorize, usersController.userDetails );
+    
+    // Tree
+    app.get('/tree/',           session.authorize, treeController.main );
     
     // all links from Angular App should be redirected to the index of the app
     // send the URL as parameter for the Angular App to make the redirection

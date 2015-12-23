@@ -3,6 +3,15 @@
 app.service('server', ['$http', 'session',
                function($http, session) {
     
+    function http(params, httpFunc, path, okCallback, onError) {
+        params.token = session.getToken();
+        
+        httpFunc(path, { params: params }).
+        then(function(response) {
+            okCallback(response.data);
+        }, onError);
+    }
+    
     this.getTable = function( table, okCallback, errorCallback ) {
         params = { 
             table: table,
@@ -77,15 +86,13 @@ app.service('server', ['$http', 'session',
     
     
     this.getComboValues = function(modelName, okCallback, onError) {
-        params = { 
-            model: modelName,
-            token: session.getToken()
-        };
-        
-        $http.get('/combo_values/', { params: params }).
-        then(function(response) {
-            okCallback(response.data);
-        }, onError);
+        params = { model: modelName };
+        http(params, $http.get, '/combo_values/', okCallback, onError);
+    }
+    
+    
+    this.getTree = function(okCallback, onError) {
+        http({}, $http.get, '/tree/', okCallback, onError);
     }
         
 }]);
