@@ -96,7 +96,8 @@ function getModelFields(modelName) {
         fields[fieldName] = {
             label: att.label,
             type: 'ref',
-            model: association.target.name 
+            model: association.target.name,
+            association: associationName
         };
     }
     
@@ -196,17 +197,28 @@ exports.viewRecord = function(req, res, next) {
     var dataSource = req.query.dataSource;
     var id = req.query.id;
     var model = db[dataSource];
-    model.findById(id).then(onRecord)
+    var options = {};
+    options.include = dbUtils.getAssociationOptions(model);
+    model.findById(id, options).then(onRecord)
         .catch(getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) {
         var fields = getModelFields(dataSource);
         var result = [];
+        console.log(JSON.stringify(record, null, '  '));
+        console.log(JSON.stringify(fields, null, '  '));
+        
         for( var i = 0; i < fields.length; i++ ) {
             var item = {
                 label: fields[i].label,
                 value: record[fields[i].name]
             };
+            
+            if(fields[i].type == 'ref') {
+                item.ref = true;
+                item.source = fields[i].model;
+                item.name = record[fields[i].association].name;
+            }
             result.push(item);
         }
         
