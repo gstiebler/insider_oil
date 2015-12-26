@@ -200,6 +200,32 @@ deleteWell: function(test) {
 },
 
 
+getRecordViewWell: function(test) {
+    const req = {
+        query: { 
+            dataSource: 'Well',
+            id: 2
+        }
+    };
+
+    const response = getJsonResponse.sync(null, dbServerController.viewRecord, req);
+    test.equal('Poço', response[0].label);
+    test.equal('Estado', response[1].label);
+    test.equal('Latitude', response[3].label);
+    test.equal('Operador', response[5].label);
+    
+    test.equal('1AGIP1RJS', response[0].value);
+    
+    test.equal(2, response[5].value);
+    test.equal(true, response[5].ref);
+    test.equal('Company', response[5].source);
+    test.equal('Eni Oil', response[5].name);
+    
+    test.done();
+},
+
+
+
 loginHTML: function(test) {
     const req = {
         body: { 

@@ -205,8 +205,6 @@ exports.viewRecord = function(req, res, next) {
     function onRecord(record) {
         var fields = getModelFields(dataSource);
         var result = [];
-        console.log(JSON.stringify(record, null, '  '));
-        console.log(JSON.stringify(fields, null, '  '));
         
         for( var i = 0; i < fields.length; i++ ) {
             var item = {
