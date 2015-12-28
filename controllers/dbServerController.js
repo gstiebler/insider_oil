@@ -168,7 +168,7 @@ exports.viewRecord = function(req, res, next) {
     var id = req.query.id;
     var model = dbUtils.getDataSource(dataSourceName);
     var options = {};
-    options.include = dbUtils.getAssociationOptions(model);
+    options.include = [{all: true}];
     model.findById(id, options).then(onRecord)
         .catch(getErrorFunc(res, 404, "Registro não encontrado"));
     
