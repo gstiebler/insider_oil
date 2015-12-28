@@ -21,18 +21,18 @@ function getOkFunc(res, msg) {
 
 exports.main = function(req, res, next) {
     const modelName = req.query.table;
-    var model = db[modelName];
-    if(!model) {
+    var dataSource = dbUtils.getDataSource(modelName);
+    if(!dataSource) {
         getErrorFunc(res, 500, "Modelo não encontrado")({});
         return;
     }
-    dbUtils.findAllCustom(model).then(sendRecords)
+    dbUtils.findAllCustom(dataSource).then(sendRecords)
         .catch(getErrorFunc(res, 500, "Erro"));
     
     function sendRecords(records) {
-        const viewParams = tableViewParams[modelName]();
+        const viewParams = tableViewParams[dataSource.name]();
         viewParams.gridFields.push('id');
-        dbUtils.simplifyArray( model, records );
+        dbUtils.simplifyArray( dataSource, records );
         const fields = dbUtils.getModelFields(modelName);
         const types = {};
         for( var i = 0; i < fields.length; i++)
@@ -101,7 +101,7 @@ exports.recordValues = function(req, res, next) {
 exports.createItem = function(req, res, next) {
     var newItemData = req.body.newItemData;
     var modelName = req.body.model;
-    var model = db[modelName];     
+    var model = dbUtils.getDataSource(modelName);
     model.create(newItemData)
         .then(getOkFunc(res, "Registro criado com sucesso."))
         .catch(getErrorFunc(res, 400, "Não foi possível criar o registro."));

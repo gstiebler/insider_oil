@@ -225,6 +225,41 @@ getRecordViewWell: function(test) {
 },
 
 
+createOilFieldDeveloping: function(test) {
+    const req = {
+        body: { 
+            model: 'OilFieldDeveloping',
+            newItemData: {
+                name: 'Gavião Azul',
+                basin: 'Parnaíba',
+                state: 'Maranhão',
+                concessionaries: 'Parnaíba Gás¹ (70)/BPMB Parnaíba (30)',
+                shore: 'Terra'
+            }
+        }
+    };
+    
+    getJsonResponse.sync(null, dbServerController.createItem, req);
+    
+    const reqOilFieldDeveloping = {
+        query: { table: 'OilFieldDeveloping' }
+    };
+    const responseDeveloping = getJsonResponse.sync(null, dbServerController.main, reqOilFieldDeveloping);
+    test.equal(4, responseDeveloping.records.length);
+    test.equal('Gavião Azul', responseDeveloping.records[3].name);
+    test.equal('Parnaíba', responseDeveloping.records[3].basin);
+    test.equal('on', responseDeveloping.records[3].shore);
+    test.equal('Terra', responseDeveloping.records[3].userShore);
+    
+    const reqOilFieldProduction = {
+        query: { table: 'OilFieldProduction' }
+    };
+    const responseProduction = getJsonResponse.sync(null, dbServerController.main, reqOilFieldProduction);
+    test.equal(3, responseProduction.records.length);   
+    
+    test.done();
+},
+
 
 loginHTML: function(test) {
     const req = {
