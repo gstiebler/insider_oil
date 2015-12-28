@@ -129,7 +129,7 @@ exports.saveItem = function(req, res, next) {
 exports.deleteItem = function(req, res) {
     var id = req.query.id;
     var modelName = req.query.model;
-    var model = db[modelName];     
+    var model = dbUtils.getDataSource(modelName);     
     model.destroy({ where: { id: id } })
         .then(getOkFunc(res, 'Registro apagado com sucesso'))
         .catch( getErrorFunc(res, 404, "Não foi possível apagar o registro.") );
@@ -138,7 +138,7 @@ exports.deleteItem = function(req, res) {
 
 exports.getComboValues = function(req, res) {
     var modelName = req.query.model;
-    var model = db[modelName];     
+    var model = dbUtils.getDataSource(modelName);     
     model.findAll().then(onValues)
         .catch(getErrorFunc(res, 500, "Não foi possível carregar os registros."));
     
@@ -156,16 +156,16 @@ exports.getComboValues = function(req, res) {
 
 
 exports.viewRecord = function(req, res, next) {
-    var dataSource = req.query.dataSource;
+    var dataSourceName = req.query.dataSource;
     var id = req.query.id;
-    var model = db[dataSource];
+    var model = dbUtils.getDataSource(dataSourceName);
     var options = {};
     options.include = dbUtils.getAssociationOptions(model);
     model.findById(id, options).then(onRecord)
         .catch(getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) {
-        var fields = dbUtils.getModelFields(dataSource);
+        var fields = dbUtils.getModelFields(dataSourceName);
         var result = [];
         
         for( var i = 0; i < fields.length; i++ ) {
