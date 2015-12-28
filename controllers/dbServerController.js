@@ -84,7 +84,7 @@ exports.modelFields = function(req, res, next) {
 exports.recordValues = function(req, res, next) {
     var modelName = req.query.model;
     var id = req.query.id;
-    var model = db[modelName];
+    var model = dbUtils.getDataSource(modelName);
     model.findById(id).then(onRecord)
         .catch(getErrorFunc(res, 404, "Registro não encontrado"));
     
@@ -111,7 +111,7 @@ exports.createItem = function(req, res, next) {
 exports.saveItem = function(req, res, next) {
     var modelName = req.body.model;
     var recordData = req.body.record;
-    var model = db[modelName];     
+    var model = dbUtils.getDataSource(modelName);     
     model.findById( recordData.id )
         .then(onFindRecord)
         .catch(getErrorFunc(res, 404, "Não foi possível encontrar o registro."));
@@ -192,7 +192,9 @@ exports.sourcesList = function(req, res) {
         Well: 'Poços',
         DrillingRig: 'Sondas',
         Company: 'Empresas',
-        Persons: 'Pessoas'
+        Persons: 'Pessoas',
+        OilFieldDeveloping: 'Campos em desenvolvimento',
+        OilFieldProduction: 'Campos em produção'
     };
     
     res.json(list);

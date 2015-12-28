@@ -181,6 +181,58 @@ editWell: function(test) {
 },
 
 
+
+editFieldOilProduction: function(test) {
+    const reqEditValues = {
+        body: { 
+            model: 'OilFieldProduction',
+            record: {
+                id: 2,
+                name: 'Novo campo',
+                operator_id: 4,
+                state: 'AC',
+                bacia: 'Bacia nova',
+                lat: 333,
+                lng: 444
+            }
+        }
+    };
+        
+    const response = getJsonResponse.sync(null, dbServerController.saveItem, reqEditValues);
+    test.equal('Registro salvo com sucesso.', response.msg);
+    
+    const reqGetValues = {
+        query: { 
+            model: 'OilFieldProduction',
+            id: 2
+        }
+    };
+    const responseValues = getJsonResponse.sync(null, dbServerController.recordValues, reqGetValues);
+    console.log(responseValues.values);
+    test.equal('Novo campo', responseValues.values.name);
+    test.equal('on', responseValues.values.shore);
+    test.equal('Terra', responseValues.values.userShore);
+    test.done();
+},
+
+
+
+getRecordValuesOilFieldProduction: function(test) {
+    const req = {
+        query: { 
+            model: 'OilFieldProduction',
+            id: 3
+        }
+    };
+    const response = getJsonResponse.sync(null, dbServerController.recordValues, req);
+    test.equal('Abalone', response.values.name);
+    test.equal('off', response.values.shore);
+    test.equal('Mar', response.values.userShore);
+    test.equal('production', response.values.stage);
+    test.done();
+},
+
+
 deleteWell: function(test) {
     const req = {
         query: { 
@@ -234,7 +286,7 @@ createOilFieldDeveloping: function(test) {
                 basin: 'Parnaíba',
                 state: 'Maranhão',
                 concessionaries: 'Parnaíba Gás¹ (70)/BPMB Parnaíba (30)',
-                shore: 'Terra'
+                userShore: 'Terra'
             }
         }
     };

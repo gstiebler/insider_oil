@@ -15,11 +15,11 @@ module.exports = function(sequelize, DataTypes) {
         },
         basin: {
           type: DataTypes.STRING,
-          allowNull: true
+          allowNull: false
         },
         state: {
           type: DataTypes.STRING,
-          allowNull: true
+          allowNull: false
         },
         concessionaries: {
           type: DataTypes.STRING,
@@ -27,11 +27,11 @@ module.exports = function(sequelize, DataTypes) {
         },
         shore: {
           type: DataTypes.STRING,
-          allowNull: true
+          allowNull: false
         },
         stage: {
           type: DataTypes.STRING,
-          allowNull: true
+          allowNull: false
         },
         userShore: {
             type: DataTypes.VIRTUAL,
@@ -44,18 +44,16 @@ module.exports = function(sequelize, DataTypes) {
                 else 
                     throw 'Campo "shore" deve conter "on" ou "off"';
                 return null;
+            },
+            set: function(val) {
+                const shoreLower = val.toLowerCase();
+                this.shore = convertShore(shoreLower);
             }
         }
     }, 
     {
         underscored: true,
-        tableName: 'oil_fields',
-        hooks: {
-            beforeCreate: function(oilField, options) {
-                const shoreLower = oilField.shore.toLowerCase();
-                oilField.shore = convertShore(shoreLower);
-            }
-        }
+        tableName: 'oil_fields'
     }    
   );
   
