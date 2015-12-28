@@ -30,7 +30,7 @@ exports.main = function(req, res, next) {
         .catch(getErrorFunc(res, 500, "Erro"));
     
     function sendRecords(records) {
-        const viewParams = tableViewParams[dataSource.name]();
+        const viewParams = tableViewParams[dataSource.name];
         viewParams.gridFields.push('id');
         dbUtils.simplifyArray( dataSource, records );
         const fields = dbUtils.getModelFields(modelName);

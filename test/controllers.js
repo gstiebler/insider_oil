@@ -208,7 +208,6 @@ editFieldOilProduction: function(test) {
         }
     };
     const responseValues = getJsonResponse.sync(null, dbServerController.recordValues, reqGetValues);
-    console.log(responseValues.values);
     test.equal('Novo campo', responseValues.values.name);
     test.equal('on', responseValues.values.shore);
     test.equal('Terra', responseValues.values.userShore);
