@@ -93,7 +93,8 @@ function checkMainPage(test, driver) {
     test.ok( await( driver.isElementPresent(By.id('navbar')) ) );
     test.ok( !await( driver.isElementPresent(By.id('foca')) ) );
     test.ok( !await( driver.isElementPresent(elementByText('Focas'))) );
-    test.ok( await( driver.isElementPresent(elementByText('Sondas'))) );
+    test.ok( await( driver.isElementPresent(elementByText('Admin'))) );
+    test.ok( await( driver.isElementPresent(elementByText('Árvore'))) );
     test.ok( await( driver.isElementPresent(elementByText('gstiebler'))) );
     test.ok( await( driver.isElementPresent(elementByText('Logout'))) );
 }
@@ -141,6 +142,8 @@ function deleteWell(test, driver) {
 }
 
 function showDrillingRigs(test, driver) {
+    driver.findElement(elementByText('Admin')).click();
+    driver.sleep(100);
     driver.findElement(elementByText('Sondas')).click();
     driver.sleep(500);
     test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
@@ -195,6 +198,8 @@ first: function(test) {
     
     makeLogin(test, driver);
     checkMainPage(test, driver);
+    driver.findElement(elementByText('Admin')).click();
+    driver.sleep(100);
     driver.findElement(elementByText('Poços')).click();
     driver.sleep(500);
     checkWells(test, driver);
@@ -255,7 +260,8 @@ editDrillingRig: function(test) {
     
     makeLogin(test, driver);
     test.equal('Insider Oil', await( driver.getTitle() ));
-    driver.findElement(By.id('homeLink')).click();
+    driver.findElement(elementByText('Admin')).click();
+    driver.sleep(100);
     driver.findElement(elementByText('Sondas')).click();
     driver.findElement(elementByText('Adicionar')).click();
     driver.sleep(200);
