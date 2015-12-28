@@ -7,7 +7,15 @@ var dbUtils = require('../lib/dbUtils');
 
 function getErrorFunc(res, errorCode, msg) {
     return function(error) { 
-        res.status(errorCode).json( { errorMsg: msg, errors: error.errors } )
+        var errors = error.errors ? error.errors : [];
+        if((typeof error) == 'string')
+            errors.push( { message: error } );
+        res.status(errorCode).json( {
+            errorMsg: msg, 
+            errors: errors 
+        } )
+        if(process.env['NODE_ENV'] != 'test')
+            console.log(JSON.stringify(error, null, '  '));
     };
 }
 
