@@ -47,7 +47,7 @@ listWells: function(test) {
     const errorResponse = getJsonResponse.sync(null, dbServerController.main, req);
     test.equal( 500, errorResponse.code ); // test HTTP error code
     test.equal( "Modelo não encontrado", errorResponse.error.errorMsg );
-    test.ok( !errorResponse.error.errors );
+    test.equal( 0, errorResponse.error.errors.length );
     
     req.query.table = 'Well';
     const response = getJsonResponse.sync(null, dbServerController.main, req);
