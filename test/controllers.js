@@ -251,6 +251,25 @@ deleteWell: function(test) {
 },
 
 
+deleteOilFieldDeveloping: function(test) {
+    const reqDelete = {
+        query: { 
+            model: 'OilFieldDeveloping',
+            id: 4
+        }
+    };
+    const responseDelete = getJsonResponse.sync(null, dbServerController.deleteItem, reqDelete);
+    test.equal('Registro apagado com sucesso', responseDelete.msg);
+    
+    const reqGetRecords = {
+        query: { table: 'OilFieldDeveloping' }
+    };
+    const responseGetRecords = getJsonResponse.sync(null, dbServerController.main, reqGetRecords);
+    test.equal(2, responseGetRecords.records.length);
+    test.done();
+},
+
+
 getRecordViewWell: function(test) {
     const req = {
         query: { 
