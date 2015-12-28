@@ -223,3 +223,15 @@ exports.viewRecord = function(req, res, next) {
         res.json(result);
     }
 }
+
+
+exports.sourcesList = function(req, res) {
+    var list = {
+        Well: 'Poços',
+        DrillingRig: 'Sondas',
+        Company: 'Empresas',
+        Persons: 'Pessoas'
+    };
+    
+    res.json(list);
+}

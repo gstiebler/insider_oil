@@ -23,6 +23,7 @@ module.exports = function(app) {
     app.get('/view_record/',                       dbServerController.viewRecord);
     app.post('/create_item/',                      dbServerController.createItem);
     app.put('/save_item/',                         dbServerController.saveItem);
+    app.get('/sources_list/',                      dbServerController.sourcesList);
     app.delete('/delete_item/',                    dbServerController.deleteItem);
     app.get('/combo_values/', session.authorize,   dbServerController.getComboValues);
     app.post('/db_server/upload_file',             dbServerController.uploadFile);

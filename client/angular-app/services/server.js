@@ -103,5 +103,10 @@ app.service('server', ['$http', 'session',
         };
         http(params, $http.get, '/view_record/', okCallback, onError);
     }
+    
+    
+    this.sourceList = function(onData, onError) {
+        http({}, $http.get, '/sources_list/', onData, onError);
+    }
         
 }]);

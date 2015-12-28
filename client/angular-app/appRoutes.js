@@ -5,7 +5,8 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 
 		// home page
 		.when('/app/', {
-			templateUrl: 'app/templates/home.html'
+			templateUrl: 'app/templates/home.html',
+			controller: 'AdminSourcesListController'
 		})
 
 		.when('/app/model_view', {

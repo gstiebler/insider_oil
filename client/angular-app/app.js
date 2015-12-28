@@ -8,6 +8,7 @@ angular.module('InsiderOilApp', [
     'CreateItemCtrl', 
     'EditItemCtrl', 
     'ViewRecordCtrl',
+    'AdminSourcesListCtrl',
     'TreeCtrl', 
     'MapCtrl', 
     'ChartCtrl'
