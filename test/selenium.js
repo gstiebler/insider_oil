@@ -427,7 +427,60 @@ testDates: function(test) {
     server.close();
     driver.quit();
     test.done();
+},
+
+
+tree: function(test) {
+    var server = InitializeServer(port);
+    
+    var driver = new webdriver.Builder()
+        .forBrowser('firefox')
+        .build();
+        
+    makeLogin(test, driver);
+    driver.findElement(elementByText('Árvore')).click();
+    test.equal('Insider Oil', await( driver.getTitle() ));
+    var treeItems = await( driver.findElements(By.xpath('//*[@id="angularContainer"]/p')) );
+    test.equal( 4, treeItems.length );
+    test.equal( "Exploração", await( treeItems[0].getText() ) );
+    test.equal( "Produção", await( treeItems[1].getText() ) );
+    test.equal( "Logística", await( treeItems[2].getText() ) );
+    test.equal( "Downstream", await( treeItems[3].getText() ) );
+    test.equal( "Oil & Gas", await( driver.findElement(By.xpath('//*[@id="angularContainer"]/span/a')).getText() ));
+    driver.findElement(elementByText('Produção')).click();
+    driver.findElement(elementByText('Onshore')).click();
+    driver.findElement(elementByText('Campos em fase de desenvolvimento')).click();
+    test.equal( "Oil & Gas", await( driver.findElement(By.xpath('//*[@id="angularContainer"]/span[1]/a')).getText() ));
+    test.equal( "Produção", await( driver.findElement(By.xpath('//*[@id="angularContainer"]/span[2]/a')).getText() ));
+    test.equal( "Onshore", await( driver.findElement(By.xpath('//*[@id="angularContainer"]/span[3]/a')).getText() ));
+    test.equal( "Campos em fase de desenvolvimento", await( driver.findElement(By.xpath('//*[@id="angularContainer"]/span[4]/a')).getText() ));
+    treeItems = await( driver.findElements(By.xpath('//*[@id="angularContainer"]/p')) );
+    test.equal( "Arapaçu", await( treeItems[0].getText() ) );
+    test.equal( "Azulão", await( treeItems[1].getText() ) );
+    // clicking on the tree guide
+    driver.findElement(elementByText('Onshore')).click();
+    driver.sleep(100);
+    treeItems = await( driver.findElements(By.xpath('//*[@id="angularContainer"]/p')) );
+    test.equal( "Campos em fase de desenvolvimento", await( treeItems[0].getText() ) );
+    test.equal( "Campos em fase de produção", await( treeItems[1].getText() ) );
+    driver.findElement(elementByText('Campos em fase de produção')).click();
+    driver.sleep(100);
+    treeItems = await( driver.findElements(By.xpath('//*[@id="angularContainer"]/p')) );
+    test.equal( "Anambé", await( treeItems[0].getText() ) );
+    test.equal( "Jiribatuba2", await( treeItems[1].getText() ) );
+    // selecting an element and showing the values of the record
+    driver.findElement(elementByText('Jiribatuba2')).click();
+    driver.sleep(100);
+    test.equal( 'Nome:', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[1]/span[1]')).getText() ));
+    test.equal( 'Jiribatuba2', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[1]/span[2]')).getText() ));
+    test.equal( 'Terra/Mar:', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[5]/span[1]')).getText() ));
+    test.equal( 'Terra', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[5]/span[2]')).getText() ));
+    
+    server.close();
+    driver.quit();
+    test.done();
 }
+    
 
 };
 
