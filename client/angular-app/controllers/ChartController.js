@@ -3,7 +3,7 @@ angular.module('ChartCtrl', []).controller('ChartController',
         function($scope, server, $routeParams, $location) {
     
     var modelName = "Well";
-    server.getTable(modelName, showModel, showError );
+    server.getTable(modelName, {}, showModel, showError );
     
     function showModel(model) {
         var labelField = model.viewParams.labelField;

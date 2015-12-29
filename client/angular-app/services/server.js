@@ -12,9 +12,10 @@ app.service('server', ['$http', 'session',
         }, onError);
     }
     
-    this.getTable = function( table, okCallback, errorCallback ) {
+    this.getTable = function( table, filters, okCallback, errorCallback ) {
         params = { 
             table: table,
+            filters: filters,
             token: session.getToken()
         };
         

@@ -4,7 +4,7 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
         function($scope, server, $routeParams, $location, Upload, $timeout, showError, Flash) {
 
     var modelName = $routeParams.model;
-    server.getTable(modelName, showModel, showError.show );
+    server.getTable(modelName, {}, showModel, showError.show );
     
     var datatableInitialized = false;
     var dataTableElement = $('#mainTable');
@@ -88,12 +88,12 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
     $scope.editRecord = function(id) {
         $location.path("/app/edit_item").search({ modelName: modelName, id: id });
         // I don't know why the line below should be here for the redirect to work
-        server.getTable(modelName, showModel, showError.show ); 
+        server.getTable(modelName, {}, showModel, showError.show ); 
     }
     
     function onDelete(status) {
         Flash.create('success', status.data.msg );
-        server.getTable(modelName, showModel, showError.show ); 
+        server.getTable(modelName, {}, showModel, showError.show ); 
     }
     
     $scope.deleteRecord = function(id) {
@@ -130,7 +130,7 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
                         }
                     }
                     Flash.create('success', statusStr );
-                    server.getTable(modelName, showModel, showError.show );  
+                    server.getTable(modelName, {}, showModel, showError.show );  
                 });
             }, function (response) {
                 if (response.status > 0) {

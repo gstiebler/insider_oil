@@ -29,12 +29,13 @@ function getOkFunc(res, msg) {
 
 exports.main = function(req, res, next) {
     const modelName = req.query.table;
+    const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
     var dataSource = dbUtils.getDataSource(modelName);
     if(!dataSource) {
         getErrorFunc(res, 500, "Modelo não encontrado")({});
         return;
     }
-    dbUtils.findAllCustom(dataSource).then(sendRecords)
+    dbUtils.findAllCustom(dataSource, {}, filters).then(sendRecords)
         .catch(getErrorFunc(res, 500, "Erro"));
     
     function sendRecords(records) {

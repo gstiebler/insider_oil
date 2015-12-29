@@ -4,7 +4,7 @@ angular.module('MapCtrl', []).controller('MapController',
 
     var mapDiv = document.getElementById('map');
 
-    server.getTable($routeParams.model, showModel, showError );    
+    server.getTable($routeParams.model, {}, showModel, showError );    
     
     function showModel(model) {
         var labelField = model.viewParams.labelField;

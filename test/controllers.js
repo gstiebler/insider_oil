@@ -65,6 +65,28 @@ listWells: function(test) {
 },
 
 
+listOilFieldsProductionOnshore: function(test) {
+   const req = {
+        query: { 
+            table: 'OilFieldProduction',
+            filters: JSON.stringify({ shore: 'off' })
+        }
+    };    
+    
+    const response = getJsonResponse.sync(null, dbServerController.main, req);
+    // records
+    test.equal(1, response.records.length);
+    test.equal('Abalone', response.records[0].name);
+    // view params
+    test.equal( 'Campos', response.viewParams.tableLabel );
+    test.equal( 'name', response.viewParams.labelField );
+    test.equal( 'Nome', response.viewParams.fields.name.label );
+    test.equal( 'Bacia', response.viewParams.fields.basin.label );
+    test.equal( 'Terra/Mar', response.viewParams.fields.userShore.label );
+    test.done();
+},
+
+
 modelFields: function(test) {
     const req = {
         query: { model: 'Well' }

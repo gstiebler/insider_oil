@@ -53,7 +53,7 @@ angular.module('TreeCtrl', ['flash', 'ui.bootstrap']).controller('TreeController
             $scope.items = items;
         } else if (subTree.child) {
             $scope.source = subTree.child.source;
-            server.getTable( subTree.child.source, function(values) {
+            server.getTable( subTree.child.source, subTree.child.filters, function(values) {
                 $scope.records = values.records;
             }, showError.show );
         } else {
