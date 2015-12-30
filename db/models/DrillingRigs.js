@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var DrillingRig = sequelize.define('DrillingRig', {
+    var DrillingRigOffshore = sequelize.define('DrillingRigOffshore', {
         name: {
           type: DataTypes.STRING,
           allowNull: false
@@ -39,9 +39,9 @@ module.exports = function(sequelize, DataTypes) {
         },
         classMethods: {
             associate: function(models) {
-                DrillingRig.belongsTo(models.Company, { as: 'contractor', allowNull: false } );
+                DrillingRigOffshore.belongsTo(models.Company, { as: 'contractor', allowNull: false } );
             }
         }
     });
-    return DrillingRig;
+    return DrillingRigOffshore;
 };
