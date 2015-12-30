@@ -1,9 +1,8 @@
 "use strict";
 var db  = require('../db/models');
-var tableViewParams = require('../lib/tableViewParams');
 var fileUpload = require('../lib/fileUpload');
-var importExcel = require('../lib/importExcel');
 var dbUtils = require('../lib/dbUtils');
+var dsParams = require('../lib/DataSourcesParams');
 
 function getErrorFunc(res, errorCode, msg) {
     return function(error) { 
@@ -39,7 +38,7 @@ exports.main = function(req, res, next) {
         .catch(getErrorFunc(res, 500, "Erro"));
     
     function sendRecords(records) {
-        const viewParams = tableViewParams[dataSource.name];
+        const viewParams = dsParams[dataSource.name];
         viewParams.gridFields.push('id');
         dbUtils.simplifyArray( dataSource, records );
         const fields = dbUtils.getModelFields(modelName);
