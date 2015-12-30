@@ -15,16 +15,16 @@ var group = {
 
 first: function(test) {
     var fixtureCount = 3;
-    test.equal( fixtureCount, await( db.DrillingRig.findAll() ).length );  
+    test.equal( fixtureCount, await( db.DrillingRigOffshore.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
     try {
-        importExcel(excelBuf, 'DrillingRig', onImportDone, onError);
+        importExcel(excelBuf, 'DrillingRigOffshore', onImportDone, onError);
     } catch(err) {
         console.log(err);
     }
     
     function onImportDone(status, invalidRecordsStatus) {
-        var rows = await( dbUtils.findAllCustom(db.DrillingRig));
+        var rows = await( dbUtils.findAllCustom(db.DrillingRigOffshore));
         test.equal( 13, rows.length );  
         var expectedStatus = "Registros criados: 10";
         expectedStatus += "\nRegistros atualizados: 3";
@@ -64,7 +64,7 @@ invalidHeader: function(test) {
     var modifiedExcelBuf = XLSX.write(workbook, {type:"buffer"});
     
     try {
-        importExcel(modifiedExcelBuf, 'DrillingRig');
+        importExcel(modifiedExcelBuf, 'DrillingRigOffshore');
     } catch(err) {
         test.equal( "O cabeçalho do arquivo Excel não possui o campo sonda", err );
         test.done();

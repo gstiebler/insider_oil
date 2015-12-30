@@ -144,7 +144,7 @@ function deleteWell(test, driver) {
 function showDrillingRigs(test, driver) {
     driver.findElement(elementByText('Admin')).click();
     driver.sleep(100);
-    driver.findElement(elementByText('Sondas')).click();
+    driver.findElement(elementByText('Sondas offshore')).click();
     driver.sleep(500);
     test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
     test.equal( 'Statoil', getTableValue(0, 1, driver) );
@@ -262,7 +262,7 @@ editDrillingRig: function(test) {
     test.equal('Insider Oil', await( driver.getTitle() ));
     driver.findElement(elementByText('Admin')).click();
     driver.sleep(100);
-    driver.findElement(elementByText('Sondas')).click();
+    driver.findElement(elementByText('Sondas offshore')).click();
     driver.findElement(elementByText('Adicionar')).click();
     driver.sleep(200);
     driver.findElement(By.id('html_id_name')).sendKeys('nova sonda');
@@ -365,7 +365,7 @@ testDates: function(test) {
         .build();
     
     makeLogin(test, driver);
-    driver.get('http://localhost:' + port + '/app/model_view?model=DrillingRig');
+    driver.get('http://localhost:' + port + '/app/model_view?model=DrillingRigOffshore');
     test.equal('Insider Oil', await( driver.getTitle() ));
     
     test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
