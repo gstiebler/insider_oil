@@ -199,7 +199,7 @@ exports.viewRecord = function(req, res, next) {
 exports.sourcesList = function(req, res) {
     var list = {
         Well: 'Poços',
-        DrillingRig: 'Sondas',
+        DrillingRigOffshore: 'Sondas offshore',
         Company: 'Empresas',
         Persons: 'Pessoas',
         OilFieldDeveloping: 'Campos em desenvolvimento',

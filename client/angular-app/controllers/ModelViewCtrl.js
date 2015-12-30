@@ -43,7 +43,7 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
     function showModel(model) {
     
         if(!datatableInitialized) {
-            
+            $scope.viewParams = model.viewParams;
             var columns = [];
             for( var i = 0; i < model.viewParams.gridFields.length; i++) {
                 var fieldName = model.viewParams.gridFields[i];

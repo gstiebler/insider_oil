@@ -73,8 +73,8 @@ function createWells() {
 }
 
 
-function createDrillingRigs() {
-    return db.DrillingRig.bulkCreate([
+function createDrillingRigsOffshore() {
+    return db.DrillingRigOffshore.bulkCreate([
         {
             name: "Aban Abraham",
             type: "NS",
@@ -183,7 +183,7 @@ function createFixtures() {
     await( createUsers() );
     await( createCompanies() );
     await( createWells() );
-    await( createDrillingRigs() );
+    await( createDrillingRigsOffshore() );
     await( createPersons() );
     await( createOilFields() );
 };
