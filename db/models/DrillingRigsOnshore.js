@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
         }*/
     }, {
         underscored: true,
-        tableName: 'drilling_rigs',
+        tableName: 'drilling_rigs_onshore',
         validate: {
             contractorNotNull: function() {
                 if( !this.contractor_id )

@@ -3,6 +3,7 @@ var db  = require('../db/models');
 var fileUpload = require('../lib/fileUpload');
 var dbUtils = require('../lib/dbUtils');
 var dsParams = require('../lib/DataSourcesParams');
+var importExcel = require('../lib/importExcel');
 
 function getErrorFunc(res, errorCode, msg) {
     return function(error) { 
