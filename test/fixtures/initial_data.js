@@ -10,6 +10,7 @@ function createFixtures() {
     await( require('./DrillingRigOnshore')(db) );
     await( require('./Person')(db) );
     await( require('./OilField')(db) );
+    await( require('./Seismic')(db) );
 };
 
 module.exports = createFixtures;

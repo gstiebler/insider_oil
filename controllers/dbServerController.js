@@ -204,7 +204,8 @@ exports.sourcesList = function(req, res) {
         Company: 'Empresas',
         Persons: 'Pessoas',
         OilFieldDeveloping: 'Campos em desenvolvimento',
-        OilFieldProduction: 'Campos em produção'
+        OilFieldProduction: 'Campos em produção',
+        Seismic: 'Sísmica'
     };
     
     res.json(list);
