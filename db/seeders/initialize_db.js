@@ -6,7 +6,11 @@ var createFixtures = require('../../test/fixtures/initial_data');
 db.sequelize.getQueryInterface().dropAllTables().then( function() {
     db.sequelize.sync().then(function() {
         Sync(function() {
-            createFixtures();
+            try {
+                createFixtures();
+            } catch(e) {
+                console.error(e.stack);
+            }
         });
     });
 });
