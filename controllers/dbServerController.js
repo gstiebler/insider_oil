@@ -199,6 +199,7 @@ exports.sourcesList = function(req, res) {
     var list = {
         Well: 'Poços',
         DrillingRigOffshore: 'Sondas offshore',
+        DrillingRigOnshore: 'Sondas onshore',
         Company: 'Empresas',
         Persons: 'Pessoas',
         OilFieldDeveloping: 'Campos em desenvolvimento',
