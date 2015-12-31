@@ -8,10 +8,6 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.STRING,
           allowNull: false
         },
-        status: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         end: {
           type: DataTypes.DATE,
           allowNull: true

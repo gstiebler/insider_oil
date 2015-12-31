@@ -7,6 +7,7 @@ function createFixtures() {
     await( require('./Company')(db) );
     await( require('./Well')(db) );
     await( require('./DrillingRigOffshore')(db) );
+    await( require('./DrillingRigOnshore')(db) );
     await( require('./Person')(db) );
     await( require('./OilField')(db) );
 };
