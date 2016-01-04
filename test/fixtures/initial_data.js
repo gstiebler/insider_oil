@@ -11,6 +11,7 @@ function createFixtures() {
     await( require('./Person')(db) );
     await( require('./OilField')(db) );
     await( require('./Seismic')(db) );
+    await( require('./AmbientalLicense')(db) );
 };
 
 module.exports = createFixtures;
