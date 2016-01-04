@@ -14,6 +14,7 @@ function createFixtures() {
     await( require('./AmbientalLicense')(db) );
     await( require('./FPSOProduction')(db) );
     await( require('./FixedUEPProduction')(db) );
+    await( require('./Reserve')(db) );
 };
 
 module.exports = createFixtures;
