@@ -202,7 +202,7 @@ exports.sourcesList = function(req, res) {
         DrillingRigOffshore: 'Sondas offshore',
         DrillingRigOnshore: 'Sondas onshore',
         Company: 'Empresas',
-        Persons: 'Pessoas',
+        Person: 'Pessoas',
         OilFieldDeveloping: 'Campos em desenvolvimento',
         OilFieldProduction: 'Campos em produção',
         Seismic: 'Sísmica',
