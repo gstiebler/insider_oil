@@ -26,11 +26,11 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: true
         },
         shore: {
-          type: DataTypes.STRING,
+          type: DataTypes.ENUM('on', 'off'),
           allowNull: false
         },
         stage: {
-          type: DataTypes.STRING,
+          type: DataTypes.ENUM('production', 'development'),
           allowNull: false
         },
         userShore: {
