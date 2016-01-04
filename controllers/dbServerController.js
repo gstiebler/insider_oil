@@ -209,8 +209,10 @@ exports.sourcesList = function(req, res) {
         AmbientalLicenses: 'Licenças ambientais',
         FPSOProduction: 'Produção UEP FPSO',
         FixedUEPProduction: 'Produção UEP Fixa',
-        NationalOilReserves: 'Reservas nacionais de óleo',
-        NationalGasReserves: 'Reservas nacionais de gás',
+        ReserveProvenOil: 'Reservas provadas de óleo',
+        ReserveProvenGas: 'Reservas provadas de gás',
+        ReserveTotalOil: 'Reservas totais de óleo',
+        ReserveTotalGas: 'Reservas totais de gás',
         OnshoreProduction: 'Produção onshore',
         OffshoreshoreProduction: 'Produção offshore'
     };
