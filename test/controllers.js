@@ -379,6 +379,21 @@ loginHTML: function(test) {
         test.equal( '/app/templates/index.html?token', url.split('=')[0] );
         test.done();
     }
+},
+
+
+integrity: test => {
+    const responseAdminDataSources = getJsonResponse.sync(null, dbServerController.sourcesList, null);
+    for(const dataSourceName in responseAdminDataSources) {
+        const req = {
+            query: { table: dataSourceName }
+        };
+        let responseRecords = getJsonResponse.sync(null, dbServerController.main, req);
+        test.ok(responseRecords.records, 'Problem with model ' + dataSourceName);
+        if(responseRecords.records)
+            test.ok(responseRecords.records.length >= 2, 'Problem with model ' + dataSourceName);
+    }
+    test.done();
 }
 
 };
