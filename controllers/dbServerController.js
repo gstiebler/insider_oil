@@ -213,8 +213,8 @@ exports.sourcesList = function(req, res) {
         ReserveProvenGas: 'Reservas provadas de gás',
         ReserveTotalOil: 'Reservas totais de óleo',
         ReserveTotalGas: 'Reservas totais de gás',
-        OnshoreProduction: 'Produção onshore',
-        OffshoreshoreProduction: 'Produção offshore'
+        ProductionOnshore: 'Produção onshore',
+        ProductionOffshore: 'Produção offshore'
     };
     
     res.json(list);
