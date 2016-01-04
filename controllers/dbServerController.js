@@ -205,7 +205,14 @@ exports.sourcesList = function(req, res) {
         Persons: 'Pessoas',
         OilFieldDeveloping: 'Campos em desenvolvimento',
         OilFieldProduction: 'Campos em produção',
-        Seismic: 'Sísmica'
+        Seismic: 'Sísmica',
+        AmbientalLicenses: 'Licenças ambientais',
+        FPSOProduction: 'Produção UEP FPSO',
+        FixedUEPProduction: 'Produção UEP Fixa',
+        NationalOilReserves: 'Reservas nacionais de óleo',
+        NationalGasReserves: 'Reservas nacionais de gás',
+        OnshoreProduction: 'Produção onshore',
+        OffshoreshoreProduction: 'Produção offshore'
     };
     
     res.json(list);
