@@ -206,7 +206,7 @@ exports.sourcesList = function(req, res) {
         OilFieldDeveloping: 'Campos em desenvolvimento',
         OilFieldProduction: 'Campos em produção',
         Seismic: 'Sísmica',
-        AmbientalLicenses: 'Licenças ambientais',
+        AmbientalLicense: 'Licenças ambientais',
         FPSOProduction: 'Produção UEP FPSO',
         FixedUEPProduction: 'Produção UEP Fixa',
         ReserveProvenOil: 'Reservas provadas de óleo',
