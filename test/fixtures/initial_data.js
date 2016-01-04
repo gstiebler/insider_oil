@@ -13,6 +13,7 @@ function createFixtures() {
     await( require('./Seismic')(db) );
     await( require('./AmbientalLicense')(db) );
     await( require('./FPSOProduction')(db) );
+    await( require('./FixedUEPProduction')(db) );
 };
 
 module.exports = createFixtures;
