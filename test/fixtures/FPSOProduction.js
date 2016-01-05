@@ -3,7 +3,7 @@ module.exports = function(db) {
         {
             name: 'Cidade de Anchieta',
             owner: 'SBM',
-            status: 'Operação',
+            status: 'operation',
             field: 'Baleia Azul',
             oil_processing_capacity: 100,
             gas_processing_capacity: 3.5,
@@ -17,7 +17,7 @@ module.exports = function(db) {
         {
             name: 'Cidade de Angra dos Reis',
             owner: 'Modec',
-            status: 'Operação',
+            status: 'operation',
             field: 'Lula',
             oil_processing_capacity: 100,
             gas_processing_capacity: 5,
@@ -31,7 +31,7 @@ module.exports = function(db) {
         {
             name: 'Cidade de Campos dos Goytacazes',
             owner: 'Modec/Schahin',
-            status: 'Construção',
+            status: 'construction',
             field: 'Tartaruga Verde/Tartaruga Mestiça',
             oil_processing_capacity: 150,
             gas_processing_capacity: 5.0,

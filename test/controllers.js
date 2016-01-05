@@ -42,11 +42,18 @@ function testRenderFn(test, errorMsg) {
 function iterateTree(children, test) {
     for(let i = 0; i < children.length; i++) {
         const item = children[i];
-        console.log(item.label);
         if(item.children) {
             iterateTree(item.children, test);
         } else {
             test.ok(item.child, 'Não existe filho para o item ' + item.label);
+            const req = {
+                query: { 
+                    table: item.child.source,
+                    filters: JSON.stringify(item.child.filters)
+                }
+            };
+            const response = getJsonResponse.sync(null, dbServerController.main, req);
+            test.ok(response.records.length > 0, 'Não há registros em ' + item.label);
         }
     }
 }
