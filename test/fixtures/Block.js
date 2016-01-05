@@ -15,7 +15,7 @@ module.exports = function(db) {
         },
         {
             name: 'ES-M-529',
-            basin: 'EspÌrito Santo',
+            basin: 'Esp√≠rito Santo',
             name_contract: 'BM-ES-40',
             bid: 'BID9',
             operator: 'Perenco Brasil',
@@ -23,21 +23,21 @@ module.exports = function(db) {
             end_2: '3/28/2015',
             end_3 : '12/31/2019',
             end_last: '12/31/2019',
-            status: 'PAD EM AN¡LISE',
-            concessionaries: '*Perenco Brasil - 40%, OGX - 50%, Sinochem PetrÛleo - 10%'
+            status: 'PAD EM AN√ÅLISE',
+            concessionaries: '*Perenco Brasil - 40%, OGX - 50%, Sinochem Petr√≥leo - 10%'
         },
         {
             name: 'PN-T-102',
-            basin: 'ParnaÌba',
+            basin: 'Parna√≠ba',
             name_contract: 'BT-PN-1',
             bid: 'BID9',
-            operator: 'ParnaÌba G·s Natural',
+            operator: 'Parna√≠ba G√°s Natural',
             end_1: '3/12/2012',
             end_2: '3/12/2014',
             end_3 : '',
             end_last: '6/25/2016',
             status: '',
-            concessionaries: '*ParnaÌba G·s Natural - 50%, Imetame - 16.67%, Delp - 16.665%, Orteng - 16.665%'
+            concessionaries: '*Parna√≠ba G√°s Natural - 50%, Imetame - 16.67%, Delp - 16.665%, Orteng - 16.665%'
         }
     ]);
 }
