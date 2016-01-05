@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         },
         status: {
-          type: DataTypes.STRING,
+          type: DataTypes.ENUM('operation', 'construction'),
           allowNull: false
         },
         field: {

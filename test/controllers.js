@@ -1,6 +1,7 @@
 "use strict";
 var fiberTests = require('./lib/fiberTests');
 var dbServerController = require('../controllers/dbServerController');
+var TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
 //var Sync = require('sync');
 
@@ -34,6 +35,19 @@ function testRenderFn(test, errorMsg) {
     return function render(viewName, params) {
         test.equal('login', viewName);
         test.equal( errorMsg, params.errorMsg );
+    }
+}
+
+
+function iterateTree(children, test) {
+    for(let i = 0; i < children.length; i++) {
+        const item = children[i];
+        console.log(item.label);
+        if(item.children) {
+            iterateTree(item.children, test);
+        } else {
+            test.ok(item.child, 'Não existe filho para o item ' + item.label);
+        }
     }
 }
 
@@ -382,7 +396,7 @@ loginHTML: function(test) {
 },
 
 
-integrity: test => {
+adminTablesIntegrity: test => {
     const responseAdminDataSources = getJsonResponse.sync(null, dbServerController.sourcesList, null);
     for(const dataSourceName in responseAdminDataSources) {
         const req = {
@@ -393,6 +407,13 @@ integrity: test => {
         if(responseRecords.records)
             test.ok(responseRecords.records.length >= 2, 'Problem with model ' + dataSourceName);
     }
+    test.done();
+},
+
+
+treeIntegrity: test => {
+    const tree = getJsonResponse.sync(null, TreeController.main, null);
+    iterateTree(tree.children, test);
     test.done();
 }
 
