@@ -198,6 +198,7 @@ exports.viewRecord = function(req, res, next) {
 
 exports.sourcesList = function(req, res) {
     var list = {
+        Block: 'Blocos',
         Well: 'Poços',
         DrillingRigOffshore: 'Sondas offshore',
         DrillingRigOnshore: 'Sondas onshore',

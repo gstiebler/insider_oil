@@ -16,6 +16,7 @@ function createFixtures() {
     await( require('./FixedUEPProduction')(db) );
     await( require('./Reserve')(db) );
     await( require('./Production')(db) );
+    await( require('./Block')(db) );
 };
 
 module.exports = createFixtures;
