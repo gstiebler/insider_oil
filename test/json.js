@@ -89,7 +89,7 @@ modelFields: function(test) {
         
         test.equal('VARCHAR(255)', json.fields[0].type);
         test.equal('VARCHAR(255)', json.fields[1].type);
-        test.equal('DECIMAL', json.fields[4].type);
+        test.equal('DECIMAL(10,6)', json.fields[4].type);
         test.equal('ref', json.fields[5].type);
         
         test.equal('Company', json.fields[5].model);
@@ -113,8 +113,8 @@ recordValues: function(test) {
         test.equal(2, json.values.operator_id);
         test.equal('RJ', json.values.state);
         test.equal('Santos', json.values.bacia);
-        test.equal(-4.91808556, json.values.lat);
-        test.equal(-37.22464472, json.values.lng);
+        test.equal(-4.918086, json.values.lat);
+        test.equal(-37.224645, json.values.lng);
         
         server.close();
         test.done();

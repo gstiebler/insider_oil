@@ -1,11 +1,22 @@
 {
   "development": {
-    "dialect": "sqlite",
-    "storage": "./db.development.sqlite"
+    "port": 3306,
+    "username": "root",
+    "password": "root",
+    "database": "insider_oil_development",
+    "host": "localhost",
+    "protocol": "mysql",
+    "dialect": "mysql",
+    "logging": false
   },
   "test": {
-    "dialect": "sqlite",
-    "storage": "./db.test.sqlite",
+    "port": 3306,
+    "username": "root",
+    "password": "root",
+    "database": "insider_oil_test",
+    "host": "localhost",
+    "protocol": "mysql",
+    "dialect": "mysql",
     "logging": false
   },
   "production": {    

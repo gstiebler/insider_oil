@@ -25,30 +25,30 @@ first: function(test) {
     
     function onImportDone(status, invalidRecordsStatus) {
         var rows = await( dbUtils.findAllCustom(db.DrillingRigOffshore));
-        test.equal( 13, rows.length );  
-        var expectedStatus = "Registros criados: 10";
+        test.equal( 26, rows.length );  
+        var expectedStatus = "Registros criados: 23";
         expectedStatus += "\nRegistros atualizados: 3";
-        expectedStatus += "\nRegistros inválidos: 85";
+        expectedStatus += "\nRegistros inválidos: 72";
         test.equal( expectedStatus, status );
         test.equal( "Valor 'Brasdril' do campo 'contratada' não encontrado.", invalidRecordsStatus[0] );
         test.equal( "Valor 'Transocean' do campo 'contratada' não encontrado.", invalidRecordsStatus[1] );
-        test.equal( "Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[83] );
-        test.equal( "Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[84] );
+        test.equal( "Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[70] );
+        test.equal( "Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[71] );
         
         test.equal("Aban Abraham", rows[0].name);
         test.equal("Etesco", rows[0].contractor.name);
         test.equal("NS", rows[0].type);
         test.equal("Em operação", rows[0].status);
         test.equal(1900, rows[0].lda);
-        test.equal("2011-06-05", rows[0].start.substring(0, 10));
-        test.equal("2016-06-02", rows[0].end.substring(0, 10));
-        test.equal("Pantanal (Schahin I)", rows[10].name);
-        test.equal("Schahin", rows[10].contractor.name);
+        test.equal("2011-06-05", rows[0].start.toJSON().substring(0, 10));
+        test.equal("2016-06-02", rows[0].end.toJSON().substring(0, 10));
+        test.equal("Petrobras XVII", rows[10].name);
+        test.equal("Petrobrás", rows[10].contractor.name);
         test.equal("SS", rows[10].type);
         test.equal("Em operação", rows[10].status);
-        test.equal(2400, rows[10].lda);
-        test.equal("2011-06-06", rows[10].start.substring(0, 10));
-        test.equal("2018-06-03", rows[10].end.substring(0, 10));
+        test.equal(700, rows[10].lda);
+        test.equal("0000-00-00", rows[10].start.substring(0, 10));
+        test.equal("0000-00-00", rows[10].end.substring(0, 10));
         
         test.done();
     }

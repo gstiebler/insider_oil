@@ -411,8 +411,10 @@ adminTablesIntegrity: test => {
         };
         let responseRecords = getJsonResponse.sync(null, dbServerController.main, req);
         test.ok(responseRecords.records, 'Problem with model ' + dataSourceName);
-        if(responseRecords.records)
-            test.ok(responseRecords.records.length >= 2, 'Problem with model ' + dataSourceName);
+        if(responseRecords.records) {
+            test.ok(responseRecords.records.length >= 2, 'Problem with model ' + dataSourceName + 
+                    ', records: ' +responseRecords.records.length);
+        }
     }
     test.done();
 },

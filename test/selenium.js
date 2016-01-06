@@ -160,10 +160,10 @@ function uploadExcelFile(test, driver) {
     var fileName = __dirname + '\\data\\drilling_rigs.xls';
     driver.findElement(By.id('uploadExcelButton')).sendKeys(fileName);
     driver.sleep(tableLoadTime + 500);
-    test.equal( "Registros criados: 10", getFlashMessage(driver, 0) );
+    test.equal( "Registros criados: 23", getFlashMessage(driver, 0) );
     test.equal( "Registros atualizados: 3", getFlashMessage(driver, 1) );
-    test.equal( "Registros inválidos: 85", getFlashMessage(driver, 2) );
-    test.ok( await( driver.isElementPresent(elementByText('Mostrando de 1 até 10 de 13 registros'))) );
+    test.equal( "Registros inválidos: 72", getFlashMessage(driver, 2) );
+    test.equal( 'Mostrando de 1 até 10 de 26 registros', await( driver.findElement(By.xpath('//*[@id="mainTable_info"]')).getText() ));
     test.equal( 'Aban Abraham', getTableValue(0, 0, driver) );
     test.equal( 'Etesco', getTableValue(0, 1, driver) );
     test.equal( '05/06/2011', getTableValue(0, 5, driver) );
@@ -172,14 +172,14 @@ function uploadExcelFile(test, driver) {
     test.equal( 'Schahin', getTableValue(1, 1, driver) );
     test.equal( '10/02/2012', getTableValue(1, 5, driver) );
     test.equal( '07/02/2017', getTableValue(1, 6, driver) );
-    test.equal( 'S.C. Lancer', getTableValue(8, 0, driver) );
-    test.equal( 'Schahin', getTableValue(8, 1, driver) );
-    test.equal( '16/08/2002', getTableValue(8, 5, driver) );
-    test.equal( '11/08/2016', getTableValue(8, 6, driver) );
-    test.equal( 'Schahin Cerrado', getTableValue(9, 0, driver) );
-    test.equal( 'Schahin', getTableValue(9, 1, driver) )
-    test.equal( '21/03/2012', getTableValue(9, 5, driver) );
-    test.equal( '25/07/2015', getTableValue(9, 6, driver) );;
+    test.equal( 'Petrobras 09', getTableValue(8, 0, driver) );
+    test.equal( 'Petrobrás', getTableValue(8, 1, driver) );
+    test.equal( '00/00/0000', getTableValue(8, 5, driver) );
+    test.equal( '00/00/0000', getTableValue(8, 6, driver) );
+    test.equal( 'Petrobras 59', getTableValue(9, 0, driver) );
+    test.equal( 'Petrobrás', getTableValue(9, 1, driver) )
+    test.equal( '00/00/0000', getTableValue(9, 5, driver) );
+    test.equal( '00/00/0000', getTableValue(9, 6, driver) );;
 }
 
 function logout(test, driver) {
