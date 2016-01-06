@@ -120,7 +120,7 @@ modelFields: function(test) {
     test.equal( 'VARCHAR(255)', response.fields[0].type );
     test.equal( 'lat', response.fields[3].name );
     test.equal( 'Latitude', response.fields[3].label );
-    test.equal( 'DECIMAL', response.fields[3].type );
+    test.equal( 'DECIMAL(10,6)', response.fields[3].type );
     test.equal( 'operator_id', response.fields[5].name );
     test.equal( 'Operador', response.fields[5].label );
     test.equal( 'ref', response.fields[5].type );
