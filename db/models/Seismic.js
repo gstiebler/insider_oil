@@ -9,11 +9,11 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: true
         },
         dou_publi_date: {
-          type: DataTypes.DATE,
+          type: DataTypes.DATEONLY,
           allowNull: true
         },
         end_date: {
-          type: DataTypes.DATE,
+          type: DataTypes.DATEONLY,
           allowNull: true
         },
         authorized_technologies: {

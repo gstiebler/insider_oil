@@ -17,11 +17,11 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: true
         },
         start: {
-          type: DataTypes.DATE,
+          type: DataTypes.DATEONLY,
           allowNull: true
         },
         end: {
-          type: DataTypes.DATE,
+          type: DataTypes.DATEONLY,
           allowNull: true
         }/*, another option of validation
         contractor_id: {
