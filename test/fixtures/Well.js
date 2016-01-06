@@ -7,6 +7,7 @@ module.exports = function(db) {
             operator_id: utils.idByName('Company', 'Petrobrás'),
             state: "BA",
             bacia: "Recôncavo",
+            block_id: utils.idByName('Block', 'BM-BAR-1'),
             lat: -12.79429444,
             lng: -38.43638167
         },
@@ -15,6 +16,7 @@ module.exports = function(db) {
             operator_id: utils.idByName('Company', 'Eni Oil'),
             state: "RJ",
             bacia: "Santos",
+            block_id: utils.idByName('Block', 'ES-M-529'),
             lat: -4.91808556,
             lng: -37.22464472
         },
@@ -23,6 +25,7 @@ module.exports = function(db) {
             operator_id: utils.idByName('Company', 'Recôncavo E&P'),
             state: "BA",
             bacia: "Recôncavo",
+            block_id: utils.idByName('Block', 'PN-T-102'),
             lat: -9.98799556,
             lng: -38.67655583
         }

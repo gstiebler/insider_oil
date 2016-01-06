@@ -33,6 +33,7 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 Well.belongsTo(models.Company, { as: 'operator' } );
+                Well.belongsTo(models.Block, { as: 'block' } );
             }
         }
     }

@@ -5,6 +5,7 @@ var await = require('../../lib/await');
 function createFixtures() {
     await( require('./User')(db) );
     await( require('./Company')(db) );
+    await( require('./Block')(db) );
     await( require('./Well')(db) );
     await( require('./DrillingRigOffshore')(db) );
     await( require('./DrillingRigOnshore')(db) );
@@ -16,7 +17,6 @@ function createFixtures() {
     await( require('./FixedUEPProduction')(db) );
     await( require('./Reserve')(db) );
     await( require('./Production')(db) );
-    await( require('./Block')(db) );
 };
 
 module.exports = createFixtures;
