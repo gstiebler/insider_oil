@@ -6,8 +6,7 @@
     "database": "insider_oil_development",
     "host": "localhost",
     "protocol": "mysql",
-    "dialect": "mysql",
-    "logging": false
+    "dialect": "mysql"
   },
   "test": {
     "port": 3306,
@@ -26,6 +25,9 @@
     "database": "heroku_bf9cc835b37a928",
     "host": "us-cdbr-iron-east-03.cleardb.net",
     "protocol": "mysql",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "dialectOptions": {
+        "timeout": 30
+    },
   }
 }
