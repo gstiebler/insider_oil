@@ -53,7 +53,7 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
                     title: fieldLabel,
                     data: fieldName
                 };
-                if(model.types[fieldName] == "DATETIME")
+                if(model.types[fieldName] == "DATE")
                     columnObj.render = { display: dateFormat };
                     
                 columns.push(columnObj);

@@ -19,7 +19,7 @@ angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemCo
             var field = fields[i];
             field.htmlId = getHtmlId(field);
             field.hasRef = field.type == 'ref';
-            field.isDate = field.type == 'DATETIME';
+            field.isDate = field.type == 'DATE';
             if( field.hasRef ) {
                 data.values[field.name] = data.values[field.name].toString();
                 

@@ -19,7 +19,7 @@ angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateIt
             $scope.values[field.name] = "";
             field.htmlId = getHtmlId(field);
             field.hasRef = field.type == 'ref';
-            field.isDate = field.type == 'DATETIME';
+            field.isDate = field.type == 'DATE';
             if( field.hasRef ) {
                 server.getComboValues( field.model, onValues, showError.show );
             }

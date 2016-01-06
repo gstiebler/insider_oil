@@ -40,15 +40,15 @@ first: function(test) {
         test.equal("NS", rows[0].type);
         test.equal("Em operação", rows[0].status);
         test.equal(1900, rows[0].lda);
-        test.equal("2011-06-05", rows[0].start.toJSON().substring(0, 10));
-        test.equal("2016-06-02", rows[0].end.toJSON().substring(0, 10));
+        test.equal("2011-06-05", rows[0].start.substring(0, 10));
+        test.equal("2016-06-02", rows[0].end.substring(0, 10));
         test.equal("Pantanal (Schahin I)", rows[10].name);
         test.equal("Schahin", rows[10].contractor.name);
         test.equal("SS", rows[10].type);
         test.equal("Em operação", rows[10].status);
         test.equal(2400, rows[10].lda);
-        test.equal("2011-06-06", rows[10].start.toJSON().substring(0, 10));
-        test.equal("2018-06-03", rows[10].end.toJSON().substring(0, 10));
+        test.equal("2011-06-06", rows[10].start.substring(0, 10));
+        test.equal("2018-06-03", rows[10].end.substring(0, 10));
         
         test.done();
     }
