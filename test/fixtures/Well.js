@@ -1,10 +1,10 @@
-var await = require('../../lib/await');
+var utils = require('../lib/utils');
 
 module.exports = function(db) {
     return db.Well.bulkCreate([
         {
             name: "1A 0001 BA",
-            operator_id: await( db.Company.findOne( { where: { name: 'Petrobrás' }} ) ).id,
+            operator_id: utils.idByName('Company', 'Petrobrás'),
             state: "BA",
             bacia: "Recôncavo",
             lat: -12.79429444,
@@ -12,7 +12,7 @@ module.exports = function(db) {
         },
         {
             name: "1AGIP1RJS",
-            operator_id: await( db.Company.findOne( { where: { name: 'Eni Oil' }} ) ).id,
+            operator_id: utils.idByName('Company', 'Eni Oil'),
             state: "RJ",
             bacia: "Santos",
             lat: -4.91808556,
@@ -20,7 +20,7 @@ module.exports = function(db) {
         },
         {
             name: "1AJ 0001 BA",
-            operator_id: await( db.Company.findOne( { where: { name: 'Recôncavo E&P' }} ) ).id,
+            operator_id: utils.idByName('Company', 'Recôncavo E&P'),
             state: "BA",
             bacia: "Recôncavo",
             lat: -9.98799556,
