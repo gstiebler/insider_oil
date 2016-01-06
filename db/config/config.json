@@ -28,6 +28,6 @@
     "dialect": "mysql",
     "dialectOptions": {
         "timeout": 30
-    },
+    }
   }
 }
