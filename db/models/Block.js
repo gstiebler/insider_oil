@@ -4,19 +4,11 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.STRING,
           allowNull: false
         },
-        basin: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         name_contract: {
           type: DataTypes.STRING,
           allowNull: false
         },
         bid: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
-        operator: {
           type: DataTypes.STRING,
           allowNull: false
         },
@@ -47,7 +39,13 @@ module.exports = function(sequelize, DataTypes) {
     }, 
     {
         underscored: true,
-        tableName: 'blocks'
+        tableName: 'blocks',
+        classMethods: {
+            associate: function(models) {
+                Block.belongsTo(models.Company, { as: 'operator' } );
+                Block.belongsTo(models.Basin, { as: 'basin' } );
+            }
+        }
     }
   );
   

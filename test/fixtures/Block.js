@@ -1,11 +1,13 @@
+var utils = require('../lib/utils');
+
 module.exports = function(db) {
     return db.Block.bulkCreate([
         {
             name: 'BM-BAR-1',
-            basin: 'Barreirinhas',
+            basin_id: utils.idByName('Basin', 'Recôncavo'),
             name_contract: 'BM-BAR-1',
             bid: 'BID3',
-            operator: 'Petrobras',
+            operator_id: utils.idByName('Company', 'Petrobrás'),
             end_1: '8/29/2004',
             end_2: '7/18/2012',
             end_3 : '4/20/2014',
@@ -15,10 +17,10 @@ module.exports = function(db) {
         },
         {
             name: 'ES-M-529',
-            basin: 'Espírito Santo',
+            basin_id: utils.idByName('Basin', 'Potiguar'),
             name_contract: 'BM-ES-40',
             bid: 'BID9',
-            operator: 'Perenco Brasil',
+            operator_id: utils.idByName('Company', 'Statoil'),
             end_1: '10/14/2012',
             end_2: '3/28/2015',
             end_3 : '12/31/2019',
@@ -28,10 +30,10 @@ module.exports = function(db) {
         },
         {
             name: 'PN-T-102',
-            basin: 'Parnaíba',
+            basin_id: utils.idByName('Basin', 'Tucano Central'),
             name_contract: 'BT-PN-1',
             bid: 'BID9',
-            operator: 'Parnaíba Gás Natural',
+            operator_id: utils.idByName('Company', 'Schahin'),
             end_1: '3/12/2012',
             end_2: '3/12/2014',
             end_3 : '',
