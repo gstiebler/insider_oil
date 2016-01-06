@@ -15,13 +15,15 @@ angular.module('CreateItemCtrl', ['flash', 'ui.bootstrap']).controller('CreateIt
         }
         
         for( var i = 0; i < fields.length; i++ ) {
-            var field = fields[i];
+            const field = fields[i];
             $scope.values[field.name] = "";
             field.htmlId = getHtmlId(field);
             field.hasRef = field.type == 'ref';
             field.isDate = field.type == 'DATE';
             if( field.hasRef ) {
-                server.getComboValues( field.model, onValues, showError.show );
+                server.getComboValues( field.model, function(values) {
+                    field.values = values;
+                }, showError.show );
             }
         }
     

@@ -10,20 +10,18 @@ angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemCo
     $scope.dateFormat = 'dd/MM/yyyy';
     
     function valuesArrived(data) {
-        function onValues(values) {
-            field.values = values;
-        }
-        
         var fields = data.fields;
         for( var i = 0; i < fields.length; i++ ) {
-            var field = fields[i];
+            const field = fields[i];
             field.htmlId = getHtmlId(field);
             field.hasRef = field.type == 'ref';
             field.isDate = field.type == 'DATE';
             if( field.hasRef ) {
                 data.values[field.name] = data.values[field.name].toString();
                 
-                server.getComboValues( field.model, onValues, showError.show );
+                server.getComboValues( field.model, function (values) {
+                    field.values = values;
+                }, showError.show );
             }
             if(field.isDate) {
                 const dateStr = data.values[field.name];
