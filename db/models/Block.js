@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: true
         },
         concessionaries: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           allowNull: true
         }
     }, 
