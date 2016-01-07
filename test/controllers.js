@@ -102,7 +102,7 @@ listOilFieldsProductionOnshore: function(test) {
     test.equal( 'Campos', response.viewParams.tableLabel );
     test.equal( 'name', response.viewParams.labelField );
     test.equal( 'Nome', response.viewParams.fields.name.label );
-    test.equal( 'Bacia', response.viewParams.fields.basin.label );
+    test.equal( 'Bacia', response.viewParams.fields.basin_name.label );
     test.equal( 'Terra/Mar', response.viewParams.fields.userShore.label );
     test.done();
 },
@@ -114,17 +114,16 @@ modelFields: function(test) {
     };
     
     const response = getJsonResponse.sync(null, dbServerController.modelFields, req);
-    
     test.equal( 'name', response.fields[0].name );
     test.equal( 'Poço', response.fields[0].label );
     test.equal( 'VARCHAR(255)', response.fields[0].type );
-    test.equal( 'lat', response.fields[3].name );
-    test.equal( 'Latitude', response.fields[3].label );
-    test.equal( 'DECIMAL(10,6)', response.fields[3].type );
-    test.equal( 'operator_id', response.fields[5].name );
-    test.equal( 'Operador', response.fields[5].label );
-    test.equal( 'ref', response.fields[5].type );
-    test.equal( 'Company', response.fields[5].model );
+    test.equal( 'lat', response.fields[2].name );
+    test.equal( 'Latitude', response.fields[2].label );
+    test.equal( 'DECIMAL(10,6)', response.fields[2].type );
+    test.equal( 'operator_id', response.fields[4].name );
+    test.equal( 'Operador', response.fields[4].label );
+    test.equal( 'ref', response.fields[4].type );
+    test.equal( 'Company', response.fields[4].model );
     test.done();
 },
 
