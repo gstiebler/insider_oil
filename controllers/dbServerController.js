@@ -39,19 +39,23 @@ exports.main = function(req, res, next) {
         .catch(getErrorFunc(res, 500, "Erro"));
     
     function sendRecords(records) {
-        const viewParams = dsParams[dataSource.name];
-        viewParams.gridFields.push('id');
-        dbUtils.simplifyArray( dataSource, records );
-        const fields = dbUtils.getModelFields(modelName);
-        const types = {};
-        for( var i = 0; i < fields.length; i++)
-            types[fields[i].name] = fields[i].type;
-        const responseObj = {
-            records: records,
-            viewParams: viewParams,
-            types: types
-        };
-        res.json( responseObj );
+        try {
+            const viewParams = dsParams[dataSource.name];
+            viewParams.gridFields.push('id');
+            dbUtils.simplifyArray( dataSource, records );
+            const fields = dbUtils.getModelFields(modelName);
+            const types = {};
+            for( var i = 0; i < fields.length; i++)
+                types[fields[i].name] = fields[i].type;
+            const responseObj = {
+                records: records,
+                viewParams: viewParams,
+                types: types
+            };
+            res.json( responseObj );
+        } catch(e) {
+            getErrorFunc(res, 500, "Erro")(e);
+        }
     }
 }
 

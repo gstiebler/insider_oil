@@ -323,15 +323,15 @@ getRecordViewWell: function(test) {
     const response = getJsonResponse.sync(null, dbServerController.viewRecord, req);
     test.equal('Poço', response[0].label);
     test.equal('Estado', response[1].label);
-    test.equal('Latitude', response[3].label);
-    test.equal('Operador', response[5].label);
+    test.equal('Latitude', response[2].label);
+    test.equal('Operador', response[4].label);
     
     test.equal('1AGIP1RJS', response[0].value);
     
     test.equal(2, response[5].value);
     test.equal(true, response[5].ref);
-    test.equal('Company', response[5].source);
-    test.equal('Eni Oil', response[5].name);
+    test.equal('Company', response[4].source);
+    test.equal('Eni Oil', response[4].name);
     
     test.done();
 },
@@ -343,7 +343,7 @@ createOilFieldDeveloping: function(test) {
             model: 'OilFieldDeveloping',
             newItemData: {
                 name: 'Gavião Azul',
-                basin: 'Parnaíba',
+                basin_id: 2,
                 state: 'Maranhão',
                 concessionaries: 'Parnaíba Gás¹ (70)/BPMB Parnaíba (30)',
                 userShore: 'Terra'
@@ -359,7 +359,7 @@ createOilFieldDeveloping: function(test) {
     const responseDeveloping = getJsonResponse.sync(null, dbServerController.main, reqOilFieldDeveloping);
     test.equal(4, responseDeveloping.records.length);
     test.equal('Gavião Azul', responseDeveloping.records[3].name);
-    test.equal('Parnaíba', responseDeveloping.records[3].basin);
+    test.equal('Potiguar', responseDeveloping.records[3].basin_name);
     test.equal('on', responseDeveloping.records[3].shore);
     test.equal('Terra', responseDeveloping.records[3].userShore);
     
