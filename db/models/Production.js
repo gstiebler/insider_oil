@@ -4,23 +4,11 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.STRING,
           allowNull: false
         },
-        basin: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         well_anp: {
           type: DataTypes.STRING,
           allowNull: false
         },
         well_operator: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
-        oil_field: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
-        operator: {
           type: DataTypes.STRING,
           allowNull: false
         },
@@ -79,7 +67,14 @@ module.exports = function(sequelize, DataTypes) {
     }, 
     {
         underscored: true,
-        tableName: 'production'
+        tableName: 'production',
+        classMethods: {
+            associate: function(models) {
+                Production.belongsTo(models.Basin, { as: 'basin', allowNull: false } );
+                Production.belongsTo(models.Company, { as: 'operator', allowNull: false } );
+                Production.belongsTo(models.OilField, { as: 'oil_field', allowNull: false } );
+            }
+        }
     }
   );
   

@@ -8,10 +8,6 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.STRING,
           allowNull: false
         },
-        bacia: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         lat: {
           type: DataTypes.DECIMAL(10, 6),
           allowNull: false
@@ -34,6 +30,7 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 Well.belongsTo(models.Company, { as: 'operator' } );
                 Well.belongsTo(models.Block, { as: 'block' } );
+                Well.belongsTo(models.Basin, { as: 'basin' } );
             }
         }
     }

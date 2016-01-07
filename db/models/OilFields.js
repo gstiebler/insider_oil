@@ -13,10 +13,6 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.STRING,
           allowNull: false
         },
-        basin: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         state: {
           type: DataTypes.STRING,
           allowNull: false
@@ -53,7 +49,12 @@ module.exports = function(sequelize, DataTypes) {
     }, 
     {
         underscored: true,
-        tableName: 'oil_fields'
+        tableName: 'oil_fields',
+        classMethods: {
+            associate: function(models) {
+                OilField.belongsTo(models.Basin, { as: 'basin', allowNull: false } );
+            }
+        }
     }    
   );
   

@@ -1,10 +1,12 @@
+var utils = require('../lib/utils');
+
 module.exports = function(db) {
     return db.FixedUEPProduction.bulkCreate([
         {
             name: 'Peregrino A',
             code: 'PEREGRINO A',
-            basin: 'Campos',
-            operator: 'Statoil Brasil',
+            basin_id: utils.idByName('Basin', 'Potiguar'),
+            operator_id: utils.idByName('Company', 'Paragon'),
             lat: -23.334167,
             lng: -41.2983,
             depth: 106
@@ -12,8 +14,8 @@ module.exports = function(db) {
         {
             name: 'PEROA',
             code: 'PPER',
-            basin: 'Espírito Santo',
-            operator: 'Petrobras',
+            basin_id: utils.idByName('Basin', 'Tucano Central'),
+            operator_id: utils.idByName('Company', 'Etesco'),
             lat: -19.564167,
             lng: -39.25389,
             depth: 70
@@ -21,8 +23,8 @@ module.exports = function(db) {
         {
             name: 'PLATAFORMA BIQUARA 1',
             code: 'PBIQ-1',
-            basin: 'Potiguar',
-            operator: 'Petrobras',
+            basin_id: utils.idByName('Basin', 'Recôncavo'),
+            operator_id: utils.idByName('Company', 'Eni Oil'),
             lat: -4.85694,
             lng: -36.560278,
             depth: 20

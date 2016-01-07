@@ -1,12 +1,14 @@
+var utils = require('../lib/utils');
+
 module.exports = function(db) {
     return db.Production.bulkCreate([
         {
             state: 'Bahia',
-            basin: 'Recôncavo',
+            basin_id: utils.idByName('Basin', 'Potiguar'),
             well_anp: '7C   0137  BA',
             well_operator: '7C   0137  BA',
-            oil_field: 'CANDEIAS',
-            operator: 'Petrobras',
+            oil_field_id: utils.idByName('OilField', 'Abalone'),
+            operator_id: utils.idByName('Company', 'Petrobrás'),
             contract: '480000036389734',
             period_year: 2015,
             period_month: 07,
@@ -19,15 +21,15 @@ module.exports = function(db) {
             instalation: 'Estação Pedra Branca',
             instalation_type: 'INSTALACAO EMB/DESEMB',
             production_time: 711,
-            shore: 'off',
+            shore: 'off'
         },
         {
             state: 'Rio Grande do Norte',
-            basin: 'Potiguar',
+            basin_id: utils.idByName('Basin', 'Tucano Central'),
             well_anp: '7UB  0007D RNS',
             well_operator: '7UB  0007D RNS',
-            oil_field: 'UBARANA',
-            operator: 'Petrobras',
+            oil_field_id: utils.idByName('OilField', 'Azulão'),
+            operator_id: utils.idByName('Company', 'Eni Oil'),
             contract: '480000037829771',
             period_year: 2015,
             period_month: 07,
@@ -40,15 +42,15 @@ module.exports = function(db) {
             instalation: 'PLATAFORMA DE UBARANA 1',
             instalation_type: 'UEP',
             production_time: 742,
-            shore: 'off',
+            shore: 'off'
         },
         {
             state: 'Sergipe',
-            basin: 'Sergipe',
+            basin_id: utils.idByName('Basin', 'Potiguar'),
             well_anp: '7GA  0007D SES',
             well_operator: '7GA  0007D SES',
-            oil_field: 'GUARICEMA',
-            operator: 'Petrobras',
+            oil_field_id: utils.idByName('OilField', 'Anambé'),
+            operator_id: utils.idByName('Company', 'Eni Oil'),
             contract: '480000038399796',
             period_year: 2015,
             period_month: 07,
@@ -61,15 +63,15 @@ module.exports = function(db) {
             instalation: 'PLATAFORMA PGA-01 DE GUARICEMA',
             instalation_type: 'UEP',
             production_time: 743,
-            shore: 'off',
+            shore: 'off'
         },
         {
             state: 'Bahia',
-            basin: 'Recôncavo',
+            basin_id: utils.idByName('Basin', 'Potiguar'),
             well_anp: '7C   0010  BA       ',
-            well_operator: '7C   0010  BA       ',
-            oil_field: 'CANDEIAS',
-            operator: 'Petrobras',
+            well_operator: '7C   0010  BA', 
+            oil_field_id: utils.idByName('OilField', 'Anambé'),
+            operator_id: utils.idByName('Company', 'Eni Oil'),
             contract: '480000036389734',
             period_year: 2015,
             period_month: 07,
@@ -82,15 +84,15 @@ module.exports = function(db) {
             instalation: 'Estação São Paulinho',
             instalation_type: 'INSTALACAO EMB/DESEMB',
             production_time: 700,
-            shore: 'on',
+            shore: 'on'
         },
         {
             state: 'Amazonas',
-            basin: 'Solimões',
+            basin_id: utils.idByName('Basin', 'Recôncavo'),
             well_anp: '3LUC 0008  AM',
             well_operator: '3LUC 0008  AM',
-            oil_field: 'LESTE DO URUCU',
-            operator: 'Petrobras',
+            oil_field_id: utils.idByName('OilField', 'Abalone'),
+            operator_id: utils.idByName('Company', 'Recôncavo E&P'),
             contract: '480000036279718',
             period_year: 2015,
             period_month: 07,
@@ -103,15 +105,15 @@ module.exports = function(db) {
             instalation: 'Ponto de Coleta Área do LUC-05',
             instalation_type: 'INSTALACAO EMB/DESEMB',
             production_time: 744,
-            shore: 'on',
+            shore: 'on'
         },
         {
             state: 'Rio Grande do Norte',
-            basin: 'Potiguar',
+            basin_id: utils.idByName('Basin', 'Recôncavo'),
             well_anp: '7ET1442DRN',
-            well_operator: '7ET1442DRN',
-            oil_field: 'ESTREITO',
-            operator: 'Petrobras',
+            well_operator: '3LUC 00048  AM',
+            oil_field_id: utils.idByName('OilField', 'Anambé'),
+            operator_id: utils.idByName('Company', 'Recôncavo E&P'),
             contract: '480000037939797',
             period_year: 2015,
             period_month: 07,
@@ -124,7 +126,7 @@ module.exports = function(db) {
             instalation: 'Estação Coletora Rio Panon A',
             instalation_type: 'INSTALACAO EMB/DESEMB',
             production_time: 740,
-            shore: 'on',
+            shore: 'on'
         }
     ]);
 }

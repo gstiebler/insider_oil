@@ -1,3 +1,5 @@
+var utils = require('../lib/utils');
+
 module.exports = function(db) {
     return db.Seismic.bulkCreate([
         {
@@ -6,7 +8,7 @@ module.exports = function(db) {
             dou_publi_date: '1/9/2013',
             end_date: '3/9/2013',
             authorized_technologies: 'Aquisição de Dados Magnetotelúricos',
-            basin: 'São Francisco'
+            basin_id: utils.idByName('Basin', 'Potiguar')
         },
         {
             process: '48610.000189/2013-10',
@@ -14,7 +16,7 @@ module.exports = function(db) {
             dou_publi_date: '1/14/2013',
             end_date: '1/14/2014',
             authorized_technologies: 'Reprocessamento de Dados Sísmicas 3D',
-            basin: 'Espírito Santo e Campos'
+            basin_id: utils.idByName('Basin', 'Tucano Central')
         },
         {
             process: '48610.000912/2013-52',
@@ -22,7 +24,7 @@ module.exports = function(db) {
             dou_publi_date: '1/30/2013',
             end_date: '1/30/2015',
             authorized_technologies: 'Aquisição de Dados',
-            basin: 'Parecis'
+            basin_id: utils.idByName('Basin', 'Recôncavo')
         }
     ]);
 }

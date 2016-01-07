@@ -12,10 +12,6 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.ENUM('operation', 'construction'),
           allowNull: false
         },
-        field: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         oil_processing_capacity: {
           type: DataTypes.FLOAT,
           allowNull: false
@@ -51,7 +47,12 @@ module.exports = function(sequelize, DataTypes) {
     }, 
     {
         underscored: true,
-        tableName: 'fpso_production'
+        tableName: 'fpso_production',
+        classMethods: {
+            associate: function(models) {
+                FPSOProduction.belongsTo(models.OilField, { as: 'field', allowNull: false } );
+            }
+        }
     }
   );
   

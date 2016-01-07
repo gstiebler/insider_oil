@@ -1,10 +1,12 @@
+var utils = require('../lib/utils');
+
 module.exports = function(db) {
     return db.FPSOProduction.bulkCreate([
         {
             name: 'Cidade de Anchieta',
             owner: 'SBM',
             status: 'operation',
-            field: 'Baleia Azul',
+            field_id: utils.idByName('OilField', 'Anambé'),
             oil_processing_capacity: 100,
             gas_processing_capacity: 3.5,
             oil_storage_capacity: 1600,
@@ -18,7 +20,7 @@ module.exports = function(db) {
             name: 'Cidade de Angra dos Reis',
             owner: 'Modec',
             status: 'operation',
-            field: 'Lula',
+            field_id: utils.idByName('OilField', 'Azulão'),
             oil_processing_capacity: 100,
             gas_processing_capacity: 5,
             oil_storage_capacity: 1600,
@@ -32,7 +34,7 @@ module.exports = function(db) {
             name: 'Cidade de Campos dos Goytacazes',
             owner: 'Modec/Schahin',
             status: 'construction',
-            field: 'Tartaruga Verde/Tartaruga Mestiça',
+            field_id: utils.idByName('OilField', 'Abalone'),
             oil_processing_capacity: 150,
             gas_processing_capacity: 5.0,
             oil_storage_capacity: 500,

@@ -12,10 +12,6 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.STRING,
           allowNull: false
         },
-        operator: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         lat: {
           type: DataTypes.DECIMAL,
           allowNull: false
@@ -31,7 +27,12 @@ module.exports = function(sequelize, DataTypes) {
     }, 
     {
         underscored: true,
-        tableName: 'fixed_uep_production'
+        tableName: 'fixed_uep_production',
+        classMethods: {
+            associate: function(models) {
+                FixedUEPProduction.belongsTo(models.Company, { as: 'operator', allowNull: false } );
+            }
+        }
     }
   );
   

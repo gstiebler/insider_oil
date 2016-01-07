@@ -19,15 +19,16 @@ module.exports = function(sequelize, DataTypes) {
         authorized_technologies: {
           type: DataTypes.STRING,
           allowNull: true
-        },
-        basin: {
-          type: DataTypes.STRING,
-          allowNull: true
         }
     }, 
     {
         underscored: true,
-        tableName: 'seismics'
+        tableName: 'seismics',
+        classMethods: {
+            associate: function(models) {
+                Seismic.belongsTo(models.Basin, { as: 'basin', allowNull: false } );
+            }
+        }
     }
   );
   return Seismic;

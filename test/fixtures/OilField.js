@@ -1,8 +1,10 @@
+var utils = require('../lib/utils');
+
 module.exports = function(db) {
     return db.OilField.bulkCreate([
         {
             name: 'Anambé',
-            basin: 'Alagoas',
+            basin_id: utils.idByName('Basin', 'Potiguar'),
             state: 'Alagoas',
             concessionaries: 'Petrobras¹ (100)',
             shore: 'on',
@@ -10,7 +12,7 @@ module.exports = function(db) {
         },
         {
             name: 'Jiribatuba2',
-            basin: 'Camamu',
+            basin_id: utils.idByName('Basin', 'Tucano Central'),
             state: 'Bahia',
             concessionaries: 'Alvopetro¹ (100)',
             shore: 'on',
@@ -18,7 +20,7 @@ module.exports = function(db) {
         },
         {
             name: 'Abalone',
-            basin: 'Campos',
+            basin_id: utils.idByName('Basin', 'Recôncavo'),
             state: 'Espírito Santo',
             concessionaries: 'Shell Brasil¹ (50)/ONGC Campos (27)/QPI Brasil Petróleo (23)',
             shore: 'off',
@@ -26,7 +28,7 @@ module.exports = function(db) {
         },
         {
             name: 'Arapaçu',
-            basin: 'Alagoas',
+            basin_id: utils.idByName('Basin', 'Recôncavo'),
             state: 'Alagoas',
             concessionaries: 'Petrobras¹ (100)',
             shore: 'on',
@@ -34,7 +36,7 @@ module.exports = function(db) {
         },
         {
             name: 'Azulão',
-            basin: 'Amazonas',
+            basin_id: utils.idByName('Basin', 'Potiguar'),
             state: 'Amazonas',
             concessionaries: 'Petrobras¹ (100)',
             shore: 'on',
@@ -42,7 +44,7 @@ module.exports = function(db) {
         },
         {
             name: 'Baleia Anã',
-            basin: 'Campos',
+            basin_id: utils.idByName('Basin', 'Recôncavo'),
             state: 'Espírito Santo',
             concessionaries: 'Petrobras¹ (100)',
             shore: 'off',
