@@ -54,6 +54,14 @@ function iterateTree(children, test) {
             };
             const response = getJsonResponse.sync(null, dbServerController.main, req);
             test.ok(response.records.length > 0, 'Não há registros em ' + item.label);
+            const reqViewRecords = {
+            	query: {
+            		dataSource: item.child.source,
+            		id: response.records[0].id
+            	}	
+            };
+            const responseViewRecords = getJsonResponse.sync(null, dbServerController.viewRecord, reqViewRecords);
+            test.ok( responseViewRecords.length > 0, 'Problema no viewRecords do datasource ' +  item.child.source)
         }
     }
 }

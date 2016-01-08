@@ -58,7 +58,8 @@ function addWell(test, driver) {
     
     selectComboBoxItem(companiesCombo, 'Statoil');
     driver.findElement(By.id('html_id_state')).sendKeys('AC');
-    driver.findElement(By.id('html_id_bacia')).sendKeys('Bacia do Selenium');
+    selectComboBoxItem(driver.findElement(By.id('html_id_basin_id')), 'Potiguar');
+    selectComboBoxItem(driver.findElement(By.id('html_id_block_id')), 'ES-M-529');
     driver.findElement(By.id('html_id_lat')).sendKeys('1234');
     driver.findElement(By.id('html_id_lng')).sendKeys('3334321');
     driver.findElement(elementByText('Salvar')).click();
@@ -77,13 +78,13 @@ function addWell(test, driver) {
     test.equal( 'Novo poço Selenium', getTableValue(3, 0, driver) );
     test.equal( 'Statoil', getTableValue(3, 1, driver) );
     test.equal( 'AC', getTableValue(3, 2, driver) );
-    test.equal( 'Bacia do Selenium', getTableValue(3, 3, driver) );
+    test.equal( 'Potiguar', getTableValue(3, 3, driver) );
 }
 
 function checkWells(test, driver) {
     test.equal( '1A 0001 BA', getTableValue(0, 0, driver) );
     test.equal( 'Petrobrás', getTableValue(0, 1, driver) );
-    test.equal( 'Recôncavo', getTableValue(0, 3, driver) );
+    test.equal( 'Potiguar', getTableValue(0, 3, driver) );
     test.equal( '1AJ 0001 BA', getTableValue(2, 0, driver) );
     test.equal( 'Recôncavo E&P', getTableValue(2, 1, driver) );
     test.equal( 'Recôncavo', getTableValue(2, 3, driver) );
@@ -103,8 +104,8 @@ function editWell(test, driver) {
     var editBtn = getTableCell(2, 4, driver).findElement(By.xpath("a"));
     editBtn.click();
     driver.sleep(200);
-    driver.findElement(By.id('html_id_bacia')).clear();
-    driver.findElement(By.id('html_id_bacia')).sendKeys('Bacia Elvis Foca');
+    driver.findElement(By.id('html_id_name')).clear();
+    selectComboBoxItem(driver.findElement(By.id('html_id_basin_id')), 'Potiguar');
     var companiesCombo = driver.findElement(By.id('html_id_operator_id'));
     var optionElements = await( companiesCombo.findElements(By.xpath("option")) );
     test.equal( 7, optionElements.length );
@@ -128,7 +129,7 @@ function editWell(test, driver) {
     test.equal( "Registro salvo com sucesso.", getFlashMessage(driver, 0) );
     test.equal( '1AJ 0001 BA', getTableValue(2, 0, driver) );
     test.equal( 'Etesco', getTableValue(2, 1, driver) );
-    test.equal( 'Bacia Elvis Foca', getTableValue(2, 3, driver) );
+    test.equal( 'Potiguar', getTableValue(2, 3, driver) );
 }
 
 
@@ -473,8 +474,8 @@ tree: function(test) {
     driver.sleep(100);
     test.equal( 'Nome:', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[1]/span[1]')).getText() ));
     test.equal( 'Jiribatuba2', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[1]/span[2]')).getText() ));
-    test.equal( 'Terra/Mar:', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[5]/span[1]')).getText() ));
-    test.equal( 'Terra', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[5]/span[2]')).getText() ));
+    test.equal( 'Terra/Mar:', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[4]/span[1]')).getText() ));
+    test.equal( 'Terra', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[4]/span[2]')).getText() ));
     
     server.close();
     driver.quit();
