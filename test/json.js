@@ -75,24 +75,24 @@ modelFields: function(test) {
     });
     
     function onWellFields(json) {
-        test.equal(6, json.fields.length);
+        test.equal(7, json.fields.length);
         
         test.equal('name', json.fields[0].name);
         test.equal('state', json.fields[1].name);
-        test.equal('lng', json.fields[4].name);
-        test.equal('operator_id', json.fields[5].name);
+        test.equal('lng', json.fields[3].name);
+        test.equal('operator_id', json.fields[4].name);
         
         test.equal('Poço', json.fields[0].label);
         test.equal('Estado', json.fields[1].label);
-        test.equal('Longitude', json.fields[4].label);
-        test.equal('Operador', json.fields[5].label);
+        test.equal('Longitude', json.fields[3].label);
+        test.equal('Operador', json.fields[4].label);
         
         test.equal('VARCHAR(255)', json.fields[0].type);
         test.equal('VARCHAR(255)', json.fields[1].type);
-        test.equal('DECIMAL(10,6)', json.fields[4].type);
-        test.equal('ref', json.fields[5].type);
+        test.equal('DECIMAL(10,6)', json.fields[3].type);
+        test.equal('ref', json.fields[4].type);
         
-        test.equal('Company', json.fields[5].model);
+        test.equal('Company', json.fields[4].model);
         
         server.close();
         test.done();
@@ -107,12 +107,12 @@ recordValues: function(test) {
     });
     
     function onWellValues(json) {
-        test.equal(6, json.fields.length);
-        
+        test.equal(7, json.fields.length);
+
         test.equal('1AGIP1RJS', json.values.name);
         test.equal(2, json.values.operator_id);
         test.equal('RJ', json.values.state);
-        test.equal('Santos', json.values.bacia);
+        test.equal(3, json.values.basin_id);
         test.equal(-4.918086, json.values.lat);
         test.equal(-37.224645, json.values.lng);
         
