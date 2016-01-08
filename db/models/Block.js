@@ -14,19 +14,19 @@ module.exports = function(sequelize, DataTypes) {
         },
         end_1: {
           type: DataTypes.DATEONLY,
-          allowNull: false
+          allowNull: true
         },
         end_2: {
           type: DataTypes.DATEONLY,
-          allowNull: false
+          allowNull: true
         },
         end_3: {
           type: DataTypes.DATEONLY,
-          allowNull: false
+          allowNull: true
         },
         end_last: {
           type: DataTypes.DATEONLY,
-          allowNull: false
+          allowNull: true
         },
         status: {
           type: DataTypes.STRING,
