@@ -1,1 +1,27 @@
-Nova notícia
+<div flash-message="5000" id="flashMessage" ></div> 
+<h4 class="col-sm-2" >Nova notícia</h4>
+<br><br>
+<div class="row">   
+    <form class="form-horizontal" role="form">
+    
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="title_box">Título:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="title_box" ng-model="title"/>
+            </div>    
+        </div>
+            
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-default" ng-click="saveItem()" >Salvar</button>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="content_box">Notícia:</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="12" id="content_box" ng-model="content"/>
+            </div>
+        </div>
+    </form>
+</div> 

@@ -7,7 +7,6 @@ angular.module('MainCtrl', []).controller('MainController',
         session.login( token );
     else
         token = session.getToken();    
-    console.log( "token: " + token );
     
     var url = $location.search().url;
     if( url ) {
@@ -18,7 +17,6 @@ angular.module('MainCtrl', []).controller('MainController',
     
     $http.get('/user/details', { params: { token: token} }).
             then(function(response) {
-                console.log( "user details: "  + JSON.stringify(response.data) );
                 $scope.username = response.data.login;
             }, function(response) {
                 console.log( "Problemas na resposta: " + response.data.errorMsg );
@@ -26,12 +24,6 @@ angular.module('MainCtrl', []).controller('MainController',
             
             
     $scope.logout = session.logout; // functions
-
-    $scope.searchOptions = [
-	    'Guilherme',
-	    'Marcelo',
-	    'Felipe'
-    ];
     
     var searchResult = {};
     $scope.onSearchType = function(value) {

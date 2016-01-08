@@ -7,7 +7,8 @@ exports.userDetails = function(req, res, next) {
     user = {
         login: req.user.login,
         name: req.user.name,
-        email: req.user.email
+        email: req.user.email,
+        id: req.user.id
     };
     res.json( user );
 }

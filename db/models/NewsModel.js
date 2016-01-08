@@ -7,6 +7,10 @@ module.exports = function(sequelize, DataTypes) {
 		content : {
 			type : DataTypes.TEXT,
 			allowNull : false
+		},
+		author_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false
 		}
 	}, 
 	{
@@ -15,8 +19,7 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods : {
 			associate : function(models) {
 				News.belongsTo(models.User, {
-					as : 'author',
-					allowNull : false
+					as : 'author'
 				});
 			}
 		}
