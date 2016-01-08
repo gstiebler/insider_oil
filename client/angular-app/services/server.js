@@ -97,6 +97,12 @@ app.service('server', ['$http', 'session',
     }
     
     
+    this.getSearchResult = function(searchValue, okCallback, onError) {
+    	params = { searchValue: searchValue };
+        http(params, $http.get, '/search', okCallback, onError);
+    }
+    
+    
     this.viewRecord = function(dataSource, id, okCallback, onError) {
         params = { 
             dataSource: dataSource,

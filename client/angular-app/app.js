@@ -3,6 +3,7 @@ angular.module('InsiderOilApp', [
     'appRoutes', 
     'ngCookies',
     'flash',
+    'autocomplete',
     'MainCtrl', 
     'ModelViewCtrl', 
     'CreateItemCtrl', 
