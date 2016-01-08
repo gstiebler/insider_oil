@@ -20,8 +20,12 @@ app.service('ModelOperations', ['$location', 'server',
     }
     
     
-    function createNewsOperations() {
-    	return createDefaultModelOperations();
+    function createNewsOperations(modelName) {
+    	const modelOperations = createDefaultModelOperations(modelName);
+    	modelOperations.createItem = function() {
+			$location.path("/app/create_news").search({ model: modelName });
+    	}
+    	return modelOperations;
     }
     
     

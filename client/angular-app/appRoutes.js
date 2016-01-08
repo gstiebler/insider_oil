@@ -24,6 +24,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'EditItemController'
 		})
 
+		.when('/app/edit_news', {
+			templateUrl: 'app/templates/edit_news.html',
+			controller: 'EditNewsController'
+		})
+
 		.when('/app/view_record', {
 			templateUrl: 'app/templates/view_record.html',
 			controller: 'ViewRecordController'
