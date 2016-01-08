@@ -5,6 +5,7 @@ var loginController = require('../controllers/loginController');
 var dbServerController = require('../controllers/dbServerController');
 var usersController = require('../controllers/usersController');
 var treeController = require('../controllers/TreeController');
+var treeController = require('../controllers/SearchController');
 
 module.exports = function(app) {
     // Main route
@@ -27,6 +28,7 @@ module.exports = function(app) {
     app.delete('/delete_item/',                    dbServerController.deleteItem);
     app.get('/combo_values/', session.authorize,   dbServerController.getComboValues);
     app.post('/db_server/upload_file',             dbServerController.uploadFile);
+    app.post('/search', session.authorize          search.main);
     
     // Users
     app.get('/user/',           session.authorize, usersController.main );

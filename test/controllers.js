@@ -3,6 +3,7 @@ var fiberTests = require('./lib/fiberTests');
 var dbServerController = require('../controllers/dbServerController');
 var TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
+var SearchController = require('../controllers/SearchController');
 //var Sync = require('sync');
 
 function deStringify(json) {
@@ -431,7 +432,30 @@ treeIntegrity: test => {
     const tree = getJsonResponse.sync(null, TreeController.main, null);
     iterateTree(tree.children, test);
     test.done();
+},
+
+
+search: test => {
+	const req = {
+		query: { searchValue: 'guilherme' }
+	}
+    var searchResults = getJsonResponse.sync(null, SearchController.main, req);
+	test.equal(1, searchResults.length);
+    test.equal('Guilherme Stiebler', searchResults[0].name);
+    test.equal('Person', searchResults[0].model);
+    test.equal(1, searchResults[0].id);
+    
+    req.query.searchValue = 'ba';
+    searchResults = getJsonResponse.sync(null, SearchController.main, req);
+	test.equal(5, searchResults.length);
+    test.equal('BM-BAR-1', searchResults[0].name);
+    test.equal('Block', searchResults[0].model);
+    test.equal('Jiribatuba2', searchResults[2].name);
+    test.equal('OilField', searchResults[2].model);
+    
+    test.done();
 }
+
 
 };
 
