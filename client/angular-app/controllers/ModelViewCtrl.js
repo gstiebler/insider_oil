@@ -1,15 +1,16 @@
 'use strict';
 angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelViewController', 
-                ['$scope', 'server', '$routeParams', '$location', 'Upload', '$timeout', 'showError', 'Flash',
-        function($scope, server, $routeParams, $location, Upload, $timeout, showError, Flash) {
+                ['$scope', 'server', '$routeParams', '$location', 'Upload', '$timeout', 'showError', 'Flash', 'ModelOperations',
+        function($scope, server, $routeParams, $location, Upload, $timeout, showError, Flash, ModelOperations) {
 
     var modelName = $routeParams.model;
     server.getTable(modelName, {}, showModel, showError.show );
     
     var datatableInitialized = false;
-    var dataTableElement = $('#mainTable');
+    const dataTableElement = $('#mainTable');
+    const modelOperations = ModelOperations.getModelOperations(modelName);
     
-    var datatables_pt_br_translation = {
+    const datatables_pt_br_translation = {
         "sEmptyTable": "Nenhum registro encontrado",
         "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
         "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
@@ -86,21 +87,24 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
     }
     
     $scope.editRecord = function(id) {
-        $location.path("/app/edit_item").search({ modelName: modelName, id: id });
+    	modelOperations.editRecord(id);
         // I don't know why the line below should be here for the redirect to work
-        server.getTable(modelName, {}, showModel, showError.show ); 
-    }
-    
-    function onDelete(status) {
-        Flash.create('success', status.data.msg );
         server.getTable(modelName, {}, showModel, showError.show ); 
     }
     
     $scope.deleteRecord = function(id) {
         if(confirm("Deseja realmente apagar o registro?")){
-            
-            server.deleteItem( modelName, id, onDelete, showError.show );
+        	modelOperations.deleteItem(id, onDelete, showError.show);
         }
+    }
+    
+    $scope.createItem = function() {
+    	modelOperations.createItem();
+    }
+    
+    function onDelete(status) {
+        Flash.create('success', status.data.msg );
+        server.getTable(modelName, {}, showModel, showError.show ); 
     }
     
     $scope.showMap = function() {
@@ -141,10 +145,6 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
                                          evt.loaded / evt.total));
             });
         }   
-    }
-    
-    $scope.createItem = function() {
-         $location.path("/app/create_item").search({ model: modelName });
     }
     
 }]);

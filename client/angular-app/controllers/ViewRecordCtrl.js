@@ -1,7 +1,7 @@
 'use strict';
 angular.module('ViewRecordCtrl', ['flash', 'ui.bootstrap']).controller('ViewRecordController', 
-                ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
-        function($scope, server, $routeParams, $location, showError, Flash) {
+                ['$scope', 'server', '$routeParams', 'showError', 'Flash',
+        function($scope, server, $routeParams, showError, Flash) {
     
     var source = $routeParams.source;
     var id = $routeParams.id;
