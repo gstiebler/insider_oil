@@ -11,7 +11,6 @@ module.exports = function(db) {
 		if(excludedItems[itemName])
 			continue;
 		models.push( { name: itemName } );
-		console.log(itemName);
 	}
     return db.ModelsList.bulkCreate(models);
 }
