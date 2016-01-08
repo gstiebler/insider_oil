@@ -24,7 +24,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'EditItemController'
 		})
 
-		.when('/app/edit_news', {
+		.when('/app/create_news', {
 			templateUrl: 'app/templates/edit_news.html',
 			controller: 'EditNewsController'
 		})

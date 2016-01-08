@@ -98,9 +98,7 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
         }
     }
     
-    $scope.createItem = function() {
-    	modelOperations.createItem();
-    }
+    $scope.createItem = modelOperations.createItem;
     
     function onDelete(status) {
         Flash.create('success', status.data.msg );

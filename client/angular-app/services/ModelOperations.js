@@ -23,7 +23,7 @@ app.service('ModelOperations', ['$location', 'server',
     function createNewsOperations(modelName) {
     	const modelOperations = createDefaultModelOperations(modelName);
     	modelOperations.createItem = function() {
-			$location.path("/app/create_news").search({ model: modelName });
+			$location.path("/app/create_news");
     	}
     	return modelOperations;
     }
@@ -31,7 +31,7 @@ app.service('ModelOperations', ['$location', 'server',
     
     this.getModelOperations = function(modelName) {
     	const customModels = {
-    		'news': createNewsOperations
+    		'News': createNewsOperations
     	}
     	
     	var constructorFunc = customModels[modelName];
