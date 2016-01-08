@@ -480,8 +480,32 @@ tree: function(test) {
     server.close();
     driver.quit();
     test.done();
-}
+},
+
+
+search: (test) => {
+    var server = InitializeServer(port);
     
+    var driver = new webdriver.Builder()
+        .forBrowser('firefox')
+        .build();
+
+    makeLogin(test, driver);
+    driver.findElement(By.xpath('//*[@id="searchBox"]/div/input')).sendKeys('ba');
+    driver.sleep(200);
+    driver.findElement(By.xpath('//*[@id="searchBox"]/div/ul/li[4]')).click();
+    driver.sleep(200);
+
+    test.equal( 'Nome:', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[1]/span[1]')).getText() ) );
+    test.equal( 'BM-BAR-1', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[1]/span[2]')).getText() ) );
+    test.equal( 'Concessionários:', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[9]/span[1]')).getText() ) );
+    test.equal( '*Petrobras - 75%, ONGC Campos - 25%', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[9]/span[2]')).getText() ) );
+    
+    server.close();
+    driver.quit();
+    test.done();
+}
+         
 
 };
 
