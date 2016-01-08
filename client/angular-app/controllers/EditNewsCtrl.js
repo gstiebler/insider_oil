@@ -1,5 +1,5 @@
 'use strict';
-angular.module('EditNewsCtrl', ['flash', 'ui.bootstrap']).controller('EditNewsController', 
+angular.module('EditNewsCtrl', ['flash', 'ui.bootstrap', 'textAngular']).controller('EditNewsController', 
                 ['$scope', '$http', '$routeParams', '$location', 'server', 'session', 'showError', 'Flash',
         function($scope, $http, $routeParams, $location, server, session, showError, Flash) {
                 	
@@ -23,5 +23,39 @@ angular.module('EditNewsCtrl', ['flash', 'ui.bootstrap']).controller('EditNewsCo
 	    Flash.create('success', status.data.msg);
 	    $location.path("/app/model_view").search({ model: modelName });
 	}      
+	
+	$scope.printHtml = function() {
+		console.log($scope.content);
+	}
+	
+	// search box code
+    var searchResult = {};
+    $scope.onSearchType = function(value) {
+    	function onSearchResult(results) {
+    		$scope.searchOptions = [];
+			searchResult = {};
+    		for(var i = 0; i < results.length; i++) {
+    			const completeSearchKey = results[i].modelLabel + ': ' +results[i].name;
+    			$scope.searchOptions.push(completeSearchKey);
+    			searchResult[completeSearchKey] = {
+    				model: results[i].model,
+    				id: results[i].id,
+    				name: results[i].name
+    			};
+    		}
+    	}
+    	server.getSearchResult(value, onSearchResult, showError.show);
+    }
+    
+    $scope.onSelectItemOnSearchBox = function(value) {
+    	const selectedItem = searchResult[value];
+    	console.log(value, selectedItem, searchResult);
+    	const searchParams = {
+    		source: selectedItem.model,
+    		id: selectedItem.id
+    	};
+    	const linkStr = '<a href="/app/view_record?source=' + selectedItem.model + '&id=' + selectedItem.id + '">' + selectedItem.name + '</a>';
+    	$scope.content += linkStr;
+    }
                 	
 }]);

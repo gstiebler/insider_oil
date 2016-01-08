@@ -1,6 +1,7 @@
 'use strict';
 var db  = require('../db/models');
 var await = require('../lib/await');
+var dsParams = require('../lib/DataSourcesParams');
 
 
 function search(searchValue, dataSources, numMaxResults) {
@@ -80,8 +81,10 @@ exports.main = function(req, res) {
     	var results = [];
 		for( var n = 0; n < queryResults[0].length; n++ ) {
 			const result = queryResults[0][n];
+			const modelParams = dsParams[result.model];
 			results.push({
 				model: result.model,
+				modelLabel: modelParams.tableLabel,
 				name: result.name,
 				id: result.id
 			});
