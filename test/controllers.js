@@ -4,7 +4,6 @@ var dbServerController = require('../controllers/dbServerController');
 var TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
 var SearchController = require('../controllers/SearchController');
-//var Sync = require('sync');
 
 function deStringify(json) {
     var str = JSON.stringify(json);
