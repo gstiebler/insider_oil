@@ -49,7 +49,6 @@ angular.module('EditNewsCtrl', ['flash', 'ui.bootstrap', 'textAngular']).control
     
     $scope.onSelectItemOnSearchBox = function(value) {
     	const selectedItem = searchResult[value];
-    	console.log(value, selectedItem, searchResult);
     	const searchParams = {
     		source: selectedItem.model,
     		id: selectedItem.id
