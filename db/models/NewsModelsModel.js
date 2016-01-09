@@ -18,14 +18,8 @@ module.exports = function(sequelize, DataTypes) {
 		tableName : 'news_models',
 		classMethods : {
 			associate : function(models) {
-				NewsModels.belongsTo(models.News, {
-					as : 'news',
-					allowNull : false
-				});
-				NewsModels.belongsTo(models.ModelsList, {
-					as : 'model',
-					allowNull : false
-				});
+				NewsModels.belongsTo(models.News, { as : 'news' });
+				NewsModels.belongsTo(models.ModelsList, { as : 'model' });
 			}
 		}
 	});
