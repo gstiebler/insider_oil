@@ -53,6 +53,7 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods: {
 			associate: function(models) {
 				News.belongsTo(models.User, { as: 'author' });
+				News.hasMany(models.NewsModels, { onDelete: 'cascade' });
 			},
 			defineHooks: afterCreate
 		}

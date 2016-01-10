@@ -116,9 +116,12 @@ exports.createItem = function(req, res, next) {
     var newItemData = req.body.newItemData;
     var modelName = req.body.model;
     var model = dbUtils.getDataSource(modelName);
-    model.create(newItemData)
-        .then(getOkFunc(res, "Registro criado com sucesso."))
-        .catch(getErrorFunc(res, 400, "Não foi possível criar o registro."));
+
+	db.sequelize.transaction(function(t) {
+	    return model.create(newItemData)
+	        .then(getOkFunc(res, "Registro criado com sucesso."))
+	        .catch(getErrorFunc(res, 400, "Não foi possível criar o registro."));
+	});
 }
 
 

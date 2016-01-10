@@ -38,13 +38,19 @@ createNewsOnDB: test => {
 
     test.equal( fixtureCount + 1, newNews.length );
     const justCreatedNew = newNews[fixtureCount];
+    const justCreatedNewId = justCreatedNew.id;
     test.equal('Título da nova notícia', justCreatedNew.title);
-	const referencedModelsOnNew = await( db.NewsModels.findAll({ where: { news_id: justCreatedNew.id } }) );
+	const referencedModelsOnNew = await( db.NewsModels.findAll({ where: { news_id: justCreatedNewId } }) );
 	test.equal(2, referencedModelsOnNew.length);
 	test.equal('OilField', await( db.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
 	test.equal(3, referencedModelsOnNew[0].model_ref_id);
 	test.equal('Person', await( db.ModelsList.findById(referencedModelsOnNew[1].model_id) ).name);
 	test.equal(1, referencedModelsOnNew[1].model_ref_id);
+	
+	await(justCreatedNew.destroy());
+	const referencedModelsOnDeletedNew = await( db.NewsModels.findAll({ where: { news_id: justCreatedNewId } }) );
+	test.equal(0, referencedModelsOnDeletedNew.length);
+	
 	test.done();
 },
 
@@ -60,7 +66,6 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 
 	db.sequelize.transaction(function(t) {
 		return db.News.create(newsToBeCreated, { transaction: t }).then(finalizeTest).catch(function(e) {
-			console.log('erro teste', e);
 			db.News.findAll().then(countNews);
 		});
 	});
