@@ -4,6 +4,7 @@ var dbServerController = require('../controllers/dbServerController');
 var TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
 var SearchController = require('../controllers/SearchController');
+var NewsController = require('../controllers/NewsController');
 
 function deStringify(json) {
     var str = JSON.stringify(json);
@@ -452,6 +453,15 @@ search: test => {
     test.equal('Jiribatuba2', searchResults[2].name);
     test.equal('OilField', searchResults[2].model);
     
+    test.done();
+},
+
+
+newsFetch: test => {
+    const newsResults = getJsonResponse.sync(null, NewsController.main, {});
+    test.equal(3, newsResults.length);
+    test.ok( newsResults[0].created_at >= newsResults[1].created_at );
+    test.ok( newsResults[1].created_at >= newsResults[2].created_at );
     test.done();
 }
 
