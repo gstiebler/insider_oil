@@ -54,7 +54,7 @@ exports.main = function(req, res, next) {
             };
             res.json( responseObj );
         } catch(e) {
-            console.log(e);
+            console.error(e);
             getErrorFunc(res, 500, "Erro")(e);
         }
     }
