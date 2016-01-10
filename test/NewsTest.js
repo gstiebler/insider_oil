@@ -5,9 +5,6 @@ const utils = require('./lib/utils');
 var db = require('../db/models');
 var await = require('../lib/await');
 
-function timeoutSync(seconds, callback) {
-	setTimeout(callback, seconds);
-}
 
 const newsHTML = '<p>um campo: <a href="/app/view_record?source=OilField&amp;id=3" style="background-color: rgb(255, 255, 255);">Abalone</a> ' +
 	'esse aqui é o google <a href="http://google.com" target="" style="background-color: rgb(255, 255, 255);">' + 
@@ -37,7 +34,6 @@ createNewsOnDB: test => {
 	}
 
 	await( db.News.create(newsToBeCreated) );
-	timeoutSync.sync(null, 100);
 	const newNews = await( db.News.findAll() );
 
     test.equal( fixtureCount + 1, newNews.length );
@@ -50,6 +46,33 @@ createNewsOnDB: test => {
 	test.equal('Person', await( db.ModelsList.findById(referencedModelsOnNew[1].model_id) ).name);
 	test.equal(1, referencedModelsOnNew[1].model_ref_id);
 	test.done();
+},
+
+
+doNotCreateNewsWhenErrorOnModelsReference: test => {
+    const fixtureCount = 3;
+	const HTMLcontent = newsHTML + '<a href="/app/view_record?source=Nada&amp;id=80" style="background-color: rgb(255, 255, 255);">Abalone</a>';
+	const newsToBeCreated = {
+		title: 'Título da nova notícia',
+		content: HTMLcontent,
+		author_id: utils.idByName('User', 'Felipe Grandin')
+	}
+
+	db.sequelize.transaction(function(t) {
+		return db.News.create(newsToBeCreated, { transaction: t }).then(finalizeTest).catch(function(e) {
+			console.log('erro teste', e);
+			db.News.findAll().then(countNews);
+		});
+	});
+	
+	function finalizeTest(news) {
+		test.ok(false);
+	}
+	
+	function countNews(news) {
+		test.equal(fixtureCount, news.length);
+	    test.done();
+	}
 }
 
 };

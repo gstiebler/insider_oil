@@ -1,33 +1,34 @@
 "use strict";
 const newsLib = require('../../lib/News');
-var Sync = require('Sync');
-var await = require('../../lib/await');
-
 
 function afterCreate(db) {	
 	db.News.hook('afterCreate', function(news, options) {
-		var error = false;
-		Sync( function() {
-			const referencedObjects = newsLib.getModelReferences(news.content);
-			for(var i = 0; i < referencedObjects.length; i++) {
-				const referencedObj = referencedObjects[i];
-				const findOptions = { where: { name: referencedObj.model } };
-				const modelId = await( db.ModelsList.findOne(findOptions) ).id;
-		    	const newsRefObj = {
-		    		news_id: news.id,
-		    		model_ref_id: referencedObj.id,
-		    		model_id: modelId
-		    	};
-		    	await( db.NewsModels.create(newsRefObj) );
-			}
-		}, function(err, result){ 
-		    if (err) 
-		    	console.error(err.stack); // something went wrong
-		    error = err;
-		});
+		const referencedObjects = newsLib.getModelReferences(news.content);
+		const promiseModelIdArray = [];
+		for(var i = 0; i < referencedObjects.length; i++) {
+			const referencedObj = referencedObjects[i];
+			const findOptions = { where: { name: referencedObj.model } };
+			promiseModelIdArray.push(db.ModelsList.findOne(findOptions));
+		}
 		
-		if(error)
-			throw error;
+		return Promise.all(promiseModelIdArray).then( function(modelIds) {
+			try {
+				const promiseArray = [];
+				for(var i = 0; i < referencedObjects.length; i++) {
+					const referencedObj = referencedObjects[i];
+					const modelId = modelIds[i].id;
+			    	const newsRefObj = {
+			    		news_id: news.id,
+			    		model_ref_id: referencedObj.id,
+			    		model_id: modelId
+			    	};
+			    	promiseArray.push(db.NewsModels.create(newsRefObj, { transaction: options.transaction }));
+				}
+				return Promise.all(promiseArray);
+			} catch(e) {
+				return db.sequelize.Promise.reject(e.stack)
+			}
+		});
 	});
 }
 
