@@ -469,7 +469,7 @@ newsFetch: test => {
 newsFromObject: test => {
 	var req = {
 		query: {
-			modelName: 'OilField',
+			sourceName: 'OilField',
 			id: 2
 		}
 	}

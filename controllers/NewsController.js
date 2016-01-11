@@ -1,6 +1,7 @@
 "use strict";
 var db  = require('../db/models');
 var ControllerUtils = require('../lib/ControllerUtils');
+var dataSources = require('../lib/DataSources');
 
 
 exports.allNews = function(req, res) {
@@ -16,8 +17,13 @@ exports.allNews = function(req, res) {
 
 
 exports.newsFromObject = function(req, res) {
-    const modelName = req.query.modelName;
+    const sourceName = req.query.sourceName;
     const id = req.query.id;
+    
+    var modelName = sourceName;
+    const source = dataSources[sourceName];
+    if(source)
+    	modelName = source.model.name;
     
     const modelIdQuery = 'select id from models_list where name = "' + modelName + '" group by id';
     const newsIdQuery = 'SELECT news_id FROM news_models ' +
