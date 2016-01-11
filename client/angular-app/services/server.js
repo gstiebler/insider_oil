@@ -115,5 +115,19 @@ app.service('server', ['$http', 'session',
     this.sourceList = function(onData, onError) {
         http({}, $http.get, '/sources_list/', onData, onError);
     }
+    
+    
+    this.allNews = function(onData, onError) {
+        http({}, $http.get, '/news', onData, onError);
+    }
+    
+    
+    this.newsFromObject = function(sourceName, id, onData, onError) {
+    	params = {
+    		sourceName: sourceName,
+    		id: id
+    	};
+        http(params, $http.get, '/news/from_object', onData, onError);
+    }
         
 }]);

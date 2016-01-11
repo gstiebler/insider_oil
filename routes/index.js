@@ -6,6 +6,7 @@ var dbServerController = require('../controllers/dbServerController');
 var usersController = require('../controllers/usersController');
 var treeController = require('../controllers/TreeController');
 var searchController = require('../controllers/SearchController');
+var NewsController = require('../controllers/NewsController');
 
 module.exports = function(app) {
     // Main route
@@ -28,7 +29,11 @@ module.exports = function(app) {
     app.delete('/delete_item/',                    dbServerController.deleteItem);
     app.get('/combo_values/', session.authorize,   dbServerController.getComboValues);
     app.post('/db_server/upload_file',             dbServerController.uploadFile);
-    app.get('/search', session.authorize,         searchController.main);
+    app.get('/search', session.authorize,          searchController.main);
+    
+    // News
+    app.get('/news', session.authorize,            NewsController.allNews);
+    app.get('/news/from_object',session.authorize, NewsController.newsFromObject);
     
     // Users
     app.get('/user/',           session.authorize, usersController.main );
