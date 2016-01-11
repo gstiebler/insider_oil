@@ -7,7 +7,6 @@ angular.module('EditNewsCtrl', ['flash', 'ui.bootstrap', 'textAngular']).control
                 	
 	$scope.saveItem = function() {
 		function onUserDataArrived(userData) {
-			console.log(userData);
 			const itemData = {};
 			itemData.title = $scope.title;
 			itemData.content = $scope.content;
