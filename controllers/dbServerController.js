@@ -4,27 +4,7 @@ var fileUpload = require('../lib/fileUpload');
 var dbUtils = require('../lib/dbUtils');
 var dsParams = require('../lib/DataSourcesParams');
 var importExcel = require('../lib/importExcel');
-
-function getErrorFunc(res, errorCode, msg) {
-    return function(error) { 
-        var errors = error.errors ? error.errors : [];
-        if((typeof error) == 'string')
-            errors.push( { message: error } );
-        res.status(errorCode).json( {
-            errorMsg: msg, 
-            errors: errors 
-        } )
-        if(process.env['NODE_ENV'] != 'test')
-            console.log(JSON.stringify(error, null, '  '));
-    };
-}
-
-
-function getOkFunc(res, msg) {
-    return function returnOkJson() {
-        res.json( { msg: msg } );
-    }
-}
+var ControllerUtils = require('../lib/ControllerUtils');
 
 
 exports.main = function(req, res, next) {
@@ -32,11 +12,11 @@ exports.main = function(req, res, next) {
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
     var dataSource = dbUtils.getDataSource(modelName);
     if(!dataSource) {
-        getErrorFunc(res, 500, "Modelo não encontrado")({});
+    	ControllerUtils.getErrorFunc(res, 500, "Modelo não encontrado")({});
         return;
     }
     dbUtils.findAllCustom(dataSource, {}, filters).then(sendRecords)
-        .catch(getErrorFunc(res, 500, "Erro"));
+        .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
     
     function sendRecords(records) {
         try {
@@ -55,7 +35,7 @@ exports.main = function(req, res, next) {
             res.json( responseObj );
         } catch(e) {
             console.error(e);
-            getErrorFunc(res, 500, "Erro")(e);
+            ControllerUtils.getErrorFunc(res, 500, "Erro")(e);
         }
     }
 }
@@ -100,7 +80,7 @@ exports.recordValues = function(req, res, next) {
     var id = req.query.id;
     var model = dbUtils.getDataSource(modelName);
     model.findById(id).then(onRecord)
-        .catch(getErrorFunc(res, 404, "Registro não encontrado"));
+        .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) {
         var fields = dbUtils.getModelFields(modelName);
@@ -119,8 +99,8 @@ exports.createItem = function(req, res, next) {
 
 	db.sequelize.transaction(function(t) {
 	    return model.create(newItemData)
-	        .then(getOkFunc(res, "Registro criado com sucesso."))
-	        .catch(getErrorFunc(res, 400, "Não foi possível criar o registro."));
+	        .then(ControllerUtils.getOkFunc(res, "Registro criado com sucesso."))
+	        .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."));
 	});
 }
 
@@ -131,14 +111,14 @@ exports.saveItem = function(req, res, next) {
     var model = dbUtils.getDataSource(modelName);     
     model.findById( recordData.id )
         .then(onFindRecord)
-        .catch(getErrorFunc(res, 404, "Não foi possível encontrar o registro."));
+        .catch(ControllerUtils.getErrorFunc(res, 404, "Não foi possível encontrar o registro."));
     
     function onFindRecord(record) {
         for(var attributeName in recordData)
             record[attributeName] = recordData[attributeName];
         record.save()
-            .then(getOkFunc(res, "Registro salvo com sucesso."))
-            .catch(getErrorFunc(res, 400, "Não foi possível salvar o registro."));
+            .then(ControllerUtils.getOkFunc(res, "Registro salvo com sucesso."))
+            .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível salvar o registro."));
     }
 }
 
@@ -148,8 +128,8 @@ exports.deleteItem = function(req, res) {
     var modelName = req.query.model;
     var model = dbUtils.getDataSource(modelName);     
     model.destroy({ where: { id: id } })
-        .then(getOkFunc(res, 'Registro apagado com sucesso'))
-        .catch( getErrorFunc(res, 404, "Não foi possível apagar o registro.") );
+        .then(ControllerUtils.getOkFunc(res, 'Registro apagado com sucesso'))
+        .catch( ControllerUtils.getErrorFunc(res, 404, "Não foi possível apagar o registro.") );
 }
 
 
@@ -157,7 +137,7 @@ exports.getComboValues = function(req, res) {
     var modelName = req.query.model;
     var model = dbUtils.getDataSource(modelName);     
     model.findAll().then(onValues)
-        .catch(getErrorFunc(res, 500, "Não foi possível carregar os registros."));
+        .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possível carregar os registros."));
     
     function onValues(values) {
         var valuesArray = [];
@@ -179,7 +159,7 @@ exports.viewRecord = function(req, res, next) {
     var options = {};
     options.include = [{all: true}];
     model.findById(id, options).then(onRecord)
-        .catch(getErrorFunc(res, 404, "Registro não encontrado"));
+        .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) {
         var fields = dbUtils.getModelFields(dataSourceName);

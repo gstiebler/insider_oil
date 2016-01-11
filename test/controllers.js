@@ -458,10 +458,47 @@ search: test => {
 
 
 newsFetch: test => {
-    const newsResults = getJsonResponse.sync(null, NewsController.main, {});
+    const newsResults = getJsonResponse.sync(null, NewsController.allNews, {});
     test.equal(3, newsResults.length);
     test.ok( newsResults[0].created_at >= newsResults[1].created_at );
     test.ok( newsResults[1].created_at >= newsResults[2].created_at );
+    test.done();
+},
+
+
+newsFromObject: test => {
+	var req = {
+		query: {
+			modelName: 'OilField',
+			id: 2
+		}
+	}
+    const newsResults = getJsonResponse.sync(null, NewsController.newsFromObject, req);
+    test.equal(1, newsResults.length);
+    
+    // adding more news from this oil field
+    const newNews = {
+        title: 'adicionando notícia',
+        content: '<p>outra notícia: <a href="/app/view_record?source=OilField&amp;id=2" style="background-color: rgb(255, 255, 255);">Abalone</a> ',
+        author_id: 1
+    };
+    const reqNewNews = {
+        body: { 
+            model: 'News',
+            newItemData: newNews
+        }
+    };
+    getJsonResponse.sync(null, dbServerController.createItem, reqNewNews);
+
+	// should have 2 news from this oil field now
+    const moreNewsResults = getJsonResponse.sync(null, NewsController.newsFromObject, req);
+    test.equal(2, moreNewsResults.length);
+
+    // testing with an invalid id
+    req.query.id = 50;
+    const newsResultsWrongId = getJsonResponse.sync(null, NewsController.newsFromObject, req);
+    test.equal(0, newsResultsWrongId.length);
+
     test.done();
 }
 
