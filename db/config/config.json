@@ -20,12 +20,12 @@
   },
   "production": {    
     "port": 3306,
-    "username": "bc996f008eadda",
-    "password": "76671337",
-    "database": "heroku_bf9cc835b37a928",
-    "host": "us-cdbr-iron-east-03.cleardb.net",
+    "username": "root",
+    "password": "aloalo35",
+    "database": "production",
+    "host": "insideroildb.c7lwqtporcs1.sa-east-1.rds.amazonaws.com",
     "protocol": "mysql",
-    "dialect": "mysql",
+    "dialect": "mariadb",
     "dialectOptions": {
         "timeout": 30
     }
