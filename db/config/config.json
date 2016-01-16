@@ -25,9 +25,6 @@
     "database": "production",
     "host": "insideroildb.c7lwqtporcs1.sa-east-1.rds.amazonaws.com",
     "protocol": "mysql",
-    "dialect": "mariadb",
-    "dialectOptions": {
-        "timeout": 30
-    }
+    "dialect": "mariadb"
   }
 }
