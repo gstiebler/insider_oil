@@ -9,10 +9,10 @@ module.exports = {
 				primaryKey: true,
 				autoIncrement: true
 			},
-			createdAt: {
+			created_at: {
 				type: Sequelize.DATE
 			},
-			updatedAt: {
+			updated_at: {
 				type: Sequelize.DATE
 			},
 			login: {
@@ -48,10 +48,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				name: {
@@ -71,10 +71,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				license: {
@@ -118,10 +118,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				name: {
@@ -137,10 +137,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				name: {
@@ -205,10 +205,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				name: {
@@ -251,10 +251,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				name: {
@@ -277,6 +277,47 @@ module.exports = {
 						key: 'id'
 					}
 				}
+		})}).then(function() {
+			return queryInterface.createTable('oil_fields', {
+				id: {
+					type: Sequelize.INTEGER,
+					primaryKey: true,
+					autoIncrement: true
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
+				name: {
+					type: Sequelize.STRING,
+					allowNull: false
+				},
+				state: {
+					type: Sequelize.STRING,
+					allowNull: false
+				},
+				concessionaries: {
+					type: Sequelize.STRING,
+					allowNull: true
+				},
+				shore: {
+					type: Sequelize.ENUM('on', 'off'),
+					allowNull: false
+				},
+				stage: {
+					type: Sequelize.ENUM('production', 'development'),
+					allowNull: false
+				},
+				basin_id: {
+					type: Sequelize.INTEGER,
+					allowNull: false,
+					references: {
+						model: 'basins',
+						key: 'id'
+					}
+				}
 			})
 		}).then(function() {
 			return queryInterface.createTable('fpso_production', {
@@ -285,10 +326,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				name: {
@@ -334,6 +375,14 @@ module.exports = {
 				injecting_wells: {
 					type: Sequelize.INTEGER,
 					allowNull: true
+				},
+				field_id: {
+					type: Sequelize.INTEGER,
+					allowNull: false,
+					references: {
+						model: 'oil_fields',
+						key: 'id'
+					}
 				}
 			})
 		}).then(function() {
@@ -344,10 +393,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				name: {
@@ -384,58 +433,16 @@ module.exports = {
 				}
 			})
 		}).then(function() {
-			return queryInterface.createTable('oil_fields', {
-				id: {
-					type: Sequelize.INTEGER,
-					primaryKey: true,
-					autoIncrement: true
-				},
-				createdAt: {
-					type: Sequelize.DATE
-				},
-				updatedAt: {
-					type: Sequelize.DATE
-				},
-				name: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
-				state: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
-				concessionaries: {
-					type: Sequelize.STRING,
-					allowNull: true
-				},
-				shore: {
-					type: Sequelize.ENUM('on', 'off'),
-					allowNull: false
-				},
-				stage: {
-					type: Sequelize.ENUM('production', 'development'),
-					allowNull: false
-				},
-				basin_id: {
-					type: Sequelize.INTEGER,
-					allowNull: false,
-					references: {
-						model: 'basins',
-						key: 'id'
-					}
-				}
-			})
-		}).then(function() {
 			return queryInterface.createTable('models_list', {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				name: {
@@ -450,10 +457,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				title: {
@@ -480,10 +487,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				model_ref_id: {
@@ -514,10 +521,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				state: {
@@ -616,10 +623,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				state: {
@@ -654,10 +661,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				name: {
@@ -684,10 +691,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				process: {
@@ -726,10 +733,10 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				createdAt: {
+				created_at: {
 					type: Sequelize.DATE
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE
 				},
 				name: {
