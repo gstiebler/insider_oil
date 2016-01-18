@@ -21,6 +21,7 @@
     "sequelize": "^3.15.0",
     "serve-favicon": "~2.3.0",
     "sync": "^0.2.5",
+    "winston": "^2.1.1",
     "xlsx": "^0.8.0"
   },
   "devDependencies": {

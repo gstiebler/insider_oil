@@ -5,6 +5,7 @@ var dbUtils = require('../lib/dbUtils');
 var dsParams = require('../lib/DataSourcesParams');
 var importExcel = require('../lib/importExcel');
 var ControllerUtils = require('../lib/ControllerUtils');
+var winston = require('winston');
 
 
 exports.main = function(req, res, next) {
@@ -34,7 +35,7 @@ exports.main = function(req, res, next) {
             };
             res.json( responseObj );
         } catch(e) {
-            console.error(e);
+            winston.error(e);
             ControllerUtils.getErrorFunc(res, 500, "Erro")(e);
         }
     }
@@ -45,7 +46,7 @@ exports.uploadFile = function(req, res, next) {
     fileUpload.receive( req, onFile, onFinish );
 
     function onFile(fileName, buf) {
-        console.log( "File name: " + fileName );
+    	winston.debug( "File name: " + fileName );
         var model = req.query.table;
         try {
             importExcel(buf, model, onOk, onError);
@@ -63,7 +64,7 @@ exports.uploadFile = function(req, res, next) {
     }
       
     function onFinish() {
-        console.log('Done parsing form!');
+    	winston.info('Done parsing form!');
     };
 }
 
