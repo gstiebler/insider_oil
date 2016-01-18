@@ -165,9 +165,10 @@ createWell: function(test) {
                 name: '',
                 operator_id: 4,
                 state: 'AC',
-                bacia: 'Bacia nova',
+                basin_id: 2,
                 lat: 333,
-                lng: 444
+                lng: 444,
+                block_id: 2
             }
         }
     };
@@ -186,8 +187,8 @@ createWell: function(test) {
     };
     const response = getJsonResponse.sync(null, dbServerController.main, req2);
     test.equal(4, response.records.length);
-    test.equal('Novo poço', response.records[3].name);
-    test.equal('Statoil', response.records[3].operator_name);
+    test.equal('Novo poço', response.records[2].name);
+    test.equal('Statoil', response.records[2].operator_name);
     test.done();
 },
 
