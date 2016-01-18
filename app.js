@@ -10,7 +10,7 @@ var app = express();
 
 winston.level = 'debug';
 if (app.get('env') == 'development') {
-	winston.add(winston.transports.File, { filename: 'development.log' });
+	winston.add(winston.transports.File, { filename: 'log/development.log' });
 }
 
 // view engine setup
