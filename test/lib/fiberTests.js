@@ -3,10 +3,18 @@ var db = require('../../db/models');
 var Sync = require('sync');
 var createFixtures = require('../fixtures/initial_data');
 var await = require('../../lib/await');
+var Umzug = require('umzug');
+
+var umzug = new Umzug({
+	migrations: {
+		path: __dirname + '/../../db/migrations',
+		params: [db.sequelize.getQueryInterface(), db.Sequelize]
+	}
+});
 
 exports.initializeDB = function() {
-    await( db.sequelize.getQueryInterface().dropAllTables() );
-    await( db.sequelize.sync() );
+    await( umzug.down() );
+    await( umzug.up() );
     createFixtures();
 }
 

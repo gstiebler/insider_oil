@@ -799,11 +799,11 @@ module.exports = {
 		}).then(function() {
 			return queryInterface.dropTable('models_list')
 		}).then(function() {
-			return queryInterface.dropTable('oil_fields')
-		}).then(function() {
 			return queryInterface.dropTable('fixed_uep_production')
 		}).then(function() {
 			return queryInterface.dropTable('fpso_production')
+		}).then(function() {
+			return queryInterface.dropTable('oil_fields')
 		}).then(function() {
 			return queryInterface.dropTable('drilling_rigs_onshore')
 		}).then(function() {

@@ -15,8 +15,7 @@
     "database": "insider_oil_test",
     "host": "localhost",
     "protocol": "mysql",
-    "dialect": "mysql",
-    "logging": false
+    "dialect": "mysql"
   },
   "production": {    
     "port": 3306,
