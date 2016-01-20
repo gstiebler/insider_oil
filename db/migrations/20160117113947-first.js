@@ -2,6 +2,7 @@
 
 module.exports = {
 	up: function(queryInterface, Sequelize) {
+		console.log('migrations');
 		// return queryInterface.dropAllTables().then( function() { return
 		return queryInterface.createTable('users', {
 			id: {

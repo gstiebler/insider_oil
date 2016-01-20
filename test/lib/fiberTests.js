@@ -13,6 +13,7 @@ var umzug = new Umzug({
 });
 
 exports.initializeDB = function() {
+    console.log( await( umzug.pending() ) );
     await( umzug.down() );
     await( umzug.up() );
     createFixtures();
