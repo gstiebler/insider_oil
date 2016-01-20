@@ -41,20 +41,23 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
         return strParts[2] + '/' + strParts[1] + '/' + strParts[0];
     }
 
-    function showModel(model) {
+    function showModel(modelData) {
     
+    	console.log(modelData);
+    	if(modelData.records.length == 0) return;
+    	
         if(!datatableInitialized) {
-            $scope.viewParams = model.viewParams;
+            $scope.viewParams = modelData.viewParams;
             var columns = [];
-            for( var i = 0; i < model.viewParams.gridFields.length; i++) {
-                var fieldName = model.viewParams.gridFields[i];
+            for( var i = 0; i < modelData.viewParams.gridFields.length; i++) {
+                var fieldName = modelData.viewParams.gridFields[i];
                 if(fieldName == 'id') continue;
-                var fieldLabel = model.viewParams.fields[fieldName].label;
+                var fieldLabel = modelData.viewParams.fields[fieldName].label;
                 var columnObj = { 
                     title: fieldLabel,
                     data: fieldName
                 };
-                if(model.types[fieldName] == "DATE")
+                if(modelData.types[fieldName] == "DATE")
                     columnObj.render = { display: dateFormat };
                     
                 columns.push(columnObj);
@@ -71,8 +74,8 @@ angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelView
         }
         
         var dataSet = [];
-        for( var i = 0; i < model.records.length; i++) {
-            var record = model.records[i];
+        for( var i = 0; i < modelData.records.length; i++) {
+            var record = modelData.records[i];
             var prelude = "angular.element(document.getElementById('angularContainer')).scope().";
             var editFuncStr = prelude + "editRecord(" + record.id + ")";
             var deleteFuncStr = prelude + "deleteRecord(" + record.id + ")";
