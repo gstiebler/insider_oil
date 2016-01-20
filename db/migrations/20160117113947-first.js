@@ -503,7 +503,8 @@ module.exports = {
 					references: {
 						model: 'news',
 						key: 'id'
-					}
+					},
+					onDelete: 'CASCADE'
 				},
 				model_id: {
 					type: Sequelize.INTEGER,
