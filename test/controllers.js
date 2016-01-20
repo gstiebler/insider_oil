@@ -5,6 +5,8 @@ var TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
 var SearchController = require('../controllers/SearchController');
 var NewsController = require('../controllers/NewsController');
+var Sync = require('sync');
+//var Future = Sync.Future();
 
 function deStringify(json) {
     var str = JSON.stringify(json);
@@ -433,6 +435,41 @@ treeIntegrity: test => {
     const tree = getJsonResponse.sync(null, TreeController.main, null);
     iterateTree(tree.children, test);
     test.done();
+},
+
+
+allTablesMain: test => {
+	const models = [
+	    'AmbientalLicense',
+	    'Basin',
+	    'Block',
+	    'Company',
+	    'DrillingRigOffshore',
+	    'DrillingRigOnshore',
+	    'FixedUEPProduction',
+	    'FPSOProduction',
+	    'News',
+	    'OilField',
+	    'Person',
+	    'Production',
+	    'Reserve',
+	    'Seismic',
+	    'Well'
+	];
+	
+	for(var model of models) {
+	    const req = {
+	        query: { 
+	            table: model,
+	        }
+	    };
+	    const response = getJsonResponse.future(null, dbServerController.main, req);
+	    for(var gridField of response.result.viewParams.gridFields) {
+	    	if(gridField == 'id') continue;
+	    	test.ok(response.result.viewParams.fields[gridField], 'Grid field not found: ' + gridField + ' in ' + model);
+	    }
+	}
+	test.done();
 },
 
 
