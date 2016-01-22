@@ -1,49 +1,58 @@
 'use strict';
 
+var Promise = require("bluebird");
+
 module.exports = {
 	up: function(queryInterface, Sequelize) {
-		console.log('migrations');
+		const
+		parameters = [];
 		// return queryInterface.dropAllTables().then( function() { return
-		return queryInterface.createTable('users', {
-			id: {
-				type: Sequelize.INTEGER,
-				primaryKey: true,
-				autoIncrement: true
-			},
-			created_at: {
-				type: Sequelize.DATE
-			},
-			updated_at: {
-				type: Sequelize.DATE
-			},
-			login: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
-			name: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
-			email: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
-			password: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
-			admin: {
-				type: Sequelize.BOOLEAN,
-				allowNull: false,
-				defaultValue: false
-			},
-			token: {
-				type: Sequelize.STRING,
-				allowNull: true
-			}
-		}).then(function() {
 
-			return queryInterface.createTable('companies', {
+		parameters.push({
+			table: 'users',
+			fields: {
+				id: {
+					type: Sequelize.INTEGER,
+					primaryKey: true,
+					autoIncrement: true
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
+				login: {
+					type: Sequelize.STRING,
+					allowNull: false
+				},
+				name: {
+					type: Sequelize.STRING,
+					allowNull: false
+				},
+				email: {
+					type: Sequelize.STRING,
+					allowNull: false
+				},
+				password: {
+					type: Sequelize.STRING,
+					allowNull: false
+				},
+				admin: {
+					type: Sequelize.BOOLEAN,
+					allowNull: false,
+					defaultValue: false
+				},
+				token: {
+					type: Sequelize.STRING,
+					allowNull: true
+				}
+			}
+		});
+		
+		parameters.push({
+			table: 'companies',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -63,10 +72,12 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: true
 				}
-			})
-		}).then(function() {
-
-			return queryInterface.createTable('ambiental_licenses', {
+			}
+		});
+		
+		parameters.push({
+			table: 'ambiental_licenses',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -110,10 +121,12 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: false
 				}
-			})
-		}).then(function() {
-
-			return queryInterface.createTable('basins', {
+			}
+		});
+		
+		parameters.push({
+			table: 'basins',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -128,11 +141,13 @@ module.exports = {
 				name: {
 					type: Sequelize.STRING,
 					allowNull: false
-				}
-			})
-		}).then(function() {
+				}		
+			}
+		});
 
-			return queryInterface.createTable('blocks', {
+		parameters.push({
+			table: 'blocks',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -197,10 +212,11 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
-		}).then(function() {
-
-			return queryInterface.createTable('drilling_rigs_offshore', {
+			}
+		});
+		parameters.push({
+			table: 'drilling_rigs_offshore',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -244,9 +260,12 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
-		}).then(function() {
-			return queryInterface.createTable('drilling_rigs_onshore', {
+			}
+		});
+		
+		parameters.push({
+			table: 'drilling_rigs_onshore',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -277,9 +296,14 @@ module.exports = {
 						model: 'companies',
 						key: 'id'
 					}
-				}
-		})}).then(function() {
-			return queryInterface.createTable('oil_fields', {
+				}	
+			}
+		});
+		
+		
+		parameters.push({
+			table: 'oil_fields',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -319,9 +343,12 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
-		}).then(function() {
-			return queryInterface.createTable('fpso_production', {
+			}
+		});
+		
+		parameters.push({
+			table: 'fpso_production',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -385,10 +412,12 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
-		}).then(function() {
-
-			return queryInterface.createTable('fixed_uep_production', {
+			}
+		});
+		
+		parameters.push({
+			table: 'fixed_uep_production',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -432,9 +461,12 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
-		}).then(function() {
-			return queryInterface.createTable('models_list', {
+			}
+		});
+		
+		parameters.push({
+			table: 'models_list',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -449,10 +481,13 @@ module.exports = {
 				name: {
 					type: Sequelize.STRING,
 					allowNull: false
-				}
-			})
-		}).then(function() {
-			return queryInterface.createTable('news', {
+				}	
+			}
+		});
+		
+		parameters.push({
+			table: 'news',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -480,9 +515,12 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
-		}).then(function() {
-			return queryInterface.createTable('news_models', {
+			}
+		});
+		
+		parameters.push({
+			table: 'news_models',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -515,9 +553,12 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
-		}).then(function() {
-			return queryInterface.createTable('production', {
+			}
+		});
+		
+		parameters.push({
+			table: 'production',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -617,9 +658,12 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
-		}).then(function() {
-			return queryInterface.createTable('reserves', {
+			}
+		});
+		
+		parameters.push({
+			table: 'reserves',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -655,9 +699,12 @@ module.exports = {
 					type: Sequelize.ENUM('oil', 'gas'),
 					allowNull: false
 				}
-			})
-		}).then(function() {
-			return queryInterface.createTable('persons', {
+			}
+		});
+		
+		parameters.push({
+			table: 'persons',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -685,9 +732,12 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
-		}).then(function() {
-			return queryInterface.createTable('seismics', {
+			}
+		});
+		
+		parameters.push({
+			table: 'seismics',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -727,9 +777,12 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
-		}).then(function() {
-			return queryInterface.createTable('wells', {
+			}
+		});
+
+		parameters.push({
+			table: 'wells',
+			fields: {
 				id: {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
@@ -781,45 +834,38 @@ module.exports = {
 						key: 'id'
 					}
 				}
-			})
+			}
+		});
+
+		return Promise.each(parameters, function(item) {
+			return queryInterface.createTable(item.table, item.fields);
 		});
 	},
 
 	down: function(queryInterface, Sequelize) {
-		return queryInterface.dropTable('wells').then(function() {
-			return queryInterface.dropTable('seismics')
-		}).then(function() {
-			return queryInterface.dropTable('persons')
-		}).then(function() {
-			return queryInterface.dropTable('reserves')
-		}).then(function() {
-			return queryInterface.dropTable('production')
-		}).then(function() {
-			return queryInterface.dropTable('news_models')
-		}).then(function() {
-			return queryInterface.dropTable('news')
-		}).then(function() {
-			return queryInterface.dropTable('models_list')
-		}).then(function() {
-			return queryInterface.dropTable('fixed_uep_production')
-		}).then(function() {
-			return queryInterface.dropTable('fpso_production')
-		}).then(function() {
-			return queryInterface.dropTable('oil_fields')
-		}).then(function() {
-			return queryInterface.dropTable('drilling_rigs_onshore')
-		}).then(function() {
-			return queryInterface.dropTable('drilling_rigs_offshore')
-		}).then(function() {
-			return queryInterface.dropTable('blocks')
-		}).then(function() {
-			return queryInterface.dropTable('basins')
-		}).then(function() {
-			return queryInterface.dropTable('ambiental_licenses')
-		}).then(function() {
-			return queryInterface.dropTable('companies')
-		}).then(function() {
-			return queryInterface.dropTable('users')
+		const tables = [
+		    'wells',
+		    'seismics',
+		    'persons',
+		    'reserves',
+		    'production',
+		    'news_models',
+		    'news',
+		    'models_list',
+		    'fixed_uep_production',
+		    'fpso_production',
+		    'oil_fields',
+		    'drilling_rigs_onshore',
+		    'drilling_rigs_offshore',     
+		    'blocks',
+		    'basins',
+		    'ambiental_licenses',
+		    'companies',
+		    'users'
+		];
+		
+		return Promise.each(tables, function(table) {
+			return queryInterface.dropTable(table);
 		});
 	}
 };

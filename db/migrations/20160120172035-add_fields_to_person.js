@@ -1,38 +1,64 @@
 'use strict';
+var Promise = require("bluebird");
 
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-	  return queryInterface.addColumn(
-			 'persons', 
-			 'position',
-			 {
-				  type: Sequelize.STRING,
-				  allowNull: false 
-			 }
-  	).then(function() {
-	  	  return queryInterface.addColumn(
-	 			 'persons', 
-	 			 'telephone1',
-	 			 {
-	 				  type: Sequelize.STRING,
-	 				  allowNull: false 
-	 			 }
-  	)}).then(function() {
-	  	  return queryInterface.addColumn(
-		 			 'persons', 
-		 			 'telephone2',
-		 			 {
-		 				  type: Sequelize.STRING,
-		 				  allowNull: false 
-		 			 }
-	  	)});
-  },
+	up: function(queryInterface, Sequelize) {
+		const
+		params = [];
 
-  down: function (queryInterface, Sequelize) {
-	  return queryInterface.removeColumn('persons', 'position').then(function() {
-		  return queryInterface.removeColumn('persons', 'telephone1');
-	  }).then(function() {
-		  return queryInterface.removeColumn('persons', 'telephone2');
-	  });
-  }
+		params.push({
+			table: 'persons',
+			columnName: 'position',
+			columnDesc: {
+				type: Sequelize.STRING,
+				allowNull: false
+			}
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'telephone1',
+			columnDesc: {
+				type: Sequelize.STRING,
+				allowNull: false
+			}
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'telephone2',
+			columnDesc: {
+				type: Sequelize.STRING,
+				allowNull: false
+			}
+		});
+
+		return Promise.each(params, function(item) {
+			return queryInterface.addColumn(item.table, item.columnName, item.columnDesc);
+		});
+	},
+
+	down: function(queryInterface, Sequelize) {
+		const
+		params = [];
+
+		params.push({
+			table: 'persons',
+			columnName: 'position'
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'telephone1'
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'telephone2'
+		});
+
+		return Promise.each(params, function(item) {
+			return queryInterface.removeColumn(item.table, item.columnName);
+		});
+	}
 };
