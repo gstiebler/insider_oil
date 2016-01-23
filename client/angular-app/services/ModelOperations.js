@@ -31,8 +31,8 @@ app.service('ModelOperations', ['$location', 'server',
     
     function createPersonOperations(modelName) {
     	const modelOperations = createDefaultModelOperations(modelName);
-    	modelOperations.editRecord = function() {
-			$location.path("/app/edit_person");
+    	modelOperations.editRecord = function(id) {
+			$location.path("/app/edit_person").search({ id: id });
     	}
     	return modelOperations;
     }
