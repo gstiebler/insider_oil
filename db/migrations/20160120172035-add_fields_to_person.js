@@ -11,7 +11,7 @@ module.exports = {
 			columnName: 'position',
 			columnDesc: {
 				type: Sequelize.STRING,
-				allowNull: false
+				allowNull: true
 			}
 		});
 
@@ -20,7 +20,7 @@ module.exports = {
 			columnName: 'telephone1',
 			columnDesc: {
 				type: Sequelize.STRING,
-				allowNull: false
+				allowNull: true
 			}
 		});
 
@@ -29,7 +29,83 @@ module.exports = {
 			columnName: 'telephone2',
 			columnDesc: {
 				type: Sequelize.STRING,
-				allowNull: false
+				allowNull: true
+			}
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'email',
+			columnDesc: {
+				type: Sequelize.STRING,
+				allowNull: true
+			}
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'linkedin',
+			columnDesc: {
+				type: Sequelize.STRING,
+				allowNull: true
+			}
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'address',
+			columnDesc: {
+				type: Sequelize.STRING,
+				allowNull: true
+			}
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'directorship',
+			columnDesc: {
+				type: Sequelize.STRING,
+				allowNull: true
+			}
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'management_sector',
+			columnDesc: {
+				type: Sequelize.STRING,
+				allowNull: true
+			}
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'project1_model_id',
+			columnDesc: {
+				type: Sequelize.INTEGER,
+				allowNull: true,
+				references: {
+					model: 'models_list',
+					key: 'id'
+				}
+			}
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'project1_ref_id',
+			columnDesc: {
+				type: Sequelize.INTEGER,
+				allowNull: true
+			}
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'photo',
+			columnDesc: {
+				type: Sequelize.BLOB,
+				allowNull: true
 			}
 		});
 

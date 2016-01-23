@@ -206,7 +206,6 @@ module.exports = {
 				basin_id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
-					references: 'basins',
 					references: {
 						model: 'basins',
 						key: 'id'
