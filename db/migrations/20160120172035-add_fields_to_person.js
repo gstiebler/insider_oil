@@ -104,7 +104,7 @@ module.exports = {
 			table: 'persons',
 			columnName: 'photo',
 			columnDesc: {
-				type: Sequelize.BLOB,
+				type: Sequelize.BLOB('long'),
 				allowNull: true
 			}
 		});
