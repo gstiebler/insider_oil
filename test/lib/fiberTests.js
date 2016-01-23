@@ -6,6 +6,10 @@ var await = require('../../lib/await');
 var Umzug = require('umzug');
 
 var umzug = new Umzug({
+	storage: 'sequelize',
+	storageOptions: {
+		sequelize: db.sequelize
+	},
 	migrations: {
 		path: __dirname + '/../../db/migrations',
 		params: [db.sequelize.getQueryInterface(), db.Sequelize]
@@ -13,8 +17,7 @@ var umzug = new Umzug({
 });
 
 exports.initializeDB = function() {
-    console.log( await( umzug.pending() ) );
-    await( umzug.down() );
+	await( db.sequelize.getQueryInterface().dropAllTables() );
     await( umzug.up() );
     createFixtures();
 }
