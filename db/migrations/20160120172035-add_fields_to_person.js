@@ -133,6 +133,46 @@ module.exports = {
 			columnName: 'telephone2'
 		});
 
+		params.push({
+			table: 'persons',
+			columnName: 'email'
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'linkedin'
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'address'
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'directorship'
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'management_sector'
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'project1_model_id'
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'project1_ref_id'
+		});
+
+		params.push({
+			table: 'persons',
+			columnName: 'photo'
+		});
+
 		return Promise.each(params, function(item) {
 			return queryInterface.removeColumn(item.table, item.columnName);
 		});
