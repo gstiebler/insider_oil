@@ -1,5 +1,6 @@
 <div class="row">   
-    <img ng-src="data:image/JPEG;base64,{{photo}}" alt="Foto" id="foto">
+    <img ng-src="{{photo}}" alt="Foto" id="foto">
+    <input type="file" on-read-file="loadPhoto($fileContent)" />
     <form class="form-horizontal" role="form">
         <div class="form-group" ng-repeat="field in fields">
             <label class="control-label col-sm-2" for="{{field.htmlId}}">{{field.label}}:</label>

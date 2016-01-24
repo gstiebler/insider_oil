@@ -13,7 +13,6 @@ angular.module('InsiderOilApp').controller('EditPersonController',
 	};
 	
 	function onValues(data) {
-		console.log(data);
 		// TODO refactor to centralize this code and call from EditItem
         const fields = data.fields;
         const processedFields = [];
@@ -45,7 +44,7 @@ angular.module('InsiderOilApp').controller('EditPersonController',
     
         $scope.fields = processedFields;
         $scope.values = data.values;
-        $scope.photo = _arrayBufferToBase64( data.values['photo'].data );
+        $scope.photo = 'data:image/JPEG;base64,' + _arrayBufferToBase64( data.values['photo'].data );
 	}
     
 	
@@ -80,5 +79,11 @@ angular.module('InsiderOilApp').controller('EditPersonController',
         Flash.create('success', status.data.msg);
         $location.path("/app/model_view").search({ model: 'Person' });
     }
+    
+    
+    $scope.loadPhoto = function($fileContent){
+    	console.log($fileContent);
+    	$scope.photo = $fileContent;
+    };
 	
 }]);
