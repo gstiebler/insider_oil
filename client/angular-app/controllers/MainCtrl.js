@@ -11,7 +11,6 @@ angular.module('InsiderOilApp').controller('MainController',
     
     var url = $location.search().url;
     if( url ) {
-        console.log( "url: " + decodedURL );
         var decodedURL = decodeURIComponent(url);
         $location.url(decodedURL);
     }
