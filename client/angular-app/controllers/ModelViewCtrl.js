@@ -42,8 +42,6 @@ angular.module('InsiderOilApp').controller('ModelViewController',
     }
 
     function showModel(modelData) {
-    
-    	console.log(modelData);
     	if(modelData.records.length == 0) return;
     	
         if(!datatableInitialized) {
