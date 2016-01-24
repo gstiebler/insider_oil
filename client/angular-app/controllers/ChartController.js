@@ -1,4 +1,5 @@
-angular.module('ChartCtrl', []).controller('ChartController', 
+'use strict';
+angular.module('InsiderOilApp').controller('ChartController', 
                 ['$scope', 'server', '$routeParams', '$location',
         function($scope, server, $routeParams, $location) {
     

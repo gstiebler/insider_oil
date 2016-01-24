@@ -4,15 +4,8 @@ angular.module('InsiderOilApp', [
     'ngCookies',
     'flash',
     'autocomplete',
-    'MainCtrl', 
-    'ModelViewCtrl', 
-    'CreateItemCtrl', 
-    'EditItemCtrl', 
-    'EditNewsCtrl', 
-    'EditPersonCtrl', 
-    'ViewRecordCtrl',
-    'AdminSourcesListCtrl',
-    'TreeCtrl', 
-    'MapCtrl', 
-    'ChartCtrl'
+    'ngFileUpload',
+    'ui.bootstrap',
+    'textAngular',
+    'ngSanitize'
 ]);

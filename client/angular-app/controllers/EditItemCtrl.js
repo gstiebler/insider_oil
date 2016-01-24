@@ -1,5 +1,5 @@
 'use strict';
-angular.module('EditItemCtrl', ['flash', 'ui.bootstrap']).controller('EditItemController', 
+angular.module('InsiderOilApp').controller('EditItemController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, showError, Flash) {
     

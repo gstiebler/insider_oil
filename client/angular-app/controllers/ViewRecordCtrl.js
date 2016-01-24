@@ -1,5 +1,5 @@
 'use strict';
-angular.module('ViewRecordCtrl', ['flash', 'ui.bootstrap', 'ngSanitize']).controller('ViewRecordController', 
+angular.module('InsiderOilApp').controller('ViewRecordController', 
                 ['$scope', 'server', '$routeParams', 'showError', 'Flash',
         function($scope, server, $routeParams, showError, Flash) {
     

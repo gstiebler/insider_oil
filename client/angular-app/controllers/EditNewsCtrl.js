@@ -1,5 +1,5 @@
 'use strict';
-angular.module('EditNewsCtrl', ['flash', 'ui.bootstrap', 'textAngular']).controller('EditNewsController', 
+angular.module('InsiderOilApp').controller('EditNewsController', 
                 ['$scope', '$http', '$routeParams', '$location', 'server', 'session', 'showError', 'Flash',
         function($scope, $http, $routeParams, $location, server, session, showError, Flash) {
                 	

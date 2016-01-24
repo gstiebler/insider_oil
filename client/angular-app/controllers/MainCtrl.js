@@ -1,4 +1,5 @@
-angular.module('MainCtrl', []).controller('MainController', 
+'use strict';
+angular.module('InsiderOilApp').controller('MainController', 
         ['$scope', '$location', '$http', 'session', 'server', 'showError',  
          function($scope, $location, $http, session, server, showError) {
 

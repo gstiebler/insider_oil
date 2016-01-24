@@ -1,4 +1,5 @@
-angular.module('MapCtrl', []).controller('MapController', 
+'use strict';
+angular.module('InsiderOilApp').controller('MapController', 
                 ['$scope', 'server', '$routeParams',
         function($scope, server, $routeParams) {
 

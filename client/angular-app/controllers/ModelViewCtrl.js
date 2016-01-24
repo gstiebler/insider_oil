@@ -1,5 +1,5 @@
 'use strict';
-angular.module('ModelViewCtrl', ['ngFileUpload', 'flash']).controller('ModelViewController', 
+angular.module('InsiderOilApp').controller('ModelViewController', 
                 ['$scope', 'server', '$routeParams', '$location', 'Upload', '$timeout', 'showError', 'Flash', 'ModelOperations',
         function($scope, server, $routeParams, $location, Upload, $timeout, showError, Flash, ModelOperations) {
 

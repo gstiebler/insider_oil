@@ -1,5 +1,5 @@
 'use strict';
-angular.module('EditPersonCtrl', ['ngFileUpload', 'flash']).controller('EditPersonController', 
+angular.module('InsiderOilApp').controller('EditPersonController', 
                 ['$scope', 'server', '$routeParams', '$location', 'Upload', '$timeout', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, Upload, $timeout, showError, Flash) {
                 	

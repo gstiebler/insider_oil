@@ -1,5 +1,5 @@
 'use strict';
-angular.module('TreeCtrl', ['flash', 'ui.bootstrap']).controller('TreeController', 
+angular.module('InsiderOilApp').controller('TreeController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, showError, Flash) {
     

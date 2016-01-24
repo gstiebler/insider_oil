@@ -1,5 +1,5 @@
 'use strict';
-angular.module('AdminSourcesListCtrl', ['flash', 'ui.bootstrap']).controller('AdminSourcesListController', 
+angular.module('InsiderOilApp').controller('AdminSourcesListController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, showError, Flash) {
     
