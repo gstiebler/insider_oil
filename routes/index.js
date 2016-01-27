@@ -1,3 +1,4 @@
+"use strict";
 var session = require('../lib/session');
 
 var mainController = require('../controllers/mainController');
@@ -36,8 +37,9 @@ module.exports = function(app) {
     app.get('/news/from_object',session.authorize, NewsController.newsFromObject);
     
     // Users
-    app.get('/user/',           session.authorize, usersController.main );
-    app.get('/user/details',    session.authorize, usersController.userDetails );
+    app.get('/user/',                session.authorize, usersController.main );
+    app.get('/user/details',         session.authorize, usersController.userDetails );
+    app.put('/user/change_password', session.authorize, usersController.changePassword );
     
     // Tree
     app.get('/tree/',           session.authorize, treeController.main );

@@ -129,5 +129,14 @@ app.service('server', ['$http', 'session',
     	};
         http(params, $http.get, '/news/from_object', onData, onError);
     }
+    
+    
+    this.changePassword = function(onData, onError, oldPassword, newPassword) {
+    	params = {
+    		oldPassword: oldPassword,
+    		newPassword: newPassword	
+    	};
+        http(params, $http.put, '/user/change_password', onData, onError);
+    }
         
 }]);
