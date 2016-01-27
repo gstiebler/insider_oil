@@ -1,3 +1,4 @@
+"use strict";
 process.env['NODE_ENV'] = 'test';
 var db = require('../../db/models');
 var Sync = require('sync');
