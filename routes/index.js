@@ -8,6 +8,7 @@ var usersController = require('../controllers/usersController');
 var treeController = require('../controllers/TreeController');
 var searchController = require('../controllers/SearchController');
 var NewsController = require('../controllers/NewsController');
+var ExcelController = require('../controllers/ExcelController');
 
 module.exports = function(app) {
     // Main route
@@ -31,6 +32,8 @@ module.exports = function(app) {
     app.get('/combo_values/', session.authorize,   dbServerController.getComboValues);
     app.post('/db_server/upload_file',             dbServerController.uploadFile);
     app.get('/search', session.authorize,          searchController.main);
+    
+    app.get('/download_excel', session.authorize,  ExcelController.main);
     
     // News
     app.get('/news', session.authorize,            NewsController.allNews);

@@ -4,6 +4,7 @@ var db = require('../db/models');
 var await = require('../lib/await');
 var fs = require('fs');
 var importExcel = require('../lib/importExcel');
+var ExportExcel = require('../lib/ExportExcel');
 var XLSX = require('xlsx');
 var dbUtils = require('../lib/dbUtils');
 
@@ -13,7 +14,7 @@ function onError(error) {
 
 var group = {
 
-first: function(test) {
+import: function(test) {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.DrillingRigOffshore.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
@@ -55,6 +56,11 @@ first: function(test) {
 },
 
 
+export: test => {
+	ExportExcel.main('Well');
+},
+
+
 invalidHeader: function(test) {
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
     var workbook = XLSX.read(excelBuf, {type:"buffer"});
@@ -70,6 +76,8 @@ invalidHeader: function(test) {
         test.done();
     }
 }
+
+
 
 
 };

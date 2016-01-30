@@ -4,6 +4,7 @@ angular.module('InsiderOilApp').controller('ModelViewController',
         function($scope, server, $routeParams, $location, showError, Flash, ModelOperations, ModelViewService) {
 
     var modelName = $routeParams.model;
+    $scope.dataSource = modelName;
     server.getTable(modelName, {}, showModel, showError.show );
     
     var datatableInitialized = false;
