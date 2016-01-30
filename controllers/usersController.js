@@ -8,7 +8,7 @@ exports.main = function(req, res, next) {
 
 
 exports.userDetails = function(req, res, next) {
-    user = {
+    const user = {
         login: req.user.login,
         name: req.user.name,
         email: req.user.email,

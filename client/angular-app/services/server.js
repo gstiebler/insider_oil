@@ -138,5 +138,13 @@ app.service('server', ['$http', 'session',
     	};
         http(params, $http.put, '/user/change_password', onData, onError);
     }
+    
+    
+    this.downloadExcelFile = function(dataSource, onData, onError) {
+    	params = {
+    		dataSource: dataSource	
+    	};
+        http(params, $http.get, '/download_excel', onData, onError);
+    }
         
 }]);

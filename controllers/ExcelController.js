@@ -4,17 +4,13 @@ var dbUtils = require('../lib/dbUtils');
 var ControllerUtils = require('../lib/ControllerUtils');
 var Sync = require('sync');	
 var await = require('../lib/await');
+var ExportExcel = require('../lib/ExportExcel');
 
 
 exports.main = function(req, res, next) { Sync(function() {
     const dataSourceName = req.query.dataSource;
-    const dataSource = db[dataSourceName];
-    try {
-        const records = await( dbUtils.findAllCustom(dataSource, {}, {}) );
-        res.json(records);
-    } catch(e) {
-    	console.error(e.stack);
-    	ControllerUtils.getErrorFunc(res, 500, "Problema")(e);
-        return;
-    }
+    const binaryWorkbook = ExportExcel.main(dataSourceName);
+    res.set({"Content-Disposition":'attachment; filename="arquivo.xlsx"'});
+    res.set('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.send(binaryWorkbook);
 }) }

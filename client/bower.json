@@ -13,6 +13,7 @@
     "ng-file-upload": "~10.0.2",
     "angular-flash-alert": "1.1.1",
     "allmighty-autocomplete": "*",
-    "textAngular": "~1.4.6"
+    "textAngular": "~1.4.6",
+    "file-saver.js": "~1.20150507.2"
   }
 }

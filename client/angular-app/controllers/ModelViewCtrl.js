@@ -95,4 +95,23 @@ angular.module('InsiderOilApp').controller('ModelViewController',
         }   
     }
     
+    function str2ab(str) {
+    	  var buf = new ArrayBuffer(str.length);
+    	  var bufView = new Uint8Array(buf);
+    	  for (var i=0, strLen=str.length; i<strLen; i++) {
+    	    bufView[i] = str.charCodeAt(i);
+    	  }
+    	  return buf;
+    }
+    
+    $scope.getExcelFile = function() {
+    	server.downloadExcelFile(modelName, onExcelFile, showError.show);
+    	
+    	function onExcelFile(xlsxBinary) {
+    		const ba = str2ab(xlsxBinary);
+    		var blob = new Blob([ba], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    		saveAs(blob, "arquivo.xlsx");
+    	}
+    }
+    
 }]);
