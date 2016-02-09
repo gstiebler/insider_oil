@@ -51,6 +51,7 @@ exports.uploadFile = function(req, res, next) {
         try {
             importExcel(buf, model, onOk, onError);
         } catch(err) {
+            winston.error(err);
             res.status(400).json( { errorMsg: err } );
         }
         
