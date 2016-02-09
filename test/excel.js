@@ -57,7 +57,9 @@ import: function(test) {
 
 
 export: test => {
-	ExportExcel.main('Well');
+	const excelBuf = ExportExcel.main('Well');
+    //const workbook = XLSX.read(excelBuf, {type:"buffer", cellDates: true});
+    test.done();
 },
 
 
