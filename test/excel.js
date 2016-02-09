@@ -9,7 +9,7 @@ var XLSX = require('xlsx');
 var dbUtils = require('../lib/dbUtils');
 
 function onError(error) {
-    console.error(error.stack);
+    console.error(error);
 }
 
 var group = {
