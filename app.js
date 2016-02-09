@@ -65,4 +65,9 @@ app.use(function(err, req, res, next) {
 });
 
 
+process.on('uncaughtException', function (err) {
+    winston.error(err.stack);
+})
+
+
 module.exports = app;
