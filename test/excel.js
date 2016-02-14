@@ -31,10 +31,10 @@ import: function(test) {
         expectedStatus += "\nRegistros atualizados: 3";
         expectedStatus += "\nRegistros inválidos: 72";
         test.equal( expectedStatus, status );
-        test.equal( "Valor 'Brasdril' do campo 'contratada' não encontrado.", invalidRecordsStatus[0] );
-        test.equal( "Valor 'Transocean' do campo 'contratada' não encontrado.", invalidRecordsStatus[1] );
-        test.equal( "Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[70] );
-        test.equal( "Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[71] );
+        test.equal( "Registro 5: Valor 'Brasdril' do campo 'contratada' não encontrado.", invalidRecordsStatus[0] );
+        test.equal( "Registro 6: Valor 'Transocean' do campo 'contratada' não encontrado.", invalidRecordsStatus[1] );
+        test.equal( "Registro 97: Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[70] );
+        test.equal( "Registro 98: Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[71] );
         
         test.equal("Aban Abraham", rows[0].name);
         test.equal("Etesco", rows[0].contractor.name);
