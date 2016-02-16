@@ -14,7 +14,7 @@ function onError(error) {
 
 var group = {
 
-import: function(test) {
+importDrillingRigOffshore: function(test) {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.DrillingRigOffshore.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
@@ -56,6 +56,43 @@ import: function(test) {
 },
 
 
+importAmbientalLicenses: test => {
+    var fixtureCount = 3;
+    test.equal( fixtureCount, await( db.AmbientalLicense.findAll() ).length );  
+    var excelBuf = fs.readFileSync('./test/data/ambiental_licenses.xlsx');
+    importExcel(excelBuf, 'AmbientalLicense', onImportDone, onError);
+    
+    function onImportDone(status, invalidRecordsStatus) {
+        var rows = await( dbUtils.findAllCustom(db.AmbientalLicense));
+        test.equal( 18, rows.length );  
+        var expectedStatus = "Registros criados: 15";
+        expectedStatus += "\nRegistros atualizados: 5";
+        expectedStatus += "\nRegistros inválidos: 0";
+        test.equal( expectedStatus, status );
+        test.equal( 0, invalidRecordsStatus.length );
+        
+        test.equal('2015-01-09', rows[0].start.toJSON().substring(0, 10));
+        test.equal('2016-01-09', rows[0].end.toJSON().substring(0, 10));
+        test.equal('ABio 560/2014', rows[0].license);
+        test.equal('Perfuração Marítima - Bloco BM-CAL-13 - Bacia de Camamu-Almada', rows[0].enterprise);
+        test.equal('BP ENERGY DO BRASIL LTDA', rows[0].entrepreneur);
+        test.equal('02022.001868/2007-89', rows[0].process);
+        test.equal('Petróleo - Perfuração', rows[0].tipology);
+        test.equal('Não', rows[0].pac);
+        test.equal('2015-07-16', rows[9].start.toJSON().substring(0, 10));
+        test.equal('0000-00-00', rows[9].end);
+        test.equal('ABio 616/2015', rows[9].license);
+        test.equal('Perfuração Marítima - Blocos BM-POT-16 e 17 - Bacia de Potiguar', rows[9].enterprise);
+        test.equal('PETRÓLEO BRASILEIRO S/A - PETROBRÁS', rows[9].entrepreneur);
+        test.equal('02022.004723/2006-59', rows[9].process);
+        test.equal('Petróleo - Perfuração', rows[9].tipology);
+        test.equal('Não', rows[9].pac);
+        
+        test.done();
+    }
+},
+
+
 export: test => {
 	const excelBuf = ExportExcel.main('Well');
     //const workbook = XLSX.read(excelBuf, {type:"buffer", cellDates: true});
@@ -78,8 +115,6 @@ invalidHeader: function(test) {
         test.done();
     }
 }
-
-
 
 
 };
