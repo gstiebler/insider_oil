@@ -5,6 +5,13 @@ var Sync = require('sync');
 var createFixtures = require('../fixtures/initial_data');
 var await = require('../../lib/await');
 var Umzug = require('umzug');
+var winston = require('winston');
+
+winston.level = 'debug';
+
+process.on('uncaughtException', function (err) {
+    winston.error(err.stack);
+})
 
 var umzug = new Umzug({
 	storage: 'sequelize',
