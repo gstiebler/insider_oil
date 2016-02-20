@@ -11,6 +11,7 @@ winston.level = 'debug';
 
 process.on('uncaughtException', function (err) {
     winston.error(err.stack);
+    console.log(err.stack);
 })
 
 var umzug = new Umzug({
