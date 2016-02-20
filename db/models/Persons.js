@@ -1,3 +1,5 @@
+var await = require('../../lib/await');
+
 module.exports = function(sequelize, DataTypes) {
 	var Person = sequelize.define('Person', {
 		name: {
@@ -31,7 +33,21 @@ module.exports = function(sequelize, DataTypes) {
 		photo: {
 			type: DataTypes.BLOB,
 			allowNull: true
-		}
+		},
+       telephones: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                const options = { where: { person_id: this.id } };
+                const telephoneRecords = await( sequelize.models.Telephone.findAll(options) );
+                const telephones = [];
+                for(var i = 0; i < telephoneRecords.length; i++) {
+                    telephones.push( telephoneRecords[i]['number'] );    
+                }
+                return telephones;
+            },
+            set: function(val) {
+            }
+        }
 	}, {
 		underscored: true,
 		tableName: 'persons',

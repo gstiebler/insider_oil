@@ -16,7 +16,6 @@ getPerson: test => {
         }
     };
     const response = utils.getJsonResponse.sync(null, dbServerController.recordValues, req);
-    console.log(response);
     test.equal('Felipe', response.values.name);
     test.equal(2, response.values.company_id);
     
@@ -26,7 +25,7 @@ getPerson: test => {
     test.equal('email', response.fields[2].name);
     
     const telephones = ['+55 21 234-5678', '98989-9498'];
-    test.equal(telephones, response.values.telephones);
+    test.equal(JSON.stringify(telephones), JSON.stringify(response.values.telephones));
     
     test.done();
 }

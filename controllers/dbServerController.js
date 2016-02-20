@@ -1,10 +1,11 @@
 "use strict";
-var db  = require('../db/models');
+var db = require('../db/models');
 var fileUpload = require('../lib/fileUpload');
 var dbUtils = require('../lib/dbUtils');
 var dsParams = require('../lib/DataSourcesParams');
 var importExcel = require('../lib/importExcel');
 var ControllerUtils = require('../lib/ControllerUtils');
+var Sync = require('sync');
 var winston = require('winston');
 
 
@@ -80,17 +81,18 @@ exports.modelFields = function(req, res, next) {
 exports.recordValues = function(req, res, next) {
     var modelName = req.query.model;
     var id = req.query.id;
-    var model = dbUtils.getDataSource(modelName);
-    model.findById(id).then(onRecord)
+    const dataSource = dbUtils.getDataSource(modelName);
+    dataSource.findById(id).then(onRecord)
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
-    function onRecord(record) {
+    function onRecord(record) { Sync(function(){
         var fields = dbUtils.getModelFields(modelName);
+        
         res.json({ 
             values: record,
             fields: fields
         });
-    }
+    });}
 }
 
 
