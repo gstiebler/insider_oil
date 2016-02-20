@@ -20,6 +20,7 @@ function createFixtures() {
     await( require('./Production')(db) );
     await( require('../../db/seeders/ModelsListInitializer')(db) );
     await( require('./NewsFixtures')(db) );
+    await( require('./Telephone')(db) );
 };
 
 module.exports = createFixtures;
