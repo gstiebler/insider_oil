@@ -8,9 +8,7 @@ angular.module('InsiderOilApp').controller('EditPersonController',
     const id = $routeParams.id;
 	
 	const customFields = {
-	    photo: true,
-	    project1_model_id: true,
-	    project1_ref_id: true
+	    photo: true
 	};
 	
 	server.getModelFieldsAndValues( 'Person', id, onValues, showError.show );
