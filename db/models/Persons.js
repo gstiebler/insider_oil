@@ -8,14 +8,6 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
-		telephone1: {
-			type: DataTypes.STRING,
-			allowNull: true
-		},
-		telephone2: {
-			type: DataTypes.STRING,
-			allowNull: true
-		},
 		email: {
 			type: DataTypes.STRING,
 			allowNull: true
@@ -36,10 +28,6 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
-		project1_ref_id: {
-			type: DataTypes.INTEGER,
-			allowNull: true
-		},
 		photo: {
 			type: DataTypes.BLOB,
 			allowNull: true
@@ -57,9 +45,6 @@ module.exports = function(sequelize, DataTypes) {
 			associate: function(models) {
 				Person.belongsTo(models.Company, {
 					as: 'company'
-				});
-				Person.belongsTo(models.ModelsList, {
-					as: 'project1_model'
 				});
 			}
 		}
