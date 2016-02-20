@@ -3,6 +3,9 @@ var await = require('../../lib/await');
 var Umzug = require('umzug');
 var Sync = require('sync');
 var createFixtures = require('../../test/fixtures/initial_data');
+var winston = require('winston');
+
+winston.add(winston.transports.File, { filename: 'log/seeder.log' });
 
 var umzug = new Umzug({
 	storage: 'sequelize',
