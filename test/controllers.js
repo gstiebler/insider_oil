@@ -6,33 +6,9 @@ var loginController = require('../controllers/loginController');
 var SearchController = require('../controllers/SearchController');
 var NewsController = require('../controllers/NewsController');
 var Sync = require('sync');
+var utils = require('./lib/utils');
 //var Future = Sync.Future();
 
-function deStringify(json) {
-    var str = JSON.stringify(json);
-    return JSON.parse(str);
-}
-
-function getJsonResponse(func, req, callback) {
-    const res = { 
-        json: jsonRes,
-        status: status
-    };
-    func(req, res);
-    
-    function jsonRes(response) {
-        callback(null, deStringify(response) );
-    }
-    
-    function status(code) {
-        const result = { 
-            json: function(response) { 
-                callback(null, { code: code, error: deStringify(response) } );
-            } 
-        };
-        return result;
-    }
-}
 
 function testRenderFn(test, errorMsg) {
     return function render(viewName, params) {
@@ -55,7 +31,7 @@ function iterateTree(children, test) {
                     filters: JSON.stringify(item.child.filters)
                 }
             };
-            const response = getJsonResponse.sync(null, dbServerController.main, req);
+            const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
             test.ok(response.records.length > 0, 'Não há registros em ' + item.label);
             const reqViewRecords = {
             	query: {
@@ -63,7 +39,7 @@ function iterateTree(children, test) {
             		id: response.records[0].id
             	}	
             };
-            const responseViewRecords = getJsonResponse.sync(null, dbServerController.viewRecord, reqViewRecords);
+            const responseViewRecords = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqViewRecords);
             test.ok( responseViewRecords.length > 0, 'Problema no viewRecords do datasource ' +  item.child.source)
         }
     }
@@ -76,13 +52,13 @@ listWells: function(test) {
         query: { table: 'Well2' }
     };    
     
-    const errorResponse = getJsonResponse.sync(null, dbServerController.main, req);
+    const errorResponse = utils.getJsonResponse.sync(null, dbServerController.main, req);
     test.equal( 500, errorResponse.code ); // test HTTP error code
     test.equal( "Modelo não encontrado", errorResponse.error.errorMsg );
     test.equal( 0, errorResponse.error.errors.length );
     
     req.query.table = 'Well';
-    const response = getJsonResponse.sync(null, dbServerController.main, req);
+    const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
     // records
     test.equal(3, response.records.length);
     test.equal('1A 0001 BA', response.records[0].name);
@@ -105,7 +81,7 @@ listOilFieldsProductionOnshore: function(test) {
         }
     };    
     
-    const response = getJsonResponse.sync(null, dbServerController.main, req);
+    const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
     // records
     test.equal(1, response.records.length);
     test.equal('Abalone', response.records[0].name);
@@ -124,7 +100,7 @@ modelFields: function(test) {
         query: { model: 'Well' }
     };
     
-    const response = getJsonResponse.sync(null, dbServerController.modelFields, req);
+    const response = utils.getJsonResponse.sync(null, dbServerController.modelFields, req);
     test.equal( 'name', response.fields[0].name );
     test.equal( 'Poço', response.fields[0].label );
     test.equal( 'VARCHAR(255)', response.fields[0].type );
@@ -144,7 +120,7 @@ getComboValues: function(test) {
         query: { model: 'Company' }
     };
 
-    const response = getJsonResponse.sync(null, dbServerController.getComboValues, req);
+    const response = utils.getJsonResponse.sync(null, dbServerController.getComboValues, req);
     
     test.equal( 1, response[0].id );
     test.equal( 2, response[1].id );
@@ -175,19 +151,19 @@ createWell: function(test) {
         }
     };
     
-    const errorResponse = getJsonResponse.sync(null, dbServerController.createItem, req);
+    const errorResponse = utils.getJsonResponse.sync(null, dbServerController.createItem, req);
     test.equal( 400, errorResponse.code ); // test HTTP error code
     test.equal( "Não foi possível criar o registro.", errorResponse.error.errorMsg );
     test.equal( 1, errorResponse.error.errors.length );
     test.equal( "Nome não pode ser nulo", errorResponse.error.errors[0].message );
     
     req.body.newItemData.name = 'Novo poço';
-    getJsonResponse.sync(null, dbServerController.createItem, req);
+    utils.getJsonResponse.sync(null, dbServerController.createItem, req);
     
     const req2 = {
         query: { table: 'Well' }
     };
-    const response = getJsonResponse.sync(null, dbServerController.main, req2);
+    const response = utils.getJsonResponse.sync(null, dbServerController.main, req2);
     test.equal(4, response.records.length);
     test.equal('Novo poço', response.records[2].name);
     test.equal('Statoil', response.records[2].operator_name);
@@ -211,14 +187,14 @@ editWell: function(test) {
         }
     };
         
-    const errorResponse = getJsonResponse.sync(null, dbServerController.saveItem, req);
+    const errorResponse = utils.getJsonResponse.sync(null, dbServerController.saveItem, req);
     test.equal( 400, errorResponse.code ); // test HTTP error code
     test.equal( "Não foi possível salvar o registro.", errorResponse.error.errorMsg );
     test.equal( 1, errorResponse.error.errors.length );
     test.equal( "Nome não pode ser nulo", errorResponse.error.errors[0].message );
     
     req.body.record.name = 'Novo poço';
-    const response = getJsonResponse.sync(null, dbServerController.saveItem, req);
+    const response = utils.getJsonResponse.sync(null, dbServerController.saveItem, req);
     test.equal('Registro salvo com sucesso.', response.msg);
     
     const req2 = {
@@ -227,7 +203,7 @@ editWell: function(test) {
             id: 2
         }
     };
-    const response2 = getJsonResponse.sync(null, dbServerController.recordValues, req2);
+    const response2 = utils.getJsonResponse.sync(null, dbServerController.recordValues, req2);
     test.equal('Novo poço', response2.values.name);
     test.equal(4, response2.values.operator_id);
     test.equal(444, response2.values.lng);
@@ -252,7 +228,7 @@ editFieldOilProduction: function(test) {
         }
     };
         
-    const response = getJsonResponse.sync(null, dbServerController.saveItem, reqEditValues);
+    const response = utils.getJsonResponse.sync(null, dbServerController.saveItem, reqEditValues);
     test.equal('Registro salvo com sucesso.', response.msg);
     
     const reqGetValues = {
@@ -261,7 +237,7 @@ editFieldOilProduction: function(test) {
             id: 2
         }
     };
-    const responseValues = getJsonResponse.sync(null, dbServerController.recordValues, reqGetValues);
+    const responseValues = utils.getJsonResponse.sync(null, dbServerController.recordValues, reqGetValues);
     test.equal('Novo campo', responseValues.values.name);
     test.equal('on', responseValues.values.shore);
     test.equal('Terra', responseValues.values.userShore);
@@ -277,7 +253,7 @@ getRecordValuesOilFieldProduction: function(test) {
             id: 3
         }
     };
-    const response = getJsonResponse.sync(null, dbServerController.recordValues, req);
+    const response = utils.getJsonResponse.sync(null, dbServerController.recordValues, req);
     test.equal('Abalone', response.values.name);
     test.equal('off', response.values.shore);
     test.equal('Mar', response.values.userShore);
@@ -293,13 +269,13 @@ deleteWell: function(test) {
             id: 2
         }
     };
-    const response = getJsonResponse.sync(null, dbServerController.deleteItem, req);
+    const response = utils.getJsonResponse.sync(null, dbServerController.deleteItem, req);
     test.equal('Registro apagado com sucesso', response.msg);
     
     const req2 = {
         query: { table: 'Well' }
     };
-    const response2 = getJsonResponse.sync(null, dbServerController.main, req2);
+    const response2 = utils.getJsonResponse.sync(null, dbServerController.main, req2);
     test.equal(2, response2.records.length);
     test.done();
 },
@@ -312,13 +288,13 @@ deleteOilFieldDeveloping: function(test) {
             id: 4
         }
     };
-    const responseDelete = getJsonResponse.sync(null, dbServerController.deleteItem, reqDelete);
+    const responseDelete = utils.getJsonResponse.sync(null, dbServerController.deleteItem, reqDelete);
     test.equal('Registro apagado com sucesso', responseDelete.msg);
     
     const reqGetRecords = {
         query: { table: 'OilFieldDeveloping' }
     };
-    const responseGetRecords = getJsonResponse.sync(null, dbServerController.main, reqGetRecords);
+    const responseGetRecords = utils.getJsonResponse.sync(null, dbServerController.main, reqGetRecords);
     test.equal(2, responseGetRecords.records.length);
     test.done();
 },
@@ -332,7 +308,7 @@ getRecordViewWell: function(test) {
         }
     };
 
-    const response = getJsonResponse.sync(null, dbServerController.viewRecord, req);
+    const response = utils.getJsonResponse.sync(null, dbServerController.viewRecord, req);
     test.equal('Poço', response[0].label);
     test.equal('Estado', response[1].label);
     test.equal('Latitude', response[2].label);
@@ -363,12 +339,12 @@ createOilFieldDeveloping: function(test) {
         }
     };
     
-    getJsonResponse.sync(null, dbServerController.createItem, req);
+    utils.getJsonResponse.sync(null, dbServerController.createItem, req);
     
     const reqOilFieldDeveloping = {
         query: { table: 'OilFieldDeveloping' }
     };
-    const responseDeveloping = getJsonResponse.sync(null, dbServerController.main, reqOilFieldDeveloping);
+    const responseDeveloping = utils.getJsonResponse.sync(null, dbServerController.main, reqOilFieldDeveloping);
     test.equal(4, responseDeveloping.records.length);
     test.equal('Gavião Azul', responseDeveloping.records[3].name);
     test.equal('Potiguar', responseDeveloping.records[3].basin_name);
@@ -378,7 +354,7 @@ createOilFieldDeveloping: function(test) {
     const reqOilFieldProduction = {
         query: { table: 'OilFieldProduction' }
     };
-    const responseProduction = getJsonResponse.sync(null, dbServerController.main, reqOilFieldProduction);
+    const responseProduction = utils.getJsonResponse.sync(null, dbServerController.main, reqOilFieldProduction);
     test.equal(3, responseProduction.records.length);   
     
     test.done();
@@ -415,12 +391,12 @@ loginHTML: function(test) {
 
 
 adminTablesIntegrity: test => {
-    const responseAdminDataSources = getJsonResponse.sync(null, dbServerController.sourcesList, null);
+    const responseAdminDataSources = utils.getJsonResponse.sync(null, dbServerController.sourcesList, null);
     for(const dataSourceName in responseAdminDataSources) {
         const req = {
             query: { table: dataSourceName }
         };
-        let responseRecords = getJsonResponse.sync(null, dbServerController.main, req);
+        let responseRecords = utils.getJsonResponse.sync(null, dbServerController.main, req);
         test.ok(responseRecords.records, 'Problem with model ' + dataSourceName);
         if(responseRecords.records) {
             test.ok(responseRecords.records.length >= 2, 'Problem with model ' + dataSourceName + 
@@ -432,7 +408,7 @@ adminTablesIntegrity: test => {
 
 
 treeIntegrity: test => {
-    const tree = getJsonResponse.sync(null, TreeController.main, null);
+    const tree = utils.getJsonResponse.sync(null, TreeController.main, null);
     iterateTree(tree.children, test);
     test.done();
 },
@@ -463,7 +439,7 @@ allTablesMain: test => {
 	            table: model,
 	        }
 	    };
-	    const response = getJsonResponse.future(null, dbServerController.main, req);
+	    const response = utils.getJsonResponse.future(null, dbServerController.main, req);
 	    for(var gridField of response.result.viewParams.gridFields) {
 	    	if(gridField == 'id') continue;
 	    	test.ok(response.result.viewParams.fields[gridField], 'Grid field not found: ' + gridField + ' in ' + model);
@@ -477,14 +453,14 @@ search: test => {
 	const req = {
 		query: { searchValue: 'guilherme' }
 	}
-    var searchResults = getJsonResponse.sync(null, SearchController.main, req);
+    var searchResults = utils.getJsonResponse.sync(null, SearchController.main, req);
 	test.equal(1, searchResults.length);
     test.equal('Guilherme Stiebler', searchResults[0].name);
     test.equal('Person', searchResults[0].model);
     test.equal(1, searchResults[0].id);
     
     req.query.searchValue = 'ba';
-    searchResults = getJsonResponse.sync(null, SearchController.main, req);
+    searchResults = utils.getJsonResponse.sync(null, SearchController.main, req);
 	test.equal(5, searchResults.length);
     test.equal('BM-BAR-1', searchResults[0].name);
     test.equal('Block', searchResults[0].model);
@@ -496,7 +472,7 @@ search: test => {
 
 
 newsFetch: test => {
-    const newsResults = getJsonResponse.sync(null, NewsController.allNews, {});
+    const newsResults = utils.getJsonResponse.sync(null, NewsController.allNews, {});
     test.equal(3, newsResults.length);
     test.ok( newsResults[0].created_at >= newsResults[1].created_at );
     test.ok( newsResults[1].created_at >= newsResults[2].created_at );
@@ -511,7 +487,7 @@ newsFromObject: test => {
 			id: 2
 		}
 	}
-    const newsResults = getJsonResponse.sync(null, NewsController.newsFromObject, req);
+    const newsResults = utils.getJsonResponse.sync(null, NewsController.newsFromObject, req);
     test.equal(1, newsResults.length);
     
     // adding more news from this oil field
@@ -526,15 +502,15 @@ newsFromObject: test => {
             newItemData: newNews
         }
     };
-    getJsonResponse.sync(null, dbServerController.createItem, reqNewNews);
+    utils.getJsonResponse.sync(null, dbServerController.createItem, reqNewNews);
 
 	// should have 2 news from this oil field now
-    const moreNewsResults = getJsonResponse.sync(null, NewsController.newsFromObject, req);
+    const moreNewsResults = utils.getJsonResponse.sync(null, NewsController.newsFromObject, req);
     test.equal(2, moreNewsResults.length);
 
     // testing with an invalid id
     req.query.id = 50;
-    const newsResultsWrongId = getJsonResponse.sync(null, NewsController.newsFromObject, req);
+    const newsResultsWrongId = utils.getJsonResponse.sync(null, NewsController.newsFromObject, req);
     test.equal(0, newsResultsWrongId.length);
 
     test.done();
