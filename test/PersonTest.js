@@ -28,7 +28,38 @@ getPerson: test => {
     test.equal(JSON.stringify(telephones), JSON.stringify(response.values.telephones));
     
     test.done();
-}
+},
+
+
+createPerson: function(test) {
+    const newItemReq = {
+        body: { 
+            model: 'Person',
+            newItemData: {
+                name: 'Michael Jackson',
+                company_id: 2,
+                email: 'name.example.com',
+                telephones: [
+                    '333',
+                    '444',
+                    '555'
+                ]
+            }
+        }
+    };
+    
+    const res = utils.getJsonResponse.sync(null, dbServerController.createItem, newItemReq);
+    test.equal(res.msg, 'Registro criado com sucesso.');
+    const checkCreatedPersonReq = {
+        query: { table: 'Person' }
+    };
+    const response = utils.getJsonResponse.sync(null, dbServerController.main, checkCreatedPersonReq);
+    test.equal(4, response.records.length);
+    test.equal('Michael Jackson', response.records[3].name);
+    test.equal(JSON.stringify(newItemReq.body.newItemData.telephones), JSON.stringify(response.records[3].telephones));
+    test.done();
+},
+
 
 };
 

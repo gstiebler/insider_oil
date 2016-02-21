@@ -1,5 +1,29 @@
 var await = require('../../lib/await');
 
+function defineHooks(db) {
+	db.Person.hook('afterCreate', function(person) {
+        const telephones = person.dataValues.telephones;
+        if(telephones == null)
+            return;
+        
+        const Telephone = db.Telephone;
+        const options = { where: { person_id: person.id } };
+        // remove all telephones associated with this person
+        Telephone.destroy(options).then(function() {
+            const newTelephoneRecords = [];
+            for(var i = 0; i < telephones.length; i++) {
+                var telephoneRecord = { 
+                    person_id: person.id,
+                    number: telephones[i]
+                };
+                newTelephoneRecords.push(telephoneRecord);
+            }
+            return db.Telephone.bulkCreate(newTelephoneRecords);
+        });
+    });
+}
+
+
 module.exports = function(sequelize, DataTypes) {
 	var Person = sequelize.define('Person', {
 		name: {
@@ -39,13 +63,13 @@ module.exports = function(sequelize, DataTypes) {
             get: function() {
                 const options = { where: { person_id: this.id } };
                 const telephoneRecords = await( sequelize.models.Telephone.findAll(options) );
+                if(telephoneRecords == null)
+                    return [];
                 const telephones = [];
                 for(var i = 0; i < telephoneRecords.length; i++) {
                     telephones.push( telephoneRecords[i]['number'] );    
                 }
                 return telephones;
-            },
-            set: function(val) {
             }
         }
 	}, {
@@ -62,7 +86,8 @@ module.exports = function(sequelize, DataTypes) {
 				Person.belongsTo(models.Company, {
 					as: 'company'
 				});
-			}
+			},
+			defineHooks: defineHooks
 		}
 	});
 

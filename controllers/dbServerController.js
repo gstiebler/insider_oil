@@ -20,7 +20,7 @@ exports.main = function(req, res, next) {
     dbUtils.findAllCustom(dataSource, {}, filters).then(sendRecords)
         .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
     
-    function sendRecords(records) {
+    function sendRecords(records) {Sync(function() {
         try {
             const viewParams = dsParams[dataSource.name];
             viewParams.gridFields.push('id');
@@ -38,7 +38,7 @@ exports.main = function(req, res, next) {
         } catch(e) {
             winston.error(e);
             ControllerUtils.getErrorFunc(res, 500, "Erro")(e);
-        }
+        }});
     }
 }
 
@@ -102,10 +102,10 @@ exports.createItem = function(req, res, next) {
     var model = dbUtils.getDataSource(modelName);
 
 	db.sequelize.transaction(function(t) {
-	    return model.create(newItemData)
-	        .then(ControllerUtils.getOkFunc(res, "Registro criado com sucesso."))
-	        .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."));
-	});
+	       return model.create(newItemData)
+	            .then(ControllerUtils.getOkFunc(res, "Registro criado com sucesso."))
+	           .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."));
+    });
 }
 
 
