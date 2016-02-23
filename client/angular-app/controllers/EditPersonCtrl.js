@@ -43,9 +43,10 @@ angular.module('InsiderOilApp').controller('EditPersonController',
             processedFields.push(field);
         }
     
+        $scope.telephones = data.values.telephones;
         $scope.fields = processedFields;
         $scope.values = data.values;
-        if(data.values['photo'].data) {
+        if(data.values['photo'] && data.values['photo'].data) {
         	$scope.photo = base64Header + _arrayBufferToBase64( data.values['photo'].data );
         }
 	}
@@ -84,9 +85,12 @@ angular.module('InsiderOilApp').controller('EditPersonController',
             itemData[field.name] = $scope.values[field.name];
         }
         itemData.id = id;  
+        itemData.telephones = $scope.telephones;
         const photoStr = $scope.photo;
-        const base64Data = photoStr.substring(photoStr.search(';base64,') + 8, photoStr.length);
-        itemData.photo = base64ToArray(base64Data);
+        if(photoStr != null) {
+            const base64Data = photoStr.substring(photoStr.search(';base64,') + 8, photoStr.length);
+            itemData.photo = base64ToArray(base64Data);
+        }
         server.saveItem( 'Person', itemData, onSave, showError.show );
     }
     

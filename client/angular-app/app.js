@@ -7,5 +7,6 @@ angular.module('InsiderOilApp', [
     'ngFileUpload',
     'ui.bootstrap',
     'textAngular',
-    'ngSanitize'
+    'ngSanitize',
+    'ListOfInputsDirective'
 ]);
