@@ -7,14 +7,18 @@ app.directive('listOfInputs', function() {
             modelValues: '=ngModel'
         },
         controller: ['$scope', function($scope) { 
+            $scope.range = function(max) {
+                const res = [];
+                for(var i = 0; i < max; i++)
+                    res.push(i);
+                return res;
+            }
         }],
         template: '<table style="width:100%">\
                       <tr>\
                          <td width="300">\
-                        <div ng-repeat="n in range(modelValues.length) track by $index">\
-                            {{n}}\
-                            {{$index}}\
-                            <input type="text" value="modelValues[n]"><br>\
+                        <div ng-repeat="n in range(modelValues.length)">\
+                            <input type="text" ng-model="modelValues[n]"><br>\
                         </div>\
                        </td>\
                        <td>\
