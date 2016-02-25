@@ -61,6 +61,43 @@ createPerson: function(test) {
 },
 
 
+editPerson: function(test) {
+    const reqSave = {
+        body: { 
+            model: 'Person',
+            record: {
+                id: 2,
+                name: 'Michael Jackson',
+                company_id: 2,
+                email: 'name.example.com',
+                telephones: [
+                    '333',
+                    '444',
+                    '555'
+                ]
+            }
+        }
+    };
+        
+    const response = utils.getJsonResponse.sync(null, dbServerController.saveItem, reqSave);
+    test.equal('Registro salvo com sucesso.', response.msg);
+    
+    const reqGet = {
+        query: { 
+            model: 'Person',
+            id: 2
+        }
+    };
+    const responseGet = utils.getJsonResponse.sync(null, dbServerController.recordValues, reqGet);
+    test.equal('Michael Jackson', responseGet.values.name);
+    test.equal(2, responseGet.values.company_id);
+    test.equal('name.example.com', responseGet.values.email);
+    test.equal(JSON.stringify([ '333', '444', '555' ]), JSON.stringify(responseGet.values.telephones));
+    test.done();
+},
+
+
+
 };
 
 

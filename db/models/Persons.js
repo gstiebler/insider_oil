@@ -1,7 +1,7 @@
 var await = require('../../lib/await');
 
-function defineHooks(db) {
-	db.Person.hook('afterCreate', function(person) {
+function setTelephoneFunc(db) {
+    return function (person) {
         const telephones = person.dataValues.telephones;
         if(telephones == null)
             return;
@@ -20,7 +20,13 @@ function defineHooks(db) {
             }
             return db.Telephone.bulkCreate(newTelephoneRecords);
         });
-    });
+    }
+}
+
+
+function defineHooks(db) {
+	db.Person.hook('afterCreate', setTelephoneFunc(db));
+	db.Person.hook('beforeUpdate', setTelephoneFunc(db));
 }
 
 
