@@ -67,6 +67,7 @@
 	<script src="app/directives/ReadFile.js"></script>
 	<script src="app/directives/ListOfInputsDirective.js"></script>
 	<script src="app/directives/PhotoBytesArray.js"></script>
+	<script src="app/directives/ProjectSearchDirective.js"></script>
 </head>
 <body ng-app="InsiderOilApp">
 	
@@ -91,7 +92,7 @@
                         <a href="/app/">Admin</a>
                     </li>
                     <li class="@media" >
-                        Busca: <autocomplete id="searchBox" data="searchOptions" on-type="onSearchType" on-select="onSelect"></autocomplete>
+                        Busca: <project-search id="searchBox" on-item-selected="onSelect" on-error="showError"></project-search>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

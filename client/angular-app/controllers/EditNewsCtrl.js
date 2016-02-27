@@ -36,11 +36,7 @@ angular.module('InsiderOilApp').controller('EditNewsController',
     		for(var i = 0; i < results.length; i++) {
     			const completeSearchKey = results[i].modelLabel + ': ' +results[i].name;
     			$scope.searchOptions.push(completeSearchKey);
-    			searchResult[completeSearchKey] = {
-    				model: results[i].model,
-    				id: results[i].id,
-    				name: results[i].name
-    			};
+    			searchResult[completeSearchKey] = results[i];
     		}
     	}
     	server.getSearchResult(value, onSearchResult, showError.show);
@@ -48,10 +44,6 @@ angular.module('InsiderOilApp').controller('EditNewsController',
     
     $scope.onSelectItemOnSearchBox = function(value) {
     	const selectedItem = searchResult[value];
-    	const searchParams = {
-    		source: selectedItem.model,
-    		id: selectedItem.id
-    	};
     	const linkStr = '<a href="/app/view_record?source=' + selectedItem.model + '&id=' + selectedItem.id + '">' + selectedItem.name + '</a>';
     	$scope.content += linkStr;
     }

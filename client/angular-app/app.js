@@ -9,5 +9,6 @@ angular.module('InsiderOilApp', [
     'textAngular',
     'ngSanitize',
     'ListOfInputsDirective',
-    'PhotoBytesArray'
+    'PhotoBytesArray',
+    'ProjectSearchDirective'
 ]);
