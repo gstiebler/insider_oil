@@ -26,10 +26,10 @@ angular.module('InsiderOilApp').controller('MainController',
     $scope.logout = session.logout; // functions
     
     $scope.showError = showError.show;
-    $scope.onSelect = function(value) {
+    $scope.onProjectSelected = function(selectedItem) {
     	const searchParams = {
-    		source: value.model,
-    		id: value.id
+    		source: selectedItem.model,
+    		id: selectedItem.id
     	};
         $location.path("/app/view_record").search(searchParams);
     }

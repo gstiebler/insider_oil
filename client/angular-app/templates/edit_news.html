@@ -16,8 +16,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="content_box">Notícia:</label>
             <div class="col-sm-10">
-                Busca: <autocomplete id="searchBox" data="searchOptions" on-type="onSearchType" on-select="onSelectItemOnSearchBox"></autocomplete>
-
+                Busca: <project-search id="searchBox" on-item-selected="onProjectSelected" on-error="showError"></project-search>
                 <div text-angular id="content_box_html" ng-model="content"></div><br>
                 <button class="btn btn-default" ng-click="printHtml()" >print html</button>
             </div>

@@ -26,24 +26,10 @@ angular.module('InsiderOilApp').controller('EditNewsController',
 	$scope.printHtml = function() {
 		console.log($scope.content);
 	}
-	
-	// search box code
-    var searchResult = {};
-    $scope.onSearchType = function(value) {
-    	function onSearchResult(results) {
-    		$scope.searchOptions = [];
-			searchResult = {};
-    		for(var i = 0; i < results.length; i++) {
-    			const completeSearchKey = results[i].modelLabel + ': ' +results[i].name;
-    			$scope.searchOptions.push(completeSearchKey);
-    			searchResult[completeSearchKey] = results[i];
-    		}
-    	}
-    	server.getSearchResult(value, onSearchResult, showError.show);
-    }
+
     
-    $scope.onSelectItemOnSearchBox = function(value) {
-    	const selectedItem = searchResult[value];
+    $scope.showError = showError.show;
+    $scope.onProjectSelected = function(selectedItem) {
     	const linkStr = '<a href="/app/view_record?source=' + selectedItem.model + '&id=' + selectedItem.id + '">' + selectedItem.name + '</a>';
     	$scope.content += linkStr;
     }
