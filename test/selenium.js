@@ -503,6 +503,38 @@ search: (test) => {
     server.close();
     driver.quit();
     test.done();
+},
+
+
+editPersonTelephones: (test) => {
+    var server = InitializeServer(port);
+    
+    var driver = new webdriver.Builder()
+        .forBrowser('firefox')
+        .build();
+
+    makeLogin(test, driver);
+    driver.findElement(elementByText('Admin')).click();
+    driver.sleep(150);
+    driver.findElement(elementByText('Pessoas')).click();
+    driver.sleep(150);
+    var editBtn = getTableCell(1, 2, driver).findElement(By.xpath("a"));
+    editBtn.click();
+    driver.findElement(By.xpath('//*[@id="personTelephones"]/table/tbody/tr[1]/td[2]/button[1]')).click(); // add button
+    const secondTelephoneXPath = '//*[@id="personTelephones"]/table/tbody/tr[1]/td[1]/div[2]/input';
+    driver.findElement(By.xpath(secondTelephoneXPath)).sendKeys('21 333-444');
+    driver.findElement(elementByText('Salvar')).click();
+    driver.sleep(150);
+    editBtn = getTableCell(1, 2, driver).findElement(By.xpath("a"));
+    editBtn.click();
+    driver.sleep(150);
+    const element = driver.findElement(By.xpath(secondTelephoneXPath));
+    const tel = await( element.getAttribute("value") );
+    test.equal( '21 333-444', tel );
+    
+    server.close();
+    driver.quit();
+    test.done();
 }
          
 
