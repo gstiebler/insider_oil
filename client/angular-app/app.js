@@ -8,5 +8,6 @@ angular.module('InsiderOilApp', [
     'ui.bootstrap',
     'textAngular',
     'ngSanitize',
-    'ListOfInputsDirective'
+    'ListOfInputsDirective',
+    'PhotoBytesArray'
 ]);

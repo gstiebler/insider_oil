@@ -1,5 +1,5 @@
 <div class="row">   
-    <img ng-src="{{photo}}" alt="Foto" id="foto">
+    <photo-bytes-array ds-bytes-array="photoBytesArray" ds-base64="photoBase64" id="foto"></photo-bytes-array>
     <input type="file" on-read-file="loadPhoto($fileContent)" />
     <form class="form-horizontal" role="form">
         <div class="form-group" ng-repeat="field in fields">

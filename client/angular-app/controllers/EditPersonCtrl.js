@@ -3,8 +3,6 @@ angular.module('InsiderOilApp').controller('EditPersonController',
                 ['$scope', 'server', '$routeParams', '$location', 'Upload', '$timeout', 'showError', 'Flash',
         function($scope, server, $routeParams, $location, Upload, $timeout, showError, Flash) {
                 	
-	const contentType = 'image/JPEG';
-	const base64Header = 'data:' + contentType + ';base64,';
     const id = $routeParams.id;
 	
 	const customFields = {
@@ -47,34 +45,13 @@ angular.module('InsiderOilApp').controller('EditPersonController',
         $scope.fields = processedFields;
         $scope.values = data.values;
         if(data.values['photo'] && data.values['photo'].data) {
-        	$scope.photo = base64Header + _arrayBufferToBase64( data.values['photo'].data );
+        	$scope.photoBytesArray = data.values['photo'].data;
         }
 	}
     
 	
     function getHtmlId(field) {
         return "html_id_" + field.name;
-    }
-    
-    
-    function _arrayBufferToBase64( buffer ) {
-        var binary = '';
-        var bytes = new Uint8Array( buffer );
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode( bytes[ i ] );
-        }
-        return window.btoa( binary );
-    }
-    
-    
-    function base64ToArray( base64 ) {
-    	const base64str = atob(base64);
-        const bytes = new Array( base64str.length );
-        for(var i = 0; i < base64str.length; i++) {
-        	bytes[i] = base64str.charCodeAt(i);
-        }
-        return bytes;
     }
     
     
@@ -86,10 +63,8 @@ angular.module('InsiderOilApp').controller('EditPersonController',
         }
         itemData.id = id;  
         itemData.telephones = $scope.telephones;
-        const photoStr = $scope.photo;
-        if(photoStr != null) {
-            const base64Data = photoStr.substring(photoStr.search(';base64,') + 8, photoStr.length);
-            itemData.photo = base64ToArray(base64Data);
+        if($scope.photoBytesArray != null) {
+            itemData.photo = $scope.photoBytesArray;
         }
         server.saveItem( 'Person', itemData, onSave, showError.show );
     }
@@ -102,7 +77,7 @@ angular.module('InsiderOilApp').controller('EditPersonController',
     
     
     $scope.loadPhoto = function($fileContent){
-    	$scope.photo = $fileContent;
+    	$scope.photoBase64 = $fileContent;
     };
 	
 }]);
