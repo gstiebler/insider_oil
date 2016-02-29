@@ -20,19 +20,21 @@ app.directive('recordFields', function() {
                     return "html_id_" + field.name;
                 }
                 
+                const hasValues = $scope.values && Object.keys($scope.values).length > 0;
                 for( var i = 0; i < fields.length; i++ ) {
                     const field = fields[i];
                     field.htmlId = getHtmlId(field);
                     field.hasRef = field.type == 'ref';
                     field.isDate = field.type == 'DATE';
                     if( field.hasRef ) {
-                        $scope.values[field.name] = $scope.values[field.name].toString();
+                        if(hasValues)
+                            $scope.values[field.name] = $scope.values[field.name].toString();
                         
                         server.getComboValues( field.model, function (values) {
                             field.values = values;
                         }, $scope.onError );
                     }
-                    if(field.isDate) {
+                    if(field.isDate && hasValues) {
                         const dateStr = $scope.values[field.name];
                         const date = new Date(dateStr);
                         date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 ); // correction for timezone

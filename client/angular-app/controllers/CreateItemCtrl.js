@@ -5,33 +5,10 @@ angular.module('InsiderOilApp').controller('CreateItemController',
     
     var modelName = $routeParams.model;
     server.getModelFields(modelName, fieldsArrived, showError.show);
-    
-    $scope.dateFormat = 'dd/MM/yyyy';
-    
+     
     $scope.values = {};
     function fieldsArrived(fields) {
-        function onValues(values) {
-            field.values = values;
-        }
-        
-        for( var i = 0; i < fields.length; i++ ) {
-            const field = fields[i];
-            $scope.values[field.name] = "";
-            field.htmlId = getHtmlId(field);
-            field.hasRef = field.type == 'ref';
-            field.isDate = field.type == 'DATE';
-            if( field.hasRef ) {
-                server.getComboValues( field.model, function(values) {
-                    field.values = values;
-                }, showError.show );
-            }
-        }
-    
         $scope.fields = fields;
-    }
-    
-    function getHtmlId(field) {
-        return "html_id_" + field.name;
     }
     
     $scope.saveItem = function() {
@@ -48,5 +25,6 @@ angular.module('InsiderOilApp').controller('CreateItemController',
         Flash.create('success', status.data.msg);
         $location.path("/app/model_view").search({ model: modelName });
     }
-        
+    
+    $scope.onError = showError.show;
 }]);
