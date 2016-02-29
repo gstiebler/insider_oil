@@ -1,3 +1,4 @@
+'use strict';
 var app = angular.module('ProjectSearchDirective', []);
 
 app.directive('projectSearch', function() {

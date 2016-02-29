@@ -1,3 +1,4 @@
+'use strict';
 var app = angular.module('PhotoBytesArray', []);
 
 function _arrayBufferToBase64( buffer ) {
