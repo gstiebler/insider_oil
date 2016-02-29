@@ -10,5 +10,6 @@ angular.module('InsiderOilApp', [
     'ngSanitize',
     'ListOfInputsDirective',
     'PhotoBytesArray',
-    'ProjectSearchDirective'
+    'ProjectSearchDirective',
+    'EditRecordFieldsDirective'
 ]);

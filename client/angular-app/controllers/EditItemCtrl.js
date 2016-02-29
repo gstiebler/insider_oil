@@ -7,38 +7,10 @@ angular.module('InsiderOilApp').controller('EditItemController',
     var id = $routeParams.id;
     server.getModelFieldsAndValues(modelName, id, valuesArrived, showError.show);
     
-    $scope.dateFormat = 'dd/MM/yyyy';
-    
     function valuesArrived(data) {
-        var fields = data.fields;
-        for( var i = 0; i < fields.length; i++ ) {
-            const field = fields[i];
-            field.htmlId = getHtmlId(field);
-            field.hasRef = field.type == 'ref';
-            field.isDate = field.type == 'DATE';
-            if( field.hasRef ) {
-                data.values[field.name] = data.values[field.name].toString();
-                
-                server.getComboValues( field.model, function (values) {
-                    field.values = values;
-                }, showError.show );
-            }
-            if(field.isDate) {
-                const dateStr = data.values[field.name];
-                const date = new Date(dateStr);
-                date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 ); // correction for timezone
-                data.values[field.name] = date;
-            }
-        }
-    
-        $scope.fields = fields;
         $scope.values = data.values;
+        $scope.fields = data.fields;
     }
-    
-    function getHtmlId(field) {
-        return "html_id_" + field.name;
-    }
-    
     
     $scope.saveItem = function() {
         var itemData = {};
@@ -55,4 +27,5 @@ angular.module('InsiderOilApp').controller('EditItemController',
         $location.path("/app/model_view").search({ model: modelName });
     }
     
+    $scope.onError = showError.show;
 }]);
