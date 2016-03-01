@@ -8,6 +8,7 @@ angular.module('InsiderOilApp', [
     'ui.bootstrap',
     'textAngular',
     'ngSanitize',
+    'elif',
     'ListOfInputsDirective',
     'PhotoBytesArray',
     'ProjectSearchDirective',
