@@ -14,6 +14,9 @@
                 </span>
             </p>   
         </div>
+        <div ng-else-if="field.isPhoto">
+            <photo-bytes-array id="{{field.htmlId}}" ds-bytes-array="values[field.name]"></photo-bytes-array>
+        </div>
         <div ng-else >
             <input type="text" class="form-control" id="{{field.htmlId}}" ng-model="values[field.name]"></input>
         </div>
