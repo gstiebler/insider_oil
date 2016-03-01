@@ -8,6 +8,9 @@ app.directive('listOfInputs', function() {
             modelValues: '=ngModel'
         },
         controller: ['$scope', function($scope) { 
+            if(!$scope.modelValues)
+                $scope.modelValues = [];
+                
             $scope.range = function(max) {
                 const res = [];
                 for(var i = 0; i < max; i++)
