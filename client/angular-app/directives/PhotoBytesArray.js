@@ -26,28 +26,27 @@ app.directive('photoBytesArray', function() {
     return {
         restrict: 'E',
         scope: {
-            dsBytesArray: '=dsBytesArray',
-            dsBase64: '=dsBase64'
+            dsBytesArray: '=dsBytesArray'
         },
         controller: ['$scope', function($scope) { 
             const contentType = 'image/JPEG';
             const base64Header = 'data:' + contentType + ';base64,';
+            
+            $scope.loadPhoto = function($fileContent){
+                const dsBase64 = $fileContent;
+                $scope.photoBase64 = dsBase64;
+                const trimmedBase64 = dsBase64.substring(dsBase64.search(';base64,') + 8, dsBase64.length);
+                $scope.dsBytesArray = base64ToArray(trimmedBase64);
+            };
 
-            $scope.$watch('dsBytesArray', function(newValue){
+            $scope.$watch('dsBytesArray', function(newValue, oldValue){
                 if(!newValue)
                     return;
+                    
                 $scope.photoBase64 = base64Header + _arrayBufferToBase64( newValue );
             });    
-            
-            $scope.$watch('dsBase64', function(newValue){
-                if(!newValue)
-                    return;
-                $scope.photoBase64 = newValue;
-                const trimmedBase64 = newValue.substring(newValue.search(';base64,') + 8, newValue.length);
-                $scope.dsBytesArray = base64ToArray(trimmedBase64);
-                //$scope.$apply();
-            });
         }],
-        template: '<img ng-src="{{photoBase64}}" alt="Foto">'
+        template: '<img ng-src="{{photoBase64}}" alt="Foto">\
+                   <input type="file" on-read-file="loadPhoto($fileContent)" />'
     };
 });
