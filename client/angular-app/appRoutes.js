@@ -30,11 +30,6 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'EditNewsController'
 		})
 
-		.when('/app/edit_person', {
-			templateUrl: 'app/templates/edit_person.html',
-			controller: 'EditPersonController'
-		})
-
 		.when('/app/view_record', {
 			templateUrl: 'app/templates/view_record.html',
 			controller: 'ViewRecordController'

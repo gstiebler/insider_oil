@@ -29,19 +29,9 @@ app.service('ModelOperations', ['$location', 'server',
     }
     
     
-    function createPersonOperations(modelName) {
-    	const modelOperations = createDefaultModelOperations(modelName);
-    	modelOperations.editRecord = function(id) {
-			$location.path("/app/edit_person").search({ id: id });
-    	}
-    	return modelOperations;
-    }
-    
-    
     this.getModelOperations = function(modelName) {
     	const customModels = {
-    		'News': createNewsOperations,
-    		'Person': createPersonOperations
+    		'News': createNewsOperations
     	}
     	
     	var constructorFunc = customModels[modelName];
