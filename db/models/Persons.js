@@ -1,33 +1,59 @@
 "use strict";
 var await = require('../../lib/await');
 
-function setTelephoneFunc(db) {
+function updateTelephones(db, person) {
+    const telephones = person.dataValues.telephones;
+    if(telephones == null)
+        return;
+    
+    const options = { where: { person_id: person.id } };
+    // remove all telephones associated with this person
+    db.Telephone.destroy(options).then(function() {
+        const newTelephoneRecords = [];
+        for(var i = 0; i < telephones.length; i++) {
+            var telephoneRecord = { 
+                person_id: person.id,
+                number: telephones[i]
+            };
+            newTelephoneRecords.push(telephoneRecord);
+        }
+        return db.Telephone.bulkCreate(newTelephoneRecords);
+    });
+}
+
+
+function updatePersonProjects(db, person) {
+    const projects = person.dataValues.projects;
+    if(projects == null)
+        return;
+    const options = { where: { person_id: person.id } };
+    db.PersonProjects.destroy(options).then(() => {
+        const newProjectRecords = [];
+        for(var i = 0; i < projects.length; i++) {
+            var projectRecord = { 
+                person_id: person.id,
+                model_id: projects[i].model_id,
+                model_ref_id: projects[i].id
+            };
+            newProjectRecords.push(projectRecord);
+        }
+        return db.PersonProjects.bulkCreate(newProjectRecords);
+    });
+}
+
+
+function updateFieldsFunc(db) {
     return function (person) {
-        const telephones = person.dataValues.telephones;
-        if(telephones == null)
-            return;
-        
-        const Telephone = db.Telephone;
-        const options = { where: { person_id: person.id } };
-        // remove all telephones associated with this person
-        Telephone.destroy(options).then(function() {
-            const newTelephoneRecords = [];
-            for(var i = 0; i < telephones.length; i++) {
-                var telephoneRecord = { 
-                    person_id: person.id,
-                    number: telephones[i]
-                };
-                newTelephoneRecords.push(telephoneRecord);
-            }
-            return db.Telephone.bulkCreate(newTelephoneRecords);
-        });
+        // TODO unify both functions in one
+        updateTelephones(db, person);
+        updatePersonProjects(db, person);
     }
 }
 
 
 function defineHooks(db) {
-	db.Person.hook('afterCreate', setTelephoneFunc(db));
-	db.Person.hook('beforeUpdate', setTelephoneFunc(db));
+	db.Person.hook('afterCreate', updateFieldsFunc(db));
+	db.Person.hook('beforeUpdate', updateFieldsFunc(db));
 }
 
 
@@ -77,6 +103,14 @@ module.exports = function(sequelize, DataTypes) {
                     telephones.push( telephoneRecords[i]['number'] );    
                 }
                 return telephones;
+            }
+        },
+        projects: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                const projectsPromise = sequelize.models.PersonProjects.getProjects(sequelize, this.id);
+                const projects = await( projectsPromise );
+                return projects;
             }
         }
 	}, {
