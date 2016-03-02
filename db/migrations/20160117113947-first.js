@@ -556,6 +556,74 @@ module.exports = {
 		});
 		
 		parameters.push({
+			table: 'persons',
+			fields: {
+				id: {
+					type: Sequelize.INTEGER,
+					primaryKey: true,
+					autoIncrement: true
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
+				name: {
+					type: Sequelize.STRING,
+					allowNull: false
+				},
+				company_id: {
+					type: Sequelize.INTEGER,
+					allowNull: false,
+					references: {
+						model: 'companies',
+						key: 'id'
+					}
+				}
+			}
+		});
+		
+        
+		parameters.push({
+			table: 'person_projects',
+			fields: {
+				id: {
+					type: Sequelize.INTEGER,
+					primaryKey: true,
+					autoIncrement: true
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
+				model_ref_id: {
+					type: Sequelize.INTEGER,
+					allowNull: false
+				},
+				person_id: {
+					type: Sequelize.INTEGER,
+					allowNull: false,
+					references: {
+						model: 'persons',
+						key: 'id'
+					},
+					onDelete: 'CASCADE'
+				},
+				model_id: {
+					type: Sequelize.INTEGER,
+					allowNull: false,
+					references: {
+						model: 'models_list',
+						key: 'id'
+					}
+				}
+			}
+		});
+        
+		parameters.push({
 			table: 'production',
 			fields: {
 				id: {
@@ -697,35 +765,6 @@ module.exports = {
 				type: {
 					type: Sequelize.ENUM('oil', 'gas'),
 					allowNull: false
-				}
-			}
-		});
-		
-		parameters.push({
-			table: 'persons',
-			fields: {
-				id: {
-					type: Sequelize.INTEGER,
-					primaryKey: true,
-					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
-				},
-				name: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
-				company_id: {
-					type: Sequelize.INTEGER,
-					allowNull: false,
-					references: {
-						model: 'companies',
-						key: 'id'
-					}
 				}
 			}
 		});
