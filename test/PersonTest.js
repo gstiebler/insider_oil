@@ -63,7 +63,7 @@ createPerson: test => {
     const checkCreatedPersonReq = {
         query: { table: 'Person' }
     };
-    //TODO change to get only one person, not all
+    
     const response = utils.getJsonResponse.sync(null, dbServerController.main, checkCreatedPersonReq);
     test.equal(4, response.records.length);
     test.equal('Michael Jackson', response.records[3].name);
@@ -94,6 +94,16 @@ editPerson: test => {
                     '333',
                     '444',
                     '555'
+                ],
+                projects: [
+                    {
+                        model_id: 3,
+                        id: 2
+                    },
+                    {
+                        model_id: 6,
+                        id: 1
+                    }
                 ]
             }
         }
@@ -114,6 +124,16 @@ editPerson: test => {
     test.equal('name.example.com', responseGet.values.email);
     // TODO test that no other telephone have been deleted
     test.equal(JSON.stringify([ '333', '444', '555' ]), JSON.stringify(responseGet.values.telephones));
+    
+    // test projects
+    test.equal(2, responseGet.values.projects.length);
+    test.equal('Block', responseGet.values.projects[0].model);
+    test.equal(2, responseGet.values.projects[0].id);    
+    test.equal('ES-M-529',responseGet.values.projects[0].name);    
+    test.equal('DrillingRigOnshore', responseGet.values.projects[1].model);
+    test.equal(1, responseGet.values.projects[1].id);
+    test.equal('BS-04', responseGet.values.projects[1].name);
+      
     test.done();
 },
 
