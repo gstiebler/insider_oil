@@ -492,7 +492,7 @@ search: (test) => {
     makeLogin(test, driver);
     driver.findElement(By.xpath('//*[@id="searchBox"]/autocomplete/div/input')).sendKeys('ba');
     driver.sleep(200);
-    driver.findElement(By.xpath('//*[@id="searchBox"]/autocomplete/div/ul/li[4]')).click();
+    driver.findElement(By.xpath('//*[@id="searchBox"]/autocomplete/div/ul/li[1]')).click();
     driver.sleep(200);
 
     test.equal( 'Nome:', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[1]/span[1]')).getText() ) );
@@ -506,7 +506,7 @@ search: (test) => {
 },
 
 
-editPersonTelephones: (test) => {
+editPerson: (test) => {
     var server = InitializeServer(port);
     
     var driver = new webdriver.Builder()
@@ -520,10 +520,21 @@ editPersonTelephones: (test) => {
     driver.sleep(150);
     var editBtn = getTableCell(1, 2, driver).findElement(By.xpath("a"));
     editBtn.click();
-    driver.findElement(By.xpath('//*[@id="personTelephones"]/table/tbody/tr[1]/td[2]/button[1]')).click(); // add button
-    const secondTelephoneXPath = '//*[@id="personTelephones"]/table/tbody/tr[1]/td[1]/div[2]/input';
+    driver.sleep(150);
+    driver.findElement(By.xpath('//*[@id="add_button"]')).click(); // add button   
+    const secondTelephoneXPath = '//*[@id="html_id_telephones"]/table/tbody/tr/td[1]/table/tbody/tr[2]/td[1]/input';  
     driver.findElement(By.xpath(secondTelephoneXPath)).sendKeys('21 333-444');
-    driver.findElement(elementByText('Salvar')).click();
+    const searchBoxXPath = '//*[@id="html_id_projects"]/table/tbody/tr/td[2]/project-search/autocomplete/div';
+    driver.findElement(By.xpath(searchBoxXPath + '/input')).sendKeys('');
+    driver.sleep(1000);
+    driver.findElement(By.xpath(searchBoxXPath + '/input')).sendKeys('jiri');
+    driver.sleep(200);
+    // click on first result of the search
+    driver.findElement(By.xpath(searchBoxXPath + '/ul/li[1]')).click();
+    // Remove first project
+    driver.findElement(By.xpath('//*[@id="html_id_projects"]/table/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/button')).click(); 
+    driver.sleep(100);
+    driver.findElement(elementByText('Salvar')).click();  
     driver.sleep(150);
     editBtn = getTableCell(1, 2, driver).findElement(By.xpath("a"));
     editBtn.click();
@@ -531,6 +542,8 @@ editPersonTelephones: (test) => {
     const element = driver.findElement(By.xpath(secondTelephoneXPath));
     const tel = await( element.getAttribute("value") );
     test.equal( '21 333-444', tel );
+    const firstProjectText = await( driver.findElement(By.xpath('//*[@id="html_id_projects"]/table/tbody/tr/td[1]/table/tbody/tr/td[1]')).getText() );
+    test.equal( 'Jiribatuba2', firstProjectText);
     
     server.close();
     driver.quit();
