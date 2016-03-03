@@ -1,11 +1,67 @@
 'use strict';
 var db  = require('../db/models');
+var Sync = require('sync');
 var await = require('../lib/await');
 var dsParams = require('../lib/DataSourcesParams');
 
+ const dataSources = [
+    {
+        model: 'AmbientalLicense',
+        fields: ['license']
+    },
+    {
+        model: 'Block',
+        fields: ['name']
+    },
+    {
+        model: 'Company',
+        fields: ['name']
+    },
+    {
+        model: 'DrillingRigOffshore',
+        fields: ['name']
+    },
+    {
+        model: 'DrillingRigOnshore',
+        fields: ['name']
+    },
+    {
+        model: 'Person',
+        fields: ['name']
+    },
+    {
+        model: 'FixedUEPProduction',
+        fields: ['name']
+    },
+    {
+        model: 'FPSOProduction',
+        fields: ['name']
+    },
+    {
+        model: 'OilField',
+        fields: ['name']
+    },
+    {
+        model: 'Seismic',
+        fields: ['process']
+    },
+    {
+        model: 'Well',
+        fields: ['name']
+    }
+];
 
-function search(searchValue, dataSources, numMaxResults) {
-	var results = [];
+// add ids to dataSources
+Sync(function() {
+    for(var i = 0; i < dataSources.length; i++) {
+        const searchOptions = { where: { name: dataSources[i].model } };
+        const modelItem = await( db.ModelsList.findOne(searchOptions) );
+        dataSources[i].model_id = modelItem.id;
+    }
+});
+
+
+function search(searchValue, numMaxResults) {
     const searchStr = '%' + searchValue + '%';
     var queryStrings = [];
     for( var i = 0; i < dataSources.length; i++) {
@@ -13,7 +69,8 @@ function search(searchValue, dataSources, numMaxResults) {
     	for( var j = 0; j < dataSource.fields.length; j++ ) {
     		const model = db[dataSource.model];
     		const fieldName = dataSource.fields[j];
-    		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model, id from ' + model.getTableName();
+    		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model, ' + dataSource.model_id + ' as model_id, id ';
+            currQuery += ' from ' + model.getTableName();
     		currQuery += ' where ' + fieldName + ' like "' + searchStr + '"';
     		queryStrings.push(currQuery);
     		queryStrings.push('\n union \n')
@@ -22,71 +79,27 @@ function search(searchValue, dataSources, numMaxResults) {
     
     queryStrings[queryStrings.length - 1] = '\n limit ' + numMaxResults;
     const queryStr = queryStrings.join('');
-    return db.sequelize.query(queryStr);
+    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
+    return db.sequelize.query(queryStr, simpleQueryType);
 }
 
 
 exports.main = function(req, res) {
 	const MAX_NUM_RESULTS = 5;
     const searchValue = req.query.searchValue;
-    const dataSources = [
-		{
-			model: 'AmbientalLicense',
-			fields: ['license']
-		},
-        {
-        	model: 'Block',
-        	fields: ['name']
-        },
-        {
-        	model: 'Company',
-        	fields: ['name']
-        },
-        {
-        	model: 'DrillingRigOffshore',
-        	fields: ['name']
-        },
-        {
-        	model: 'DrillingRigOnshore',
-        	fields: ['name']
-        },
-        {
-        	model: 'Person',
-        	fields: ['name']
-        },
-        {
-        	model: 'FixedUEPProduction',
-        	fields: ['name']
-        },
-        {
-        	model: 'FPSOProduction',
-        	fields: ['name']
-        },
-        {
-        	model: 'OilField',
-        	fields: ['name']
-        },
-        {
-        	model: 'Seismic',
-        	fields: ['process']
-        },
-        {
-        	model: 'Well',
-        	fields: ['name']
-        }
-    ];
-    
-    search(searchValue, dataSources, MAX_NUM_RESULTS).then(onResults);
+   
+    search(searchValue, MAX_NUM_RESULTS).then(onResults);
     function onResults(queryResults) {
     	var results = [];
-		for( var n = 0; n < queryResults[0].length; n++ ) {
-			const result = queryResults[0][n];
+		for( var n = 0; n < queryResults.length; n++ ) {
+			const result = queryResults[n];
 			const modelParams = dsParams[result.model];
 			results.push({
 				model: result.model,
 				modelLabel: modelParams.tableLabel,
 				name: result.name,
-				id: result.id
+				id: result.id,
+                model_id: result.model_id
 			});
 		}
         res.json(results);
