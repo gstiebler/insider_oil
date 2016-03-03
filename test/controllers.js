@@ -484,7 +484,7 @@ newsFromObject: test => {
 	var req = {
 		query: {
 			sourceName: 'OilField',
-			id: 2
+			id: 3
 		}
 	}
     const newsResults = utils.getJsonResponse.sync(null, NewsController.newsFromObject, req);
@@ -493,7 +493,7 @@ newsFromObject: test => {
     // adding more news from this oil field
     const newNews = {
         title: 'adicionando notícia',
-        content: '<p>outra notícia: <a href="/app/view_record?source=OilField&amp;id=2" style="background-color: rgb(255, 255, 255);">Abalone</a> ',
+        content: '<p>outra notícia: <a href="/app/view_record?source=OilField&amp;id=3" style="background-color: rgb(255, 255, 255);">Abalone</a> ',
         author_id: 1
     };
     const reqNewNews = {
