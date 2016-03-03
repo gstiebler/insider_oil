@@ -64,7 +64,7 @@ function addWell(test, driver) {
     driver.findElement(elementByText('Salvar')).click();
     driver.sleep(200);
     test.equal( "Não foi possível criar o registro.", getFlashMessage(driver, 0) );
-    test.equal( "Nome não pode ser nulo", getFlashMessage(driver, 1) );
+    test.equal( "Nome não pode ser nulo", getFlashMessage(driver, 2) );
     
     // test save correct well
     driver.findElement(By.id('html_id_name')).sendKeys('Novo poço Selenium');
@@ -490,9 +490,9 @@ search: (test) => {
         .build();
 
     makeLogin(test, driver);
-    driver.findElement(By.xpath('//*[@id="searchBox"]/div/input')).sendKeys('ba');
+    driver.findElement(By.xpath('//*[@id="searchBox"]/autocomplete/div/input')).sendKeys('ba');
     driver.sleep(200);
-    driver.findElement(By.xpath('//*[@id="searchBox"]/div/ul/li[4]')).click();
+    driver.findElement(By.xpath('//*[@id="searchBox"]/autocomplete/div/ul/li[4]')).click();
     driver.sleep(200);
 
     test.equal( 'Nome:', await( driver.findElement(By.xpath('//*[@id="angularContainer"]/p[1]/span[1]')).getText() ) );
