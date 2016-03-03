@@ -1,0 +1,15 @@
+<table style="width:100%">
+    <tr>
+        <td width="300">
+            <table>
+                <tr ng-repeat="project in projects">
+                    <td>{{project.name}}</td>
+                    <td><button class="btn btn-default" ng-click="removeItem(project)">Remover</button></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <project-search id="searchBox" on-item-selected="onProjectSelected" on-error="showError"></project-search>
+        </td>
+    </tr>
+</table>

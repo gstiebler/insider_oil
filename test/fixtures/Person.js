@@ -5,7 +5,11 @@ module.exports = function(db) {
         {
             name: "Guilherme Stiebler",
             company_id: utils.idByName('Company', 'Petrobrás'),
-            phone: "+55 21 99401-1944"
+            telephones: ["+55 21 99401-1944"],
+            projects: [{
+                model_id: 2,
+                model_ref_id: 1
+            }]
         },
         {
             name: "Felipe",
