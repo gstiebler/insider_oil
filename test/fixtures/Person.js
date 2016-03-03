@@ -1,11 +1,11 @@
 var utils = require('../lib/utils');
 
 module.exports = function(db) {
-    return db.Person.bulkCreate([
+    const personObjs = [
         {
             name: "Guilherme Stiebler",
             company_id: utils.idByName('Company', 'Petrobrás'),
-            telephones: ["+55 21 99401-1944"],
+            telephones: ['+55 21 99401-1944'],
             projects: [{
                 model_id: 2,
                 model_ref_id: 1
@@ -13,11 +13,20 @@ module.exports = function(db) {
         },
         {
             name: "Felipe",
-            company_id: utils.idByName('Company', 'Eni Oil')
+            company_id: utils.idByName('Company', 'Eni Oil'),
+            telephones: ["+55 21 234-5678", "98989-9498"]
         },
         {
             name: "Marcelo",
-            company_id: utils.idByName('Company', 'Recôncavo E&P')
+            company_id: utils.idByName('Company', 'Recôncavo E&P'),
+            telephones: ["+101 232 1100194"]
         }
-    ]);
+    ];
+    
+    const promisesArray = [];
+    for(var personObj of personObjs) {
+        promisesArray.push(db.Person.create(personObj));
+    }
+    
+    return Promise.all(promisesArray);
 }

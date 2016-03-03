@@ -3,6 +3,7 @@ var await = require('../../lib/await');
 
 
 function createFixtures() {
+    await( require('../../db/seeders/ModelsListInitializer')(db) );
     await( require('./User')(db) );
     await( require('./Company')(db) );
     await( require('./Basin')(db) );
@@ -18,9 +19,7 @@ function createFixtures() {
     await( require('./FixedUEPProduction')(db) );
     await( require('./Reserve')(db) );
     await( require('./Production')(db) );
-    await( require('../../db/seeders/ModelsListInitializer')(db) );
     await( require('./NewsFixtures')(db) );
-    await( require('./Telephone')(db) );
 };
 
 module.exports = createFixtures;
