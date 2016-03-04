@@ -165,26 +165,23 @@ exports.viewRecord = function(req, res, next) {
     model.findById(id, options).then(onRecord)
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
-    function onRecord(record) {
+    function onRecord(record) { Sync(function() {
         var fields = dbUtils.getModelFields(dataSourceName);
         var result = [];
         
         for( var i = 0; i < fields.length; i++ ) {
-            var item = {
-                label: fields[i].label,
-                value: record[fields[i].name]
-            };
+            const item = fields[i];
+            item.value = record[fields[i].name];
             
             if(fields[i].type == 'ref') {
                 item.ref = true;
-                item.source = fields[i].model;
                 item.name = record[fields[i].association].name;
             }
             result.push(item);
         }
         
         res.json(result);
-    }
+    })};
 }
 
 
