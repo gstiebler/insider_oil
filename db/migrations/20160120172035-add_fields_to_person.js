@@ -17,6 +17,15 @@ module.exports = {
 
 		params.push({
 			table: 'persons',
+			columnName: 'telephones_text',
+			columnDesc: {
+				type: Sequelize.TEXT('medium'),
+				allowNull: true
+			}
+		});
+
+		params.push({
+			table: 'persons',
 			columnName: 'email',
 			columnDesc: {
 				type: Sequelize.STRING,

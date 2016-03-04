@@ -1,26 +1,6 @@
 "use strict";
 var await = require('../../lib/await');
 
-function updateTelephones(db, person) {
-    const telephones = person.dataValues.telephones;
-    if(telephones == null)
-        return;
-    
-    const options = { where: { person_id: person.id } };
-    // remove all telephones associated with this person
-    db.Telephone.destroy(options).then(function() {
-        const newTelephoneRecords = [];
-        for(var i = 0; i < telephones.length; i++) {
-            var telephoneRecord = { 
-                person_id: person.id,
-                number: telephones[i]
-            };
-            newTelephoneRecords.push(telephoneRecord);
-        }
-        return db.Telephone.bulkCreate(newTelephoneRecords);
-    });
-}
-
 
 function updatePersonProjects(db, person) {
     const projects = person.dataValues.projects;
@@ -44,8 +24,6 @@ function updatePersonProjects(db, person) {
 
 function updateFieldsFunc(db) {
     return function (person) {
-        // TODO unify both functions in one
-        updateTelephones(db, person);
         updatePersonProjects(db, person);
     }
 }
@@ -91,18 +69,18 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.BLOB,
 			allowNull: true
 		},
-       telephones: {
+        // internal field to store values from the telephones field
+		telephones_text: {
+			type: DataTypes.TEXT('medium'),
+			allowNull: true
+		},
+        telephones: {
             type: DataTypes.VIRTUAL,
             get: function() {
-                const options = { where: { person_id: this.id } };
-                const telephoneRecords = await( sequelize.models.Telephone.findAll(options) );
-                if(telephoneRecords == null)
-                    return [];
-                const telephones = [];
-                for(var i = 0; i < telephoneRecords.length; i++) {
-                    telephones.push( telephoneRecords[i]['number'] );    
-                }
-                return telephones;
+                return JSON.parse(this.telephones_text);
+            },
+            set: function(newValue) {
+                this.telephones_text = JSON.stringify(newValue);
             }
         },
         projects: {
