@@ -1,21 +1,27 @@
-<div ng-repeat="field in record">
-    <span class="col-sm-2">{{field.label}}:</span>
-    <div ng-if="field.ref" >
-        <a class="col-sm-10" href="/app/view_record?source={{field.model}}&id={{field.value}}" >{{field.name}}</a>    
-    </div>
-    <div ng-else-if="field.isList">
-        <span ng-repeat="item in field.value" class="col-sm-10">{{item}}</span>
-    </div>
-    <div ng-else-if="field.isProjectList">
-        <a ng-repeat="item in field.value" class="col-sm-10" href="/app/view_record?source={{item.model}}&id={{item.id}}" >{{item.name}}</a> 
-    </div>
-    <div ng-else-if="field.isPhoto">
-        <img class="col-sm-10" src="/db_image?dataSource={{source}}&id={{id}}&fieldName={{field.name}}" ></img> 
-    </div>
-    <div ng-else>
-        <span class="col-sm-10">{{field.value}}</span>
-    </div>
-</div>
+<table border="1">
+    <tr ng-repeat="field in record">
+        <td width="100">
+            <span class="control-label col-sm-2">{{field.label}}:</span>
+        </td>
+        <td>
+            <div ng-if="field.ref" >
+                <a class="col-sm-10" href="/app/view_record?source={{field.model}}&id={{field.value}}" >{{field.name}}</a>    
+            </div>
+            <div ng-else-if="field.isList">
+                <span ng-repeat="item in field.value" class="col-sm-10">{{item}}</span>
+            </div>
+            <div ng-else-if="field.isProjectList">
+                <a ng-repeat="item in field.value" class="col-sm-10" href="/app/view_record?source={{item.model}}&id={{item.id}}" >{{item.name}}</a> 
+            </div>
+            <div ng-else-if="field.isPhoto">
+                <img class="col-sm-10" src="/db_image?dataSource={{source}}&id={{id}}&fieldName={{field.name}}" ></img> 
+            </div>
+            <div ng-else>
+                <span class="col-sm-10">{{field.value}}</span>
+            </div>
+        </td>
+    </tr>
+</table>
 <br><br><br>
 <hr>
 <br><br>
