@@ -9,6 +9,7 @@ var treeController = require('../controllers/TreeController');
 var searchController = require('../controllers/SearchController');
 var NewsController = require('../controllers/NewsController');
 var ExcelController = require('../controllers/ExcelController');
+var imageController = require('../controllers/ImageController');
 
 module.exports = function(app) {
     // Main route
@@ -46,6 +47,9 @@ module.exports = function(app) {
     
     // Tree
     app.get('/tree/',           session.authorize, treeController.main );
+    
+    // TODO !autorize!
+    app.get('/db_image',                                imageController.main );
     
     // all links from Angular App should be redirected to the index of the app
     // send the URL as parameter for the Angular App to make the redirection

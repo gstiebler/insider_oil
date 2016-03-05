@@ -3,8 +3,10 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
                 ['$scope', 'server', '$routeParams', 'showError', 'Flash',
         function($scope, server, $routeParams, showError, Flash) {
     
-    var source = $routeParams.source;
-    var id = $routeParams.id;
+    const source = $routeParams.source;
+    const id = $routeParams.id;
+    $scope.id = id;
+    $scope.source = source;
     
     // show record values
     function showValues(record) {
