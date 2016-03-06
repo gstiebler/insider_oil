@@ -3,6 +3,7 @@ var db  = require('../db/models');
 var Sync = require('sync');
 var await = require('../lib/await');
 var dsParams = require('../lib/DataSourcesParams');
+var winston = require('winston');
 
  const dataSources = [
     {
@@ -88,7 +89,9 @@ exports.main = function(req, res) {
 	const MAX_NUM_RESULTS = 5;
     const searchValue = req.query.searchValue;
    
-    search(searchValue, MAX_NUM_RESULTS).then(onResults);
+    search(searchValue, MAX_NUM_RESULTS).then(onResults).catch(function(error){
+        winston.error(error.stack);
+    });
     function onResults(queryResults) {
     	var results = [];
 		for( var n = 0; n < queryResults.length; n++ ) {
@@ -103,5 +106,6 @@ exports.main = function(req, res) {
 			});
 		}
         res.json(results);
+        return null;
     }
 };

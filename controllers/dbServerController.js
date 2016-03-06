@@ -30,13 +30,12 @@ exports.main = function(req, res, next) {
             for( var i = 0; i < fields.length; i++)
                 types[fields[i].name] = fields[i].type;
             const responseObj = {
-                records: records,
+                records: dbUtils.filterGridFields(records, viewParams.gridFields),
                 viewParams: viewParams,
                 types: types
             };
             res.json( responseObj );
         } catch(e) {
-            winston.error(e);
             ControllerUtils.getErrorFunc(res, 500, "Erro")(e);
         }});
     }

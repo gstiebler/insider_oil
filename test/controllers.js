@@ -318,7 +318,7 @@ getRecordViewWell: function(test) {
     
     test.equal(2, response[5].value);
     test.equal(true, response[5].ref);
-    test.equal('Company', response[4].source);
+    test.equal('Company', response[4].model);
     test.equal('Eni Oil', response[4].name);
     
     test.done();
@@ -341,21 +341,25 @@ createOilFieldDeveloping: function(test) {
     
     utils.getJsonResponse.sync(null, dbServerController.createItem, req);
     
-    const reqOilFieldDeveloping = {
-        query: { table: 'OilFieldDeveloping' }
+    const reqGet = {
+        query: { 
+            dataSource: 'OilFieldDeveloping',
+            id: 7
+        }
     };
-    const responseDeveloping = utils.getJsonResponse.sync(null, dbServerController.main, reqOilFieldDeveloping);
-    test.equal(4, responseDeveloping.records.length);
-    test.equal('Gavião Azul', responseDeveloping.records[3].name);
-    test.equal('Potiguar', responseDeveloping.records[3].basin_name);
-    test.equal('on', responseDeveloping.records[3].shore);
-    test.equal('Terra', responseDeveloping.records[3].userShore);
+    const responseDeveloping = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqGet);
+    test.equal('Gavião Azul', responseDeveloping[0].value);
+    test.equal('Potiguar', responseDeveloping[4].name);
+    test.equal('Terra', responseDeveloping[3].value);
     
     const reqOilFieldProduction = {
-        query: { table: 'OilFieldProduction' }
+        query: { 
+            dataSource: 'OilFieldProduction',
+            id: 7
+        }
     };
-    const responseProduction = utils.getJsonResponse.sync(null, dbServerController.main, reqOilFieldProduction);
-    test.equal(3, responseProduction.records.length);   
+    const responseProduction = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqOilFieldProduction);
+    test.equal(5, responseProduction.length);   
     
     test.done();
 },

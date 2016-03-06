@@ -60,22 +60,26 @@ createPerson: test => {
     
     const res = utils.getJsonResponse.sync(null, dbServerController.createItem, newItemReq);
     test.equal(res.msg, 'Registro criado com sucesso.');
-    const checkCreatedPersonReq = {
-        query: { table: 'Person' }
+
+    const reqGet = {
+        query: { 
+            model: 'Person',
+            id: 4
+        }
     };
+    const responseGet = utils.getJsonResponse.sync(null, dbServerController.recordValues, reqGet);
     
-    const response = utils.getJsonResponse.sync(null, dbServerController.main, checkCreatedPersonReq);
-    test.equal(4, response.records.length);
-    test.equal('Michael Jackson', response.records[3].name);
-    test.equal(JSON.stringify(newItemReq.body.newItemData.telephones), JSON.stringify(response.records[3].telephones));
+    const responseValues = responseGet.values;
+    test.equal('Michael Jackson', responseValues.name);
+    test.equal(JSON.stringify(newItemReq.body.newItemData.telephones), JSON.stringify(responseValues.telephones));
     // test projects
-    test.equal(2, response.records[3].projects.length);
-    test.equal('Block', response.records[3].projects[0].model);
-    test.equal(2, response.records[3].projects[0].id);    
-    test.equal('ES-M-529', response.records[3].projects[0].name);    
-    test.equal('DrillingRigOnshore', response.records[3].projects[1].model);
-    test.equal(1, response.records[3].projects[1].id);
-    test.equal('BS-04', response.records[3].projects[1].name);  
+    test.equal(2, responseValues.projects.length);
+    test.equal('Block', responseValues.projects[0].model);
+    test.equal(2, responseValues.projects[0].id);    
+    test.equal('ES-M-529', responseValues.projects[0].name);    
+    test.equal('DrillingRigOnshore', responseValues.projects[1].model);
+    test.equal(1, responseValues.projects[1].id);
+    test.equal('BS-04', responseValues.projects[1].name);  
     
     test.done();
 },
