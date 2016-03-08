@@ -22,9 +22,15 @@ app.service('ModelOperations', ['$location', 'server',
     
     function createNewsOperations(modelName) {
     	const modelOperations = createDefaultModelOperations(modelName);
+        
     	modelOperations.createItem = function() {
 			$location.path("/app/create_news");
     	}
+        
+        modelOperations.editRecord = function(id) {
+            $location.path("/app/create_news").search({ id: id });
+        }
+        
     	return modelOperations;
     }
     

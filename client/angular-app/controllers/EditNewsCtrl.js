@@ -4,6 +4,20 @@ angular.module('InsiderOilApp').controller('EditNewsController',
         function($scope, $http, $routeParams, $location, server, session, showError, Flash) {
                 	
     const modelName = 'News';
+    const id = $routeParams.id;
+    
+    if(id) {
+        $scope.mainTitle = "Editar notícia"
+        
+        server.getModelFieldsAndValues(modelName, id, valuesArrived, showError.show);
+        
+        function valuesArrived(data) {
+            $scope.title = data.values.title;
+            $scope.content = data.values.content;
+        }
+    } else {
+        $scope.mainTitle = "Nova notícia"
+    }
                 	
 	$scope.saveItem = function() {
 		function onUserDataArrived(userData) {
@@ -11,7 +25,12 @@ angular.module('InsiderOilApp').controller('EditNewsController',
 			itemData.title = $scope.title;
 			itemData.content = $scope.content;
 			itemData.author_id = userData.data.id;
-		    server.createNewItem( modelName, itemData, onSave, showError.show );
+            if(id) {
+                itemData.id = id;
+                server.saveItem( modelName, itemData, onSave, showError.show );
+            } else {
+		        server.createNewItem( modelName, itemData, onSave, showError.show );
+            }
 		}
 	    
 	    $http.get('/user/details', { params: { token: session.getToken()} }).
