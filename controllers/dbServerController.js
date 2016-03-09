@@ -85,12 +85,16 @@ exports.recordValues = function(req, res, next) {
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) { Sync(function(){
-        var fields = dbUtils.getModelFields(modelName);
-        
-        res.json({ 
-            values: record,
-            fields: fields
-        });
+        try{
+            var fields = dbUtils.getModelFields(modelName);
+            
+            res.json({ 
+                values: record,
+                fields: fields
+            });
+        } catch(error) {
+            ControllerUtils.getErrorFunc(res, 500, "Problemas ao recuperar o registro")(error);
+        }
     });}
 }
 
