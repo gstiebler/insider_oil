@@ -6,8 +6,12 @@ var Sequelize = require('sequelize');
 var winston   = require('winston');
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.json')[env];
+var config    = require(__dirname + '/../config/config.json');
 var db        = {};
+
+config.production.password = process.env.DB_PROD_PASSWORD;
+config.production.host = process.env.DB_PROD_HOST;
+config = config[env];
 
 if (env == 'test') {
 	winston.add(winston.transports.File, { filename: 'log/test.log' });
@@ -15,6 +19,7 @@ if (env == 'test') {
 }
 	
 winston.info('environment: ', env);
+
 
 	
 if (config.use_env_variable) {
