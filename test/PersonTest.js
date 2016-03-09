@@ -47,11 +47,12 @@ createPerson: test => {
                 projects: [
                     {
                         model_id: 3,
-                        id: 2
+                        id: 2,
+                        description: 'Diretor'
                     },
                     {
                         model_id: 6,
-                        id: 1
+                        id: 1,
                     }
                 ]
             }
@@ -76,10 +77,13 @@ createPerson: test => {
     test.equal(2, responseValues.projects.length);
     test.equal('Block', responseValues.projects[0].model);
     test.equal(2, responseValues.projects[0].id);    
-    test.equal('ES-M-529', responseValues.projects[0].name);    
+    test.equal('ES-M-529', responseValues.projects[0].name);  
+    test.equal('Diretor', responseValues.projects[0].description);   
+      
     test.equal('DrillingRigOnshore', responseValues.projects[1].model);
     test.equal(1, responseValues.projects[1].id);
     test.equal('BS-04', responseValues.projects[1].name);  
+    test.ok(!responseValues.projects[1].description);  
     
     test.done();
 },

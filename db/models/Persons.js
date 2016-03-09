@@ -13,7 +13,8 @@ function updatePersonProjects(db, person) {
             var projectRecord = { 
                 person_id: person.id,
                 model_id: projects[i].model_id,
-                model_ref_id: projects[i].id
+                model_ref_id: projects[i].id,
+                description: projects[i].description
             };
             newProjectRecords.push(projectRecord);
         }

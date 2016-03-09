@@ -1,7 +1,7 @@
 "use strict";
 
 function getProjects(sequelize, personId) {
-    var modelRefsQueryStr = 'select m.id as model_id, p.model_ref_id as id, m.name as model ';
+    var modelRefsQueryStr = 'select m.id as model_id, p.model_ref_id as id, m.name as model, p.description ';
     modelRefsQueryStr += 'from person_projects p, models_list m ';
     modelRefsQueryStr += 'where p.model_id = m.id ';
     modelRefsQueryStr += 'and person_id = ' + personId;
@@ -17,6 +17,10 @@ function getProjects(sequelize, personId) {
             const labelField = 'name';
             var modelValsQueryStr = 'select ' + modelRefRecord.model_id + ' as model_id, ';
             modelValsQueryStr += '"' + modelRefRecord.model + '" as model, ';
+            if(modelRefRecord.description && modelRefRecord.description != 'null')
+                modelValsQueryStr += '"' + modelRefRecord.description + '" as description, ';
+            else
+                modelValsQueryStr += 'null as description, ';
             modelValsQueryStr += 'id, ';
             modelValsQueryStr += labelField +' ';
             modelValsQueryStr += 'from ' + tableName;
@@ -45,7 +49,11 @@ module.exports = function(sequelize, DataTypes) {
 		model_id : {
 			type : DataTypes.INTEGER,
 			allowNull : false
-		}
+		},
+        description: {
+            type: DataTypes.STRING,
+            allowNull: true
+        }
 	}, 
 	{
 		underscored : true,

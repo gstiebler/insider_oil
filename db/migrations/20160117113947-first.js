@@ -619,6 +619,10 @@ module.exports = {
 						model: 'models_list',
 						key: 'id'
 					}
+				},
+				description: {
+					type: Sequelize.STRING,
+					allowNull: true
 				}
 			}
 		});

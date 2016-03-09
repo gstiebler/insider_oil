@@ -21,7 +21,9 @@ app.directive('listOfProjects', function() {
             };
             
             $scope.onProjectSelected = (selectedItem) => {
+                selectedItem.description = $scope.descriptionInput;
                 $scope.projects.push(selectedItem);
+                $scope.descriptionInput = "";
             };
         }],
         templateUrl: 'app/directives/templates/list_of_projects.html'

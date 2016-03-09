@@ -8,7 +8,8 @@ module.exports = function(db) {
             telephones: ['+55 21 99401-1944'],
             projects: [{
                 model_id: 2,
-                id: 1
+                id: 1,
+                description: 'diretor'
             }]
         },
         {

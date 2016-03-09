@@ -1,15 +1,27 @@
 <table style="width:100%">
     <tr>
         <td width="300">
-            <table>
+            <table border="1">
+                <tr>
+                    <th>Projeto</th>
+                    <th>Descrição</th>
+                </tr>
                 <tr ng-repeat="project in projects">
                     <td>{{project.name}}</td>
+                    <td>{{project.description}}
                     <td><button class="btn btn-default" ng-click="removeItem(project)">Remover</button></td>
                 </tr>
             </table>
         </td>
         <td>
-            <project-search on-item-selected="onProjectSelected" on-error="showError"></project-search>
+            <table cellpadding="10">
+                <tr>
+                    <td><project-search on-item-selected="onProjectSelected" on-error="showError"></project-search></td>
+                </tr>
+                <tr>
+                    <td>Descrição: <input type="text" ng-model="descriptionInput" /></td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>
