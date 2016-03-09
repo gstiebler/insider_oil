@@ -19,7 +19,7 @@ module.exports = {
 			table: 'persons',
 			columnName: 'telephones_text',
 			columnDesc: {
-				type: Sequelize.TEXT('medium'),
+				type: Sequelize.TEXT('tiny'),
 				allowNull: true
 			}
 		});

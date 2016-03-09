@@ -23,13 +23,13 @@ module.exports = function(app) {
     
     // DB Server
     app.get('/db_server/', session.authorize,      dbServerController.main);
-    app.get('/model_fields/',                      dbServerController.modelFields);
-    app.get('/record_values/',                     dbServerController.recordValues);
-    app.get('/view_record/',                       dbServerController.viewRecord);
-    app.post('/create_item/',                      dbServerController.createItem);
-    app.put('/save_item/',                         dbServerController.saveItem);
-    app.get('/sources_list/',                      dbServerController.sourcesList);
-    app.delete('/delete_item/',                    dbServerController.deleteItem);
+    app.get('/model_fields/', session.authorize,   dbServerController.modelFields);
+    app.get('/record_values/',  session.authorize, dbServerController.recordValues);
+    app.get('/view_record/',   session.authorize,  dbServerController.viewRecord);
+    app.post('/create_item/',  session.authorize,  dbServerController.createItem);
+    app.put('/save_item/',   session.authorize,    dbServerController.saveItem);
+    app.get('/sources_list/',  session.authorize,  dbServerController.sourcesList);
+    app.delete('/delete_item/', session.authorize, dbServerController.deleteItem);
     app.get('/combo_values/', session.authorize,   dbServerController.getComboValues);
     app.post('/db_server/upload_file',             dbServerController.uploadFile);
     app.get('/search', session.authorize,          searchController.main);
