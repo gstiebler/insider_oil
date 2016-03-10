@@ -9,3 +9,5 @@
 /.elasticbeanstalk
 /temp.js
 /.vscode
+/client/angular-app/minified.js
+/client/angular-app/out.js.map
