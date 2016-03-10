@@ -9,7 +9,7 @@ var routes = require('./routes/index');
 var winston = require('winston');
 var app = express();
 
-require('./lib/uglifyJsFrontend').uglifyAngularJsFiles();
+require('./lib/uglifyJsFrontend').uglifyAngularJsFiles(app.get('env'));
 
 winston.level = 'debug';
 if (app.get('env') == 'development') {
