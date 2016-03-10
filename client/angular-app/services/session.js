@@ -1,4 +1,5 @@
- var app = angular.module('InsiderOilApp');
+'use strict';
+var app = angular.module('InsiderOilApp');
 
 app.service('session', ['$http', '$location', '$cookies', '$window',
                function($http, $location, $cookies, $window ) {

@@ -1,4 +1,5 @@
- var app = angular.module('InsiderOilApp');
+'use strict';
+var app = angular.module('InsiderOilApp');
 
 app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'showError', 
                function(server, Flash, Upload, $timeout, showError) {

@@ -1,4 +1,5 @@
- var app = angular.module('InsiderOilApp');
+'use strict';
+var app = angular.module('InsiderOilApp');
 
 app.service('showError', ['Flash', 
                function(Flash) {

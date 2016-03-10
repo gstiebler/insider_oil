@@ -1,4 +1,5 @@
- var app = angular.module('InsiderOilApp');
+'use strict';
+var app = angular.module('InsiderOilApp');
 
 app.service('ModelOperations', ['$location', 'server',
                function($location, server) {

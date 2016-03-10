@@ -1,4 +1,5 @@
- var app = angular.module('InsiderOilApp');
+'use strict';
+var app = angular.module('InsiderOilApp');
 
 app.service('server', ['$http', 'session',
                function($http, session) {
@@ -13,7 +14,7 @@ app.service('server', ['$http', 'session',
     }
     
     this.getTable = function( table, filters, okCallback, errorCallback ) {
-        params = { 
+        const params = { 
             table: table,
             filters: filters,
             token: session.getToken()
@@ -27,7 +28,7 @@ app.service('server', ['$http', 'session',
     
     
     this.getModelFields = function( model, okCallback, errorCallback ) {
-        params = { 
+        const params = { 
             model: model,
             token: session.getToken()
         };
@@ -40,7 +41,7 @@ app.service('server', ['$http', 'session',
     
     
     this.createNewItem = function( modelName, newItemData, onSave, onError ) {
-        params = {
+        const params = {
             model: modelName,
             newItemData: newItemData,
             token: session.getToken()
@@ -51,7 +52,7 @@ app.service('server', ['$http', 'session',
     
     
     this.deleteItem = function( modelName, id, onDelete, onError ) {
-        params = {
+        const params = {
             model: modelName,
             id: id,
             token: session.getToken()
@@ -62,7 +63,7 @@ app.service('server', ['$http', 'session',
     
    
     this.getModelFieldsAndValues = function( modelName, id, okCallback, errorCallback ) {
-        params = { 
+        const params = { 
             model: modelName,
             id: id,
             token: session.getToken()
@@ -76,7 +77,7 @@ app.service('server', ['$http', 'session',
     
     
     this.saveItem = function( modelName, record, onSave, onError ) {
-        params = {
+        const params = {
             model: modelName,
             record: record,
             token: session.getToken()
@@ -87,7 +88,7 @@ app.service('server', ['$http', 'session',
     
     
     this.getComboValues = function(modelName, okCallback, onError) {
-        params = { model: modelName };
+        const params = { model: modelName };
         http(params, $http.get, '/combo_values/', okCallback, onError);
     }
     
@@ -98,13 +99,13 @@ app.service('server', ['$http', 'session',
     
     
     this.getSearchResult = function(searchValue, okCallback, onError) {
-    	params = { searchValue: searchValue };
+    	const params = { searchValue: searchValue };
         http(params, $http.get, '/search', okCallback, onError);
     }
     
     
     this.viewRecord = function(dataSource, id, okCallback, onError) {
-        params = { 
+        const params = { 
             dataSource: dataSource,
             id: id
         };
@@ -123,7 +124,7 @@ app.service('server', ['$http', 'session',
     
     
     this.newsFromObject = function(sourceName, id, onData, onError) {
-    	params = {
+    	const params = {
     		sourceName: sourceName,
     		id: id
     	};
@@ -132,7 +133,7 @@ app.service('server', ['$http', 'session',
     
     
     this.changePassword = function(onData, onError, oldPassword, newPassword) {
-    	params = {
+    	const params = {
     		oldPassword: oldPassword,
     		newPassword: newPassword	
     	};
@@ -141,7 +142,7 @@ app.service('server', ['$http', 'session',
     
     
     this.downloadExcelFile = function(dataSource, onData, onError) {
-    	params = {
+    	const params = {
     		dataSource: dataSource	
     	};
         http(params, $http.get, '/download_excel', onData, onError);
