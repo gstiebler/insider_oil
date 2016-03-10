@@ -8,7 +8,7 @@ app.directive('projectSearch', function() {
             onItemSelected: '=onItemSelected',
             onError: '=onError'
         },
-        controller: ['$scope', `server`, function($scope, server) { 
+        controller: ['$scope', 'server', function($scope, server) { 
 
             var searchResult = {};
             $scope.onSearchType = function(value) {

@@ -12,7 +12,7 @@ app.directive('listOfProjects', function() {
             if(!$scope.projects)
                 $scope.projects = [];
                 
-            $scope.removeItem = (item) => {
+            $scope.removeItem = function(item) {
                 const index = $scope.projects.indexOf(item);
                 if (index > -1) {
                     // remove the item from the array
@@ -20,7 +20,7 @@ app.directive('listOfProjects', function() {
                 }
             };
             
-            $scope.onProjectSelected = (selectedItem) => {
+            $scope.onProjectSelected = function(selectedItem) {
                 selectedItem.description = $scope.descriptionInput;
                 $scope.projects.push(selectedItem);
                 $scope.descriptionInput = "";
