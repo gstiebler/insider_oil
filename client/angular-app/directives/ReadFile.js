@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('InsiderOilApp');
 
- app.directive('onReadFile', function ($parse) {
+ app.directive('onReadFile', ['$parse', function ($parse) {
 	return {
 		restrict: 'A',
 		scope: false,
@@ -21,4 +21,4 @@ var app = angular.module('InsiderOilApp');
 			});
 		}
 	};
-});
+}]);
