@@ -8,6 +8,8 @@ var routes = require('./routes/index');
 var winston = require('winston');
 var app = express();
 
+require('./lib/uglifyJsFrontend').uglifyAngularJsFiles();
+
 winston.level = 'debug';
 if (app.get('env') == 'development') {
 	winston.add(winston.transports.File, { filename: 'log/development.log' });
