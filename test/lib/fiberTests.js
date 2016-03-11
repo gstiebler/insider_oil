@@ -11,7 +11,6 @@ winston.level = 'debug';
 
 process.on('uncaughtException', function (err) {
     winston.error(err.stack);
-    console.log(err.stack);
 })
 
 var umzug = new Umzug({
@@ -26,9 +25,14 @@ var umzug = new Umzug({
 });
 
 exports.initializeDB = function() {
-	await( db.sequelize.getQueryInterface().dropAllTables() );
-    await( umzug.up() );
-    createFixtures();
+    try {
+        await( db.sequelize.getQueryInterface().dropAllTables() );
+        await( umzug.up() );
+        createFixtures();
+    } catch(e) {
+        winston.error(e.errors);
+        winston.error(e.stack);
+    }
 }
 
 

@@ -25,6 +25,7 @@ Sync(function() {
         await( umzug.up() );
         createFixtures();
     } catch(e) {
-        console.error(e.stack);
+        winston.error(e.errors);
+        winston.error(e.stack);
     }
 });
