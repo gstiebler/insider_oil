@@ -36,9 +36,11 @@ app.directive('recordFields', function() {
                     }
                     if(field.isDate && hasValues) {
                         const dateStr = $scope.values[field.name];
-                        const date = new Date(dateStr);
-                        date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 ); // correction for timezone
-                        $scope.values[field.name] = date;
+                        if(dateStr) {
+                            const date = new Date(dateStr);
+                            date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 ); // correction for timezone
+                            $scope.values[field.name] = date;
+                        }
                     }
                     if(field.isPhoto && hasValues) {
                         const fieldValues = $scope.values[field.name];
