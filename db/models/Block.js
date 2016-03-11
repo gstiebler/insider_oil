@@ -2,7 +2,8 @@ module.exports = function(sequelize, DataTypes) {
   var Block = sequelize.define('Block', {
         name: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: false,
+          unique: true
         },
         name_contract: {
           type: DataTypes.STRING,

@@ -24,7 +24,8 @@ module.exports = {
 				},
 				login: {
 					type: Sequelize.STRING,
-					allowNull: false
+					allowNull: false,
+                    unique: true
 				},
 				name: {
 					type: Sequelize.STRING,
@@ -45,7 +46,8 @@ module.exports = {
 				},
 				token: {
 					type: Sequelize.STRING,
-					allowNull: true
+					allowNull: true,
+                    unique: true
 				}
 			}
 		});
@@ -66,7 +68,8 @@ module.exports = {
 				},
 				name: {
 					type: Sequelize.STRING,
-					allowNull: false
+					allowNull: false,
+                    unique: true
 				},
 				address: {
 					type: Sequelize.STRING,
@@ -140,7 +143,8 @@ module.exports = {
 				},
 				name: {
 					type: Sequelize.STRING,
-					allowNull: false
+					allowNull: false,
+                    unique: true
 				}		
 			}
 		});
@@ -161,7 +165,8 @@ module.exports = {
 				},
 				name: {
 					type: Sequelize.STRING,
-					allowNull: false
+					allowNull: false,
+                    unique: true
 				},
 				name_contract: {
 					type: Sequelize.STRING,
@@ -834,7 +839,8 @@ module.exports = {
 				},
 				name: {
 					type: Sequelize.STRING,
-					allowNull: false
+					allowNull: false,
+                    unique: true
 				},
 				state: {
 					type: Sequelize.STRING,

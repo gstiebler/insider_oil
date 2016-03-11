@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     }, 
     {
         underscored: true,
-        tableName: 'basins'
+        tableName: 'basins',
+        unique: true
     }
   );
   

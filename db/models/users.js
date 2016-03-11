@@ -4,7 +4,8 @@ module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
     login: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     name: {
       type: DataTypes.STRING,
@@ -25,7 +26,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     token: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      unique: true
     }
   }, {
     underscored: true,

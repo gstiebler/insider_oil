@@ -11,7 +11,8 @@ module.exports = function(sequelize, DataTypes) {
     }, 
     {
         underscored: true,
-        tableName: 'companies'
+        tableName: 'companies',
+        unique: true
     }
   );
   return Company;

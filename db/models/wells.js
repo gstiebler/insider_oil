@@ -2,7 +2,8 @@ module.exports = function(sequelize, DataTypes) {
   var Well = sequelize.define('Well', {
         name: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: false,
+          unique: true
         },
         state: {
           type: DataTypes.STRING,
