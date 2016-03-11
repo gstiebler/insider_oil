@@ -16,12 +16,6 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
-				},
 				login: {
 					type: Sequelize.STRING,
 					allowNull: false,
@@ -48,6 +42,12 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: true,
                     unique: true
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
 				}
 			}
 		});
@@ -60,12 +60,6 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
-				},
 				name: {
 					type: Sequelize.STRING,
 					allowNull: false,
@@ -74,7 +68,13 @@ module.exports = {
 				address: {
 					type: Sequelize.STRING,
 					allowNull: true
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 		
@@ -135,17 +135,17 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
+				name: {
+					type: Sequelize.STRING,
+					allowNull: false,
+                    unique: true
+				},	
 				created_at: {
 					type: Sequelize.DATE
 				},
 				updated_at: {
 					type: Sequelize.DATE
-				},
-				name: {
-					type: Sequelize.STRING,
-					allowNull: false,
-                    unique: true
-				}		
+				}	
 			}
 		});
 
@@ -156,12 +156,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				name: {
 					type: Sequelize.STRING,
@@ -215,6 +209,12 @@ module.exports = {
 						model: 'basins',
 						key: 'id'
 					}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
 				}
 			}
 		});
