@@ -441,7 +441,7 @@ tree: function(test) {
     driver.findElement(elementByText('Árvore')).click();
     test.equal('Insider Oil', await( driver.getTitle() ));
     var treeItems = await( driver.findElements(By.xpath('//*[@id="angularContainer"]/p')) );
-    test.equal( 3, treeItems.length );
+    test.equal( 4, treeItems.length );
     test.equal( "Exploração", await( treeItems[0].getText() ) );
     test.equal( "Produção", await( treeItems[1].getText() ) );
     //test.equal( "Logística", await( treeItems[2].getText() ) );
