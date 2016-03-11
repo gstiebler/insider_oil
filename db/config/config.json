@@ -20,9 +20,7 @@
   "production": {    
     "port": 3306,
     "username": "root",
-    "password": "aloalo35",
     "database": "production",
-    "host": "insideroil.c7lwqtporcs1.sa-east-1.rds.amazonaws.com",
     "protocol": "mysql",
     "dialect": "mysql"
   }
