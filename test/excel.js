@@ -33,15 +33,15 @@ importDrillingRigOffshore: function(test) {
     
     function onImportDone(status, invalidRecordsStatus) {
         var rows = await( dbUtils.findAllCustom(db.DrillingRigOffshore));
-        test.equal( 26, rows.length );  
-        var expectedStatus = "Registros criados: 23";
+        test.equal( 35, rows.length );  
+        var expectedStatus = "Registros criados: 32";
         expectedStatus += "\nRegistros atualizados: 3";
-        expectedStatus += "\nRegistros inválidos: 72";
+        expectedStatus += "\nRegistros inválidos: 63";
         test.equal( expectedStatus, status );
         test.equal( "Registro 5: Valor 'Brasdril' do campo 'contratada' não encontrado.", invalidRecordsStatus[0] );
         test.equal( "Registro 6: Valor 'Transocean' do campo 'contratada' não encontrado.", invalidRecordsStatus[1] );
-        test.equal( "Registro 97: Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[70] );
-        test.equal( "Registro 98: Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[71] );
+        test.equal( "Registro 97: Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[61] );
+        test.equal( "Registro 98: Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[62] );
         
         test.equal("Aban Abraham", rows[0].name);
         test.equal("Etesco", rows[0].contractor.name);
@@ -50,13 +50,14 @@ importDrillingRigOffshore: function(test) {
         test.equal(1900, rows[0].lda);
         test.equal("2011-06-05", rows[0].start.toJSON().substring(0, 10));
         test.equal("2016-06-02", rows[0].end.toJSON().substring(0, 10));
-        test.equal("Petrobras XVII", rows[10].name);
-        test.equal("Petrobrás", rows[10].contractor.name);
+        
+        test.equal("Petrobras X", rows[10].name);
+        test.equal("Petrobras", rows[10].contractor.name);
         test.equal("SS", rows[10].type);
         test.equal("Em operação", rows[10].status);
-        test.equal(700, rows[10].lda);
-        test.equal("0000-00-00", rows[10].start.substring(0, 10));
-        test.equal("0000-00-00", rows[10].end.substring(0, 10));
+        test.equal(1500, rows[10].lda);
+        test.equal(null, rows[10].start);
+        test.equal(null, rows[10].end);
         
         test.done();
     }
@@ -71,12 +72,13 @@ importAmbientalLicenses: test => {
     
     function onImportDone(status, invalidRecordsStatus) {
         var rows = await( dbUtils.findAllCustom(db.AmbientalLicense));
-        test.equal( 18, rows.length );  
-        var expectedStatus = "Registros criados: 15";
+        test.equal( 17, rows.length );  
+        var expectedStatus = "Registros criados: 14";
         expectedStatus += "\nRegistros atualizados: 5";
-        expectedStatus += "\nRegistros inválidos: 0";
+        expectedStatus += "\nRegistros inválidos: 1";
         test.equal( expectedStatus, status );
-        test.equal( 0, invalidRecordsStatus.length );
+        test.equal( 1, invalidRecordsStatus.length );
+        test.equal('Registro 10: notNull Violation: end cannot be null', invalidRecordsStatus[0]);
         
         test.equal('2015-01-09', rows[0].start.toJSON().substring(0, 10));
         test.equal('2016-01-09', rows[0].end.toJSON().substring(0, 10));
@@ -86,9 +88,10 @@ importAmbientalLicenses: test => {
         test.equal('02022.001868/2007-89', rows[0].process);
         test.equal('Petróleo - Perfuração', rows[0].tipology);
         test.equal('Não', rows[0].pac);
-        test.equal('2015-07-16', rows[9].start.toJSON().substring(0, 10));
-        test.equal('0000-00-00', rows[9].end);
-        test.equal('ABio 616/2015', rows[9].license);
+        
+        test.equal('2015-07-31', rows[9].start.toJSON().substring(0, 10));
+        test.equal('2018-07-31', rows[9].end.toJSON().substring(0, 10));
+        test.equal('Ret ABio 269/2013', rows[9].license);
         test.equal('Perfuração Marítima - Blocos BM-POT-16 e 17 - Bacia de Potiguar', rows[9].enterprise);
         test.equal('PETRÓLEO BRASILEIRO S/A - PETROBRÁS', rows[9].entrepreneur);
         test.equal('02022.004723/2006-59', rows[9].process);
