@@ -1,13 +1,79 @@
 module.exports = function(db) {
     return db.Basin.bulkCreate([
         {
-            name: 'Recôncavo'
+            name: 'Tucano Central'
+        },
+        {
+            name: 'Acre'
+        },
+        {
+            name: 'Alagoas'
+        },
+        {
+            name: 'Almada'
+        },
+        {
+            name: 'Amazonas'
+        },
+        {
+            name: 'Barreirinhas'
+        },
+        {
+            name: 'Camamu'
+        },
+        {
+            name: 'Campos'
+        },
+        {
+            name: 'Ceará'
+        },
+        {
+            name: 'Espírito Santo'
+        },
+        {
+            name: 'Foz do Amazonas'
+        },
+        {
+            name: 'Jequitinhonha'
+        },
+        {
+            name: 'Pará - Maranhão'
+        },
+        {
+            name: 'Paraná'
+        },
+        {
+            name: 'Parecis - Alto Xingu'
+        },
+        {
+            name: 'Parnaíba'
+        },
+        {
+            name: 'Pelotas'
+        },
+        {
+            name: 'Pernambuco - Paraíba'
         },
         {
             name: 'Potiguar'
         },
         {
-            name: 'Tucano Central'
+            name: 'Recôncavo'
+        },
+        {
+            name: 'Santos'
+        },
+        {
+            name: 'São Francisco'
+        },
+        {
+            name: 'Sergipe'
+        },
+        {
+            name: 'Solimões'
+        },
+        {
+            name: 'Tucano Sul'
         }
     ]);
 }
