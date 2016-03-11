@@ -1,7 +1,7 @@
 'use strict';
 angular.module('InsiderOilApp').controller('ViewRecordController', 
-                ['$scope', 'server', '$routeParams', 'showError', 'Flash',
-        function($scope, server, $routeParams, showError, Flash) {
+                ['$scope', 'server', '$routeParams', 'showError', 'Flash', 'DateService',
+        function($scope, server, $routeParams, showError, Flash, DateService) {
     
     const source = $routeParams.source;
     const id = $routeParams.id;
@@ -13,16 +13,11 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
         $scope.record = record;
     }
     server.viewRecord( source, id, showValues, showError.show );
-        
-    function parseDateTime(dateTimeStr) {
-    	const date = new Date(dateTimeStr);
-    	return date.toLocaleString();
-    }
     
     // show record news
     function showNews(news) {
     	for(var i = 0; i < news.length; i++) {
-    		news[i].formattedCreatedAt = parseDateTime(news[i].created_at);
+    		news[i].formattedCreatedAt = DateService.parseDateTime(news[i].created_at);
     	}
     	
     	$scope.news = news;

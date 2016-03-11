@@ -1,7 +1,9 @@
 'use strict';
 angular.module('InsiderOilApp').controller('ModelViewController', 
-                ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash', 'ModelOperations', 'ModelViewService',
-        function($scope, server, $routeParams, $location, showError, Flash, ModelOperations, ModelViewService) {
+                ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash', 
+                 'ModelOperations', 'ModelViewService', 'DateService',
+        function($scope, server, $routeParams, $location, showError, Flash, 
+                 ModelOperations, ModelViewService, DateService) {
 
     var modelName = $routeParams.model;
     $scope.dataSource = modelName;
@@ -10,13 +12,6 @@ angular.module('InsiderOilApp').controller('ModelViewController',
     var datatableInitialized = false;
     const dataTableElement = $('#mainTable');
     const modelOperations = ModelOperations.getModelOperations(modelName);
-    
-    function dateFormat(dateStr) {
-        if(!dateStr)
-            return '';
-        const strParts = dateStr.substring(0, 10).split('-');;
-        return strParts[2] + '/' + strParts[1] + '/' + strParts[0];
-    }
 
     function showModel(modelData) {
     	if(modelData.records.length == 0) return;
@@ -33,7 +28,7 @@ angular.module('InsiderOilApp').controller('ModelViewController',
                     data: fieldName
                 };
                 if(modelData.types[fieldName] == "DATE")
-                    columnObj.render = { display: dateFormat };
+                    columnObj.render = { display: DateService.dateFormat };
                     
                 columns.push(columnObj);
             }
