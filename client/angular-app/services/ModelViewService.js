@@ -1,8 +1,8 @@
 'use strict';
 var app = angular.module('InsiderOilApp');
 
-app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'showError', 
-               function(server, Flash, Upload, $timeout, showError) {
+app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 
+               function(server, Flash, Upload, $timeout) {
 
     this.datatablesPtBrTranslation = {
 		"sEmptyTable": "Nenhum registro encontrado",
@@ -29,7 +29,7 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'showEr
     }
     
     
-    this.uploadFile = function(file, modelName, showModelCallback) {
+    this.uploadFile = function(file, modelName, doneCallback) {
         file.upload = Upload.upload({
             url: '/db_server/upload_file',
             data: { file: file },
@@ -47,9 +47,8 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'showEr
                     for( var i = 0; i < response.data.recordsStatus.length; i++ ) {
                         statusStr += '<br>' + response.data.recordsStatus[i];
                     }
-                }
-                Flash.create('success', statusStr );
-                server.getTable(modelName, {}, showModelCallback, showError.show );  
+                }  
+                doneCallback(statusStr);
             });
         }, function (response) {
             if (response.status > 0) {

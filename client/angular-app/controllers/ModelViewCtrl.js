@@ -90,9 +90,15 @@ angular.module('InsiderOilApp').controller('ModelViewController',
     $scope.uploadFiles = function(file, errFiles) {
         $scope.f = file;
         $scope.errFile = errFiles && errFiles[0];
-        if (file) {
-        	ModelViewService.uploadFile(file, modelName, showModel);
-        }   
+        if(!file)
+            return;
+            
+        ModelViewService.uploadFile(file, modelName, fileUploaded);
+        
+        function fileUploaded(status) {
+            Flash.create('success', status );
+            server.getTable(modelName, {}, showModel, showError.show );
+        }
     }
     
     function str2ab(str) {
