@@ -10,6 +10,12 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
     
     // show record values
     function showValues(record) {
+        for(var i = 0; i < record.length; i++) {
+            if(record[i].type == 'DATE') {
+                record[i].value = DateService.dateFormat(record[i].value);
+            }
+        }
+        
         $scope.record = record;
     }
     server.viewRecord( source, id, showValues, showError.show );
