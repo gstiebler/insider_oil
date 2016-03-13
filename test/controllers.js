@@ -62,7 +62,7 @@ listWells: function(test) {
     // records
     test.equal(3, response.records.length);
     test.equal('1A 0001 BA', response.records[0].name);
-    test.equal('Petrobrás', response.records[0].operator_name);
+    test.equal('Petrobras', response.records[0].operator_name);
     // view params
     test.equal( 'Poços', response.viewParams.tableLabel );
     test.equal( 'name', response.viewParams.labelField );
@@ -127,7 +127,7 @@ getComboValues: function(test) {
     test.equal( 6, response[5].id );
     test.equal( 7, response[6].id );
     
-    test.equal( 'Petrobrás', response[0].label );
+    test.equal( 'Petrobras', response[0].label );
     test.equal( 'Eni Oil', response[1].label );
     test.equal( 'Schahin', response[5].label );
     test.equal( 'Paragon', response[6].label );
@@ -349,7 +349,7 @@ createOilFieldDeveloping: function(test) {
     };
     const responseDeveloping = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqGet);
     test.equal('Gavião Azul', responseDeveloping[0].value);
-    test.equal('Potiguar', responseDeveloping[4].name);
+    test.equal('Acre', responseDeveloping[4].name);
     test.equal('Terra', responseDeveloping[3].value);
     
     const reqOilFieldProduction = {
@@ -468,8 +468,8 @@ search: test => {
 	test.equal(5, searchResults.length);
     test.equal('BM-BAR-1', searchResults[0].name);
     test.equal('Block', searchResults[0].model);
-    test.equal('Jiribatuba2', searchResults[2].name);
-    test.equal('OilField', searchResults[2].model);
+    test.equal('Parnaíba Gás Natural', searchResults[2].name);
+    test.equal('Company', searchResults[2].model);
     
     test.done();
 },
