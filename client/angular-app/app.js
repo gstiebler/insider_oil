@@ -13,5 +13,6 @@ angular.module('InsiderOilApp', [
     'PhotoBytesArray',
     'ProjectSearchDirective',
     'EditRecordFieldsDirective',
-    'ListOfProjectsDirective'
+    'ListOfProjectsDirective',
+    'FilteredObjectsDirective'
 ]);
