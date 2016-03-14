@@ -170,7 +170,7 @@ exports.viewRecord = function(req, res, next) {
     
     function onRecord(record) { Sync(function() {
         var fields = dbUtils.getModelFields(dataSourceName);
-        var result = [];
+        var recordValues = [];
         
         for( var i = 0; i < fields.length; i++ ) {
             const item = fields[i];
@@ -180,9 +180,12 @@ exports.viewRecord = function(req, res, next) {
                 item.ref = true;
                 item.name = record[fields[i].association].name;
             }
-            result.push(item);
+            recordValues.push(item);
         }
         
+        const result = {
+            record: recordValues
+        };
         res.json(result);
     })};
 }

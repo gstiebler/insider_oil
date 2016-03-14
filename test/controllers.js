@@ -40,7 +40,7 @@ function iterateTree(children, test) {
             	}	
             };
             const responseViewRecords = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqViewRecords);
-            test.ok( responseViewRecords.length > 0, 'Problema no viewRecords do datasource ' +  item.child.source)
+            test.ok( responseViewRecords.record.length > 0, 'Problema no viewRecords do datasource ' +  item.child.source)
         }
     }
 }
@@ -309,17 +309,18 @@ getRecordViewWell: function(test) {
     };
 
     const response = utils.getJsonResponse.sync(null, dbServerController.viewRecord, req);
-    test.equal('Poço', response[0].label);
-    test.equal('Estado', response[1].label);
-    test.equal('Latitude', response[2].label);
-    test.equal('Operador', response[4].label);
+    const record = response.record;
+    test.equal('Poço', record[0].label);
+    test.equal('Estado', record[1].label);
+    test.equal('Latitude', record[2].label);
+    test.equal('Operador', record[4].label);
     
-    test.equal('1AGIP1RJS', response[0].value);
+    test.equal('1AGIP1RJS', record[0].value);
     
-    test.equal(2, response[5].value);
-    test.equal(true, response[5].ref);
-    test.equal('Company', response[4].model);
-    test.equal('Eni Oil', response[4].name);
+    test.equal(2, record[5].value);
+    test.equal(true, record[5].ref);
+    test.equal('Company', record[4].model);
+    test.equal('Eni Oil', record[4].name);
     
     test.done();
 },
@@ -348,9 +349,9 @@ createOilFieldDeveloping: function(test) {
         }
     };
     const responseDeveloping = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqGet);
-    test.equal('Gavião Azul', responseDeveloping[0].value);
-    test.equal('Acre', responseDeveloping[4].name);
-    test.equal('Terra', responseDeveloping[3].value);
+    test.equal('Gavião Azul', responseDeveloping.record[0].value);
+    test.equal('Acre', responseDeveloping.record[4].name);
+    test.equal('Terra', responseDeveloping.record[3].value);
     
     const reqOilFieldProduction = {
         query: { 
@@ -359,7 +360,7 @@ createOilFieldDeveloping: function(test) {
         }
     };
     const responseProduction = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqOilFieldProduction);
-    test.equal(5, responseProduction.length);   
+    test.equal(5, responseProduction.record.length);   
     
     test.done();
 },
