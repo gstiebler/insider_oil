@@ -11,8 +11,8 @@ app.service('DateService',  function() {
     this.dateFormat = function(dateStr) {
         if(!dateStr)
             return '';
-        const strParts = dateStr.substring(0, 10).split('-');;
-        return strParts[2] + '/' + strParts[1] + '/' + strParts[0];
+        const result = moment(dateStr).utcOffset(0).format('DD/MM/YYYY');
+        return result;
     }
     
     /**
@@ -21,8 +21,8 @@ app.service('DateService',  function() {
      * @return {String} Formatted date string
      */
     this.parseDateTime = function(dateTimeStr) {
-    	const date = new Date(dateTimeStr);
-    	return date.toLocaleString();
+        const result = moment(dateTimeStr).utcOffset(0).format('DD/MM/YYYY HH:mm');
+        return result;
     }
 
 });
