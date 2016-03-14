@@ -162,10 +162,10 @@ exports.getComboValues = function(req, res) {
 exports.viewRecord = function(req, res, next) {
     var dataSourceName = req.query.dataSource;
     var id = req.query.id;
-    var model = dbUtils.getDataSource(dataSourceName);
+    var dataSource = dbUtils.getDataSource(dataSourceName);
     var options = {};
     options.include = [{all: true}];
-    model.findById(id, options).then(onRecord)
+    dataSource.findById(id, options).then(onRecord)
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) { Sync(function() {
@@ -183,8 +183,10 @@ exports.viewRecord = function(req, res, next) {
             recordValues.push(item);
         }
         
+        const viewParams = dsParams[dataSource.name];
         const result = {
-            record: recordValues
+            record: recordValues,
+            referencedObjects: viewParams.referencedObjectsOnView
         };
         res.json(result);
     })};

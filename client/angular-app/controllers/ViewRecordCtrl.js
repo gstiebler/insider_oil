@@ -18,6 +18,19 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
         }
         
         $scope.record = record;
+        
+        const referencedObjects = viewData.referencedObjects;
+        if(referencedObjects) {
+            for(var i = 0; i < referencedObjects.length; i++) {
+                const filterField = referencedObjects[i].filterField;
+                const filter = {};
+                filter[filterField] = id;
+                server.getTable(referencedObjects[i].dataSource, filter, 
+                function(records) {
+                    console.log(records);
+                }, showError.show);
+            }
+        }
     }
     server.viewRecord( source, id, showValues, showError.show );
     
