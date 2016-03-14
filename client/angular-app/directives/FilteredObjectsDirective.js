@@ -14,11 +14,42 @@ app.directive('filteredObjects', ['server', function(server) {
             const filterField = referencedObject.filterField;
             const filter = {};
             filter[filterField] = $scope.id;
-            server.getTable(referencedObject.dataSource, filter, 
-            function(records) {
-                console.log(records);
-            }, $scope.onError);
+            $scope.dataSource = referencedObject.dataSource;
+            server.getTable(referencedObject.dataSource, filter, onData, $scope.onError);
+            
+            function onData(data) {
+                console.log(data);
+                const records = data.records;
+                const showFields = referencedObject.showFields;
+                const fields = data.viewParams.fields;
+                $scope.title = data.viewParams.tableLabel;
+                
+                const header = [];
+                for(var i = 0; i < showFields.length; i++) {
+                    const field = fields[showFields[i]];
+                    header.push( field.label );
+                }
+                $scope.header = header;
+                
+                const showRecords = [];
+                for(var i = 0; i < records.length; i++) {
+                    const recordValues = [];
+                    const item = {};
+                    const record = records[i];
+                    for(var j = 0; j < showFields.length; j++) {
+                        const gridField = showFields[j];
+                        recordValues.push(record[gridField]);
+                    }
+                    item.id = record.id;
+                    // considering always the first column as the link field
+                    item.linkField = recordValues[0];
+                    recordValues.splice(0, 1);
+                    item.recordValues = recordValues;
+                    showRecords.push(item);
+                }
+                $scope.records = showRecords;
+            }
         }],
-       // templateUrl: 'app/directives/templates/filtered_objects.html'
+       templateUrl: 'app/directives/templates/filtered_objects.html'
     };
 }]);

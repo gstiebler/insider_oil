@@ -1,0 +1,17 @@
+<h4>{{title}}:</h4>
+<table border="1">
+    <tr>
+        <th ng-repeat="headerItem in header">
+            {{headerItem}}
+        </th>
+    </tr>
+    <tr ng-repeat="record in records">
+        <td>
+            <a href="/app/view_record?source={{dataSource}}&id={{record.id}}" >{{record.linkField}}</a>
+            
+        </td>
+        <td ng-repeat="fieldValue in record.recordValues">
+            {{fieldValue}}
+        </td>
+    </tr>
+</table>
