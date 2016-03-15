@@ -9,7 +9,7 @@ module.exports = function(db) {
             company_id: utils.idByName('Company', 'Petrobrás'),
             telephones: ['+55 21 99401-1944'],
             projects: [{
-                model_id: 2,
+                model_id: 3,
                 id: 1,
                 description: 'diretor'
             }]
