@@ -1,5 +1,9 @@
+'use strict';
+
+var utils = require('../lib/utils');
+
 module.exports = function(db) {
-    return db.AmbientalLicense.bulkCreate([
+    const ambientalLicenseObjs = [
         {
             license: 'ABio 560/2014',
             start: '2015-09-01',
@@ -8,7 +12,11 @@ module.exports = function(db) {
             entrepreneur: 'BP ENERGY DO BRASIL LTDA',
             process: '02022.001868/2007-89',
             tipology: 'Petróleo - Perfuração',
-            pac: 'Não'
+            pac: 'Não',
+            blocks: [
+                { block_id: utils.idByName('Block', 'BM-BAR-1')  },
+                { block_id: utils.idByName('Block', 'ES-M-529')  }
+            ]
         },
         {
             license: 'LPS 101/2015',
@@ -18,7 +26,10 @@ module.exports = function(db) {
             entrepreneur: 'SPECTRUM GEO DO BRASIL SERVIÇOS GEOFÍSICOS LTDA.',
             process: '02022.000874/2014-48',
             tipology: 'Petróleo - Aquisição de Dados',
-            pac: 'Não'
+            pac: 'Não',
+            blocks: [
+                { block_id: utils.idByName('Block', 'BM-BAR-1')  }
+            ]
         },
         {
             license: 'LPS 102/2015',
@@ -30,5 +41,12 @@ module.exports = function(db) {
             tipology: 'Petróleo - Aquisição de Dados',
             pac: 'Não'
         }
-    ]);
+    ];
+    
+    const promisesArray = [];
+    for(var ambientalLicenseObj of ambientalLicenseObjs) {
+        promisesArray.push(db.AmbientalLicense.create(ambientalLicenseObj));
+    }
+    
+    return Promise.all(promisesArray);
 }
