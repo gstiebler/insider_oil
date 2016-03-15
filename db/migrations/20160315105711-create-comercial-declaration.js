@@ -32,15 +32,19 @@ module.exports = {
                     key: 'id'
                 }
             },
+            attached: {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
             date: {
                 type: Sequelize.DATEONLY,
                 allowNull: false
             },
-            createdAt: {
+            created_at: {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            updatedAt: {
+            updated_at: {
                 allowNull: false,
                 type: Sequelize.DATE
             }
