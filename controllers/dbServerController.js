@@ -198,6 +198,7 @@ exports.sourcesList = function(req, res) {
         Basin: 'Bacias',
         Block: 'Blocos',
         Well: 'Poços',
+        ComercialDeclaration: 'Declarações de comercialidade',
         DrillingRigOffshore: 'Sondas offshore',
         DrillingRigOnshore: 'Sondas onshore',
         Company: 'Empresas',
