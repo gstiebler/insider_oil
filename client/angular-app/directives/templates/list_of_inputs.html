@@ -2,7 +2,7 @@
     <tr>
         <td width="300">
             <table>
-                <tr ng-repeat="n in range(modelValues.length)">
+                <tr ng-repeat="n in _.range(modelValues.length)">
                     <td><input type="text" ng-model="modelValues[n]" /><br></td>
                     <td><button class="btn btn-default" ng-click="modelValues.splice(n, 1)">Remover</button></td>
                 </tr>
