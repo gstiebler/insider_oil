@@ -226,12 +226,6 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
-				},
 				name: {
 					type: Sequelize.STRING,
 					allowNull: false
@@ -263,7 +257,13 @@ module.exports = {
 						model: 'companies',
 						key: 'id'
 					}
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 		
@@ -274,12 +274,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				name: {
 					type: Sequelize.STRING,
@@ -300,7 +294,13 @@ module.exports = {
 						model: 'companies',
 						key: 'id'
 					}
-				}	
+                },
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 		
@@ -312,12 +312,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				name: {
 					type: Sequelize.STRING,
@@ -346,6 +340,12 @@ module.exports = {
 						model: 'basins',
 						key: 'id'
 					}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
 				}
 			}
 		});
@@ -357,12 +357,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				name: {
 					type: Sequelize.STRING,
@@ -415,6 +409,12 @@ module.exports = {
 						model: 'oil_fields',
 						key: 'id'
 					}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
 				}
 			}
 		});
@@ -426,12 +426,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				name: {
 					type: Sequelize.STRING,
@@ -464,7 +458,13 @@ module.exports = {
 						model: 'companies',
 						key: 'id'
 					}
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 		
@@ -476,16 +476,16 @@ module.exports = {
 					primaryKey: true,
 					autoIncrement: true
 				},
+				name: {
+					type: Sequelize.STRING,
+					allowNull: false
+				},
 				created_at: {
 					type: Sequelize.DATE
 				},
 				updated_at: {
 					type: Sequelize.DATE
 				},
-				name: {
-					type: Sequelize.STRING,
-					allowNull: false
-				}	
 			}
 		});
 		
@@ -496,12 +496,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				title: {
 					type: Sequelize.STRING,
@@ -518,7 +512,13 @@ module.exports = {
 						model: 'users',
 						key: 'id'
 					}
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 		
@@ -529,12 +529,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				model_ref_id: {
 					type: Sequelize.INTEGER,
@@ -556,7 +550,13 @@ module.exports = {
 						model: 'models_list',
 						key: 'id'
 					}
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 		
@@ -567,12 +567,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				name: {
 					type: Sequelize.STRING,
@@ -585,7 +579,13 @@ module.exports = {
 						model: 'companies',
 						key: 'id'
 					}
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 		
@@ -597,12 +597,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				model_ref_id: {
 					type: Sequelize.INTEGER,
@@ -628,7 +622,13 @@ module.exports = {
 				description: {
 					type: Sequelize.STRING,
 					allowNull: true
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
         
@@ -639,12 +639,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				state: {
 					type: Sequelize.STRING,
@@ -733,7 +727,13 @@ module.exports = {
 						model: 'oil_fields',
 						key: 'id'
 					}
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 		
@@ -744,12 +744,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				state: {
 					type: Sequelize.STRING,
@@ -774,7 +768,13 @@ module.exports = {
 				type: {
 					type: Sequelize.ENUM('oil', 'gas'),
 					allowNull: false
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 		
@@ -785,12 +785,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				process: {
 					type: Sequelize.STRING,
@@ -819,7 +813,13 @@ module.exports = {
 						model: 'basins',
 						key: 'id'
 					}
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 
@@ -830,12 +830,6 @@ module.exports = {
 					type: Sequelize.INTEGER,
 					primaryKey: true,
 					autoIncrement: true
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
 				},
 				name: {
 					type: Sequelize.STRING,
@@ -877,7 +871,13 @@ module.exports = {
 						model: 'basins',
 						key: 'id'
 					}
-				}
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
 			}
 		});
 
