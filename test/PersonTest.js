@@ -46,13 +46,13 @@ createPerson: test => {
                 ],
                 projects: [
                     {
-                        model_id: 3,
-                        id: 2,
+                        model_id: utils.idByName('ModelsList', 'Block'),
+                        id: utils.idByName('Block', 'ES-M-529'),
                         description: 'Diretor'
                     },
                     {
-                        model_id: 6,
-                        id: 1,
+                        model_id: utils.idByName('ModelsList', 'DrillingRigOnshore'),
+                        id: utils.idByName('DrillingRigOnshore', 'BS-04'),
                     }
                 ]
             }
@@ -96,7 +96,7 @@ editPerson: test => {
             record: {
                 id: 2,
                 name: 'Michael Jackson',
-                company_id: 2,
+                company_id: utils.idByName('Company', 'Eni Oil'),
                 email: 'name.example.com',
                 telephones: [
                     '333',
@@ -105,12 +105,12 @@ editPerson: test => {
                 ],
                 projects: [
                     {
-                        model_id: 3,
-                        id: 2
+                        model_id: utils.idByName('ModelsList', 'Block'),
+                        id: utils.idByName('Block', 'ES-M-529'),
                     },
                     {
-                        model_id: 6,
-                        id: 1
+                        model_id: utils.idByName('ModelsList', 'DrillingRigOnshore'),
+                        id: utils.idByName('DrillingRigOnshore', 'BS-04'),
                     }
                 ]
             }

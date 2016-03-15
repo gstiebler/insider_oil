@@ -6,11 +6,11 @@ module.exports = function(db) {
     const personObjs = [
         {
             name: "Guilherme Stiebler",
-            company_id: utils.idByName('Company', 'Petrobrás'),
+            company_id: utils.idByName('Company', 'Petrobras'),
             telephones: ['+55 21 99401-1944'],
             projects: [{
-                model_id: 3,
-                id: 1,
+                model_id: utils.idByName('ModelsList', 'Basin'),
+                id: utils.idByName('Basin', 'Amazonas'),
                 description: 'diretor'
             }]
         },
