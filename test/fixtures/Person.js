@@ -1,3 +1,5 @@
+'use strict';
+
 var utils = require('../lib/utils');
 
 module.exports = function(db) {
