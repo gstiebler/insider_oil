@@ -3,6 +3,12 @@
 module.exports = {
     up: function(queryInterface, Sequelize) {
         queryInterface.createTable('ambiental_license_blocks', {
+            // TODO remove this field
+            id: {
+                type: Sequelize.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
+            },
             ambiental_license_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
