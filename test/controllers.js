@@ -519,7 +519,29 @@ newsFromObject: test => {
     test.equal(0, newsResultsWrongId.length);
 
     test.done();
-}
+},
+
+
+getAmbientalLicenses: function(test) {
+   const reqRecordValues = {
+        query: { 
+            model: 'AmbientalLicense',
+            id: 2
+        }
+    };
+    const resRecordValues = utils.getJsonResponse.sync(null, dbServerController.recordValues, reqRecordValues);
+    test.equal(1, resRecordValues.values.blocks.length);
+    test.equal('BM-BAR-1', resRecordValues.values.blocks[0].name);
+    
+    const reqViewRecord = {
+        query: { 
+            dataSource: 'AmbientalLicense',
+            id: 1
+        }
+    };
+    
+    test.done();
+},
 
 
 };

@@ -1,4 +1,5 @@
 'use strict';
+var await = require('../../lib/await');
 
 function updateBlocks(db, ambientalLicense) {
     const blocks = ambientalLicense.dataValues.blocks;
@@ -73,7 +74,8 @@ module.exports = function(sequelize, DataTypes) {
             get: function() {
                 var queryStr = 'select b.name, b.id ';
                 queryStr += 'from ambiental_license_blocks alb, blocks b ';
-                queryStr += 'where alb.block_id = b.id';
+                queryStr += 'where alb.block_id = b.id ';
+                queryStr += 'and alb.ambiental_license_id = ' + this.id;
                 const simpleQueryType = { type: sequelize.QueryTypes.SELECT};
                 const result = await( sequelize.query(queryStr, simpleQueryType) );
                 return result;
