@@ -1,6 +1,6 @@
 'use strict';
 
-function controllerFunc($scope, server) {
+function controllerFunc($scope, server, DateService) {
     const referencedObject = $scope.referencedObject;
     const filterField = referencedObject.filterField;
     const showFields = referencedObject.showFields;
@@ -14,7 +14,6 @@ function controllerFunc($scope, server) {
     server.getTable(referencedObject.dataSource, options, onData, $scope.onError);
     
     function onData(data) {
-        console.log(data);
         const records = data.records;
         const types = data.types;
         const fields = data.viewParams.fields;
@@ -34,7 +33,10 @@ function controllerFunc($scope, server) {
             const record = records[i];
             for(var j = 0; j < showFields.length; j++) {
                 const gridField = showFields[j];
-                recordValues.push(record[gridField]);
+                var recordValue = record[gridField];
+                if(types[gridField] == 'DATE')
+                    recordValue = DateService.dateFormat(recordValue);
+                recordValues.push(recordValue);
             }
             item.id = record.id;
             // considering always the first column as the link field
@@ -57,7 +59,7 @@ app.directive('filteredObjects', function() {
             id: '=ngId',
             onError: '=ngOnError'
         },
-        controller: ['$scope', 'server', controllerFunc],
+        controller: ['$scope', 'server', 'DateService', controllerFunc],
        templateUrl: 'app/directives/templates/filtered_objects.html'
     };
 });
