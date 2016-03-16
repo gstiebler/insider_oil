@@ -23,6 +23,9 @@
         <div ng-else-if="field.isProjectList">
             <list-of-projects id="{{field.htmlId}}" ng-model="values[field.name]"></list-of-projects><br>
         </div>
+        <div ng-else-if="field.isManyToMany">
+            <many-to-many id="{{field.htmlId}}" ng-model="values[field.name]" ng-combo-source="field.comboSource" on-error="onError"></many-to-many><br>
+        </div>
         <div ng-else >
             <input type="text" class="form-control" id="{{field.htmlId}}" ng-model="values[field.name]"></input>
         </div>
