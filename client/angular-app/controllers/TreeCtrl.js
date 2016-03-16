@@ -53,7 +53,8 @@ angular.module('InsiderOilApp').controller('TreeController',
             $scope.items = items;
         } else if (subTree.child) {
             $scope.source = subTree.child.source;
-            server.getTable( subTree.child.source, subTree.child.filters, function(values) {
+            const options = { filters: subTree.child.filters };
+            server.getTable( subTree.child.source, options, function(values) {
                 $scope.records = values.records;
             }, showError.show );
         } else {

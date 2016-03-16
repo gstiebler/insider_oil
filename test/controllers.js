@@ -49,7 +49,14 @@ var group = {
 
 listWells: function(test) {
     const req = {
-        query: { table: 'Well2' }
+        query: { 
+            table: 'Well2',
+            fieldNames: [
+                'name', 
+                'operator_name',
+                'basin_name'
+            ]
+        }
     };    
     
     const errorResponse = utils.getJsonResponse.sync(null, dbServerController.main, req);

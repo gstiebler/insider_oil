@@ -13,10 +13,18 @@ app.service('server', ['$http', 'session',
         }, onError);
     }
     
-    this.getTable = function( table, filters, okCallback, errorCallback ) {
+    /**
+     * Return multiple records
+     * @param {String} table Name of the datasource
+     * @param {} options Opttions (filters and fields)
+     * @param {Function} okCallback Result callback
+     * @param {Function} errorCallback Error callback
+     */
+    this.getTable = function( table, options, okCallback, errorCallback ) {
         const params = { 
             table: table,
-            filters: filters,
+            filters: options.filters,
+            fieldNames: options.fieldNames,
             token: session.getToken()
         };
         

@@ -12,14 +12,18 @@ app.directive('filteredObjects', ['server', function(server) {
         controller: ['$scope', function($scope) {
             const referencedObject = $scope.referencedObject;
             const filterField = referencedObject.filterField;
+            const showFields = referencedObject.showFields;
             const filter = {};
             filter[filterField] = $scope.id;
             $scope.dataSource = referencedObject.dataSource;
-            server.getTable(referencedObject.dataSource, filter, onData, $scope.onError);
+            const options = { 
+                filters: filter,
+                fieldNames: showFields
+             };
+            server.getTable(referencedObject.dataSource, options, onData, $scope.onError);
             
             function onData(data) {
                 const records = data.records;
-                const showFields = referencedObject.showFields;
                 const fields = data.viewParams.fields;
                 $scope.title = data.viewParams.tableLabel;
                 

@@ -12,17 +12,22 @@ var winston = require('winston');
 exports.main = function(req, res, next) {
     const modelName = req.query.table;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
-    var dataSource = dbUtils.getDataSource(modelName);
+    const fieldNames = req.query.fieldNames;
+    const dataSource = dbUtils.getDataSource(modelName);
     if(!dataSource) {
     	ControllerUtils.getErrorFunc(res, 500, "Modelo não encontrado")({});
         return;
     }
+    const viewParams = dsParams[dataSource.name];
+    var showFields = fieldNames;
+    if(!showFields)
+        showFields = viewParams.gridFields;
+    // TODO only get selected fields
     dbUtils.findAllCustom(dataSource, {}, filters).then(sendRecords)
         .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
     
     function sendRecords(records) {Sync(function() {
         try {
-            const viewParams = dsParams[dataSource.name];
             viewParams.gridFields.push('id');
             dbUtils.simplifyArray( dataSource, records );
             const fields = dbUtils.getModelFields(modelName);
@@ -30,7 +35,7 @@ exports.main = function(req, res, next) {
             for( var i = 0; i < fields.length; i++)
                 types[fields[i].name] = fields[i].type;
             const responseObj = {
-                records: dbUtils.filterGridFields(records, viewParams.gridFields),
+                records: dbUtils.filterShowFields(records, showFields),
                 viewParams: viewParams,
                 types: types
             };
