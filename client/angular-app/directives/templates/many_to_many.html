@@ -1,0 +1,20 @@
+<table class="table table-bordered" style="width:100%">
+    <tr>
+        <td width="300">
+            <table class="table table-bordered">
+                <tr ng-repeat="n in _.range(modelValues.length)">
+                    <td>{{modelValues[n].name}}</td>
+                    <td><button class="btn btn-default" ng-click="modelValues.splice(n, 1)">Remover</button></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <select ng-model="selectedId">                                                                                                                                                                                                    >
+                <option ng-repeat="value in comboValues" value="{{value.id}}" >{{value.name}}</option>
+            </select>  
+        </td>
+        <td>
+            <button id="add_button" class="btn btn-default" ng-click="add()">Adicionar</button><br>
+        </td>
+    </tr>
+</table>

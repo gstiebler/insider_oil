@@ -14,5 +14,6 @@ angular.module('InsiderOilApp', [
     'ProjectSearchDirective',
     'EditRecordFieldsDirective',
     'ListOfProjectsDirective',
-    'FilteredObjectsDirective'
+    'FilteredObjectsDirective',
+    'ManyToManyDirective'
 ]);
