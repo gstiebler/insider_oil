@@ -13,8 +13,9 @@ app.directive('manyToMany', ['server', function(server) {
             if(!$scope.modelValues)
                 $scope.modelValues = [];
                 
-            server.getComboValues($scope.comboSource, onComboValues, $scope.onError);
+            $scope.range = _.range;
             
+            server.getComboValues($scope.comboSource, onComboValues, $scope.onError);
             function onComboValues(values) {
                 $scope.comboValues = values;
                 
@@ -24,12 +25,11 @@ app.directive('manyToMany', ['server', function(server) {
                 }
             }
             
-            function add() {
+            $scope.add = function() {
                 const selectedId = $scope.selectedId;
-                const label = $scope.comboValuesMap[selectedId].label;
                 const newItem = {
-                    id: itemId,
-                    name: label
+                    id: selectedId,
+                    name: $scope.comboValuesMap[selectedId]
                 };
                 $scope.modelValues.push(newItem);
             }
