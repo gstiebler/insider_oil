@@ -10,6 +10,8 @@ app.directive('listOfInputs', function() {
         controller: ['$scope', function($scope) { 
             if(!$scope.modelValues)
                 $scope.modelValues = [];
+                
+            $scope.range = _.range;
         }],
         templateUrl: 'app/directives/templates/list_of_inputs.html'
     };

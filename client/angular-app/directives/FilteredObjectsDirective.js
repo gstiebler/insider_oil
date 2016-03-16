@@ -18,7 +18,6 @@ app.directive('filteredObjects', ['server', function(server) {
             server.getTable(referencedObject.dataSource, filter, onData, $scope.onError);
             
             function onData(data) {
-                console.log(data);
                 const records = data.records;
                 const showFields = referencedObject.showFields;
                 const fields = data.viewParams.fields;
