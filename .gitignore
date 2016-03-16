@@ -11,3 +11,4 @@
 /.vscode
 /client/angular-app/minified.js
 /client/angular-app/out.js.map
+/client/angular-app/templates/index.html
