@@ -14,8 +14,8 @@ module.exports = function(db) {
             tipology: 'Petróleo - Perfuração',
             pac: 'Não',
             blocks: [
-                { block_id: utils.idByName('Block', 'BM-BAR-1')  },
-                { block_id: utils.idByName('Block', 'ES-M-529')  }
+                { id: utils.idByName('Block', 'BM-BAR-1')  },
+                { id: utils.idByName('Block', 'ES-M-529')  }
             ]
         },
         {
@@ -28,7 +28,7 @@ module.exports = function(db) {
             tipology: 'Petróleo - Aquisição de Dados',
             pac: 'Não',
             blocks: [
-                { block_id: utils.idByName('Block', 'BM-BAR-1')  }
+                { id: utils.idByName('Block', 'BM-BAR-1')  }
             ]
         },
         {

@@ -13,7 +13,7 @@ function updateBlocks(db, ambientalLicense) {
         for(var i = 0; i < blocks.length; i++) {
             const albRecord = { 
                 ambiental_license_id: ambientalLicense.id,
-                block_id: blocks[i].block_id
+                block_id: blocks[i].id
             };
             newBlocksRecords.push(albRecord);
         }
