@@ -34,6 +34,27 @@ app.service('server', ['$http', 'session',
         }, errorCallback);
     }
     
+    /**
+     * Return multiple records from a query
+     * @param {String} dataSource Name of the datasource
+     * @param {} options Opttions (queryName and filters)
+     * @param {Function} okCallback Result callback
+     * @param {Function} errorCallback Error callback
+     */
+    this.getQueryData = function( dataSource, options, okCallback, errorCallback ) {
+        const params = { 
+            dataSource: dataSource,
+            queryName: options.queryName,
+            filters: options.filters,
+            token: session.getToken()
+        };
+        
+        $http.get('/get_query_data', { params: params }).
+        then(function(response) {
+            okCallback(response.data);
+        }, errorCallback);
+    }
+    
     
     this.getModelFields = function( model, okCallback, errorCallback ) {
         const params = { 
