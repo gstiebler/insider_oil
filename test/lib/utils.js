@@ -1,11 +1,20 @@
 var await = require('../../lib/await');
 var db = require('../../db/models');
 
-exports.idByName = function(modelName, value) {
+
+function idByValue(modelName, fieldName, value) {
     const model = db[modelName];
-    const record = await( model.findOne( { where: { name: value }} ) );
+    const filter = {};
+    filter[fieldName] = value;
+    const record = await( model.findOne( { where: filter } ) );
     return record.id;
 }
+
+
+function idByName(modelName, value) {
+    return idByValue(modelName, 'name', value);
+}
+
 
 function deStringify(json) {
     var str = JSON.stringify(json);
@@ -32,3 +41,7 @@ exports.getJsonResponse = function(func, req, callback) {
         return result;
     }
 }
+
+
+exports.idByName = idByName;
+exports.idByValue = idByValue

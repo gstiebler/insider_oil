@@ -76,6 +76,7 @@ module.exports = function(sequelize, DataTypes) {
                 queryStr += 'from ambiental_license_blocks alb, blocks b ';
                 queryStr += 'where alb.block_id = b.id ';
                 queryStr += 'and alb.ambiental_license_id = ' + this.id;
+                queryStr += ' order by b.name';
                 const simpleQueryType = { type: sequelize.QueryTypes.SELECT};
                 const result = await( sequelize.query(queryStr, simpleQueryType) );
                 return result;

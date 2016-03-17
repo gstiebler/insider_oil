@@ -530,26 +530,30 @@ newsFromObject: test => {
 
 
 getAmbientalLicensesRecordValues: function(test) {
-   const reqRecordValues = {
+    const ambientalLicenseId = utils.idByValue('AmbientalLicense', 'license', 'ABio 560/2014');
+    const reqRecordValues = {
         query: { 
             model: 'AmbientalLicense',
-            id: 2
+            id: ambientalLicenseId
         }
     };
     const resRecordValues = utils.getJsonResponse.sync(null, dbServerController.recordValues, reqRecordValues);
-    test.equal(1, resRecordValues.values.blocks.length);
+
+    test.equal(2, resRecordValues.values.blocks.length);
     test.equal('BM-BAR-1', resRecordValues.values.blocks[0].name);
+    test.equal('ES-M-529', resRecordValues.values.blocks[1].name);
     
     test.done();
 },
 
 
 getAmbientalLicensesQuery: function(test) {
-   const reqQueryValues = {
+    const block_id = utils.idByName('Block', 'BM-BAR-1') ;
+    const reqQueryValues = {
         query: { 
             dataSource: 'AmbientalLicense',
             queryName: 'byBlock',
-            filter: { block_id: 1 }
+            filters: JSON.stringify({ block_id: block_id })
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
