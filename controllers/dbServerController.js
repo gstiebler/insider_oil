@@ -207,14 +207,15 @@ exports.viewRecord = function(req, res, next) {
 exports.getQueryData = function(req, res) {
     const dataSourceName = req.query.dataSource;
     const queryName = req.query.queryName;
-    const filter = req.query.filter;
+    const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
     const dataSource = dbUtils.getDataSource(dataSourceName);
     if(!dataSource) {
     	ControllerUtils.getErrorFunc(res, 500, "Modelo não encontrado")({});
         return;
     }
     const viewParams = dsParams[dataSource.name];
-    const queryStr = viewParams.queries[queryName](filter);
+    const queryStrGenerator = viewParams.queries[queryName];
+    const queryStr = queryStrGenerator(filters);
     const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
     db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
         const fields = dbUtils.getModelFields(dataSourceName);

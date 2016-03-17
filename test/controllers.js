@@ -548,7 +548,7 @@ getAmbientalLicensesQuery: function(test) {
    const reqQueryValues = {
         query: { 
             dataSource: 'AmbientalLicense',
-            queryName: 'byBlocks',
+            queryName: 'byBlock',
             filter: { block_id: 1 }
         }
     };
