@@ -49,6 +49,10 @@ var winston = require('winston');
     {
         model: 'Well',
         fields: ['name']
+    },
+    {
+        model: 'Basin',
+        fields: ['name']
     }
 ];
 
