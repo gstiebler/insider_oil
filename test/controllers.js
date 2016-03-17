@@ -529,7 +529,7 @@ newsFromObject: test => {
 },
 
 
-getAmbientalLicenses: function(test) {
+getAmbientalLicensesRecordValues: function(test) {
    const reqRecordValues = {
         query: { 
             model: 'AmbientalLicense',
@@ -540,12 +540,28 @@ getAmbientalLicenses: function(test) {
     test.equal(1, resRecordValues.values.blocks.length);
     test.equal('BM-BAR-1', resRecordValues.values.blocks[0].name);
     
-    const reqViewRecord = {
+    test.done();
+},
+
+
+getAmbientalLicensesQuery: function(test) {
+   const reqQueryValues = {
         query: { 
             dataSource: 'AmbientalLicense',
-            id: 1
+            queryName: 'byBlocks',
+            filter: { block_id: 1 }
         }
     };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+    
+    test.equal('ABio 560/2014', resQueryValues.records[0].license);
+    
+    test.equal('LPS 101/2015', resQueryValues.records[1].license);
+    test.equal('Pesquisa Sísmica Marítima 2D na Bacia de Pelotas - Programa Pelotas Fase II', resQueryValues.records[1].enterprise);
+    
+    test.equal('VARCHAR(255)', resQueryValues.types.license);
+    test.equal('DATE', resQueryValues.types.start);
     
     test.done();
 },

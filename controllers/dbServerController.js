@@ -9,6 +9,15 @@ var Sync = require('sync');
 var winston = require('winston');
 
 
+function getFieldTypes(fields) {
+    const types = {};
+    for( var i = 0; i < fields.length; i++) {
+        types[fields[i].name] = fields[i].type;
+    }
+    return types;
+}
+
+
 exports.main = function(req, res, next) {
     const modelName = req.query.table;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
@@ -31,13 +40,10 @@ exports.main = function(req, res, next) {
             viewParams.gridFields.push('id');
             dbUtils.simplifyArray( dataSource, records );
             const fields = dbUtils.getModelFields(modelName);
-            const types = {};
-            for( var i = 0; i < fields.length; i++)
-                types[fields[i].name] = fields[i].type;
             const responseObj = {
                 records: dbUtils.filterShowFields(records, showFields),
                 viewParams: viewParams,
-                types: types
+                types: getFieldTypes(fields)
             };
             res.json( responseObj );
         } catch(e) {
@@ -195,6 +201,30 @@ exports.viewRecord = function(req, res, next) {
         };
         res.json(result);
     })};
+}
+
+
+exports.getQueryData = function(req, res) {
+    const dataSourceName = req.query.dataSource;
+    const queryName = req.query.queryName;
+    const filter = req.query.filter;
+    const dataSource = dbUtils.getDataSource(dataSourceName);
+    if(!dataSource) {
+    	ControllerUtils.getErrorFunc(res, 500, "Modelo não encontrado")({});
+        return;
+    }
+    const viewParams = dsParams[dataSource.name];
+    const queryStr = viewParams.queries[queryName](filter);
+    const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
+    db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
+        const fields = dbUtils.getModelFields(dataSourceName);
+        const result = {
+            viewParams: viewParams,
+            records: records,
+            types: getFieldTypes(fields)
+        };
+        res.json(result);
+    }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }
 
 
