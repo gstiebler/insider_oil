@@ -7,11 +7,20 @@ function controllerFunc($scope, server, DateService) {
     const filter = {};
     filter[filterField] = $scope.id;
     $scope.dataSource = referencedObject.dataSource;
-    const options = { 
-        filters: filter,
-        fieldNames: showFields
-    };
-    server.getTable(referencedObject.dataSource, options, onData, $scope.onError);
+    
+    if(referencedObject.queryName) {
+        const options = { 
+            filters: filter,
+            queryName: referencedObject.queryName
+        };
+        server.getQueryData(referencedObject.dataSource, options, onData, $scope.onError);
+    } else {
+        const options = { 
+            filters: filter,
+            fieldNames: showFields
+        };
+        server.getTable(referencedObject.dataSource, options, onData, $scope.onError);
+    }
     
     function onData(data) {
         const records = data.records;
