@@ -14,9 +14,11 @@ angular.module('InsiderOilApp').controller('EditItemController',
     
     $scope.saveItem = function() {
         var itemData = {};
-        for( var i = 0; i < $scope.fields.length; i++ )  {
-            var field = $scope.fields[i];
-            itemData[field.name] = $scope.values[field.name];
+        for(var prop in $scope.values)  {
+            var value = $scope.values[prop];
+            if(value == undefined)
+                value = null;
+            itemData[prop] = value;
         }
         itemData.id = id;    
         server.saveItem( modelName, itemData, onSave, showError.show );

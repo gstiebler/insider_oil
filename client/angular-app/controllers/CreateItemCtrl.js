@@ -12,13 +12,7 @@ angular.module('InsiderOilApp').controller('CreateItemController',
     }
     
     $scope.saveItem = function() {
-        var itemData = {};
-        for( var i = 0; i < $scope.fields.length; i++ )  {
-            var field = $scope.fields[i];
-            itemData[field.name] = $scope.values[field.name];
-        }
-            
-        server.createNewItem( modelName, itemData, onSave, showError.show );
+        server.createNewItem( modelName, $scope.values, onSave, showError.show );
     }
     
     function onSave(status) {
