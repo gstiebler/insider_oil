@@ -132,8 +132,11 @@ function saveItem(req, res, next) {
         .catch(ControllerUtils.getErrorFunc(res, 404, "Não foi possível encontrar o registro."));
     
     function onFindRecord(record) {
-        for(var attributeName in recordData)
+        for(var attributeName in recordData) {
+            const tableAttribute = model.tableAttributes[attributeName];
+            if(tableAttribute && tableAttribute.invisible) continue;
             record[attributeName] = recordData[attributeName];
+        }
         record.save()
             .then(ControllerUtils.getOkFunc(res, "Registro salvo com sucesso."))
             .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível salvar o registro."));
