@@ -18,7 +18,7 @@ function getFieldTypes(fields) {
 }
 
 
-exports.main = function(req, res, next) {
+function main(req, res, next) {
     const modelName = req.query.table;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
     const fieldNames = req.query.fieldNames;
@@ -53,7 +53,7 @@ exports.main = function(req, res, next) {
 }
 
 
-exports.uploadFile = function(req, res, next) {
+function uploadFile(req, res, next) {
     fileUpload.receive( req, onFile, onFinish );
 
     function onFile(fileName, buf) {
@@ -81,14 +81,14 @@ exports.uploadFile = function(req, res, next) {
 }
 
 
-exports.modelFields = function(req, res, next) {
+function modelFields(req, res, next) {
     var modelName = req.query.model;
     var fields = dbUtils.getModelFields(modelName);
     res.json( { fields: fields } );
 }
 
 
-exports.recordValues = function(req, res, next) {
+function recordValues(req, res, next) {
     var modelName = req.query.model;
     var id = req.query.id;
     const dataSource = dbUtils.getDataSource(modelName);
@@ -110,7 +110,7 @@ exports.recordValues = function(req, res, next) {
 }
 
 
-exports.createItem = function(req, res, next) {
+function createItem(req, res, next) {
     var newItemData = req.body.newItemData;
     var modelName = req.body.model;
     var model = dbUtils.getDataSource(modelName);
@@ -123,7 +123,7 @@ exports.createItem = function(req, res, next) {
 }
 
 
-exports.saveItem = function(req, res, next) {
+function saveItem(req, res, next) {
     var modelName = req.body.model;
     var recordData = req.body.record;
     var model = dbUtils.getDataSource(modelName);     
@@ -141,7 +141,7 @@ exports.saveItem = function(req, res, next) {
 }
 
 
-exports.deleteItem = function(req, res) {
+function deleteItem(req, res) {
     var id = req.query.id;
     var modelName = req.query.model;
     var model = dbUtils.getDataSource(modelName);     
@@ -151,7 +151,7 @@ exports.deleteItem = function(req, res) {
 }
 
 
-exports.getComboValues = function(req, res) {
+function getComboValues(req, res) {
     var modelName = req.query.model;
     var model = dbUtils.getDataSource(modelName);     
     model.findAll().then(onValues)
@@ -170,7 +170,7 @@ exports.getComboValues = function(req, res) {
 }
 
 
-exports.viewRecord = function(req, res, next) {
+function viewRecord(req, res, next) {
     var dataSourceName = req.query.dataSource;
     var id = req.query.id;
     var dataSource = dbUtils.getDataSource(dataSourceName);
@@ -204,7 +204,7 @@ exports.viewRecord = function(req, res, next) {
 }
 
 
-exports.getQueryData = function(req, res) {
+function getQueryData(req, res) {
     const dataSourceName = req.query.dataSource;
     const queryName = req.query.queryName;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
@@ -229,7 +229,7 @@ exports.getQueryData = function(req, res) {
 }
 
 
-exports.sourcesList = function(req, res) {
+function sourcesList(req, res) {
     var list = {
         Basin: 'Bacias',
         Block: 'Blocos',
@@ -255,3 +255,15 @@ exports.sourcesList = function(req, res) {
     
     res.json(list);
 }
+
+exports.main = main;
+exports.uploadFile = uploadFile;
+exports.modelFields = modelFields;
+exports.recordValues = recordValues;
+exports.createItem = createItem;
+exports.saveItem = saveItem;
+exports.deleteItem = deleteItem;
+exports.getComboValues = getComboValues;
+exports.viewRecord = viewRecord;
+exports.getQueryData = getQueryData;
+exports.sourcesList = sourcesList;
