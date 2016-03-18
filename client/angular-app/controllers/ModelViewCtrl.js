@@ -59,30 +59,28 @@ angular.module('InsiderOilApp').controller('ModelViewController',
         oTable.fnAddData( dataSet );
     }
     
-    $scope.editRecord = function(id) {
+    function editRecord(id) {
     	modelOperations.editRecord(id);
         // I don't know why the line below should be here for the redirect to work
         server.getTable(modelName, {}, showModel, showError.show ); 
     }
     
-    $scope.deleteRecord = function(id) {
+    function deleteRecord(id) {
         if(confirm("Deseja realmente apagar o registro?")){
         	modelOperations.deleteItem(id, onDelete, showError.show);
         }
     }
-    
-    $scope.createItem = modelOperations.createItem;
     
     function onDelete(status) {
         Flash.create('success', status.data.msg );
         server.getTable(modelName, {}, showModel, showError.show ); 
     }
     
-    $scope.showMap = function() {
+    function showMap() {
          $location.path("/app/map").search({ model: modelName });
     }
     
-    $scope.uploadFiles = function(file, errFiles) {
+    function uploadFiles(file, errFiles) {
         $scope.f = file;
         $scope.errFile = errFiles && errFiles[0];
         if(!file)
@@ -105,7 +103,7 @@ angular.module('InsiderOilApp').controller('ModelViewController',
     	  return buf;
     }
     
-    $scope.getExcelFile = function() {
+    function getExcelFile() {
     	server.downloadExcelFile(modelName, onExcelFile, showError.show);
     	
     	function onExcelFile(xlsxBinary) {
@@ -115,4 +113,11 @@ angular.module('InsiderOilApp').controller('ModelViewController',
     	}
     }
     
+    
+    $scope.createItem = modelOperations.createItem;
+    $scope.editRecord = editRecord;
+    $scope.deleteRecord = deleteRecord;
+    $scope.showMap = showMap;
+    $scope.uploadFiles = uploadFiles;
+    $scope.getExcelFile = getExcelFile;
 }]);
