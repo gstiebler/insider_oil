@@ -8,6 +8,6 @@
 <p ng-repeat="item in items">
     <a href="/app/tree?nodeId={{item.id}}">{{item.label}}</a>
 </p>
-<p ng-repeat="record in records">
-    <a href="/app/view_record?source={{source}}&id={{record.id}}">{{record.name}}</a>
-</p>
+<div class="table-responsive">
+    <table id="mainTable" class="table table-striped table-bordered" cellspacing="0" width="100%"></table>
+</div>

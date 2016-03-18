@@ -1,7 +1,9 @@
 'use strict';
 angular.module('InsiderOilApp').controller('TreeController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash',
-        function($scope, server, $routeParams, $location, showError, Flash) {
+                 'ModelOperations', 'ModelViewService',
+        function($scope, server, $routeParams, $location, showError, Flash,
+                 ModelOperations, ModelViewService) {
     
     var nodeId = $routeParams.nodeId;
     
@@ -32,15 +34,6 @@ angular.module('InsiderOilApp').controller('TreeController',
     }
     
     
-    function showObjectsFromCategory(source, filters) {
-        const options = { filters: filters };
-        server.getTable( source, options, function(values) {
-            $scope.records = values.records;
-        }, showError.show );
-        $scope.source = source;
-    }
-    
-    
     function showTree(tree) {
         var stack = [];
         var subTree = findItemById(tree, stack);
@@ -54,6 +47,7 @@ angular.module('InsiderOilApp').controller('TreeController',
         if(subTree.children) {
             // show children categories
             $scope.items = subTree.children;
+            $scope.source = null;
         } else if (subTree.child) {
             showObjectsFromCategory(subTree.child.source, subTree.child.filters);
         } else {
@@ -62,6 +56,31 @@ angular.module('InsiderOilApp').controller('TreeController',
         }
     }
     
-    server.getTree(showTree, showError.show);
     
+    function showObjectsFromCategory(source, filters) {
+        const options = { filters: filters };
+        $scope.source = source;
+        server.getTable( source, options, showModel, showError.show );
+    }
+    
+    
+    const dataTableElement = $('#mainTable');
+    function showModel(modelData) {
+    	if(modelData.records.length == 0) return;
+        
+        const modelOperations = ModelOperations.getModelOperations($scope.source);
+        $scope.viewParams = modelData.viewParams;
+        const columns = ModelViewService.getColumns(modelData.viewParams, modelData.types);
+        
+        dataTableElement.DataTable( {
+            columns: columns,
+            language: ModelViewService.datatablesPtBrTranslation
+        } );
+        
+        var oTable = dataTableElement.dataTable();
+        oTable.fnClearTable();
+        oTable.fnAddData( modelData.records );
+    }
+    
+    server.getTree(showTree, showError.show);
 }]);
