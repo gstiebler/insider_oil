@@ -1,9 +1,9 @@
 'use strict';
 angular.module('InsiderOilApp').controller('ModelViewController', 
                 ['$scope', 'server', '$routeParams', '$location', 'showError', 'Flash', 
-                 'ModelOperations', 'ModelViewService', 'DateService',
+                 'ModelOperations', 'ModelViewService',
         function($scope, server, $routeParams, $location, showError, Flash, 
-                 ModelOperations, ModelViewService, DateService) {
+                 ModelOperations, ModelViewService) {
 
     var modelName = $routeParams.model;
     $scope.dataSource = modelName;
@@ -18,21 +18,8 @@ angular.module('InsiderOilApp').controller('ModelViewController',
     	
         if(!datatableInitialized) {
             $scope.viewParams = modelData.viewParams;
-            var columns = [];
-            for( var i = 0; i < modelData.viewParams.gridFields.length; i++) {
-                var fieldName = modelData.viewParams.gridFields[i];
-                if(fieldName == 'id') continue;
-                var fieldLabel = modelData.viewParams.fields[fieldName].label;
-                var columnObj = { 
-                    title: fieldLabel,
-                    data: fieldName
-                };
-                if(modelData.types[fieldName] == "DATE")
-                    columnObj.render = { display: DateService.dateFormat };
-                    
-                columns.push(columnObj);
-            }
             
+            const columns = ModelViewService.getColumns(modelData.viewParams, modelData.types);
             columns.push( { title: "Editar", data: 'edit' } );
             columns.push( { title: "Apagar", data: 'delete' } );
             

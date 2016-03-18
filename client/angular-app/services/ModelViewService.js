@@ -1,8 +1,8 @@
 'use strict';
 var app = angular.module('InsiderOilApp');
 
-app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 
-               function(server, Flash, Upload, $timeout) {
+app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'DateService',
+               function(server, Flash, Upload, $timeout, DateService) {
 
     this.datatablesPtBrTranslation = {
 		"sEmptyTable": "Nenhum registro encontrado",
@@ -29,7 +29,7 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout',
     }
     
     
-    this.uploadFile = function(file, modelName, doneCallback) {
+    function uploadFile(file, modelName, doneCallback) {
         file.upload = Upload.upload({
             url: '/db_server/upload_file',
             data: { file: file },
@@ -59,5 +59,28 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout',
                                      evt.loaded / evt.total));
         });
     }
+    
+    
+    function getColumns(viewParams, types) {
+        var columns = [];
+        for( var i = 0; i < viewParams.gridFields.length; i++) {
+            const fieldName = viewParams.gridFields[i];
+            if(fieldName == 'id') continue;
+            const fieldLabel = viewParams.fields[fieldName].label;
+            const columnObj = { 
+                title: fieldLabel,
+                data: fieldName
+            };
+            if(types[fieldName] == "DATE")
+                columnObj.render = { display: DateService.dateFormat };
+                
+            columns.push(columnObj);
+        }        
+        return columns;
+    }
+    
+    
+    this.uploadFile = uploadFile;
+    this.getColumns = getColumns;
     
 }]);
