@@ -46,10 +46,20 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
-		email: {
-			type: DataTypes.STRING,
-			allowNull: true
+		email_text: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+            invisible: true 
 		},
+        emails: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                return JSON.parse(this.email_text);
+            },
+            set: function(newValue) {
+                this.email_text = JSON.stringify(newValue);
+            }
+        },
 		linkedin: {
 			type: DataTypes.STRING,
 			allowNull: true
@@ -72,8 +82,9 @@ module.exports = function(sequelize, DataTypes) {
 		},
         // internal field to store values from the telephones field
 		telephones_text: {
-			type: DataTypes.TEXT('medium'),
-			allowNull: true
+			type: DataTypes.TEXT,
+			allowNull: true,
+            invisible: true 
 		},
         telephones: {
             type: DataTypes.VIRTUAL,

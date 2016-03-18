@@ -12,17 +12,27 @@ module.exports = function(db) {
                 model_id: utils.idByName('ModelsList', 'Basin'),
                 id: utils.idByName('Basin', 'Amazonas'),
                 description: 'diretor'
-            }]
+            }],
+            emails: [
+                'gstiebler@gmail.com',
+                'guilhermemst@gmail.com'
+            ]
         },
         {
             name: "Felipe",
             company_id: utils.idByName('Company', 'Eni Oil'),
-            telephones: ["+55 21 234-5678", "98989-9498"]
+            telephones: ["+55 21 234-5678", "98989-9498"],
+            emails: [
+                'grandin@gmail.com',
+            ]
         },
         {
             name: "Marcelo",
             company_id: utils.idByName('Company', 'Recôncavo E&P'),
-            telephones: ["+101 232 1100194"]
+            telephones: ["+101 232 1100194"],
+            emails: [
+                'maciel.felipe@gmail.com',
+            ]
         }
     ];
     

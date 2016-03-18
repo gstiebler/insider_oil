@@ -26,9 +26,9 @@ module.exports = {
 
 		params.push({
 			table: 'persons',
-			columnName: 'email',
+			columnName: 'email_text',
 			columnDesc: {
-				type: Sequelize.STRING,
+				type: Sequelize.TEXT('tiny'),
 				allowNull: true
 			}
 		});
