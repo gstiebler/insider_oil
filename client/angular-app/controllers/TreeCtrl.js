@@ -31,6 +31,16 @@ angular.module('InsiderOilApp').controller('TreeController',
         return false;
     }
     
+    
+    function showObjectsFromCategory(source, filters) {
+        const options = { filters: filters };
+        server.getTable( source, options, function(values) {
+            $scope.records = values.records;
+        }, showError.show );
+        $scope.source = source;
+    }
+    
+    
     function showTree(tree) {
         var stack = [];
         var subTree = findItemById(tree, stack);
@@ -42,21 +52,10 @@ angular.module('InsiderOilApp').controller('TreeController',
             return;
         }
         if(subTree.children) {
-            var items = [];
-            for(var i = 0; i < subTree.children.length; i++) {
-                var item = {
-                    label: subTree.children[i].label,
-                    id: subTree.children[i].id
-                };
-                items.push( item );
-            }
-            $scope.items = items;
+            // show children categories
+            $scope.items = subTree.children;
         } else if (subTree.child) {
-            $scope.source = subTree.child.source;
-            const options = { filters: subTree.child.filters };
-            server.getTable( subTree.child.source, options, function(values) {
-                $scope.records = values.records;
-            }, showError.show );
+            showObjectsFromCategory(subTree.child.source, subTree.child.filters);
         } else {
             var errorObj = { data: { errorMsg: 'Item da árvore não encontrado' } };
             showError.show(errorObj);
