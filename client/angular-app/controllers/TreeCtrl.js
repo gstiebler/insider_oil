@@ -68,10 +68,18 @@ angular.module('InsiderOilApp').controller('TreeController',
     function showModel(modelData) {
     	if(modelData.records.length == 0) return;
         
+        function formatLink(value, type, row) {
+            var linkStr = '<a href="/app/view_record?source=' + $scope.source;
+            linkStr += '&id=' + row.id;
+            linkStr += '">' + value + '</a>'; 
+            return linkStr;
+        }
+        
         const modelOperations = ModelOperations.getModelOperations($scope.source);
         $scope.viewParams = modelData.viewParams;
         const columns = ModelViewService.getColumns(modelData.viewParams, modelData.types);
         
+        columns[0].render = { display: formatLink };
         dataTableElement.DataTable( {
             columns: columns,
             language: ModelViewService.datatablesPtBrTranslation
