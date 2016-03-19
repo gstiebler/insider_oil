@@ -35,7 +35,8 @@ module.exports = function(app) {
     app.get('/get_query_data', session.authorize, dbServerController.getQueryData);
     app.get('/search', session.authorize,          searchController.main);
     
-    app.get('/download_excel', session.authorize,  ExcelController.main);
+    app.get('/download_excel', session.authorize,  ExcelController.downloadExcel);
+    app.put('/import_from_url', session.authorize,  ExcelController.importExcelFromURL);
     
     // News
     app.get('/news', session.authorize,            NewsController.allNews);
