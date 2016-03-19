@@ -578,8 +578,9 @@ importBlocksFromURL: function(test) {
             dataSource: 'Block',
         }
     };
-    const resImport = utils.getJsonResponse.sync(null, ExcelController.importExcelFromURL, reqImport);
-    test.equal('Registros importados com sucesso.', resImport.msg);
+    const resImport = utils.getJsonResponse.sync(null, ExcelController.importExcelFromURL, reqImport);    
+    test.equal('Registros criados: 341\nRegistros atualizados: 3\nRegistros inválidos: 3', resImport.status);
+
 
    const reqListBlocks = {
         query: { 
@@ -589,7 +590,7 @@ importBlocksFromURL: function(test) {
     
     const resListBlocks = utils.getJsonResponse.sync(null, dbServerController.main, reqListBlocks);
     // records
-    test.equal(345, response.records.length);
+    test.equal(344, resListBlocks.records.length);
     
     test.done();
 },
