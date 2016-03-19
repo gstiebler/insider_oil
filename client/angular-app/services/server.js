@@ -178,6 +178,14 @@ app.service('server', ['$http', 'session',
     }
     
     
+    function importFromURL(dataSource, onData, onError) {
+    	const params = {
+    		dataSource: dataSource	
+    	};
+        http(params, $http.put, '/import_from_url', onData, onError);
+    }
+    
+    
     this.getTable = getTable;
     this.getQueryData = getQueryData;
     this.getModelFields = getModelFields;
@@ -194,5 +202,5 @@ app.service('server', ['$http', 'session',
     this.newsFromObject = newsFromObject;
     this.changePassword = changePassword;
     this.downloadExcelFile = downloadExcelFile;
-        
+    this.importFromURL = importFromURL;
 }]);
