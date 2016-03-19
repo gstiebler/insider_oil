@@ -574,8 +574,8 @@ getAmbientalLicensesQuery: function(test) {
 
 importBlocksFromURL: function(test) {
     const reqImport = {
-        query: { 
-            dataSource: 'Block',
+        body: { 
+            params: { dataSource: 'Block' },
         }
     };
     const resImport = utils.getJsonResponse.sync(null, ExcelController.importExcelFromURL, reqImport);    

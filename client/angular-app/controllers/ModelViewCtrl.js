@@ -67,18 +67,20 @@ angular.module('InsiderOilApp').controller('ModelViewController',
          $location.path("/app/map").search({ model: modelName });
     }
     
+        
+    function onFileUploaded(status) {
+        Flash.create('success', status );
+        server.getTable(modelName, {}, showModel, showError.show );
+    }
+    
+    
     function uploadFiles(file, errFiles) {
         $scope.f = file;
         $scope.errFile = errFiles && errFiles[0];
         if(!file)
             return;
             
-        ModelViewService.uploadFile(file, modelName, fileUploaded);
-        
-        function fileUploaded(status) {
-            Flash.create('success', status );
-            server.getTable(modelName, {}, showModel, showError.show );
-        }
+        ModelViewService.uploadFile(file, modelName, onFileUploaded);
     }
     
     function str2ab(str) {
@@ -101,10 +103,16 @@ angular.module('InsiderOilApp').controller('ModelViewController',
     }
     
     
+    function importFromURL() {
+        server.importFromURL(modelName, onFileUploaded, showError.show);
+    }
+    
+    
     $scope.createItem = modelOperations.createItem;
     $scope.editRecord = editRecord;
     $scope.deleteRecord = deleteRecord;
     $scope.showMap = showMap;
     $scope.uploadFiles = uploadFiles;
     $scope.getExcelFile = getExcelFile;
+    $scope.importFromURL = importFromURL;
 }]);

@@ -20,7 +20,7 @@ function downloadExcel(req, res, next) { Sync(function() {
 
 
 function importExcelFromURL(req, res) {
-    const dataSourceName = req.query.dataSource;
+    const dataSourceName = req.body.params.dataSource;
     const viewParams = dsParams[dataSourceName];
     const url = viewParams.urlSource;
     
