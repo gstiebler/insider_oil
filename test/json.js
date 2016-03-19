@@ -1,6 +1,7 @@
 var fiberTests = require('./lib/fiberTests');
 var await = require(__dirname + '/../lib/await');
 var Sync = require('sync');
+var utils = require('./lib/utils');
 
 var port = 3333;
 var InitializeServer = require('./lib/InitializeServer');
@@ -101,18 +102,21 @@ modelFields: function(test) {
 
 recordValues: function(test) {
     var server = InitializeServer(port);
-    
+    const wellId = utils.idByName('Well', '1AGIP1RJS');
+    const basinId = utils.idByName('Basin', 'Tucano Central');
+    const operatorId = utils.idByName('Company', 'Eni Oil');
+    const url = '/record_values?model=Well&id=' + wellId;
     getToken(function(token){
-        getUrl('/record_values?model=Well&id=2', {}, token, onWellValues);
+        getUrl(url, {}, token, onWellValues);
     });
     
     function onWellValues(json) {
         test.equal(7, json.fields.length);
 
         test.equal('1AGIP1RJS', json.values.name);
-        test.equal(2, json.values.operator_id);
+        test.equal(operatorId, json.values.operator_id);
         test.equal('RJ', json.values.state);
-        test.equal(3, json.values.basin_id);
+        test.equal(basinId, json.values.basin_id);
         test.equal(-4.918086, json.values.lat);
         test.equal(-37.224645, json.values.lng);
         
