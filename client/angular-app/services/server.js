@@ -20,7 +20,7 @@ app.service('server', ['$http', 'session',
      * @param {Function} okCallback Result callback
      * @param {Function} errorCallback Error callback
      */
-    this.getTable = function( table, options, okCallback, errorCallback ) {
+    function getTable( table, options, okCallback, errorCallback ) {
         const params = { 
             table: table,
             filters: options.filters,
@@ -41,7 +41,7 @@ app.service('server', ['$http', 'session',
      * @param {Function} okCallback Result callback
      * @param {Function} errorCallback Error callback
      */
-    this.getQueryData = function( dataSource, options, okCallback, errorCallback ) {
+    function getQueryData( dataSource, options, okCallback, errorCallback ) {
         const params = { 
             dataSource: dataSource,
             queryName: options.queryName,
@@ -56,7 +56,7 @@ app.service('server', ['$http', 'session',
     }
     
     
-    this.getModelFields = function( model, okCallback, errorCallback ) {
+    function getModelFields( model, okCallback, errorCallback ) {
         const params = { 
             model: model,
             token: session.getToken()
@@ -69,7 +69,7 @@ app.service('server', ['$http', 'session',
     }
     
     
-    this.createNewItem = function( modelName, newItemData, onSave, onError ) {
+    function createNewItem( modelName, newItemData, onSave, onError ) {
         const params = {
             model: modelName,
             newItemData: newItemData,
@@ -80,7 +80,7 @@ app.service('server', ['$http', 'session',
     }
     
     
-    this.deleteItem = function( modelName, id, onDelete, onError ) {
+    function deleteItem( modelName, id, onDelete, onError ) {
         const params = {
             model: modelName,
             id: id,
@@ -91,7 +91,7 @@ app.service('server', ['$http', 'session',
     }
     
    
-    this.getModelFieldsAndValues = function( modelName, id, okCallback, errorCallback ) {
+    function getModelFieldsAndValues( modelName, id, okCallback, errorCallback ) {
         const params = { 
             model: modelName,
             id: id,
@@ -105,7 +105,7 @@ app.service('server', ['$http', 'session',
     }
     
     
-    this.saveItem = function( modelName, record, onSave, onError ) {
+    function saveItem( modelName, record, onSave, onError ) {
         const params = {
             model: modelName,
             record: record,
@@ -116,24 +116,24 @@ app.service('server', ['$http', 'session',
     }
     
     
-    this.getComboValues = function(modelName, okCallback, onError) {
+    function getComboValues(modelName, okCallback, onError) {
         const params = { model: modelName };
         http(params, $http.get, '/combo_values/', okCallback, onError);
     }
     
     
-    this.getTree = function(okCallback, onError) {
+    function getTree(okCallback, onError) {
         http({}, $http.get, '/tree/', okCallback, onError);
     }
     
     
-    this.getSearchResult = function(searchValue, okCallback, onError) {
+    function getSearchResult(searchValue, okCallback, onError) {
     	const params = { searchValue: searchValue };
         http(params, $http.get, '/search', okCallback, onError);
     }
     
     
-    this.viewRecord = function(dataSource, id, okCallback, onError) {
+    function viewRecord(dataSource, id, okCallback, onError) {
         const params = { 
             dataSource: dataSource,
             id: id
@@ -142,17 +142,17 @@ app.service('server', ['$http', 'session',
     }
     
     
-    this.sourceList = function(onData, onError) {
+    function sourceList(onData, onError) {
         http({}, $http.get, '/sources_list/', onData, onError);
     }
     
     
-    this.allNews = function(onData, onError) {
+    function allNews(onData, onError) {
         http({}, $http.get, '/news', onData, onError);
     }
     
     
-    this.newsFromObject = function(sourceName, id, onData, onError) {
+    function newsFromObject(sourceName, id, onData, onError) {
     	const params = {
     		sourceName: sourceName,
     		id: id
@@ -161,7 +161,7 @@ app.service('server', ['$http', 'session',
     }
     
     
-    this.changePassword = function(onData, onError, oldPassword, newPassword) {
+    function changePassword(onData, onError, oldPassword, newPassword) {
     	const params = {
     		oldPassword: oldPassword,
     		newPassword: newPassword	
@@ -170,11 +170,29 @@ app.service('server', ['$http', 'session',
     }
     
     
-    this.downloadExcelFile = function(dataSource, onData, onError) {
+    function downloadExcelFile(dataSource, onData, onError) {
     	const params = {
     		dataSource: dataSource	
     	};
         http(params, $http.get, '/download_excel', onData, onError);
     }
+    
+    
+    this.getTable = getTable;
+    this.getQueryData = getQueryData;
+    this.getModelFields = getModelFields;
+    this.createNewItem = createNewItem;
+    this.deleteItem = deleteItem;
+    this.getModelFieldsAndValues = getModelFieldsAndValues;
+    this.saveItem = saveItem;
+    this.getComboValues = getComboValues;
+    this.getTree = getTree;
+    this.getSearchResult = getSearchResult;
+    this.viewRecord = viewRecord;
+    this.sourceList = sourceList;
+    this.allNews = allNews;
+    this.newsFromObject = newsFromObject;
+    this.changePassword = changePassword;
+    this.downloadExcelFile = downloadExcelFile;
         
 }]);
