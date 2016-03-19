@@ -29,6 +29,17 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'DateSe
     }
     
     
+    function formatExcelUploadResult(response) {
+        var statusStr = response.status.replace(/\n/g, '<br>');
+        if(response.recordsStatus) {
+            for( var i = 0; i < response.recordsStatus.length; i++ ) {
+                statusStr += '<br>' + response.recordsStatus[i];
+            }
+        }       
+        return statusStr;
+    }
+    
+    
     function uploadFile(file, modelName, doneCallback) {
         file.upload = Upload.upload({
             url: '/db_server/upload_file',
@@ -41,13 +52,7 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'DateSe
         file.upload.then(function (response) {
             $timeout(function () {
                 file.result = response.data;
-                console.log(response.data);
-                var statusStr = response.data.status.replace(/\n/g, '<br>');
-                if(response.data.recordsStatus) {
-                    for( var i = 0; i < response.data.recordsStatus.length; i++ ) {
-                        statusStr += '<br>' + response.data.recordsStatus[i];
-                    }
-                }  
+                const statusStr = formatExcelUploadResult(response.data);
                 doneCallback(statusStr);
             });
         }, function (response) {
@@ -82,5 +87,6 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'DateSe
     
     this.uploadFile = uploadFile;
     this.getColumns = getColumns;
+    this.formatExcelUploadResult = formatExcelUploadResult;
     
 }]);
