@@ -5,6 +5,7 @@ var TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
 var SearchController = require('../controllers/SearchController');
 var NewsController = require('../controllers/NewsController');
+var ExcelController = require('../controllers/ExcelController');
 var Sync = require('sync');
 var utils = require('./lib/utils');
 //var Future = Sync.Future();
@@ -569,6 +570,30 @@ getAmbientalLicensesQuery: function(test) {
     
     test.done();
 },
+
+
+importBlocksFromURL: function(test) {
+    const reqImport = {
+        query: { 
+            dataSource: 'Block',
+        }
+    };
+    const resImport = utils.getJsonResponse.sync(null, ExcelController.importExcelFromURL, reqImport);
+    test.equal('Registros importados com sucesso.', resImport.msg);
+
+   const reqListBlocks = {
+        query: { 
+            table: 'Block',
+        }
+    };    
+    
+    const resListBlocks = utils.getJsonResponse.sync(null, dbServerController.main, reqListBlocks);
+    // records
+    test.equal(345, response.records.length);
+    
+    test.done();
+},
+
 
 
 };
