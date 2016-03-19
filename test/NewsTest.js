@@ -14,12 +14,14 @@ const newsHTML = '<p>um campo: <a href="/app/view_record?source=OilField&amp;id
 var group = {
 
 modelReferences: test => {
+    const abaloneId = utils.idByName('OilField', 'Abalone');
+    const guilhermeId = utils.idByName('Person', 'Guilherme Stiebler');
 	const references = news.getModelReferences(newsHTML);
 	test.equal(2, references.length);
 	test.equal('OilField', references[0].model);
-	test.equal(3, references[0].id);
+	test.equal(abaloneId, references[0].id);
 	test.equal('Person', references[1].model);
-	test.equal(1, references[1].id);
+	test.equal(guilhermeId, references[1].id);
 	test.done();
 },
 

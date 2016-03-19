@@ -2,11 +2,14 @@ var utils = require('../lib/utils');
 var await = require('../../lib/await');
 
 module.exports = function(db) {
-	const newsHTML = '<p>um campo: <a href="/app/view_record?source=OilField&amp;id=3" style="background-color: rgb(255, 255, 255);">Abalone</a> ' +
+    const abaloneId = utils.idByName('OilField', 'Abalone');
+    const guilhermeId = utils.idByName('Person', 'Guilherme Stiebler');
+	const newsHTML = '<p>um campo: <a href="/app/view_record?source=OilField&amp;id=' + abaloneId +
+        '" style="background-color: rgb(255, 255, 255);">Abalone</a> ' +
 		'esse aqui é o google <a href="http://google.com" target="" style="background-color: rgb(255, 255, 255);">' + 
-		'Google</a> link de verdade e aqui um nome: </p><p><a href="/app/view_record?source=Person&amp;id=2" style="background-color: rgb(255, 255, 255);">' + 
+		'Google</a> link de verdade e aqui um nome: </p><p><a href="/app/view_record?source=Person&amp;id=' + guilhermeId +
+        '" style="background-color: rgb(255, 255, 255);">' + 
 		'Guilherme Stiebler</a></p>';
-	
 
     const newNews = {
         title: 'Petrobrás compra Statoil',
