@@ -27,6 +27,8 @@ modelReferences: test => {
 
 
 createNewsOnDB: test => {
+    const abaloneId = utils.idByName('OilField', 'Abalone');
+    const guilhermeId = utils.idByName('Person', 'Guilherme Stiebler');
     const fixtureCount = 3;
     test.equal( fixtureCount, await( db.News.findAll() ).length ); 
 	const newsToBeCreated = {
@@ -45,9 +47,9 @@ createNewsOnDB: test => {
 	const referencedModelsOnNew = await( db.NewsModels.findAll({ where: { news_id: justCreatedNewId } }) );
 	test.equal(2, referencedModelsOnNew.length);
 	test.equal('OilField', await( db.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
-	test.equal(3, referencedModelsOnNew[0].model_ref_id);
+	test.equal(abaloneId, referencedModelsOnNew[0].model_ref_id);
 	test.equal('Person', await( db.ModelsList.findById(referencedModelsOnNew[1].model_id) ).name);
-	test.equal(1, referencedModelsOnNew[1].model_ref_id);
+	test.equal(guilhermeId, referencedModelsOnNew[1].model_ref_id);
 	
 	await(justCreatedNew.destroy());
 	const referencedModelsOnDeletedNew = await( db.NewsModels.findAll({ where: { news_id: justCreatedNewId } }) );
@@ -55,6 +57,22 @@ createNewsOnDB: test => {
 	
 	test.done();
 },
+
+
+editNews: test => {
+    const camposId = utils.idByName('Basin', 'Campos');
+    const newsId = utils.idByValue('News', 'title', 'Petrobrás compra Statoil');
+
+    const record = await( db.News.findById(newsId) );
+    record.content = '<p>um campo: <a href="/app/view_record?source=Basin&amp;id=' + camposId + '" >Campos</a>';
+	await( record.save() );
+	const referencedModelsOnNew = await( db.NewsModels.findAll({ where: { news_id: newsId } }) );
+    test.equal(1, referencedModelsOnNew.length);
+	test.equal('Basin', await( db.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
+	test.equal(camposId, referencedModelsOnNew[0].model_ref_id);
+	test.done();
+},
+
 
 
 doNotCreateNewsWhenErrorOnModelsReference: test => {
