@@ -1,5 +1,10 @@
 'use strict';
 
+/*****************/
+This directive is used to show records in a static table
+The source of the records is a custom query
+******************/
+
 function controllerFunc($scope, server, DateService) {
     const referencedObject = $scope.referencedObject;
     const filterField = referencedObject.filterField;

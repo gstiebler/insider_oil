@@ -1,4 +1,10 @@
 'use strict';
+
+/*****************/
+This directive is used to show different edit components in the 
+create and edit item
+******************/
+
 var app = angular.module('EditRecordFieldsDirective', []);
 
 app.directive('recordFields', function() {

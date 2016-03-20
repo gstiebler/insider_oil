@@ -1,4 +1,11 @@
 'use strict';
+
+/*****************/
+This directive is used to show a list of objects that come
+from a many-to-many relationship. The user selects a item in the combobox and 
+it's inserted in a list on the left
+******************/
+
 var app = angular.module('ManyToManyDirective', []);
 
 app.directive('manyToMany', ['server', function(server) {

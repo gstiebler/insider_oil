@@ -1,4 +1,9 @@
 'use strict';
+
+/*****************/
+This directive is used to search for objects on a autocomplete box 
+******************/
+
 var app = angular.module('ProjectSearchDirective', []);
 
 app.directive('projectSearch', function() {
