@@ -1,6 +1,6 @@
 'use strict';
 
-/*****************/
+/*****************
 This directive is used to search for objects on a autocomplete box 
 ******************/
 

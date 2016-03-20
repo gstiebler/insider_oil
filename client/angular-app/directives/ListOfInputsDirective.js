@@ -1,6 +1,6 @@
 'use strict';
 
-/*****************/
+/*****************
 This directive is used to show a list of items in the
 create and edit page
 ******************/
