@@ -12,7 +12,7 @@ var winston = require('winston');
     },
     {
         model: 'Block',
-        fields: ['name']
+        fields: ['name', 'name_contract']
     },
     {
         model: 'Company',
