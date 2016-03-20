@@ -7,11 +7,11 @@ module.exports = function(sequelize, DataTypes) {
         },
         name_contract: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: true
         },
         bid: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: true
         },
         end_1: {
           type: DataTypes.DATEONLY,
