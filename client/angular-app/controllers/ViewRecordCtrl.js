@@ -8,6 +8,19 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
     $scope.id = id;
     $scope.source = source;
     
+    $scope.relatedPersons = {
+        dataSource: 'Person',
+        queryName: 'byProject',
+        filters: {
+            project_id: id,
+            dataSource: source
+        },
+        showFields: [
+            'name',
+            'description'
+        ]
+    }
+    
     // show record values
     function showValues(viewData) {
         const record = viewData.record;

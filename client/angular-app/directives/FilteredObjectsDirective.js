@@ -7,21 +7,23 @@ The source of the records is a custom query
 
 function controllerFunc($scope, server, DateService) {
     const referencedObject = $scope.referencedObject;
-    const filterField = referencedObject.filterField;
     const showFields = referencedObject.showFields;
-    const filter = {};
-    filter[filterField] = $scope.id;
+    var filters = referencedObject.filters;
+    if(!filters) {
+        filters = {};
+        filters[referencedObject.filterField] = $scope.id;
+    }
     $scope.dataSource = referencedObject.dataSource;
     
     if(referencedObject.queryName) {
         const options = { 
-            filters: filter,
+            filters: filters,
             queryName: referencedObject.queryName
         };
         server.getQueryData(referencedObject.dataSource, options, onData, $scope.onError);
     } else {
         const options = { 
-            filters: filter,
+            filters: filters,
             fieldNames: showFields
         };
         server.getTable(referencedObject.dataSource, options, onData, $scope.onError);
@@ -36,6 +38,10 @@ function controllerFunc($scope, server, DateService) {
         const header = [];
         for(var i = 0; i < showFields.length; i++) {
             const field = fields[showFields[i]];
+            if(!field) {
+                console.log('Field not found: ', showFields[i]);
+                continue;
+            }
             header.push( field.label );
         }
         $scope.header = header;
