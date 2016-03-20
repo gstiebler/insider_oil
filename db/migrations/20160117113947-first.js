@@ -164,11 +164,11 @@ module.exports = {
 				},
 				name_contract: {
 					type: Sequelize.STRING,
-					allowNull: false
+					allowNull: true
 				},
 				bid: {
 					type: Sequelize.STRING,
-					allowNull: false
+					allowNull: true
 				},
 				end_1: {
 					type: Sequelize.DATEONLY,
