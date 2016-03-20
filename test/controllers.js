@@ -289,6 +289,31 @@ deleteWell: function(test) {
 },
 
 
+doNotDelReferencedObjsInNews: function(test) {
+    const camamuId = utils.idByName('Basin', 'Camamu');
+    const reqDelCamamu = {
+        query: { 
+            model: 'Basin',
+            id: camamuId
+        }
+    };
+    const resDelCamamu = utils.getJsonResponse.sync(null, dbServerController.deleteItem, reqDelCamamu);
+    test.equal('Não foi possível apagar o registro.', resDelCamamu.error.errorMsg);
+    
+    const reqGetCamamu = {
+        query: { 
+            dataSource: 'Basin',
+            id: camamuId
+        }
+    };
+
+    const resGetCamamu = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqGetCamamu);
+    const record = resGetCamamu.record;
+    test.equal('Camamu', record[0].value);
+    test.done();
+},
+
+
 deleteOilFieldDeveloping: function(test) {
     const reqDelete = {
         query: { 

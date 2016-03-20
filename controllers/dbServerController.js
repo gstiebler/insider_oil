@@ -6,6 +6,7 @@ var dsParams = require('../lib/DataSourcesParams');
 var importExcel = require('../lib/importExcel');
 var ControllerUtils = require('../lib/ControllerUtils');
 var Sync = require('sync');
+var await = require('../lib/await');
 var winston = require('winston');
 
 
@@ -144,14 +145,41 @@ function saveItem(req, res, next) {
 }
 
 
-function deleteItem(req, res) {
+function deleteItem(req, res) { Sync(function() {
     var id = req.query.id;
     var modelName = req.query.model;
-    var model = dbUtils.getDataSource(modelName);     
-    model.destroy({ where: { id: id } })
-        .then(ControllerUtils.getOkFunc(res, 'Registro apagado com sucesso'))
-        .catch( ControllerUtils.getErrorFunc(res, 404, "Não foi possível apagar o registro.") );
-}
+    var model = dbUtils.getDataSource(modelName);
+    const errorFunc = ControllerUtils.getErrorFunc(res, 404, "Não foi possível apagar o registro.");
+    
+    function hasReferencedObjInNews() {
+        // check if a news deference the object
+        const modelInList = await(db.ModelsList.find({ where: { name: modelName } }));
+        if(!modelInList)
+            return false;
+        const newsModelOptions = {
+            where: {
+                model_id: modelInList.id,
+                model_ref_id: id
+            }
+        }
+        const newsRef = await( db.NewsModels.find(newsModelOptions) );
+        return newsRef;
+    }
+    
+    try {
+        if(hasReferencedObjInNews()) {
+            errorFunc(`Uma notícia referencia o objeto`);
+            return;
+        }
+            
+        model.destroy({ where: { id: id } })
+            .then(ControllerUtils.getOkFunc(res, 'Registro apagado com sucesso'))
+            .catch( errorFunc );
+    } catch(error) {
+        errorFunc(error);
+    }
+
+})}
 
 
 function getComboValues(req, res) {

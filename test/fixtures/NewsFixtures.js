@@ -10,19 +10,19 @@ module.exports = function(db) {
 		'Google</a> link de verdade e aqui um nome: </p><p><a href="/app/view_record?source=Person&amp;id=' + guilhermeId +
         '" style="background-color: rgb(255, 255, 255);">' + 
 		'Guilherme Stiebler</a></p>';
-
-    const newNews = {
-        title: 'Petrobrás compra Statoil',
-        content: newsHTML,
-        author_id: utils.idByName('User', 'Felipe Grandin')
-    };
-    
-	await( db.News.create(newNews) );
 	
-    return db.News.bulkCreate([
+    const camamuId = utils.idByName('Basin', 'Camamu');
+    const contentCamamu = '<a href="/app/view_record?source=Basin&amp;id=' + camamuId + '" >Camamu</a> ' ;
+    
+    const newsObjs = [
+        {
+            title: 'Petrobrás compra Statoil',
+            content: newsHTML,
+            author_id: utils.idByName('User', 'Felipe Grandin')
+        },
         {
             title: 'Petrobrás demite presidente',
-            content: 'Já estava na hora',
+            content: contentCamamu,
             author_id: utils.idByName('User', 'Felipe Maciel')
         },
         {
@@ -30,5 +30,12 @@ module.exports = function(db) {
             content: 'Ações multiplicam por 4 no dia seguinte',
             author_id: utils.idByName('User', 'Guilherme Stiebler')
         }
-    ]);
+    ];
+    
+	const promisesArray = [];
+    for(var newsObj of newsObjs) {
+        promisesArray.push(db.News.create(newsObj));
+    }
+    
+    return Promise.all(promisesArray);
 }
