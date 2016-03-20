@@ -235,7 +235,7 @@ function viewRecord(req, res, next) {
 }
 
 
-function getQueryData(req, res) {
+function getQueryData(req, res) {Sync(function(){
     const dataSourceName = req.query.dataSource;
     const queryName = req.query.queryName;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
@@ -257,7 +257,7 @@ function getQueryData(req, res) {
         };
         res.json(result);
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
-}
+})}
 
 
 function sourcesList(req, res) {

@@ -597,6 +597,29 @@ getAmbientalLicensesQuery: function(test) {
 },
 
 
+getPersonsByProject: function(test) {
+    const amazonasId = utils.idByName('Basin', 'Amazonas') ;
+    const filters = {
+        project_id: amazonasId,
+        dataSource: 'Basin'
+    };
+    const reqQueryValues = {
+        query: { 
+            dataSource: 'Person',
+            queryName: 'byProject',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    const record = resQueryValues.records[0];
+    test.equal('Guilherme Stiebler', record.name);
+    test.equal('diretor', record.description);
+
+    test.done();
+},
+
+
 importBlocksFromURL: function(test) {
     const reqImport = {
         body: { 
