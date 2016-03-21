@@ -184,8 +184,14 @@ function deleteItem(req, res) { Sync(function() {
 
 function getComboValues(req, res) {
     var modelName = req.query.model;
-    var model = dbUtils.getDataSource(modelName);     
-    model.findAll().then(onValues)
+    var model = dbUtils.getDataSource(modelName);   
+    // TODO using 'name' as field. Should change for label field configuration
+    const labelField = 'name';  
+    const options = {
+        attributes: ['id', labelField],
+        order: [labelField]
+    };
+    model.findAll(options).then(onValues)
         .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possível carregar os registros."));
     
     function onValues(values) {
@@ -193,7 +199,7 @@ function getComboValues(req, res) {
         values.forEach( function(value) {
             valuesArray.push( {
                 id: value.id, 
-                label: value.dataValues.name // TODO using 'name' as field. Should change for label field configuration
+                label: value.dataValues[labelField]
             });
         });
         res.json(valuesArray);
