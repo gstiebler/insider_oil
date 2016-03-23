@@ -7,7 +7,6 @@ var dbServerController = require('../controllers/dbServerController');
 var usersController = require('../controllers/usersController');
 var treeController = require('../controllers/TreeController');
 var searchController = require('../controllers/SearchController');
-var NewsController = require('../controllers/NewsController');
 var ExcelController = require('../controllers/ExcelController');
 var imageController = require('../controllers/ImageController');
 
@@ -37,10 +36,6 @@ module.exports = function(app) {
     
     app.get('/download_excel', session.authorize,  ExcelController.downloadExcel);
     app.put('/import_from_url', session.authorize,  ExcelController.importExcelFromURL);
-    
-    // News
-    app.get('/news', session.authorize,            NewsController.allNews);
-    app.get('/news/from_object',session.authorize, NewsController.newsFromObject);
     
     // Users
     app.get('/user/',                session.authorize, usersController.main );

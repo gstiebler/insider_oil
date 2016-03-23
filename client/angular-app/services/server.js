@@ -147,20 +147,6 @@ app.service('server', ['$http', 'session',
     }
     
     
-    function allNews(onData, onError) {
-        http({}, $http.get, '/news', onData, onError);
-    }
-    
-    
-    function newsFromObject(sourceName, id, onData, onError) {
-    	const params = {
-    		sourceName: sourceName,
-    		id: id
-    	};
-        http(params, $http.get, '/news/from_object', onData, onError);
-    }
-    
-    
     function changePassword(onData, onError, oldPassword, newPassword) {
     	const params = {
     		oldPassword: oldPassword,
@@ -198,8 +184,6 @@ app.service('server', ['$http', 'session',
     this.getSearchResult = getSearchResult;
     this.viewRecord = viewRecord;
     this.sourceList = sourceList;
-    this.allNews = allNews;
-    this.newsFromObject = newsFromObject;
     this.changePassword = changePassword;
     this.downloadExcelFile = downloadExcelFile;
     this.importFromURL = importFromURL;

@@ -509,15 +509,6 @@ search: test => {
 },
 
 
-newsFetch: test => {
-    const newsResults = utils.getJsonResponse.sync(null, NewsController.allNews, {});
-    test.equal(3, newsResults.length);
-    test.ok( newsResults[0].created_at >= newsResults[1].created_at );
-    test.ok( newsResults[1].created_at >= newsResults[2].created_at );
-    test.done();
-},
-
-
 newsFromObject: test => {
     const abaloneId = utils.idByName('OilField', 'Abalone');
     const filters = {
