@@ -519,19 +519,26 @@ newsFetch: test => {
 
 
 newsFromObject: test => {
-	var req = {
-		query: {
-			sourceName: 'OilField',
-			id: 3
-		}
-	}
-    const newsResults = utils.getJsonResponse.sync(null, NewsController.newsFromObject, req);
-    test.equal(1, newsResults.length);
-    
+    const abaloneId = utils.idByName('OilField', 'Abalone');
+    const filters = {
+        modelName: 'OilField',
+        id: abaloneId
+    };
+    const reqQueryValues = {
+        query: { 
+            dataSource: 'News',
+            queryName: 'byObject',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);    
+    test.equal('Petrobrás compra Statoil', resQueryValues.records[0].title);
+  
     // adding more news from this oil field
     const newNews = {
         title: 'adicionando notícia',
-        content: '<p>outra notícia: <a href="/app/view_record?source=OilField&amp;id=3" style="background-color: rgb(255, 255, 255);">Abalone</a> ',
+        content: '<p>outra notícia: <a href="/app/view_record?source=OilField&amp;id=' + abaloneId + '" style="background-color: rgb(255, 255, 255);">Abalone</a> ',
         author_id: 1
     };
     const reqNewNews = {
@@ -543,13 +550,14 @@ newsFromObject: test => {
     utils.getJsonResponse.sync(null, dbServerController.createItem, reqNewNews);
 
 	// should have 2 news from this oil field now
-    const moreNewsResults = utils.getJsonResponse.sync(null, NewsController.newsFromObject, req);
-    test.equal(2, moreNewsResults.length);
+    const moreNewsFromObject = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, moreNewsFromObject.records.length);
 
     // testing with an invalid id
-    req.query.id = 50;
-    const newsResultsWrongId = utils.getJsonResponse.sync(null, NewsController.newsFromObject, req);
-    test.equal(0, newsResultsWrongId.length);
+    filters.id = 5450;
+    reqQueryValues.query.filters = JSON.stringify(filters);
+    const newsResultsWrongId = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(0, newsResultsWrongId.records.length);
 
     test.done();
 },
