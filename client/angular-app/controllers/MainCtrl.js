@@ -1,7 +1,7 @@
 'use strict';
 angular.module('InsiderOilApp').controller('MainController', 
-        ['$scope', '$location', 'session', 'server', 'showError',  
-         function($scope, $location, session, server, showError) {
+        ['$scope', '$location', 'session', 'server', 'showError', '$window', 
+         function($scope, $location, session, server, showError, $window) {
 
     var token = $location.search().token;
     if( token )
@@ -18,7 +18,11 @@ angular.module('InsiderOilApp').controller('MainController',
     server.getUserDetails(function(response) {
         $scope.username = response.login;
         $scope.isAdmin = response.admin;
-    }, showError.show);       
+    }, function(result) {
+        if(result.status == 401) {
+            $window.location.href = '/';
+        }
+    });       
             
     $scope.logout = session.logout; // functions
     
