@@ -107,7 +107,6 @@ angular.module('InsiderOilApp').controller('ModelViewController',
         server.importFromURL(modelName, onImportFromURL, showError.show);
         
         function onImportFromURL(response) {
-            console.log(response);
             const statusStr = ModelViewService.formatExcelUploadResult(response);
             onFileUploaded(statusStr);
         }

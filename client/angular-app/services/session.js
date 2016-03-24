@@ -1,8 +1,8 @@
 'use strict';
 var app = angular.module('InsiderOilApp');
 
-app.service('session', ['$http', '$location', '$cookies', '$window',
-               function($http, $location, $cookies, $window ) {
+app.service('session', ['$http', '$location', '$cookies', '$window', 'showError',
+               function($http, $location, $cookies, $window, showError ) {
     
     this.login = function(token) {
         $cookies.put( 'token', token );
@@ -20,7 +20,7 @@ app.service('session', ['$http', '$location', '$cookies', '$window',
         }
         
         function logoutError(response) {
-            console.log( "Error on logout: " + response );
+            showError.show( "Error on logout: " + response );
         }
     };
     

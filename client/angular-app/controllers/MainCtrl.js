@@ -19,7 +19,7 @@ angular.module('InsiderOilApp').controller('MainController',
             then(function(response) {
                 $scope.username = response.data.login;
             }, function(response) {
-                console.log( "Problemas na resposta: " + response.data.errorMsg );
+                showError.show( "Problemas na resposta: " + response.data.errorMsg );
             });
             
             
