@@ -4,7 +4,6 @@ var dbServerController = require('../controllers/dbServerController');
 var TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
 var SearchController = require('../controllers/SearchController');
-var NewsController = require('../controllers/NewsController');
 var ExcelController = require('../controllers/ExcelController');
 var Sync = require('sync');
 var utils = require('./lib/utils');
@@ -129,16 +128,17 @@ getComboValues: function(test) {
     };
 
     const response = utils.getJsonResponse.sync(null, dbServerController.getComboValues, req);
+    test.equal(46, response.length);
     
-    test.equal( 1, response[0].id );
-    test.equal( 2, response[1].id );
-    test.equal( 6, response[5].id );
-    test.equal( 7, response[6].id );
+    test.equal( utils.idByName('Company', 'Alvopetro'), response[0].id );
+    test.equal( utils.idByName('Company', 'Anadarko'), response[1].id );
+    test.equal( utils.idByName('Company', 'UTC EP'), response[44].id );
+    test.equal( utils.idByName('Company', 'Vipetro'), response[45].id );
     
-    test.equal( 'Petrobras', response[0].label );
-    test.equal( 'Eni Oil', response[1].label );
-    test.equal( 'Schahin', response[5].label );
-    test.equal( 'Paragon', response[6].label );
+    test.equal( 'Alvopetro', response[0].label );
+    test.equal( 'Anadarko', response[1].label );
+    test.equal( 'UTC EP', response[44].label );
+    test.equal( 'Vipetro', response[45].label );
     test.done();
 },
 
