@@ -314,6 +314,31 @@ doNotDelReferencedObjsInNews: function(test) {
 },
 
 
+doNotDelReferencedPersonProject: function(test) {
+    const amazonasId = utils.idByName('Basin', 'Amazonas');
+    const reqDelAmazonas = {
+        query: { 
+            model: 'Basin',
+            id: amazonasId
+        }
+    };
+    const resDelAmazonas = utils.getJsonResponse.sync(null, dbServerController.deleteItem, reqDelAmazonas);
+    test.equal('Não foi possível apagar o registro.', resDelAmazonas.error.errorMsg);
+    
+    const reqGetAmazonas = {
+        query: { 
+            dataSource: 'Basin',
+            id: amazonasId
+        }
+    };
+
+    const resGetAmazonas = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqGetAmazonas);
+    const record = resGetAmazonas.record;
+    test.equal('Amazonas', record[0].value);
+    test.done();
+},
+
+
 deleteOilFieldDeveloping: function(test) {
     const reqDelete = {
         query: { 

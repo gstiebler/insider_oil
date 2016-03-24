@@ -146,29 +146,30 @@ function saveItem(req, res, next) {
 
 
 function deleteItem(req, res) { Sync(function() {
-    var id = req.query.id;
-    var modelName = req.query.model;
-    var model = dbUtils.getDataSource(modelName);
-    const errorFunc = ControllerUtils.getErrorFunc(res, 404, "Não foi possível apagar o registro.");
-    
-    function hasReferencedObjInNews() {
+    function hasReferencedObj() {
         // check if a news deference the object
         const modelInList = await(db.ModelsList.find({ where: { name: modelName } }));
         if(!modelInList)
             return false;
-        const newsModelOptions = {
+        const modelRefsOptions = {
             where: {
                 model_id: modelInList.id,
                 model_ref_id: id
             }
         }
-        const newsRef = await( db.NewsModels.find(newsModelOptions) );
-        return newsRef;
+        const newsRefs = await( db.NewsModels.find(modelRefsOptions) );
+        const personRefs = await( db.PersonProjects.find(modelRefsOptions) );
+        return newsRefs || personRefs;
     }
     
+    var id = req.query.id;
+    var modelName = req.query.model;
+    var model = dbUtils.getDataSource(modelName);
+    const errorFunc = ControllerUtils.getErrorFunc(res, 404, "Não foi possível apagar o registro.");
+    
     try {
-        if(hasReferencedObjInNews()) {
-            errorFunc(`Uma notícia referencia o objeto`);
+        if(hasReferencedObj()) {
+            errorFunc(`Existe uma referência a este objeto, portanto não pode ser deletado.`);
             return;
         }
             
