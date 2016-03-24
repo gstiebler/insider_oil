@@ -10,6 +10,9 @@
             <div ng-else-if="field.isLink">
                 <a class="col-sm-10" href="{{field.value}}" target="_blank">{{field.value}}</a>
             </div>
+            <div ng-else-if="field.isHTML">
+                <span ng-bind-html="field.value" class="col-sm-10"/></span>
+            </div>
             <div ng-else-if="field.isList">
                 <span ng-repeat="item in field.value" class="col-sm-10">{{item}}</span>
             </div>
