@@ -18,6 +18,7 @@ angular.module('InsiderOilApp').controller('MainController',
     server.getUserDetails(function(response) {
         console.log(response);
         $scope.username = response.login;
+        $scope.isAdmin = response.admin;
     }, showError.show);       
             
     $scope.logout = session.logout; // functions

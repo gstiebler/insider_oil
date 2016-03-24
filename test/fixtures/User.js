@@ -20,6 +20,13 @@ module.exports = function(db) {
             email: 'maciel.felipe@gmail.com',
             password: 'io_maciel_io2016',
             admin: true
+        },
+        {
+            login: 'usuario',
+            name: 'José da Silva',
+            email: 'jose@example.com',
+            password: 'io_usuario_io2016',
+            admin: false
         }
     ]);
 }

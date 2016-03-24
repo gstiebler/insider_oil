@@ -70,7 +70,7 @@
                         <a href="/app/tree">Árvore</a>
                     </li>
                     <li>
-                        <a href="/app/">Admin</a>
+                        <a href="/app/" ng-if="isAdmin">Admin</a>
                     </li>
                     <li class="@media" >
                         Busca: <project-search id="searchBox" on-item-selected="onProjectSelected" on-error="showError"></project-search>

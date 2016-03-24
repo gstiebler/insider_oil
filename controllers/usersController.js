@@ -12,7 +12,8 @@ exports.userDetails = function(req, res, next) {
         login: req.user.login,
         name: req.user.name,
         email: req.user.email,
-        id: req.user.id
+        id: req.user.id,
+        admin: req.user.admin
     };
     res.json( user );
 }
