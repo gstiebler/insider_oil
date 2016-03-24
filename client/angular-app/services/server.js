@@ -14,9 +14,25 @@ app.service('server', ['$http', 'session',
     }
     
     /**
+     * Get user details
+     * @param {Function} onData Result callback
+     * @param {Function} onError Error callback
+     */
+    function getUserDetails(onData, onError) {
+        const params = { 
+            token: session.getToken()
+        };
+        
+        $http.get('/user/details', { params: params }).
+        then(function(response) {
+            onData(response.data);
+        }, onError);
+    }
+    
+    /**
      * Return multiple records
      * @param {String} table Name of the datasource
-     * @param {} options Opttions (filters and fields)
+     * @param {} options Options (filters and fields)
      * @param {Function} okCallback Result callback
      * @param {Function} errorCallback Error callback
      */
@@ -37,7 +53,7 @@ app.service('server', ['$http', 'session',
     /**
      * Return multiple records from a query
      * @param {String} dataSource Name of the datasource
-     * @param {} options Opttions (queryName and filters)
+     * @param {} options Options (queryName and filters)
      * @param {Function} okCallback Result callback
      * @param {Function} errorCallback Error callback
      */
@@ -171,7 +187,7 @@ app.service('server', ['$http', 'session',
         http(params, $http.put, '/import_from_url', onData, onError);
     }
     
-    
+    this.getUserDetails = getUserDetails;
     this.getTable = getTable;
     this.getQueryData = getQueryData;
     this.getModelFields = getModelFields;

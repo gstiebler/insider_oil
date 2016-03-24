@@ -1,7 +1,7 @@
 'use strict';
 angular.module('InsiderOilApp').controller('EditNewsController', 
-                ['$scope', '$http', '$routeParams', '$location', 'server', 'session', 'showError', 'Flash',
-        function($scope, $http, $routeParams, $location, server, session, showError, Flash) {
+                ['$scope', '$routeParams', '$location', 'server', 'session', 'showError', 'Flash',
+        function($scope, $routeParams, $location, server, session, showError, Flash) {
                 	
     const modelName = 'News';
     const id = $routeParams.id;
@@ -24,7 +24,7 @@ angular.module('InsiderOilApp').controller('EditNewsController',
 			const itemData = {};
 			itemData.title = $scope.title;
 			itemData.content = $scope.content;
-			itemData.author_id = userData.data.id;
+			itemData.author_id = userData.id;
             if(id) {
                 itemData.id = id;
                 server.saveItem( modelName, itemData, onSave, showError.show );
@@ -33,8 +33,7 @@ angular.module('InsiderOilApp').controller('EditNewsController',
             }
 		}
 	    
-	    $http.get('/user/details', { params: { token: session.getToken()} }).
-        	then(onUserDataArrived, showError.show);
+        server.getUserDetails(onUserDataArrived, showError.show);
 	}
 	
 	function onSave(status) {

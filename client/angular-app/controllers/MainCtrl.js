@@ -1,7 +1,7 @@
 'use strict';
 angular.module('InsiderOilApp').controller('MainController', 
-        ['$scope', '$location', '$http', 'session', 'server', 'showError',  
-         function($scope, $location, $http, session, server, showError) {
+        ['$scope', '$location', 'session', 'server', 'showError',  
+         function($scope, $location, session, server, showError) {
 
     var token = $location.search().token;
     if( token )
@@ -15,13 +15,10 @@ angular.module('InsiderOilApp').controller('MainController',
         $location.url(decodedURL);
     }
     
-    $http.get('/user/details', { params: { token: token} }).
-            then(function(response) {
-                $scope.username = response.data.login;
-            }, function(response) {
-                showError.show( "Problemas na resposta: " + response.data.errorMsg );
-            });
-            
+    server.getUserDetails(function(response) {
+        console.log(response);
+        $scope.username = response.login;
+    }, showError.show);       
             
     $scope.logout = session.logout; // functions
     
