@@ -17,7 +17,7 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
         },
         showFields: [
             'name',
-            'description'
+            'position'
         ]
     }
     
