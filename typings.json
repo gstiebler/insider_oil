@@ -1,0 +1,6 @@
+{
+  "ambientDependencies": {
+    "express": "registry:dt/express#4.0.0+20160317120654",
+    "sequelize": "registry:dt/sequelize#3.4.1+20160317120654"
+  }
+}
