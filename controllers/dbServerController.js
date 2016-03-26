@@ -256,7 +256,7 @@ function getQueryData(req, res) {Sync(function(){
     const queryStr = queryStrGenerator(filters);
     const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
     db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
-        const fields = dbUtils.getModelFields(dataSourceName);
+        const fields = dbUtils.getModelFields(dataSourceName, true);
         const result = {
             viewParams: viewParams,
             records: records,

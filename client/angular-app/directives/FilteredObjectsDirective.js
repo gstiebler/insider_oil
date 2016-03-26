@@ -56,6 +56,8 @@ function controllerFunc($scope, server, DateService) {
                 var recordValue = record[gridField];
                 if(types[gridField] == 'DATE')
                     recordValue = DateService.dateFormat(recordValue);
+                else if(types[gridField] == 'DATETIME')
+                    recordValue = DateService.parseDateTime(recordValue);
                 recordValues.push(recordValue);
             }
             item.id = record.id;
