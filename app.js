@@ -7,10 +7,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var winston = require('winston');
+var umzug = require('./lib/InitUmzug');
 var app = express();
 
+// Make necessary migrations
+umzug.up();
+
+// Generate minified Angular js files
 require('./lib/uglifyJsFrontend').uglifyAngularJsFiles(app.get('env'));
 
+// Configure Winston log lib
 winston.level = 'debug';
 if (app.get('env') == 'development') {
 	winston.add(winston.transports.File, { filename: 'log/development.log' });

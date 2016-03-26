@@ -4,7 +4,7 @@ var db = require('../../db/models');
 var Sync = require('sync');
 var createFixtures = require('../fixtures/initial_data');
 var await = require('../../lib/await');
-var Umzug = require('umzug');
+var umzug = require('../../lib/InitUmzug');
 var winston = require('winston');
 
 winston.level = 'debug';
@@ -12,17 +12,6 @@ winston.level = 'debug';
 process.on('uncaughtException', function (err) {
     winston.error(err.stack);
 })
-
-var umzug = new Umzug({
-	storage: 'sequelize',
-	storageOptions: {
-		sequelize: db.sequelize
-	},
-	migrations: {
-		path: __dirname + '/../../db/migrations',
-		params: [db.sequelize.getQueryInterface(), db.Sequelize]
-	}
-});
 
 exports.initializeDB = function() {
     try {
