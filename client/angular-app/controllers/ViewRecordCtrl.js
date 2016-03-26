@@ -40,6 +40,8 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
         for(var i = 0; i < record.length; i++) {
             if(record[i].type == 'DATE') {
                 record[i].value = DateService.dateFormat(record[i].value);
+            } else if(record[i].type == 'DATETIME') {
+                record[i].value = DateService.parseDateTime(record[i].value);
             }
         }
         $scope.record = record;

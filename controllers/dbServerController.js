@@ -218,7 +218,7 @@ function viewRecord(req, res, next) {
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) { Sync(function() {
-        var fields = dbUtils.getModelFields(dataSourceName);
+        var fields = dbUtils.getModelFields(dataSourceName, true);
         var recordValues = [];
         
         for( var i = 0; i < fields.length; i++ ) {
