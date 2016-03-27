@@ -668,6 +668,20 @@ importBlocksFromURL: function(test) {
 },
 
 
+customComboQuery: (test) => {
+    const req = {
+        query: { model: 'AllDrillingRigs' }
+    };
+
+    const response = utils.getJsonResponse.sync(null, dbServerController.getComboValues, req);
+    test.equal(6, response.length);    
+    test.equal('1:offshore', response[0].id);
+    test.equal('Aban Abraham', response[0].label);
+    test.equal('1:onshore', response[1].id);
+    test.equal('BS-04', response[1].label);
+    test.done();
+},
+
 
 };
 

@@ -8,6 +8,7 @@ var ControllerUtils = require('../lib/ControllerUtils');
 var Sync = require('sync');
 var await = require('../lib/await');
 var winston = require('winston');
+var ComboQueries = require('../db/queries/ComboQueries');
 
 
 function getFieldTypes(fields) {
@@ -185,24 +186,30 @@ function deleteItem(req, res) { Sync(function() {
 
 function getComboValues(req, res) {
     var modelName = req.query.model;
-    var model = dbUtils.getDataSource(modelName);   
-    // TODO using 'name' as field. Should change for label field configuration
+    var model = dbUtils.getDataSource(modelName);
     const labelField = 'name';  
-    const options = {
-        attributes: ['id', labelField],
-        order: [labelField]
-    };
-    model.findAll(options).then(onValues)
-        .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possível carregar os registros."));
-    
+    if(model) {
+        // TODO using 'name' as field. Should change for label field configuration
+        const options = {
+            attributes: ['id', labelField],
+            order: [labelField]
+        };
+        model.findAll(options).then(onValues)
+            .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possível carregar os registros."));
+    } else { // it should use a custom query to get the combo values
+        const queryStrGenerator = ComboQueries[modelName];
+        const queryStr = queryStrGenerator();
+        const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
+        db.sequelize.query(queryStr, simpleQueryType).then(onValues);
+    } 
     function onValues(values) {
         var valuesArray = [];
-        values.forEach( function(value) {
+        for(var value of values) {
             valuesArray.push( {
                 id: value.id, 
-                label: value.dataValues[labelField]
+                label: value[labelField]
             });
-        });
+        };
         res.json(valuesArray);
     }
 }
