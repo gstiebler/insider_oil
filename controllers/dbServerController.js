@@ -188,19 +188,23 @@ function getComboValues(req, res) {
     var modelName = req.query.model;
     var model = dbUtils.getDataSource(modelName);
     const labelField = 'name';  
+    // default combo list
     if(model) {
         // TODO using 'name' as field. Should change for label field configuration
         const options = {
             attributes: ['id', labelField],
             order: [labelField]
         };
-        model.findAll(options).then(onValues)
+        model.findAll(options)
+            .then(onValues)
             .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possível carregar os registros."));
     } else { // it should use a custom query to get the combo values
         const queryStrGenerator = ComboQueries[modelName];
         const queryStr = queryStrGenerator();
         const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
-        db.sequelize.query(queryStr, simpleQueryType).then(onValues);
+        db.sequelize.query(queryStr, simpleQueryType)
+            .then(onValues) 
+            .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possível carregar os registros."));;
     } 
     function onValues(values) {
         var valuesArray = [];
