@@ -1,15 +1,15 @@
 "use strict";
 var db = require('../db/models');
 var fileUpload = require('../lib/fileUpload');
-var dbUtils = require('../lib/dbUtils');
 var dsParams = require('../lib/DataSourcesParams');
 var importExcel = require('../lib/importExcel');
 var ControllerUtils = require('../lib/ControllerUtils');
 var Sync = require('sync');
 var await = require('../lib/await');
 var winston = require('winston');
-
-
+import dbUtils = require("../lib/dbUtils");
+ 
+ 
 function getFieldTypes(fields) {
     const types = {};
     for( var i = 0; i < fields.length; i++) {
@@ -18,9 +18,8 @@ function getFieldTypes(fields) {
     return types;
 }
 
-
 function main(req, res, next) {
-    const modelName = req.query.table;
+    const modelName: string = req.query.table;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
     const fieldNames = req.query.fieldNames;
     const dataSource = dbUtils.getDataSource(modelName);
@@ -206,7 +205,6 @@ function getComboValues(req, res) {
         res.json(valuesArray);
     }
 }
-
 
 function viewRecord(req, res, next) {
     var dataSourceName = req.query.dataSource;

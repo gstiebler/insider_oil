@@ -4,14 +4,18 @@ var db = require('../db/models');
 var DataSources = require('./DataSources');
 var dsParams = require('./DataSourcesParams');
 
+
 function assignObjects(objDst: any, objSrc: any) {
+    if(!objDst)
+        objDst = {};
     for(let attName in objSrc) {
         objDst[attName] = objSrc[attName];
     }
+    return objDst;
 }
 
 
-function getDataSource(dataSourceName) {
+export function getDataSource(dataSourceName: string) {
     var model = db[dataSourceName];
     if(model)
         return model;  
@@ -21,7 +25,7 @@ function getDataSource(dataSourceName) {
 }
  
  
-exports.findAllCustom = function(model, options, filters) {
+export function findAllCustom(model, options: any, filters: any) {
     options = options ? options : {};
     filters = filters ? filters : {};
     options.where = options.where ? options.where : {};  
@@ -47,7 +51,7 @@ function simplifyItem(model, item) {
 }
 
 
-exports.getModelFields = function(modelName) {
+export function getModelFields(modelName: string) {
     var dataSource = getDataSource(modelName);
     var viewParams = dsParams[dataSource.name];
     var fields = {};
@@ -94,14 +98,14 @@ exports.getModelFields = function(modelName) {
 }
 
 
-exports.simplifyArray = function(model, array) {
+export function simplifyArray(model, array: any[]) {
     for(var i = 0; i < array.length; i++) {
         simplifyItem( model, array[i] );
     }
 }
 
 
-function createDataSource(dataSourceName) {
+function createDataSource(dataSourceName: string) {
     var dataSourceParams = DataSources[dataSourceName];
     if(!dataSourceParams)
         return null;
@@ -132,7 +136,7 @@ function createDataSource(dataSourceName) {
 }
 
 // TODO replace this function by only getting the selected field in the query
-exports.filterShowFields = function(records, gridFields) {
+export function filterShowFields(records: any[], gridFields: any[]): any[] {
     const resultArray = [];
     for(var record of records) {
         const resultRecord:any = {};
@@ -144,6 +148,3 @@ exports.filterShowFields = function(records, gridFields) {
     }
     return resultArray;
 }
-
-exports.getDataSource = getDataSource;
-exports.simplifyItem = simplifyItem;
