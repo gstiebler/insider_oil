@@ -1,34 +1,42 @@
-interface field {
+interface IField {
     label: string;
     isManyToMany?: boolean;
     comboSource?: string;
 }
 
-interface ExcelFieldMap {
+interface IExcelFieldMap {
     [name: string]: string;
 }
 
-interface ExcelParams {
+interface IExcelParams {
     keyField: string;
-    fields: ExcelFieldMap;
+    fields: IExcelFieldMap;
 }
 
-interface fieldMap {
-    [name: string]: field;
+interface IFieldMap {
+    [name: string]: IField;
 }
 
-interface queryMap {
+interface IQueryMap {
     [name: string]: any;
 }
 
+interface IRefObjectsOnView {
+    dataSource: string;
+    showFields: string[];
+    filterField?: string;
+    queryName?: string;
+}
+
 interface BaseDataSourceParams {
-    fields: fieldMap;
+    fields: IFieldMap;
     labelField: string;
     gridFields: string[];
     tableLabel: string;
     hasMap?: boolean;
-    excelParams?: ExcelParams;
-    queries: queryMap;
+    excelParams?: IExcelParams;
+    queries?: IQueryMap;
+    referencedObjectsOnView?: IRefObjectsOnView;
 }
 
 export = BaseDataSourceParams;

@@ -61,4 +61,4 @@ const AmbientalLicense: BaseDataSourceParams = {
     }
 }
 
-export default AmbientalLicense;
+export = AmbientalLicense;

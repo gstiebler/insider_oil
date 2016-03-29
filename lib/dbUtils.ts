@@ -2,7 +2,7 @@
 
 var db = require('../db/models');
 var DataSources = require('./DataSources');
-var dsParams = require('./DataSourcesParams');
+import dsParams = require('./DataSourcesParams');
 
 interface ioDataSource {
     name: string;

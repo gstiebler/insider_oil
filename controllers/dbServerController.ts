@@ -1,14 +1,13 @@
 "use strict";
 var db = require('../db/models');
 var fileUpload = require('../lib/fileUpload');
-var dsParams = require('../lib/DataSourcesParams');
 var importExcel = require('../lib/importExcel');
 var ControllerUtils = require('../lib/ControllerUtils');
 var Sync = require('sync');
 var await = require('../lib/await');
-var winston = require('winston');
+import winston = require('winston');
 import dbUtils = require("../lib/dbUtils");
- 
+import dsParams = require('../lib/DataSourcesParams');
  
 function getFieldTypes(fields) {
     const types = {};
