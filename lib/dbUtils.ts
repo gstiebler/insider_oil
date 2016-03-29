@@ -4,6 +4,16 @@ var db = require('../db/models');
 var DataSources = require('./DataSources');
 var dsParams = require('./DataSourcesParams');
 
+interface ioDataSource {
+    name: string;
+    findAll(options?: any): any;
+    findById(id: number, options?: any): any;
+    create(newItemData: any): any;
+    destroy(options?: any): any;
+    tableAttributes: any;
+    attributes: [string, any];
+    associations: [string, any];
+}
 
 function assignObjects(objDst: any, objSrc: any) {
     if(!objDst)
@@ -15,8 +25,8 @@ function assignObjects(objDst: any, objSrc: any) {
 }
 
 
-export function getDataSource(dataSourceName: string) {
-    var model = db[dataSourceName];
+export function getDataSource(dataSourceName: string): ioDataSource {
+    const model = db[dataSourceName];
     if(model)
         return model;  
     else {
@@ -25,7 +35,7 @@ export function getDataSource(dataSourceName: string) {
 }
  
  
-export function findAllCustom(model, options: any, filters: any) {
+export function findAllCustom(model: ioDataSource, options: any, filters: any) {
     options = options ? options : {};
     filters = filters ? filters : {};
     options.where = options.where ? options.where : {};  
@@ -36,7 +46,7 @@ export function findAllCustom(model, options: any, filters: any) {
 
 
 // Convert associations to plain item strings in the record
-function simplifyItem(model, item) {
+function simplifyItem(model: any, item) {
     for( var associationName in model.associations ) {
         const association = model.associations[associationName];
         for( var att in association.target.attributes ) {
@@ -105,11 +115,11 @@ export function simplifyArray(model, array: any[]) {
 }
 
 
-function createDataSource(dataSourceName: string) {
+function createDataSource(dataSourceName: string): ioDataSource {
     var dataSourceParams = DataSources[dataSourceName];
     if(!dataSourceParams)
         return null;
-    var dataSource = {
+    var dataSource: ioDataSource = {
         name: dataSourceParams.modelName,
         create: function(newItemData) {
             for(var filterField in dataSourceParams.filters)
