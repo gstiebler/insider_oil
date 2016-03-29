@@ -13,7 +13,7 @@ var winston = require('winston');
 function getFieldTypes(fields) {
     const types = {};
     for( var i = 0; i < fields.length; i++) {
-        types[fields[i].name] = fields[i].type;
+        types[fields[i].name] = fields[i].type; 
     }
     return types;
 }
@@ -212,12 +212,12 @@ function viewRecord(req, res, next) {
     var dataSourceName = req.query.dataSource;
     var id = req.query.id;
     var dataSource = dbUtils.getDataSource(dataSourceName);
-    var options = {};
+    var options: any = {};
     options.include = [{all: true}];
     dataSource.findById(id, options).then(onRecord)
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
-    function onRecord(record) { Sync(function() {
+    function onRecord(record) { Sync(function() {  
         var fields = dbUtils.getModelFields(dataSourceName);
         var recordValues = [];
         
