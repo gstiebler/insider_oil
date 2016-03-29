@@ -4,23 +4,29 @@ var db = require('../db/models');
 var DataSources = require('./DataSources');
 var dsParams = require('./DataSourcesParams');
 
-
-function getDataSource(dataSourceName) {
-    var model = db[dataSourceName];
-    if(model)
-        return model;
-    else {
-        return createDataSource(dataSourceName);
+function assignObjects(objDst: any, objSrc: any) {
+    for(let attName in objSrc) {
+        objDst[attName] = objSrc[attName];
     }
 }
 
 
+function getDataSource(dataSourceName) {
+    var model = db[dataSourceName];
+    if(model)
+        return model;  
+    else {
+        return createDataSource(dataSourceName);
+    }
+}
+ 
+ 
 exports.findAllCustom = function(model, options, filters) {
     options = options ? options : {};
     filters = filters ? filters : {};
-    options.where = options.where ? options.where : {};
+    options.where = options.where ? options.where : {};  
     options.include = [{all: true}];
-    options.where = Object.assign(options.where, filters);
+    options.where = assignObjects(options.where, filters);
     return model.findAll(options);
 }
 
@@ -109,7 +115,7 @@ function createDataSource(dataSourceName) {
         findAll: function(options) {
             options = options ? options : {};
             // filter using the fixed filters
-            options.where = Object.assign(options.where, dataSourceParams.filters);
+            options.where = assignObjects(options.where, dataSourceParams.filters);
             return dataSourceParams.model.findAll(options);
         },
         findById: function(id, options) {
@@ -129,7 +135,7 @@ function createDataSource(dataSourceName) {
 exports.filterShowFields = function(records, gridFields) {
     const resultArray = [];
     for(var record of records) {
-        const resultRecord = {};
+        const resultRecord:any = {};
         for(var gridField of gridFields) {
             resultRecord[gridField] = record.dataValues[gridField]; 
         }
