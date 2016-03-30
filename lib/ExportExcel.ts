@@ -46,7 +46,7 @@ function Workbook():void {
 }
 
 
-function exportExcel(records, dataSource, dataSourceName) {
+function exportExcel(records: any[], dataSource: dbUtils.ioDataSource, dataSourceName: string) {
 	const fieldsArray = [];
 	const fieldLabels = [];
 	const dsParam = dsParams[dataSourceName];
@@ -90,7 +90,7 @@ function exportExcel(records, dataSource, dataSourceName) {
 }
 
 
-export function main(dataSourceName) {
+export function main(dataSourceName: string) {
     const dataSource = dbUtils.getDataSource(dataSourceName);
     try {
         const records = await( dbUtils.findAllCustom(dataSource, {}, {}) );

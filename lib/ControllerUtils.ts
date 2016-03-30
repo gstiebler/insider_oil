@@ -1,6 +1,7 @@
+import express = require("express");
 import winston = require('winston');
 
-export function getErrorFunc(res, errorCode: number, msg: string) {
+export function getErrorFunc(res: express.Response, errorCode: number, msg: string) {
     return function(error) { 
         var errors = error.errors ? error.errors : [];
         if((typeof error) == 'string')
@@ -14,7 +15,7 @@ export function getErrorFunc(res, errorCode: number, msg: string) {
 }
 
 
-export function getOkFunc(res, msg: string) {
+export function getOkFunc(res: express.Response, msg: string) {
     return function returnOkJson() {
         res.json( { msg: msg } );
     }

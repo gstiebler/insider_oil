@@ -4,7 +4,7 @@ var db = require('../db/models');
 var DataSources = require('./DataSources');
 import dsParams = require('./DataSourcesParams');
 
-interface ioDataSource {
+export interface ioDataSource {
     name: string;
     findAll(options?: any): any;
     findById(id: number, options?: any): any;
@@ -46,7 +46,7 @@ export function findAllCustom(model: ioDataSource, options: any, filters: any) {
 
 
 // Convert associations to plain item strings in the record
-function simplifyItem(model: any, item) {
+function simplifyItem(model: ioDataSource, item) {
     for( var associationName in model.associations ) {
         const association = model.associations[associationName];
         for( var att in association.target.attributes ) {
@@ -61,7 +61,7 @@ function simplifyItem(model: any, item) {
 }
 
 
-export function getModelFields(modelName: string) {
+export function getModelFields(modelName: string): any[] {
     var dataSource = getDataSource(modelName);
     var viewParams = dsParams[dataSource.name];
     var fields = {};
@@ -108,7 +108,7 @@ export function getModelFields(modelName: string) {
 }
 
 
-export function simplifyArray(model, array: any[]) {
+export function simplifyArray(model: ioDataSource, array: any[]) {
     for(var i = 0; i < array.length; i++) {
         simplifyItem( model, array[i] );
     }
@@ -146,7 +146,7 @@ function createDataSource(dataSourceName: string): ioDataSource {
 }
 
 // TODO replace this function by only getting the selected field in the query
-export function filterShowFields(records: any[], gridFields: any[]): any[] {
+export function filterShowFields(records: any[], gridFields: string[]): any[] {
     const resultArray = [];
     for(var record of records) {
         const resultRecord:any = {};
