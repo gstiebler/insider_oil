@@ -1,17 +1,17 @@
 "use strict";
-var XLSX = require('xlsx');;
-var db = require( '../db/models' );
-var dbUtils = require('../lib/dbUtils');
-var dsParams = require('./DataSourcesParams');
 var await = require('../lib/await');
+var XLSX = require('xlsx');
+import dbUtils = require('../lib/dbUtils');
+import dsParams = require('./DataSourcesParams');
 
-function datenum(v, date1904) {
+function datenum(v, date1904?:any) {
 	if(date1904) v+=1462;
 	var epoch = Date.parse(v);
-	return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
+    var newDate = new Date(Date.UTC(1899, 11, 30));
+	return (epoch - newDate.getMilliseconds()) / (24 * 60 * 60 * 1000);
 }
 
-function sheet_from_array_of_arrays(data, opts) {
+function sheet_from_array_of_arrays(data: any[], opts?:any) {
 	var ws = {};
 	var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
 	for(var R = 0; R != data.length; ++R) {
@@ -20,7 +20,7 @@ function sheet_from_array_of_arrays(data, opts) {
 			if(range.s.c > C) range.s.c = C;
 			if(range.e.r < R) range.e.r = R;
 			if(range.e.c < C) range.e.c = C;
-			var cell = {v: data[R][C] };
+			var cell:any = {v: data[R][C] };
 			if(cell.v == null) continue;
 			var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
 			
@@ -39,7 +39,7 @@ function sheet_from_array_of_arrays(data, opts) {
 	return ws;
 }
 
-function Workbook() {
+function Workbook():void {
 	if(!(this instanceof Workbook)) return new Workbook();
 	this.SheetNames = [];
 	this.Sheets = {};
@@ -90,7 +90,7 @@ function exportExcel(records, dataSource, dataSourceName) {
 }
 
 
-exports.main = function(dataSourceName) {
+export function main(dataSourceName) {
     const dataSource = dbUtils.getDataSource(dataSourceName);
     try {
         const records = await( dbUtils.findAllCustom(dataSource, {}, {}) );

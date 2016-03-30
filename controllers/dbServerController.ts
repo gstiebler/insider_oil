@@ -1,10 +1,10 @@
 "use strict";
 var db = require('../db/models');
 var fileUpload = require('../lib/fileUpload');
-var importExcel = require('../lib/importExcel');
-var ControllerUtils = require('../lib/ControllerUtils');
 var Sync = require('sync');
 var await = require('../lib/await');
+import ControllerUtils = require('../lib/ControllerUtils');
+import importExcel = require('../lib/importExcel');
 import winston = require('winston');
 import dbUtils = require("../lib/dbUtils");
 import dsParams = require('../lib/DataSourcesParams');

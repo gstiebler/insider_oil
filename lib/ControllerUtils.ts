@@ -1,7 +1,6 @@
-"use strict";
+import winston = require('winston');
 
-var winston = require('winston');
-exports.getErrorFunc = function(res, errorCode, msg) {
+export function getErrorFunc(res, errorCode: number, msg: string) {
     return function(error) { 
         var errors = error.errors ? error.errors : [];
         if((typeof error) == 'string')
@@ -15,7 +14,7 @@ exports.getErrorFunc = function(res, errorCode, msg) {
 }
 
 
-exports.getOkFunc = function(res, msg) {
+export function getOkFunc(res, msg: string) {
     return function returnOkJson() {
         res.json( { msg: msg } );
     }
