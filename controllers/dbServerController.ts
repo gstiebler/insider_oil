@@ -8,6 +8,7 @@ import winston = require('winston');
 import dbUtils = require("../lib/dbUtils");
 import dsParams = require('../lib/DataSourcesParams');
 import express = require("express");
+var ComboQueries = require('../db/queries/ComboQueries');
  
 function getFieldTypes(fields) {
     const types = {};
@@ -183,24 +184,34 @@ function deleteItem(req: express.Request, res: express.Response) { Sync(function
 
 function getComboValues(req: express.Request, res: express.Response) {
     var modelName = req.query.model;
-    var model = dbUtils.getDataSource(modelName);   
-    // TODO using 'name' as field. Should change for label field configuration
+    var model = dbUtils.getDataSource(modelName);
     const labelField = 'name';  
-    const options = {
-        attributes: ['id', labelField],
-        order: [labelField]
-    };
-    model.findAll(options).then(onValues)
-        .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possível carregar os registros."));
-    
+    // default combo list 
+    if(model) {
+        // TODO using 'name' as field. Should change for label field configuration
+        const options = {
+            attributes: ['id', labelField],
+            order: [labelField]
+        };
+        model.findAll(options)
+            .then(onValues)
+            .catch(ControllerUtils.getErrorFunc(res, 500, "NÃ£o foi possÃ­vel carregar os registros."));
+    } else { // it should use a custom query to get the combo values
+        const queryStrGenerator = ComboQueries[modelName];
+        const queryStr = queryStrGenerator();
+        const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
+        db.sequelize.query(queryStr, simpleQueryType)
+            .then(onValues) 
+            .catch(ControllerUtils.getErrorFunc(res, 500, "NÃ£o foi possÃ­vel carregar os registros."));;
+    } 
     function onValues(values) {
         var valuesArray = [];
-        values.forEach( function(value) {
+        for(var value of values) {
             valuesArray.push( {
                 id: value.id, 
-                label: value.dataValues[labelField]
+                label: value[labelField]
             });
-        });
+        };
         res.json(valuesArray);
     }
 }

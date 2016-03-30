@@ -25,7 +25,7 @@ function assignObjects(objDst: any, objSrc: any) {
 
 export function getDataSource(dataSourceName: string): ioDataSource {
     const model = db[dataSourceName];
-    if(model)
+    if(model) // model without special filters
         return model;  
     else {
         return createDataSource(dataSourceName);
