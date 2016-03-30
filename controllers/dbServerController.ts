@@ -1,4 +1,3 @@
-"use strict";
 var db = require('../db/models');
 var fileUpload = require('../lib/fileUpload');
 var Sync = require('sync');
@@ -17,7 +16,7 @@ function getFieldTypes(fields) {
     }
     return types;
 }
-
+ 
 function main(req: express.Request, res: express.Response, next) {
     const modelName: string = req.query.table;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
