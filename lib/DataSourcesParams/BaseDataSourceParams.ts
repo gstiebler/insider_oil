@@ -1,6 +1,11 @@
 interface IField {
     label: string;
     isManyToMany?: boolean;
+    isHTML?: boolean;
+    isList?: boolean;
+    isLink?: boolean;
+    isPhoto?: boolean;
+    isProjectList?: boolean;
     comboSource?: string;
 }
 
@@ -35,8 +40,9 @@ interface BaseDataSourceParams {
     tableLabel: string;
     hasMap?: boolean;
     excelParams?: IExcelParams;
+    urlSource?: string;
     queries?: IQueryMap;
-    referencedObjectsOnView?: IRefObjectsOnView;
+    referencedObjectsOnView?: IRefObjectsOnView[];
 }
 
 export = BaseDataSourceParams;

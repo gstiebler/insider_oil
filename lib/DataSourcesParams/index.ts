@@ -9,7 +9,7 @@ interface IParams {
     [name: string]: BaseDataSourceParams;
 }
 
-let params:IParams;
+let params:IParams = {};
 
 params['AmbientalLicense'] = require('./AmbientalLicense');
 params['Basin'] = require('./Basin');

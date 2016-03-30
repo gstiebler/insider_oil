@@ -1,4 +1,6 @@
-exports.Block = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const Block: BaseDataSourceParams = {
     fields: {
         name: {
             label: 'Nome'
@@ -92,3 +94,5 @@ exports.Block = {
         }
     ]
 }
+
+export = Block;

@@ -1,4 +1,6 @@
-exports.Production = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const Production: BaseDataSourceParams = {
     fields: {
         state: {
             label: 'Estado'
@@ -66,3 +68,5 @@ exports.Production = {
     tableLabel: 'Produção',
     hasMap: false
 }
+
+export = Production;

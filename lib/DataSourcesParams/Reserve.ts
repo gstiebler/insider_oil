@@ -1,4 +1,6 @@
-exports.Reserve = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const Reserve: BaseDataSourceParams = {
     fields: {
         state: {
             label: 'Estado'
@@ -18,3 +20,5 @@ exports.Reserve = {
     tableLabel: 'Reservas',
     hasMap: false
 }
+
+export = Reserve;

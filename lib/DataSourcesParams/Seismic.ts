@@ -1,4 +1,6 @@
-exports.Seismic = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const Seismic: BaseDataSourceParams = {
     fields: {
         process: {
             label: "Processo"
@@ -38,3 +40,5 @@ exports.Seismic = {
         }
     }
 }
+
+export = Seismic

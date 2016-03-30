@@ -1,4 +1,6 @@
-exports.Company = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const Company: BaseDataSourceParams = {
     fields: {
         name: {
             label: "Empresa"
@@ -12,3 +14,5 @@ exports.Company = {
     tableLabel: "Empresas",
     hasMap: false
 }
+
+export = Company;

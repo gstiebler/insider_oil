@@ -1,4 +1,6 @@
-exports.DrillingRigOffshore = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const DrillingRigOffshore: BaseDataSourceParams = {
     fields: {
         name: {
             label: "Sonda Offshore"
@@ -42,3 +44,5 @@ exports.DrillingRigOffshore = {
         }
     }
 }
+
+export = DrillingRigOffshore

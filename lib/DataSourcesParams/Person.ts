@@ -1,8 +1,9 @@
-"use strict";
 var db = require('../../db/models');
 var await = require('../../lib/await');
 
-exports.Person = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const Person: BaseDataSourceParams = {
     fields: {
         name: {
             label: "Nome"
@@ -76,3 +77,5 @@ exports.Person = {
         }
     }
 }
+
+export = Person;

@@ -1,4 +1,6 @@
-exports.Basin = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const Basin: BaseDataSourceParams = {
     fields: {
         name: {
             label: 'Nome'
@@ -9,3 +11,5 @@ exports.Basin = {
     tableLabel: 'Bacias',
     hasMap: false
 }
+
+export = Basin;
