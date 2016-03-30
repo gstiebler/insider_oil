@@ -1,4 +1,6 @@
-exports.ComercialDeclaration = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const ComercialDeclaration: BaseDataSourceParams = {
     fields: {
         block_id: {
             label: 'Bloco'
@@ -30,3 +32,5 @@ exports.ComercialDeclaration = {
     tableLabel: 'Declarações de comercialidade',
     hasMap: false
 }
+
+export = ComercialDeclaration;

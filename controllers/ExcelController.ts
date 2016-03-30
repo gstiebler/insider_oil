@@ -1,16 +1,17 @@
 "use strict";
 var db = require('../db/models');
-var dbUtils = require('../lib/dbUtils');
-var ControllerUtils = require('../lib/ControllerUtils');
 var Sync = require('sync');	
 var await = require('../lib/await');
-var ExportExcel = require('../lib/ExportExcel');
-var importExcel = require('../lib/importExcel');
-var dsParams = require('../lib/DataSourcesParams');
 var request = require('request');
+import ControllerUtils = require('../lib/ControllerUtils');
+import dbUtils = require('../lib/dbUtils');
+import ExportExcel = require('../lib/ExportExcel');
+import importExcel = require('../lib/importExcel');
+import dsParams = require('../lib/DataSourcesParams');
+import express = require("express");
 
 
-function downloadExcel(req, res, next) { Sync(function() {
+function downloadExcel(req: express.Request, res: express.Response, next) { Sync(function() {
     const dataSourceName = req.query.dataSource;
     const binaryWorkbook = ExportExcel.main(dataSourceName);
     res.set({"Content-Disposition":'attachment; filename="arquivo.xlsx"'});
@@ -19,8 +20,8 @@ function downloadExcel(req, res, next) { Sync(function() {
 }) }
 
 
-function importExcelFromURL(req, res) {
-    const dataSourceName = req.body.params.dataSource;
+function importExcelFromURL(req: express.Request, res: express.Response) {
+    const dataSourceName:string = req.body.params.dataSource;
     const viewParams = dsParams[dataSourceName];
     const url = viewParams.urlSource;
     
@@ -31,7 +32,7 @@ function importExcelFromURL(req, res) {
     };
     request(options, function (error, excelResponse, body) {
         if (error || excelResponse.statusCode != 200) {
-            errorFunc(err);
+            errorFunc(error);
             return;
         } 
         
@@ -42,7 +43,7 @@ function importExcelFromURL(req, res) {
         }
     })
     
-    function onOk(status, recordsStatus) {
+    function onOk(status: string, recordsStatus: string[]) {
         res.json( { status: status, recordsStatus: recordsStatus } );
     }
 }

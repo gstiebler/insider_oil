@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "prestart": "cd client && ../node_modules/bower/bin/bower install"
+    "prestart": "./node_modules/typescript/bin/tsc && cd client && ../node_modules/bower/bin/bower install"
   },
   "dependencies": {
     "bluebird": "^3.3.4",
@@ -25,6 +25,8 @@
     "sequelize": "^3.19.3",
     "serve-favicon": "~2.3.0",
     "sync": "^0.2.5",
+    "typescript": "^1.8.9",
+    "typings": "^0.7.9",
     "uglify-js": "^2.6.2",
     "umzug": "^1.9.0",
     "winston": "^2.1.1",

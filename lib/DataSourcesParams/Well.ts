@@ -1,4 +1,6 @@
-exports.Well = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const Well: BaseDataSourceParams = {
     fields: {
         name: {
             label: "Poço"
@@ -48,3 +50,5 @@ exports.Well = {
         }
     }
 }
+
+export = Well;

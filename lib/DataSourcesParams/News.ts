@@ -1,5 +1,6 @@
-"use strict";
-exports.News = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const News: BaseDataSourceParams = {
     fields: {
         title: {
             label: 'Título'
@@ -36,3 +37,5 @@ exports.News = {
         }
     }
 }
+
+export = News;

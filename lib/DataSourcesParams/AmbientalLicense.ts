@@ -1,4 +1,6 @@
-exports.AmbientalLicense = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const AmbientalLicense: BaseDataSourceParams = {
     fields: {
         license: {
             label: 'Nro da licença'
@@ -15,7 +17,7 @@ exports.AmbientalLicense = {
         entrepreneur: {
             label: 'Empreendedor'
         },
-        process: {
+        process: { 
             label: 'Nro do processo'
         },
         tipology: {
@@ -28,7 +30,7 @@ exports.AmbientalLicense = {
             label: 'Blocos',
             isManyToMany: true,
             comboSource: 'Block'
-        }
+        },
     },
     labelField: 'license',
     gridFields: ['license', 'start', 'end', 'enterprise', 'entrepreneur', 'process', 'tipology', 'pac'],
@@ -58,3 +60,5 @@ exports.AmbientalLicense = {
         }
     }
 }
+
+export = AmbientalLicense;

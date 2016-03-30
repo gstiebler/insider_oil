@@ -1,4 +1,6 @@
-exports.FixedUEPProduction = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const FixedUEPProduction: BaseDataSourceParams = {
     fields: {
         name: {
             label: 'Nome'
@@ -33,3 +35,5 @@ exports.FixedUEPProduction = {
     tableLabel: 'Produção UEP fixas',
     hasMap: true
 }
+
+export = FixedUEPProduction;

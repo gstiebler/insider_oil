@@ -1,26 +1,25 @@
 "use strict";
 var db = require('../db/models');
 var fileUpload = require('../lib/fileUpload');
-var dbUtils = require('../lib/dbUtils');
-var dsParams = require('../lib/DataSourcesParams');
-var importExcel = require('../lib/importExcel');
-var ControllerUtils = require('../lib/ControllerUtils');
 var Sync = require('sync');
 var await = require('../lib/await');
-var winston = require('winston');
-
-
+import ControllerUtils = require('../lib/ControllerUtils');
+import importExcel = require('../lib/importExcel');
+import winston = require('winston');
+import dbUtils = require("../lib/dbUtils");
+import dsParams = require('../lib/DataSourcesParams');
+import express = require("express");
+ 
 function getFieldTypes(fields) {
     const types = {};
     for( var i = 0; i < fields.length; i++) {
-        types[fields[i].name] = fields[i].type;
+        types[fields[i].name] = fields[i].type; 
     }
     return types;
 }
 
-
-function main(req, res, next) {
-    const modelName = req.query.table;
+function main(req: express.Request, res: express.Response, next) {
+    const modelName: string = req.query.table;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
     const fieldNames = req.query.fieldNames;
     const dataSource = dbUtils.getDataSource(modelName);
@@ -54,7 +53,7 @@ function main(req, res, next) {
 }
 
 
-function uploadFile(req, res, next) {
+function uploadFile(req: express.Request, res: express.Response, next) {
     fileUpload.receive( req, onFile, onFinish );
 
     function onFile(fileName, buf) {
@@ -82,14 +81,14 @@ function uploadFile(req, res, next) {
 }
 
 
-function modelFields(req, res, next) {
+function modelFields(req: express.Request, res: express.Response, next) {
     var modelName = req.query.model;
     var fields = dbUtils.getModelFields(modelName);
     res.json( { fields: fields } );
 }
 
 
-function recordValues(req, res, next) {
+function recordValues(req: express.Request, res: express.Response, next) {
     var modelName = req.query.model;
     var id = req.query.id;
     const dataSource = dbUtils.getDataSource(modelName);
@@ -111,7 +110,7 @@ function recordValues(req, res, next) {
 }
 
 
-function createItem(req, res, next) {
+function createItem(req: express.Request, res: express.Response, next) {
     var newItemData = req.body.newItemData;
     var modelName = req.body.model;
     var model = dbUtils.getDataSource(modelName);
@@ -124,7 +123,7 @@ function createItem(req, res, next) {
 }
 
 
-function saveItem(req, res, next) {
+function saveItem(req: express.Request, res: express.Response, next) {
     var modelName = req.body.model;
     var recordData = req.body.record;
     var model = dbUtils.getDataSource(modelName);     
@@ -145,7 +144,7 @@ function saveItem(req, res, next) {
 }
 
 
-function deleteItem(req, res) { Sync(function() {
+function deleteItem(req: express.Request, res: express.Response) { Sync(function() {
     function hasReferencedObj() {
         // check if a news deference the object
         const modelInList = await(db.ModelsList.find({ where: { name: modelName } }));
@@ -183,7 +182,7 @@ function deleteItem(req, res) { Sync(function() {
 })}
 
 
-function getComboValues(req, res) {
+function getComboValues(req: express.Request, res: express.Response) {
     var modelName = req.query.model;
     var model = dbUtils.getDataSource(modelName);   
     // TODO using 'name' as field. Should change for label field configuration
@@ -207,17 +206,16 @@ function getComboValues(req, res) {
     }
 }
 
-
-function viewRecord(req, res, next) {
+function viewRecord(req: express.Request, res: express.Response, next) {
     var dataSourceName = req.query.dataSource;
     var id = req.query.id;
     var dataSource = dbUtils.getDataSource(dataSourceName);
-    var options = {};
+    var options: any = {};
     options.include = [{all: true}];
     dataSource.findById(id, options).then(onRecord)
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
-    function onRecord(record) { Sync(function() {
+    function onRecord(record) { Sync(function() {  
         var fields = dbUtils.getModelFields(dataSourceName, true);
         var recordValues = [];
         
@@ -242,7 +240,7 @@ function viewRecord(req, res, next) {
 }
 
 
-function getQueryData(req, res) {Sync(function(){
+function getQueryData(req: express.Request, res: express.Response) {Sync(function(){
     const dataSourceName = req.query.dataSource;
     const queryName = req.query.queryName;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
@@ -267,7 +265,7 @@ function getQueryData(req, res) {Sync(function(){
 })}
 
 
-function sourcesList(req, res) {
+function sourcesList(req: express.Request, res: express.Response) {
     var list = {
         Basin: 'Bacias',
         Block: 'Blocos',

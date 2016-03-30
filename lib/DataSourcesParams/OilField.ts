@@ -1,4 +1,6 @@
-exports.OilField = { 
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const OilField: BaseDataSourceParams = {
     fields: {
         name: {
             label: "Nome"
@@ -24,3 +26,5 @@ exports.OilField = {
     tableLabel: "Campos",
     hasMap: false
 };
+
+export = OilField;

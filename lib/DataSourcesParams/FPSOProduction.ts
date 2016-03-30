@@ -1,4 +1,6 @@
-exports.FPSOProduction = {
+import BaseDataSourceParams = require('./BaseDataSourceParams');
+
+const FPSOProduction: BaseDataSourceParams = {
     fields: {
         name: {
             label: 'Nome da unidade'
@@ -45,3 +47,5 @@ exports.FPSOProduction = {
     tableLabel: 'Produção FPSOs',
     hasMap: false
 }
+
+export = FPSOProduction

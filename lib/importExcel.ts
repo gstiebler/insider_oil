@@ -3,8 +3,8 @@ var XLSX = require('xlsx');
 var db = require( '../db/models' );
 var Sync = require('sync');
 var await = require('./await');
-var dsParams = require('./DataSourcesParams');
-var winston = require('winston');
+import dsParams = require('./DataSourcesParams');
+import winston = require('winston');
 
 
 function getRowValues(worksheet, row) {
@@ -105,8 +105,11 @@ function setRecord(record, header, fields, rowValues, model) {
     }    
 }
 
+interface IOkFunc {
+    (status: string, recordsStatus: string[]): void;
+}
 
-function importExcel(excelBuf, modelName, lineOffset, onOk, onError) {
+function importExcel(excelBuf, modelName: string, lineOffset: number, onOk: IOkFunc, onError) {
     var workbook = XLSX.read(excelBuf, {type:"buffer", cellDates: true});
     var first_sheet_name = workbook.SheetNames[0];
     var worksheet = workbook.Sheets[first_sheet_name];
@@ -124,7 +127,7 @@ function importExcel(excelBuf, modelName, lineOffset, onOk, onError) {
     Sync( function() {
         try{
             var status = "";
-            var invalidStatus = [];
+            var invalidStatus: string[] = [];
             function addError(error, row) {
                 var msg = error.message;
                 if(!msg)
@@ -168,7 +171,7 @@ function importExcel(excelBuf, modelName, lineOffset, onOk, onError) {
 }
 
 
-module.exports = function(excelBuf, modelName, onOk, onError) {
+function main(excelBuf, modelName: string, onOk, onError) {
     const modelOffset = {
         'Block': 10
     };
@@ -178,3 +181,5 @@ module.exports = function(excelBuf, modelName, onOk, onError) {
         offset = modelOffset[modelName];
     importExcel(excelBuf, modelName, offset, onOk, onError);
 }
+
+export = main;
