@@ -31,6 +31,12 @@ const Well: BaseDataSourceParams = {
         },
         block_id: {
             label: "Bloco"
+        },
+        drilling_rig_onshore_id: {
+            label: "Sonda"
+        },
+        drilling_rig_offshore_id: {
+            label: "Sonda"
         }
     },
     labelField: "name",

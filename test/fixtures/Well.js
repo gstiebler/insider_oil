@@ -1,5 +1,8 @@
 var utils = require('../lib/utils');
 
+const idOnshore = utils.idByName('DrillingRigOnshore', 'NIC-01');
+const idOffshore = utils.idByName('DrillingRigOffshore', 'Aban Abraham');
+
 module.exports = function(db) {
     return db.Well.bulkCreate([
         {
@@ -9,7 +12,8 @@ module.exports = function(db) {
             basin_id: utils.idByName('Basin', 'Potiguar'),
             block_id: utils.idByName('Block', 'BM-BAR-1'),
             lat: -12.79429444,
-            lng: -38.43638167
+            lng: -38.43638167,
+            drilling_rig: 'onshore:' + idOnshore
         },
         {
             name: "1AGIP1RJS",
@@ -18,7 +22,8 @@ module.exports = function(db) {
             basin_id: utils.idByName('Basin', 'Tucano Central'),
             block_id: utils.idByName('Block', 'ES-M-529'),
             lat: -4.91808556,
-            lng: -37.22464472
+            lng: -37.22464472,
+            drilling_rig: 'onshore:' + idOnshore
         },
         {
             name: "1AJ 0001 BA",
@@ -27,7 +32,8 @@ module.exports = function(db) {
             basin_id: utils.idByName('Basin', 'Recôncavo'),
             block_id: utils.idByName('Block', 'PN-T-102'),
             lat: -9.98799556,
-            lng: -38.67655583
+            lng: -38.67655583,
+            drilling_rig: 'offshore:' + idOffshore
         }
     ]);
 }

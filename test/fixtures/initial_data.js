@@ -8,9 +8,9 @@ function createFixtures() {
     await( require('./Company')(db) );
     await( require('./Basin')(db) );
     await( require('./Block')(db) );
-    await( require('./Well')(db) );
     await( require('./DrillingRigOffshore')(db) );
     await( require('./DrillingRigOnshore')(db) );
+    await( require('./Well')(db) );
     await( require('./Person')(db) );
     await( require('./OilField')(db) );
     await( require('./Seismic')(db) );

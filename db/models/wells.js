@@ -17,6 +17,26 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.DECIMAL(10, 6),
           allowNull: false
         },
+        drilling_rig: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                if(this.drilling_rig_onshore_id) {
+                    return this.drilling_rig_onshore_id;
+                } else {
+                    return this.drilling_rig_offshore_id;
+                }
+            },
+            set: function(newValue) {
+                const parts = newValue.split(':');
+                const type = parts[0];
+                const id = parts[1];
+                if(type == 'onshore') {
+                    this.drilling_rig_onshore_id = id;
+                } else {
+                    this.drilling_rig_offshore_id = id;
+                }
+            }
+        }
     }, 
     {
         underscored: true,
