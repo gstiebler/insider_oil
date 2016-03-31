@@ -32,6 +32,8 @@ module.exports = function(sequelize, DataTypes) {
                 Well.belongsTo(models.Company, { as: 'operator' } );
                 Well.belongsTo(models.Block, { as: 'block' } );
                 Well.belongsTo(models.Basin, { as: 'basin' } );
+                Well.belongsTo(models.DrillingRigOnshore, { as: 'drilling_rig_onshore' } );
+                Well.belongsTo(models.DrillingRigOffshore, { as: 'drilling_rig_offshore' } );
             }
         }
     }
