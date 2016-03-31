@@ -183,8 +183,8 @@ function deleteItem(req: express.Request, res: express.Response) { Sync(function
 
 
 function getComboValues(req: express.Request, res: express.Response) {
-    var modelName = req.query.model;
-    var model = dbUtils.getDataSource(modelName);
+    const modelName:string = req.query.model;
+    const model = dbUtils.getDataSource(modelName);
     const labelField = 'name';  
     // default combo list 
     if(model) {
@@ -195,14 +195,14 @@ function getComboValues(req: express.Request, res: express.Response) {
         };
         model.findAll(options)
             .then(onValues)
-            .catch(ControllerUtils.getErrorFunc(res, 500, "NÃ£o foi possÃ­vel carregar os registros."));
+            .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possí­vel carregar os registros."));
     } else { // it should use a custom query to get the combo values
         const queryStrGenerator = ComboQueries[modelName];
         const queryStr = queryStrGenerator();
         const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
         db.sequelize.query(queryStr, simpleQueryType)
             .then(onValues) 
-            .catch(ControllerUtils.getErrorFunc(res, 500, "NÃ£o foi possÃ­vel carregar os registros."));;
+            .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possí­vel carregar os registros."));;
     } 
     function onValues(values) {
         var valuesArray = [];
