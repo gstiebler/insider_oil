@@ -33,7 +33,7 @@ interface IRefObjectsOnView {
     queryName?: string;
 }
 
-interface BaseDataSourceParams {
+interface IBaseDataSourceParams {
     fields: IFieldMap;
     labelField: string;
     gridFields: string[];
@@ -45,4 +45,4 @@ interface BaseDataSourceParams {
     referencedObjectsOnView?: IRefObjectsOnView[];
 }
 
-export = BaseDataSourceParams;
+export = IBaseDataSourceParams;
