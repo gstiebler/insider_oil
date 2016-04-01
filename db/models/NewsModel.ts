@@ -1,6 +1,8 @@
-"use strict";
 const newsLib = require('../../lib/News');
-var db = {};
+
+namespace News {
+    
+var db:any = {};
 
 function setReferences(news, options) {	
     const referencedObjects = newsLib.getModelReferences(news.content);
@@ -80,3 +82,5 @@ module.exports = function(sequelize, DataTypes) {
 
 	return News;
 };
+   
+}

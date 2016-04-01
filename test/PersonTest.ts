@@ -1,9 +1,9 @@
-"use strict";
+namespace PersonTest {
+    
 const fiberTests = require('./lib/fiberTests');
 const utils = require('./lib/utils');
 var db = require('../db/models');
 var dbServerController = require('../controllers/dbServerController');
-var await = require('../lib/await');
 
 
 var group = {
@@ -155,3 +155,6 @@ editPerson: test => {
 
 
 fiberTests.convertTests( exports, group );
+
+
+}

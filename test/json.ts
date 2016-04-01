@@ -1,5 +1,7 @@
+namespace JsonTests {
+
+
 var fiberTests = require('./lib/fiberTests');
-var await = require(__dirname + '/../lib/await');
 var Sync = require('sync');
 var utils = require('./lib/utils');
 
@@ -185,3 +187,5 @@ deleteItem: function(test) {
 };
 
 fiberTests.convertTests( exports, group );
+
+}

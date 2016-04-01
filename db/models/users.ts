@@ -34,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'users',
     instanceMethods: {
         generateToken: function( callback ) {
-            user = this;
+            let user = this;
             require('crypto').randomBytes(48, function(ex, buf) {
                 user.token = buf.toString('hex');
                 user.save().then( function() {

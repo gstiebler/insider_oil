@@ -1,11 +1,10 @@
 'use strict';
 var db  = require('../db/models');
 var Sync = require('sync');
-var await = require('../lib/await');
 var dsParams = require('../lib/DataSourcesParams');
 var winston = require('winston');
 
- const dataSources = [
+ const dataSources:any = [
     {
         model: 'AmbientalLicense',
         fields: ['license']

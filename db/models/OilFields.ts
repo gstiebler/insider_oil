@@ -39,7 +39,6 @@ module.exports = function(sequelize, DataTypes) {
                     return 'Mar';
                 else 
                     throw 'Campo "shore" deve conter "on" ou "off"';
-                return null;
             },
             set: function(val) {
                 const shoreLower = val.toLowerCase();

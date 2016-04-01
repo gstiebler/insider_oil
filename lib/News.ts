@@ -1,7 +1,6 @@
 "use strict";
 var cheerio = require('cheerio');
 var db = require('../db/models');
-var await = require('./await');
 
 
 function getLinkParameters(linkStr) {

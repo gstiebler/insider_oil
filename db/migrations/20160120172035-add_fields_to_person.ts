@@ -1,5 +1,4 @@
-'use strict';
-var Promise = require("bluebird");
+var promise_bb = require("bluebird");
 
 module.exports = {
 	up: function(queryInterface, Sequelize) {
@@ -78,7 +77,7 @@ module.exports = {
 			}
 		});
 
-		return Promise.each(params, function(item) {
+		return promise_bb.each(params, function(item) {
 			return queryInterface.addColumn(item.table, item.columnName, item.columnDesc);
 		});
 	},
@@ -142,7 +141,7 @@ module.exports = {
 			columnName: 'photo'
 		});
 
-		return Promise.each(params, function(item) {
+		return promise_bb.each(params, function(item) {
 			return queryInterface.removeColumn(item.table, item.columnName);
 		});
 	}

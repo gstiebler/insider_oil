@@ -1,6 +1,4 @@
-'use strict';
-
-var Promise = require("bluebird");
+var promise_bb = require("bluebird");
 
 const params = [];
 
@@ -18,7 +16,7 @@ params.push( "ALTER TABLE `wells`" +
 
 module.exports = {
     up: function(queryInterface, Sequelize) {
-        return Promise.each(params, function(item) {
+        return promise_bb.each(params, function(item) {
             return queryInterface.sequelize.query(item);
         });
     },

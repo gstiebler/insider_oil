@@ -2,7 +2,6 @@
 
 var tree = require('../lib/Tree');
 var Sync = require('sync');	
-var await = require('../lib/await');
 var dbUtils = require('../lib/dbUtils');
 var winston = require('winston');
 

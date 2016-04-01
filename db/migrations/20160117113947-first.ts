@@ -1,6 +1,4 @@
-'use strict';
-
-var Promise = require("bluebird");
+var promise_bb = require("bluebird");
 
 module.exports = {
 	up: function(queryInterface, Sequelize) {
@@ -881,7 +879,7 @@ module.exports = {
 			}
 		});
 
-		return Promise.each(parameters, function(item) {
+		return promise_bb.each(parameters, function(item) {
 			return queryInterface.createTable(item.table, item.fields);
 		});
 	},
@@ -908,7 +906,7 @@ module.exports = {
 		    'users'
 		];
 		
-		return Promise.each(tables, function(table) {
+		return promise_bb.each(tables, function(table) {
 			return queryInterface.dropTable(table);
 		});
 	}

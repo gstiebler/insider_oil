@@ -47,7 +47,7 @@ exports.uglifyAngularJsFiles = function(env) {
     } else {
         const outSourceMapName = 'out.js.map';
         const outSourceMapFile = angularAppPath + outSourceMapName;
-        const minifyOptions = {
+        const minifyOptions:any = {
             mangle: true,
             compress: {
                 sequences: true,

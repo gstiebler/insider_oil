@@ -1,5 +1,5 @@
-'use strict';
-
+namespace Tree {
+    
 var tree = { 
 label: "Oil & Gas",
 children: [
@@ -345,5 +345,7 @@ function addNumbers() {
 }
 
 addNumbers();
+
+}
 
 module.exports = tree;

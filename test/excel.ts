@@ -1,7 +1,7 @@
-"use strict";
+namespace ExcelTests {
+    
 var fiberTests = require('./lib/fiberTests');
 var db = require('../db/models');
-var await = require('../lib/await');
 var fs = require('fs');
 var importExcel = require('../lib/importExcel');
 var ExportExcel = require('../lib/ExportExcel');
@@ -185,3 +185,5 @@ invalidHeader: function(test) {
 };
 
 fiberTests.convertTests( exports, group );
+
+}

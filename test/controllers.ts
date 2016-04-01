@@ -1,4 +1,3 @@
-"use strict";
 var fiberTests = require('./lib/fiberTests');
 var dbServerController = require('../controllers/dbServerController');
 var TreeController = require('../controllers/TreeController');

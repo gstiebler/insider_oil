@@ -1,8 +1,6 @@
 var db = require( '../models' );
-var await = require('../../lib/await');
 var umzug = require('../../lib/InitUmzug');
 var Sync = require('sync');
-var createFixtures = require('../../test/fixtures/initial_data');
 var winston = require('winston');
 
 winston.add(winston.transports.File, { filename: 'log/seeder.log' });

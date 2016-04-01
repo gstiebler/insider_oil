@@ -1,6 +1,7 @@
-"use strict";
+namespace SeleniumTests {
+    
+
 var fiberTests = require('./lib/fiberTests');
-var await = require(__dirname + '/../lib/await');
 
 var port = 3333;
 var InitializeServer = require('./lib/InitializeServer');
@@ -582,3 +583,6 @@ function elementByText(text) {
 
 
 fiberTests.convertTests( exports, group );
+
+
+}

@@ -1,9 +1,9 @@
-"use strict";
+namespace NewsTest {
+    
 const fiberTests = require('./lib/fiberTests');
 const news = require('../lib/News');
 const utils = require('./lib/utils');
 var db = require('../db/models');
-var await = require('../lib/await');
 
 
 const newsHTML = '<p>um campo: <a href="/app/view_record?source=OilField&amp;id=3" style="background-color: rgb(255, 255, 255);">Abalone</a> ' +
@@ -102,5 +102,6 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 
 };
 
-
 fiberTests.convertTests( exports, group );
+
+}

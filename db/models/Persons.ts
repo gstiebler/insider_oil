@@ -1,6 +1,3 @@
-"use strict";
-var await = require('../../lib/await');
-
 
 function updatePersonProjects(db, person) {
     const projects = person.dataValues.projects;

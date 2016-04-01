@@ -1,6 +1,6 @@
+namespace InitialDataFixtures {
+    
 var db  = require('../../db/models');
-var await = require('../../lib/await');
-
 
 function createFixtures() {
     await( require('../../db/seeders/ModelsListInitializer')(db) );
@@ -24,3 +24,5 @@ function createFixtures() {
 };
 
 module.exports = createFixtures;
+
+}

@@ -53,7 +53,7 @@ exports.authorize = function(req, res, next) {
     function callback( user ) {
         if( user ) {
             req.user = user;
-        	const logObj = {
+        	const logObj:any = {
         		path: req.route.path,
         		agent: req.headers['user-agent'],
         		query: req.query,

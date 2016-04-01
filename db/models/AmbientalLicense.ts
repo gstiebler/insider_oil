@@ -1,6 +1,5 @@
-'use strict';
-var await = require('../../lib/await');
-
+namespace AmbientalLicense {
+    
 function updateBlocks(db, ambientalLicense) {
     const blocks = ambientalLicense.dataValues.blocks;
     if(blocks == null)
@@ -94,3 +93,5 @@ module.exports = function(sequelize, DataTypes) {
   
   return AmbientalLicense;
 };
+    
+}
