@@ -8,6 +8,7 @@ import winston = require('winston');
 import dbUtils = require("../lib/dbUtils");
 import dsParams = require('../lib/DataSourcesParams');
 import express = require("express");
+import DataSourceOperations = require('../lib/DataSourceOperations/index');
 var ComboQueries = require('../db/queries/ComboQueries');
  
 function getFieldTypes(fields) {
@@ -39,7 +40,8 @@ function main(req: express.Request, res: express.Response, next) {
         try {
             viewParams.gridFields.push('id');
             dbUtils.simplifyArray( dataSource, records );
-            const fields = dbUtils.getModelFields(modelName);
+            const dsOperations = DataSourceOperations[modelName];
+            const fields = dsOperations.getModelFields(modelName);
             const responseObj = {
                 records: dbUtils.filterShowFields(records, showFields),
                 viewParams: viewParams,
@@ -83,21 +85,25 @@ function uploadFile(req: express.Request, res: express.Response, next) {
 
 function modelFields(req: express.Request, res: express.Response, next) {
     var modelName = req.query.model;
-    var fields = dbUtils.getModelFields(modelName);
+    const dsOperations = DataSourceOperations[modelName];
+    var fields = dsOperations.getModelFields(modelName);
     res.json( { fields: fields } );
 }
 
 
 function recordValues(req: express.Request, res: express.Response, next) {
-    var modelName = req.query.model;
+    var dsName = req.query.model;
     var id = req.query.id;
-    const dataSource = dbUtils.getDataSource(modelName);
-    dataSource.findById(id).then(onRecord)
+    const dataSource = dbUtils.getDataSource(dsName);
+    const dsOps = DataSourceOperations[dsName];
+    dataSource.findById(id)
+        .then(onRecord)
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) { Sync(function(){
         try{
-            var fields = dbUtils.getModelFields(modelName);
+            const dsOperations = DataSourceOperations[dsName];
+            var fields = dsOperations.getModelFields(dsName);
             
             res.json({ 
                 values: record,
@@ -124,19 +130,16 @@ function createItem(req: express.Request, res: express.Response, next) {
 
 
 function saveItem(req: express.Request, res: express.Response, next) {
-    var modelName = req.body.model;
+    var dsName = req.body.model;
     var recordData = req.body.record;
-    var model = dbUtils.getDataSource(modelName);     
-    model.findById( recordData.id )
+    var dataSource = dbUtils.getDataSource(dsName);
+    const dsOps = DataSourceOperations[dsName];     
+    dataSource.findById( recordData.id )
         .then(onFindRecord)
         .catch(ControllerUtils.getErrorFunc(res, 404, "Não foi possível encontrar o registro."));
     
     function onFindRecord(record) {
-        for(var attributeName in recordData) {
-            const tableAttribute = model.tableAttributes[attributeName];
-            if(tableAttribute && tableAttribute.invisible) continue;
-            record[attributeName] = recordData[attributeName];
-        }
+        dsOps.addAttributesToRecord(record, recordData, dataSource);
         record.save()
             .then(ControllerUtils.getOkFunc(res, "Registro salvo com sucesso."))
             .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível salvar o registro."));
@@ -226,7 +229,8 @@ function viewRecord(req: express.Request, res: express.Response, next) {
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) { Sync(function() {  
-        var fields = dbUtils.getModelFields(dataSourceName, true);
+        const dsOperations = DataSourceOperations[dataSourceName];
+        var fields = dsOperations.getModelFields(dataSourceName, true);
         var recordValues = [];
         
         for( var i = 0; i < fields.length; i++ ) {
@@ -264,7 +268,8 @@ function getQueryData(req: express.Request, res: express.Response) {Sync(functio
     const queryStr = queryStrGenerator(filters);
     const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
     db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
-        const fields = dbUtils.getModelFields(dataSourceName, true);
+        const dsOperations = DataSourceOperations[dataSourceName];
+        const fields = dsOperations.getModelFields(dataSourceName, true);
         const result = {
             viewParams: viewParams,
             records: records,
