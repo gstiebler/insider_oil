@@ -17,22 +17,32 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.DECIMAL(10, 6),
           allowNull: false
         },
+        drilling_rig_onshore_id: {
+          type: DataTypes.INTEGER,
+          allowNull: true
+        },
+        drilling_rig_offshore_id: {
+          type: DataTypes.INTEGER,
+          allowNull: true
+        },
         drilling_rig: {
             type: DataTypes.VIRTUAL,
             get: function() {
                 if(this.drilling_rig_onshore_id) {
-                    return this.drilling_rig_onshore_id;
+                    return this.drilling_rig_onshore_id + `:onshore`;
                 } else {
-                    return this.drilling_rig_offshore_id;
+                    return this.drilling_rig_offshore_id + ':offshore';
                 }
             },
             set: function(newValue) {
                 const parts = newValue.split(':');
-                const type = parts[0];
-                const id = parts[1];
+                const id = parts[0];
+                const type = parts[1];
                 if(type == 'onshore') {
                     this.drilling_rig_onshore_id = id;
+                    this.drilling_rig_offshore_id = null;
                 } else {
+                    this.drilling_rig_onshore_id = null;
                     this.drilling_rig_offshore_id = id;
                 }
             }
@@ -52,8 +62,6 @@ module.exports = function(sequelize, DataTypes) {
                 Well.belongsTo(models.Company, { as: 'operator' } );
                 Well.belongsTo(models.Block, { as: 'block' } );
                 Well.belongsTo(models.Basin, { as: 'basin' } );
-                Well.belongsTo(models.DrillingRigOnshore, { as: 'drilling_rig_onshore' } );
-                Well.belongsTo(models.DrillingRigOffshore, { as: 'drilling_rig_offshore' } );
             }
         }
     }

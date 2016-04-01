@@ -13,7 +13,7 @@ module.exports = function(db) {
             block_id: utils.idByName('Block', 'BM-BAR-1'),
             lat: -12.79429444,
             lng: -38.43638167,
-            drilling_rig: 'onshore:' + idOnshore
+            drilling_rig: idOnshore + ':onshore' 
         },
         {
             name: "1AGIP1RJS",
@@ -23,7 +23,7 @@ module.exports = function(db) {
             block_id: utils.idByName('Block', 'ES-M-529'),
             lat: -4.91808556,
             lng: -37.22464472,
-            drilling_rig: 'onshore:' + idOnshore
+            drilling_rig: idOnshore + ':onshore' 
         },
         {
             name: "1AJ 0001 BA",
@@ -33,7 +33,7 @@ module.exports = function(db) {
             block_id: utils.idByName('Block', 'PN-T-102'),
             lat: -9.98799556,
             lng: -38.67655583,
-            drilling_rig: 'offshore:' + idOffshore
+            drilling_rig: idOffshore + ':offshore' 
         }
     ]);
 }
