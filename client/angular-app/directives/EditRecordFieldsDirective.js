@@ -44,6 +44,7 @@ app.directive('recordFields', function() {
                         const dateStr = $scope.values[field.name];
                         if(dateStr) {
                             const date = new Date(dateStr);
+                            // TODO use moment.js
                             date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 ); // correction for timezone
                             $scope.values[field.name] = date;
                         }
