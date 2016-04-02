@@ -1,6 +1,6 @@
 "use strict";
 var XLSX = require('xlsx');
-var db = require( '../db/models' );
+import db = require( '../db/models' );
 var Sync = require('sync');
 var await = require('./await');
 import dsParams = require('./DataSourcesParams');
@@ -122,7 +122,7 @@ function importExcel(excelBuf, modelName: string, lineOffset: number, onOk: IOkF
     var excelParams = dsParams[modelName].excelParams;
     var keyFieldIndexInExcel = header.indexOf( excelParams.keyField );
     var modelKeyField = excelParams.fields[ excelParams.keyField ];
-    var model = db[modelName];
+    var model = db.models[modelName];
     var range = XLSX.utils.decode_range(worksheet['!ref']);
     Sync( function() {
         try{
@@ -171,7 +171,7 @@ function importExcel(excelBuf, modelName: string, lineOffset: number, onOk: IOkF
 }
 
 
-function main(excelBuf, modelName: string, onOk, onError) {
+function main(excelBuf, modelName: string, onOk?, onError?) {
     const modelOffset = {
         'Block': 10
     };

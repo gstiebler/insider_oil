@@ -1,10 +1,9 @@
 "use strict";
+
+const fiberTests = require('./lib/fiberTests');
 import db = require('../db/models');
 import dbServerController = require('../controllers/dbServerController');
 
-namespace PersonTest {
-    
-const fiberTests = require('./lib/fiberTests');
 const utils = require('./lib/utils');
 
 
@@ -157,6 +156,3 @@ editPerson: test => {
 
 
 fiberTests.convertTests( exports, group );
-
-
-}

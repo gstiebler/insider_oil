@@ -47,7 +47,3 @@ export function importExcelFromURL(req: express.Request, res: express.Response) 
         res.json( { status: status, recordsStatus: recordsStatus } );
     }
 }
-
-
-exports.downloadExcel = downloadExcel;
-exports.importExcelFromURL = importExcelFromURL;

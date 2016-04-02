@@ -1,11 +1,11 @@
 "use strict"
 
 var fiberTests = require('./lib/fiberTests');
-var dbServerController = require('../controllers/dbServerController');
+import dbServerController = require('../controllers/dbServerController');
 var TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
 var SearchController = require('../controllers/SearchController');
-var ExcelController = require('../controllers/ExcelController');
+import ExcelController = require('../controllers/ExcelController');
 var Sync = require('sync');
 var utils = require('./lib/utils');
 //var Future = Sync.Future();

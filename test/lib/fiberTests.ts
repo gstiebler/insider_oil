@@ -1,12 +1,10 @@
 "use strict";
 
+process.env['NODE_ENV'] = 'test';
 import winston = require('winston');
 import db = require('../../db/models');
 import createFixtures = require('../fixtures/initial_data');
 
-namespace FiberTests {
-    
-process.env['NODE_ENV'] = 'test';
 var Sync = require('sync');
 var await = require('../../lib/await');
 var umzug = require('../../lib/InitUmzug');
@@ -60,6 +58,4 @@ exports.convertTests = function( exports, group ) {
     for(var propertyName in group) {
         exports.group[propertyName] = syncBaseFunc( group[propertyName] );
     }
-}
-
 }

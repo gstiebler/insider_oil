@@ -33,7 +33,7 @@ export function getDataSource(dataSourceName: string): ioDataSource {
 }
  
  
-export function findAllCustom(model: ioDataSource, options: any, filters: any) {
+export function findAllCustom(model: ioDataSource, options?: any, filters?: any) {
     options = options ? options : {};
     filters = filters ? filters : {};
     options.where = options.where ? options.where : {};  

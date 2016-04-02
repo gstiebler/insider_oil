@@ -1,12 +1,12 @@
-namespace ExcelTests {
     
 var fiberTests = require('./lib/fiberTests');
-var db = require('../db/models');
-var fs = require('fs');
-var importExcel = require('../lib/importExcel');
-var ExportExcel = require('../lib/ExportExcel');
+import db = require('../db/models');
+import fs = require('fs');
+import importExcel = require('../lib/importExcel');
+import ExportExcel = require('../lib/ExportExcel');
 var XLSX = require('xlsx');
-var dbUtils = require('../lib/dbUtils');
+import dbUtils = require('../lib/dbUtils');
+var await = require('../lib/await');
 
 function onError(error) {
     console.error(error.stack);
@@ -23,7 +23,7 @@ var group = {
 
 importDrillingRigOffshore: function(test) {
     var fixtureCount = 3;
-    test.equal( fixtureCount, await( db.DrillingRigOffshore.findAll() ).length );  
+    test.equal( fixtureCount, await( db.models.DrillingRigOffshore.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
     try {
         importExcel(excelBuf, 'DrillingRigOffshore', onImportDone, onError);
@@ -32,7 +32,8 @@ importDrillingRigOffshore: function(test) {
     }
     
     function onImportDone(status, invalidRecordsStatus) {
-        var rows = await( dbUtils.findAllCustom(db.DrillingRigOffshore));
+        const DrillingRigOffshoreModel: dbUtils.ioDataSource = db.models.DrillingRigOffshore;
+        var rows = await( dbUtils.findAllCustom(DrillingRigOffshoreModel));
         test.equal( 35, rows.length );  
         var expectedStatus = "Registros criados: 32";
         expectedStatus += "\nRegistros atualizados: 3";
@@ -66,12 +67,12 @@ importDrillingRigOffshore: function(test) {
 
 importAmbientalLicenses: test => {
     var fixtureCount = 3;
-    test.equal( fixtureCount, await( db.AmbientalLicense.findAll() ).length );  
+    test.equal( fixtureCount, await( db.models.AmbientalLicense.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/ambiental_licenses.xlsx');
     importExcel(excelBuf, 'AmbientalLicense', onImportDone, onError);
     
     function onImportDone(status, invalidRecordsStatus) {
-        var rows = await( dbUtils.findAllCustom(db.AmbientalLicense));
+        var rows = await( dbUtils.findAllCustom(db.models.AmbientalLicense));
         test.equal( 17, rows.length );  
         var expectedStatus = "Registros criados: 14";
         expectedStatus += "\nRegistros atualizados: 5";
@@ -105,12 +106,12 @@ importAmbientalLicenses: test => {
 
 importBlocks: test => {
     var fixtureCount = 3;
-    test.equal( fixtureCount, await( db.Block.findAll() ).length );  
+    test.equal( fixtureCount, await( db.models.Block.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/blocks.xlsx');
     importExcel(excelBuf, 'Block', onImportDone, onError);
     
     function onImportDone(status, invalidRecordsStatus) {
-        var rows = await( dbUtils.findAllCustom(db.Block));
+        var rows = await( dbUtils.findAllCustom(db.models.Block));
         test.equal( 344, rows.length );  
         var expectedStatus = "Registros criados: 341";
         expectedStatus += "\nRegistros atualizados: 3";
@@ -185,5 +186,3 @@ invalidHeader: function(test) {
 };
 
 fiberTests.convertTests( exports, group );
-
-}

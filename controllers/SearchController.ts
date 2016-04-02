@@ -73,7 +73,7 @@ function search(searchValue, numMaxResults) {
     for( var i = 0; i < dataSources.length; i++) {
     	const dataSource = dataSources[i];
     	for( var j = 0; j < dataSource.fields.length; j++ ) {
-    		const model = db[dataSource.model];
+    		const model = db.models[dataSource.model];
     		const fieldName = dataSource.fields[j];
     		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model, ' + dataSource.model_id + ' as model_id, id ';
             currQuery += ' from ' + model.getTableName();

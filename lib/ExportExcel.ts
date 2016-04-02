@@ -93,7 +93,7 @@ function exportExcel(records: any[], dataSource: dbUtils.ioDataSource, dataSourc
 export function main(dataSourceName: string) {
     const dataSource = dbUtils.getDataSource(dataSourceName);
     try {
-        const records = await( dbUtils.findAllCustom(dataSource, {}, {}) );
+        const records = await( dbUtils.findAllCustom(dataSource) );
         return exportExcel(records, dataSource, dataSourceName);
     } catch(e) {
     	console.error(e.stack);
