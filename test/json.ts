@@ -1,9 +1,7 @@
-namespace JsonTests {
-
 
 var fiberTests = require('./lib/fiberTests');
 var Sync = require('sync');
-var utils = require('./lib/utils');
+import utils = require('./lib/utils');
 
 var port = 3333;
 var InitializeServer = require('./lib/InitializeServer');
@@ -78,24 +76,20 @@ modelFields: function(test) {
     });
     
     function onWellFields(json) {
-        test.equal(7, json.fields.length);
+        test.equal(16, json.fields.length);
         
         test.equal('name', json.fields[0].name);
-        test.equal('state', json.fields[1].name);
-        test.equal('lng', json.fields[3].name);
-        test.equal('operator_id', json.fields[4].name);
-        
         test.equal('Poço', json.fields[0].label);
-        test.equal('Estado', json.fields[1].label);
-        test.equal('Longitude', json.fields[3].label);
-        test.equal('Operador', json.fields[4].label);
-        
         test.equal('VARCHAR(255)', json.fields[0].type);
-        test.equal('VARCHAR(255)', json.fields[1].type);
-        test.equal('DECIMAL(10,6)', json.fields[3].type);
-        test.equal('ref', json.fields[4].type);
         
-        test.equal('Company', json.fields[4].model);
+        test.equal('lng', json.fields[3].name);
+        test.equal('Longitude', json.fields[3].label);
+        test.equal('DECIMAL(10,6)', json.fields[3].type);
+        
+        test.equal('operator_id', json.fields[14].name);
+        test.equal('Operador', json.fields[14].label);
+        test.equal('ref', json.fields[14].type);
+        test.equal('Company', json.fields[14].model);
         
         server.close();
         test.done();
@@ -113,12 +107,10 @@ recordValues: function(test) {
     });
     
     function onWellValues(json) {
-        test.equal(7, json.fields.length);
+        test.equal(16, json.fields.length);
 
         test.equal('1AGIP1RJS', json.values.name);
         test.equal(operatorId, json.values.operator_id);
-        test.equal('RJ', json.values.state);
-        test.equal(basinId, json.values.basin_id);
         test.equal(-4.918086, json.values.lat);
         test.equal(-37.224645, json.values.lng);
         
@@ -187,5 +179,3 @@ deleteItem: function(test) {
 };
 
 fiberTests.convertTests( exports, group );
-
-}
