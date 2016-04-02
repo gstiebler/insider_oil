@@ -1,4 +1,7 @@
 "use strict";
+
+namespace FiberTests {
+    
 process.env['NODE_ENV'] = 'test';
 var db = require('../../db/models');
 var Sync = require('sync');
@@ -56,4 +59,6 @@ exports.convertTests = function( exports, group ) {
     for(var propertyName in group) {
         exports.group[propertyName] = syncBaseFunc( group[propertyName] );
     }
+}
+
 }
