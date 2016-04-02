@@ -19,6 +19,14 @@ module.exports = {
         const columnParams = [];
 
 		columnParams.push({
+			columnName: 'name_operator',
+			columnDesc: {
+				type: Sequelize.STRING,
+				allowNull: true
+			}
+		});
+
+		columnParams.push({
 			columnName: 'type',
 			columnDesc: {
 				type: Sequelize.STRING,

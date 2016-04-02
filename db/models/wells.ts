@@ -7,6 +7,10 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false,
           unique: true
         },
+        name_operator: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
         lat: {
           type: DataTypes.DECIMAL(10, 6),
           allowNull: false

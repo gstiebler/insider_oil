@@ -5,6 +5,9 @@ const Well: BaseDataSourceParams = {
         name: {
             label: "Poço"
         },
+        name_operator: { // name defined by the Operator Company
+            label: "Nome operador"
+        },
         operator_name: {
             label: "Operador"
         },

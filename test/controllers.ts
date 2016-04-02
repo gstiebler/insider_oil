@@ -375,20 +375,21 @@ getRecordViewWell: function(test) {
 
     const response = utils.getJsonResponse.sync(null, dbServerController.viewRecord, req);
     const record = response.record;
+    test.equal(16, record.length);
     test.equal('Poço', record[0].label);
     test.equal('1AGIP1RJS', record[0].value);
     
-    test.equal('Estado', record[1].label);
+    test.equal('Reclassificação', record[7].label);
     test.equal('Latitude', record[2].label);
     
     test.equal('Sonda', record[4].label);
     test.equal('NIC-01', record[4].name);
     
-    test.equal('Operador', record[5].label);
-    test.equal(2, record[5].value);
-    test.equal(true, record[5].ref);
-    test.equal('Company', record[5].model);
-    test.equal('Eni Oil', record[5].name);
+    test.equal('Operador', record[14].label);
+    test.equal(2, record[14].value);
+    test.equal(true, record[14].ref);
+    test.equal('Company', record[14].model);
+    test.equal('Eni Oil', record[14].name);
     
     test.done();
 },
