@@ -834,10 +834,6 @@ module.exports = {
 					allowNull: false,
                     unique: true
 				},
-				state: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
 				lat: {
 					type: Sequelize.DECIMAL(10, 6),
 					allowNull: false
@@ -859,14 +855,6 @@ module.exports = {
 					allowNull: false,
 					references: {
 						model: 'blocks',
-						key: 'id'
-					}
-				},
-				basin_id: {
-					type: Sequelize.INTEGER,
-					allowNull: false,
-					references: {
-						model: 'basins',
 						key: 'id'
 					}
 				},

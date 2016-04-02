@@ -7,10 +7,6 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false,
           unique: true
         },
-        state: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         lat: {
           type: DataTypes.DECIMAL(10, 6),
           allowNull: false
@@ -58,7 +54,43 @@ module.exports = function(sequelize, DataTypes) {
                      return await( sequelize.models.DrillingRigOffshore.findById(this.drilling_rig_offshore_id) );
                 }
             }
-        }
+        },
+        type: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        category: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        reclassification: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        situation: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        start: {
+          type: DataTypes.DATEONLY,
+          allowNull: true
+        },
+        end: {
+          type: DataTypes.DATEONLY,
+          allowNull: true
+        },
+        conclusion: {
+          type: DataTypes.DATEONLY,
+          allowNull: true
+        },
+        measured_depth: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        depth: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
     }, 
     {
         underscored: true,
@@ -73,7 +105,6 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 Well.belongsTo(models.Company, { as: 'operator' } );
                 Well.belongsTo(models.Block, { as: 'block' } );
-                Well.belongsTo(models.Basin, { as: 'basin' } );
             }
         }
     }

@@ -11,12 +11,6 @@ const Well: BaseDataSourceParams = {
         operator_id: {
             label: "Operador"
         },
-        state: {
-            label: "Estado"
-        },
-        basin_id: {
-            label: "Bacia"
-        },
         basin_name: {
             label: "Bacia"
         },
@@ -38,12 +32,36 @@ const Well: BaseDataSourceParams = {
         drilling_rig_onshore_id: {
             label: "Sonda"
         },
-        drilling_rig_offshore_id: {
-            label: "Sonda"
+        type: {
+            label: "Tipo"
+        },
+        category: {
+            label: "Categoria"
+        },
+        reclassification: {
+            label: "Reclassificação"
+        },
+        situation: {
+            label: "Situação"
+        },
+        start: {
+            label: "Início"
+        },
+        end: {
+            label: "Término"
+        },
+        conclusion: {
+            label: "Conclusão"
+        },
+        measured_depth: {
+            label: "Profundidade medida"
+        },
+        depth: {
+            label: "Profundidade"
         }
     },
     labelField: "name",
-    gridFields: ["name", "operator_name", "state", "basin_name"],
+    gridFields: ["name", "operator_name"],
     tableLabel: "Poços",
     hasMap: true,
     excelParams: {
@@ -51,8 +69,6 @@ const Well: BaseDataSourceParams = {
         fields: {
             poco: 'name',
             operadora: 'operator',
-            estado: 'state',
-            bacia: 'basin',
             bloco: 'block',
             latitude_dd: 'lat',
             longitude_dd: 'lng'
