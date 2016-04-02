@@ -4,7 +4,7 @@ var tree = require('../lib/Tree');
 var Sync = require('sync');	
 var dbUtils = require('../lib/dbUtils');
 var winston = require('winston');
-
+var await = require('../lib/await');
 
 exports.main = function(req, res, next) { Sync(function() {
     try{

@@ -1,12 +1,15 @@
 "use strict";
 var db = require( '../db/models' );
-var winston = require('winston');
+import winston = require('winston');
 
 function userFromToken( token, callback ) {
-    if(token == '')
+    if (token == '')
         callback(null);
-      
-    db.User.findOne({ where: { token: token } }).then(callback);
+    db.User.findOne({ where: { token: token } })
+        .then(callback)
+        .catch((error) => {
+            winston.error(error);
+        });
 }
 
 
@@ -34,6 +37,7 @@ exports.authorizeHTML = function(req, res, next) {
             next();
         } else
             res.redirect('/login');
+        return null;
     }
 }
 
@@ -60,7 +64,7 @@ exports.authorize = function(req, res, next) {
         		user: user.login,
                 method: req.method
         	};
-        	winston.info({access: logObj});
+        	winston.info(JSON.stringify({access: logObj}));
             logObj.request = JSON.stringify(req.body);
             logObj.query = JSON.stringify(logObj.query);
             db.RequestLog.create( logObj ).catch((error) => {
@@ -68,7 +72,8 @@ exports.authorize = function(req, res, next) {
             });
             next();
         } else
-            invalidToken()
+            invalidToken();
+        return null;
     }
     
     function invalidToken() {

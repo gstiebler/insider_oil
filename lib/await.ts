@@ -5,6 +5,7 @@ namespace Await {
 function transPro( promise, callback ) {
     var promiseResponse = promise.then( function(result) {
         callback( null, result );
+        return null;
     });
     if(promiseResponse.thenCatch) {
         promiseResponse.thenCatch(function(error) {

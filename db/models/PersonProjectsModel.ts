@@ -33,6 +33,7 @@ function getProjects(sequelize, personId) {
             const queryStr = queryStrings.join('');
             return sequelize.query(queryStr, simpleQueryType);
         }
+        return null;
     });
 }
 

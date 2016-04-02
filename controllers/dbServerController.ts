@@ -238,7 +238,10 @@ export function viewRecord(req: express.Request, res: express.Response, next) {
             referencedObjects: viewParams.referencedObjectsOnView
         };
         res.json(result);
-    })};
+        return null;
+    })
+    return null;
+    };
 }
 
 
