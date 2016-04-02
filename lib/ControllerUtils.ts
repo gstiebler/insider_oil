@@ -18,5 +18,6 @@ export function getErrorFunc(res: express.Response, errorCode: number, msg: stri
 export function getOkFunc(res: express.Response, msg: string) {
     return function returnOkJson() {
         res.json( { msg: msg } );
+        return null;
     }
 }

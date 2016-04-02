@@ -143,6 +143,7 @@ export function saveItem(req: express.Request, res: express.Response, next) {
         record.save()
             .then(ControllerUtils.getOkFunc(res, "Registro salvo com sucesso."))
             .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível salvar o registro."));
+        return null;
     }
 }
 
