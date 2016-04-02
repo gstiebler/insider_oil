@@ -109,6 +109,7 @@ modelFields: function(test) {
     };
     
     const response = utils.getJsonResponse.sync(null, dbServerController.modelFields, req);
+    test.equal(16, response.fields.length);
     test.equal( 'name', response.fields[0].name );
     test.equal( 'Poço', response.fields[0].label );
     test.equal( 'VARCHAR(255)', response.fields[0].type );
@@ -121,10 +122,10 @@ modelFields: function(test) {
     test.equal( 'Sonda', response.fields[4].label );
     test.equal( 'ref', response.fields[4].type );
     
-    test.equal( 'operator_id', response.fields[5].name );
-    test.equal( 'Operador', response.fields[5].label );
-    test.equal( 'ref', response.fields[5].type );
-    test.equal( 'Company', response.fields[5].model );
+    test.equal( 'operator_id', response.fields[14].name );
+    test.equal( 'Operador', response.fields[14].label );
+    test.equal( 'ref', response.fields[14].type );
+    test.equal( 'Company', response.fields[14].model );
     test.done();
 },
 
