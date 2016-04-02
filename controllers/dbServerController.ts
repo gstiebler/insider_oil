@@ -9,7 +9,7 @@ import dbUtils = require("../lib/dbUtils");
 import dsParams = require('../lib/DataSourcesParams');
 import express = require("express");
 import DataSourceOperations = require('../lib/DataSourceOperations/index');
-var ComboQueries = require('../db/queries/ComboQueries');
+import ComboQueries = require('../db/queries/ComboQueries');
  
 function getFieldTypes(fields) {
     const types = {};
