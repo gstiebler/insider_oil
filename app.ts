@@ -23,11 +23,11 @@ if (app.get('env') == 'development') {
 }
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
 if (app.get('env') != 'test') {
 	app.use(logger('dev'));
@@ -35,9 +35,9 @@ if (app.get('env') != 'test') {
 app.use(bodyParser.json({limit: '20mb'}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/app/ext_libs', express.static(path.join(__dirname, './client/bower_components')));
-app.use('/app', express.static(path.join(__dirname, './client/angular-app')));
+app.use(express.static(path.join(__dirname, '../public')));
+app.use('/app/ext_libs', express.static(path.join(__dirname, '/../client/bower_components')));
+app.use('/app', express.static(path.join(__dirname, '/../client/angular-app')));
 
 routes(app);
 

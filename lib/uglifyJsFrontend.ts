@@ -37,7 +37,7 @@ exports.uglifyAngularJsFiles = function(env) {
         jsFilesList[i] = __dirname + '/../client/angular-app/' + jsFilesList[i];
     }*/
     
-    const angularAppPath = __dirname + '/../client/angular-app/';
+    const angularAppPath = __dirname + '/../../client/angular-app/';
     var includeJsHtml = '';
     if(env == 'development') {
         for(var jsFile of jsFilesList) {
