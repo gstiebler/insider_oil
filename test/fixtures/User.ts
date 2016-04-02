@@ -1,5 +1,5 @@
 module.exports = function(db) {
-    return db.User.bulkCreate([
+    return db.models.User.bulkCreate([
         {
             login: "gstiebler",
             name: "Guilherme Stiebler",

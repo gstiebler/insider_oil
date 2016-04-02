@@ -1,4 +1,4 @@
-var db = require('../db/models');
+import db = require('../db/models');
 var DataSources = require('./DataSources');
 import dsParams = require('./DataSourcesParams');
 
@@ -24,7 +24,7 @@ function assignObjects(objDst: any, objSrc: any) {
 
 
 export function getDataSource(dataSourceName: string): ioDataSource {
-    const model = db[dataSourceName];
+    const model = db.models[dataSourceName];
     if(model) // model without special filters
         return model;  
     else {

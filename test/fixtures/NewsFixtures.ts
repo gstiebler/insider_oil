@@ -1,4 +1,4 @@
-var utils = require('../lib/utils');
+import utils = require('../lib/utils');
 var await = require('../../lib/await');
 
 module.exports = function(db) {
@@ -34,7 +34,7 @@ module.exports = function(db) {
     
 	const promisesArray = [];
     for(var newsObj of newsObjs) {
-        promisesArray.push(db.News.create(newsObj));
+        promisesArray.push(db.models.News.create(newsObj));
     }
     
     return Promise.all(promisesArray);

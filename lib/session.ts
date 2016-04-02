@@ -1,11 +1,11 @@
 "use strict";
-var db = require( '../db/models' );
+import db = require( '../db/models' );
 import winston = require('winston');
 
 function userFromToken( token, callback ) {
     if (token == '')
         callback(null);
-    db.User.findOne({ where: { token: token } })
+    db.models.User.findOne({ where: { token: token } })
         .then(callback)
         .catch((error) => {
             winston.error(error);
@@ -14,7 +14,7 @@ function userFromToken( token, callback ) {
 
 
 exports.login = function( username, password, loginOk, loginError ) {
-    db.User.findOne({ where: { 
+    db.models.User.findOne({ where: { 
                         login: username} 
     }).then( function(user) {
         if( user )  {  
@@ -67,7 +67,7 @@ exports.authorize = function(req, res, next) {
         	winston.info(JSON.stringify({access: logObj}));
             logObj.request = JSON.stringify(req.body);
             logObj.query = JSON.stringify(logObj.query);
-            db.RequestLog.create( logObj ).catch((error) => {
+            db.models.RequestLog.create( logObj ).catch((error) => {
                 winston.error(error.stack);
             });
             next();

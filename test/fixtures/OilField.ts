@@ -1,7 +1,7 @@
-var utils = require('../lib/utils');
+import utils = require('../lib/utils');
 
 module.exports = function(db) {
-    return db.OilField.bulkCreate([
+    return db.models.OilField.bulkCreate([
         {
             name: 'Anambé',
             basin_id: utils.idByName('Basin', 'Potiguar'),

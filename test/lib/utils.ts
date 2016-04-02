@@ -1,9 +1,9 @@
 var await = require('../../lib/await');
-var db = require('../../db/models');
+import db = require('../../db/models');
 
 
-function idByValue(modelName, fieldName, value) {
-    const model = db[modelName];
+export function idByValue(modelName: string, fieldName: string, value): number {
+    const model = db.models[modelName];
     const filter = {};
     filter[fieldName] = value;
     const record = await( model.findOne( { where: filter } ) );
@@ -11,17 +11,17 @@ function idByValue(modelName, fieldName, value) {
 }
 
 
-function idByName(modelName, value) {
+export function idByName(modelName: string, value): number {
     return idByValue(modelName, 'name', value);
 }
 
 
-function deStringify(json) {
+export function deStringify(json) {
     var str = JSON.stringify(json);
     return JSON.parse(str);
 }
 
-exports.getJsonResponse = function(func, req, callback) {
+export function getJsonResponse(func, req, callback) {
     const res = { 
         json: jsonRes,
         status: status
@@ -41,7 +41,3 @@ exports.getJsonResponse = function(func, req, callback) {
         return result;
     }
 }
-
-
-exports.idByName = idByName;
-exports.idByValue = idByValue

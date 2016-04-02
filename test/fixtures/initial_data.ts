@@ -1,9 +1,8 @@
-namespace InitialDataFixtures {
-    
-var await = require('../../lib/await');
-var db = require('../../db/models');
+import db = require('../../db/models');
 
-function createFixtures() {
+var await = require('../../lib/await');
+
+export function createFixtures():void {
     await( require('../../db/seeders/ModelsListInitializer')(db) );
     await( require('./User')(db) );
     await( require('./Company')(db) );
@@ -23,7 +22,3 @@ function createFixtures() {
     await( require('./NewsFixtures')(db) );
     await( require('./ComercialDeclarationFixture')(db) );
 };
-
-module.exports = createFixtures;
-
-}

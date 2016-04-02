@@ -1,13 +1,15 @@
 'use strict';
 
-var fs        = require('fs');
-var path      = require('path');
-var Sequelize = require('sequelize');  
-var winston   = require('winston');
+import fs        = require('fs');
+import path      = require('path');
+import Sequelize = require('sequelize');  
+import winston   = require('winston');
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
 var config    = require(__dirname + '/../../../db/config/config.json');
-var db:any    = {};
+
+
+var models:any = {};
 
 config.production.password = process.env.DB_PROD_PASSWORD;
 config.production.host = process.env.DB_PROD_HOST;
@@ -19,8 +21,6 @@ if (env == 'test') {
 }
 	
 winston.info('environment: ', env);
-
-
 	
 if (config.use_env_variable) {
   var sequelize = new Sequelize(process.env[config.use_env_variable]);
@@ -33,6 +33,7 @@ if (config.use_env_variable) {
   var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+
 fs
   .readdirSync(__dirname)
   .filter(function(file) {
@@ -40,20 +41,21 @@ fs
   })
   .forEach(function(file) {
     if (file.slice(-3) !== '.js') return;
-    var model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
+    var model:any = sequelize['import'](path.join(__dirname, file));
+    models[model.name] = model;
   });
 
-Object.keys(db).forEach(function(modelName) {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
+Object.keys(models).forEach(function(modelName) {
+  if (models[modelName].associate) {
+models[modelName].associate(models);
   }
-  	if (db[modelName].defineHooks) {
-	    db[modelName].defineHooks(db);
+  	if (models[modelName].defineHooks) {
+	    models[modelName].defineHooks(models);
 	}
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
-module.exports = db;
+export = { 
+    sequelize,
+    Sequelize,
+    models
+ };

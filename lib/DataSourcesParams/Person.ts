@@ -1,6 +1,5 @@
-var db = require('../../db/models');
+import db = require('../../db/models');
 var await = require('../../lib/await');
-
 import BaseDataSourceParams = require('./BaseDataSourceParams');
 
 const Person: BaseDataSourceParams = {
@@ -65,7 +64,7 @@ const Person: BaseDataSourceParams = {
             const modelsListFilter = {
                 name: filters.dataSource
             }
-            const modelInList = await( db.ModelsList.find({ where: modelsListFilter }) );
+            const modelInList = await( db.models.ModelsList.find({ where: modelsListFilter }) );
             
             var query = 'select p.id, p.name, p.position, pp.description ';
             query += 'from persons p, person_projects pp ';

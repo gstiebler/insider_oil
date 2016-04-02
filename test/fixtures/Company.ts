@@ -1,5 +1,5 @@
 module.exports = function(db) {
-    return db.Company.bulkCreate([
+    return db.models.Company.bulkCreate([
         {
             name: "Petrobras",
             address: "Rua no Centro"

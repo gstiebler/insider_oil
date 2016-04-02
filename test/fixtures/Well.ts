@@ -1,10 +1,10 @@
-var utils = require('../lib/utils');
+import utils = require('../lib/utils');
 
 const idOnshore = utils.idByName('DrillingRigOnshore', 'NIC-01');
 const idOffshore = utils.idByName('DrillingRigOffshore', 'Aban Abraham');
 
 module.exports = function(db) {
-    return db.Well.bulkCreate([
+    return db.models.Well.bulkCreate([
         {
             name: "1A 0001 BA",
             operator_id: utils.idByName('Company', 'Petrobrás'),

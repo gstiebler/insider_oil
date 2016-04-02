@@ -1,5 +1,5 @@
 module.exports = function(db) {
-    return db.Reserve.bulkCreate([
+    return db.models.Reserve.bulkCreate([
         {
             state: 'Alagoas',
             reserve: 10.5,

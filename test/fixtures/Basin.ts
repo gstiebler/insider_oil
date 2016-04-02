@@ -1,5 +1,5 @@
 module.exports = function(db) {
-    return db.Basin.bulkCreate([
+    return db.models.Basin.bulkCreate([
         {
             name: 'Tucano Central'
         },

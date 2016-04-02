@@ -1,6 +1,6 @@
 "use strict";
 var cheerio = require('cheerio');
-var db = require('../db/models');
+import db = require('../db/models');
 
 
 function getLinkParameters(linkStr) {

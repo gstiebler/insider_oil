@@ -1,10 +1,10 @@
 'use strict';
 
 var await = require('../lib/await');
-var db  = require('../db/models');
+import db = require('../db/models');
 var Sync = require('sync');
 var dsParams = require('../lib/DataSourcesParams');
-var winston = require('winston');
+import winston = require('winston');
 
  const dataSources:any = [
     {
@@ -61,7 +61,7 @@ var winston = require('winston');
 Sync(function() {
     for(var i = 0; i < dataSources.length; i++) {
         const searchOptions = { where: { name: dataSources[i].model } };
-        const modelItem = await( db.ModelsList.findOne(searchOptions) );
+        const modelItem = await( db.models.ModelsList.findOne(searchOptions) );
         dataSources[i].model_id = modelItem.id;
     }
 });

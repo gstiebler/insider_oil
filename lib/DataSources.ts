@@ -1,8 +1,8 @@
-var db  = require('../db/models');
+import db  = require('../db/models');
 
 exports.OilFieldDeveloping = {
     modelName: 'OilField',
-    model: db.OilField,
+    model: db.models.OilField,
     filters: {
         stage: 'development'
     }
@@ -11,7 +11,7 @@ exports.OilFieldDeveloping = {
 
 exports.OilFieldProduction = {
     modelName: 'OilField',
-    model: db.OilField,
+    model: db.models.OilField,
     filters: {
         stage: 'production'
     }
@@ -20,7 +20,7 @@ exports.OilFieldProduction = {
 
 exports.ReserveProvenOil = {
     modelName: 'Reserve',
-    model: db.Reserve,
+    model: db.models.Reserve,
     filters: {
         quantity_type: 'proven',
         type: 'oil'
@@ -30,7 +30,7 @@ exports.ReserveProvenOil = {
 
 exports.ReserveProvenGas = {
     modelName: 'Reserve',
-    model: db.Reserve,
+    model: db.models.Reserve,
     filters: {
         quantity_type: 'proven',
         type: 'gas'
@@ -40,7 +40,7 @@ exports.ReserveProvenGas = {
 
 exports.ReserveTotalOil = {
     modelName: 'Reserve',
-    model: db.Reserve,
+    model: db.models.Reserve,
     filters: {
         quantity_type: 'total',
         type: 'oil'
@@ -50,9 +50,9 @@ exports.ReserveTotalOil = {
 
 exports.ReserveTotalGas = {
     modelName: 'Reserve',
-    model: db.Reserve,
+    model: db.models.Reserve,
     filters: {
-        quantity_type: 'total',
+    quantity_type: 'total',
         type: 'gas'
     }
 };
@@ -60,7 +60,7 @@ exports.ReserveTotalGas = {
 
 exports.ProductionOnshore = {
     modelName: 'Production',
-    model: db.Production,
+    model: db.models.Production,
     filters: {
         shore: 'on'
     }
@@ -69,7 +69,7 @@ exports.ProductionOnshore = {
 
 exports.ProductionOffshore = {
     modelName: 'Production',
-    model: db.Production,
+    model: db.models.Production,
     filters: {
         shore: 'off'
     }

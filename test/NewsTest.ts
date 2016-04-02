@@ -1,10 +1,10 @@
 "use strict";
-namespace NewsTest {
+
+import db = require('../db/models');
+import utils = require('./lib/utils');
     
 const fiberTests = require('./lib/fiberTests');
 const news = require('../lib/News');
-const utils = require('./lib/utils');
-var db = require('../db/models');
 var await = require('../lib/await');
 
 
@@ -32,15 +32,15 @@ createNewsOnDB: test => {
     const abaloneId = utils.idByName('OilField', 'Abalone');
     const guilhermeId = utils.idByName('Person', 'Guilherme Stiebler');
     const fixtureCount = 3;
-    test.equal( fixtureCount, await( db.News.findAll() ).length ); 
+    test.equal( fixtureCount, await( db.models.News.findAll() ).length ); 
 	const newsToBeCreated = {
 		title: 'Título da nova notícia',
 		content: newsHTML,
 		author_id: utils.idByName('User', 'Felipe Grandin')
 	}
 
-	await( db.News.create(newsToBeCreated) );
-	const newNews = await( db.News.findAll() );
+	await( db.models.News.create(newsToBeCreated) );
+	const newNews = await( db.models.News.findAll() );
 
     test.equal( fixtureCount + 1, newNews.length );
     const justCreatedNew = newNews[fixtureCount];
@@ -50,15 +50,15 @@ createNewsOnDB: test => {
         where: { news_id: justCreatedNewId },
         order: 'id'
     };
-	const referencedModelsOnNew = await( db.NewsModels.findAll(options) );
+	const referencedModelsOnNew = await( db.models.NewsModels.findAll(options) );
 	test.equal(2, referencedModelsOnNew.length);
-	test.equal('OilField', await( db.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
+	test.equal('OilField', await( db.models.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
 	test.equal(abaloneId, referencedModelsOnNew[0].model_ref_id);
-	test.equal('Person', await( db.ModelsList.findById(referencedModelsOnNew[1].model_id) ).name);
+	test.equal('Person', await( db.models.ModelsList.findById(referencedModelsOnNew[1].model_id) ).name);
 	test.equal(guilhermeId, referencedModelsOnNew[1].model_ref_id);
 	
 	await(justCreatedNew.destroy());
-	const referencedModelsOnDeletedNew = await( db.NewsModels.findAll({ where: { news_id: justCreatedNewId } }) );
+	const referencedModelsOnDeletedNew = await( db.models.NewsModels.findAll({ where: { news_id: justCreatedNewId } }) );
 	test.equal(0, referencedModelsOnDeletedNew.length);
 	
 	test.done();
@@ -69,12 +69,12 @@ editNews: test => {
     const camposId = utils.idByName('Basin', 'Campos');
     const newsId = utils.idByValue('News', 'title', 'Petrobrás compra Statoil');
 
-    const record = await( db.News.findById(newsId) );
+    const record = await( db.models.News.findById(newsId) );
     record.content = '<p>um campo: <a href="/app/view_record?source=Basin&amp;id=' + camposId + '" >Campos</a>';
 	await( record.save() );
-	const referencedModelsOnNew = await( db.NewsModels.findAll({ where: { news_id: newsId } }) );
+	const referencedModelsOnNew = await( db.models.NewsModels.findAll({ where: { news_id: newsId } }) );
     test.equal(1, referencedModelsOnNew.length);
-	test.equal('Basin', await( db.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
+	test.equal('Basin', await( db.models.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
 	test.equal(camposId, referencedModelsOnNew[0].model_ref_id);
 	test.done();
 },
@@ -91,8 +91,8 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 	}
 
 	db.sequelize.transaction(function(t) {
-		return db.News.create(newsToBeCreated, { transaction: t }).then(finalizeTest).catch(function(e) {
-			db.News.findAll().then(countNews);
+		return db.models.News.create(newsToBeCreated, { transaction: t }).then(finalizeTest).catch(function(e) {
+			db.models.News.findAll().then(countNews);
 		});
 	});
 	
@@ -109,5 +109,3 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 };
 
 fiberTests.convertTests( exports, group );
-
-}

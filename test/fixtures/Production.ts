@@ -1,7 +1,7 @@
-var utils = require('../lib/utils');
+import utils = require('../lib/utils');
 
 module.exports = function(db) {
-    return db.Production.bulkCreate([
+    return db.models.Production.bulkCreate([
         {
             state: 'Bahia',
             basin_id: utils.idByName('Basin', 'Potiguar'),

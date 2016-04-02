@@ -1,4 +1,4 @@
-var db = require('../db/models');
+import db = require('../db/models');
 var fileUpload = require('../lib/fileUpload');
 var Sync = require('sync');
 var await = require('../lib/await');
@@ -151,7 +151,7 @@ export function saveItem(req: express.Request, res: express.Response, next) {
 export function deleteItem(req: express.Request, res: express.Response) { Sync(function() {
     function hasReferencedObj() {
         // check if a news deference the object
-        const modelInList = await(db.ModelsList.find({ where: { name: modelName } }));
+        const modelInList = await(db.models.ModelsList.find({ where: { name: modelName } }));
         if(!modelInList)
             return false;
         const modelRefsOptions = {
@@ -160,8 +160,8 @@ export function deleteItem(req: express.Request, res: express.Response) { Sync(f
                 model_ref_id: id
             }
         }
-        const newsRefs = await( db.NewsModels.find(modelRefsOptions) );
-        const personRefs = await( db.PersonProjects.find(modelRefsOptions) );
+        const newsRefs = await( db.models.NewsModels.find(modelRefsOptions) );
+        const personRefs = await( db.models.PersonProjects.find(modelRefsOptions) );
         return newsRefs || personRefs;
     }
     

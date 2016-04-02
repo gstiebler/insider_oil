@@ -1,8 +1,8 @@
 "use strict";
-var utils = require('../lib/utils');
+import utils = require('../lib/utils');
 
 module.exports = function(db) {
-    return db.ComercialDeclaration.bulkCreate([
+    return db.models.ComercialDeclaration.bulkCreate([
         {
             block_id: utils.idByName('Block', 'BM-BAR-1'),
             oil_field_id: utils.idByName('OilField', 'Anambé'),

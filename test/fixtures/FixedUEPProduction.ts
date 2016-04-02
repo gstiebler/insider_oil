@@ -1,7 +1,7 @@
-var utils = require('../lib/utils');
+import utils = require('../lib/utils');
 
 module.exports = function(db) {
-    return db.FixedUEPProduction.bulkCreate([
+    return db.models.FixedUEPProduction.bulkCreate([
         {
             name: 'Peregrino A',
             code: 'PEREGRINO A',

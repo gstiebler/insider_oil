@@ -1,7 +1,7 @@
-var utils = require('../lib/utils');
+import utils = require('../lib/utils');
 
 module.exports = function(db) {
-    return db.DrillingRigOnshore.bulkCreate([
+    return db.models.DrillingRigOnshore.bulkCreate([
         {
             name: "BS-04",
             type: "Perfuração",

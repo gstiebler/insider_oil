@@ -45,7 +45,7 @@ module.exports = function(db) {
     
     const promisesArray = [];
     for(var ambientalLicenseObj of ambientalLicenseObjs) {
-        promisesArray.push(db.AmbientalLicense.create(ambientalLicenseObj));
+        promisesArray.push(db.models.AmbientalLicense.create(ambientalLicenseObj));
     }
     
     return Promise.all(promisesArray);

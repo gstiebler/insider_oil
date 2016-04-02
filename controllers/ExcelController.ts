@@ -1,5 +1,5 @@
 "use strict";
-var db = require('../db/models');
+import db = require('../db/models');
 var Sync = require('sync');	
 var await = require('../lib/await');
 var request = require('request');

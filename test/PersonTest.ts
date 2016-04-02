@@ -1,9 +1,11 @@
+"use strict";
+import db = require('../db/models');
+import dbServerController = require('../controllers/dbServerController');
+
 namespace PersonTest {
     
 const fiberTests = require('./lib/fiberTests');
 const utils = require('./lib/utils');
-var db = require('../db/models');
-var dbServerController = require('../controllers/dbServerController');
 
 
 var group = {

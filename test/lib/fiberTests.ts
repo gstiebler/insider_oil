@@ -1,12 +1,13 @@
 "use strict";
 
 import winston = require('winston');
+import db = require('../../db/models');
+import createFixtures = require('../fixtures/initial_data');
+
 namespace FiberTests {
     
 process.env['NODE_ENV'] = 'test';
-var db = require('../../db/models');
 var Sync = require('sync');
-var createFixtures = require('../fixtures/initial_data');
 var await = require('../../lib/await');
 var umzug = require('../../lib/InitUmzug');
 
@@ -20,7 +21,7 @@ exports.initializeDB = function() {
     try {
         await( db.sequelize.getQueryInterface().dropAllTables() );
         await( umzug.up() );
-        createFixtures();
+        createFixtures.createFixtures();
     } catch(e) {
         winston.error(e.errors);
         winston.error(e.stack);

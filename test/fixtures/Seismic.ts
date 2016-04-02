@@ -1,7 +1,7 @@
-var utils = require('../lib/utils');
+import utils = require('../lib/utils');
 
 module.exports = function(db) {
-    return db.Seismic.bulkCreate([
+    return db.models.Seismic.bulkCreate([
         {
             process: '48610.014844/2012-28',
             authorized_company: 'Strataimage Consultoria Ltda.',

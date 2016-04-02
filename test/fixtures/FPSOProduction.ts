@@ -1,7 +1,7 @@
-var utils = require('../lib/utils');
+import utils = require('../lib/utils');
 
 module.exports = function(db) {
-    return db.FPSOProduction.bulkCreate([
+    return db.models.FPSOProduction.bulkCreate([
         {
             name: 'Cidade de Anchieta',
             owner: 'SBM',
