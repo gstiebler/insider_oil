@@ -346,6 +346,6 @@ function addNumbers() {
 
 addNumbers();
 
-}
-
 module.exports = tree;
+
+}

@@ -6,7 +6,7 @@ var Sequelize = require('sequelize');
 var winston   = require('winston');
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.json');
+var config    = require(__dirname + '/../../../db/config/config.json');
 var db:any    = {};
 
 config.production.password = process.env.DB_PROD_PASSWORD;
