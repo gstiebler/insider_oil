@@ -1,4 +1,6 @@
 'use strict';
+
+var await = require('../lib/await');
 var db  = require('../db/models');
 var Sync = require('sync');
 var dsParams = require('../lib/DataSourcesParams');

@@ -16,6 +16,7 @@ const operations: IOperations = {
     DrillingRigOnshore: BaseDataSourceOperations,
     FixedUEPProduction: BaseDataSourceOperations,
     FPSOProduction: BaseDataSourceOperations,
+    News: BaseDataSourceOperations,
     OilFieldDeveloping: BaseDataSourceOperations,
     OilFieldProduction: BaseDataSourceOperations,
     Person: BaseDataSourceOperations,
