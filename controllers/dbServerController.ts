@@ -220,30 +220,18 @@ export function getComboValues(req: express.Request, res: express.Response) {
 }
 
 export function viewRecord(req: express.Request, res: express.Response, next) {
-    var dataSourceName = req.query.dataSource;
-    var id = req.query.id;
-    var dataSource = dbUtils.getDataSource(dataSourceName);
-    var options: any = {};
+    const dataSourceName = req.query.dataSource;
+    const id = req.query.id;
+    const dataSource = dbUtils.getDataSource(dataSourceName);
+    const options: any = {};
     options.include = [{all: true}];
-    dataSource.findById(id, options).then(onRecord)
+    dataSource.findById(id, options)
+        .then(onRecord)
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) { Sync(function() {  
         const dsOperations = DataSourceOperations[dataSourceName];
-        var fields = dsOperations.getModelFields(dataSourceName, true);
-        var recordValues = [];
-        
-        for( var i = 0; i < fields.length; i++ ) {
-            const item = fields[i];
-            item.value = record[fields[i].name];
-            
-            if(fields[i].type == 'ref') {
-                item.ref = true;
-                item.name = record[fields[i].association].name;
-            }
-            recordValues.push(item);
-        }
-        
+        const recordValues = dsOperations.recordToViewValues(dataSourceName, record);
         const viewParams = dsParams[dataSource.name];
         const result = {
             record: recordValues,
@@ -306,15 +294,3 @@ export function sourcesList(req: express.Request, res: express.Response) {
     
     res.json(list);
 }
-
-exports.main = main;
-exports.uploadFile = uploadFile;
-exports.modelFields = modelFields;
-exports.recordValues = recordValues;
-exports.createItem = createItem;
-exports.saveItem = saveItem;
-exports.deleteItem = deleteItem;
-exports.getComboValues = getComboValues;
-exports.viewRecord = viewRecord;
-exports.getQueryData = getQueryData;
-exports.sourcesList = sourcesList;

@@ -64,6 +64,23 @@ class DataSourceOperations implements IDataSourceOperations {
             record[attributeName] = attributes[attributeName];
         }
     }
+    
+    recordToViewValues(dataSourceName: string, record): any[] {
+        const fields = this.getModelFields(dataSourceName, true);
+        const recordValues = [];
+        
+        for( let item of fields ) {
+            item.value = record[item.name];
+            
+            if(item.type == 'ref') {
+                item.ref = true;
+                item.name = record[item.association].name;
+            }
+            recordValues.push(item);
+        }
+        
+        return recordValues;
+    }
 }
 
 const obj = new DataSourceOperations();

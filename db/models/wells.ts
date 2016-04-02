@@ -1,3 +1,5 @@
+var await = require('../../lib/await');
+
 module.exports = function(sequelize, DataTypes) {
   var Well = sequelize.define('Well', {
         name: {
@@ -44,6 +46,16 @@ module.exports = function(sequelize, DataTypes) {
                 } else {
                     this.drilling_rig_onshore_id = null;
                     this.drilling_rig_offshore_id = id;
+                }
+            }
+        },
+        drilling_rig_obj: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                if(this.drilling_rig_onshore_id) {
+                     return await( sequelize.models.DrillingRigOnshore.findById(this.drilling_rig_onshore_id) );
+                } else {
+                     return await( sequelize.models.DrillingRigOffshore.findById(this.drilling_rig_offshore_id) );
                 }
             }
         }

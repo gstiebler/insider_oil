@@ -24,6 +24,34 @@ class Well implements IDataSourceOperations {
         delete attributes['drilling_rig_onshore_id'];
         BaseDataSourceOperations.addAttributesToRecord(record, attributes, dataSource);
     }
+    
+    recordToViewValues(dataSourceName: string, record): any[] {
+        const fields = this.getModelFields(dataSourceName, true);
+        const recordValues = [];
+        
+        for( let item of fields ) {
+            item.value = record[item.name];
+            
+            if(item.name == 'drilling_rig') {
+                var tbNameModelMap = {
+                    drilling_rigs_onshore: 'DrillingRigOnshore',  
+                    drilling_rigs_offshore: 'DrillingRigOffshore'
+                };
+                
+                item.ref = true;
+                const drillingRigObj = record.drilling_rig_obj;
+                item.name = drillingRigObj.name;
+                item.value = drillingRigObj.id;
+                item.model = tbNameModelMap[drillingRigObj.$modelOptions.tableName];
+            } else if(item.type == 'ref') {
+                item.ref = true;
+                item.name = record[item.association].name;
+            }
+            recordValues.push(item);
+        }
+        
+        return recordValues;
+    }
 }
 
 const obj = new Well();
