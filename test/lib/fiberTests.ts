@@ -1,5 +1,6 @@
 "use strict";
 
+import winston = require('winston');
 namespace FiberTests {
     
 process.env['NODE_ENV'] = 'test';
@@ -8,7 +9,6 @@ var Sync = require('sync');
 var createFixtures = require('../fixtures/initial_data');
 var await = require('../../lib/await');
 var umzug = require('../../lib/InitUmzug');
-var winston = require('winston');
 
 winston.level = 'debug';
 
@@ -38,7 +38,7 @@ function showErrosOnCallback( test, callback ) {
     try {
         callback( test );
     } catch (e) {
-        console.error(e.stack);
+        winston.error(e.stack);
     }
 }
 
