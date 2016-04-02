@@ -1,3 +1,4 @@
+"use strict";
 const newsLib = require('../../lib/News');
 
 namespace News {

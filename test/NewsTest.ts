@@ -1,9 +1,11 @@
+"use strict";
 namespace NewsTest {
     
 const fiberTests = require('./lib/fiberTests');
 const news = require('../lib/News');
 const utils = require('./lib/utils');
 var db = require('../db/models');
+var await = require('../lib/await');
 
 
 const newsHTML = '<p>um campo: <a href="/app/view_record?source=OilField&amp;id=3" style="background-color: rgb(255, 255, 255);">Abalone</a> ' +
@@ -44,7 +46,11 @@ createNewsOnDB: test => {
     const justCreatedNew = newNews[fixtureCount];
     const justCreatedNewId = justCreatedNew.id;
     test.equal('Título da nova notícia', justCreatedNew.title);
-	const referencedModelsOnNew = await( db.NewsModels.findAll({ where: { news_id: justCreatedNewId } }) );
+    const options = {
+        where: { news_id: justCreatedNewId },
+        order: 'id'
+    };
+	const referencedModelsOnNew = await( db.NewsModels.findAll(options) );
 	test.equal(2, referencedModelsOnNew.length);
 	test.equal('OilField', await( db.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
 	test.equal(abaloneId, referencedModelsOnNew[0].model_ref_id);
