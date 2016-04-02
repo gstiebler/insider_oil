@@ -3,14 +3,15 @@ var session = require('../lib/session');
 
 var mainController = require('../controllers/mainController');
 var loginController = require('../controllers/loginController');
-var dbServerController = require('../controllers/dbServerController');
+import dbServerController = require('../controllers/dbServerController');
 var usersController = require('../controllers/usersController');
 var treeController = require('../controllers/TreeController');
 var searchController = require('../controllers/SearchController');
-var ExcelController = require('../controllers/ExcelController');
+import ExcelController = require('../controllers/ExcelController');
 var imageController = require('../controllers/ImageController');
+import express = require("express");
 
-module.exports = function(app) {
+module.exports = function(app: express.Express) {
     // Main route
     app.get('/', session.authorizeHTML, mainController.main );
     

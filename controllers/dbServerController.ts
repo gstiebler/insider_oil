@@ -19,7 +19,7 @@ function getFieldTypes(fields) {
     return types;
 }
  
-function main(req: express.Request, res: express.Response, next) {
+export function main(req: express.Request, res: express.Response, next) {
     const modelName: string = req.query.table;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
     const fieldNames = req.query.fieldNames;
@@ -55,7 +55,7 @@ function main(req: express.Request, res: express.Response, next) {
 }
 
 
-function uploadFile(req: express.Request, res: express.Response, next) {
+export function uploadFile(req: express.Request, res: express.Response, next) {
     fileUpload.receive( req, onFile, onFinish );
 
     function onFile(fileName, buf) {
@@ -83,7 +83,7 @@ function uploadFile(req: express.Request, res: express.Response, next) {
 }
 
 
-function modelFields(req: express.Request, res: express.Response, next) {
+export function modelFields(req: express.Request, res: express.Response, next) {
     var modelName = req.query.model;
     const dsOperations = DataSourceOperations[modelName];
     var fields = dsOperations.getModelFields(modelName);
@@ -91,7 +91,7 @@ function modelFields(req: express.Request, res: express.Response, next) {
 }
 
 
-function recordValues(req: express.Request, res: express.Response, next) {
+export function recordValues(req: express.Request, res: express.Response, next) {
     var dsName = req.query.model;
     var id = req.query.id;
     const dataSource = dbUtils.getDataSource(dsName);
@@ -116,7 +116,7 @@ function recordValues(req: express.Request, res: express.Response, next) {
 }
 
 
-function createItem(req: express.Request, res: express.Response, next) {
+export function createItem(req: express.Request, res: express.Response, next) {
     var newItemData = req.body.newItemData;
     var modelName = req.body.model;
     var model = dbUtils.getDataSource(modelName);
@@ -129,7 +129,7 @@ function createItem(req: express.Request, res: express.Response, next) {
 }
 
 
-function saveItem(req: express.Request, res: express.Response, next) {
+export function saveItem(req: express.Request, res: express.Response, next) {
     var dsName = req.body.model;
     var recordData = req.body.record;
     var dataSource = dbUtils.getDataSource(dsName);
@@ -147,7 +147,7 @@ function saveItem(req: express.Request, res: express.Response, next) {
 }
 
 
-function deleteItem(req: express.Request, res: express.Response) { Sync(function() {
+export function deleteItem(req: express.Request, res: express.Response) { Sync(function() {
     function hasReferencedObj() {
         // check if a news deference the object
         const modelInList = await(db.ModelsList.find({ where: { name: modelName } }));
@@ -185,7 +185,7 @@ function deleteItem(req: express.Request, res: express.Response) { Sync(function
 })}
 
 
-function getComboValues(req: express.Request, res: express.Response) {
+export function getComboValues(req: express.Request, res: express.Response) {
     const modelName:string = req.query.model;
     const model = dbUtils.getDataSource(modelName);
     const labelField = 'name';  
@@ -219,7 +219,7 @@ function getComboValues(req: express.Request, res: express.Response) {
     }
 }
 
-function viewRecord(req: express.Request, res: express.Response, next) {
+export function viewRecord(req: express.Request, res: express.Response, next) {
     var dataSourceName = req.query.dataSource;
     var id = req.query.id;
     var dataSource = dbUtils.getDataSource(dataSourceName);
@@ -254,7 +254,7 @@ function viewRecord(req: express.Request, res: express.Response, next) {
 }
 
 
-function getQueryData(req: express.Request, res: express.Response) {Sync(function(){
+export function getQueryData(req: express.Request, res: express.Response) {Sync(function(){
     const dataSourceName = req.query.dataSource;
     const queryName = req.query.queryName;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
@@ -280,7 +280,7 @@ function getQueryData(req: express.Request, res: express.Response) {Sync(functio
 })}
 
 
-function sourcesList(req: express.Request, res: express.Response) {
+export function sourcesList(req: express.Request, res: express.Response) {
     var list = {
         Basin: 'Bacias',
         Block: 'Blocos',

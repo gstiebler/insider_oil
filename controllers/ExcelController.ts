@@ -11,7 +11,7 @@ import dsParams = require('../lib/DataSourcesParams');
 import express = require("express");
 
 
-function downloadExcel(req: express.Request, res: express.Response, next) { Sync(function() {
+export function downloadExcel(req: express.Request, res: express.Response, next) { Sync(function() {
     const dataSourceName = req.query.dataSource;
     const binaryWorkbook = ExportExcel.main(dataSourceName);
     res.set({"Content-Disposition":'attachment; filename="arquivo.xlsx"'});
@@ -20,7 +20,7 @@ function downloadExcel(req: express.Request, res: express.Response, next) { Sync
 }) }
 
 
-function importExcelFromURL(req: express.Request, res: express.Response) {
+export function importExcelFromURL(req: express.Request, res: express.Response) {
     const dataSourceName:string = req.body.params.dataSource;
     const viewParams = dsParams[dataSourceName];
     const url = viewParams.urlSource;
