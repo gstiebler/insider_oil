@@ -16,8 +16,6 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 ComercialDeclaration.belongsTo(models.Block, { as: 'block', allowNull: false });
-                ComercialDeclaration.belongsTo(models.OilField, { as: 'oil_field', allowNull: false });
-                ComercialDeclaration.belongsTo(models.Basin, { as: 'basin', allowNull: false });
             }
         }
     });

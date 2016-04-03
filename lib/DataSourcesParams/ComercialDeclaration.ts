@@ -8,18 +8,6 @@ const ComercialDeclaration: BaseDataSourceParams = {
         block_name: {
             label: 'Bloco'
         },
-        basin_id: {
-            label: 'Bacia'
-        },
-        basin_name: {
-            label: 'Bacia'
-        },
-        oil_field_id: {
-            label: 'Campo'
-        },
-        oil_field_name: {
-            label: 'Campo'
-        },
         attached: {
             label: 'Anexado'
         },

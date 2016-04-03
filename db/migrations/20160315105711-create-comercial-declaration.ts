@@ -16,22 +16,6 @@ module.exports = {
                     key: 'id'
                 }
             },
-            oil_field_id: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                references: {
-                    model: 'oil_fields',
-                    key: 'id'
-                }
-            },
-            basin_id: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                references: {
-                    model: 'basins',
-                    key: 'id'
-                }
-            },
             attached: {
                 type: Sequelize.STRING,
                 allowNull: false
