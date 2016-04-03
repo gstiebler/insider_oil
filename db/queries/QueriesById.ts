@@ -143,6 +143,31 @@ const queries:IQueriesById = {
                 type: 'VARCHAR'
             }
         ]
+    },
+    
+    comercialDeclarationsByBlock: {
+        queryStrFn: (filter) => {
+            var query = 'select id, attached, date, "ComercialDeclaration" as model ';
+            query += 'from comercial_declarations ';
+            query += 'where block_id = ' + filter.id;
+            query += ' order by date ';
+            return query;
+        },
+        fields: [
+            {
+                label: 'Anexado',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'attached'
+                }
+            },
+            {
+                label: 'Data',
+                fieldName: 'date',
+                type: 'DATE'
+            }
+        ]
     }
 };
 

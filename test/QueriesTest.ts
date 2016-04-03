@@ -114,6 +114,37 @@ getAmbientalLicensesByBlock:  (test: nodeunit.Test) => {
     test.done();
 },
 
+
+
+getComercialDeclarationsByBlock:  (test: nodeunit.Test) => {
+    const bmbarId = utils.idByName('Block', 'BM-BAR-1') ;
+    const filters = {
+        id: bmbarId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'comercialDeclarationsByBlock',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    
+    const record = resQueryValues.records[0];
+    test.equal('NÃO', record.attached);
+    
+    test.equal('Anexado', resQueryValues.fields[0].label);
+    test.equal('model', resQueryValues.fields[0].ref.modelField);
+    test.equal('id', resQueryValues.fields[0].ref.idField);
+    test.equal('attached', resQueryValues.fields[0].ref.valueField);
+    
+    test.equal('Data', resQueryValues.fields[1].label);
+    test.equal('date', resQueryValues.fields[1].fieldName);
+    test.equal('DATE', resQueryValues.fields[1].type);
+
+    test.done();
+},
+
 }
 
 fiberTests.convertTests( exports, group );
