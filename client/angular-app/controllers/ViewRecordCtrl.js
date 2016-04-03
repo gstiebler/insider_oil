@@ -10,6 +10,7 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
     
     $scope.relatedPersons = {
         queryName: 'PersonsByProject',
+        title: 'Pessoas',
         filters: {
             project_id: id,
             dataSource: source
@@ -17,8 +18,8 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
     }
     
     $scope.relateNews = {
-        dataSource: 'News',
         queryName: 'NewsByObject',
+        title: 'Notícias',
         filters: {
             modelName: source,
             id: id

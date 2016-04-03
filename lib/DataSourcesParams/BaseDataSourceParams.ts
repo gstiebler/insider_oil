@@ -24,6 +24,7 @@ interface IFieldMap {
 
 interface IRefObjectsOnView {
     queryName: string;
+    title: string;
     filterField?: string;
 }
 

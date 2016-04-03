@@ -65,13 +65,16 @@ const Block: BaseDataSourceParams = {
     },
     referencedObjectsOnView:  [
         {
-            queryName: 'wellsByBlock'
+            queryName: 'wellsByBlock',
+            title: 'Poços'
         },
         {
-            queryName: 'comercialDeclarationsByBlock'
+            queryName: 'comercialDeclarationsByBlock',
+            title: 'Declarações de Comercialidade'
         },
         {
-            queryName: 'ambientalLicenseByBlock'
+            queryName: 'ambientalLicenseByBlock',
+            title: 'Licenças Ambientais'
         }
     ]
 }

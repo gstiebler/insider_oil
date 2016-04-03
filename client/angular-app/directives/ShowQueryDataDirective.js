@@ -7,7 +7,7 @@ The source of the records is a custom query
 
 function controllerFunc($scope, server, DateService) {
     const referencedObject = $scope.referencedObject;
-    $scope.title = 'Título';
+    $scope.title = referencedObject.title;
     var filters = referencedObject.filters;
     if(!filters) {
         filters = {};
