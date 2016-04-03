@@ -546,50 +546,6 @@ search: test => {
 },
 
 
-newsFromObject: test => {
-    const abaloneId = utils.idByName('OilField', 'Abalone');
-    const filters = {
-        modelName: 'OilField',
-        id: abaloneId
-    };
-    const reqQueryValues = {
-        query: { 
-            dataSource: 'News',
-            queryName: 'byObject',
-            filters: JSON.stringify(filters)
-        }
-    };
-    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(1, resQueryValues.records.length);    
-    test.equal('Petrobrás compra Statoil', resQueryValues.records[0].title);
-  
-    // adding more news from this oil field
-    const newNews = {
-        title: 'adicionando notícia',
-        content: '<p>outra notícia: <a href="/app/view_record?source=OilField&amp;id=' + abaloneId + '" style="background-color: rgb(255, 255, 255);">Abalone</a> ',
-        author_id: 1
-    };
-    const reqNewNews = {
-        body: { 
-            model: 'News',
-            newItemData: newNews
-        }
-    };
-    utils.getJsonResponse.sync(null, dbServerController.createItem, reqNewNews);
-
-	// should have 2 news from this oil field now
-    const moreNewsFromObject = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(2, moreNewsFromObject.records.length);
-
-    // testing with an invalid id
-    filters.id = 5450;
-    reqQueryValues.query.filters = JSON.stringify(filters);
-    const newsResultsWrongId = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(0, newsResultsWrongId.records.length);
-
-    test.done();
-},
-
 
 getAmbientalLicensesRecordValues: function(test) {
     const ambientalLicenseId = utils.idByValue('AmbientalLicense', 'license', 'ABio 560/2014');
@@ -632,28 +588,6 @@ getAmbientalLicensesQuery: function(test) {
     test.done();
 },
 
-
-getPersonsByProject: function(test) {
-    const amazonasId = utils.idByName('Basin', 'Amazonas') ;
-    const filters = {
-        project_id: amazonasId,
-        dataSource: 'Basin'
-    };
-    const reqQueryValues = {
-        query: { 
-            dataSource: 'Person',
-            queryName: 'byProject',
-            filters: JSON.stringify(filters)
-        }
-    };
-    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(1, resQueryValues.records.length);
-    const record = resQueryValues.records[0];
-    test.equal('Guilherme Stiebler', record.name);
-    test.equal('diretor', record.description);
-
-    test.done();
-},
 
 
 importBlocksFromURL: function(test) {

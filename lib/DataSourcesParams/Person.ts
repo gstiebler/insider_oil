@@ -58,23 +58,7 @@ const Person: BaseDataSourceParams = {
     labelField: "name",
     gridFields: ["name", "company_name"],
     tableLabel: "Pessoas",
-    hasMap: false,
-    queries: {
-        byProject: (filters) => {
-            const modelsListFilter = {
-                name: filters.dataSource
-            }
-            const modelInList = await( db.models.ModelsList.find({ where: modelsListFilter }) );
-            
-            var query = 'select p.id, p.name, p.position, pp.description ';
-            query += 'from persons p, person_projects pp ';
-            query += 'where pp.person_id = p.id ';
-            query += '   and pp.model_id = ' + modelInList.id;
-            query += '   and pp.model_ref_id = ' + filters.project_id;
-            query += ' order by p.name ';
-            return query;
-        }
-    }
+    hasMap: false
 }
 
 export = Person;

@@ -48,16 +48,6 @@ const AmbientalLicense: BaseDataSourceParams = {
             'tipologia': 'tipology',
             'pac': 'pac'
         }
-    },
-    queries: {
-        byBlock: (filter) => {
-            var query = 'select al.id, license, start, end, enterprise, entrepreneur ';
-            query += 'from ambiental_licenses al, ambiental_license_blocks alb ';
-            query += 'where alb.ambiental_license_id = al.id ';
-            query += '  and alb.block_id = ' + filter.block_id;
-            query += ' order by al.license ';
-            return query;
-        }
     }
 }
 

@@ -10,6 +10,7 @@ import dsParams = require('../lib/DataSourcesParams');
 import express = require("express");
 import DataSourceOperations = require('../lib/DataSourceOperations/index');
 import ComboQueries = require('../db/queries/ComboQueries');
+import QueriesById = require('../db/queries/QueriesById');
  
 function getFieldTypes(fields) {
     const types = {};
@@ -250,22 +251,14 @@ export function getQueryData(req: express.Request, res: express.Response) {Sync(
     const dataSourceName = req.query.dataSource;
     const queryName = req.query.queryName;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
-    const dataSource = dbUtils.getDataSource(dataSourceName);
-    if(!dataSource) {
-    	ControllerUtils.getErrorFunc(res, 500, "Modelo não encontrado")({});
-        return;
-    }
-    const viewParams = dsParams[dataSource.name];
-    const queryStrGenerator = viewParams.queries[queryName];
-    const queryStr = queryStrGenerator(filters);
+    const queryById = QueriesById[queryName];
+    const queryStr = queryById.queryStrFn(filters);
     const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
     db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
         const dsOperations = DataSourceOperations[dataSourceName];
-        const fields = dsOperations.getModelFields(dataSourceName, true);
         const result = {
-            viewParams: viewParams,
-            records: records,
-            types: getFieldTypes(fields)
+            fields: queryById.fields,
+            records: records
         };
         res.json(result);
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));

@@ -22,10 +22,6 @@ interface IFieldMap {
     [name: string]: IField;
 }
 
-interface IQueryMap {
-    [name: string]: any;
-}
-
 interface IRefObjectsOnView {
     dataSource: string;
     showFields: string[];
@@ -41,7 +37,6 @@ interface IBaseDataSourceParams {
     hasMap?: boolean;
     excelParams?: IExcelParams;
     urlSource?: string;
-    queries?: IQueryMap;
     referencedObjectsOnView?: IRefObjectsOnView[];
 }
 
