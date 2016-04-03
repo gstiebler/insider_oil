@@ -65,32 +65,13 @@ const Block: BaseDataSourceParams = {
     },
     referencedObjectsOnView:  [
         {
-            dataSource: 'Well',
-            filterField: 'block_id',
-            showFields: [
-                'name',
-                'operator_name'
-            ]
+            queryName: 'wellsByBlock'
         },
         {
-            dataSource: 'ComercialDeclaration',
-            filterField: 'block_id',
-            showFields: [
-                'attached',
-                'date'
-            ]
+            queryName: 'comercialDeclarationsByBlock'
         },
         {
-            dataSource: 'AmbientalLicense',
-            filterField: 'block_id',
-            queryName: 'byBlock',
-            showFields: [
-                'license',
-                'start',
-                'end',
-                'enterprise',
-                'entrepreneur'
-            ]
+            queryName: 'ambientalLicenseByBlock'
         }
     ]
 }

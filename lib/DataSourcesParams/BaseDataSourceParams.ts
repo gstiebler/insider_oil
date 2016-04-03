@@ -23,10 +23,8 @@ interface IFieldMap {
 }
 
 interface IRefObjectsOnView {
-    dataSource: string;
-    showFields: string[];
+    queryName: string;
     filterField?: string;
-    queryName?: string;
 }
 
 interface IBaseDataSourceParams {
