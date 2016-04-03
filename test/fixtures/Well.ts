@@ -26,7 +26,7 @@ module.exports = function(db) {
         {
             name: "1AJ 0001 BA",
             operator_id: utils.idByName('Company', 'Recôncavo E&P'),
-            block_id: utils.idByName('Block', 'PN-T-102'),
+            block_id: utils.idByName('Block', 'BM-BAR-1'),
             lat: -9.98799556,
             lng: -38.67655583,
             start: '2016-12-30',
