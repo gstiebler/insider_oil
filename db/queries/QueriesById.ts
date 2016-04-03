@@ -168,6 +168,45 @@ const queries:IQueriesById = {
                 type: 'DATE'
             }
         ]
+    },
+    
+    wellsByBlock: {
+        queryStrFn: (filter) => {
+            function getSubQuery(onOffStr) {
+                const query = 'select w.id, w.name as well_name, w.start, "Well" as model, dr.name as drilling_rig_name, ' +
+                        'dr.id as drilling_rig_id, "DrillingRigO' + onOffStr + 'shore" as drilling_rig_model ' +
+                    ' from wells w, drilling_rigs_o' + onOffStr + 'shore dr ' +
+                    ' where w.drilling_rig_o'+ onOffStr +'shore_id = dr.id ' +
+                        ' and w.block_id = ' + filter.id;
+                return query;
+            }
+            
+            var query = getSubQuery('n') + ' union ' + getSubQuery('ff') + ' order by well_name';
+            return query;
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'well_name'
+                }
+            },
+            {
+                label: 'Início',
+                fieldName: 'start',
+                type: 'DATE'
+            },
+            {
+                label: 'Sonda',
+                ref: {
+                    modelField: 'drilling_rig_model',
+                    idField: 'drilling_rig_id',
+                    valueField: 'drilling_rig_name'
+                }
+            }
+        ]
     }
 };
 

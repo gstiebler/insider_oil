@@ -115,7 +115,6 @@ getAmbientalLicensesByBlock:  (test: nodeunit.Test) => {
 },
 
 
-
 getComercialDeclarationsByBlock:  (test: nodeunit.Test) => {
     const bmbarId = utils.idByName('Block', 'BM-BAR-1') ;
     const filters = {
@@ -144,6 +143,47 @@ getComercialDeclarationsByBlock:  (test: nodeunit.Test) => {
 
     test.done();
 },
+
+
+getWellsByBlock:  (test: nodeunit.Test) => {
+    const bmbarId = utils.idByName('Block', 'BM-BAR-1') ;
+    const nicId = utils.idByName('DrillingRigOnshore', 'NIC-01');
+    const filters = {
+        id: bmbarId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'wellsByBlock',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    
+    const record = resQueryValues.records[0];
+    test.equal('1A 0001 BA', record.well_name);
+    test.equal('Well', record.model);
+    test.equal('DrillingRigOnshore', record.drilling_rig_model);
+    test.equal(nicId, record.drilling_rig_id);
+    test.equal('NIC-01', record.drilling_rig_name);
+    
+    test.equal('Nome', resQueryValues.fields[0].label);
+    test.equal('model', resQueryValues.fields[0].ref.modelField);
+    test.equal('id', resQueryValues.fields[0].ref.idField);
+    test.equal('well_name', resQueryValues.fields[0].ref.valueField);
+    
+    test.equal('Início', resQueryValues.fields[1].label);
+    test.equal('start', resQueryValues.fields[1].fieldName);
+    test.equal('DATE', resQueryValues.fields[1].type);
+    
+    test.equal('Sonda', resQueryValues.fields[2].label);
+    test.equal('drilling_rig_model', resQueryValues.fields[2].ref.modelField);
+    test.equal('drilling_rig_id', resQueryValues.fields[2].ref.idField);
+    test.equal('drilling_rig_name', resQueryValues.fields[2].ref.valueField);
+
+    test.done();
+},
+
 
 }
 
