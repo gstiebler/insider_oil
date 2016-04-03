@@ -181,8 +181,8 @@ createWell: function(test) {
     };
     const response = utils.getJsonResponse.sync(null, dbServerController.main, req2);
     test.equal(4, response.records.length);
-    test.equal('Novo poço', response.records[2].name);
-    test.equal('Statoil', response.records[2].operator_name);
+    test.equal('Novo poço', response.records[3].name);
+    test.equal('Statoil', response.records[3].operator_name);
     test.done();
 },
 
@@ -563,31 +563,6 @@ getAmbientalLicensesRecordValues: function(test) {
     
     test.done();
 },
-
-
-getAmbientalLicensesQuery: function(test) {
-    const block_id = utils.idByName('Block', 'BM-BAR-1') ;
-    const reqQueryValues = {
-        query: { 
-            dataSource: 'AmbientalLicense',
-            queryName: 'byBlock',
-            filters: JSON.stringify({ block_id: block_id })
-        }
-    };
-    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(2, resQueryValues.records.length);
-    
-    test.equal('ABio 560/2014', resQueryValues.records[0].license);
-    
-    test.equal('LPS 101/2015', resQueryValues.records[1].license);
-    test.equal('Pesquisa Sísmica Marítima 2D na Bacia de Pelotas - Programa Pelotas Fase II', resQueryValues.records[1].enterprise);
-    
-    test.equal('VARCHAR(255)', resQueryValues.types.license);
-    test.equal('DATE', resQueryValues.types.start);
-    
-    test.done();
-},
-
 
 
 importBlocksFromURL: function(test) {
