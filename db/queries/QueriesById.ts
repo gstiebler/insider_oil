@@ -106,15 +106,42 @@ const queries:IQueriesById = {
     
     ambientalLicenseByBlock: {
         queryStrFn: (filter) => {
-            var query = 'select al.id, license, start, end, enterprise, entrepreneur ';
+            var query = 'select al.id, license, start, end, enterprise, entrepreneur, "AmbientalLicense" as model ';
             query += 'from ambiental_licenses al, ambiental_license_blocks alb ';
             query += 'where alb.ambiental_license_id = al.id ';
-            query += '  and alb.block_id = ' + filter.block_id;
+            query += '  and alb.block_id = ' + filter.id;
             query += ' order by al.license ';
             return query;
         },
         fields: [
-            
+            {
+                label: 'Nro da licença',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'license'
+                }
+            },
+            {
+                label: 'Emissão',
+                fieldName: 'start',
+                type: 'DATE'
+            },
+            {
+                label: 'Vencimento',
+                fieldName: 'end',
+                type: 'DATE'
+            },
+            {
+                label: 'Empreendimento',
+                fieldName: 'enterprise',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Empreendedor',
+                fieldName: 'entrepreneur',
+                type: 'VARCHAR'
+            }
         ]
     }
 };

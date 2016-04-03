@@ -21,6 +21,7 @@ newsFromObject:  (test: nodeunit.Test) => {
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
     test.equal(1, resQueryValues.records.length);    
     test.equal('Petrobrás compra Statoil', resQueryValues.records[0].title);
+    test.equal('News', resQueryValues.records[0].model);
   
     // adding more news from this oil field
     const newNews = {
@@ -50,7 +51,6 @@ newsFromObject:  (test: nodeunit.Test) => {
 },
 
 
-
 getPersonsByProject:  (test: nodeunit.Test) => {
     const amazonasId = utils.idByName('Basin', 'Amazonas') ;
     const filters = {
@@ -68,6 +68,7 @@ getPersonsByProject:  (test: nodeunit.Test) => {
     const record = resQueryValues.records[0];
     test.equal('Guilherme Stiebler', record.name);
     test.equal('diretor', record.description);
+    test.equal('Person', record.model);
     
     test.equal('Nome', resQueryValues.fields[0].label);
     test.equal('model', resQueryValues.fields[0].ref.modelField);
@@ -77,6 +78,38 @@ getPersonsByProject:  (test: nodeunit.Test) => {
     test.equal('Cargo', resQueryValues.fields[1].label);
     test.equal('position', resQueryValues.fields[1].fieldName);
     test.equal('VARCHAR', resQueryValues.fields[1].type);
+
+    test.done();
+},
+
+
+getAmbientalLicensesByBlock:  (test: nodeunit.Test) => {
+    const bmbarId = utils.idByName('Block', 'BM-BAR-1') ;
+    const filters = {
+        id: bmbarId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'ambientalLicenseByBlock',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+    
+    const record = resQueryValues.records[0];
+    test.equal('ABio 560/2014', record.license);
+    test.equal('BP ENERGY DO BRASIL LTDA', record.entrepreneur);
+    test.equal('AmbientalLicense', record.model);
+    
+    test.equal('Nro da licença', resQueryValues.fields[0].label);
+    test.equal('model', resQueryValues.fields[0].ref.modelField);
+    test.equal('id', resQueryValues.fields[0].ref.idField);
+    test.equal('license', resQueryValues.fields[0].ref.valueField);
+    
+    test.equal('Emissão', resQueryValues.fields[1].label);
+    test.equal('start', resQueryValues.fields[1].fieldName);
+    test.equal('DATE', resQueryValues.fields[1].type);
 
     test.done();
 },
