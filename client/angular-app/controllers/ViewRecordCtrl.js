@@ -9,29 +9,20 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
     $scope.source = source;
     
     $scope.relatedPersons = {
-        dataSource: 'Person',
-        queryName: 'byProject',
+        queryName: 'PersonsByProject',
         filters: {
             project_id: id,
             dataSource: source
-        },
-        showFields: [
-            'name',
-            'position'
-        ]
+        }
     }
     
     $scope.relateNews = {
         dataSource: 'News',
-        queryName: 'byObject',
+        queryName: 'NewsByObject',
         filters: {
             modelName: source,
             id: id
-        },
-        showFields: [
-            'title',
-            'created_at'
-        ]
+        }
     }
     
     // show record values

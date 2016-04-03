@@ -4,7 +4,11 @@
         <th ng-repeat="headerItem in header">{{headerItem}}</th>
     </tr>
     <tr ng-repeat="record in records">
-        <td> <a href="/app/view_record?source={{dataSource}}&id={{record.id}}" >{{record.linkField}}</a></td>
-        <td ng-repeat="fieldValue in record.recordValues">{{fieldValue}}</td>
+        <td ng-repeat="record_column in record">
+            <div ng-if="record_column.model">
+                <a href="/app/view_record?source={{record_column.model}}&id={{record_column.id}}" >{{record_column.value}}</a>   
+            </div>
+            <div ng-else>{{record_column.value}}</div>
+        </td>
     </tr>
 </table>

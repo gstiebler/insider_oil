@@ -52,14 +52,12 @@ app.service('server', ['$http', 'session',
     
     /**
      * Return multiple records from a query
-     * @param {String} dataSource Name of the datasource
      * @param {} options Options (queryName and filters)
      * @param {Function} okCallback Result callback
      * @param {Function} errorCallback Error callback
      */
-    function getQueryData( dataSource, options, okCallback, errorCallback ) {
+    function getQueryData( options, okCallback, errorCallback ) {
         const params = { 
-            dataSource: dataSource,
             queryName: options.queryName,
             filters: options.filters,
             token: session.getToken()

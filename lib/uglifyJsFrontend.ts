@@ -19,7 +19,7 @@ exports.uglifyAngularJsFiles = function(env) {
         'directives/PhotoBytesArray.js',
         'directives/ProjectSearchDirective.js',
         'directives/EditRecordFieldsDirective.js',
-        'directives/FilteredObjectsDirective.js',
+        'directives/ShowQueryDataDirective.js',
         'directives/ManyToManyDirective.js',
         'controllers/MainCtrl.js',
         'controllers/ModelViewCtrl.js',

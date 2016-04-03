@@ -32,10 +32,10 @@
     </tr>
 </table>
 <hr>
-<filtered-objects ng-model="relatedPersons"></filtered-objects>
+<show-query-data ng-model="relatedPersons"></show-query-data>
 <hr>
 <div ng-repeat="referencedObject in referencedObjects">
-    <filtered-objects ng-model="referencedObject" ng-id="id" /></filtered-objects>
+    <show-query-data ng-model="referencedObject" ng-id="id" /></show-query-data>
     <hr>
 </div>
-<filtered-objects ng-model="relateNews"></filtered-objects>
+<show-query-data ng-model="relateNews"></show-query-data>
