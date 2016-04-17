@@ -17,7 +17,7 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
         }
     }
     
-    $scope.relateNews = {
+    const relateNewsQuery = {
         queryName: 'NewsByObject',
         title: 'Notícias',
         filters: {
@@ -25,6 +25,12 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
             id: id
         }
     }
+    server.getQueryData(relateNewsQuery, onNews, showError.show);
+    
+    function onNews(newsData) {
+        $scope.newsData = newsData.records;
+    }
+    
     
     // show record values
     function showValues(viewData) {
