@@ -720,7 +720,9 @@
     border: none;
     font-family: "Avenir LT Std 55 Roman";
     text-transform: uppercase;
-    color: #0e454f
+    color: #0e454f;
+    padding: 8px;
+    background-color: #e8e8e8
 }
 .bootstrap-table .table tbody>tr>td {
     border-left: none;
