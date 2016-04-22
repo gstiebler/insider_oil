@@ -10,7 +10,7 @@ function updateBlocks(db, ambientalLicense) {
         return;
     
     const options = { where: { ambiental_license_id: ambientalLicense.id } };
-    // remove all blocks associated with this ambiental license
+    // remove all records from AmbientalLicenseBlock associated with this ambiental license
     db.AmbientalLicenseBlock.destroy(options).then(function() {
         const newBlocksRecords = [];
         for(var i = 0; i < blocks.length; i++) {
