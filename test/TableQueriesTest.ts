@@ -7,7 +7,7 @@ import dbServerController = require('../controllers/dbServerController');
 var group: nodeunit.ITestGroup = {
 
 
-basins:  (test: nodeunit.Test) => {
+basinsInFilter:  (test: nodeunit.Test) => {
     const queryParams:TableQueries.IQueryParams = {
         order: ['name'],
         filters: [
@@ -33,6 +33,35 @@ basins:  (test: nodeunit.Test) => {
     test.equal( 4, resQueryValues.records.length );
     test.equal( 'Alagoas', resQueryValues.records[0].name );
     test.equal( 'Almada', resQueryValues.records[1].name );
+    
+    test.done();
+},
+
+
+basinsPagination:  (test: nodeunit.Test) => {
+    const queryParams:TableQueries.IQueryParams = {
+        order: ['name'],
+        filters: [],
+        pagination: {
+            first: 10,
+            itemsPerPage: 5
+        }
+    }
+    
+    const reqQueryValues = {
+        query: {
+            queryName: 'Basins',
+            queryParams: JSON.stringify(queryParams)
+        }
+    }; 
+    
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
+    test.equal( 5, resQueryValues.records.length );
+    test.equal( 'Jequitinhonha', resQueryValues.records[0].name );
+    test.equal( 'Pará - Maranhão', resQueryValues.records[1].name );
+    test.equal( 'Paraná', resQueryValues.records[2].name );
+    test.equal( 'Parecis - Alto Xingu', resQueryValues.records[3].name );
+    test.equal( 'Parnaíba', resQueryValues.records[4].name );
     
     test.done();
 }

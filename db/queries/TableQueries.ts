@@ -95,8 +95,8 @@ export function getQueryResult(queryName: string, queryParams: IQueryParams): Pr
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const queryStr = queries[queryName].queryStrFn(queryParams);
     const orderBy = getOrderByStr(queryParams.order);
-    const pagi = getPaginationStr(queryParams.pagination);
-    const completeQueryStr = queryStr + orderBy + pagi;
+    const pagination = getPaginationStr(queryParams.pagination);
+    const completeQueryStr = queryStr + orderBy + pagination;
     //console.log(completeQueryStr);
     return db.sequelize.query(completeQueryStr, simpleQueryType);
 }
