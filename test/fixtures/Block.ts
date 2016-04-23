@@ -7,7 +7,7 @@ module.exports = function(db) {
             basin_id: utils.idByName('Basin', 'Recôncavo'),
             name_contract: 'BM-BAR-1',
             bid: 'BID3',
-            operator_id: utils.idByName('Company', 'Petrobrás'),
+            operator_id: utils.idByName('Company', 'Petrobras'),
             end_1: '2004-08-29',
             end_2: '2012-07-18',
             end_3 : '2014-04-20',

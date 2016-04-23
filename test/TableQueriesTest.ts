@@ -7,7 +7,7 @@ import dbServerController = require('../controllers/dbServerController');
 var group: nodeunit.ITestGroup = {
 
 
-basinsInFilter:  (test: nodeunit.Test) => {
+basinsLikeFilter:  (test: nodeunit.Test) => {
     const queryParams:TableQueries.IQueryParams = {
         order: ['name'],
         filters: [
@@ -66,9 +66,47 @@ basinsPagination:  (test: nodeunit.Test) => {
     test.equal( 'Parnaíba', resQueryValues.records[4].name );
     
     test.done();
+},
+
+
+blocksInFilter:  (test: nodeunit.Test) => {
+    const queryParams:TableQueries.IQueryParams = {
+        order: ['basin_name', 'name'],
+        filters: [
+            {
+                field: 'operator_id',
+                in: [
+                    utils.idByName('Company', 'Petrobras'),
+                    utils.idByName('Company', 'Statoil')
+                ]
+            }
+        ],
+        pagination: {
+            first: 0,
+            itemsPerPage: 10
+        }
+    }
+    
+    const reqQueryValues = {
+        query: {
+            queryName: 'Blocks',
+            queryParams: JSON.stringify(queryParams)
+        }
+    }; 
+    
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
+    test.equal( 2, resQueryValues.records.length );
+    test.equal( 2, resQueryValues.count );
+    test.equal( 'ES-M-529', resQueryValues.records[0].name );
+    test.equal( 'Statoil', resQueryValues.records[0].operator_name );
+    test.equal( 'BM-BAR-1', resQueryValues.records[1].name );
+    test.equal( 'Petrobras', resQueryValues.records[1].operator_name );
+    
+    test.done();
 }
     
 }
+
  
 
 fiberTests.convertTests( exports, group );

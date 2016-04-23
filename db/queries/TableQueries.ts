@@ -53,7 +53,12 @@ function getWhereStr(filters: IFilter[]): string {
             if(filter.like) {
                 whereStr += filter.field + ' like "%' + filter.like + '%" and ';
             } else if (filter.in) {
-                // TODO
+                whereStr += filter.field + ' in (';
+                for(let id of filter.in) {
+                    whereStr += id + ', '
+                }
+                whereStr = whereStr.substr(0, whereStr.length - 2);
+                whereStr += ') and ';
             }
         }
         whereStr = whereStr.substr(0, whereStr.length - 4);
@@ -75,8 +80,32 @@ export const queries:ITableQueries = {
             const select = 'select name, "Basin" as model ';
             const fromStr = ' from basins ';
             const where = getWhereStr(queryParams.filters);
-            const query = select + fromStr + where;
-            return query;
+            return select + fromStr + where;
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'name'
+                }
+            }
+        ]
+    },
+    
+    Blocks: {
+        queryStrFn: (queryParams: IQueryParams) => {
+            const select = 'select b.name, b.name_contract, b.status, ' +
+                'b.bid, b.end_1, b.end_2, b.end_3, b.end_last, ' +
+                'ba.name as basin_name, c.name as operator_name, concessionaries, "Block" as model ';
+            const fromStr = ' from blocks b ';
+            const joinCompany = ' left outer join companies c on ' +
+                'c.id = b.operator_id ';
+            const joinBasin = ' left outer join basins ba on ' +
+                'ba.id = b.basin_id ';
+            const where = getWhereStr(queryParams.filters);
+            return select + fromStr + joinCompany + joinBasin + where;
         },
         fields: [
             {
