@@ -1,26 +1,6 @@
 var await = require('../../lib/await');
 import db = require('../models');
-
-/*
-interface IField {
-    label: string;
-}
-
-interface ISimpleField extends IField {
-    fieldName: string;
-    type: string;
-}
-
-interface IRef {
-    modelField: string;
-    idField: string;
-    valueField: string;
-}
-
-interface IRefField extends IField {
-    ref: IRef;
-}
-*/
+import BaseQuery = require('./BaseQuery');
 
 /** function that returns the SQL query string */
 interface IQueryStrFn {
@@ -29,7 +9,7 @@ interface IQueryStrFn {
 
 interface IQueryById {
     queryStrFn: IQueryStrFn;
-    fields: any[];
+    fields: BaseQuery.IField[];
 }
 
 interface IQueriesById {
