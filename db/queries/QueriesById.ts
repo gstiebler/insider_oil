@@ -155,10 +155,9 @@ const queries:IQueriesById = {
             function getSubQuery(onOffStr) {
                 const query = 'select w.id, w.name as well_name, w.start, "Well" as model, dr.name as drilling_rig_name, ' +
                         'dr.id as drilling_rig_id, "DrillingRigO' + onOffStr + 'shore" as drilling_rig_model ' +
-                    ' from wells w ' +
-                    ' where  w.block_id = ' + filter.id +
-                        ' left outer join drilling_rigs_o' + onOffStr + 'shore dr ' +
-                        ' on w.drilling_rig_o'+ onOffStr +'shore_id = dr.id ';
+                    ' from wells w, drilling_rigs_o' + onOffStr + 'shore dr ' +
+                    ' where w.drilling_rig_o'+ onOffStr +'shore_id = dr.id ' +
+                        ' and w.block_id = ' + filter.id;
                 return query;
             }
             
