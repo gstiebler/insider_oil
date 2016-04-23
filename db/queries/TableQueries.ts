@@ -98,5 +98,9 @@ export function getQueryResult(queryName: string, queryParams: IQueryParams): Pr
     const pagination = getPaginationStr(queryParams.pagination);
     const completeQueryStr = queryStr + orderBy + pagination;
     //console.log(completeQueryStr);
-    return db.sequelize.query(completeQueryStr, simpleQueryType);
+    const recordsPromise = db.sequelize.query(completeQueryStr, simpleQueryType);
+    
+    const countQuery = 'select count(*) as count from (' + queryStr + ') t';
+    const countPromise = db.sequelize.query(countQuery, simpleQueryType);
+    return Promise.all([recordsPromise, countPromise]);
 }

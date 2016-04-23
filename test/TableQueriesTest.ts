@@ -31,6 +31,7 @@ basinsInFilter:  (test: nodeunit.Test) => {
     
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
     test.equal( 4, resQueryValues.records.length );
+    test.equal( 4, resQueryValues.count );
     test.equal( 'Alagoas', resQueryValues.records[0].name );
     test.equal( 'Almada', resQueryValues.records[1].name );
     
@@ -57,6 +58,7 @@ basinsPagination:  (test: nodeunit.Test) => {
     
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
     test.equal( 5, resQueryValues.records.length );
+    test.equal( 25, resQueryValues.count );
     test.equal( 'Jequitinhonha', resQueryValues.records[0].name );
     test.equal( 'Pará - Maranhão', resQueryValues.records[1].name );
     test.equal( 'Paraná', resQueryValues.records[2].name );

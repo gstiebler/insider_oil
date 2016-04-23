@@ -271,10 +271,11 @@ export function getTableQueryData(req: express.Request, res: express.Response):v
     const queryName:string = req.query.queryName;
     const fields = TableQueries.queries[queryName].fields;
 
-    TableQueries.getQueryResult(queryName, queryParams).then( (records) => {
+    TableQueries.getQueryResult(queryName, queryParams).then( (results) => {
         const result = {
             fields: fields,
-            records: records
+            records: results[0],
+            count: results[1][0].count
         };
         res.json(result);
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
