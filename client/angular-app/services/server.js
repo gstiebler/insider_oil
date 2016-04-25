@@ -69,6 +69,29 @@ app.service('server', ['$http', 'session',
         }, errorCallback);
     }
     
+    /**
+     * Return multiple records from a table data source
+     * @param {} options Options (queryName and queryParams)
+     *   queryParams:
+     *     order: string[]
+     *     filters: {field, like}
+     *     pagination: {first, itemsPerPage}
+     * @param {Function} okCallback Result callback
+     * @param {Function} errorCallback Error callback
+     */
+    function getTableData( options, okCallback, errorCallback ) {
+        const params = { 
+            queryName: options.queryName,
+            queryParams: options.queryParams,
+            token: session.getToken()
+        };
+        
+        $http.get('/get_table_data', { params: params }).
+        then(function(response) {
+            okCallback(response.data);
+        }, errorCallback);
+    }
+    
     
     function getModelFields( model, okCallback, errorCallback ) {
         const params = { 
