@@ -76,11 +76,10 @@ angular.module('InsiderOilApp').controller('TreeController',
         }
         
         function ajaxFn(data, callback, settings) {
-            console.log(data);
-            
             let columnNames = [];
             for(let i = 0; i < data.order.length; i++) {
                 let columnIndex = data.order[i].column;
+                let dir = data.order[i].dir;
                 columnNames.push( data.columns[columnIndex].data );
             }
             
@@ -99,8 +98,12 @@ angular.module('InsiderOilApp').controller('TreeController',
             server.getTableData(options, setDataTablesRows, showError.show);
             
             function setDataTablesRows(serverResult) {
-                console.log(serverResult);
-                callback( { aaData: serverResult.records });
+                const result = { 
+                    aaData: serverResult.records,
+                    recordsTotal: serverResult.count,
+                    recordsFiltered: serverResult.count 
+                };
+                callback(result);
             }
         }
         
