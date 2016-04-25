@@ -1,3 +1,5 @@
+'use strict';
+
 var await = require('../../lib/await');
 import db = require('../models');
 import BaseQuery = require('./BaseQuery');
@@ -77,7 +79,7 @@ function getPaginationStr(pagiOpts: IPaginationOpts): string {
 export const queries:ITableQueries = {
     Basins: {
         queryStrFn: (queryParams: IQueryParams) => {
-            const select = 'select name, "Basin" as model ';
+            const select = 'select id, name, "Basin" as model ';
             const fromStr = ' from basins ';
             const where = getWhereStr(queryParams.filters);
             return select + fromStr + where;
@@ -96,7 +98,7 @@ export const queries:ITableQueries = {
     
     Blocks: {
         queryStrFn: (queryParams: IQueryParams) => {
-            const select = 'select b.name, b.name_contract, b.status, ' +
+            const select = 'select b.id, b.name, b.name_contract, b.status, ' +
                 'b.bid, b.end_1, b.end_2, b.end_3, b.end_last, ' +
                 'ba.name as basin_name, c.name as operator_name, concessionaries, "Block" as model ';
             const fromStr = ' from blocks b ';
@@ -115,6 +117,11 @@ export const queries:ITableQueries = {
                     idField: 'id',
                     valueField: 'name'
                 }
+            },
+            {
+                label: 'Operador',
+                fieldName: 'operator_name',
+                type: 'VARCHAR'
             }
         ]
     }

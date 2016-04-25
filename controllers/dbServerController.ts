@@ -1,3 +1,5 @@
+'use strict';
+
 import db = require('../db/models');
 var fileUpload = require('../lib/fileUpload');
 var Sync = require('sync');
