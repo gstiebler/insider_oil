@@ -1,7 +1,11 @@
+'use strict';
+
+import TableQueries = require('../db/queries/TableQueries');
 
 interface ITreeChild {
     source: string;
     filters?: any;
+    fields?: any;
 }
 
 interface ITreeNode {
@@ -20,7 +24,7 @@ var tree: ITreeNode = {
                 {
                     label: 'Blocos',
                     child: {
-                        source: 'Block'
+                        source: 'Blocks'
                     }
                 },
                 {
@@ -339,23 +343,32 @@ var tree: ITreeNode = {
 };
 
  
-function addNumbers() {
-    function enumerateSubTree(subTree: any, counter) {
+function preProcessTree() {
+    function processNode(subTree: any, counter: any) {
         if (!subTree)
             return;
         subTree.id = counter.value++;
+        
+        if(subTree.source) {
+            const opts = TableQueries.queries[subTree.source];
+            if(opts)
+                subTree.fields = opts.fields;
+             else
+                console.log('missing: ', subTree.source);
+        }
+        
         if (subTree.children) {
             for (var i = 0; i < subTree.children.length; i++)
-                enumerateSubTree(subTree.children[i], counter);
+                processNode(subTree.children[i], counter);
         } else if (subTree.child) {
-            enumerateSubTree(subTree.child, counter);
+            processNode(subTree.child, counter);
         }
     }
 
     var counter = { value: 1 };
-    enumerateSubTree(tree, counter);
+    processNode(tree, counter);
 }
 
-addNumbers();
+preProcessTree();
 
 export = tree; 

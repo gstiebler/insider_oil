@@ -48,9 +48,9 @@ angular.module('InsiderOilApp').controller('TreeController',
         if(subTree.children) {
             // show children categories
             $scope.items = subTree.children;
-            $scope.source = null;
+            $scope.tableParams = null;
         } else if (subTree.child) {
-            showObjectsFromCategory(subTree.child.source, subTree.child.filters);
+            showObjectsFromCategory(subTree);
         } else {
             var errorObj = { data: { errorMsg: 'Item da árvore não encontrado' } };
             showError.show(errorObj);
@@ -58,21 +58,13 @@ angular.module('InsiderOilApp').controller('TreeController',
     }
     
     
-    function showObjectsFromCategory(source, filters) {
-        /* const options = { filters: filters };
-        $scope.source = source;
-        server.getTable( source, options, showModel, showError.show ); */
+    function showObjectsFromCategory(subTree) {
+        $scope.tableParams = {
+            label: subTree.label,
+            fields: subTree.child.fields,
+            source: subTree.child.source  
+        };
     }
-    
-    /*
-    function showModel(modelData) {
-    	if(modelData.records.length == 0) return;
-        
-        const modelOperations = ModelOperations.getModelOperations($scope.source);
-        $scope.viewParams = modelData.viewParams;
-        const columns = ModelViewService.getColumns(modelData.viewParams, modelData.types);
-    }
-    */
     
     server.getTree(showTree, showError.show);
 }]);

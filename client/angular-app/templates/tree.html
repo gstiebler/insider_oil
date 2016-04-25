@@ -8,4 +8,4 @@
 <p ng-repeat="item in items">
     <a href="/app/tree?nodeId={{item.id}}">{{item.label}}</a>
 </p>
-<paginated-table on-error="onError" ></paginated-table>
+<paginated-table ng-if="tableParams" table-params="tableParams" on-error="onError" ></paginated-table>

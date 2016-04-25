@@ -6,7 +6,9 @@ and filtered in the server
 ******************/
 
 var _server;
-var _onError;
+var _ModelViewService;
+var _$scope;
+
 var app = angular.module('PaginatedTableDirective', []);
 
 /**
@@ -32,7 +34,7 @@ function ajaxFn(data, callback, settings) {
     }
     
     const options = {
-        queryName: 'Blocks',
+        queryName: _$scope.tableParams.source,
         queryParams: {
             pagination: {
                 first: data.start,
@@ -52,40 +54,59 @@ function ajaxFn(data, callback, settings) {
         callback(result);
     }
     
-    _server.getTableData(options, setDataTablesRows, _onError);
+    _server.getTableData(options, setDataTablesRows, _$scope.onError);
+}
+
+/**
+ * Responds to change in the tableParams. It occurs when a new table has to be shown
+ */
+function tableParamsChanged(tableParams) {
+    if(!tableParams)
+        return;
+        
+    _$scope.label = tableParams.label;
+    const dataTableElement = $('#mainTable');
+    const columns = [];
+    for(let i = 0; i < tableParams.fields.length; i++) {
+        let field = tableParams.fields[i];
+        if(field.ref) {
+            columns.push({
+                data: field.ref.valueField,
+                title: field.label
+            });
+        } else {
+            columns.push({
+                data: field.fieldName,
+                title: field.label
+            });
+        }
+    }
+    columns[0].render = { display: formatLink };
+    
+    dataTableElement.DataTable( {
+        columns: columns,
+        language: _ModelViewService.datatablesPtBrTranslation,
+        processing: true,
+        serverSide: true,
+        ajax: ajaxFn
+    } );
 }
 
 let controller = ['$scope', 'server', 'ModelViewService',
 function($scope, server, ModelViewService) { 
     _server = server;
-    _onError = $scope.onError;
-    const dataTableElement = $('#mainTable');
-    const columns = [
-        {
-            data: 'name',
-            title: 'Nome',
-            render: { display: formatLink }
-        },
-        {
-            data: 'operator_name',
-            title: 'Operador', 
-        }
-    ];
+    _ModelViewService = ModelViewService;
+    _$scope = $scope;
     
-    dataTableElement.DataTable( {
-        columns: columns,
-        language: ModelViewService.datatablesPtBrTranslation,
-        processing: true,
-        serverSide: true,
-        ajax: ajaxFn
-    } );
+    $scope.$watch('tableParams', tableParamsChanged);
 }];
 
 app.directive('paginatedTable', function() {
     return {
         restrict: 'E',
         scope: {
-            onError: '=onError'
+            onError: '=onError',
+            tableParams: '=tableParams'
         },
         controller: controller,
         templateUrl: 'app/directives/templates/paginated_table.html'
