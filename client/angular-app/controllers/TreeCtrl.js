@@ -6,7 +6,7 @@ angular.module('InsiderOilApp').controller('TreeController',
                  ModelOperations, ModelViewService) {
     
     var nodeId = $routeParams.nodeId;
-    const dataTableElement = $('#mainTable');
+    $scope.onError = showError.show;
     
     function makeItem(subTree) {
         return {
@@ -62,70 +62,6 @@ angular.module('InsiderOilApp').controller('TreeController',
         /* const options = { filters: filters };
         $scope.source = source;
         server.getTable( source, options, showModel, showError.show ); */
-        
-        initializeDataTable();
-    }
-    
-    function initializeDataTable() {
-        
-        function formatLink(value, type, row) {
-            var linkStr = '<a href="/app/view_record?source=' + $scope.source;
-            linkStr += '&id=' + row.id;
-            linkStr += '">' + value + '</a>'; 
-            return linkStr;
-        }
-        
-        function ajaxFn(data, callback, settings) {
-            let columnNames = [];
-            for(let i = 0; i < data.order.length; i++) {
-                let columnIndex = data.order[i].column;
-                let dir = data.order[i].dir;
-                columnNames.push( data.columns[columnIndex].data );
-            }
-            
-            const options = {
-                queryName: 'Blocks',
-                queryParams: {
-                    pagination: {
-                        first: data.start,
-                        itemsPerPage: data.length 
-                    },
-                    order: columnNames,
-                    filters: []
-                }
-            };
-            
-            server.getTableData(options, setDataTablesRows, showError.show);
-            
-            function setDataTablesRows(serverResult) {
-                const result = { 
-                    aaData: serverResult.records,
-                    recordsTotal: serverResult.count,
-                    recordsFiltered: serverResult.count 
-                };
-                callback(result);
-            }
-        }
-        
-        const columns = [
-            {
-                data: 'name',
-                title: 'Nome',
-                render: { display: formatLink }
-            },
-            {
-                data: 'operator_name',
-                title: 'Operador', 
-            }
-        ];
-        
-        dataTableElement.DataTable( {
-            columns: columns,
-            language: ModelViewService.datatablesPtBrTranslation,
-            processing: true,
-            serverSide: true,
-            ajax: ajaxFn
-        } );
     }
     
     /*
