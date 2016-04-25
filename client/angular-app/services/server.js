@@ -211,6 +211,7 @@ app.service('server', ['$http', 'session',
     this.getUserDetails = getUserDetails;
     this.getTable = getTable;
     this.getQueryData = getQueryData;
+    this.getTableData = getTableData;
     this.getModelFields = getModelFields;
     this.createNewItem = createNewItem;
     this.deleteItem = deleteItem;
