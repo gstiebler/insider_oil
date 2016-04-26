@@ -3,22 +3,12 @@
 var await = require('../../lib/await');
 import db = require('../models');
 import BaseQuery = require('./BaseQuery');
-
-interface IPaginationOpts {
-    first: number;
-    itemsPerPage: number;
-}
-
-interface IFilter {
-    field: string;
-    like?: string;
-    in?: number[];
-}
+import QueryGenerator = require('./QueryGenerator');
 
 export interface IQueryParams {
     order: string[];
-    filters: IFilter[];
-    pagination: IPaginationOpts;
+    filters: QueryGenerator.IFilter[];
+    pagination: QueryGenerator.IPaginationOpts;
 }
 
 interface IQueryStrFn {
@@ -34,55 +24,26 @@ interface ITableQueries {
     [name: string]: ITableQuery;
 }
 
-function getOrderByStr(orderFields: string[]): string {
-    let orderByStr = '';
-    if( orderFields.length > 0 ) {
-        orderByStr += ' order by ';  
-        for( let orderField of orderFields ) {
-            orderByStr += orderField + ', ';
-        }
-        orderByStr = orderByStr.substr(0, orderByStr.length - 2);
-        orderByStr += ' ';
-    }   
-    return orderByStr;
-}
-
-function getWhereStr(filters: IFilter[]): string {
-    let whereStr = '';
-    if(filters.length > 0) {
-        whereStr = ' where ';
-        for(let filter of filters) {
-            if(filter.like) {
-                whereStr += filter.field + ' like "%' + filter.like + '%" and ';
-            } else if (filter.in) {
-                whereStr += filter.field + ' in (';
-                for(let id of filter.in) {
-                    whereStr += id + ', '
-                }
-                whereStr = whereStr.substr(0, whereStr.length - 2);
-                whereStr += ') and ';
-            }
-        }
-        whereStr = whereStr.substr(0, whereStr.length - 4);
-    }
-    return whereStr;
-}
-
-function getPaginationStr(pagiOpts: IPaginationOpts): string {
-    if(pagiOpts)
-        return ' limit ' + pagiOpts.first + ', ' + pagiOpts.itemsPerPage;
-    else
-        return '';
-        
-}
 
 export const queries:ITableQueries = {
     Basins: {
         queryStrFn: (queryParams: IQueryParams) => {
-            const select = 'select id, name, "Basin" as model ';
-            const fromStr = ' from basins ';
-            const where = getWhereStr(queryParams.filters);
-            return select + fromStr + where;
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'basins',
+                    fields: [
+                        'id',
+                        'name'
+                    ]
+                },
+                extraFields: [
+                    ['"Basin"', 'model']
+                ],
+                joinTables: [],
+                filters: queryParams.filters
+            };
+            
+            return QueryGenerator.queryGenerator(options);
         },
         fields: [
             {
@@ -92,22 +53,47 @@ export const queries:ITableQueries = {
                     idField: 'id',
                     valueField: 'name'
                 }
-            }
+            } 
         ]
     },
     
     Blocks: {
         queryStrFn: (queryParams: IQueryParams) => {
-            const select = 'select b.id, b.name, b.name_contract, b.status, ' +
-                'b.bid, b.end_1, b.end_2, b.end_3, b.end_last, ' +
-                'ba.name as basin_name, c.name as operator_name, concessionaries, "Block" as model ';
-            const fromStr = ' from blocks b ';
-            const joinCompany = ' left outer join companies c on ' +
-                'c.id = b.operator_id ';
-            const joinBasin = ' left outer join basins ba on ' +
-                'ba.id = b.basin_id ';
-            const where = getWhereStr(queryParams.filters);
-            return select + fromStr + joinCompany + joinBasin + where;
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'blocks',
+                    fields: [
+                        'id',
+                        'name',
+                        'name_contract',
+                        'status'
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'companies',
+                        fields: [
+                            ['id', 'operator_id'],
+                            ['name', 'operator_name'],
+                        ],
+                        joinField: 'operator_id'
+                    },
+                    {
+                        name: 'basins',
+                        fields: [
+                            ['id', 'basin_id'],
+                            ['name', 'basin_name'],
+                        ],
+                        joinField: 'basin_id'
+                    }
+                ],
+                extraFields: [
+                    ['"Block"', 'model']
+                ],
+                filters: queryParams.filters
+            };
+            
+            return QueryGenerator.queryGenerator(options);
         },
         fields: [
             {
@@ -135,13 +121,13 @@ export const queries:ITableQueries = {
 export function getQueryResult(queryName: string, queryParams: IQueryParams): Promise<any> {
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const queryStr = queries[queryName].queryStrFn(queryParams);
-    const orderBy = getOrderByStr(queryParams.order);
-    const pagination = getPaginationStr(queryParams.pagination);
+    const orderBy = QueryGenerator.getOrderByStr(queryParams.order);
+    const pagination = QueryGenerator.getPaginationStr(queryParams.pagination);
     const completeQueryStr = queryStr + orderBy + pagination;
-    //console.log(completeQueryStr);
     const recordsPromise = db.sequelize.query(completeQueryStr, simpleQueryType);
     
     const countQuery = 'select count(*) as count from (' + queryStr + ') t';
     const countPromise = db.sequelize.query(countQuery, simpleQueryType);
+    
     return Promise.all([recordsPromise, countPromise]);
 }
