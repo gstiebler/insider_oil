@@ -579,6 +579,9 @@
     color: #fff;
     font-family: "Avenir LT Std 95 Black"
 }
+.table.dataTable{
+    margin-top: 0px !important
+}
 .table-options .table-options-pages {
     font-size: 16px;
     float: right;

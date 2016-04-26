@@ -86,8 +86,10 @@ function tableParamsChanged(tableParams) {
     dataTableElement.DataTable( {
         columns: columns,
         language: _ModelViewService.datatablesPtBrTranslation,
-        processing: true,
+        processing: true, // show processing message when loading rows
         serverSide: true,
+        searching: false,
+        dom: 'rtip', // constrols what parts of datatables is visible
         ajax: ajaxFn
     } );
 }
