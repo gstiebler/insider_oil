@@ -122,6 +122,11 @@ export const queries:ITableQueries = {
                 label: 'Operador',
                 fieldName: 'operator_name',
                 type: 'VARCHAR'
+            },
+            {
+                label: 'Nome contrato',
+                fieldName: 'name_contract',
+                type: 'VARCHAR'
             }
         ]
     }

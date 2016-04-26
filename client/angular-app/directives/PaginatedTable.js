@@ -8,6 +8,8 @@ and filtered in the server
 var _server;
 var _ModelViewService;
 var _$scope;
+var dataTable;
+var filters = [];
 
 var app = angular.module('PaginatedTableDirective', []);
 
@@ -41,7 +43,7 @@ function ajaxFn(data, callback, settings) {
                 itemsPerPage: data.length 
             },
             order: columnNames,
-            filters: []
+            filters: filters
         }
     };
     
@@ -87,7 +89,7 @@ function tableParamsChanged(tableParams) {
         label: tableParams.label
     };
     
-    dataTableElement.DataTable( {
+    dataTable = dataTableElement.DataTable( {
         columns: columns,
         language: _ModelViewService.datatablesPtBrTranslation,
         processing: true, // show processing message when loading rows
@@ -98,6 +100,11 @@ function tableParamsChanged(tableParams) {
     } );
 }
 
+function filterChanged(newFilter) {
+    filters = newFilter;
+    dataTable.draw();
+} 
+
 let controller = ['$scope', 'server', 'ModelViewService',
 function($scope, server, ModelViewService) { 
     _server = server;
@@ -105,6 +112,8 @@ function($scope, server, ModelViewService) {
     _$scope = $scope;
     
     $scope.$watch('tableParams', tableParamsChanged);
+    
+    $scope.filterChanged = filterChanged;
 }];
 
 app.directive('paginatedTable', function() {
