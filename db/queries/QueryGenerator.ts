@@ -24,24 +24,31 @@ export interface IPaginationOpts {
     itemsPerPage: number;
 }
 
-export function getWhereStr(filters: IFilter[]): string {
+export function getWhereStr(filters: IFilter[], aliasMap?): string {
     let whereStr = '';
-    if(filters.length > 0) {
-        whereStr = ' where ';
-        for(let filter of filters) {
-            if(filter.like) {
-                whereStr += filter.field + ' like "%' + filter.like + '%" and ';
-            } else if (filter.in) {
-                whereStr += filter.field + ' in (';
-                for(let id of filter.in) {
-                    whereStr += id + ', '
-                }
-                whereStr = whereStr.substr(0, whereStr.length - 2);
-                whereStr += ') and ';
+    
+    if(filters.length == 0) 
+        return whereStr;
+        
+    whereStr = ' where ';
+    for(let filter of filters) {
+        let field = filter.field;
+        
+        if(aliasMap && aliasMap[field])
+            field = aliasMap[field];
+        
+        if(filter.like) {
+            whereStr += field + ' like "%' + filter.like + '%" and ';
+        } else if (filter.in) {
+            whereStr += field + ' in (';
+            for(let id of filter.in) {
+                whereStr += id + ', '
             }
+            whereStr = whereStr.substr(0, whereStr.length - 2);
+            whereStr += ') and ';
         }
-        whereStr = whereStr.substr(0, whereStr.length - 4);
     }
+    whereStr = whereStr.substr(0, whereStr.length - 4);
     return whereStr;
 }
 
@@ -61,8 +68,8 @@ function genTableSelectStr(tableQryOpts: ITableQueryOpts, aliasMap):string {
         } else {
             const completeFieldName = tableQryOpts.name + '.' + field[0];
             resultQry += completeFieldName + ' as ' + field[1];
-            aliasMap[field[0]] = completeFieldName;
-        }
+            aliasMap[field[1]] = completeFieldName; 
+        }  
         resultQry += ', ';
     }
     return resultQry;
@@ -106,6 +113,6 @@ export function queryGenerator(queryOpts: IQueryOpts):string {
     const select = genSelectStr(queryOpts, aliasMap);
     const fromStr = ' from ' + queryOpts.table.name;
     const joins = genOuterJoins(queryOpts);
-    const where = getWhereStr(queryOpts.filters);
+    const where = getWhereStr(queryOpts.filters, aliasMap);
     return select + fromStr + joins + where;
 }

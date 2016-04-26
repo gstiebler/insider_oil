@@ -64,7 +64,7 @@ export const queries:ITableQueries = {
                     name: 'blocks',
                     fields: [
                         'id',
-                        'name',
+                        ['name', 'block_name'],
                         'name_contract',
                         'status'
                     ]
@@ -101,7 +101,7 @@ export const queries:ITableQueries = {
                 ref: {
                     modelField: 'model',
                     idField: 'id',
-                    valueField: 'name'
+                    valueField: 'block_name'
                 }
             },
             {
