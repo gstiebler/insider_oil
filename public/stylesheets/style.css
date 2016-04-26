@@ -596,6 +596,15 @@
     text-transform: uppercase;
     padding: 10px
 }
+.table-options-pages>select {
+    color: #333;
+    padding: 6px;
+    font-size: 14px
+}
+.table-options-pages .header-input {
+    color: #333;
+    padding: 4px
+}
 .table-options .table-options-pages>.btn>.right-carot {
     background: url(../images/right-carot.svg) no-repeat;
     width: 20px;

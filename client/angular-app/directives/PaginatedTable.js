@@ -83,10 +83,7 @@ function tableParamsChanged(tableParams) {
     columns[0].render = { display: formatLink };
     
     _$scope.headerParams = { 
-        filterFields: [
-            'Contratada',
-            'Sonda'  
-        ],
+        filterFields: columns,
         label: tableParams.label
     };
     

@@ -7,20 +7,10 @@
     <div class="col-md-8 col-sm-6">
         <div class="table-options-pages">
             Filtrar por:
-            <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    Contratada
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <a href="#">Contratada</a>
-                    </li>
-                    <li>
-                        <a href="#">Sonda</a>
-                    </li>
-                </ul>
-            </div>
+            <select ng-model="selectedFilter">
+                <option ng-repeat="filterField in filterFields" value="filterField.data" >{{filterField.title}}</option>
+            </select>
+            <input class="header-input" type="text" ng-model="filterText"></input>
         </div>
     </div>
 </div>

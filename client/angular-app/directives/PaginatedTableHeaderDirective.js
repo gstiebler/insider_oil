@@ -3,11 +3,20 @@
 var app = angular.module('PaginatedTableHeaderDirective', []);
 
 let paginatedHeaderController = ['$scope',
-function($scope) { 
-    _$scope = $scope;
+function($scope) {
+    var delayTimer;
+    $scope.$watch('filterText', function(value) {
+        clearTimeout(delayTimer);
+        delayTimer = setTimeout(function() {
+            console.log(value);
+        }, 400);
+    });
+    
     $scope.$watch('headerParams', function(headerParams) {
         console.log(headerParams);
-        _$scope.label = headerParams.label;
+        $scope.label = headerParams.label;
+        $scope.filterFields = headerParams.filterFields;
+        $scope.selectedFilter = headerParams.filterFields[0].data;
     });
 }];
 
