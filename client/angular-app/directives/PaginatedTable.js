@@ -16,11 +16,13 @@ var app = angular.module('PaginatedTableDirective', []);
 /**
  * Function passed to DataTables to format a row with links
  */
-function formatLink(value, type, row) {
-    var linkStr = '<a href="/app/view_record?source=' + row.model;
-    linkStr += '&id=' + row.id;
-    linkStr += '">' + value + '</a>'; 
-    return linkStr;
+function getFormatLinkFn(column) {
+    return function(value, type, row) {
+        var linkStr = '<a href="/app/view_record?source=' + row.model;
+        linkStr += '&id=' + row[column.ref.idField];
+        linkStr += '">' + value + '</a>'; 
+        return linkStr;
+    }
 }
 
 /**
@@ -82,7 +84,7 @@ function tableParamsChanged(tableParams) {
             });
         }
     }
-    columns[0].render = { display: formatLink };
+    columns[0].render = { display: getFormatLinkFn(tableParams.fields[0]) };
     
     _$scope.headerParams = { 
         filterFields: columns,

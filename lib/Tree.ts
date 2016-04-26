@@ -56,7 +56,7 @@ var tree: ITreeNode = {
                         {
                             label: 'Autorizações',
                             child: {
-                                source: 'Seismic'
+                                source: 'Seismics'
                             }
                         },
                         {

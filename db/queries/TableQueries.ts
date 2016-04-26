@@ -227,12 +227,12 @@ export const queries:ITableQueries = {
             {
                 label: 'Emissão',
                 fieldName: 'start',
-                type: 'VARCHAR'
+                type: 'DATE'
             },
             {
                 label: 'Vencimento',
                 fieldName: 'end',
-                type: 'VARCHAR'
+                type: 'DATE'
             },
             {
                 label: 'Empreendimento',
@@ -260,7 +260,72 @@ export const queries:ITableQueries = {
                 type: 'VARCHAR'
             }
         ]
-    }
+    },
+    
+    /** Seismics */
+    Seismics: {
+        queryStrFn: (queryParams: IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'seismics',
+                    fields: [
+                        ['id', 's_id'],
+                        'process',
+                        'authorized_company',
+                        'dou_publi_date',
+                        'end_date',
+                        'authorized_technologies'
+                    ]
+                },
+                extraFields: [
+                    ['"Seismic"', 'model']
+                ],
+                joinTables: [
+                    {
+                        name: 'basins',
+                        fields: [
+                            ['id', 'basin_id'],
+                            ['name', 'basin_name'],
+                        ],
+                        joinField: 'basin_id'
+                    }
+                ],
+                filters: queryParams.filters
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Processo',
+                ref: {
+                    modelField: 'model',
+                    idField: 's_id',
+                    valueField: 'process'
+                }
+            },
+            {
+                label: 'Empresa autorizada',
+                fieldName: 'authorized_company',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Publicação no DOU',
+                fieldName: 'dou_publi_date',
+                type: 'DATE'
+            },
+            {
+                label: 'Validade',
+                fieldName: 'end_date',
+                type: 'DATE'
+            },
+            {
+                label: 'Bacia',
+                fieldName: 'basin_name',
+                type: 'VARCHAR'
+            }
+        ]
+    },
     
     /** sample
     ComercialDeclarations: {
