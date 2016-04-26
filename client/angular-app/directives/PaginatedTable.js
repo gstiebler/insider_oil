@@ -64,7 +64,6 @@ function tableParamsChanged(tableParams) {
     if(!tableParams)
         return;
         
-    _$scope.label = tableParams.label;
     const dataTableElement = $('#mainTable');
     const columns = [];
     for(let i = 0; i < tableParams.fields.length; i++) {
@@ -82,6 +81,14 @@ function tableParamsChanged(tableParams) {
         }
     }
     columns[0].render = { display: formatLink };
+    
+    _$scope.headerParams = { 
+        filterFields: [
+            'Contratada',
+            'Sonda'  
+        ],
+        label: tableParams.label
+    };
     
     dataTableElement.DataTable( {
         columns: columns,

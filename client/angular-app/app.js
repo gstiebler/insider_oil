@@ -16,5 +16,6 @@ angular.module('InsiderOilApp', [
     'ListOfProjectsDirective',
     'ShowQueryDataDirective',
     'ManyToManyDirective',
-    'PaginatedTableDirective'
+    'PaginatedTableDirective',
+    'PaginatedTableHeaderDirective'
 ]);

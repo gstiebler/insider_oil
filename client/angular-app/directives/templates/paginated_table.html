@@ -1,29 +1,4 @@
 <div class="main-table table-responsive bootstrap-table">
-    <div class="table-options">
-        <div class="col-md-4 col-sm-6">
-            <div class="table-options-name">
-                <h1>{{label}}</h1>
-            </div>
-        </div>
-        <div class="col-md-8 col-sm-6">
-            <div class="table-options-pages">
-                Filtrar por:
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        Contratada
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">Contratada</a>
-                        </li>
-                        <li>
-                            <a href="#">Sonda</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    <paginated-table-header header-params="headerParams" ></paginated-table-header>
     <table id="mainTable" class="table" cellspacing="0" width="100%"></table>
 </div>
