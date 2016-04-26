@@ -89,7 +89,9 @@ export const queries:ITableQueries = {
                     }
                 ],
                 extraFields: [
-                    ['"Block"', 'model']
+                    ['"Block"', 'model'],
+                    ['"Basin"', 'basin_model'],
+                    ['"Company"', 'operator_model']
                 ],
                 filters: queryParams.filters
             };
@@ -107,13 +109,19 @@ export const queries:ITableQueries = {
             },
             {
                 label: 'Bacia',
-                fieldName: 'basin_name',
-                type: 'VARCHAR'
+                ref: {
+                    modelField: 'basin_model',
+                    idField: 'basin_id',
+                    valueField: 'basin_name'
+                }
             },
             {
                 label: 'Operador',
-                fieldName: 'operator_name',
-                type: 'VARCHAR'
+                ref: {
+                    modelField: 'operator_model',
+                    idField: 'operator_id',
+                    valueField: 'operator_name'
+                }
             },
             {
                 label: 'Status',
@@ -278,7 +286,8 @@ export const queries:ITableQueries = {
                     ]
                 },
                 extraFields: [
-                    ['"Seismic"', 'model']
+                    ['"Seismic"', 'model'],
+                    ['"Basin"', 'basin_model']
                 ],
                 joinTables: [
                     {
@@ -321,8 +330,11 @@ export const queries:ITableQueries = {
             },
             {
                 label: 'Bacia',
-                fieldName: 'basin_name',
-                type: 'VARCHAR'
+                ref: {
+                    modelField: 'basin_model',
+                    idField: 'basin_id',
+                    valueField: 'basin_name'
+                }
             }
         ]
     },

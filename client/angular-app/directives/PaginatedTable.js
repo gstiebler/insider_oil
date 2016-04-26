@@ -77,6 +77,7 @@ function tableParamsChanged(tableParams) {
                 data: field.ref.valueField,
                 title: field.label
             });
+            columns[i].render = { display: getFormatLinkFn(field) };
         } else {
             columns.push({
                 data: field.fieldName,
@@ -84,7 +85,6 @@ function tableParamsChanged(tableParams) {
             });
         }
     }
-    columns[0].render = { display: getFormatLinkFn(tableParams.fields[0]) };
     
     _$scope.headerParams = { 
         filterFields: columns,
