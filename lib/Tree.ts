@@ -62,7 +62,7 @@ var tree: ITreeNode = {
                         {
                             label: 'Licenças ambientais',
                             child: {
-                                source: 'AmbientalLicense'
+                                source: 'AmbientalLicenses'
                             }
                         }
                     ]

@@ -26,6 +26,7 @@ interface ITableQueries {
 
 
 export const queries:ITableQueries = {
+    /** Basins */
     Basins: {
         queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
@@ -57,6 +58,7 @@ export const queries:ITableQueries = {
         ]
     },
     
+    /** Blocks */
     Blocks: {
         queryStrFn: (queryParams: IQueryParams) => {
             const options:QueryGenerator.IQueryOpts = {
@@ -119,7 +121,174 @@ export const queries:ITableQueries = {
                 type: 'VARCHAR'
             }
         ]
+    },
+    
+    /** Comercial declarations */
+    ComercialDeclarations: {
+        queryStrFn: (queryParams: IQueryParams) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'comercial_declarations',
+                    fields: [
+                        ['id', 'cd_id']
+                        ['name', 'cd_name'],
+                        'date'
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'basins',
+                        fields: [
+                            ['id', 'basin_id'],
+                            ['name', 'basin_name'],
+                        ],
+                        joinField: 'basin_id'
+                    },
+                    {
+                        name: 'oil_fields',
+                        fields: [
+                            ['id', 'oil_field_id'],
+                            ['name', 'oil_field_name'],
+                        ],
+                        joinField: 'oil_field_id'
+                    }
+                ],
+                extraFields: [
+                    ['"ComercialDeclaration"', 'model']
+                ],
+                filters: queryParams.filters
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'cd_id',
+                    valueField: 'cd_name'
+                }
+            },
+            {
+                label: 'Bacia',
+                fieldName: 'basin_name',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Campo',
+                fieldName: 'oil_field_name',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Data',
+                fieldName: 'date',
+                type: 'DATE'
+            }
+        ]
+    },
+    
+    /** Ambiental Licenses */
+    AmbientalLicenses: {
+        queryStrFn: (queryParams: IQueryParams) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'ambiental_licenses',
+                    fields: [
+                        'id',
+                        'license',
+                        'start',
+                        'end',
+                        'enterprise',
+                        'entrepreneur',
+                        'process',
+                        'tipology',
+                        'pac'
+                    ]
+                },
+                joinTables: [],
+                extraFields: [
+                    ['"AmbientalLicense"', 'model']
+                ],
+                filters: queryParams.filters
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nro da licença',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'license'
+                }
+            },
+            {
+                label: 'Emissão',
+                fieldName: 'start',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Vencimento',
+                fieldName: 'end',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Empreendimento',
+                fieldName: 'enterprise',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Empreendedor',
+                fieldName: 'entrepreneur',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Nº do processo',
+                fieldName: 'process',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Tipologia',
+                fieldName: 'tipology',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'PAC',
+                fieldName: 'pac',
+                type: 'VARCHAR'
+            }
+        ]
     }
+    
+    /** sample
+    ComercialDeclarations: {
+        queryStrFn: (queryParams: IQueryParams) => {
+            const options:QueryGenerator.IQueryOpts = {
+            {
+                table: {
+                    name: 'blocks',
+                    fields: [
+                        'id',
+                        ['name', 'block_name'],
+                        'status'
+                    ]
+                },
+                joinTables: [],
+                extraFields: [
+                    ['"Basin"', 'model']
+                ],
+                filters: queryParams.filters
+            },
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {}
+        ]
+    } */
 };
 
 export function getQueryResult(queryName: string, queryParams: IQueryParams): Promise<any> {
