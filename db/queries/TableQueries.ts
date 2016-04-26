@@ -65,7 +65,6 @@ export const queries:ITableQueries = {
                     fields: [
                         'id',
                         ['name', 'block_name'],
-                        'name_contract',
                         'status'
                     ]
                 },
@@ -105,13 +104,18 @@ export const queries:ITableQueries = {
                 }
             },
             {
+                label: 'Bacia',
+                fieldName: 'basin_name',
+                type: 'VARCHAR'
+            },
+            {
                 label: 'Operador',
                 fieldName: 'operator_name',
                 type: 'VARCHAR'
             },
             {
-                label: 'Nome contrato',
-                fieldName: 'name_contract',
+                label: 'Status',
+                fieldName: 'status',
                 type: 'VARCHAR'
             }
         ]
