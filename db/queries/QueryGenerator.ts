@@ -6,12 +6,23 @@ export interface IFilter {
     in?: number[];
 }
 
-export function getOrderByStr(orderFields: string[]): string {
+export interface IOrderOpts {
+    fieldName: string;
+    dir: string; // "asc" or "desc"
+}
+
+export interface IQueryParams {
+    order: IOrderOpts[];
+    filters: IFilter[];
+    pagination: IPaginationOpts;
+}
+
+export function getOrderByStr(orderOpts: IOrderOpts[]): string {
     let orderByStr = '';
-    if( orderFields.length > 0 ) {
+    if( orderOpts.length > 0 ) {
         orderByStr += ' order by ';  
-        for( let orderField of orderFields ) {
-            orderByStr += orderField + ', ';
+        for( let orderOpt of orderOpts ) {
+            orderByStr += orderOpt.fieldName + ' ' + orderOpt.dir + ', ';
         }
         orderByStr = orderByStr.substr(0, orderByStr.length - 2);
         orderByStr += ' ';

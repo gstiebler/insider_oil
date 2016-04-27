@@ -1,6 +1,6 @@
 var fiberTests = require('./lib/fiberTests');
 var utils = require('./lib/utils');
-import TableQueries = require('../db/queries/TableQueries');
+import QueryGenerator = require('../db/queries/QueryGenerator');
 import nodeunit = require('nodeunit');
 import dbServerController = require('../controllers/dbServerController');
 
@@ -8,8 +8,13 @@ var group: nodeunit.ITestGroup = {
 
 
 basinsLikeFilter:  (test: nodeunit.Test) => {
-    const queryParams:TableQueries.IQueryParams = {
-        order: ['name'],
+    const queryParams:QueryGenerator.IQueryParams = {
+        order: [
+            {
+                fieldName: 'name',
+                dir: 'asc'
+            }
+        ],
         filters: [
             {
                 field: 'name',
@@ -40,8 +45,13 @@ basinsLikeFilter:  (test: nodeunit.Test) => {
 
 
 basinsPagination:  (test: nodeunit.Test) => {
-    const queryParams:TableQueries.IQueryParams = {
-        order: ['name'],
+    const queryParams:QueryGenerator.IQueryParams = {
+        order: [
+            {
+                fieldName: 'name',
+                dir: 'asc'
+            }
+        ],
         filters: [],
         pagination: {
             first: 10,
@@ -70,8 +80,17 @@ basinsPagination:  (test: nodeunit.Test) => {
 
 
 blocksInFilter:  (test: nodeunit.Test) => {
-    const queryParams:TableQueries.IQueryParams = {
-        order: ['basin_name', 'block_name'],
+    const queryParams:QueryGenerator.IQueryParams = {
+        order: [
+            {
+                fieldName: 'basin_name',
+                dir: 'desc'
+            },
+            {
+                fieldName: 'block_name',
+                dir: 'asc'
+            }
+        ],
         filters: [
             {
                 field: 'operator_id',
@@ -97,10 +116,14 @@ blocksInFilter:  (test: nodeunit.Test) => {
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
     test.equal( 2, resQueryValues.records.length );
     test.equal( 2, resQueryValues.count );
-    test.equal( 'ES-M-529', resQueryValues.records[0].block_name );
-    test.equal( 'Statoil', resQueryValues.records[0].operator_name );
-    test.equal( 'BM-BAR-1', resQueryValues.records[1].block_name );
-    test.equal( 'Petrobras', resQueryValues.records[1].operator_name );
+    
+    test.equal( 'BM-BAR-1', resQueryValues.records[0].block_name );
+    test.equal( 'Petrobras', resQueryValues.records[0].operator_name );
+    test.equal( 'Recôncavo', resQueryValues.records[0].basin_name );
+    
+    test.equal( 'ES-M-529', resQueryValues.records[1].block_name );
+    test.equal( 'Statoil', resQueryValues.records[1].operator_name );
+    test.equal( 'Potiguar', resQueryValues.records[1].basin_name );
     
     test.done();
 }

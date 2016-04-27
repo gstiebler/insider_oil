@@ -5,14 +5,8 @@ import db = require('../models');
 import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
 
-export interface IQueryParams {
-    order: string[];
-    filters: QueryGenerator.IFilter[];
-    pagination: QueryGenerator.IPaginationOpts;
-}
-
 interface IQueryStrFn {
-    (queryParams: IQueryParams): string; 
+    (queryParams: QueryGenerator.IQueryParams): string; 
 }
 
 interface ITableQuery {
@@ -28,7 +22,7 @@ interface ITableQueries {
 export const queries:ITableQueries = {
     /** Basins */
     Basins: {
-        queryStrFn: (queryParams: IQueryParams) => {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'basins',
@@ -60,7 +54,7 @@ export const queries:ITableQueries = {
     
     /** Blocks */
     Blocks: {
-        queryStrFn: (queryParams: IQueryParams) => {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
             const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'blocks',
@@ -133,7 +127,7 @@ export const queries:ITableQueries = {
     
     /** Comercial declarations */
     ComercialDeclarations: {
-        queryStrFn: (queryParams: IQueryParams) => {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
             const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'comercial_declarations',
@@ -198,7 +192,7 @@ export const queries:ITableQueries = {
     
     /** Ambiental Licenses */
     AmbientalLicenses: {
-        queryStrFn: (queryParams: IQueryParams) => {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
             const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'ambiental_licenses',
@@ -272,7 +266,7 @@ export const queries:ITableQueries = {
     
     /** Seismics */
     Seismics: {
-        queryStrFn: (queryParams: IQueryParams) => {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'seismics',
@@ -368,7 +362,7 @@ export const queries:ITableQueries = {
     } */
 };
 
-export function getQueryResult(queryName: string, queryParams: IQueryParams): Promise<any> {
+export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const queryStr = queries[queryName].queryStrFn(queryParams);
     const orderBy = QueryGenerator.getOrderByStr(queryParams.order);

@@ -30,11 +30,14 @@ function getFormatLinkFn(column) {
  * and when a page on pagination is clicked
  */
 function ajaxFn(data, callback, settings) {
-    let columnNames = [];
+    let orderColumns = [];
     for(let i = 0; i < data.order.length; i++) {
         let columnIndex = data.order[i].column;
-        let dir = data.order[i].dir;
-        columnNames.push( data.columns[columnIndex].data );
+        let orderObj = {
+            fieldName: data.columns[columnIndex].data,
+            dir: data.order[i].dir
+        };
+        orderColumns.push( orderObj );
     }
     
     const options = {
@@ -44,7 +47,7 @@ function ajaxFn(data, callback, settings) {
                 first: data.start,
                 itemsPerPage: data.length 
             },
-            order: columnNames,
+            order: orderColumns,
             filters: filters
         }
     };
@@ -102,11 +105,6 @@ function tableParamsChanged(tableParams) {
     } );
 }
 
-function filterChanged(newFilter) {
-    filters = newFilter;
-    dataTable.draw();
-} 
-
 let controller = ['$scope', 'server', 'ModelViewService',
 function($scope, server, ModelViewService) { 
     _server = server;
@@ -116,6 +114,11 @@ function($scope, server, ModelViewService) {
     $scope.$watch('tableParams', tableParamsChanged);
     
     $scope.filterChanged = filterChanged;
+
+    function filterChanged(newFilter) {
+        filters = newFilter;
+        dataTable.draw();
+    } 
 }];
 
 app.directive('paginatedTable', function() {
