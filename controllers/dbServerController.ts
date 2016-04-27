@@ -14,6 +14,7 @@ import DataSourceOperations = require('../lib/DataSourceOperations/index');
 import ComboQueries = require('../db/queries/ComboQueries');
 import QueriesById = require('../db/queries/QueriesById');
 import TableQueries = require('../db/queries/TableQueries');
+import QueryGenerator = require('../db/queries/QueryGenerator');
  
 function getFieldTypes(fields) {
     const types = {};
@@ -266,10 +267,10 @@ export function getQueryData(req: express.Request, res: express.Response) {Sync(
         res.json(result);
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 })}
-
+ 
 
 export function getTableQueryData(req: express.Request, res: express.Response):void {Sync(function(){
-    const queryParams:TableQueries.IQueryParams = req.query.queryParams ? JSON.parse(req.query.queryParams) : {};
+    const queryParams:QueryGenerator.IQueryParams = req.query.queryParams ? JSON.parse(req.query.queryParams) : {};
     const queryName:string = req.query.queryName;
     const fields = TableQueries.queries[queryName].fields;
 

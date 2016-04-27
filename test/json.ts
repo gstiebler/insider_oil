@@ -1,7 +1,9 @@
+"use strict"
 
-var fiberTests = require('./lib/fiberTests');
+import fiberTests = require('./lib/fiberTests');
 var Sync = require('sync');
 import utils = require('./lib/utils');
+import nodeunit = require('nodeunit');
 
 var port = 3333;
 var InitializeServer = require('./lib/InitializeServer');
@@ -50,7 +52,7 @@ function getToken(callback) {
     });   
 }
 
-var group = {
+var group:nodeunit.ITestGroup = {
 
 first: function(test) {
     var server = InitializeServer(port);
@@ -178,4 +180,4 @@ deleteItem: function(test) {
 
 };
 
-fiberTests.convertTests( exports, group );
+exports.group = fiberTests.convertTests( group, true );

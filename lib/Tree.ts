@@ -27,7 +27,7 @@ var tree: ITreeNode = {
                         source: 'Blocks'
                     }
                 },
-                {
+                /*{
                     label: 'Poços',
                     child: {
                         source: 'Well'
@@ -49,7 +49,7 @@ var tree: ITreeNode = {
                             }
                         }
                     ]
-                },
+                },*/
                 {
                     label: 'Sísmica',
                     children: [
@@ -69,7 +69,7 @@ var tree: ITreeNode = {
                 },
             ]
         },
-        {
+        /*{
             label: 'Produção',
             children: [
                 {
@@ -137,10 +137,6 @@ var tree: ITreeNode = {
                                     label: 'Fixas',
                                     child: {
                                         source: 'FPSOProduction'
-                                        /* TODO must have a field for this filter
-                                        filters: {
-                                            status: 'operation'
-                                        }*/
                                     }
                                 }
                             ]
@@ -161,10 +157,6 @@ var tree: ITreeNode = {
                                     label: 'Fixas',
                                     child: {
                                         source: 'FPSOProduction'
-                                        /* TODO must have a field for this filter
-                                        filters: {
-                                            status: 'operation'
-                                        }*/
                                     }
                                 }
                             ]
@@ -287,8 +279,7 @@ var tree: ITreeNode = {
             child: {
                 source: 'News'
             }
-        }
-        /*,
+        },
         {
             label: 'Logística',
             children: [

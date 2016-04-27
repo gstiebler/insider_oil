@@ -1,11 +1,12 @@
-"use strict";
-    
-const fiberTests = require('./lib/fiberTests');
+"use strict"
+
+import fiberTests = require('./lib/fiberTests');
 const news = require('../lib/News');
 var await = require('../lib/await');
 
 import db = require('../db/models');
 import utils = require('./lib/utils');
+import nodeunit = require('nodeunit');
 
 
 const newsHTML = '<p>um campo: <a href="/app/view_record?source=OilField&amp;id=3" style="background-color: rgb(255, 255, 255);">Abalone</a> ' +
@@ -13,7 +14,7 @@ const newsHTML = '<p>um campo: <a href="/app/view_record?source=OilField&amp;id
 	'Google</a> link de verdade e aqui um nome: </p><p><a href="/app/view_record?source=Person&amp;id=1" style="background-color: rgb(255, 255, 255);">' + 
 	'Guilherme Stiebler</a></p>';
 
-var group = {
+var group: nodeunit.ITestGroup = {
 
 modelReferences: test => {
     const abaloneId = utils.idByName('OilField', 'Abalone');
@@ -108,4 +109,5 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 
 };
 
-fiberTests.convertTests( exports, group );
+
+exports.group = fiberTests.convertTests( group, false );

@@ -4,6 +4,7 @@ process.env['NODE_ENV'] = 'test';
 import winston = require('winston');
 import db = require('../../db/models');
 import createFixtures = require('../fixtures/initial_data');
+import nodeunit = require('nodeunit');
 
 var Sync = require('sync');
 var await = require('../../lib/await');
@@ -17,7 +18,7 @@ process.on('uncaughtException', function (err) {
     winston.error(err.stack);
 }) 
 
-function initializeDB() {
+export function initializeDB() {
     try {
         await( db.sequelize.getQueryInterface().dropAllTables() );
         await( umzug.up() );
@@ -59,12 +60,11 @@ function syncBaseFunc( callback ) {
 }
 
 
-exports.convertTests = function( exports, group, doNotModifyDB ) {
-    exports.group = {};
-    exports.group.setUp = syncBaseFunc( getDefaultSetUpFn(!doNotModifyDB) );
+export function convertTests( group:nodeunit.ITestGroup, doNotModifyDB:boolean ):nodeunit.ITestGroup {
+    let newGroup:nodeunit.ITestGroup = {};
+    newGroup.setUp = syncBaseFunc( getDefaultSetUpFn(!doNotModifyDB) );
     for(var propertyName in group) {
-        exports.group[propertyName] = syncBaseFunc( group[propertyName] );
+        newGroup[propertyName] = syncBaseFunc( group[propertyName] );
     }
+    return newGroup;
 }
-
-exports.initializeDB = initializeDB;

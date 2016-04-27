@@ -1,13 +1,14 @@
-"use strict";
+"use strict"
 
-const fiberTests = require('./lib/fiberTests');
+import fiberTests = require('./lib/fiberTests');
 import db = require('../db/models');
 import dbServerController = require('../controllers/dbServerController');
+import nodeunit = require('nodeunit');
 
 const utils = require('./lib/utils');
 
 
-var group = {
+const group: nodeunit.ITestGroup = {
 
 getPerson: test => {
     const req = {
@@ -155,4 +156,4 @@ editPerson: test => {
 };
 
 
-fiberTests.convertTests( exports, group );
+exports.group = fiberTests.convertTests( group, false );

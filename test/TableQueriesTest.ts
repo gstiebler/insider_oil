@@ -1,11 +1,10 @@
-var fiberTests = require('./lib/fiberTests');
+import fiberTests = require('./lib/fiberTests');
 var utils = require('./lib/utils');
 import QueryGenerator = require('../db/queries/QueryGenerator');
 import nodeunit = require('nodeunit');
 import dbServerController = require('../controllers/dbServerController');
 
 var group: nodeunit.ITestGroup = {
-
 
 basinsLikeFilter:  (test: nodeunit.Test) => {
     const queryParams:QueryGenerator.IQueryParams = {
@@ -130,6 +129,4 @@ blocksInFilter:  (test: nodeunit.Test) => {
     
 }
 
- 
-
-fiberTests.convertTests( exports, group, true );
+exports.group = fiberTests.convertTests( group, true );

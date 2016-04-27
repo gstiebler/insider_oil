@@ -1,7 +1,7 @@
-namespace SeleniumTests {
-    
+"use strict"
 
-var fiberTests = require('./lib/fiberTests');
+import fiberTests = require('./lib/fiberTests');
+import nodeunit = require('nodeunit');
 
 var port = 3333;
 var InitializeServer = require('./lib/InitializeServer');
@@ -188,7 +188,7 @@ function logout(test, driver) {
     test.equal('Login', await( driver.getTitle() ));
 }
     
-var group = {
+var group: nodeunit.ITestGroup = {
 
 first: function(test) {
     var server = InitializeServer(port);
@@ -582,7 +582,4 @@ function elementByText(text) {
 }
 
 
-fiberTests.convertTests( exports, group );
-
-
-}
+exports.group = fiberTests.convertTests( group, false );

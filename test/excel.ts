@@ -1,5 +1,6 @@
-    
-var fiberTests = require('./lib/fiberTests');
+"use strict"
+
+import fiberTests = require('./lib/fiberTests');
 import db = require('../db/models');
 import fs = require('fs');
 import importExcel = require('../lib/importExcel');
@@ -7,6 +8,7 @@ import ExportExcel = require('../lib/ExportExcel');
 var XLSX = require('xlsx');
 import dbUtils = require('../lib/dbUtils');
 var await = require('../lib/await');
+import nodeunit = require('nodeunit');
 
 function onError(error) {
     console.error(error.stack);
@@ -19,9 +21,9 @@ function compareArray(test, array1, array2) {
 }
 
 
-var group = {
+var group: nodeunit.ITestGroup = {
 
-importDrillingRigOffshore: function(test) {
+importDrillingRigOffshore: function(test: nodeunit.Test) {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.DrillingRigOffshore.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
@@ -65,7 +67,7 @@ importDrillingRigOffshore: function(test) {
 },
 
 
-importAmbientalLicenses: test => {
+importAmbientalLicenses: (test: nodeunit.Test) => {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.AmbientalLicense.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/ambiental_licenses.xlsx');
@@ -185,4 +187,4 @@ invalidHeader: function(test) {
 
 };
 
-fiberTests.convertTests( exports, group );
+exports.group = fiberTests.convertTests( group, false );

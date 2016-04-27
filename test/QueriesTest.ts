@@ -1,4 +1,6 @@
-var fiberTests = require('./lib/fiberTests');
+"use strict"
+
+import fiberTests = require('./lib/fiberTests');
 var utils = require('./lib/utils');
 import nodeunit = require('nodeunit');
 import dbServerController = require('../controllers/dbServerController');
@@ -195,4 +197,4 @@ getWellsByBlock:  (test: nodeunit.Test) => {
 
 }
 
-fiberTests.convertTests( exports, group, true );
+exports.group = fiberTests.convertTests( group, true );

@@ -1,11 +1,13 @@
 "use strict"
 
-var fiberTests = require('./lib/fiberTests');
+import fiberTests = require('./lib/fiberTests');
 import dbServerController = require('../controllers/dbServerController');
+import ExcelController = require('../controllers/ExcelController');
+import QueryGenerator = require('../db/queries/QueryGenerator');
+import nodeunit = require('nodeunit');
 var TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
 var SearchController = require('../controllers/SearchController');
-import ExcelController = require('../controllers/ExcelController');
 var Sync = require('sync');
 var utils = require('./lib/utils');
 //var Future = Sync.Future();
@@ -26,18 +28,33 @@ function iterateTree(children, test) {
             iterateTree(item.children, test);
         } else {
             test.ok(item.child, 'Não existe filho para o item ' + item.label);
-            const req = {
-                query: { 
-                    table: item.child.source,
-                    filters: JSON.stringify(item.child.filters)
+            
+            const queryParams:QueryGenerator.IQueryParams = {
+                order: [],
+                filters: [],
+                pagination: {
+                    first: 0,
+                    itemsPerPage: 10
                 }
-            };
-            const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
+            }
+            
+            const reqQueryValues = {
+                query: {
+                    queryName: item.child.source,
+                    queryParams: JSON.stringify(queryParams)
+                }
+            }; 
+            
+            const response = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
             test.ok(response.records.length > 0, 'Não há registros em ' + item.label);
+            const firstRecord = response.records[0];
+            const firstField = response.fields[0];
+            const idField = firstField.ref.idField;
+            const modelField = firstField.ref.modelField;
             const reqViewRecords = {
             	query: {
-            		dataSource: item.child.source,
-            		id: response.records[0].id
+            		dataSource: firstRecord[modelField],
+            		id: firstRecord[idField]
             	}	
             };
             const responseViewRecords = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqViewRecords);
@@ -46,110 +63,7 @@ function iterateTree(children, test) {
     }
 }
 
-var group = {
-
-listWells: function(test) {
-    const req = {
-        query: { 
-            table: 'Well2',
-            fieldNames: [
-                'name', 
-                'operator_name',
-                'basin_name'
-            ]
-        }
-    };    
-    
-    const errorResponse = utils.getJsonResponse.sync(null, dbServerController.main, req);
-    test.equal( 500, errorResponse.code ); // test HTTP error code
-    test.equal( "Modelo não encontrado", errorResponse.error.errorMsg );
-    test.equal( 0, errorResponse.error.errors.length );
-    
-    req.query.table = 'Well';
-    const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
-    // records
-    test.equal(3, response.records.length);
-    test.equal('1A 0001 BA', response.records[0].name);
-    test.equal('Petrobras', response.records[0].operator_name);
-    // view params
-    test.equal( 'Poços', response.viewParams.tableLabel );
-    test.equal( 'name', response.viewParams.labelField );
-    test.equal( 'Poço', response.viewParams.fields.name.label );
-    test.equal( 'Operador', response.viewParams.fields.operator_name.label );
-    test.equal( 'Latitude', response.viewParams.fields.lat.label );
-    test.done();
-},
-
-
-listOilFieldsProductionOnshore: function(test) {
-   const req = {
-        query: { 
-            table: 'OilFieldProduction',
-            filters: JSON.stringify({ shore: 'off' })
-        }
-    };    
-    
-    const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
-    // records
-    test.equal(1, response.records.length);
-    test.equal('Abalone', response.records[0].name);
-    // view params
-    test.equal( 'Campos', response.viewParams.tableLabel );
-    test.equal( 'name', response.viewParams.labelField );
-    test.equal( 'Nome', response.viewParams.fields.name.label );
-    test.equal( 'Bacia', response.viewParams.fields.basin_name.label );
-    test.equal( 'Terra/Mar', response.viewParams.fields.userShore.label );
-    test.done();
-},
-
-
-modelFields: function(test) {
-    const req = {
-        query: { model: 'Well' }
-    };
-    
-    const response = utils.getJsonResponse.sync(null, dbServerController.modelFields, req);
-    test.equal(16, response.fields.length);
-    test.equal( 'name', response.fields[0].name );
-    test.equal( 'Poço', response.fields[0].label );
-    test.equal( 'VARCHAR(255)', response.fields[0].type );
-    
-    test.equal( 'lat', response.fields[2].name );
-    test.equal( 'Latitude', response.fields[2].label );
-    test.equal( 'DECIMAL(10,6)', response.fields[2].type );
-    
-    test.equal( 'drilling_rig', response.fields[4].name );
-    test.equal( 'Sonda', response.fields[4].label );
-    test.equal( 'ref', response.fields[4].type );
-    
-    test.equal( 'operator_id', response.fields[14].name );
-    test.equal( 'Operador', response.fields[14].label );
-    test.equal( 'ref', response.fields[14].type );
-    test.equal( 'Company', response.fields[14].model );
-    test.done();
-},
-
-
-getComboValues: function(test) {
-    const req = {
-        query: { model: 'Company' }
-    };
-
-    const response = utils.getJsonResponse.sync(null, dbServerController.getComboValues, req);
-    test.equal(46, response.length);
-    
-    test.equal( utils.idByName('Company', 'Alvopetro'), response[0].id );
-    test.equal( utils.idByName('Company', 'Anadarko'), response[1].id );
-    test.equal( utils.idByName('Company', 'UTC EP'), response[44].id );
-    test.equal( utils.idByName('Company', 'Vipetro'), response[45].id );
-    
-    test.equal( 'Alvopetro', response[0].label );
-    test.equal( 'Anadarko', response[1].label );
-    test.equal( 'UTC EP', response[44].label );
-    test.equal( 'Vipetro', response[45].label );
-    test.done();
-},
-
+var group:nodeunit.ITestGroup = {
 
 createWell: function(test) {
     const req = {
@@ -261,23 +175,6 @@ editFieldOilProduction: function(test) {
 },
 
 
-
-getRecordValuesOilFieldProduction: function(test) {
-    const req = {
-        query: { 
-            model: 'OilFieldProduction',
-            id: 3
-        }
-    };
-    const response = utils.getJsonResponse.sync(null, dbServerController.recordValues, req);
-    test.equal('Abalone', response.values.name);
-    test.equal('off', response.values.shore);
-    test.equal('Mar', response.values.userShore);
-    test.equal('production', response.values.stage);
-    test.done();
-},
-
-
 deleteWell: function(test) {
     const req = {
         query: { 
@@ -366,36 +263,6 @@ deleteOilFieldDeveloping: function(test) {
 },
 
 
-getRecordViewWell: function(test) {
-    const req = {
-        query: { 
-            dataSource: 'Well',
-            id: 2
-        }
-    };
-
-    const response = utils.getJsonResponse.sync(null, dbServerController.viewRecord, req);
-    const record = response.record;
-    test.equal(16, record.length);
-    test.equal('Poço', record[0].label);
-    test.equal('1AGIP1RJS', record[0].value);
-    
-    test.equal('Reclassificação', record[7].label);
-    test.equal('Latitude', record[2].label);
-    
-    test.equal('Sonda', record[4].label);
-    test.equal('NIC-01', record[4].name);
-    
-    test.equal('Operador', record[14].label);
-    test.equal(2, record[14].value);
-    test.equal(true, record[14].ref);
-    test.equal('Company', record[14].model);
-    test.equal('Eni Oil', record[14].name);
-    
-    test.done();
-},
-
-
 createOilFieldDeveloping: function(test) {
     const req = {
         body: { 
@@ -465,6 +332,180 @@ loginHTML: function(test) {
 },
 
 
+importBlocksFromURL: function(test) {
+    const reqImport = {
+        body: { 
+            params: { dataSource: 'Block' },
+        }
+    };
+    const resImport = utils.getJsonResponse.sync(null, ExcelController.importExcelFromURL, reqImport);    
+    test.equal('Registros criados: 341\nRegistros atualizados: 3\nRegistros inválidos: 3', resImport.status);
+
+
+   const reqListBlocks = {
+        query: { 
+            table: 'Block',
+        }
+    };    
+    
+    const resListBlocks = utils.getJsonResponse.sync(null, dbServerController.main, reqListBlocks);
+    // records
+    test.equal(344, resListBlocks.records.length);
+    
+    test.done();
+},
+
+
+};
+
+
+var notModDBGroup:nodeunit.ITestGroup = {
+
+listWells: function(test) {
+    const req = {
+        query: { 
+            table: 'Well2',
+            fieldNames: [
+                'name', 
+                'operator_name',
+                'basin_name'
+            ]
+        }
+    };    
+    
+    const errorResponse = utils.getJsonResponse.sync(null, dbServerController.main, req);
+    test.equal( 500, errorResponse.code ); // test HTTP error code
+    test.equal( "Modelo não encontrado", errorResponse.error.errorMsg );
+    test.equal( 0, errorResponse.error.errors.length );
+    
+    req.query.table = 'Well';
+    const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
+    // records
+    test.equal(3, response.records.length);
+    test.equal('1A 0001 BA', response.records[0].name);
+    test.equal('Petrobras', response.records[0].operator_name);
+    // view params
+    test.equal( 'Poços', response.viewParams.tableLabel );
+    test.equal( 'name', response.viewParams.labelField );
+    test.equal( 'Poço', response.viewParams.fields.name.label );
+    test.equal( 'Operador', response.viewParams.fields.operator_name.label );
+    test.equal( 'Latitude', response.viewParams.fields.lat.label );
+    test.done();
+},
+
+listOilFieldsProductionOnshore: function(test) {
+   const req = {
+        query: { 
+            table: 'OilFieldProduction',
+            filters: JSON.stringify({ shore: 'off' })
+        }
+    };    
+    
+    const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
+    // records
+    test.equal(1, response.records.length);
+    test.equal('Abalone', response.records[0].name);
+    // view params
+    test.equal( 'Campos', response.viewParams.tableLabel );
+    test.equal( 'name', response.viewParams.labelField );
+    test.equal( 'Nome', response.viewParams.fields.name.label );
+    test.equal( 'Bacia', response.viewParams.fields.basin_name.label );
+    test.equal( 'Terra/Mar', response.viewParams.fields.userShore.label );
+    test.done();
+},
+
+
+modelFields: function(test) {
+    const req = {
+        query: { model: 'Well' }
+    };
+    
+    const response = utils.getJsonResponse.sync(null, dbServerController.modelFields, req);
+    test.equal(16, response.fields.length);
+    test.equal( 'name', response.fields[0].name );
+    test.equal( 'Poço', response.fields[0].label );
+    test.equal( 'VARCHAR(255)', response.fields[0].type );
+    
+    test.equal( 'lat', response.fields[2].name );
+    test.equal( 'Latitude', response.fields[2].label );
+    test.equal( 'DECIMAL(10,6)', response.fields[2].type );
+    
+    test.equal( 'drilling_rig', response.fields[4].name );
+    test.equal( 'Sonda', response.fields[4].label );
+    test.equal( 'ref', response.fields[4].type );
+    
+    test.equal( 'operator_id', response.fields[14].name );
+    test.equal( 'Operador', response.fields[14].label );
+    test.equal( 'ref', response.fields[14].type );
+    test.equal( 'Company', response.fields[14].model );
+    test.done();
+},
+
+
+getComboValues: function(test) {
+    const req = {
+        query: { model: 'Company' }
+    };
+
+    const response = utils.getJsonResponse.sync(null, dbServerController.getComboValues, req);
+    test.equal(46, response.length);
+    
+    test.equal( utils.idByName('Company', 'Alvopetro'), response[0].id );
+    test.equal( utils.idByName('Company', 'Anadarko'), response[1].id );
+    test.equal( utils.idByName('Company', 'UTC EP'), response[44].id );
+    test.equal( utils.idByName('Company', 'Vipetro'), response[45].id );
+    
+    test.equal( 'Alvopetro', response[0].label );
+    test.equal( 'Anadarko', response[1].label );
+    test.equal( 'UTC EP', response[44].label );
+    test.equal( 'Vipetro', response[45].label );
+    test.done();
+},
+
+getRecordValuesOilFieldProduction: function(test) {
+    const req = {
+        query: { 
+            model: 'OilFieldProduction',
+            id: 3
+        }
+    };
+    const response = utils.getJsonResponse.sync(null, dbServerController.recordValues, req);
+    test.equal('Abalone', response.values.name);
+    test.equal('off', response.values.shore);
+    test.equal('Mar', response.values.userShore);
+    test.equal('production', response.values.stage);
+    test.done();
+},
+
+getRecordViewWell: function(test) {
+    const req = {
+        query: { 
+            dataSource: 'Well',
+            id: 2
+        }
+    };
+
+    const response = utils.getJsonResponse.sync(null, dbServerController.viewRecord, req);
+    const record = response.record;
+    test.equal(16, record.length);
+    test.equal('Poço', record[0].label);
+    test.equal('1AGIP1RJS', record[0].value);
+    
+    test.equal('Reclassificação', record[7].label);
+    test.equal('Latitude', record[2].label);
+    
+    test.equal('Sonda', record[4].label);
+    test.equal('NIC-01', record[4].name);
+    
+    test.equal('Operador', record[14].label);
+    test.equal(2, record[14].value);
+    test.equal(true, record[14].ref);
+    test.equal('Company', record[14].model);
+    test.equal('Eni Oil', record[14].name);
+    
+    test.done();
+},
+
 adminTablesIntegrity: test => {
     const responseAdminDataSources = utils.getJsonResponse.sync(null, dbServerController.sourcesList, null);
     for(const dataSourceName in responseAdminDataSources) {
@@ -481,13 +522,11 @@ adminTablesIntegrity: test => {
     test.done();
 },
 
-
 treeIntegrity: test => {
     const tree = utils.getJsonResponse.sync(null, TreeController.main, null);
     iterateTree(tree.children, test);
     test.done();
 },
-
 
 allTablesMain: test => {
 	const models = [
@@ -523,7 +562,6 @@ allTablesMain: test => {
 	test.done();
 },
 
-
 search: test => {
 	const req = {
 		query: { searchValue: 'guilherme' }
@@ -545,8 +583,6 @@ search: test => {
     test.done();
 },
 
-
-
 getAmbientalLicensesRecordValues: function(test) {
     const ambientalLicenseId = utils.idByValue('AmbientalLicense', 'license', 'ABio 560/2014');
     const reqRecordValues = {
@@ -564,31 +600,6 @@ getAmbientalLicensesRecordValues: function(test) {
     test.done();
 },
 
-
-importBlocksFromURL: function(test) {
-    const reqImport = {
-        body: { 
-            params: { dataSource: 'Block' },
-        }
-    };
-    const resImport = utils.getJsonResponse.sync(null, ExcelController.importExcelFromURL, reqImport);    
-    test.equal('Registros criados: 341\nRegistros atualizados: 3\nRegistros inválidos: 3', resImport.status);
-
-
-   const reqListBlocks = {
-        query: { 
-            table: 'Block',
-        }
-    };    
-    
-    const resListBlocks = utils.getJsonResponse.sync(null, dbServerController.main, reqListBlocks);
-    // records
-    test.equal(344, resListBlocks.records.length);
-    
-    test.done();
-},
-
-
 customComboQuery: (test) => {
     const req = {
         query: { model: 'AllDrillingRigs' }
@@ -603,7 +614,7 @@ customComboQuery: (test) => {
     test.done();
 },
 
+}
 
-};
-
-fiberTests.convertTests( exports, group );
+exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );
+exports.group = fiberTests.convertTests( group, false );

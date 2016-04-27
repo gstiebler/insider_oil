@@ -1,4 +1,6 @@
-var fiberTests = require('./lib/fiberTests');
+"use strict"
+
+import fiberTests = require('./lib/fiberTests');
 import db = require('../db/models');
 var await = require('../lib/await');
 var utils = require('./lib/utils');
@@ -27,4 +29,4 @@ updateWell: (test: nodeunit.Test) => {
 
 }
 
-fiberTests.convertTests( exports, group );
+exports.group = fiberTests.convertTests( group, false );
