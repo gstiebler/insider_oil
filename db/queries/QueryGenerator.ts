@@ -101,7 +101,7 @@ function genOuterJoins(queryOpts: IQueryOpts): string {
     let resultQry = '';
     for(let joinTable of queryOpts.joinTables) {
         resultQry += ' left outer join ' + joinTable.name + ' on ';
-        resultQry += joinTable.name + '.id = ' + queryOpts.table.name + '.' + joinTable.joinField;
+        resultQry += joinTable.name + '.id = ' + joinTable.joinField;
     }
     return resultQry;
 }

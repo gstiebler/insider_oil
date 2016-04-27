@@ -71,7 +71,7 @@ export const queries:ITableQueries = {
                             ['id', 'operator_id'],
                             ['name', 'operator_name'],
                         ],
-                        joinField: 'operator_id'
+                        joinField: 'blocks.operator_id'
                     },
                     {
                         name: 'basins',
@@ -79,7 +79,7 @@ export const queries:ITableQueries = {
                             ['id', 'basin_id'],
                             ['name', 'basin_name'],
                         ],
-                        joinField: 'basin_id'
+                        joinField: 'blocks.basin_id'
                     }
                 ],
                 extraFields: [
@@ -125,7 +125,7 @@ export const queries:ITableQueries = {
         ]
     },
     
-    /** Comercial declarations */
+    /** Comercial declarations 
     ComercialDeclarations: {
         queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
             const options:QueryGenerator.IQueryOpts = {
@@ -188,9 +188,9 @@ export const queries:ITableQueries = {
                 type: 'DATE'
             }
         ]
-    },
+    },*/
     
-    /** Ambiental Licenses */
+    /** Ambiental Licenses 
     AmbientalLicenses: {
         queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
             const options:QueryGenerator.IQueryOpts = {
@@ -262,7 +262,7 @@ export const queries:ITableQueries = {
                 type: 'VARCHAR'
             }
         ]
-    },
+    },*/
     
     /** Seismics */
     Seismics: {
@@ -281,16 +281,25 @@ export const queries:ITableQueries = {
                 },
                 extraFields: [
                     ['"Seismic"', 'model'],
+                    ['"Block"', 'block_model'],
                     ['"Basin"', 'basin_model']
                 ],
                 joinTables: [
+                    {
+                        name: 'blocks',
+                        fields: [
+                            ['id', 'block_id'],
+                            ['name', 'block_name'],
+                        ],
+                        joinField: 'seismics.block_id'
+                    },
                     {
                         name: 'basins',
                         fields: [
                             ['id', 'basin_id'],
                             ['name', 'basin_name'],
                         ],
-                        joinField: 'basin_id'
+                        joinField: 'blocks.basin_id'
                     }
                 ],
                 filters: queryParams.filters
@@ -321,6 +330,14 @@ export const queries:ITableQueries = {
                 label: 'Validade',
                 fieldName: 'end_date',
                 type: 'DATE'
+            },
+            {
+                label: 'Bloco',
+                ref: {
+                    modelField: 'block_model',
+                    idField: 'block_id',
+                    valueField: 'block_name'
+                }
             },
             {
                 label: 'Bacia',

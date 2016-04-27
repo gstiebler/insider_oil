@@ -58,13 +58,13 @@ var tree: ITreeNode = {
                             child: {
                                 source: 'Seismics'
                             }
-                        },
+                        }/*,
                         {
                             label: 'Licenças ambientais',
                             child: {
                                 source: 'AmbientalLicenses'
                             }
-                        }
+                        }*/
                     ]
                 },
             ]

@@ -17,15 +17,15 @@ const Seismic: BaseDataSourceParams = {
         authorized_technologies: {
             label: "Tecnologias autorizadas"
         },
-        basin_id: {
-            label: "Bacia sedimentar"
+        block_id: {
+            label: "Bloco"
         },
-        basin_name: {
-            label: "Bacia sedimentar"
+        block_name: {
+            label: "Bloco"
         }
     },
     labelField: "process",
-    gridFields: ["process", "authorized_company", "dou_publi_date", "end_date", "authorized_technologies", "basin_name"],
+    gridFields: ["process", "authorized_company", "dou_publi_date", "end_date", "authorized_technologies", "block_name"],
     tableLabel: "Sísmicas",
     hasMap: false,
     excelParams: {
@@ -36,7 +36,7 @@ const Seismic: BaseDataSourceParams = {
             'Publicação no DOU': 'dou_publi_date',
             'Validade': 'end_date',
             'Tecnologias Autorizadas': 'authorized_technologies',
-            'Bacia Sedimentar': 'basin'
+            'Bloco': 'block'
         }
     }
 }

@@ -804,11 +804,11 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: true
 				},
-				basin_id: {
+				block_id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 					references: {
-						model: 'basins',
+						model: 'blocks',
 						key: 'id'
 					}
 				},
