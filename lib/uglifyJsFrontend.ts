@@ -35,9 +35,6 @@ exports.uglifyAngularJsFiles = function(env) {
         'controllers/ChartController.js',
         'controllers/ChangePasswordCtrl.js'
     ];
-    /*for(var i = 0; i < jsFilesList.length; i++) {
-        jsFilesList[i] = __dirname + '/../client/angular-app/' + jsFilesList[i];
-    }*/
     
     const angularAppPath = __dirname + '/../../client/angular-app/';
     var includeJsHtml = '';

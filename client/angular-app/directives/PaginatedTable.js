@@ -35,10 +35,10 @@ function formatDate(value) {
  * and when a page on pagination is clicked
  */
 function ajaxFn(data, callback, settings) {
-    let orderColumns = [];
-    for(let i = 0; i < data.order.length; i++) {
-        let columnIndex = data.order[i].column;
-        let orderObj = {
+    var orderColumns = [];
+    for(var i = 0; i < data.order.length; i++) {
+        var columnIndex = data.order[i].column;
+        var orderObj = {
             fieldName: data.columns[columnIndex].data,
             dir: data.order[i].dir
         };
@@ -78,8 +78,8 @@ function tableParamsChanged(tableParams) {
         
     const dataTableElement = $('#mainTable');
     const columns = [];
-    for(let i = 0; i < tableParams.fields.length; i++) {
-        let field = tableParams.fields[i];
+    for(var i = 0; i < tableParams.fields.length; i++) {
+        var field = tableParams.fields[i];
         if(field.ref) {
             columns.push({
                 data: field.ref.valueField,
@@ -114,7 +114,7 @@ function tableParamsChanged(tableParams) {
     } );
 }
 
-let controller = ['$scope', 'server', 'ModelViewService', 'DateService',
+var controller = ['$scope', 'server', 'ModelViewService', 'DateService',
 function($scope, server, ModelViewService, DateService) { 
     _server = server;
     _ModelViewService = ModelViewService;

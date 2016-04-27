@@ -2,7 +2,7 @@
 
 var app = angular.module('PaginatedTableHeaderDirective', []);
 
-let paginatedHeaderController = ['$scope',
+var paginatedHeaderController = ['$scope',
 function($scope) {
     var delayTimer;
     $scope.$watch('filterText', function(value) {
