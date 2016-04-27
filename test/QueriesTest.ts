@@ -195,4 +195,4 @@ getWellsByBlock:  (test: nodeunit.Test) => {
 
 }
 
-fiberTests.convertTests( exports, group );
+fiberTests.convertTests( exports, group, true );

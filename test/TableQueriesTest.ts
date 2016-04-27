@@ -71,7 +71,7 @@ basinsPagination:  (test: nodeunit.Test) => {
 
 blocksInFilter:  (test: nodeunit.Test) => {
     const queryParams:TableQueries.IQueryParams = {
-        order: ['basin_name', 'name'],
+        order: ['basin_name', 'block_name'],
         filters: [
             {
                 field: 'operator_id',
@@ -97,9 +97,9 @@ blocksInFilter:  (test: nodeunit.Test) => {
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
     test.equal( 2, resQueryValues.records.length );
     test.equal( 2, resQueryValues.count );
-    test.equal( 'ES-M-529', resQueryValues.records[0].name );
+    test.equal( 'ES-M-529', resQueryValues.records[0].block_name );
     test.equal( 'Statoil', resQueryValues.records[0].operator_name );
-    test.equal( 'BM-BAR-1', resQueryValues.records[1].name );
+    test.equal( 'BM-BAR-1', resQueryValues.records[1].block_name );
     test.equal( 'Petrobras', resQueryValues.records[1].operator_name );
     
     test.done();
@@ -109,4 +109,4 @@ blocksInFilter:  (test: nodeunit.Test) => {
 
  
 
-fiberTests.convertTests( exports, group );
+fiberTests.convertTests( exports, group, true );

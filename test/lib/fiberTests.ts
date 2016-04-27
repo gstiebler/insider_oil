@@ -11,11 +11,13 @@ var umzug = require('../../lib/InitUmzug');
 
 winston.level = 'debug';
 
+var lastFunctionModfiesDB = true;
+
 process.on('uncaughtException', function (err) {
     winston.error(err.stack);
-})
+}) 
 
-exports.initializeDB = function() {
+function initializeDB() {
     try {
         await( db.sequelize.getQueryInterface().dropAllTables() );
         await( umzug.up() );
@@ -27,9 +29,14 @@ exports.initializeDB = function() {
 }
 
 
-function defaultSetUp(callback) {
-    exports.initializeDB();
-    callback();    
+function getDefaultSetUpFn(modifiesDB) {
+    return function(callback) {
+        if(lastFunctionModfiesDB) {
+            initializeDB();
+        } 
+        callback();   
+        lastFunctionModfiesDB = modifiesDB;
+    }
 }
 
 
@@ -52,10 +59,12 @@ function syncBaseFunc( callback ) {
 }
 
 
-exports.convertTests = function( exports, group ) {
+exports.convertTests = function( exports, group, doNotModifyDB ) {
     exports.group = {};
-    exports.group.setUp = syncBaseFunc( defaultSetUp );
+    exports.group.setUp = syncBaseFunc( getDefaultSetUpFn(!doNotModifyDB) );
     for(var propertyName in group) {
         exports.group[propertyName] = syncBaseFunc( group[propertyName] );
     }
 }
+
+exports.initializeDB = initializeDB;
