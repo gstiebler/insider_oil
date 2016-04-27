@@ -18,7 +18,7 @@ var app = angular.module('PaginatedTableDirective', []);
  */
 function getFormatLinkFn(column) {
     return function(value, type, row) {
-        var linkStr = '<a href="/app/view_record?source=' + row.model;
+        var linkStr = '<a href="/app/view_record?source=' + row[column.ref.modelField];
         linkStr += '&id=' + row[column.ref.idField];
         linkStr += '">' + value + '</a>'; 
         return linkStr;

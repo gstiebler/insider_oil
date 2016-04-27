@@ -11,7 +11,6 @@ function($scope) {
     });
     
     $scope.$watch('headerParams', function(headerParams) {
-        console.log(headerParams);
         $scope.label = headerParams.label;
         $scope.filterFields = headerParams.filterFields;
         var temp = headerParams.filterFields[0].data;
