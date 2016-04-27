@@ -7,6 +7,7 @@ and filtered in the server
 
 var _server;
 var _ModelViewService;
+var _DateService;
 var _$scope;
 var dataTable;
 var filters = [];
@@ -23,6 +24,10 @@ function getFormatLinkFn(column) {
         linkStr += '">' + value + '</a>'; 
         return linkStr;
     }
+}
+
+function formatDate(value) {
+    return _DateService.dateFormat(value);
 }
 
 /**
@@ -87,6 +92,10 @@ function tableParamsChanged(tableParams) {
                 title: field.label
             });
         }
+        
+        if(field.type == 'DATE') {
+            columns[i].render = { display: formatDate };
+        }
     }
     
     _$scope.headerParams = { 
@@ -105,10 +114,11 @@ function tableParamsChanged(tableParams) {
     } );
 }
 
-let controller = ['$scope', 'server', 'ModelViewService',
-function($scope, server, ModelViewService) { 
+let controller = ['$scope', 'server', 'ModelViewService', 'DateService',
+function($scope, server, ModelViewService, DateService) { 
     _server = server;
     _ModelViewService = ModelViewService;
+    _DateService = DateService;
     _$scope = $scope;
     
     $scope.$watch('tableParams', tableParamsChanged);
