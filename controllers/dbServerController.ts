@@ -306,7 +306,8 @@ export function sourcesList(req: express.Request, res: express.Response) {
         ReserveTotalOil: 'Reservas totais de óleo',
         ReserveTotalGas: 'Reservas totais de gás',
         ProductionOnshore: 'Produção onshore',
-        ProductionOffshore: 'Produção offshore'
+        ProductionOffshore: 'Produção offshore',
+        HydrocarbonEvidence: 'Indicíos de hidrocarbonetos'
     };
     
     res.json(list);

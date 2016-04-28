@@ -30,7 +30,8 @@ const operations: IOperations = {
     ReserveTotalOil: BaseDataSourceOperations,
     ReserveTotalGas: BaseDataSourceOperations,
     Seismic: BaseDataSourceOperations,
-    Well: Well
+    Well: Well,
+    HydrocarbonEvidence: BaseDataSourceOperations
 };
 
 export = operations;
