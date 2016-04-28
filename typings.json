@@ -6,7 +6,7 @@
     "mime": "registry:dt/mime#0.0.0+20160316155526",
     "node": "registry:dt/node#4.0.0+20160330064709",
     "nodeunit": "registry:dt/nodeunit#0.0.0+20160316155526",
-    "sequelize": "registry:dt/sequelize#3.4.1+20160317120654",
+    "sequelize": "registry:dt/sequelize#3.4.1+20160423143634",
     "serve-static": "registry:dt/serve-static#0.0.0+20160317120654",
     "underscore": "registry:dt/underscore#1.7.0+20160316155526",
     "validator": "registry:dt/validator#4.5.1+20160316155526",
