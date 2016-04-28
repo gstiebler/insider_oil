@@ -35,7 +35,8 @@ export const queries:ITableQueries = {
                     ['"Basin"', 'model']
                 ],
                 joinTables: [],
-                filters: queryParams.filters
+                filters: queryParams.filters,
+                order: queryParams.order
             };
             
             return QueryGenerator.queryGenerator(options);
@@ -87,7 +88,8 @@ export const queries:ITableQueries = {
                     ['"Basin"', 'basin_model'],
                     ['"Company"', 'operator_model']
                 ],
-                filters: queryParams.filters
+                filters: queryParams.filters,
+                order: queryParams.order
             };
             
             return QueryGenerator.queryGenerator(options);
@@ -302,7 +304,8 @@ export const queries:ITableQueries = {
                         joinField: 'blocks.basin_id'
                     }
                 ],
-                filters: queryParams.filters
+                filters: queryParams.filters,
+                order: queryParams.order
             };
             
             return QueryGenerator.queryGenerator(options);
@@ -382,9 +385,8 @@ export const queries:ITableQueries = {
 export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const queryStr = queries[queryName].queryStrFn(queryParams);
-    const orderBy = QueryGenerator.getOrderByStr(queryParams.order);
     const pagination = QueryGenerator.getPaginationStr(queryParams.pagination);
-    const completeQueryStr = queryStr + orderBy + pagination;
+    const completeQueryStr = queryStr + pagination;
     const recordsPromise = db.sequelize.query(completeQueryStr, simpleQueryType);
     
     const countQuery = 'select count(*) as count from (' + queryStr + ') t';

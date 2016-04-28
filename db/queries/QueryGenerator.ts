@@ -4,6 +4,7 @@ export interface IFilter {
     field: string;
     like?: string;
     in?: number[];
+    equal?: string;
 }
 
 export interface IOrderOpts {
@@ -57,6 +58,8 @@ export function getWhereStr(filters: IFilter[], aliasMap?): string {
             }
             whereStr = whereStr.substr(0, whereStr.length - 2);
             whereStr += ') and ';
+        } else if (filter.equal) {
+            whereStr += field + ' = ' + filter.equal + ' and ';
         }
     }
     whereStr = whereStr.substr(0, whereStr.length - 4);
@@ -117,6 +120,7 @@ export interface IQueryOpts {
     joinTables: ITableQueryOpts[];
     extraFields?: any[];
     filters: IFilter[];
+    order: IOrderOpts[];
 }
 
 export function queryGenerator(queryOpts: IQueryOpts):string {
@@ -125,5 +129,6 @@ export function queryGenerator(queryOpts: IQueryOpts):string {
     const fromStr = ' from ' + queryOpts.table.name;
     const joins = genOuterJoins(queryOpts);
     const where = getWhereStr(queryOpts.filters, aliasMap);
-    return select + fromStr + joins + where;
+    const orderBy = getOrderByStr(queryOpts.order);
+    return select + fromStr + joins + where + orderBy;
 }

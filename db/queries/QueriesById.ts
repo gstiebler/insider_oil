@@ -1,6 +1,7 @@
 var await = require('../../lib/await');
 import db = require('../models');
 import BaseQuery = require('./BaseQuery');
+import QueryGenerator = require('./QueryGenerator');
 
 /** function that returns the SQL query string */
 interface IQueryStrFn {
@@ -127,11 +128,18 @@ const queries:IQueriesById = {
     
     comercialDeclarationsByBlock: {
         queryStrFn: (filter) => {
-            var query = 'select id, attached, date, "ComercialDeclaration" as model ';
-            query += 'from comercial_declarations ';
-            query += 'where block_id = ' + filter.id;
-            query += ' order by date ';
-            return query;
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'comercial_declarations',
+                    fields: [ 'id', 'attached', 'date', ]
+                },
+                extraFields: [ ['"ComercialDeclaration"', 'model'] ],
+                joinTables: [],
+                filters: [ { field: 'block_id', equal: filter.id } ],
+                order: [ { fieldName: 'date', dir: 'asc' } ]
+            };
+            
+            return QueryGenerator.queryGenerator(options);
         },
         fields: [
             {
