@@ -75,6 +75,10 @@ const Block: BaseDataSourceParams = {
         {
             queryName: 'ambientalLicenseByBlock',
             title: 'Licenças Ambientais'
+        },
+        {
+            queryName: 'seismicsByBlock',
+            title: 'Autorizações'
         }
     ]
 }
