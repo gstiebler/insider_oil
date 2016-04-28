@@ -1,6 +1,6 @@
 'use strict';
 
-export interface IFilter {
+interface IFilter {
     field: string;
     like?: string;
     in?: number[];
@@ -13,9 +13,33 @@ export interface IOrderOpts {
 }
 
 export interface IQueryParams {
-    order: IOrderOpts[];
+    order: IOrderOpts[]; 
     filters: IFilter[];
     pagination: IPaginationOpts;
+}
+
+export interface IPaginationOpts {
+    first: number;
+    itemsPerPage: number;
+} 
+
+type Field = string | string[];
+
+interface ITableQueryOpts {
+    name: string;
+    fields: Field[];
+}
+ 
+interface IJoinTableQueryOpts extends ITableQueryOpts {
+    joinField: string;
+}
+ 
+export interface IQueryOpts {
+    table: ITableQueryOpts;
+    joinTables: IJoinTableQueryOpts[]; 
+    extraFields?: any[];
+    filters: IFilter[];
+    order: IOrderOpts[];
 }
 
 export function getOrderByStr(orderOpts: IOrderOpts[]): string {
@@ -29,11 +53,6 @@ export function getOrderByStr(orderOpts: IOrderOpts[]): string {
         orderByStr += ' ';
     }   
     return orderByStr;
-}
-
-export interface IPaginationOpts {
-    first: number;
-    itemsPerPage: number;
 }
 
 export function getWhereStr(filters: IFilter[], aliasMap?): string {
@@ -107,20 +126,6 @@ function genOuterJoins(queryOpts: IQueryOpts): string {
         resultQry += joinTable.name + '.id = ' + joinTable.joinField;
     }
     return resultQry;
-}
-
-interface ITableQueryOpts {
-    name: string;
-    fields: any[];
-    joinField?: string;
-}
-
-export interface IQueryOpts {
-    table: ITableQueryOpts;
-    joinTables: ITableQueryOpts[];
-    extraFields?: any[];
-    filters: IFilter[];
-    order: IOrderOpts[];
 }
 
 export function queryGenerator(queryOpts: IQueryOpts):string {
