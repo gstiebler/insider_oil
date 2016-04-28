@@ -158,6 +158,54 @@ const queries:IQueriesById = {
         ]
     },
     
+    seismicsByBlock: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'seismics',
+                    fields: [ 'id', 'process', 'authorized_company',
+                        'dou_publi_date', 'end_date', 'authorized_technologies' ]
+                },
+                extraFields: [ ['"Seismic"', 'model'] ],
+                joinTables: [],
+                filters: [ { field: 'block_id', equal: filter.id } ],
+                order: [ { fieldName: 'process', dir: 'asc' } ]
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Processo',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'process'
+                }
+            },
+            {
+                label: 'Empresa autorizada',
+                fieldName: 'authorized_company',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Publicação no DOU',
+                fieldName: 'dou_publi_date',
+                type: 'DATE'
+            },
+            {
+                label: 'Validade',
+                fieldName: 'end_date',
+                type: 'DATE'
+            },
+            {
+                label: 'Tecnologias autorizadas',
+                fieldName: 'authorized_technologies',
+                type: 'VARCHAR'
+            },
+        ]
+    },
+    
     wellsByBlock: {
         queryStrFn: (filter) => {
             function getSubQuery(onOffStr) {

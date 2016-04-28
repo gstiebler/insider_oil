@@ -194,6 +194,37 @@ getWellsByBlock:  (test: nodeunit.Test) => {
     test.done();
 },
 
+getSeismicsByBlock:  (test: nodeunit.Test) => {
+    const bmbarId = utils.idByName('Block', 'BM-BAR-1') ;
+    const filters = {
+        id: bmbarId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'seismicsByBlock',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+    
+    const record = resQueryValues.records[0];
+    test.equal('48610.000189/2013-10', record.process);
+    test.equal('PGS Investigação Petrolífera Ltda.', record.authorized_company);
+    test.equal('Reprocessamento de Dados Sísmicas 3D', record.authorized_technologies);
+    
+    test.equal('Processo', resQueryValues.fields[0].label);
+    test.equal('model', resQueryValues.fields[0].ref.modelField);
+    test.equal('id', resQueryValues.fields[0].ref.idField);
+    test.equal('process', resQueryValues.fields[0].ref.valueField);
+    
+    test.equal('Publicação no DOU', resQueryValues.fields[2].label);
+    test.equal('dou_publi_date', resQueryValues.fields[2].fieldName);
+    test.equal('DATE', resQueryValues.fields[2].type);
+
+    test.done();
+},
+
 
 }
 
