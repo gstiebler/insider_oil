@@ -79,6 +79,10 @@ const Block: BaseDataSourceParams = {
         {
             queryName: 'seismicsByBlock',
             title: 'Autorizações'
+        },
+        {
+            queryName: 'hydrocarbonEvidencesByBlock',
+            title: 'Indícios de hidrocarbonetos'
         }
     ]
 }
