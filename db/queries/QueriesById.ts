@@ -206,6 +206,53 @@ const queries:IQueriesById = {
         ]
     },
     
+    hydrocarbonEvidencesByBlock: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'hydrocarbon_evidences',
+                    fields: [ 'notification_date', 'fluids', 'depth' ]
+                },
+                extraFields: [],
+                joinTables: [
+                    {
+                        name: 'wells',
+                        fields: [
+                            ['name', 'well_name'],
+                        ],
+                        joinField: 'hydrocarbon_evidences.well_id'
+                    },
+                ],
+                filters: [ { field: 'block_id', equal: filter.id } ],
+                order: [ { fieldName: 'notification_date', dir: 'asc' } ]
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Poço',
+                fieldName: 'well_name',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Data de notificação',
+                fieldName: 'notification_date',
+                type: 'DATE'
+            },
+            {
+                label: 'Fluidos',
+                fieldName: 'fluids',
+                type: 'VARCHAR'
+            },
+            {
+                label: "Lâmina d'água",
+                fieldName: 'depth',
+                type: 'FLOAT'
+            },
+        ]
+    },
+    
     wellsByBlock: {
         queryStrFn: (filter) => {
             function getSubQuery(onOffStr) {

@@ -225,6 +225,27 @@ getSeismicsByBlock:  (test: nodeunit.Test) => {
     test.done();
 },
 
+getHydrocarbonEvidencesByBlock:  (test: nodeunit.Test) => {
+    const bmbarId = utils.idByName('Block', 'BM-BAR-1') ;
+    const filters = {
+        id: bmbarId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'hydrocarbonEvidencesByBlock',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(3, resQueryValues.records.length);
+    
+    const record = resQueryValues.records[0];
+    test.equal('1A 0001 BA', record.well_name);
+    test.equal('Petróleo', record.fluids);
+
+    test.done();
+},
+
 
 }
 
