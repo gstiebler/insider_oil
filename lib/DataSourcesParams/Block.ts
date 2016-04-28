@@ -73,10 +73,6 @@ const Block: BaseDataSourceParams = {
             title: 'Declarações de Comercialidade'
         },
         {
-            queryName: 'ambientalLicenseByBlock',
-            title: 'Licenças Ambientais'
-        },
-        {
             queryName: 'seismicsByBlock',
             title: 'Autorizações'
         },
