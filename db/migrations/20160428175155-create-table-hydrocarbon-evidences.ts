@@ -30,6 +30,14 @@ module.exports = {
                 type: Sequelize.FLOAT,
                 allowNull: false
             },
+            created_at: {
+                allowNull: false,
+                type: Sequelize.DATE
+            },
+            updated_at: {
+                allowNull: false,
+                type: Sequelize.DATE
+            }
         };
 
     queryInterface.createTable('hydrocarbon_evidences', tableOpts);

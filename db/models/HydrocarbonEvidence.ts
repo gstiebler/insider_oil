@@ -3,10 +3,6 @@ import Sequelize = require('sequelize');
 
 module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes) {
   var HydrocarbonEvidence = sequelize.define('HydrocarbonEvidence', {
-        process: {
-          type: DataTypes.STRING,
-          allowNull: false
-        }, 
         notification_date: {
           type: DataTypes.DATEONLY,
           allowNull: false
