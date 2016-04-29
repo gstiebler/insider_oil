@@ -66,7 +66,7 @@ importDrillingRigOffshore: function(test: nodeunit.Test) {
     }
 },
 
-
+/*
 importAmbientalLicenses: (test: nodeunit.Test) => {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.AmbientalLicense.findAll() ).length );  
@@ -103,7 +103,7 @@ importAmbientalLicenses: (test: nodeunit.Test) => {
         
         test.done();
     }
-},
+},*/
 
 
 importBlocks: test => {

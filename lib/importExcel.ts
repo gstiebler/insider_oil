@@ -43,9 +43,9 @@ function validateHeader(header, modelName) {
 
 function XLSnum2date(v) {
 	var date = XLSX.SSF.parse_date_code(v);
-	var val = new Date();
-	val.setUTCMonth(date.m-1);
+	var val = new Date(0);
 	val.setUTCFullYear(date.y);
+	val.setUTCMonth(date.m-1);
 	val.setUTCDate(date.d);
 	val.setUTCHours(date.H);
 	val.setUTCMinutes(date.M);
