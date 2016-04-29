@@ -160,7 +160,6 @@ importBlocks: test => {
     }
 },
 
-/*
 importPersons: test => {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.Person.findAll() ).length );  
@@ -168,53 +167,33 @@ importPersons: test => {
     importExcel(excelBuf, 'Person', onImportDone, onError);
     
     function onImportDone(status, invalidRecordsStatus) {
-        var rows = await( dbUtils.findAllCustom(db.models.Person));
-        console.log(rows);
-        test.equal( 344, rows.length );  
-        var expectedStatus = "Registros criados: 341";
+        var rows = await( dbUtils.findAllCustom(db.models.Person, { order: ['name'] }));
+        test.equal( 4, rows.length );  
+        var expectedStatus = "Registros criados: 1";
         expectedStatus += "\nRegistros atualizados: 3";
-        expectedStatus += "\nRegistros inválidos: 3";
+        expectedStatus += "\nRegistros inválidos: 1";
         test.equal( expectedStatus, status );
         var expectedInvalidStatus = [
-            'Registro 289: Valor \'Cemes\' do campo \'operador\' não encontrado.',
-            'Registro 293: Valor \'Cemes\' do campo \'operador\' não encontrado.',
-            'Registro 294: Valor \'Cemes\' do campo \'operador\' não encontrado.' 
+            'Registro 5: Valor \'BR Distribuidora\' do campo \'empresa\' não encontrado.',
         ];
         compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
-        
         {
             const record = rows[0];
-            test.equal('BM-BAR-1', record.name);
-            test.equal('BM-BAR-1', record.name_contract);
-            test.equal('BID3', record.bid);
-            test.equal('2004-08-29', record.end_1.toJSON().substring(0, 10));
-            test.equal('2012-07-18', record.end_2.toJSON().substring(0, 10));
-            test.equal('2014-04-20', record.end_3.toJSON().substring(0, 10));
-            test.equal('2016-12-31', record.end_last.toJSON().substring(0, 10));
-            test.equal('SUSPENSO', record.status);
-            test.equal('*Petrobras - 75%, ONGC Campos - 25%', record.concessionaries);
-            test.equal('Petrobras', record.operator.name);
-            test.equal('Barreirinhas', record.basin.name);           
-        }
-
+            test.equal('Carlos Alberto B.Tessarollo', record.name);
+            test.equal(1, record.emails.length);
+            test.equal('tessarollo@br.com.br', record.emails[0]);
+        }  
         {
-            const record = rows[300];
-            test.equal('SEAL-M-424', record.name);
-            test.equal('BM-SEAL-10', record.name_contract);
-            test.equal('BID6', record.bid);
-            test.equal('2010-12-23', record.end_1.toJSON().substring(0, 10));
-            test.equal('2013-02-28', record.end_2.toJSON().substring(0, 10));
-            test.equal(null, record.end_3);
-            test.equal('2018-12-30', record.end_last.toJSON().substring(0, 10));
-            test.equal('EM ANÁLISE', record.status);
-            test.equal('*Petrobras - 100%', record.concessionaries);
-            test.equal('Petrobras', record.operator.name);
-            test.equal('Sergipe', record.basin.name);
-        }     
+            const record = rows[2];
+            test.equal('Guilherme Stiebler', record.name);
+            test.equal(2, record.emails.length);
+            test.equal('gstiebler@gmail.com', record.emails[0]);
+            test.equal('guilhermeabc@gmail.com', record.emails[1]);
+        }   
         
         test.done();
     }
-},*/
+},
 
 /*
 export: test => {

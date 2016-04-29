@@ -7,9 +7,6 @@ const Person: BaseDataSourceParams = {
         name: {
             label: "Nome"
         },
-        phone: {
-            label: "Telefone"
-        },
         company_name: {
             label: "Empresa"
         },
@@ -58,7 +55,20 @@ const Person: BaseDataSourceParams = {
     labelField: "name",
     gridFields: ["name", "company_name"],
     tableLabel: "Pessoas",
-    hasMap: false
+    hasMap: false,
+    excelParams: {
+        keyField: 'nome',
+        fields: {
+            'nome': 'name',
+            'empresa': 'company',
+            'cargo': 'position',
+            'telefones': 'telephones',
+            'emails': 'emails',
+            'endereço': 'address',
+            'diretoria': 'directorship',
+            'gerência': 'management_sector'
+        }
+    }
 }
 
 export = Person;

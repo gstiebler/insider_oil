@@ -3,6 +3,7 @@
 import db = require( '../../db/models' );
 import dsParams = require('./../DataSourcesParams');
 import winston = require('winston');
+import Sequelize = require('sequelize');  
 var XLSX = require('xlsx');
 var Sync = require('sync');
 var await = require('../await');
@@ -103,6 +104,7 @@ export class ImportExcel {
     }
 
     setRecord(record, header, fields, rowValues, model) {
+        const _dsParams = dsParams[model.name];
         for( var col = 0; col < header.length; col++ ) {
             var headerField = header[col];
             var fieldName = fields[ headerField ];
@@ -117,8 +119,18 @@ export class ImportExcel {
                 this.setRecordValueFromAssociation(record, value, headerField, association);
             } else if (typeStr == 'DATE') { // is date, should convert
                 record[fieldName] = this.getDateValue(value);
+            } else if(typeStr.includes('VARCHAR')) {
+                record[fieldName] = value.trim();
             } else {
                 record[fieldName] = value;
+            }
+            
+            if(_dsParams.fields[fieldName] && _dsParams.fields[fieldName].isList) {
+                const result = [];
+                const arrayValues = value.split(',');
+                for(let arrayValue of arrayValues)
+                    result.push(arrayValue.trim());
+                record[fieldName] = result;
             }
         }    
     }
