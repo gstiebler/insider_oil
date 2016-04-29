@@ -79,6 +79,28 @@ export class ImportExcel {
         }
     }
 
+    getDateValue(value:any):any {
+        if(value == '')
+            return null;
+        else if(typeof value == 'number')
+            return this.XLSnum2date(value);
+        else
+            return this.str2date(value);
+    }
+    
+    setRecordValueFromAssociation(record, value, headerField, association) {
+        var searchParams = { name: value }; // TODO always using 'name' here
+        try {
+            var associatedRecord = await( association.target.findOne({ where: searchParams }) );
+            if(associatedRecord) {
+                record[association.identifierField] = associatedRecord.id;
+            } else {
+                throw "Valor '" + value + "' do campo '" + headerField + "' não encontrado.";
+            } 
+        } catch(e) {
+            throw "Valor '" + value + "' do campo '" + headerField + "' não encontrado.";
+        }
+    }
 
     setRecord(record, header, fields, rowValues, model) {
         for( var col = 0; col < header.length; col++ ) {
@@ -90,27 +112,11 @@ export class ImportExcel {
                 typeStr = model.attributes[fieldName].type.toString();
             } catch(e) { }
             const value = rowValues[col];
-            if(model.associations[fieldName]) {
-                const association = model.associations[fieldName];
-                var searchParams = { name: value }; // TODO always using 'name' here
-                try {
-                    var associatedRecord = await( association.target.findOne({ where: searchParams }) );
-                    if(associatedRecord) {
-                        record[association.identifierField] = associatedRecord.id;
-                    } else {
-                        throw "Valor '" + value + "' do campo '" + headerField + "' não encontrado.";
-                    } 
-                } catch(e) {
-                    throw "Valor '" + value + "' do campo '" + headerField + "' não encontrado.";
-                }
-                
+            const association = model.associations[fieldName];
+            if(association) {
+                this.setRecordValueFromAssociation(record, value, headerField, association);
             } else if (typeStr == 'DATE') { // is date, should convert
-                if(value == '')
-                    record[fieldName] = null;
-                else if(typeof value == 'number')
-                    record[fieldName] = this.XLSnum2date(value);
-                else
-                    record[fieldName] = this.str2date(value);
+                record[fieldName] = this.getDateValue(value);
             } else {
                 record[fieldName] = value;
             }
