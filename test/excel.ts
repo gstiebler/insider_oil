@@ -3,8 +3,8 @@
 import fiberTests = require('./lib/fiberTests');
 import db = require('../db/models');
 import fs = require('fs');
-import importExcel = require('../lib/importExcel');
-import ExportExcel = require('../lib/ExportExcel');
+import importExcel = require('../lib/excel/importExcel');
+import ExportExcel = require('../lib/excel/ExportExcel');
 var XLSX = require('xlsx');
 import dbUtils = require('../lib/dbUtils');
 var await = require('../lib/await');
@@ -159,6 +159,62 @@ importBlocks: test => {
         test.done();
     }
 },
+
+/*
+importPersons: test => {
+    var fixtureCount = 3;
+    test.equal( fixtureCount, await( db.models.Person.findAll() ).length );  
+    var excelBuf = fs.readFileSync('./test/data/persons.xlsx');
+    importExcel(excelBuf, 'Person', onImportDone, onError);
+    
+    function onImportDone(status, invalidRecordsStatus) {
+        var rows = await( dbUtils.findAllCustom(db.models.Person));
+        console.log(rows);
+        test.equal( 344, rows.length );  
+        var expectedStatus = "Registros criados: 341";
+        expectedStatus += "\nRegistros atualizados: 3";
+        expectedStatus += "\nRegistros inválidos: 3";
+        test.equal( expectedStatus, status );
+        var expectedInvalidStatus = [
+            'Registro 289: Valor \'Cemes\' do campo \'operador\' não encontrado.',
+            'Registro 293: Valor \'Cemes\' do campo \'operador\' não encontrado.',
+            'Registro 294: Valor \'Cemes\' do campo \'operador\' não encontrado.' 
+        ];
+        compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
+        
+        {
+            const record = rows[0];
+            test.equal('BM-BAR-1', record.name);
+            test.equal('BM-BAR-1', record.name_contract);
+            test.equal('BID3', record.bid);
+            test.equal('2004-08-29', record.end_1.toJSON().substring(0, 10));
+            test.equal('2012-07-18', record.end_2.toJSON().substring(0, 10));
+            test.equal('2014-04-20', record.end_3.toJSON().substring(0, 10));
+            test.equal('2016-12-31', record.end_last.toJSON().substring(0, 10));
+            test.equal('SUSPENSO', record.status);
+            test.equal('*Petrobras - 75%, ONGC Campos - 25%', record.concessionaries);
+            test.equal('Petrobras', record.operator.name);
+            test.equal('Barreirinhas', record.basin.name);           
+        }
+
+        {
+            const record = rows[300];
+            test.equal('SEAL-M-424', record.name);
+            test.equal('BM-SEAL-10', record.name_contract);
+            test.equal('BID6', record.bid);
+            test.equal('2010-12-23', record.end_1.toJSON().substring(0, 10));
+            test.equal('2013-02-28', record.end_2.toJSON().substring(0, 10));
+            test.equal(null, record.end_3);
+            test.equal('2018-12-30', record.end_last.toJSON().substring(0, 10));
+            test.equal('EM ANÁLISE', record.status);
+            test.equal('*Petrobras - 100%', record.concessionaries);
+            test.equal('Petrobras', record.operator.name);
+            test.equal('Sergipe', record.basin.name);
+        }     
+        
+        test.done();
+    }
+},*/
 
 /*
 export: test => {

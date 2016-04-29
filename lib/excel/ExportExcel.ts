@@ -1,8 +1,8 @@
 "use strict";
-var await = require('../lib/await');
+var await = require('../await');
 var XLSX = require('xlsx');
-import dbUtils = require('../lib/dbUtils');
-import dsParams = require('./DataSourcesParams');
+import dbUtils = require('../dbUtils');
+import dsParams = require('./../DataSourcesParams');
 
 function datenum(v, date1904?:any) {
 	if(date1904) v+=1462;

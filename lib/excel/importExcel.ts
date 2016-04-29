@@ -1,9 +1,9 @@
 "use strict";
 var XLSX = require('xlsx');
-import db = require( '../db/models' );
+import db = require( '../../db/models' );
 var Sync = require('sync');
 var await = require('./await');
-import dsParams = require('./DataSourcesParams');
+import dsParams = require('./../DataSourcesParams');
 import winston = require('winston');
 
 
@@ -12,6 +12,12 @@ interface IOkFunc {
 }
     
 class ImportExcel {
+    
+    lineOffset: number;
+    
+    constructor() {
+        this.lineOffset = 0;
+    }
 
     getRowValues(worksheet, row) {
         var rowValues = [];
@@ -111,12 +117,12 @@ class ImportExcel {
         }    
     }
 
-    execute(excelBuf, modelName: string, lineOffset: number, onOk: IOkFunc, onError) {
+    execute(excelBuf, modelName: string, onOk: IOkFunc, onError) {
         const workbook = XLSX.read(excelBuf, {type:"buffer", cellDates: true});
         const first_sheet_name = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[first_sheet_name];
         
-        const header = this.getHeader(worksheet, lineOffset);
+        const header = this.getHeader(worksheet, this.lineOffset);
         this.validateHeader(header, modelName);
         
         const excelParams = dsParams[modelName].excelParams;
@@ -139,7 +145,7 @@ class ImportExcel {
                     invalidStatus.push( 'Registro ' + row + ': ' + msg ); // pseudoerror. It's about not finding a record
                 }
                 
-                for( var row = 1 + lineOffset; row <= range.e.r; row++ ) {
+                for( var row = 1 + this.lineOffset; row <= range.e.r; row++ ) {
                     var rowValues = _this.getRowValues(worksheet, row);
                     var searchParams = {};
                     searchParams[modelKeyField] = rowValues[keyFieldIndexInExcel];
@@ -182,11 +188,11 @@ function main(excelBuf, modelName: string, onOk?, onError?) {
         'Block': 10
     };
     
-    var offset = 0;
     if(modelOffset[modelName])
         offset = modelOffset[modelName];
+        
     const importExcel = new ImportExcel();
-    importExcel.execute(excelBuf, modelName, offset, onOk, onError);
+    importExcel.execute(excelBuf, modelName, onOk, onError);
 }
 
 export = main;
