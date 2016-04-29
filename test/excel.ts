@@ -28,7 +28,7 @@ importDrillingRigOffshore: function(test: nodeunit.Test) {
     test.equal( fixtureCount, await( db.models.DrillingRigOffshore.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
     try {
-        importExcel(excelBuf, 'DrillingRigOffshore', onImportDone, onError);
+        importExcel.execute(excelBuf, 'DrillingRigOffshore', onImportDone, onError);
     } catch(err) {
         console.log(err);
     }
@@ -110,7 +110,7 @@ importBlocks: test => {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.Block.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/blocks.xlsx');
-    importExcel(excelBuf, 'Block', onImportDone, onError);
+    importExcel.execute(excelBuf, 'Block', onImportDone, onError);
     
     function onImportDone(status, invalidRecordsStatus) {
         var rows = await( dbUtils.findAllCustom(db.models.Block));
@@ -233,11 +233,11 @@ invalidHeader: function(test) {
     var modifiedExcelBuf = XLSX.write(workbook, {type:"buffer"});
     
     try {
-        importExcel(modifiedExcelBuf, 'DrillingRigOffshore');
+        importExcel.execute(modifiedExcelBuf, 'DrillingRigOffshore');
     } catch(err) {
         test.equal( "O cabeçalho do arquivo Excel não possui o campo sonda", err );
         test.done();
-    }
+    } 
 }
 
 
