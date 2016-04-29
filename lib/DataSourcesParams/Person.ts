@@ -17,7 +17,7 @@ const Person: BaseDataSourceParams = {
             label: 'Cargo'
         },
         telephones: {
-            label: 'Telefones',
+            label: 'Telefone',
             isList: true  
         },
         emails: {
@@ -62,8 +62,9 @@ const Person: BaseDataSourceParams = {
             'nome': 'name',
             'empresa': 'company',
             'cargo': 'position',
-            'telefones': 'telephones',
-            'emails': 'emails',
+            'telefone': 'telephones',
+            'e-mail': 'emails',
+            'linkedin': 'linkedin',
             'endereço': 'address',
             'diretoria': 'directorship',
             'gerência': 'management_sector'

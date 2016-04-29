@@ -5,8 +5,7 @@
         "removeComments": true,
         "preserveConstEnums": true,
         "sourceMap": true,
-        "outDir": "./out",
-        "watch": false
+        "outDir": "./out"
     },
     "exclude": [
         "node_modules",    

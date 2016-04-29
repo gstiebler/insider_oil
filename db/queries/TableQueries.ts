@@ -127,6 +127,64 @@ export const queries:ITableQueries = {
         ]
     },
     
+      
+    /** Persons */
+    Persons: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'persons',
+                    fields: [
+                        ['id', 'person_id'],
+                        ['name', 'person_name'],
+                        'position'
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'companies',
+                        fields: [
+                            ['id', 'company_id'],
+                            ['name', 'company_name'],
+                        ],
+                        joinField: 'persons.company_id'
+                    }
+                ],
+                extraFields: [
+                    ['"Person"', 'model'],
+                    ['"Company"', 'company_model']
+                ],
+                filters: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'person_id',
+                    valueField: 'person_name'
+                }
+            },
+            {
+                label: 'Empresa',
+                ref: {
+                    modelField: 'company_model',
+                    idField: 'company_id',
+                    valueField: 'company_name'
+                }
+            },
+            {
+                label: 'Cargo',
+                fieldName: 'position',
+                type: 'VARCHAR'
+            }
+        ]
+    },
+    
     /** Comercial declarations 
     ComercialDeclarations: {
         queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {

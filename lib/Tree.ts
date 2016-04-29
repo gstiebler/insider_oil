@@ -263,18 +263,6 @@ var tree: ITreeNode = {
             ]
         },
         {
-            label: 'Pessoas',
-            child: {
-                source: 'Person'
-            }
-        },
-        {
-            label: 'Empresas',
-            child: {
-                source: 'Company'
-            }
-        },
-        {
             label: 'Notícias',
             child: {
                 source: 'News'
@@ -329,7 +317,20 @@ var tree: ITreeNode = {
                     label: 'Venda de derivados'
                 }
             ]
-        }*/
+        },
+        {
+            label: 'Empresas',
+            child: {
+                source: 'Company'
+            }
+        },
+        */
+        {
+            label: 'Pessoas',
+            child: {
+                source: 'Persons'
+            }
+        },
     ]
 };
 
