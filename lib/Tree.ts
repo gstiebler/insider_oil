@@ -27,45 +27,23 @@ var tree: ITreeNode = {
                         source: 'Blocks'
                     }
                 },
+                {
+                    label: 'Sondas',
+                    child: {
+                        source: 'DrillingRigs'
+                    }
+                },
                 /*{
                     label: 'Poços',
                     child: {
                         source: 'Well'
                     }
-                },
-                {
-                    label: 'Sondas',
-                    children: [
-                        {
-                            label: 'Offshore',
-                            child: {
-                                source: 'DrillingRigOffshore'
-                            }
-                        },
-                        {
-                            label: 'Onshore',
-                            child: {
-                                source: 'DrillingRigOnshore'
-                            }
-                        }
-                    ]
                 },*/
                 {
                     label: 'Sísmica',
-                    children: [
-                        {
-                            label: 'Autorizações',
-                            child: {
-                                source: 'Seismics'
-                            }
-                        }/*,
-                        {
-                            label: 'Licenças ambientais',
-                            child: {
-                                source: 'AmbientalLicenses'
-                            }
-                        }*/
-                    ]
+                    child: {
+                        source: 'Seismics'
+                    }
                 },
             ]
         },

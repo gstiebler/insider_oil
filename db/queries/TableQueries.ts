@@ -126,7 +126,6 @@ export const queries:ITableQueries = {
             }
         ]
     },
-    
       
     /** Persons */
     Persons: {
@@ -180,6 +179,94 @@ export const queries:ITableQueries = {
             {
                 label: 'Cargo',
                 fieldName: 'position',
+                type: 'VARCHAR'
+            }
+        ]
+    },
+    
+    /** DrillingRigs */
+    DrillingRigs: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'drilling_rigs_onshore',
+                    fields: [
+                        ['id', 'dr_id'],
+                        ['name', 'dr_name'],
+                        'start',
+                        'end',
+                        'status',
+                        'day_rate'
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'companies',
+                        fields: [
+                            ['id', 'contractor_id'],
+                            ['name', 'contractor_name'],
+                        ],
+                        joinField: 'drilling_rigs_onshore.contractor_id'
+                    }
+                ],
+                extraFields: [
+                    ['"DrillingRigOnshore"', 'model'],
+                    ['"Terra"', 'land_sea'],
+                    ['"Company"', 'contractor_model']
+                ],
+                filters: [],
+                order: []
+            };
+            const onshoreQryStr = QueryGenerator.queryGenerator(options);
+            
+            options.table.name = 'drilling_rigs_offshore';
+            options.joinTables[0].joinField = 'drilling_rigs_offshore.contractor_id';
+            options.extraFields[0] = ['"DrillingRigOffshore"', 'model'];
+            options.extraFields[1] = ['"Mar"', 'land_sea'];
+            const offshoreQryStr = QueryGenerator.queryGenerator(options);
+            
+            return onshoreQryStr + ' union ' + offshoreQryStr;
+        },
+        fields: [
+            {
+                label: 'Sonda',
+                ref: {
+                    modelField: 'model',
+                    idField: 'dr_id',
+                    valueField: 'dr_name'
+                }
+            },
+            {
+                label: 'Operador',
+                ref: {
+                    modelField: 'contractor_model',
+                    idField: 'contractor_id',
+                    valueField: 'contractor_name'
+                }
+            },
+            {
+                label: 'Terra/Mar',
+                fieldName: 'land_sea',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Início contrato',
+                fieldName: 'start',
+                type: 'DATE'
+            },
+            {
+                label: 'Fim contrato',
+                fieldName: 'end',
+                type: 'DATE'
+            },
+            {
+                label: 'Status',
+                fieldName: 'status',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Day rate',
+                fieldName: 'day_rate',
                 type: 'VARCHAR'
             }
         ]
