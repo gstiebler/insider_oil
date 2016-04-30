@@ -80,7 +80,6 @@ module.exports = function(sequelize, DataTypes) {
             invisible: true 
 		},
         telephones: getListFieldObj('telephones_text'),
-        },
         projects: {
             type: DataTypes.VIRTUAL,
             get: function() {
