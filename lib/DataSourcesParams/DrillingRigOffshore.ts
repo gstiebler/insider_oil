@@ -30,7 +30,8 @@ const DrillingRigOffshore: BaseDataSourceParams = {
             label: "Day rate"
         },
         info: {
-            label: "Informações"
+            label: "Informações",
+            isLongText: true
         }
     },
     labelField: "name",

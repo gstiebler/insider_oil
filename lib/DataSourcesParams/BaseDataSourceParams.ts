@@ -5,6 +5,7 @@ interface IField {
     isList?: boolean;
     isLink?: boolean;
     isPhoto?: boolean;
+    isLongText?: boolean;
     isProjectList?: boolean;
     comboSource?: string;
 }
