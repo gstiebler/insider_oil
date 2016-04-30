@@ -1,5 +1,6 @@
 'use strict';
 
+import { getListFieldObj } from '../../lib/ModelUtils';
 var await = require('../../lib/await');
 
 function updatePersonProjects(db, person) {
@@ -51,15 +52,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true,
             invisible: true 
 		},
-        emails: {
-            type: DataTypes.VIRTUAL,
-            get: function() {
-                return JSON.parse(this.email_text);
-            },
-            set: function(newValue) {
-                this.email_text = JSON.stringify(newValue);
-            }
-        },
+        emails: getListFieldObj('email_text'),
 		linkedin: {
 			type: DataTypes.STRING,
 			allowNull: true
@@ -86,14 +79,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true,
             invisible: true 
 		},
-        telephones: {
-            type: DataTypes.VIRTUAL,
-            get: function() {
-                return JSON.parse(this.telephones_text);
-            },
-            set: function(newValue) {
-                this.telephones_text = JSON.stringify(newValue);
-            }
+        telephones: getListFieldObj('telephones_text'),
         },
         projects: {
             type: DataTypes.VIRTUAL,
