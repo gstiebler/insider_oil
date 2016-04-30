@@ -1,10 +1,14 @@
 var promise_bb = require("bluebird");
+import Sequelize = require('sequelize');  
+
+interface ITableOpts {
+	table:string; 
+	fields: Sequelize.DefineAttributes;
+}
 
 module.exports = {
-	up: function(queryInterface, Sequelize) {
-		const
-		parameters = [];
-		// return queryInterface.dropAllTables().then( function() { return
+	up: function(queryInterface:Sequelize.QueryInterface, sequelize:Sequelize.Sequelize) {
+		const parameters:ITableOpts[] = [];
 
 		parameters.push({
 			table: 'users',
@@ -872,7 +876,7 @@ module.exports = {
 		});
 	},
 
-	down: function(queryInterface, Sequelize) {
+	down: function(queryInterface:Sequelize.QueryInterface, Sequelize) {
 		const tables = [
 		    'wells',
 		    'seismics',
@@ -894,7 +898,7 @@ module.exports = {
 		    'users'
 		];
 		
-		return promise_bb.each(tables, function(table) {
+		return promise_bb.each(tables, function(table:string):Promise<void> {
 			return queryInterface.dropTable(table);
 		});
 	}
