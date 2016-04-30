@@ -38,12 +38,6 @@ function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataType
     }, {
         underscored: true,
         tableName: 'drilling_rigs_offshore',
-        validate: {
-            contractorNotNull: function() {
-                if( !this.contractor_id )
-                    throw new Error('Contratante não pode ser nulo');
-            }
-        },
         classMethods: {
             associate: function(models) {
                 const opts:Sequelize.AssociationOptionsBelongsTo = {

@@ -11,16 +11,16 @@ function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataType
           type: DataTypes.STRING,
           allowNull: false
         },
+        start: {
+            type: DataTypes.DATEONLY,
+            allowNull: true
+        },
         end: {
           type: DataTypes.DATEONLY,
           allowNull: true
         },
         status: {
             type: DataTypes.STRING,
-            allowNull: true
-        },
-        start: {
-            type: DataTypes.DATEONLY,
             allowNull: true
         },
         day_rate: {
