@@ -1,5 +1,8 @@
-module.exports = function(sequelize, DataTypes) {
-    var DrillingRigOnshore = sequelize.define('DrillingRigOnshore', {
+'use strict';
+import Sequelize = require('sequelize');  
+
+function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes):Sequelize.Model<any, any> {
+    const DrillingRigOnshore = sequelize.define('DrillingRigOnshore', {
         name: {
           type: DataTypes.STRING,
           allowNull: false
@@ -11,25 +14,21 @@ module.exports = function(sequelize, DataTypes) {
         end: {
           type: DataTypes.DATEONLY,
           allowNull: true
-        }/*, another option of validation
-        contractor_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        }*/
+        }
     }, {
         underscored: true,
         tableName: 'drilling_rigs_onshore',
-        validate: {
-            contractorNotNull: function() {
-                if( !this.contractor_id )
-                    throw new Error('Contratante não pode ser nulo');
-            }
-        },
         classMethods: {
             associate: function(models) {
-                DrillingRigOnshore.belongsTo(models.Company, { as: 'contractor', allowNull: false } );
+                const opts:Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'contractor', 
+                    foreignKey: {  allowNull: false }
+                };
+                DrillingRigOnshore.belongsTo(models.Company, opts);
             }
         }
     });
     return DrillingRigOnshore;
 };
+
+export = defineModel;
