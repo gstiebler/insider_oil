@@ -14,7 +14,19 @@ function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataType
         end: {
           type: DataTypes.DATEONLY,
           allowNull: true
-        }
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        start: {
+            type: DataTypes.DATEONLY,
+            allowNull: true
+        },
+        day_rate: {
+            type: DataTypes.FLOAT,
+            allowNull: true
+        },
     }, {
         underscored: true,
         tableName: 'drilling_rigs_onshore',

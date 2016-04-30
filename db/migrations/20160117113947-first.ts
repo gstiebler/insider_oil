@@ -252,6 +252,14 @@ module.exports = {
 					type: Sequelize.DATEONLY,
 					allowNull: true
 				},
+				day_rate: {
+					type: Sequelize.FLOAT,
+					allowNull: true
+				},
+				info: {
+					type: Sequelize.TEXT,
+					allowNull: true
+				},
 				contractor_id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
@@ -285,8 +293,20 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: false
 				},
+				status: {
+					type: Sequelize.STRING,
+					allowNull: true
+				},
+				start: {
+					type: Sequelize.DATEONLY,
+					allowNull: true
+				},
 				end: {
 					type: Sequelize.DATEONLY,
+					allowNull: true
+				},
+				day_rate: {
+					type: Sequelize.FLOAT,
 					allowNull: true
 				},
 				contractor_id: {

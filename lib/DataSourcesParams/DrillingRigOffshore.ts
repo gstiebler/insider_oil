@@ -25,6 +25,12 @@ const DrillingRigOffshore: BaseDataSourceParams = {
         },
         end: {
             label: "Fim"
+        },
+        day_rate: {
+            label: "Day rate"
+        },
+        info: {
+            label: "Informações"
         }
     },
     labelField: "name",

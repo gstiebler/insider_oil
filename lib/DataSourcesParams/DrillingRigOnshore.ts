@@ -14,8 +14,17 @@ const DrillingRigOnshore: BaseDataSourceParams = {
         type: {
             label: "Tipo"
         },
+        start: {
+            label: "Início"
+        },
         end: {
             label: "Fim"
+        },
+        status: {
+            label: "Status"
+        },
+        day_rate: {
+            label: "Day rate"
         }
     },
     labelField: "name",
