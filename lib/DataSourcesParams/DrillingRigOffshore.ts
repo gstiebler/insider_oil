@@ -31,7 +31,7 @@ const DrillingRigOffshore: BaseDataSourceParams = {
         },
         info: {
             label: "Informações",
-            isLongText: true
+            isMultiFieldText: true
         }
     },
     labelField: "name",

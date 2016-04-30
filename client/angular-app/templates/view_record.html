@@ -7,48 +7,33 @@
                 </div>
                 <div class="box-body">
                     <ul>
-                        <li ng-repeat="field in record">
-                            <div ng-if="field.isLongText">    
-                                <div ng-repeat="item in field.value.split('\n') track by $index" >
-                                    <div class="col-md-6">
-                                        {{item.split(':')[0]}}
-                                    </div>
-                                    
-                                    <div class="col-md-6">
-                                        <span class="col-sm-10">
-                                            {{item.split(':')[1]}}
-                                        </span>
-                                    </div>
+                        <li ng-repeat="field in record">    
+                            <div class="col-md-6">
+                                {{field.label}}
+                            </div>
+                            <div ng-if="field.ref"  class="col-md-6">
+                                <a class="col-sm-10" href="/app/view_record?source={{field.model}}&id={{field.value}}" >{{field.name}}</a>    
+                            </div>
+                            <div ng-else-if="field.isLink" class="col-md-6">
+                                <a class="col-sm-10" href="{{field.value}}" target="_blank">{{field.value}}</a>
+                            </div>
+                            <div ng-else-if="field.isHTML" class="col-md-6">
+                                <span ng-bind-html="field.value" class="col-sm-10"/></span>
+                            </div>
+                            <div ng-else-if="field.isList" class="col-md-6">
+                                <span ng-repeat="item in field.value" class="col-sm-10">{{item}}</span>
+                            </div>
+                            <div ng-else-if="field.isProjectList" class="col-md-6">
+                                <div ng-repeat="item in field.value" >
+                                    <a class="col-sm-10" href="/app/view_record?source={{item.model}}&id={{item.id}}" >{{item.name}}</a>
+                                    <span ng-if="item.description"> - Descrição: {{item.description}}</span> 
                                 </div>
                             </div>
-                            <div ng-else >     
-                                <div class="col-md-6">
-                                    {{field.label}}
-                                </div>
-                                <div ng-if="field.ref"  class="col-md-6">
-                                    <a class="col-sm-10" href="/app/view_record?source={{field.model}}&id={{field.value}}" >{{field.name}}</a>    
-                                </div>
-                                <div ng-else-if="field.isLink" class="col-md-6">
-                                    <a class="col-sm-10" href="{{field.value}}" target="_blank">{{field.value}}</a>
-                                </div>
-                                <div ng-else-if="field.isHTML" class="col-md-6">
-                                    <span ng-bind-html="field.value" class="col-sm-10"/></span>
-                                </div>
-                                <div ng-else-if="field.isList" class="col-md-6">
-                                    <span ng-repeat="item in field.value" class="col-sm-10">{{item}}</span>
-                                </div>
-                                <div ng-else-if="field.isProjectList" class="col-md-6">
-                                    <div ng-repeat="item in field.value" >
-                                        <a class="col-sm-10" href="/app/view_record?source={{item.model}}&id={{item.id}}" >{{item.name}}</a>
-                                        <span ng-if="item.description"> - Descrição: {{item.description}}</span> 
-                                    </div>
-                                </div>
-                                <div ng-else-if="field.isPhoto" class="col-md-6">
-                                    <img class="col-sm-10" src="/db_image?dataSource={{source}}&id={{id}}&fieldName={{field.name}}" ></img> 
-                                </div>
-                                <div ng-else class="col-md-6">
-                                    <span class="col-sm-10">{{field.value}}</span>
-                                </div>
+                            <div ng-else-if="field.isPhoto" class="col-md-6">
+                                <img class="col-sm-10" src="/db_image?dataSource={{source}}&id={{id}}&fieldName={{field.name}}" ></img> 
+                            </div>
+                            <div ng-else class="col-md-6">
+                                <span class="col-sm-10">{{field.value}}</span>
                             </div>
                         </li>
                     </ul>
