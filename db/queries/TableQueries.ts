@@ -214,7 +214,7 @@ export const queries:ITableQueries = {
                     ['"Terra"', 'land_sea'],
                     ['"Company"', 'contractor_model']
                 ],
-                filters: [],
+                filters: queryParams.filters,
                 order: []
             };
             const onshoreQryStr = QueryGenerator.queryGenerator(options);
@@ -225,7 +225,8 @@ export const queries:ITableQueries = {
             options.extraFields[1] = ['"Mar"', 'land_sea'];
             const offshoreQryStr = QueryGenerator.queryGenerator(options);
             
-            return onshoreQryStr + ' union ' + offshoreQryStr;
+            const orderQry = QueryGenerator.getOrderByStr(queryParams.order);
+            return onshoreQryStr + ' union ' + offshoreQryStr + orderQry;
         },
         fields: [
             {
