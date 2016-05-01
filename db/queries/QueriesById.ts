@@ -1,7 +1,10 @@
+'use strict';
+
 var await = require('../../lib/await');
 import db = require('../models');
 import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
+import { wellsByBlock } from './WellQuery';
 
 /** function that returns the SQL query string */
 interface IQueryStrFn {
@@ -254,45 +257,23 @@ const queries:IQueriesById = {
     },
     
     wellsByBlock: {
-        queryStrFn: (filter) => {
-            function getSubQuery(onOffStr) {
-                const wellOpts:QueryGenerator.ITableQueryOpts = {
-                    name: 'wells',
-                    fields: [
-                        ['id', 'w_id'],
-                        ['name', 'well_name'],
-                        'start'
-                    ]
-                }
-                const wellSelectQry = QueryGenerator.genTableSelectStr(wellOpts, {});
-                
-                const drTableName = 'drilling_rigs_o' + onOffStr + 'shore';
-                const drOpts:QueryGenerator.ITableQueryOpts = {
-                    name: drTableName,
-                    fields: [
-                        ['id', 'drilling_rig_id'],
-                        ['name', 'drilling_rig_name']
-                    ]
-                }
-                const drSelectQry = QueryGenerator.genTableSelectStr(drOpts, {});
-                
-                const extraFields = [
-                    ['"Well"', 'model'],
-                    ['"DrillingRigO' + onOffStr + 'shore"', 'drilling_rig_model']
-                ];
-                const extraFieldsQry = QueryGenerator.getExtraFieldsStr(extraFields);
-                
-                const fromStr = ' from wells, ' + drTableName;
-                const whereStr = ' where wells.drilling_rig_o'+ onOffStr +'shore_id = ' + drTableName + '.id ' +
-                        ' and wells.block_id = ' + filter.id;
-                
-                const selectStr = 'select ' + wellSelectQry + drSelectQry + extraFieldsQry.substr(0, extraFieldsQry.length - 2);
-                
-                const query = selectStr + fromStr + whereStr;
-                return query;
+        queryStrFn: (filter) => {        
+            const wellOpts:QueryGenerator.ITableQueryOpts = {
+                name: 'wells',
+                fields: [
+                    ['id', 'w_id'],
+                    ['name', 'well_name'],
+                    'start'
+                ]
             }
             
-            var query = getSubQuery('n') + ' union ' + getSubQuery('ff') + ' order by well_name';
+            function whereFn(onOffStr:string, drTableName:string):string {
+                const whereStr = ' where wells.drilling_rig_o'+ onOffStr +'shore_id = ' + drTableName + '.id ' +
+                ' and wells.block_id = ' + filter.id;
+                return whereStr;
+            }
+            
+            var query = wellsByBlock(wellOpts, whereFn) + ' order by well_name';
             return query;
         },
         fields: [
