@@ -507,7 +507,14 @@ export const queries:ITableQueries = {
                 fields: [
                     ['id', 'w_id'],
                     ['name', 'well_name'],
-                    'start'
+                    'name_operator',
+                    'type',
+                    'category',
+                    'reclassification',
+                    'situation',
+                    'start',
+                    'end',
+                    'conclusion'
                 ]
             }
             
@@ -529,9 +536,9 @@ export const queries:ITableQueries = {
                 }
             },
             {
-                label: 'Início',
-                fieldName: 'start',
-                type: 'DATE'
+                label: 'Nome operador',
+                fieldName: 'name_operator',
+                type: 'VARCHAR'
             },
             {
                 label: 'Sonda',
@@ -540,7 +547,42 @@ export const queries:ITableQueries = {
                     idField: 'drilling_rig_id',
                     valueField: 'drilling_rig_name'
                 }
-            }
+            },
+            {
+                label: 'Tipo',
+                fieldName: 'type',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Categoria',
+                fieldName: 'category',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Reclassificação',
+                fieldName: 'reclassification',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Situação',
+                fieldName: 'situation',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Início',
+                fieldName: 'start',
+                type: 'DATE'
+            },
+            {
+                label: 'Término',
+                fieldName: 'end',
+                type: 'DATE'
+            },
+            {
+                label: 'Conclusão',
+                fieldName: 'conclusion',
+                type: 'DATE'
+            },
         ]
     }
     
