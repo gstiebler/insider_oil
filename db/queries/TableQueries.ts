@@ -4,6 +4,7 @@ var await = require('../../lib/await');
 import db = require('../models');
 import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
+import { wellsByBlock } from './WellQuery';
 
 interface IQueryStrFn {
     (queryParams: QueryGenerator.IQueryParams): string; 
@@ -498,6 +499,50 @@ export const queries:ITableQueries = {
             }
         ]
     },
+    
+    Wells: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {        
+            const wellOpts:QueryGenerator.ITableQueryOpts = {
+                name: 'wells',
+                fields: [
+                    ['id', 'w_id'],
+                    ['name', 'well_name'],
+                    'start'
+                ]
+            }
+            
+            function whereFn(onOffStr:string, drTableName:string):string {
+                const whereStr = ' where wells.drilling_rig_o'+ onOffStr +'shore_id = ' + drTableName + '.id '
+                return whereStr;
+            }
+            
+            var query = wellsByBlock(wellOpts, whereFn) + ' order by well_name';
+            return query;
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'w_id',
+                    valueField: 'well_name'
+                }
+            },
+            {
+                label: 'Início',
+                fieldName: 'start',
+                type: 'DATE'
+            },
+            {
+                label: 'Sonda',
+                ref: {
+                    modelField: 'drilling_rig_model',
+                    idField: 'drilling_rig_id',
+                    valueField: 'drilling_rig_name'
+                }
+            }
+        ]
+    }
     
     /** sample
     ComercialDeclarations: {

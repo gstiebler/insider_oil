@@ -33,12 +33,12 @@ var tree: ITreeNode = {
                         source: 'DrillingRigs'
                     }
                 },
-                /*{
+                {
                     label: 'Poços',
                     child: {
-                        source: 'Well'
+                        source: 'Wells'
                     }
-                },*/
+                },
                 {
                     label: 'Sísmica',
                     child: {
