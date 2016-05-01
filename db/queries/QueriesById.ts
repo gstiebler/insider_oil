@@ -4,7 +4,6 @@ var await = require('../../lib/await');
 import db = require('../models');
 import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
-import { wellsByBlock } from './WellQuery';
 
 /** function that returns the SQL query string */
 interface IQueryStrFn {
@@ -258,22 +257,48 @@ const queries:IQueriesById = {
     
     wellsByBlock: {
         queryStrFn: (filter) => {        
-            const wellOpts:QueryGenerator.ITableQueryOpts = {
-                name: 'wells',
-                fields: [
-                    ['id', 'w_id'],
-                    ['name', 'well_name'],
-                    'start'
+            const wellOpts:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'wells',
+                    fields: [
+                        ['id', 'w_id'],
+                        ['name', 'well_name'],
+                        'start'
+                    ]
+                },
+                extraFields: [
+                    ['"Well"', 'model'],
+                    ['if(isnull(drilling_rigs_onshore.name), "DrillingRigOffshore", "DrillingRigOnshore")', 'dr_model'],
+                    ['if(isnull(drilling_rigs_onshore.name), drilling_rigs_offshore.name, drilling_rigs_onshore.name)', 'dr_name'],
+                    ['if(isnull(drilling_rigs_onshore.name), wells.drilling_rig_offshore_id, wells.drilling_rig_onshore_id)', 'dr_id'],
+                ],
+                joinTables: [
+                    {
+                        name: 'drilling_rigs_onshore',
+                        fields: [],
+                        joinField: 'wells.drilling_rig_onshore_id'
+                    },
+                    {
+                        name: 'drilling_rigs_offshore',
+                        fields: [],
+                        joinField: 'wells.drilling_rig_offshore_id'
+                    },
+                ],
+                filters: [
+                    {
+                        field: 'wells.block_id',
+                        equal: filter.id
+                    }
+                ],
+                order: [
+                    {
+                        fieldName: 'well_name',
+                        dir: 'asc'
+                    }
                 ]
             }
             
-            function whereFn(onOffStr:string, drTableName:string):string {
-                const whereStr = ' where wells.drilling_rig_o'+ onOffStr +'shore_id = ' + drTableName + '.id ' +
-                ' and wells.block_id = ' + filter.id;
-                return whereStr;
-            }
-            
-            var query = wellsByBlock(wellOpts, whereFn) + ' order by well_name';
+            var query = QueryGenerator.queryGenerator(wellOpts);
             return query;
         },
         fields: [
@@ -293,9 +318,9 @@ const queries:IQueriesById = {
             {
                 label: 'Sonda',
                 ref: {
-                    modelField: 'drilling_rig_model',
-                    idField: 'drilling_rig_id',
-                    valueField: 'drilling_rig_name'
+                    modelField: 'dr_model',
+                    idField: 'dr_id',
+                    valueField: 'dr_name'
                 }
             }
         ]

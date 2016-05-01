@@ -4,7 +4,6 @@ var await = require('../../lib/await');
 import db = require('../models');
 import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
-import { wellsByBlock } from './WellQuery';
 
 interface IQueryStrFn {
     (queryParams: QueryGenerator.IQueryParams): string; 
@@ -274,145 +273,6 @@ export const queries:ITableQueries = {
         ]
     },
     
-    /** Comercial declarations 
-    ComercialDeclarations: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
-            const options:QueryGenerator.IQueryOpts = {
-                table: {
-                    name: 'comercial_declarations',
-                    fields: [
-                        ['id', 'cd_id']
-                        ['name', 'cd_name'],
-                        'date'
-                    ]
-                },
-                joinTables: [
-                    {
-                        name: 'basins',
-                        fields: [
-                            ['id', 'basin_id'],
-                            ['name', 'basin_name'],
-                        ],
-                        joinField: 'basin_id'
-                    },
-                    {
-                        name: 'oil_fields',
-                        fields: [
-                            ['id', 'oil_field_id'],
-                            ['name', 'oil_field_name'],
-                        ],
-                        joinField: 'oil_field_id'
-                    }
-                ],
-                extraFields: [
-                    ['"ComercialDeclaration"', 'model']
-                ],
-                filters: queryParams.filters
-            };
-            
-            return QueryGenerator.queryGenerator(options);
-        },
-        fields: [
-            {
-                label: 'Nome',
-                ref: {
-                    modelField: 'model',
-                    idField: 'cd_id',
-                    valueField: 'cd_name'
-                }
-            },
-            {
-                label: 'Bacia',
-                fieldName: 'basin_name',
-                type: 'VARCHAR'
-            },
-            {
-                label: 'Campo',
-                fieldName: 'oil_field_name',
-                type: 'VARCHAR'
-            },
-            {
-                label: 'Data',
-                fieldName: 'date',
-                type: 'DATE'
-            }
-        ]
-    },*/
-    
-    /** Ambiental Licenses 
-    AmbientalLicenses: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
-            const options:QueryGenerator.IQueryOpts = {
-                table: {
-                    name: 'ambiental_licenses',
-                    fields: [
-                        'id',
-                        'license',
-                        'start',
-                        'end',
-                        'enterprise',
-                        'entrepreneur',
-                        'process',
-                        'tipology',
-                        'pac'
-                    ]
-                },
-                joinTables: [],
-                extraFields: [
-                    ['"AmbientalLicense"', 'model']
-                ],
-                filters: queryParams.filters
-            };
-            
-            return QueryGenerator.queryGenerator(options);
-        },
-        fields: [
-            {
-                label: 'Nro da licença',
-                ref: {
-                    modelField: 'model',
-                    idField: 'id',
-                    valueField: 'license'
-                }
-            },
-            {
-                label: 'Emissão',
-                fieldName: 'start',
-                type: 'DATE'
-            },
-            {
-                label: 'Vencimento',
-                fieldName: 'end',
-                type: 'DATE'
-            },
-            {
-                label: 'Empreendimento',
-                fieldName: 'enterprise',
-                type: 'VARCHAR'
-            },
-            {
-                label: 'Empreendedor',
-                fieldName: 'entrepreneur',
-                type: 'VARCHAR'
-            },
-            {
-                label: 'Nº do processo',
-                fieldName: 'process',
-                type: 'VARCHAR'
-            },
-            {
-                label: 'Tipologia',
-                fieldName: 'tipology',
-                type: 'VARCHAR'
-            },
-            {
-                label: 'PAC',
-                fieldName: 'pac',
-                type: 'VARCHAR'
-            }
-        ]
-    },*/
-    
     /** Seismics */
     Seismics: {
         queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
@@ -501,51 +361,96 @@ export const queries:ITableQueries = {
     },
     
     Wells: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {        
-            const wellOpts:QueryGenerator.ITableQueryOpts = {
-                name: 'wells',
-                fields: [
-                    ['id', 'w_id'],
-                    ['name', 'well_name'],
-                    'name_operator',
-                    'type',
-                    'category',
-                    'reclassification',
-                    'situation',
-                    'start',
-                    'end',
-                    'conclusion'
-                ]
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {    
+            const wellOpts:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'wells',
+                    fields: [
+                        ['name', 'well_name'],
+                        'name_operator',
+                        'type',
+                        'category',
+                        'reclassification',
+                        'situation',
+                        'start',
+                        'end',
+                        'conclusion'
+                    ]
+                },
+                extraFields: [
+                    ['"Block"', 'model_block'],
+                    ['"Company"', 'model_operator'],
+                    ['if(isnull(drilling_rigs_onshore.name), "DrillingRigOffshore", "DrillingRigOnshore")', 'dr_model'],
+                    ['if(isnull(drilling_rigs_onshore.name), drilling_rigs_offshore.name, drilling_rigs_onshore.name)', 'dr_name'],
+                    ['if(isnull(drilling_rigs_onshore.name), wells.drilling_rig_offshore_id, wells.drilling_rig_onshore_id)', 'dr_id'],
+                ],
+                joinTables: [
+                    {
+                        name: 'drilling_rigs_onshore',
+                        fields: [],
+                        joinField: 'wells.drilling_rig_onshore_id'
+                    },
+                    {
+                        name: 'drilling_rigs_offshore',
+                        fields: [],
+                        joinField: 'wells.drilling_rig_offshore_id'
+                    },
+                    {
+                        name: 'companies',
+                        fields: [
+                            ['id', 'operator_id'],
+                            ['name', 'operator_name'],
+                        ],
+                        joinField: 'wells.operator_id'
+                    },
+                    {
+                        name: 'blocks',
+                        fields: [
+                            ['id', 'block_id'],
+                            ['name', 'block_name'],
+                        ],
+                        joinField: 'wells.block_id'
+                    }
+                ],
+                filters: queryParams.filters,
+                order: queryParams.order
             }
             
-            function whereFn(onOffStr:string, drTableName:string):string {
-                const whereStr = ' where wells.drilling_rig_o'+ onOffStr +'shore_id = ' + drTableName + '.id '
-                return whereStr;
-            }
-            
-            const orderStr = QueryGenerator.getOrderByStr(queryParams.order);
-            return wellsByBlock(wellOpts, whereFn) + orderStr;
+            return QueryGenerator.queryGenerator(wellOpts);
         },
         fields: [
             {
-                label: 'Nome',
+                label: 'Operador',
                 ref: {
-                    modelField: 'model',
-                    idField: 'w_id',
-                    valueField: 'well_name'
+                    modelField: 'model_operator',
+                    idField: 'operator_id',
+                    valueField: 'operator_name'
                 }
             },
             {
-                label: 'Nome operador',
+                label: 'Nome',
+                fieldName: 'well_name',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Nome operador', 
                 fieldName: 'name_operator',
                 type: 'VARCHAR'
             },
             {
+                label: 'Bloco',
+                ref: {
+                    modelField: 'model_block',
+                    idField: 'block_id',
+                    valueField: 'block_name'
+                }
+            },
+            {
                 label: 'Sonda',
                 ref: {
-                    modelField: 'drilling_rig_model',
-                    idField: 'drilling_rig_id',
-                    valueField: 'drilling_rig_name'
+                    modelField: 'dr_model',
+                    idField: 'dr_id',
+                    valueField: 'dr_name'
                 }
             },
             {
@@ -584,35 +489,7 @@ export const queries:ITableQueries = {
                 type: 'DATE'
             },
         ]
-    }
-    
-    /** sample
-    ComercialDeclarations: {
-        queryStrFn: (queryParams: IQueryParams) => {
-            const options:QueryGenerator.IQueryOpts = {
-            {
-                table: {
-                    name: 'blocks',
-                    fields: [
-                        'id',
-                        ['name', 'block_name'],
-                        'status'
-                    ]
-                },
-                joinTables: [],
-                extraFields: [
-                    ['"Basin"', 'model']
-                ],
-                filters: queryParams.filters
-            },
-            };
-            
-            return QueryGenerator.queryGenerator(options);
-        },
-        fields: [
-            {}
-        ]
-    } */
+    },
 };
 
 export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {

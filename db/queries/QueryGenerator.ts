@@ -30,7 +30,7 @@ export interface ITableQueryOpts {
     fields: Field[];
 }
  
-interface IJoinTableQueryOpts extends ITableQueryOpts {
+export interface IJoinTableQueryOpts extends ITableQueryOpts {
     joinField: string;
 }
  
@@ -125,9 +125,9 @@ export function genSelectStr(queryOpts: IQueryOpts, aliasMap):string {
     return resultQry.substr(0, resultQry.length - 2);
 }
 
-function genOuterJoins(queryOpts: IQueryOpts): string {
+export function genOuterJoins(joinTables: IJoinTableQueryOpts[]): string {
     let resultQry = '';
-    for(let joinTable of queryOpts.joinTables) {
+    for(let joinTable of joinTables) {
         resultQry += ' left outer join ' + joinTable.name + ' on ';
         resultQry += joinTable.name + '.id = ' + joinTable.joinField;
     }
@@ -138,7 +138,7 @@ export function queryGenerator(queryOpts: IQueryOpts):string {
     const aliasMap = {};
     const select = genSelectStr(queryOpts, aliasMap);
     const fromStr = ' from ' + queryOpts.table.name;
-    const joins = genOuterJoins(queryOpts);
+    const joins = genOuterJoins(queryOpts.joinTables);
     const where = getWhereStr(queryOpts.filters, aliasMap);
     const orderBy = getOrderByStr(queryOpts.order);
     return select + fromStr + joins + where + orderBy;

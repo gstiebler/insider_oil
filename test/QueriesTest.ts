@@ -166,16 +166,16 @@ getWellsByBlock:  (test: nodeunit.Test) => {
     const recordOnshore = resQueryValues.records[0];
     test.equal('1A 0001 BA', recordOnshore.well_name);
     test.equal('Well', recordOnshore.model);
-    test.equal('DrillingRigOnshore', recordOnshore.drilling_rig_model);
-    test.equal(nicId, recordOnshore.drilling_rig_id);
-    test.equal('NIC-01', recordOnshore.drilling_rig_name);
+    test.equal('DrillingRigOnshore', recordOnshore.dr_model);
+    test.equal(nicId, recordOnshore.dr_id);
+    test.equal('NIC-01', recordOnshore.dr_name);
     
     const recordOffshore = resQueryValues.records[1];
     test.equal('1AJ 0001 BA', recordOffshore.well_name);
     test.equal('Well', recordOffshore.model);
-    test.equal('DrillingRigOffshore', recordOffshore.drilling_rig_model);
-    test.equal(abanId, recordOffshore.drilling_rig_id);
-    test.equal('Aban Abraham', recordOffshore.drilling_rig_name);
+    test.equal('DrillingRigOffshore', recordOffshore.dr_model);
+    test.equal(abanId, recordOffshore.dr_id);
+    test.equal('Aban Abraham', recordOffshore.dr_name);
     
     test.equal('Nome', resQueryValues.fields[0].label);
     test.equal('model', resQueryValues.fields[0].ref.modelField);
@@ -187,9 +187,9 @@ getWellsByBlock:  (test: nodeunit.Test) => {
     test.equal('DATE', resQueryValues.fields[1].type);
     
     test.equal('Sonda', resQueryValues.fields[2].label);
-    test.equal('drilling_rig_model', resQueryValues.fields[2].ref.modelField);
-    test.equal('drilling_rig_id', resQueryValues.fields[2].ref.idField);
-    test.equal('drilling_rig_name', resQueryValues.fields[2].ref.valueField);
+    test.equal('dr_model', resQueryValues.fields[2].ref.modelField);
+    test.equal('dr_id', resQueryValues.fields[2].ref.idField);
+    test.equal('dr_name', resQueryValues.fields[2].ref.valueField);
 
     test.done();
 },
