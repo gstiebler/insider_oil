@@ -25,7 +25,7 @@ export interface IPaginationOpts {
 
 type Field = string | string[];
 
-interface ITableQueryOpts {
+export interface ITableQueryOpts {
     name: string;
     fields: Field[];
 }
@@ -93,7 +93,7 @@ export function getPaginationStr(pagiOpts: IPaginationOpts): string {
         
 }
 
-function genTableSelectStr(tableQryOpts: ITableQueryOpts, aliasMap):string {
+export function genTableSelectStr(tableQryOpts: ITableQueryOpts, aliasMap):string {
     let resultQry = '';
     for(let field of tableQryOpts.fields) {
         if(typeof field == 'string') {
@@ -108,14 +108,20 @@ function genTableSelectStr(tableQryOpts: ITableQueryOpts, aliasMap):string {
     return resultQry;
 }
 
+export function getExtraFieldsStr(extraFields:any[]) {
+    let resultQry = '';
+    for(let extraField of extraFields) {
+        resultQry += extraField[0] + ' as ' + extraField[1] + ', '; 
+    }   
+    return resultQry;
+}
+
 export function genSelectStr(queryOpts: IQueryOpts, aliasMap):string {
     let resultQry = 'select ' + genTableSelectStr(queryOpts.table, aliasMap);
     for(let joinTable of queryOpts.joinTables) {
         resultQry += genTableSelectStr(joinTable, aliasMap);
     }
-    for(let extraField of queryOpts.extraFields) {
-        resultQry += extraField[0] + ' as ' + extraField[1] + ', '; 
-    }
+    resultQry += getExtraFieldsStr(queryOpts.extraFields);
     return resultQry.substr(0, resultQry.length - 2);
 }
 

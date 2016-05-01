@@ -179,7 +179,7 @@ getWellsByBlock:  (test: nodeunit.Test) => {
     
     test.equal('Nome', resQueryValues.fields[0].label);
     test.equal('model', resQueryValues.fields[0].ref.modelField);
-    test.equal('id', resQueryValues.fields[0].ref.idField);
+    test.equal('w_id', resQueryValues.fields[0].ref.idField);
     test.equal('well_name', resQueryValues.fields[0].ref.valueField);
     
     test.equal('Início', resQueryValues.fields[1].label);

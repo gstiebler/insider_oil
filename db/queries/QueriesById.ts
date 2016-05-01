@@ -256,11 +256,39 @@ const queries:IQueriesById = {
     wellsByBlock: {
         queryStrFn: (filter) => {
             function getSubQuery(onOffStr) {
-                const query = 'select w.id, w.name as well_name, w.start, "Well" as model, dr.name as drilling_rig_name, ' +
-                        'dr.id as drilling_rig_id, "DrillingRigO' + onOffStr + 'shore" as drilling_rig_model ' +
-                    ' from wells w, drilling_rigs_o' + onOffStr + 'shore dr ' +
-                    ' where w.drilling_rig_o'+ onOffStr +'shore_id = dr.id ' +
-                        ' and w.block_id = ' + filter.id;
+                const wellOpts:QueryGenerator.ITableQueryOpts = {
+                    name: 'wells',
+                    fields: [
+                        ['id', 'w_id'],
+                        ['name', 'well_name'],
+                        'start'
+                    ]
+                }
+                const wellSelectQry = QueryGenerator.genTableSelectStr(wellOpts, {});
+                
+                const drTableName = 'drilling_rigs_o' + onOffStr + 'shore';
+                const drOpts:QueryGenerator.ITableQueryOpts = {
+                    name: drTableName,
+                    fields: [
+                        ['id', 'drilling_rig_id'],
+                        ['name', 'drilling_rig_name']
+                    ]
+                }
+                const drSelectQry = QueryGenerator.genTableSelectStr(drOpts, {});
+                
+                const extraFields = [
+                    ['"Well"', 'model'],
+                    ['"DrillingRigO' + onOffStr + 'shore"', 'drilling_rig_model']
+                ];
+                const extraFieldsQry = QueryGenerator.getExtraFieldsStr(extraFields);
+                
+                const fromStr = ' from wells, ' + drTableName;
+                const whereStr = ' where wells.drilling_rig_o'+ onOffStr +'shore_id = ' + drTableName + '.id ' +
+                        ' and wells.block_id = ' + filter.id;
+                
+                const selectStr = 'select ' + wellSelectQry + drSelectQry + extraFieldsQry.substr(0, extraFieldsQry.length - 2);
+                
+                const query = selectStr + fromStr + whereStr;
                 return query;
             }
             
@@ -272,7 +300,7 @@ const queries:IQueriesById = {
                 label: 'Nome',
                 ref: {
                     modelField: 'model',
-                    idField: 'id',
+                    idField: 'w_id',
                     valueField: 'well_name'
                 }
             },
