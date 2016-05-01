@@ -516,8 +516,8 @@ export const queries:ITableQueries = {
                 return whereStr;
             }
             
-            var query = wellsByBlock(wellOpts, whereFn) + ' order by well_name';
-            return query;
+            const orderStr = QueryGenerator.getOrderByStr(queryParams.order);
+            return wellsByBlock(wellOpts, whereFn) + orderStr;
         },
         fields: [
             {
