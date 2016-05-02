@@ -53,6 +53,44 @@ export const queries:ITableQueries = {
         ]
     },
     
+     Companies: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'companies',
+                    fields: [
+                        'id',
+                        'name',
+                        'address'
+                    ]
+                },
+                extraFields: [
+                    ['"Company"', 'model']
+                ],
+                joinTables: [],
+                filters: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'name'
+                }
+            },
+            {
+                label: 'Endereço',
+                fieldName: 'address',
+                type: 'VARCHAR'
+            },
+        ]
+    },
+    
     /** Blocks */
     Blocks: {
         queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {

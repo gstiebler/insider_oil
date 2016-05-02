@@ -296,13 +296,13 @@ var tree: ITreeNode = {
                 }
             ]
         },
+        */
         {
             label: 'Empresas',
             child: {
-                source: 'Company'
+                source: 'Companies'
             }
         },
-        */
         {
             label: 'Pessoas',
             child: {
