@@ -48,14 +48,26 @@ var tree: ITreeNode = {
             ]
         },
         {
-            label: 'Exploração',
+            label: 'Produção',
             children: [
                 {
                     label: 'FPSOs',
                     child: {
                         source: 'FPSOs'
                     }
-                }
+                },
+                {
+                    label: 'UPEs Fixas',
+                    child: {
+                        source: 'FixedProductionUnits'
+                    }
+                },
+                {
+                    label: 'UPE FPSs Semi',
+                    child: {
+                        source: 'SemiSubmersibleProductionUnits'
+                    }
+                },
             ]
         },
         /*{
