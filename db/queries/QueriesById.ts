@@ -335,8 +335,21 @@ const queries:IQueriesById = {
                 pagination: { first: 0, itemsPerPage: 100 }
             };
             return TableQueries.queries['Persons'].queryStrFn(queryParams);
-        },
-        fields: TableQueries.queries['Persons'].fields
+        },fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'person_id',
+                    valueField: 'person_name'
+                }
+            },
+            {
+                label: 'Cargo',
+                fieldName: 'position',
+                type: 'VARCHAR'
+            }
+        ]
     }
 };
 

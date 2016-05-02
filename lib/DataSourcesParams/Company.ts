@@ -20,6 +20,12 @@ const Company: BaseDataSourceParams = {
             isList: true  
         },
     },
+    referencedObjectsOnView:  [
+        {
+            queryName: 'personsByCompany',
+            title: 'Pessoas'
+        },
+    ],
     labelField: "name",
     gridFields: ["name", "address"],
     tableLabel: "Empresas",
