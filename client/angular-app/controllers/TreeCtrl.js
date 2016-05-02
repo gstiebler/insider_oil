@@ -6,6 +6,7 @@ angular.module('InsiderOilApp').controller('TreeController',
                  ModelOperations, ModelViewService) {
     
     var nodeId = $routeParams.nodeId;
+    var nodeLabel = $routeParams.nodeLabel;
     $scope.onError = showError.show;
     
     function makeItem(subTree) {
@@ -15,15 +16,15 @@ angular.module('InsiderOilApp').controller('TreeController',
         };
     }
     
-    function findItemById(tree, stack) {
-        if(!nodeId || tree.id == nodeId) {
+    function findItem(tree, stack) {
+        if(tree.id == nodeId || tree.label == nodeLabel) {
             stack.push( makeItem(tree) );
             return tree;
         }
             
         if(tree.children) {
             for(var i = 0; i < tree.children.length; i++) {
-                var result = findItemById(tree.children[i], stack);
+                var result = findItem(tree.children[i], stack);
                 if(result) {
                     stack.push( makeItem(tree) );
                     return result;
@@ -37,7 +38,7 @@ angular.module('InsiderOilApp').controller('TreeController',
     
     function showTree(tree) {
         var stack = [];
-        var subTree = findItemById(tree, stack);
+        var subTree = findItem(tree, stack);
         stack.reverse();
         $scope.stack = stack;
         if(!subTree) {
