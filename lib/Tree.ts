@@ -47,6 +47,17 @@ var tree: ITreeNode = {
                 },
             ]
         },
+        {
+            label: 'Exploração',
+            children: [
+                {
+                    label: 'FPSOs',
+                    child: {
+                        source: 'FPSOs'
+                    }
+                }
+            ]
+        },
         /*{
             label: 'Produção',
             children: [

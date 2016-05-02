@@ -528,6 +528,75 @@ export const queries:ITableQueries = {
             },
         ]
     },
+    
+    FPSOs: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+            const filters = queryParams.filters;
+            filters.push(
+                {
+                    field: 'type',
+                    equal: '"FPSO"'
+                }
+            );
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'production_units',
+                    fields: [
+                        ['id', 'pu_id'],
+                        ['name', 'pu_name'],
+                        'owner',
+                        'situation'
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'oil_fields',
+                        fields: [
+                            ['id', 'of_id'],
+                            ['name', 'of_name'],
+                        ],
+                        joinField: 'production_units.oil_field_id'
+                    },
+                ],
+                extraFields: [
+                    ['"ProductionUnit"', 'model'],
+                    ['"OilField"', 'of_model'],
+                ],
+                filters: filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'pu_id',
+                    valueField: 'pu_name'
+                }
+            },
+            {
+                label: 'Campo',
+                ref: {
+                    modelField: 'of_model',
+                    idField: 'of_id',
+                    valueField: 'of_name'
+                }
+            },
+            {
+                label: 'Empresa proprietária',
+                fieldName: 'owner',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Situação',
+                fieldName: 'situation',
+                type: 'VARCHAR'
+            },
+        ]
+    },
 };
 
 export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {
