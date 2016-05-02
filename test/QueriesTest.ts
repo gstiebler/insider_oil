@@ -246,6 +246,22 @@ getHydrocarbonEvidencesByBlock:  (test: nodeunit.Test) => {
     test.done();
 },
 
+getPersonsByCompany:  (test: nodeunit.Test) => {
+    const petroId = utils.idByName('Company', 'Petrobras') ;
+    const filters = {
+        id: petroId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'personsByCompany',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+
+    test.done();
+},
 
 }
 

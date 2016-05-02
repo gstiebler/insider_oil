@@ -4,6 +4,7 @@ var await = require('../../lib/await');
 import db = require('../models');
 import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
+import * as TableQueries from './TableQueries';
 
 /** function that returns the SQL query string */
 interface IQueryStrFn {
@@ -324,6 +325,18 @@ const queries:IQueriesById = {
                 }
             }
         ]
+    },
+    
+    personsByCompany: {
+        queryStrFn: (filter) => {
+            const queryParams: QueryGenerator.IQueryParams = {
+                filters: [ { field: 'company_id', equal: filter.id } ],
+                order: [ { fieldName: 'person_name', dir: 'asc' } ],
+                pagination: { first: 0, itemsPerPage: 100 }
+            };
+            return TableQueries.queries['Persons'].queryStrFn(queryParams);
+        },
+        fields: TableQueries.queries['Persons'].fields
     }
 };
 
