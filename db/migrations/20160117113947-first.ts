@@ -71,6 +71,18 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: true
 				},
+				logo: {
+					type: Sequelize.BLOB('long'),
+					allowNull: true
+				},
+				site: {
+					type: Sequelize.STRING,
+					allowNull: true
+				},
+				telephones_text: {
+					type: Sequelize.TEXT('tiny'),
+					allowNull: true
+				},
 				created_at: {
 					type: Sequelize.DATE
 				},

@@ -7,7 +7,18 @@ const Company: BaseDataSourceParams = {
         },
         address: {
             label: "Endereço"
-        }
+        },
+        logo: {
+            label: "Logotipo",
+            isPhoto: true
+        },
+        site: {
+            label: "Site"
+        },
+        telephones: {
+            label: 'Telefone',
+            isList: true  
+        },
     },
     labelField: "name",
     gridFields: ["name", "address"],
