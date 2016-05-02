@@ -21,6 +21,8 @@ class DataSourceOperations implements IDataSourceOperations {
             }
             fields[attributeName] = att;
             fields[attributeName].type = typeStr;
+            if(dataSource.attributes[attributeName].values)
+                fields[attributeName].enumValues = dataSource.attributes[attributeName].values;
         }
         
         for( let associationName in dataSource.associations ) {
