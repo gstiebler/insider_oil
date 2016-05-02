@@ -20,4 +20,5 @@ export function createFixtures():void {
     await( require('./NewsFixtures')(db) );
     await( require('./ComercialDeclarationFixture')(db) );
     await( require('./HydrocarbonEvidence')(db) );
+    await( require('./ProductionUnit')(db) );
 };
