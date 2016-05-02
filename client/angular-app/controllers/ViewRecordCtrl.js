@@ -48,6 +48,8 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
         const fieldValues = [];
         for(var i = 0; i < record.length; i++) {
             if(record[i].isMultiFieldText) {
+                if(!record[i].value)
+                    continue;
                 var items = record[i].value.split('\n');
                 for(var j = 0; j < items.length; j++) {
                     var newFieldInfo = { type: items[j].type };
