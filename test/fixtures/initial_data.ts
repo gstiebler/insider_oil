@@ -15,8 +15,6 @@ export function createFixtures():void {
     await( require('./OilField')(db) );
     await( require('./Seismic')(db) );
     await( require('./AmbientalLicense')(db) );
-    await( require('./FPSOProduction')(db) );
-    await( require('./FixedUEPProduction')(db) );
     await( require('./Reserve')(db) );
     await( require('./Production')(db) );
     await( require('./NewsFixtures')(db) );

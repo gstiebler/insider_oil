@@ -385,124 +385,6 @@ module.exports = {
 		});
 		
 		parameters.push({
-			table: 'fpso_production',
-			fields: {
-				id: {
-					type: Sequelize.INTEGER,
-					primaryKey: true,
-					autoIncrement: true
-				},
-				name: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
-				owner: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
-				status: {
-					type: Sequelize.ENUM('operation', 'construction'),
-					allowNull: false
-				},
-				oil_processing_capacity: {
-					type: Sequelize.FLOAT,
-					allowNull: false
-				},
-				gas_processing_capacity: {
-					type: Sequelize.FLOAT,
-					allowNull: false
-				},
-				oil_storage_capacity: {
-					type: Sequelize.FLOAT,
-					allowNull: false
-				},
-				depth: {
-					type: Sequelize.FLOAT,
-					allowNull: false
-				},
-				start: {
-					type: Sequelize.DATEONLY,
-					allowNull: false
-				},
-				end: {
-					type: Sequelize.DATEONLY,
-					allowNull: true
-				},
-				operating_wells: {
-					type: Sequelize.INTEGER,
-					allowNull: true
-				},
-				injecting_wells: {
-					type: Sequelize.INTEGER,
-					allowNull: true
-				},
-				field_id: {
-					type: Sequelize.INTEGER,
-					allowNull: false,
-					references: {
-						model: 'oil_fields',
-						key: 'id'
-					}
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
-				}
-			}
-		});
-		
-		parameters.push({
-			table: 'fixed_uep_production',
-			fields: {
-				id: {
-					type: Sequelize.INTEGER,
-					primaryKey: true,
-					autoIncrement: true
-				},
-				name: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
-				code: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
-				basin: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
-				lat: {
-					type: Sequelize.DECIMAL,
-					allowNull: false
-				},
-				lng: {
-					type: Sequelize.DECIMAL,
-					allowNull: false
-				},
-				depth: {
-					type: Sequelize.FLOAT,
-					allowNull: false
-				},
-				operator_id: {
-					type: Sequelize.INTEGER,
-					allowNull: false,
-					references: {
-						model: 'companies',
-						key: 'id'
-					}
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
-				},
-			}
-		});
-		
-		parameters.push({
 			table: 'models_list',
 			fields: {
 				id: {
@@ -918,8 +800,6 @@ module.exports = {
 		    'news_models',
 		    'news',
 		    'models_list',
-		    'fixed_uep_production',
-		    'fpso_production',
 		    'oil_fields',
 		    'drilling_rigs_onshore',
 		    'drilling_rigs_offshore',     

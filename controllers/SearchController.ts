@@ -32,14 +32,6 @@ import winston = require('winston');
         fields: ['name']
     },
     {
-        model: 'FixedUEPProduction',
-        fields: ['name']
-    },
-    {
-        model: 'FPSOProduction',
-        fields: ['name']
-    },
-    {
         model: 'OilField',
         fields: ['name']
     },

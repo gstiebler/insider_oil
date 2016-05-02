@@ -536,8 +536,6 @@ allTablesMain: test => {
 	    'Company',
 	    'DrillingRigOffshore',
 	    'DrillingRigOnshore',
-	    'FixedUEPProduction',
-	    'FPSOProduction',
 	    'News',
 	    'OilField',
 	    'Person',
