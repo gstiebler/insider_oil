@@ -542,7 +542,8 @@ allTablesMain: test => {
 	    'Production',
 	    'Reserve',
 	    'Seismic',
-	    'Well'
+	    'Well',
+	    'ProductionUnit',
 	];
 	
 	for(var model of models) {
