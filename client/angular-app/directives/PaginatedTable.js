@@ -126,6 +126,9 @@ function($scope, server, ModelViewService, DateService) {
     $scope.filterChanged = filterChanged;
 
     function filterChanged(newFilter) {
+        if(JSON.stringify(newFilter) == JSON.stringify(filters))
+            return;
+        console.log(filters, newFilter);
         filters = newFilter;
         dataTable.draw();
     } 
