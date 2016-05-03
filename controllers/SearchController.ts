@@ -8,10 +8,6 @@ import winston = require('winston');
 
  const dataSources:any = [
     {
-        model: 'AmbientalLicense',
-        fields: ['license']
-    },
-    {
         model: 'Block',
         fields: ['name', 'name_contract']
     },
