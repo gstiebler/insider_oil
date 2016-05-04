@@ -73,16 +73,6 @@ angular.module('InsiderOilApp').controller('ModelViewController',
         server.getTable(modelName, {}, showModel, showError.show );
     }
     
-    
-    function uploadFiles(file, errFiles) {
-        $scope.f = file;
-        $scope.errFile = errFiles && errFiles[0];
-        if(!file)
-            return;
-            
-        ModelViewService.uploadFile(file, modelName, onFileUploaded);
-    }
-    
     function str2ab(str) {
     	  var buf = new ArrayBuffer(str.length);
     	  var bufView = new Uint8Array(buf);
@@ -112,12 +102,10 @@ angular.module('InsiderOilApp').controller('ModelViewController',
         }
     }
     
-    
     $scope.createItem = modelOperations.createItem;
     $scope.editRecord = editRecord;
     $scope.deleteRecord = deleteRecord;
     $scope.showMap = showMap;
-    $scope.uploadFiles = uploadFiles;
     $scope.getExcelFile = getExcelFile;
     $scope.importFromURL = importFromURL;
 }]);

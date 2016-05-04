@@ -17,5 +17,6 @@ angular.module('InsiderOilApp', [
     'ShowQueryDataDirective',
     'ManyToManyDirective',
     'PaginatedTableDirective',
-    'PaginatedTableHeaderDirective'
+    'PaginatedTableHeaderDirective',
+    'UploadExcelFileDirective',
 ]);

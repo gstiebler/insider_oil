@@ -23,6 +23,7 @@ exports.uglifyAngularJsFiles = function(env) {
         'directives/ManyToManyDirective.js',
         'directives/PaginatedTable.js',
         'directives/PaginatedTableHeaderDirective.js',
+        'directives/UploadExcelFileDirective.js',
         'controllers/MainCtrl.js',
         'controllers/ModelViewCtrl.js',
         'controllers/CreateItemCtrl.js',

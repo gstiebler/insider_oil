@@ -6,17 +6,6 @@
 <button class="btn btn-large btn-success" ng-click="showMap()" ng-show="viewParams.hasMap">Mapa</button>
 <br><br><br>
  <h4>Enviar arquivo Excel</h4>
-  <input id="uploadExcelButton" class="btn btn-large btn-success" type="file" ngf-select="uploadFiles($file, $invalidFiles)"
-          ngf-pattern=".xls,.xlsx" ngf-max-height="1000" ngf-max-size="10MB">
-      Escolha o arquivo</button>
-  <br><br>
-  File:
-  <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
-      <span class="progress" ng-show="f.progress >= 0">
-          <div style="width:{{f.progress}}%"  
-               ng-bind="f.progress + '%'"></div>
-      </span>
-  </div>
-<br>
+  <upload-excel-file model-name="dataSource" on-file-uploaded="onFileUploaded" ></upload-excel-file>
 <button ng-click="importFromURL()" >Importar Excel da URL</button><br><br>
 <button ng-click="getExcelFile()" >Baixar arquivo Excel</button>
