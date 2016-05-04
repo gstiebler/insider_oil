@@ -19,10 +19,16 @@ const OilField: BaseDataSourceParams = {
         },
         userShore: {
             label: "Terra/Mar"
-        }
+        },
+        shore: {
+            label: "Terra/Mar"
+        },
+        stage: {
+            label: "Estágio"
+        },
     },
     labelField: "name",
-    gridFields: ['name', 'basin_name', 'state', 'concessionaries', 'userShore'],
+    gridFields: ['name', 'basin_name', 'state', 'concessionaries', 'shore', 'stage'],
     tableLabel: "Campos",
     hasMap: false
 };

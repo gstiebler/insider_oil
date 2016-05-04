@@ -295,6 +295,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         DrillingRigOnshore: 'Sondas onshore',
         Company: 'Empresas',
         Person: 'Pessoas',
+        OilField: 'Campos',
         //OilFieldDeveloping: 'Campos em desenvolvimento',
         //OilFieldProduction: 'Campos em produção',
         Seismic: 'Sísmica',

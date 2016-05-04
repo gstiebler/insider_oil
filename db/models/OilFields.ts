@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.ENUM('production', 'development'),
           allowNull: false
         },
-        userShore: {
+        /*userShore: {
             type: DataTypes.VIRTUAL,
             get: function() {
                 const shore = this.get('shore');
@@ -44,7 +44,7 @@ module.exports = function(sequelize, DataTypes) {
                 const shoreLower = val.toLowerCase();
                 this.shore = convertShore(shoreLower);
             }
-        }
+        }*/
     }, 
     {
         underscored: true,
