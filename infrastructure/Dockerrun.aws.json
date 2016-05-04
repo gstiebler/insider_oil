@@ -1,0 +1,17 @@
+{
+ "AWSEBDockerrunVersion": "1",
+ "Authentication": {
+   "Bucket": "elasticbeanstalk-sa-east-1-720923920380",
+   "Key": ".dockercfg"
+ },
+ "Image": {
+    "Name": "gstiebler/insider_oil",
+    "Update": "true"
+  },
+ "Ports": [
+   {
+     "ContainerPort": "80"
+   }
+ ],
+ "Logging": "/var/log"
+}
