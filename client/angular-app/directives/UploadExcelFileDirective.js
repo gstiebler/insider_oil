@@ -6,7 +6,7 @@ Directive to upload Excel File
 
 var app = angular.module('UploadExcelFileDirective', []);
 
-function uploadExcelFileController($scope, ModelOperations) {
+function uploadExcelFileController($scope, ModelViewService) {
     
     function uploadFiles(file, errFiles) {
         $scope.f = file;
@@ -27,7 +27,7 @@ app.directive('uploadExcelFile', function() {
             modelName: '=modelName',
             onFileUploaded: '=onFileUploaded'
         },
-        controller: ['$scope','ModelOperations', uploadExcelFileController],
+        controller: ['$scope','ModelViewService', uploadExcelFileController],
         templateUrl: 'app/directives/templates/upload_excel_file.html'
     };
 });

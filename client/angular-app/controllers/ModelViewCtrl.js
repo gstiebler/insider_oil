@@ -108,4 +108,5 @@ angular.module('InsiderOilApp').controller('ModelViewController',
     $scope.showMap = showMap;
     $scope.getExcelFile = getExcelFile;
     $scope.importFromURL = importFromURL;
+    $scope.onFileUploaded = onFileUploaded;
 }]);
