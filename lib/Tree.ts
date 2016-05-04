@@ -68,6 +68,18 @@ var tree: ITreeNode = {
                         source: 'SemiSubmersibleProductionUnits'
                     }
                 },
+                {
+                    label: 'Campos em fase de desenvolvimento',
+                    child: {
+                        source: 'oilFieldsDevelopment'
+                    }
+                },
+                {
+                    label: 'Campos em fase de produção',
+                    child: {
+                        source: 'oilFielsdProduction'
+                    }
+                },
             ]
         },
         /*{
@@ -76,24 +88,6 @@ var tree: ITreeNode = {
                 {
                     label: 'Onshore',
                     children: [
-                        {
-                            label: 'Campos em fase de desenvolvimento',
-                            child: {
-                                source: 'OilFieldDeveloping',
-                                filters: {
-                                    shore: 'on'
-                                }
-                            }
-                        },
-                        {
-                            label: 'Campos em fase de produção',
-                            child: {
-                                source: 'OilFieldProduction',
-                                filters: {
-                                    shore: 'on'
-                                }
-                            }
-                        }
                     ]
                 },
                 {

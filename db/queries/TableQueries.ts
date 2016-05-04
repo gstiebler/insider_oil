@@ -81,6 +81,75 @@ const productionUnit:ITableQuery = {
 };
 
 
+const oilField:ITableQuery = {
+    queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        const options:QueryGenerator.IQueryOpts = {
+            table: {
+                name: 'oil_fields',
+                fields: [
+                    ['id', 'of_id'],
+                    ['name', 'of_name'],
+                    'state',
+                    'concessionaries'
+                ]
+            },
+            joinTables: [
+                {
+                    name: 'basins',
+                    fields: [
+                        ['id', 'b_id'],
+                        ['name', 'b_name'],
+                    ],
+                    joinField: 'oil_fields.basin_id'
+                },
+            ],
+            extraFields: [
+                ['"OilField"', 'model'],
+                ['"Basin"', 'b_model'],
+                ['if(shore = "on", "Terra", "Mar")', 'land_sea'],
+            ],
+            filters: queryParams.filters,
+            order: queryParams.order
+        };
+        
+        return QueryGenerator.queryGenerator(options);
+    },
+    fields: [
+        {
+            label: 'Nome',
+            ref: {
+                modelField: 'model',
+                idField: 'of_id',
+                valueField: 'of_name'
+            }
+        },
+        {
+            label: 'Basin',
+            ref: {
+                modelField: 'b_model',
+                idField: 'b_id',
+                valueField: 'b_name'
+            }
+        },
+        {
+            label: 'Concessionárias',
+            fieldName: 'concessionaries',
+            type: 'VARCHAR'
+        },
+        {
+            label: 'Estado',
+            fieldName: 'state',
+            type: 'VARCHAR'
+        },
+        {
+            label: 'Terra/Mar',
+            fieldName: 'land_sea',
+            type: 'VARCHAR'
+        },
+    ]
+};
+
+
 export const queries:ITableQueries = {
     /** Basins */
     Basins: {
@@ -628,6 +697,32 @@ export const queries:ITableQueries = {
             return productionUnit.queryStrFn(queryParams);
         },
         fields: productionUnit.fields
+    },
+    
+    oilFielsdProduction: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+            queryParams.filters.push(
+                {
+                    field: 'stage',
+                    equal: '"production"'
+                }
+            );
+            return oilField.queryStrFn(queryParams);
+        },
+        fields: oilField.fields
+    },
+    
+    oilFieldsDevelopment: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+            queryParams.filters.push(
+                {
+                    field: 'stage',
+                    equal: '"development"'
+                }
+            );
+            return oilField.queryStrFn(queryParams);
+        },
+        fields: oilField.fields
     },
 };
 
