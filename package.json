@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "prestart": "chmod +x prestart.sh && ./prestart.sh"
+    "prestart": "./prestart.sh"
   },
   "dependencies": {
     "bluebird": "^3.3.4",
