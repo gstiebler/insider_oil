@@ -15,6 +15,7 @@ import ComboQueries = require('../db/queries/ComboQueries');
 import QueriesById = require('../db/queries/QueriesById');
 import TableQueries = require('../db/queries/TableQueries');
 import QueryGenerator = require('../db/queries/QueryGenerator');
+import { getProductionData } from '../db/queries/ProductionQueries'
  
 function getFieldTypes(fields) {
     const types = {};
@@ -279,6 +280,19 @@ export function getTableQueryData(req: express.Request, res: express.Response):v
             fields: fields,
             records: results[0],
             count: results[1][0].count
+        };
+        res.json(result);
+    }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
+})}
+ 
+
+export function getProduction(req: express.Request, res: express.Response):void {Sync(function(){
+    const queryParams = req.query.queryParams ? JSON.parse(req.query.queryParams) : {};
+    const queryName:string = req.query.queryName;
+
+    getProductionData(queryName, queryParams).then( (results) => {
+        const result = {
+            records: results
         };
         res.json(result);
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));

@@ -1,12 +1,16 @@
 var await = require('../../lib/await');
 import db = require('../../db/models');
-
+import winston = require('winston');
 
 export function idByValue(modelName: string, fieldName: string, value): number {
     const model = db.models[modelName];
     const filter = {};
     filter[fieldName] = value;
     const record = await( model.findOne( { where: filter } ) );
+    if(!record) {
+        winston.error('Record not found: ', modelName, fieldName, value);
+        return -1;
+    }
     return record.id;
 }
 
