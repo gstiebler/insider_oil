@@ -21,4 +21,5 @@ export function createFixtures():void {
     await( require('./ComercialDeclarationFixture')(db) );
     await( require('./HydrocarbonEvidence')(db) );
     await( require('./ProductionUnit')(db) );
+    await( require('./ProductionWell')(db) );
 };
