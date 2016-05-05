@@ -490,7 +490,7 @@ module.exports = {
 				},
 				company_id: {
 					type: Sequelize.INTEGER,
-					allowNull: false,
+					allowNull: true,
 					references: {
 						model: 'companies',
 						key: 'id'
