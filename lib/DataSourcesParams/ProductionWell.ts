@@ -1,12 +1,12 @@
 import BaseDataSourceParams = require('./BaseDataSourceParams');
 
-const HydrocarbonEvidence: BaseDataSourceParams = {
+const ProductionWell: BaseDataSourceParams = {
     fields: {
         name: {
-            label: 'Fluidos'
+            label: 'Nome'
         },
         operator_name: {
-            label: "Lâmina d'água"
+            label: "Nome operador"
         },
         oil_field_id: {
             label: 'Campo'
@@ -27,4 +27,4 @@ const HydrocarbonEvidence: BaseDataSourceParams = {
     hasMap: false
 }
 
-export = HydrocarbonEvidence;
+export = ProductionWell;
