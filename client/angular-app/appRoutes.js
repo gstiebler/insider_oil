@@ -45,11 +45,6 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'MapController'	
 		})
 
-		.when('/app/chart', {
-			templateUrl: 'app/templates/chart.html',
-			controller: 'ChartController'	
-		})
-
 		.when('/app/change_password', {
 			templateUrl: 'app/templates/change_password.html',
 			controller: 'ChangePasswordController'	

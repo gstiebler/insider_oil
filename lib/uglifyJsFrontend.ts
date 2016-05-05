@@ -33,7 +33,6 @@ exports.uglifyAngularJsFiles = function(env) {
         'controllers/AdminSourcesListCtrl.js',
         'controllers/TreeCtrl.js',
         'controllers/MapController.js',
-        'controllers/ChartController.js',
         'controllers/ChangePasswordCtrl.js'
     ];
     

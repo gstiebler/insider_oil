@@ -313,7 +313,7 @@ uploadExcelFiles: function(test) {
     test.done();
 },
 
-mapAndChart: function(test) {
+map: function(test) {
     var server = InitializeServer(port);
     
     var driver = new webdriver.Builder()
@@ -325,10 +325,6 @@ mapAndChart: function(test) {
     driver.get('http://localhost:' + port + '/app/map?model=Well');
     test.equal('Insider Oil', await( driver.getTitle() ));
     test.ok( await( driver.isElementPresent(By.xpath("id('map')/div/div/div"))) );
-    
-    driver.get('http://localhost:' + port + '/app/chart');
-    test.equal('Insider Oil', await( driver.getTitle() ));
-    test.ok( await( driver.isElementPresent(By.xpath("id('curve_chart')/div/div/div"))) );
     
     server.close();
     driver.quit();
