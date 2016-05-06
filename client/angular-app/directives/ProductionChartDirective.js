@@ -15,26 +15,28 @@ function queryParamsChanged(qParams) {
 
 function showChart(records) {
      var data = records.records;
-     console.log(data); 
        
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
+        
+    var parseDate = d3.time.format("%m/%Y").parse;
 
-    var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width], .1);
+    var x = d3.time.scale()
+        .range([0, width]);
 
     var y = d3.scale.linear()
         .range([height, 0]);
 
     var xAxis = d3.svg.axis()
         .scale(x)
-        .orient("bottom");
+        .orient("bottom")
+        .ticks(d3.time.year);
 
     var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
-        .ticks(10, "%");
+        .ticks(10);
 
     var svg = d3.select("#d3Container").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -42,7 +44,12 @@ function showChart(records) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    x.domain(data.map(function(d) { return d.date_prod; }));
+    data.forEach(function(d) {
+        d.date = parseDate(d.date_prod);
+    });
+
+     console.log(data); 
+    x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain([0, d3.max(data, function(d) { return d.oil_production; })]);
 
     svg.append("g")
@@ -64,8 +71,8 @@ function showChart(records) {
         .data(data)
     .enter().append("rect")
         .attr("class", "bar")
-        .attr("x", function(d) { return x(d.date_prod); })
-        .attr("width", x.rangeBand())
+        .attr("x", function(d) { return x(d.date); })
+        .attr("width", 20)
         .attr("y", function(d) { return y(d.oil_production); })
         .attr("height", function(d) { return height - y(d.oil_production); });
 }
