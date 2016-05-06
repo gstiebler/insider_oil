@@ -3,7 +3,7 @@
 var app = angular.module('RecordViewDirective', []);
 
 var _DateService;
-var _$scope;
+var _$rv_scope;
 
 function formatByType(field) {
     if(field.type == 'DATE') {
@@ -36,7 +36,7 @@ function onRecordDataChange(recordData) {
             fieldValues.push(recordData[i]);   
         }
     }
-    _$scope.record = fieldValues;
+    _$rv_scope.record = fieldValues;
 }
 
 app.directive('recordView', function() {
@@ -47,7 +47,7 @@ app.directive('recordView', function() {
         },
         controller:['$scope', 'DateService', function($scope, DateService) {
             _DateService = DateService;
-            _$scope = $scope;
+            _$rv_scope = $scope;
             $scope.$watch('recordData', onRecordDataChange);
         }],
         templateUrl: 'app/directives/templates/record_view.html'
