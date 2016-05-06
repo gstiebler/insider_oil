@@ -65,14 +65,14 @@ function showChart(records) {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Produção");
+        .text("Produção (bbl/dia)");
 
     svg.selectAll(".bar")
         .data(data)
     .enter().append("rect")
         .attr("class", "bar")
         .attr("x", function(d) { return x(d.date); })
-        .attr("width", 20)
+        .attr("width", 5)
         .attr("y", function(d) { return y(d.oil_production); })
         .attr("height", function(d) { return height - y(d.oil_production); });
 }
