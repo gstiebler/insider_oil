@@ -20,4 +20,5 @@ angular.module('InsiderOilApp', [
     'PaginatedTableHeaderDirective',
     'UploadExcelFileDirective',
     'RecordViewDirective',
+    'ObjectNewsDirective',
 ]);

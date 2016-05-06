@@ -7,6 +7,7 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
     const id = $routeParams.id;
     $scope.id = id;
     $scope.source = source;
+    $scope.onError = showError.show;
     
     $scope.relatedPersons = {
         queryName: 'PersonsByProject',
@@ -16,21 +17,6 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
             dataSource: source
         }
     }
-    
-    const relateNewsQuery = {
-        queryName: 'NewsByObject',
-        title: 'Notícias',
-        filters: {
-            modelName: source,
-            id: id
-        }
-    }
-    server.getQueryData(relateNewsQuery, onNews, showError.show);
-    
-    function onNews(newsData) {
-        $scope.newsData = newsData.records;
-    }
-    
     
     // show record values
     function showValues(viewData) {
