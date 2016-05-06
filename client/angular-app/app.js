@@ -21,4 +21,5 @@ angular.module('InsiderOilApp', [
     'UploadExcelFileDirective',
     'RecordViewDirective',
     'ObjectNewsDirective',
+    'ProductionChartDirective',
 ]);

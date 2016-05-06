@@ -8,7 +8,8 @@ angular.module('InsiderOilApp').controller('OilFieldController',
     $scope.id = id;
     $scope.source = source;
     $scope.onError = showError.show;
-    
+    $scope.prodQueryParams = { oilField: id };
+        
     $scope.relatedPersons = {
         queryName: 'PersonsByProject',
         title: 'Pessoas',
