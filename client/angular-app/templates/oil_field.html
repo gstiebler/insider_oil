@@ -1,0 +1,9 @@
+<record-view record-data="recordData"></record-view>
+<hr>
+<show-query-data ng-model="relatedPersons"></show-query-data>
+<hr>
+<div ng-repeat="referencedObject in referencedObjects">
+    <show-query-data ng-model="referencedObject" ng-id="id"></show-query-data>
+    <hr>
+</div>
+<object-news model-name="source" obj-id="id" on-error="onError"></object-news>

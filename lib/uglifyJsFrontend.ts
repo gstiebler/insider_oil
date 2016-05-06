@@ -35,7 +35,8 @@ exports.uglifyAngularJsFiles = function(env) {
         'controllers/AdminSourcesListCtrl.js',
         'controllers/TreeCtrl.js',
         'controllers/MapController.js',
-        'controllers/ChangePasswordCtrl.js'
+        'controllers/ChangePasswordCtrl.js',
+        'controllers/OilFieldCtrl.js',
     ];
     
     const angularAppPath = __dirname + '/../../client/angular-app/';

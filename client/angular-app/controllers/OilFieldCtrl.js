@@ -1,14 +1,10 @@
 'use strict';
-angular.module('InsiderOilApp').controller('ViewRecordController', 
-                ['$scope', 'server', '$routeParams', 'showError', '$location',
-        function($scope, server, $routeParams, showError, $location) {
+angular.module('InsiderOilApp').controller('OilFieldController', 
+                ['$scope', 'server', '$routeParams', 'showError', 
+        function($scope, server, $routeParams, showError) {
     
-    const source = $routeParams.source;
+    const source = 'OilField';
     const id = $routeParams.id;
-    if(source == 'OilField') {
-        $location.path("/app/oil_field").search({ id: id });
-    }
-    
     $scope.id = id;
     $scope.source = source;
     $scope.onError = showError.show;
