@@ -1,7 +1,7 @@
 'use strict';
 angular.module('InsiderOilApp').controller('ViewRecordController', 
-                ['$scope', 'server', '$routeParams', 'showError', 'Flash', 'DateService',
-        function($scope, server, $routeParams, showError, Flash, DateService) {
+                ['$scope', 'server', '$routeParams', 'showError', 
+        function($scope, server, $routeParams, showError) {
     
     const source = $routeParams.source;
     const id = $routeParams.id;
