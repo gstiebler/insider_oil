@@ -32,8 +32,10 @@ module.exports = function(app: express.Express) {
     app.delete('/delete_item/', session.authorize, dbServerController.deleteItem);
     app.get('/combo_values/', session.authorize,   dbServerController.getComboValues);
     app.post('/db_server/upload_file',             dbServerController.uploadFile);
-    app.get('/get_query_data', session.authorize, dbServerController.getQueryData);
-    app.get('/get_table_data', session.authorize, dbServerController.getTableQueryData);
+    app.get('/get_query_data', session.authorize,  dbServerController.getQueryData);
+    app.get('/get_table_data', session.authorize,  dbServerController.getTableQueryData);
+    app.get('/production', session.authorize,      dbServerController.getProduction);
+    
     app.get('/search', session.authorize,          searchController.main);
     
     app.get('/download_excel', session.authorize,  ExcelController.downloadExcel);

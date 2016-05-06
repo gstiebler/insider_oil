@@ -10,8 +10,11 @@ function queryParamsChanged(qParams) {
         queryName: _$pc_scope.queryName,
         queryParams: qParams
      }
-     console.log('prod chart', query);
-    //_server.getProduction(query, onData, _$pc_scope.onError);
+    _server.getProduction(query, onData, _$pc_scope.onError);
+    
+    function onData(data) {
+     console.log('prod chart', data);  
+    }
 }
 
 function pcController($scope, server) {
@@ -91,7 +94,7 @@ app.directive('productionChart', function() {
     return {
         restrict: 'E',
         scope: {
-            queryName: '=queryName',
+            queryName: '@queryName',
             qParams: '=qParams',
             onError: '=onError',
         },
