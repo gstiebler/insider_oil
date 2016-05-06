@@ -10,18 +10,13 @@ function queryParamsChanged(qParams) {
         queryName: _$pc_scope.queryName,
         queryParams: qParams
      }
-    _server.getProduction(query, onData, _$pc_scope.onError);
-    
-    function onData(data) {
-     console.log('prod chart', data);  
-    }
+    _server.getProduction(query, showChart, _$pc_scope.onError);
 }
 
-function pcController($scope, server) {
-    _server = server;
-    _$pc_scope = $scope;
-    $scope.$watch('qParams', queryParamsChanged);
-    
+function showChart(records) {
+     var data = records.records;
+     console.log(data); 
+       
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -47,23 +42,8 @@ function pcController($scope, server) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var data = [
-    {
-        letter: 'a',
-        frequency: 30
-    },
-    {
-        letter: 'b',
-        frequency: 50
-    },
-    {
-        letter: 'c',
-        frequency: 30
-    },
-    ];
-
-    x.domain(data.map(function(d) { return d.letter; }));
-    y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+    x.domain(data.map(function(d) { return d.date_prod; }));
+    y.domain([0, d3.max(data, function(d) { return d.oil_production; })]);
 
     svg.append("g")
         .attr("class", "x axis")
@@ -78,16 +58,22 @@ function pcController($scope, server) {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Frequency");
+        .text("Produção");
 
     svg.selectAll(".bar")
         .data(data)
     .enter().append("rect")
         .attr("class", "bar")
-        .attr("x", function(d) { return x(d.letter); })
+        .attr("x", function(d) { return x(d.date_prod); })
         .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.frequency); })
-        .attr("height", function(d) { return height - y(d.frequency); });
+        .attr("y", function(d) { return y(d.oil_production); })
+        .attr("height", function(d) { return height - y(d.oil_production); });
+}
+
+function pcController($scope, server) {
+    _server = server;
+    _$pc_scope = $scope;
+    $scope.$watch('qParams', queryParamsChanged);
 }
 
 app.directive('productionChart', function() {
