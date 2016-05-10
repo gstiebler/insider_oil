@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      operator_name: {
+      name_operator: {
         type: Sequelize.STRING,
         allowNull: true
       },

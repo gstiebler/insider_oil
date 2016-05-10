@@ -7,7 +7,7 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
           type: DataTypes.STRING,
           allowNull: false
         }, 
-        operator_name: {
+        name_operator: {
           type: DataTypes.STRING,
           allowNull: true
         },
