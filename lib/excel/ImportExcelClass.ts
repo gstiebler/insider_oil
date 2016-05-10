@@ -134,9 +134,17 @@ export class ImportExcel {
             }
         }    
     }
+    
+    getWorkbook(excelBuf) {
+        return XLSX.read(excelBuf, {type:"buffer", cellDates: true});
+    }
+    
+    getRange(worksheet) {
+        return XLSX.utils.decode_range(worksheet['!ref']);
+    }
 
     execute(excelBuf, modelName: string, onOk: IOkFunc, onError) {
-        const workbook = XLSX.read(excelBuf, {type:"buffer", cellDates: true});
+        const workbook = this.getWorkbook(excelBuf);
         const first_sheet_name = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[first_sheet_name];
         
@@ -147,7 +155,7 @@ export class ImportExcel {
         const keyFieldIndexInExcel = header.indexOf( excelParams.keyField );
         const modelKeyField = excelParams.fields[ excelParams.keyField ];
         const model = db.models[modelName];
-        const range = XLSX.utils.decode_range(worksheet['!ref']);
+        const range = this.getRange(worksheet);
         let insertedRecords = 0;
         let updatedRecords = 0;
         const _this = this;

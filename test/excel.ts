@@ -195,6 +195,16 @@ importPersons: test => {
     }
 },
 
+
+wellProduction: test => {
+    var excelBuf = fs.readFileSync('./test/data/production.xls');
+    importExcel(excelBuf, 'Production', onImportDone, onError);
+    
+    function onImportDone(status, invalidRecordsStatus) {
+        console.log(status);
+    }
+},
+
 /*
 export: test => {
 	const excelBuf = ExportExcel.main('Well');
