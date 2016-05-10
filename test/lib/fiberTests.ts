@@ -10,8 +10,6 @@ var Sync = require('sync');
 var await = require('../../lib/await');
 var umzug = require('../../lib/InitUmzug');
 
-winston.level = 'debug';
-
 var lastFunctionModfiesDB = true;
 
 process.on('uncaughtException', function (err) {

@@ -17,8 +17,9 @@ umzug.up();
 require('./lib/uglifyJsFrontend').uglifyAngularJsFiles(app.get('env'));
 
 // Configure Winston log lib
-winston.level = 'debug';
+winston.level = 'error';
 if (app.get('env') == 'development') {
+  winston.level = 'debug';
 	winston.add(winston.transports.File, { filename: 'log/development.log' });
 }
 

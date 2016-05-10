@@ -16,8 +16,11 @@ config.production.host = process.env.DB_PROD_HOST;
 config = config[env];
 
 if (env == 'test') {
-	winston.add(winston.transports.File, { filename: 'log/test.log' });
-	winston.remove(winston.transports.Console);
+    winston.level = 'error';
+	winston.add(winston.transports.File, { filename: 'log/test.log', level: 'info' });
+  if(!process.env.SHOW_WINSTON_CONSOLE) {
+    winston.remove(winston.transports.Console);
+  }
 }
 	
 winston.info('environment: ', env);
