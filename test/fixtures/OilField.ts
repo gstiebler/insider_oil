@@ -49,6 +49,62 @@ module.exports = function(db) {
             concessionaries: 'Petrobras¹ (100)',
             shore: 'off',
             stage: 'development'
-        }
+        },
+        {
+            name: 'Marlim',
+            basin_id: utils.idByName('Basin', 'Campos'),
+            state: 'Rio de Janeiro',
+            concessionaries: 'Petrobras¹ (100)',
+            shore: 'off',
+            stage: 'production'
+        },
+        {
+            name: 'Albacora',
+            basin_id: utils.idByName('Basin', 'Campos'),
+            state: 'Rio de Janeiro',
+            concessionaries: 'Petrobras¹ (100)',
+            shore: 'off',
+            stage: 'production'
+        },
+        {
+            name: 'Congro',
+            basin_id: utils.idByName('Basin', 'Campos'),
+            state: 'Rio de Janeiro',
+            concessionaries: 'Petrobras¹ (100)',
+            shore: 'off',
+            stage: 'production'
+        },
+        {
+            name: 'Vermelho',
+            basin_id: utils.idByName('Basin', 'Campos'),
+            state: 'Rio de Janeiro',
+            concessionaries: 'Petrobras¹ (100)',
+            shore: 'off',
+            stage: 'production'
+        },
+        {
+            name: 'Marimbá',
+            basin_id: utils.idByName('Basin', 'Campos'),
+            state: 'Rio de Janeiro',
+            concessionaries: 'Petrobras¹ (100)',
+            shore: 'off',
+            stage: 'production'
+        },
+        {
+            name: 'Pampo',
+            basin_id: utils.idByName('Basin', 'Campos'),
+            state: 'Rio de Janeiro',
+            concessionaries: 'Petrobras¹ (100)',
+            shore: 'off',
+            stage: 'production'
+        },
+        {
+            name: 'Roncador',
+            basin_id: utils.idByName('Basin', 'Campos'),
+            state: 'Rio de Janeiro',
+            concessionaries: 'Petrobras¹ (100)',
+            shore: 'off',
+            stage: 'production'
+        },
     ]);
 }
