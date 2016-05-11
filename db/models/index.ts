@@ -18,7 +18,7 @@ config = config[env];
 if (env == 'test') {
     winston.level = 'error';
 	winston.add(winston.transports.File, { filename: 'log/test.log', level: 'info' });
-  if(!process.env.SHOW_WINSTON_CONSOLE) {
+  if(process.env.HIDE_WINSTON_ERRORS) {
     winston.remove(winston.transports.Console);
   }
 }
