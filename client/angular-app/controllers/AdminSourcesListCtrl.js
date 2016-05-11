@@ -9,4 +9,8 @@ angular.module('InsiderOilApp').controller('AdminSourcesListController',
     
     server.sourceList( onData, showError.show );
     
+    $scope.onProductionFileUploaded = function (status) {
+        Flash.create('success', status );
+    }
+    
 }]);

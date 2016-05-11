@@ -4,3 +4,5 @@
 <p ng-repeat="(key, value) in sourcesList" >
     <a href="/app/model_view?model={{key}}">{{value}}</a>
 </p>
+Importar Excel de produção
+<upload-excel-file model-name="'Production'" on-file-uploaded="onProductionFileUploaded" ></upload-excel-file>
