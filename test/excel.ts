@@ -201,7 +201,26 @@ wellProduction: test => {
     importExcel(excelBuf, 'Production', onImportDone, onError);
     
     function onImportDone(status, invalidRecordsStatus) {
-        console.log(status);
+        const order = ['period_year', 'period_month', 'production_well.name'];
+        var rows = await( dbUtils.findAllCustom(db.models.Production, { order: order }));
+        test.equal( 10, rows.length );  
+        var expectedStatus = "Registros criados: 2";
+        expectedStatus += "\nRegistros atualizados: 1";
+        expectedStatus += "\nRegistros inválidos: 14";
+        test.equal( expectedStatus, status );
+        
+        {
+            const record = rows[3];
+            test.equal('7AB 0047D RJS', record.production_well.name);
+            test.equal(329.222, record.oil_production);
+        }  
+        {
+            const record = rows[5];
+            test.equal('7MRL 0062D RJS', record.production_well.name);
+            test.equal(2325.89, record.oil_production);
+        }   
+        
+        test.done();
     }
 },
 

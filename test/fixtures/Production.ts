@@ -79,5 +79,16 @@ module.exports = function(db) {
             gas_royaties_volume: 0.0,
             water_production: 0.004,
         },
+        {
+            production_well_id: utils.idByName('ProductionWell', '7AB 0047D RJS'),
+            period_year: 2015,
+            period_month: 4,
+            oil_production: 0.0,
+            oil_condensed_production: 1.0,
+            gas_associated_production: 1.0,
+            gas_non_associated_production: 0.0,
+            gas_royaties_volume: 0.0,
+            water_production: 0.004,
+        },
     ]);
 }

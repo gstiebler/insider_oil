@@ -90,11 +90,12 @@ export class Production extends ImportExcel {
                     };
                     const wellRecord = await( db.models.ProductionWell.findOne({ where: wellSearchParams }) );
                     if(!wellRecord) {
-                        throw "Poço não encontrado " + rowObj.name;
+                        invalidStatus.push( "Poço não encontrado " + rowObj.name );
+                        continue;
                     }
                     
                     var searchParams = {
-                        production_well_id: rowObj.production_well_id,
+                        production_well_id: wellRecord.id,
                         period_year: rowObj.period_year,
                         period_month: rowObj.period_month
                     };
