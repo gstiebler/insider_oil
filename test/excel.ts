@@ -9,6 +9,7 @@ var XLSX = require('xlsx');
 import dbUtils = require('../lib/dbUtils');
 var await = require('../lib/await');
 import nodeunit = require('nodeunit');
+import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 
 function onError(error) {
     console.error(error.stack);
@@ -27,7 +28,7 @@ importDrillingRigOffshore: function(test: nodeunit.Test) {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.DrillingRigOffshore.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
-    const result = await(importExcel(excelBuf, 'DrillingRigOffshore'));
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'DrillingRigOffshore'));
     const invalidRecordsStatus = result.invalidRecordsStatus;    
     const status = result.status;    
     
@@ -67,7 +68,7 @@ importBlocks: test => {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.Block.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/blocks.xlsx');
-    const result = await(importExcel(excelBuf, 'Block'));
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Block'));
     const invalidRecordsStatus = result.invalidRecordsStatus;    
     const status = result.status;    
     
@@ -121,7 +122,7 @@ importPersons: test => {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.Person.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/persons.xlsx');
-    const result = await(importExcel(excelBuf, 'Person'));
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Person'));
     const invalidRecordsStatus = result.invalidRecordsStatus;    
     const status = result.status;    
     
@@ -155,7 +156,7 @@ importPersons: test => {
 
 wellProduction: test => {
     var excelBuf = fs.readFileSync('./test/data/production.xls');
-    const result = await(importExcel(excelBuf, 'Production'));
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Production'));
     const invalidRecordsStatus = result.invalidRecordsStatus;    
     const status = result.status;    
     

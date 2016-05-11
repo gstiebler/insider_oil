@@ -1,6 +1,6 @@
 "use strict";
 
-import { ImportExcel } from './ImportExcelClass';
+import { ImportExcel, IExcelUploadResponse } from './ImportExcelClass';
 import { IOkFunc } from './ImportExcelClass';
 import db = require( '../../db/models' );
 import winston = require('winston');
@@ -56,7 +56,7 @@ export class Production extends ImportExcel {
         }  
     }
     
-    execute(excelBuf, modelName: string, onOk: IOkFunc, onError) {
+    execute(excelBuf, modelName: string):Promise<IExcelUploadResponse> {
         const workbook = this.getWorkbook(excelBuf);
         const first_sheet_name = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[first_sheet_name];
@@ -71,7 +71,7 @@ export class Production extends ImportExcel {
         let updatedRecords = 0;
         const _this = this;
         
-        Sync( function() {
+        const promise = new Promise<IExcelUploadResponse>( function(resolve, reject) { Sync( function() {
             try{
                 var status = "";
                 var invalidStatus: string[] = [];
@@ -123,12 +123,14 @@ export class Production extends ImportExcel {
                 status += "Registros criados: " + insertedRecords;
                 status += "\nRegistros atualizados: " + updatedRecords;
                 status += "\nRegistros inválidos: " + invalidStatus.length;
-                onOk(status, invalidStatus);
+                resolve( { status: status, invalidRecordsStatus: invalidStatus });
             } catch(err) {
                 winston.error('Erro ao importar: ', row, err);
-                onError(err);
+                reject(err);
             }
+        }); 
         });
+        return promise;
     } 
     
     headerToIndexes(header:string[]) {

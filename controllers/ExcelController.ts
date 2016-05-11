@@ -9,6 +9,7 @@ import ExportExcel = require('../lib/excel/ExportExcel');
 import importExcel = require('../lib/excel/importExcel');
 import dsParams = require('../lib/DataSourcesParams');
 import express = require("express");
+import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 
 
 export function downloadExcel(req: express.Request, res: express.Response, next) { Sync(function() {
@@ -39,7 +40,7 @@ export function importExcelFromURL(req: express.Request, res: express.Response) 
         importExcel(body, dataSourceName).then(onOk).catch(errorFunc);
     })
     
-    function onOk(result) {
+    function onOk(result:IExcelUploadResponse) {
         res.json( { status: result.status, recordsStatus: result.invalidRecordsStatus } );
     }
 }

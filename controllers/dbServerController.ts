@@ -16,6 +16,7 @@ import QueriesById = require('../db/queries/QueriesById');
 import TableQueries = require('../db/queries/TableQueries');
 import QueryGenerator = require('../db/queries/QueryGenerator');
 import { getProductionData } from '../db/queries/ProductionQueries'
+import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
  
 function getFieldTypes(fields) {
     const types = {};
@@ -68,7 +69,7 @@ export function uploadFile(req: express.Request, res: express.Response, next) {
     	winston.debug( "File name: " + fileName );
         var model = req.query.table;
         
-        function onOk(result) {
+        function onOk(result:IExcelUploadResponse) {
             res.json( { status: result.status, recordsStatus: result.invalidRecordsStatus } );
         }
         

@@ -11,6 +11,11 @@ var await = require('../await');
 export interface IOkFunc {
     (status: string, recordsStatus: string[]): void;
 }
+  
+export interface IExcelUploadResponse {
+    status: string;
+    invalidRecordsStatus: string[];  
+}
 
 export class ImportExcel {
     
@@ -143,7 +148,7 @@ export class ImportExcel {
         return XLSX.utils.decode_range(worksheet['!ref']);
     }
 
-    execute(excelBuf, modelName: string, onOk: IOkFunc, onError) {
+    execute(excelBuf, modelName: string):Promise<IExcelUploadResponse> {
         const workbook = this.getWorkbook(excelBuf);
         const first_sheet_name = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[first_sheet_name];
@@ -160,7 +165,7 @@ export class ImportExcel {
         let updatedRecords = 0;
         const _this = this;
         
-        Sync( function() {
+        const promise = new Promise<IExcelUploadResponse>( function(resolve, reject) { Sync( function() {
             try{
                 var status = "";
                 var invalidStatus: string[] = [];
@@ -198,12 +203,14 @@ export class ImportExcel {
                 status += "Registros criados: " + insertedRecords;
                 status += "\nRegistros atualizados: " + updatedRecords;
                 status += "\nRegistros inválidos: " + invalidStatus.length;
-                onOk(status, invalidStatus);
+                resolve( { status: status, invalidRecordsStatus: invalidStatus });
             } catch(err) {
                 winston.error('Erro ao importar: ', row, err);
-                onError(err);
+                reject(err);
             }
+        }); 
         });
+        return promise;
     }
 
 }
