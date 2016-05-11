@@ -5,7 +5,7 @@ app.service('ModelOperations', ['$location', 'server',
                function($location, server) {
 
     function createDefaultModelOperations(modelName) {
-    	const modelOperations = {
+    	var modelOperations = {
     		editRecord: function(id) {
     	        $location.path("/app/edit_item").search({ modelName: modelName, id: id });
     		},
@@ -22,7 +22,7 @@ app.service('ModelOperations', ['$location', 'server',
     
     
     function createNewsOperations(modelName) {
-    	const modelOperations = createDefaultModelOperations(modelName);
+    	var modelOperations = createDefaultModelOperations(modelName);
         
     	modelOperations.createItem = function() {
 			$location.path("/app/create_news");
@@ -37,7 +37,7 @@ app.service('ModelOperations', ['$location', 'server',
     
     
     this.getModelOperations = function(modelName) {
-    	const customModels = {
+    	var customModels = {
     		'News': createNewsOperations
     	}
     	

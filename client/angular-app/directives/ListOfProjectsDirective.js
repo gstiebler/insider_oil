@@ -13,7 +13,7 @@ app.directive('listOfProjects', function() {
                 $scope.projects = [];
                 
             $scope.removeItem = function(item) {
-                const index = $scope.projects.indexOf(item);
+                var index = $scope.projects.indexOf(item);
                 if (index > -1) {
                     // remove the item from the array
                     $scope.projects.splice(index, 1);

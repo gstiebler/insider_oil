@@ -52,7 +52,7 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'DateSe
         file.upload.then(function (response) {
             $timeout(function () {
                 file.result = response.data;
-                const statusStr = formatExcelUploadResult(response.data);
+                var statusStr = formatExcelUploadResult(response.data);
                 doneCallback(statusStr);
             });
         }, function (response) {
@@ -69,10 +69,10 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'DateSe
     function getColumns(viewParams, types) {
         var columns = [];
         for( var i = 0; i < viewParams.gridFields.length; i++) {
-            const fieldName = viewParams.gridFields[i];
+            var fieldName = viewParams.gridFields[i];
             if(fieldName == 'id') continue;
-            const fieldLabel = viewParams.fields[fieldName].label;
-            const columnObj = { 
+            var fieldLabel = viewParams.fields[fieldName].label;
+            var columnObj = { 
                 title: fieldLabel,
                 data: fieldName
             };

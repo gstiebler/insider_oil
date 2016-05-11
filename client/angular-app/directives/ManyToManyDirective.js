@@ -33,8 +33,8 @@ app.directive('manyToMany', ['server', function(server) {
             }
             
             $scope.add = function() {
-                const selectedId = $scope.selectedId;
-                const newItem = {
+                var selectedId = $scope.selectedId;
+                var newItem = {
                     id: selectedId,
                     name: $scope.comboValuesMap[selectedId]
                 };

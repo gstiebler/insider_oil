@@ -6,7 +6,7 @@ var _server;
 var _$scope;
 
 function onObjIdChange(objId) {
-    const relateNewsQuery = {
+    var relateNewsQuery = {
         queryName: 'NewsByObject',
         title: 'Notícias',
         filters: {

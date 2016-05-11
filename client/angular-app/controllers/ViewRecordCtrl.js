@@ -3,8 +3,8 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
                 ['$scope', 'server', '$routeParams', 'showError', '$location',
         function($scope, server, $routeParams, showError, $location) {
     
-    const source = $routeParams.source;
-    const id = $routeParams.id;
+    var source = $routeParams.source;
+    var id = $routeParams.id;
     if(source == 'OilField') {
         $location.path("/app/oil_field").search({ id: id });
     }

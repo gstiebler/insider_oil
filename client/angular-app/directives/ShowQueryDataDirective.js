@@ -6,7 +6,7 @@ The source of the records is a custom query
 ******************/
 
 function controllerFunc($scope, server, DateService) {
-    const referencedObject = $scope.referencedObject;
+    var referencedObject = $scope.referencedObject;
     $scope.title = referencedObject.title;
     var filters = referencedObject.filters;
     if(!filters) {
@@ -14,30 +14,30 @@ function controllerFunc($scope, server, DateService) {
         filters.id = $scope.id;
     }
     
-    const options = { 
+    var options = { 
         filters: filters,
         queryName: referencedObject.queryName
     };
     server.getQueryData(options, onData, $scope.onError);
 
     function onData(data) {
-        const records = data.records;
-        const fields = data.fields;
+        var records = data.records;
+        var fields = data.fields;
         
-        const header = [];
+        var header = [];
         for(var i = 0; i < fields.length; i++) {
-            const field = fields[i];
+            var field = fields[i];
             header.push( field.label );
         }
         $scope.header = header;
         
-        const showRecords = [];
+        var showRecords = [];
         for(var i = 0; i < records.length; i++) {
-            const recordValues = [];
-            const record = records[i];
+            var recordValues = [];
+            var record = records[i];
             for(var j = 0; j < fields.length; j++) {
-                const item = {};
-                const field = fields[j];
+                var item = {};
+                var field = fields[j];
                 if(field.ref) {
                     item.model = record[field.ref.modelField];
                     item.id = record[field.ref.idField];

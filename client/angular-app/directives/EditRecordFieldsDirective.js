@@ -26,9 +26,9 @@ app.directive('recordFields', function() {
                     return "html_id_" + field.name;
                 }
                 
-                const hasValues = $scope.values && Object.keys($scope.values).length > 0;
+                var hasValues = $scope.values && Object.keys($scope.values).length > 0;
                 for( var i = 0; i < fields.length; i++ ) {
-                    const field = fields[i];
+                    var field = fields[i];
                     field.htmlId = getHtmlId(field);
                     field.hasRef = field.type == 'ref';
                     field.isDate = field.type == 'DATE';
@@ -41,16 +41,16 @@ app.directive('recordFields', function() {
                         }, $scope.onError );
                     }
                     if(field.isDate && hasValues) {
-                        const dateStr = $scope.values[field.name];
+                        var dateStr = $scope.values[field.name];
                         if(dateStr) {
-                            const date = new Date(dateStr);
+                            var date = new Date(dateStr);
                             // TODO use moment.js
                             date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 ); // correction for timezone
                             $scope.values[field.name] = date;
                         }
                     }
                     if(field.isPhoto && hasValues) {
-                        const fieldValues = $scope.values[field.name];
+                        var fieldValues = $scope.values[field.name];
                         if(fieldValues && fieldValues.data) {
                             $scope.values[field.name] = fieldValues.data;
                         }

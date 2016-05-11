@@ -19,7 +19,7 @@ app.service('server', ['$http', 'session',
      * @param {Function} onError Error callback
      */
     function getUserDetails(onData, onError) {
-        const params = { 
+        var params = { 
             token: session.getToken()
         };
         
@@ -37,7 +37,7 @@ app.service('server', ['$http', 'session',
      * @param {Function} errorCallback Error callback
      */
     function getTable( table, options, okCallback, errorCallback ) {
-        const params = { 
+        var params = { 
             table: table,
             filters: options.filters,
             fieldNames: options.fieldNames,
@@ -57,7 +57,7 @@ app.service('server', ['$http', 'session',
      * @param {Function} errorCallback Error callback
      */
     function getQueryData( options, okCallback, errorCallback ) {
-        const params = { 
+        var params = { 
             queryName: options.queryName,
             filters: options.filters,
             token: session.getToken()
@@ -80,7 +80,7 @@ app.service('server', ['$http', 'session',
      * @param {Function} errorCallback Error callback
      */
     function getTableData( options, okCallback, errorCallback ) {
-        const params = { 
+        var params = { 
             queryName: options.queryName,
             queryParams: options.queryParams,
             token: session.getToken()
@@ -93,7 +93,7 @@ app.service('server', ['$http', 'session',
     }
     
     function getProduction( options, okCallback, errorCallback ) {
-        const params = { 
+        var params = { 
             queryName: options.queryName,
             queryParams: options.queryParams,
             token: session.getToken()
@@ -107,7 +107,7 @@ app.service('server', ['$http', 'session',
     
     
     function getModelFields( model, okCallback, errorCallback ) {
-        const params = { 
+        var params = { 
             model: model,
             token: session.getToken()
         };
@@ -120,7 +120,7 @@ app.service('server', ['$http', 'session',
     
     
     function createNewItem( modelName, newItemData, onSave, onError ) {
-        const params = {
+        var params = {
             model: modelName,
             newItemData: newItemData,
             token: session.getToken()
@@ -131,7 +131,7 @@ app.service('server', ['$http', 'session',
     
     
     function deleteItem( modelName, id, onDelete, onError ) {
-        const params = {
+        var params = {
             model: modelName,
             id: id,
             token: session.getToken()
@@ -142,7 +142,7 @@ app.service('server', ['$http', 'session',
     
    
     function getModelFieldsAndValues( modelName, id, okCallback, errorCallback ) {
-        const params = { 
+        var params = { 
             model: modelName,
             id: id,
             token: session.getToken()
@@ -156,7 +156,7 @@ app.service('server', ['$http', 'session',
     
     
     function saveItem( modelName, record, onSave, onError ) {
-        const params = {
+        var params = {
             model: modelName,
             record: record,
             token: session.getToken()
@@ -167,7 +167,7 @@ app.service('server', ['$http', 'session',
     
     
     function getComboValues(modelName, okCallback, onError) {
-        const params = { model: modelName };
+        var params = { model: modelName };
         http(params, $http.get, '/combo_values/', okCallback, onError);
     }
     
@@ -178,13 +178,13 @@ app.service('server', ['$http', 'session',
     
     
     function getSearchResult(searchValue, okCallback, onError) {
-    	const params = { searchValue: searchValue };
+    	var params = { searchValue: searchValue };
         http(params, $http.get, '/search', okCallback, onError);
     }
     
     
     function viewRecord(dataSource, id, okCallback, onError) {
-        const params = { 
+        var params = { 
             dataSource: dataSource,
             id: id
         };
@@ -198,7 +198,7 @@ app.service('server', ['$http', 'session',
     
     
     function changePassword(onData, onError, oldPassword, newPassword) {
-    	const params = {
+    	var params = {
     		oldPassword: oldPassword,
     		newPassword: newPassword	
     	};
@@ -207,7 +207,7 @@ app.service('server', ['$http', 'session',
     
     
     function downloadExcelFile(dataSource, onData, onError) {
-    	const params = {
+    	var params = {
     		dataSource: dataSource	
     	};
         http(params, $http.get, '/download_excel', onData, onError);
@@ -215,7 +215,7 @@ app.service('server', ['$http', 'session',
     
     
     function importFromURL(dataSource, onData, onError) {
-    	const params = {
+    	var params = {
     		dataSource: dataSource	
     	};
         http(params, $http.put, '/import_from_url', onData, onError);

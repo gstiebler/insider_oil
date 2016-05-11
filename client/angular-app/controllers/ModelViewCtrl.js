@@ -10,8 +10,8 @@ angular.module('InsiderOilApp').controller('ModelViewController',
     server.getTable(modelName, {}, showModel, showError.show );
     
     var datatableInitialized = false;
-    const dataTableElement = $('#mainTable');
-    const modelOperations = ModelOperations.getModelOperations(modelName);
+    var dataTableElement = $('#mainTable');
+    var modelOperations = ModelOperations.getModelOperations(modelName);
 
     function showModel(modelData) {
     	if(modelData.records.length == 0) return;
@@ -19,7 +19,7 @@ angular.module('InsiderOilApp').controller('ModelViewController',
         if(!datatableInitialized) {
             $scope.viewParams = modelData.viewParams;
             
-            const columns = ModelViewService.getColumns(modelData.viewParams, modelData.types);
+            var columns = ModelViewService.getColumns(modelData.viewParams, modelData.types);
             columns.push( { title: "Editar", data: 'edit' } );
             columns.push( { title: "Apagar", data: 'delete' } );
             
@@ -86,7 +86,7 @@ angular.module('InsiderOilApp').controller('ModelViewController',
     	server.downloadExcelFile(modelName, onExcelFile, showError.show);
     	
     	function onExcelFile(xlsxBinary) {
-    		const ba = str2ab(xlsxBinary);
+    		var ba = str2ab(xlsxBinary);
     		var blob = new Blob([ba], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
     		saveAs(blob, "arquivo.xlsx");
     	}
@@ -97,7 +97,7 @@ angular.module('InsiderOilApp').controller('ModelViewController',
         server.importFromURL(modelName, onImportFromURL, showError.show);
         
         function onImportFromURL(response) {
-            const statusStr = ModelViewService.formatExcelUploadResult(response);
+            var statusStr = ModelViewService.formatExcelUploadResult(response);
             onFileUploaded(statusStr);
         }
     }

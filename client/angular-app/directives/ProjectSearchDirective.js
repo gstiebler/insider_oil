@@ -21,7 +21,7 @@ app.directive('projectSearch', function() {
                     $scope.searchOptions = [];
                     searchResult = {};
                     for(var i = 0; i < results.length; i++) {
-                        const completeSearchKey = results[i].modelLabel + ': ' +results[i].name;
+                        var completeSearchKey = results[i].modelLabel + ': ' +results[i].name;
                         $scope.searchOptions.push(completeSearchKey);
                         searchResult[completeSearchKey] = results[i];
                     }

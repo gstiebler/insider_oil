@@ -3,8 +3,8 @@ angular.module('InsiderOilApp').controller('EditNewsController',
                 ['$scope', '$routeParams', '$location', 'server', 'session', 'showError', 'Flash',
         function($scope, $routeParams, $location, server, session, showError, Flash) {
                 	
-    const modelName = 'News';
-    const id = $routeParams.id;
+    var modelName = 'News';
+    var id = $routeParams.id;
     
     if(id) {
         $scope.mainTitle = "Editar notícia"
@@ -21,7 +21,7 @@ angular.module('InsiderOilApp').controller('EditNewsController',
                 	
 	$scope.saveItem = function() {
 		function onUserDataArrived(userData) {
-			const itemData = {};
+			var itemData = {};
 			itemData.title = $scope.title;
 			itemData.content = $scope.content;
 			itemData.author_id = userData.id;
@@ -47,16 +47,16 @@ angular.module('InsiderOilApp').controller('EditNewsController',
     
     
     function insertLinkInContent(previousContent, linkStr) {
-        const symbolPos = previousContent.lastIndexOf('<');
-        const beforeSymbolStr = previousContent.slice(0, symbolPos);
-        const afterSymboStr = previousContent.slice(symbolPos, previousContent.length);
+        var symbolPos = previousContent.lastIndexOf('<');
+        var beforeSymbolStr = previousContent.slice(0, symbolPos);
+        var afterSymboStr = previousContent.slice(symbolPos, previousContent.length);
         return beforeSymbolStr + linkStr + afterSymboStr;
     }
 
     
     $scope.showError = showError.show;
     $scope.onProjectSelected = function(selectedItem) {
-    	const linkStr = '<a href="/app/view_record?source=' + selectedItem.model + '&id=' + selectedItem.id + '">' + selectedItem.name + '</a>';
+    	var linkStr = '<a href="/app/view_record?source=' + selectedItem.model + '&id=' + selectedItem.id + '">' + selectedItem.name + '</a>';
     	$scope.content = insertLinkInContent($scope.content, linkStr);
     }
                 	

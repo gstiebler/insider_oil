@@ -3,8 +3,8 @@ angular.module('InsiderOilApp').controller('OilFieldController',
                 ['$scope', 'server', '$routeParams', 'showError', 
         function($scope, server, $routeParams, showError) {
     
-    const source = 'OilField';
-    const id = $routeParams.id;
+    var source = 'OilField';
+    var id = $routeParams.id;
     $scope.id = id;
     $scope.source = source;
     $scope.onError = showError.show;

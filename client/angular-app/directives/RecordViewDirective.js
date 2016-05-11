@@ -18,7 +18,7 @@ function formatByType(field) {
 function onRecordDataChange(recordData) {
     if(!recordData)
         return;
-    const fieldValues = [];
+    var fieldValues = [];
     for(var i = 0; i < recordData.length; i++) {
         if(recordData[i].isMultiFieldText) {
             if(!recordData[i].value)

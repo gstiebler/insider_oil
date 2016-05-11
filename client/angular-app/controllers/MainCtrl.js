@@ -28,7 +28,7 @@ angular.module('InsiderOilApp').controller('MainController',
     
     $scope.showError = showError.show;
     $scope.onProjectSelected = function(selectedItem) {
-    	const searchParams = {
+    	var searchParams = {
     		source: selectedItem.model,
     		id: selectedItem.id
     	};

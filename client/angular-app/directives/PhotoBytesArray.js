@@ -13,8 +13,8 @@ function _arrayBufferToBase64( buffer ) {
 
 
 function base64ToArray( base64 ) {
-    const base64str = atob(base64);
-    const bytes = new Array( base64str.length );
+    var base64str = atob(base64);
+    var bytes = new Array( base64str.length );
     for(var i = 0; i < base64str.length; i++) {
         bytes[i] = base64str.charCodeAt(i);
     }
@@ -29,13 +29,13 @@ app.directive('photoBytesArray', function() {
             dsBytesArray: '=dsBytesArray'
         },
         controller: ['$scope', function($scope) { 
-            const contentType = 'image/JPEG';
-            const base64Header = 'data:' + contentType + ';base64,';
+            var contentType = 'image/JPEG';
+            var base64Header = 'data:' + contentType + ';base64,';
             
             $scope.loadPhoto = function($fileContent){
-                const dsBase64 = $fileContent;
+                var dsBase64 = $fileContent;
                 $scope.photoBase64 = dsBase64;
-                const trimmedBase64 = dsBase64.substring(dsBase64.search(';base64,') + 8, dsBase64.length);
+                var trimmedBase64 = dsBase64.substring(dsBase64.search(';base64,') + 8, dsBase64.length);
                 $scope.dsBytesArray = base64ToArray(trimmedBase64);
             };
 

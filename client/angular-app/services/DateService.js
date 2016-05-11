@@ -11,7 +11,7 @@ app.service('DateService',  function() {
     this.dateFormat = function(dateStr) {
         if(!dateStr)
             return '';
-        const result = moment(dateStr).utcOffset(0).format('DD/MM/YYYY');
+        var result = moment(dateStr).utcOffset(0).format('DD/MM/YYYY');
         return result;
     }
     
@@ -22,7 +22,7 @@ app.service('DateService',  function() {
      * @return {String} Formatted date string
      */
     this.parseDateTime = function(dateTimeStr) {
-        const result = moment(dateTimeStr).format('DD/MM/YYYY HH:mm');
+        var result = moment(dateTimeStr).format('DD/MM/YYYY HH:mm');
         return result;
     }
 

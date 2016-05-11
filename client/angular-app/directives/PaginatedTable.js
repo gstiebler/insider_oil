@@ -45,7 +45,7 @@ function ajaxFn(data, callback, settings) {
         orderColumns.push( orderObj );
     }
     
-    const options = {
+    var options = {
         queryName: _$scope.tableParams.source,
         queryParams: {
             pagination: {
@@ -58,7 +58,7 @@ function ajaxFn(data, callback, settings) {
     };
     
     function setDataTablesRows(serverResult) {
-        const result = { 
+        var result = { 
             aaData: serverResult.records,
             recordsTotal: serverResult.count,
             recordsFiltered: serverResult.count 
@@ -76,8 +76,8 @@ function tableParamsChanged(tableParams) {
     if(!tableParams)
         return;
         
-    const dataTableElement = $('#mainTable');
-    const columns = [];
+    var dataTableElement = $('#mainTable');
+    var columns = [];
     for(var i = 0; i < tableParams.fields.length; i++) {
         var field = tableParams.fields[i];
         if(field.ref) {
