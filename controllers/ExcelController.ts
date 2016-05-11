@@ -36,14 +36,10 @@ export function importExcelFromURL(req: express.Request, res: express.Response) 
             return;
         } 
         
-        try {
-            importExcel(body, dataSourceName, onOk, errorFunc);
-        } catch(err) {
-            errorFunc(err);
-        }
+        importExcel(body, dataSourceName).then(onOk).catch(errorFunc);
     })
     
-    function onOk(status: string, recordsStatus: string[]) {
-        res.json( { status: status, recordsStatus: recordsStatus } );
+    function onOk(result) {
+        res.json( { status: result.status, recordsStatus: result.invalidRecordsStatus } );
     }
 }

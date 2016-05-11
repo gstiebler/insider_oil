@@ -27,201 +27,158 @@ importDrillingRigOffshore: function(test: nodeunit.Test) {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.DrillingRigOffshore.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
-    try {
-        importExcel(excelBuf, 'DrillingRigOffshore', onImportDone, onError);
-    } catch(err) {
-        console.log(err);
-    }
+    const result = await(importExcel(excelBuf, 'DrillingRigOffshore'));
+    const invalidRecordsStatus = result.invalidRecordsStatus;    
+    const status = result.status;    
     
-    function onImportDone(status, invalidRecordsStatus) {
-        const DrillingRigOffshoreModel: dbUtils.ioDataSource = db.models.DrillingRigOffshore;
-        var rows = await( dbUtils.findAllCustom(DrillingRigOffshoreModel));
-        test.equal( 35, rows.length );  
-        var expectedStatus = "Registros criados: 32";
-        expectedStatus += "\nRegistros atualizados: 3";
-        expectedStatus += "\nRegistros inválidos: 63";
-        test.equal( expectedStatus, status );
-        test.equal( "Registro 5: Valor 'Brasdril' do campo 'contratada' não encontrado.", invalidRecordsStatus[0] );
-        test.equal( "Registro 6: Valor 'Transocean' do campo 'contratada' não encontrado.", invalidRecordsStatus[1] );
-        test.equal( "Registro 97: Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[61] );
-        test.equal( "Registro 98: Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[62] );
-        
-        test.equal("Aban Abraham", rows[0].name);
-        test.equal("Etesco", rows[0].contractor.name);
-        test.equal("NS", rows[0].type);
-        test.equal("Em operação", rows[0].status);
-        test.equal(1900, rows[0].lda);
-        test.equal("2011-06-05", rows[0].start.toJSON().substring(0, 10));
-        test.equal("2016-06-02", rows[0].end.toJSON().substring(0, 10));
-        
-        test.equal("Petrobras X", rows[10].name);
-        test.equal("Petrobras", rows[10].contractor.name);
-        test.equal("SS", rows[10].type);
-        test.equal("Em operação", rows[10].status);
-        test.equal(1500, rows[10].lda);
-        test.equal(null, rows[10].start);
-        test.equal(null, rows[10].end);
-        
-        test.done();
-    }
+    const DrillingRigOffshoreModel: dbUtils.ioDataSource = db.models.DrillingRigOffshore;
+    var rows = await( dbUtils.findAllCustom(DrillingRigOffshoreModel));
+    test.equal( 35, rows.length );  
+    var expectedStatus = "Registros criados: 32";
+    expectedStatus += "\nRegistros atualizados: 3";
+    expectedStatus += "\nRegistros inválidos: 63";
+    test.equal( expectedStatus, status );
+    test.equal( "Registro 5: Valor 'Brasdril' do campo 'contratada' não encontrado.", invalidRecordsStatus[0] );
+    test.equal( "Registro 6: Valor 'Transocean' do campo 'contratada' não encontrado.", invalidRecordsStatus[1] );
+    test.equal( "Registro 97: Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[61] );
+    test.equal( "Registro 98: Valor 'Sete Brasil' do campo 'contratada' não encontrado.", invalidRecordsStatus[62] );
+    
+    test.equal("Aban Abraham", rows[0].name);
+    test.equal("Etesco", rows[0].contractor.name);
+    test.equal("NS", rows[0].type);
+    test.equal("Em operação", rows[0].status);
+    test.equal(1900, rows[0].lda);
+    test.equal("2011-06-05", rows[0].start.toJSON().substring(0, 10));
+    test.equal("2016-06-02", rows[0].end.toJSON().substring(0, 10));
+    
+    test.equal("Petrobras X", rows[10].name);
+    test.equal("Petrobras", rows[10].contractor.name);
+    test.equal("SS", rows[10].type);
+    test.equal("Em operação", rows[10].status);
+    test.equal(1500, rows[10].lda);
+    test.equal(null, rows[10].start);
+    test.equal(null, rows[10].end);
+    
+    test.done();
 },
-
-/*
-importAmbientalLicenses: (test: nodeunit.Test) => {
-    var fixtureCount = 3;
-    test.equal( fixtureCount, await( db.models.AmbientalLicense.findAll() ).length );  
-    var excelBuf = fs.readFileSync('./test/data/ambiental_licenses.xlsx');
-    importExcel(excelBuf, 'AmbientalLicense', onImportDone, onError);
-    
-    function onImportDone(status, invalidRecordsStatus) {
-        var rows = await( dbUtils.findAllCustom(db.models.AmbientalLicense));
-        test.equal( 17, rows.length );  
-        var expectedStatus = "Registros criados: 14";
-        expectedStatus += "\nRegistros atualizados: 5";
-        expectedStatus += "\nRegistros inválidos: 1";
-        test.equal( expectedStatus, status );
-        test.equal( 1, invalidRecordsStatus.length );
-        test.equal('Registro 10: notNull Violation: end cannot be null', invalidRecordsStatus[0]);
-        
-        test.equal('2015-01-09', rows[0].start.toJSON().substring(0, 10));
-        test.equal('2016-01-09', rows[0].end.toJSON().substring(0, 10));
-        test.equal('ABio 560/2014', rows[0].license);
-        test.equal('Perfuração Marítima - Bloco BM-CAL-13 - Bacia de Camamu-Almada', rows[0].enterprise);
-        test.equal('BP ENERGY DO BRASIL LTDA', rows[0].entrepreneur);
-        test.equal('02022.001868/2007-89', rows[0].process);
-        test.equal('Petróleo - Perfuração', rows[0].tipology);
-        test.equal('Não', rows[0].pac);
-        
-        test.equal('2015-07-31', rows[9].start.toJSON().substring(0, 10));
-        test.equal('2018-07-31', rows[9].end.toJSON().substring(0, 10));
-        test.equal('Ret ABio 269/2013', rows[9].license);
-        test.equal('Perfuração Marítima - Blocos BM-POT-16 e 17 - Bacia de Potiguar', rows[9].enterprise);
-        test.equal('PETRÓLEO BRASILEIRO S/A - PETROBRÁS', rows[9].entrepreneur);
-        test.equal('02022.004723/2006-59', rows[9].process);
-        test.equal('Petróleo - Perfuração', rows[9].tipology);
-        test.equal('Não', rows[9].pac);
-        
-        test.done();
-    }
-},*/
 
 
 importBlocks: test => {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.Block.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/blocks.xlsx');
-    importExcel(excelBuf, 'Block', onImportDone, onError);
+    const result = await(importExcel(excelBuf, 'Block'));
+    const invalidRecordsStatus = result.invalidRecordsStatus;    
+    const status = result.status;    
     
-    function onImportDone(status, invalidRecordsStatus) {
-        var rows = await( dbUtils.findAllCustom(db.models.Block));
-        test.equal( 344, rows.length );  
-        var expectedStatus = "Registros criados: 341";
-        expectedStatus += "\nRegistros atualizados: 3";
-        expectedStatus += "\nRegistros inválidos: 3";
-        test.equal( expectedStatus, status );
-        var expectedInvalidStatus = [
-            'Registro 289: Valor \'Cemes\' do campo \'operador\' não encontrado.',
-            'Registro 293: Valor \'Cemes\' do campo \'operador\' não encontrado.',
-            'Registro 294: Valor \'Cemes\' do campo \'operador\' não encontrado.' 
-        ];
-        compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
-        
-        {
-            const record = rows[0];
-            test.equal('BM-BAR-1', record.name);
-            test.equal('BM-BAR-1', record.name_contract);
-            test.equal('BID3', record.bid);
-            test.equal('2004-08-29', record.end_1.toJSON().substring(0, 10));
-            test.equal('2012-07-18', record.end_2.toJSON().substring(0, 10));
-            test.equal('2014-04-20', record.end_3.toJSON().substring(0, 10));
-            test.equal('2016-12-31', record.end_last.toJSON().substring(0, 10));
-            test.equal('SUSPENSO', record.status);
-            test.equal('*Petrobras - 75%, ONGC Campos - 25%', record.concessionaries);
-            test.equal('Petrobras', record.operator.name);
-            test.equal('Barreirinhas', record.basin.name);           
-        }
-
-        {
-            const record = rows[300];
-            test.equal('SEAL-M-424', record.name);
-            test.equal('BM-SEAL-10', record.name_contract);
-            test.equal('BID6', record.bid);
-            test.equal('2010-12-23', record.end_1.toJSON().substring(0, 10));
-            test.equal('2013-02-28', record.end_2.toJSON().substring(0, 10));
-            test.equal(null, record.end_3);
-            test.equal('2018-12-30', record.end_last.toJSON().substring(0, 10));
-            test.equal('EM ANÁLISE', record.status);
-            test.equal('*Petrobras - 100%', record.concessionaries);
-            test.equal('Petrobras', record.operator.name);
-            test.equal('Sergipe', record.basin.name);
-        }     
-        
-        test.done();
+    var rows = await( dbUtils.findAllCustom(db.models.Block));
+    test.equal( 344, rows.length );  
+    var expectedStatus = "Registros criados: 341";
+    expectedStatus += "\nRegistros atualizados: 3";
+    expectedStatus += "\nRegistros inválidos: 3";
+    test.equal( expectedStatus, status );
+    var expectedInvalidStatus = [
+        'Registro 289: Valor \'Cemes\' do campo \'operador\' não encontrado.',
+        'Registro 293: Valor \'Cemes\' do campo \'operador\' não encontrado.',
+        'Registro 294: Valor \'Cemes\' do campo \'operador\' não encontrado.' 
+    ];
+    compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
+    
+    {
+        const record = rows[0];
+        test.equal('BM-BAR-1', record.name);
+        test.equal('BM-BAR-1', record.name_contract);
+        test.equal('BID3', record.bid);
+        test.equal('2004-08-29', record.end_1.toJSON().substring(0, 10));
+        test.equal('2012-07-18', record.end_2.toJSON().substring(0, 10));
+        test.equal('2014-04-20', record.end_3.toJSON().substring(0, 10));
+        test.equal('2016-12-31', record.end_last.toJSON().substring(0, 10));
+        test.equal('SUSPENSO', record.status);
+        test.equal('*Petrobras - 75%, ONGC Campos - 25%', record.concessionaries);
+        test.equal('Petrobras', record.operator.name);
+        test.equal('Barreirinhas', record.basin.name);           
     }
+
+    {
+        const record = rows[300];
+        test.equal('SEAL-M-424', record.name);
+        test.equal('BM-SEAL-10', record.name_contract);
+        test.equal('BID6', record.bid);
+        test.equal('2010-12-23', record.end_1.toJSON().substring(0, 10));
+        test.equal('2013-02-28', record.end_2.toJSON().substring(0, 10));
+        test.equal(null, record.end_3);
+        test.equal('2018-12-30', record.end_last.toJSON().substring(0, 10));
+        test.equal('EM ANÁLISE', record.status);
+        test.equal('*Petrobras - 100%', record.concessionaries);
+        test.equal('Petrobras', record.operator.name);
+        test.equal('Sergipe', record.basin.name);
+    }     
+    
+    test.done();
 },
 
 importPersons: test => {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.Person.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/persons.xlsx');
-    importExcel(excelBuf, 'Person', onImportDone, onError);
+    const result = await(importExcel(excelBuf, 'Person'));
+    const invalidRecordsStatus = result.invalidRecordsStatus;    
+    const status = result.status;    
     
-    function onImportDone(status, invalidRecordsStatus) {
-        var rows = await( dbUtils.findAllCustom(db.models.Person, { order: ['name'] }));
-        test.equal( 4, rows.length );  
-        var expectedStatus = "Registros criados: 1";
-        expectedStatus += "\nRegistros atualizados: 3";
-        expectedStatus += "\nRegistros inválidos: 1";
-        test.equal( expectedStatus, status );
-        var expectedInvalidStatus = [
-            'Registro 5: Valor \'BR Distribuidora\' do campo \'empresa\' não encontrado.',
-        ];
-        compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
-        {
-            const record = rows[0];
-            test.equal('Carlos Alberto B.Tessarollo', record.name);
-            test.equal(1, record.emails.length);
-            test.equal('tessarollo@br.com.br', record.emails[0]);
-        }  
-        {
-            const record = rows[2];
-            test.equal('Guilherme Stiebler', record.name);
-            test.equal(2, record.emails.length);
-            test.equal('gstiebler@gmail.com', record.emails[0]);
-            test.equal('guilhermeabc@gmail.com', record.emails[1]);
-        }   
-        
-        test.done();
-    }
+    var rows = await( dbUtils.findAllCustom(db.models.Person, { order: ['name'] }));
+    test.equal( 4, rows.length );  
+    var expectedStatus = "Registros criados: 1";
+    expectedStatus += "\nRegistros atualizados: 3";
+    expectedStatus += "\nRegistros inválidos: 1";
+    test.equal( expectedStatus, status );
+    var expectedInvalidStatus = [
+        'Registro 5: Valor \'BR Distribuidora\' do campo \'empresa\' não encontrado.',
+    ];
+    compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
+    {
+        const record = rows[0];
+        test.equal('Carlos Alberto B.Tessarollo', record.name);
+        test.equal(1, record.emails.length);
+        test.equal('tessarollo@br.com.br', record.emails[0]);
+    }  
+    {
+        const record = rows[2];
+        test.equal('Guilherme Stiebler', record.name);
+        test.equal(2, record.emails.length);
+        test.equal('gstiebler@gmail.com', record.emails[0]);
+        test.equal('guilhermeabc@gmail.com', record.emails[1]);
+    }   
+    
+    test.done();
 },
 
 
 wellProduction: test => {
     var excelBuf = fs.readFileSync('./test/data/production.xls');
-    importExcel(excelBuf, 'Production', onImportDone, onError);
+    const result = await(importExcel(excelBuf, 'Production'));
+    const invalidRecordsStatus = result.invalidRecordsStatus;    
+    const status = result.status;    
     
-    function onImportDone(status, invalidRecordsStatus) {
-        const order = ['period_year', 'period_month', 'production_well.name'];
-        var rows = await( dbUtils.findAllCustom(db.models.Production, { order: order }));
-        test.equal( 10, rows.length );  
-        var expectedStatus = "Registros criados: 2";
-        expectedStatus += "\nRegistros atualizados: 1";
-        expectedStatus += "\nRegistros inválidos: 14";
-        test.equal( expectedStatus, status );
-        
-        {
-            const record = rows[3];
-            test.equal('7AB 0047D RJS', record.production_well.name);
-            test.equal(329.222, record.oil_production);
-        }  
-        {
-            const record = rows[5];
-            test.equal('7MRL 0062D RJS', record.production_well.name);
-            test.equal(2325.89, record.oil_production);
-        }   
-        
-        test.done();
-    }
+    const order = ['period_year', 'period_month', 'production_well.name'];
+    var rows = await( dbUtils.findAllCustom(db.models.Production, { order: order }));
+    test.equal( 10, rows.length );  
+    var expectedStatus = "Registros criados: 2";
+    expectedStatus += "\nRegistros atualizados: 1";
+    expectedStatus += "\nRegistros inválidos: 14";
+    test.equal( expectedStatus, status );
+    
+    {
+        const record = rows[3];
+        test.equal('7AB 0047D RJS', record.production_well.name);
+        test.equal(329.222, record.oil_production);
+    }  
+    {
+        const record = rows[5];
+        test.equal('7MRL 0062D RJS', record.production_well.name);
+        test.equal(2325.89, record.oil_production);
+    }   
+    
+    test.done();
 },
 
 /*

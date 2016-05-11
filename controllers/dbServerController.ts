@@ -67,20 +67,17 @@ export function uploadFile(req: express.Request, res: express.Response, next) {
     function onFile(fileName, buf) {
     	winston.debug( "File name: " + fileName );
         var model = req.query.table;
-        try {
-            importExcel(buf, model, onOk, onError);
-        } catch(err) {
+        
+        function onOk(result) {
+            res.json( { status: result.status, recordsStatus: result.invalidRecordsStatus } );
+        }
+        
+        function onError(err) {
             winston.error(err);
             res.status(400).json( { errorMsg: err } );
         }
         
-        function onOk(status, recordsStatus) {
-            res.json( { status: status, recordsStatus: recordsStatus } );
-        }
-        
-        function onError(err) {
-            res.status(400).json( { errorMsg: err } );
-        }
+        importExcel(buf, model).then(onOk).catch(onError);
     }
       
     function onFinish() {
