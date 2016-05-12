@@ -120,7 +120,7 @@ export function recordValues(req: express.Request, res: express.Response, next) 
 }
 
 
-export function createItem(req: express.Request, res: express.Response, next) {
+export function createItem(req: express.Request, res: express.Response, next) { Sync(function() {
     var newItemData = req.body.newItemData;
     var modelName = req.body.model;
     var model = dbUtils.getDataSource(modelName);
@@ -130,10 +130,10 @@ export function createItem(req: express.Request, res: express.Response, next) {
 	            .then(ControllerUtils.getOkFunc(res, "Registro criado com sucesso."))
 	           .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."));
     });
-}
+})}
 
 
-export function saveItem(req: express.Request, res: express.Response, next) {
+export function saveItem(req: express.Request, res: express.Response, next) { Sync(function() {
     var dsName = req.body.model;
     var recordData = req.body.record;
     var dataSource = dbUtils.getDataSource(dsName);
@@ -149,7 +149,7 @@ export function saveItem(req: express.Request, res: express.Response, next) {
             .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível salvar o registro."));
         return null;
     }
-}
+})}
 
 
 export function deleteItem(req: express.Request, res: express.Response) { Sync(function() {

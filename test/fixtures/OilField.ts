@@ -7,7 +7,11 @@ module.exports = function(db) {
             basin_id: utils.idByName('Basin', 'Potiguar'),
             state: 'Alagoas',
             shore: 'on',
-            stage: 'production'
+            stage: 'production',
+            concessionaries: 
+                [ { id: 2  },
+                { id: 16  } ],
+            concessionaries_props: [ 30, 70 ],
         },
         {
             name: 'Jiribatuba2',
