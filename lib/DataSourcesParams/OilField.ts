@@ -15,7 +15,13 @@ const OilField: BaseDataSourceParams = {
             label: "Estado"
         },
         concessionaries: {
-            label: "Concessionárias"
+            label: "Concessionárias",
+            isManyToMany: true,
+            comboSource: 'Company'
+        },
+        concessionaries_props: {
+            label: "Concessionárias %",
+            isList: true
         },
         userShore: {
             label: "Terra/Mar"
@@ -28,7 +34,7 @@ const OilField: BaseDataSourceParams = {
         },
     },
     labelField: "name",
-    gridFields: ['name', 'basin_name', 'state', 'concessionaries', 'shore', 'stage'],
+    gridFields: ['name', 'basin_name', 'state', 'shore', 'stage'],
     tableLabel: "Campos",
     hasMap: false
 };

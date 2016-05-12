@@ -25,6 +25,18 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.ENUM('production', 'development'),
           allowNull: false
         },
+        concessionaries: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                return '';
+            }
+        },
+        concessionaries_props: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                return '';
+            }
+        },
         /*userShore: {
             type: DataTypes.VIRTUAL,
             get: function() {
