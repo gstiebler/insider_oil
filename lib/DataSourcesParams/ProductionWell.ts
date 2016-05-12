@@ -5,7 +5,7 @@ const ProductionWell: BaseDataSourceParams = {
         name: {
             label: 'Nome'
         },
-        operator_name: {
+        name_operator: {
             label: "Nome operador"
         },
         oil_field_id: {
@@ -24,7 +24,16 @@ const ProductionWell: BaseDataSourceParams = {
     labelField: 'name',
     gridFields: ['name', 'oil_field_name', 'production_unit_name'],
     tableLabel: 'Poços de produção',
-    hasMap: false
+    hasMap: false,
+    excelParams: {
+        keyField: "anp",
+        fields: {
+            'anp': 'name',
+            'nome operador': 'name_operator',
+            'campo': 'oil_field',
+            'unidade de produção': 'production_unit'
+        }
+    },
 }
 
 export = ProductionWell;
