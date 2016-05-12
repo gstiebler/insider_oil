@@ -172,6 +172,11 @@ wellProduction: test => {
         const record = rows[3];
         test.equal('7AB 0047D RJS', record.production_well.name);
         test.equal(329.222, record.oil_production);
+        test.equal(0.0, record.oil_condensed_production);
+        test.equal(6.1391, record.gas_associated_production);
+        test.equal(0, record.gas_non_associated_production);
+        test.equal(183.392, record.gas_royaties_volume);
+        test.equal(549.254, record.water_production);
     }  
     {
         const record = rows[5];
