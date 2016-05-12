@@ -7,6 +7,15 @@ create and edit item
 
 var app = angular.module('EditRecordFieldsDirective', []);
 
+function getOnComboValuesFn(field) {
+    
+    function onComboValues(values) {
+        field.values = values;
+    }
+    
+    return onComboValues;
+}
+
 app.directive('recordFields', function() {
     return {
         restrict: 'E',
@@ -33,12 +42,10 @@ app.directive('recordFields', function() {
                     field.hasRef = field.type == 'ref';
                     field.isDate = field.type == 'DATE';
                     if( field.hasRef ) {
-                        if(hasValues)
+                        if(hasValues) 
                             $scope.values[field.name] = $scope.values[field.name].toString();
                         
-                        server.getComboValues( field.model, function (values) {
-                            field.values = values;
-                        }, $scope.onError );
+                        server.getComboValues( field.model, getOnComboValuesFn(field), $scope.onError );
                     }
                     if(field.isDate && hasValues) {
                         var dateStr = $scope.values[field.name];
