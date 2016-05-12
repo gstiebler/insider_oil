@@ -262,6 +262,29 @@ importBlocksFromURL: function(test) {
     test.done();
 },
 
+oilFieldConcessionaries: function(test) {
+    const reqCreate = {
+        body: { 
+            model: 'OilField',
+            newItemData: {
+                name: 'Campo Teste',
+                basin_id: utils.idByName('Basin', 'Tucano Central'),
+                state: 'Bahia',
+                shore: 'on',
+                stage: 'production',
+                concessionaries: 
+                    [ { id: 2  },
+                    { id: 3  } ],
+                concessionaries_props: [ 30, 70 ],
+            }
+        }
+    };
+    const createRes = utils.getJsonResponse.sync(null, dbServerController.createItem, reqCreate);
+    test.equal('Registros criados: 341\nRegistros atualizados: 3\nRegistros inválidos: 3', createRes.status);
+    
+    test.done();
+},
+
 
 };
 

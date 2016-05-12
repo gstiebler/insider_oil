@@ -6,33 +6,31 @@ var await = require('../../lib/await');
 
 function updateConcessionaries(db, oilField) {
     const options = { where: { oil_field_id: oilField.id } };
-    // remove all records from AmbientalLicenseBlock associated with this ambiental license
-    await( db.OilFieldConcessionary.destroy(options) );
-    
-    const concessionaries:any[] = oilField.dataValues.concessionaries;
-    const concessionaries_props:any[] = oilField.dataValues.concessionaries_props;
-    if(!concessionaries || !concessionaries_props)
-        return null;
-        
-    if(concessionaries.length != concessionaries_props.length)
-        throw 'Tamanhos diferentes de concessionários';
-        
-    const newConcessionariesRecords = [];
-    for(var i = 0; i < concessionaries.length; i++) {
-        const ofcRecord = { 
-            oil_field_id: oilField.id,
-            company_id: concessionaries[i].id,
-            prop: concessionaries_props[i]
-        };
-        newConcessionariesRecords.push(ofcRecord);
-    }
-    return db.OilFieldConcessionary.bulkCreate(newConcessionariesRecords);
+    // remove all records from OilFieldConcessionary associated with this oil field
+    return db.OilFieldConcessionary.destroy(options).then(function() {
+        const concessionaries = oilField.dataValues.concessionaries;
+        const concessionaries_props = oilField.dataValues.concessionaries_props;
+        if (!concessionaries || !concessionaries_props)
+            return null;
+        if (concessionaries.length != concessionaries_props.length)
+            throw 'Tamanhos diferentes de concessionários';
+        const newConcessionariesRecords = [];
+        for (var i = 0; i < concessionaries.length; i++) {
+            const ofcRecord = {
+                oil_field_id: oilField.id,
+                company_id: concessionaries[i].id,
+                prop: concessionaries_props[i]
+            };
+            newConcessionariesRecords.push(ofcRecord);
+        }
+        return db.OilFieldConcessionary.bulkCreate(newConcessionariesRecords);
+    });
 }
 
 
 function updateFieldsFunc(db) {
-    return function (ambientalLicense) {
-        updateConcessionaries(db, ambientalLicense);
+    return function (oilField) {
+        return updateConcessionaries(db, oilField);
     }
 }
 

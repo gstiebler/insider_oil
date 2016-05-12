@@ -14,16 +14,16 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
         classMethods: {
             associate: function(models) {
                 const ofOpts:Sequelize.AssociationOptionsBelongsTo = {
-                    as: 'oil_fields', 
+                    as: 'oil_field', 
                     foreignKey: {  allowNull: false }
                 };
-                OilFieldConcessionary.belongsTo(models.Well, ofOpts );
+                OilFieldConcessionary.belongsTo(models.OilField, ofOpts );
                 
                 const cOpts:Sequelize.AssociationOptionsBelongsTo = {
-                    as: 'companies', 
+                    as: 'company', 
                     foreignKey: {  allowNull: false }
                 };
-                OilFieldConcessionary.belongsTo(models.Well, cOpts );
+                OilFieldConcessionary.belongsTo(models.Company, cOpts );
             }
         }
     }
