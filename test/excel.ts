@@ -193,9 +193,9 @@ productionWell: test => {
     
     const order = ['name'];
     var rows = await( dbUtils.findAllCustom(db.models.ProductionWell, { order: order }));
-    test.equal( 22, rows.length );  
-    var expectedStatus = "Registros criados: 15";
-    expectedStatus += "\nRegistros atualizados: 1";
+    test.equal( 20, rows.length );  
+    var expectedStatus = "Registros criados: 13";
+    expectedStatus += "\nRegistros atualizados: 3";
     expectedStatus += "\nRegistros inválidos: 1";
     test.equal( expectedStatus, result.status );
     
@@ -207,7 +207,7 @@ productionWell: test => {
         test.equal('Petrobras 52', record.production_unit.name);
     } 
     {
-        const record = rows[20];
+        const record = rows[18];
         test.equal('7VM 0071HPRJS', record.name);
         test.equal('7VM 0071HPRJS', record.name_operator);
         test.equal('Vermelho', record.oil_field.name);

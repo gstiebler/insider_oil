@@ -125,7 +125,7 @@ export class ImportExcel {
             } else if (typeStr == 'DATE') { // is date, should convert
                 record[fieldName] = this.getDateValue(value);
             } else if(typeStr.includes('VARCHAR')) {
-                record[fieldName] = value.trim();
+                record[fieldName] = this.cleanString(value);
             } else {
                 record[fieldName] = value;
             }
@@ -134,10 +134,14 @@ export class ImportExcel {
                 const result = [];
                 const arrayValues = value.split(',');
                 for(let arrayValue of arrayValues)
-                    result.push(arrayValue.trim());
+                    result.push(this.cleanString(arrayValue));
                 record[fieldName] = result;
             }
         }    
+    }
+    
+    cleanString(input:string): string {
+        return input.trim().replace(/\s+/g,' ');
     }
     
     getWorkbook(excelBuf) {
@@ -177,9 +181,11 @@ export class ImportExcel {
                 }
                 
                 for( var row = 1 + _this.lineOffset; row <= range.e.r; row++ ) {
-                    var rowValues = _this.getRowValues(worksheet, row);
-                    var searchParams = {};
-                    searchParams[modelKeyField] = rowValues[keyFieldIndexInExcel];
+                    const rowValues = _this.getRowValues(worksheet, row);
+                    const searchParams:any = {};
+                    var searchKeyValue = rowValues[keyFieldIndexInExcel];
+                    searchKeyValue = _this.cleanString(searchKeyValue)
+                    searchParams[modelKeyField] = searchKeyValue;
                     var record = await( model.findOne({ where: searchParams }) );
                     if( record ) {
                         try {
