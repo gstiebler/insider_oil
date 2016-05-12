@@ -141,40 +141,6 @@ editWell: function(test) {
 },
 
 
-
-editFieldOilProduction: function(test) {
-    const reqEditValues = {
-        body: { 
-            model: 'OilFieldProduction',
-            record: {
-                id: 2,
-                name: 'Novo campo',
-                operator_id: 4,
-                state: 'AC',
-                bacia: 'Bacia nova',
-                lat: 333,
-                lng: 444
-            }
-        }
-    };
-        
-    const response = utils.getJsonResponse.sync(null, dbServerController.saveItem, reqEditValues);
-    test.equal('Registro salvo com sucesso.', response.msg);
-    
-    const reqGetValues = {
-        query: { 
-            model: 'OilFieldProduction',
-            id: 2
-        }
-    };
-    const responseValues = utils.getJsonResponse.sync(null, dbServerController.recordValues, reqGetValues);
-    test.equal('Novo campo', responseValues.values.name);
-    test.equal('on', responseValues.values.shore);
-    test.equal('Terra', responseValues.values.userShore);
-    test.done();
-},
-
-
 deleteWell: function(test) {
     const req = {
         query: { 
@@ -240,65 +206,6 @@ doNotDelReferencedPersonProject: function(test) {
     const resGetAmazonas = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqGetAmazonas);
     const record = resGetAmazonas.record;
     test.equal('Amazonas', record[0].value);
-    test.done();
-},
-
-
-deleteOilFieldDeveloping: function(test) {
-    const reqDelete = {
-        query: { 
-            model: 'OilFieldDeveloping',
-            id: 4
-        }
-    };
-    const responseDelete = utils.getJsonResponse.sync(null, dbServerController.deleteItem, reqDelete);
-    test.equal('Registro apagado com sucesso', responseDelete.msg);
-    
-    const reqGetRecords = {
-        query: { table: 'OilFieldDeveloping' }
-    };
-    const responseGetRecords = utils.getJsonResponse.sync(null, dbServerController.main, reqGetRecords);
-    test.equal(2, responseGetRecords.records.length);
-    test.done();
-},
-
-
-createOilFieldDeveloping: function(test) {
-    const req = {
-        body: { 
-            model: 'OilFieldDeveloping',
-            newItemData: {
-                name: 'Gavião Azul',
-                basin_id: 2,
-                state: 'Maranhão',
-                concessionaries: 'Parnaíba Gás¹ (70)/BPMB Parnaíba (30)',
-                userShore: 'Terra'
-            }
-        }
-    };
-    
-    utils.getJsonResponse.sync(null, dbServerController.createItem, req);
-    
-    const reqGet = {
-        query: { 
-            dataSource: 'OilFieldDeveloping',
-            id: 7
-        }
-    };
-    const responseDeveloping = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqGet);
-    test.equal('Gavião Azul', responseDeveloping.record[0].value);
-    test.equal('Acre', responseDeveloping.record[4].name);
-    test.equal('Terra', responseDeveloping.record[3].value);
-    
-    const reqOilFieldProduction = {
-        query: { 
-            dataSource: 'OilFieldProduction',
-            id: 7
-        }
-    };
-    const responseProduction = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqOilFieldProduction);
-    test.equal(5, responseProduction.record.length);   
-    
     test.done();
 },
 
@@ -393,27 +300,6 @@ listWells: function(test) {
     test.done();
 },
 
-listOilFieldsProductionOnshore: function(test) {
-   const req = {
-        query: { 
-            table: 'OilFieldProduction',
-            filters: JSON.stringify({ shore: 'off' })
-        }
-    };    
-    
-    const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
-    // records
-    test.equal(1, response.records.length);
-    test.equal('Abalone', response.records[0].name);
-    // view params
-    test.equal( 'Campos', response.viewParams.tableLabel );
-    test.equal( 'name', response.viewParams.labelField );
-    test.equal( 'Nome', response.viewParams.fields.name.label );
-    test.equal( 'Bacia', response.viewParams.fields.basin_name.label );
-    test.equal( 'Terra/Mar', response.viewParams.fields.userShore.label );
-    test.done();
-},
-
 
 modelFields: function(test) {
     const req = {
@@ -459,21 +345,6 @@ getComboValues: function(test) {
     test.equal( 'Anadarko', response[1].label );
     test.equal( 'UTC EP', response[44].label );
     test.equal( 'Vipetro', response[45].label );
-    test.done();
-},
-
-getRecordValuesOilFieldProduction: function(test) {
-    const req = {
-        query: { 
-            model: 'OilFieldProduction',
-            id: 3
-        }
-    };
-    const response = utils.getJsonResponse.sync(null, dbServerController.recordValues, req);
-    test.equal('Abalone', response.values.name);
-    test.equal('off', response.values.shore);
-    test.equal('Mar', response.values.userShore);
-    test.equal('production', response.values.stage);
     test.done();
 },
 
@@ -539,7 +410,6 @@ allTablesMain: test => {
 	    'News',
 	    'OilField',
 	    'Person',
-	    'Production',
 	    'Reserve',
 	    'Seismic',
 	    'Well',
@@ -553,11 +423,15 @@ allTablesMain: test => {
 	            table: model,
 	        }
 	    };
-	    const response = utils.getJsonResponse.future(null, dbServerController.main, req);
-	    for(var gridField of response.result.viewParams.gridFields) {
-	    	if(gridField == 'id') continue;
-	    	test.ok(response.result.viewParams.fields[gridField], 'Grid field not found: ' + gridField + ' in ' + model);
-	    }
+        try {
+            const response = utils.getJsonResponse.future(null, dbServerController.main, req);
+            for(var gridField of response.result.viewParams.gridFields) {
+                if(gridField == 'id') continue;
+                test.ok(response.result.viewParams.fields[gridField], 'Grid field not found: ' + gridField + ' in ' + model);
+            }
+        } catch(err) {
+            test.ok(false, err + ' on table ' + model);
+        }
 	}
 	test.done();
 },
