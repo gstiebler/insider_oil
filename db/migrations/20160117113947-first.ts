@@ -355,10 +355,6 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: false
 				},
-				concessionaries: {
-					type: Sequelize.STRING,
-					allowNull: true
-				},
 				shore: {
 					type: Sequelize.ENUM('on', 'off'),
 					allowNull: false

@@ -17,10 +17,6 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.STRING,
           allowNull: false
         },
-        concessionaries: {
-          type: DataTypes.STRING,
-          allowNull: true
-        },
         shore: {
           type: DataTypes.ENUM('on', 'off'),
           allowNull: false
