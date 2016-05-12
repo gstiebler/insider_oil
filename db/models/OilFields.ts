@@ -62,13 +62,28 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
         concessionaries: {
             type: DataTypes.VIRTUAL,
             get: function() {
-                return '';
+                const select = 'select c.name, c.id ';
+                const fromStr = 'from oil_field_concessionaries ofc ';
+                const companyJoin = ' left outer join companies c on ofc.company_id = c.id ';\
+                const where = 'where ofc.oil_field_id = ' + this.id;
+                const order = ' order by ofc.id';
+                const queryStr = select + fromStr + companyJoin+ where  + order;
+                const simpleQueryType = { type: sequelize.QueryTypes.SELECT};
+                const result = await( sequelize.query(queryStr, simpleQueryType) );
+                return result;
             }
         },
         concessionaries_props: {
             type: DataTypes.VIRTUAL,
             get: function() {
-                return '';
+                const select = 'select ofc.prop ';
+                const fromStr = 'from oil_field_concessionaries ofc ';
+                const where = 'where ofc.oil_field_id = ' + this.id;
+                const order = ' order by ofc.id';
+                const queryStr = select + fromStr + where + order;
+                const simpleQueryType = { type: sequelize.QueryTypes.SELECT};
+                const result = await( sequelize.query(queryStr, simpleQueryType) );
+                return result.map( value => { return value.prop } );
             }
         },
     }, 

@@ -25,7 +25,36 @@ updateWell: (test: nodeunit.Test) => {
     const well2 = await( db.models.Well.findById( firstId ) );
     test.equal( idOffshore + ':offshore', well2.drilling_rig );
     test.done();
-}
+},
+
+
+oilFieldConcessionaries: function(test) {
+    const petroId = utils.idByName('Company', 'Petrobras');
+    const newItemData = {
+        name: 'Campo Teste',
+        basin_id: utils.idByName('Basin', 'Tucano Central'),
+        state: 'Bahia',
+        shore: 'on',
+        stage: 'production',
+        concessionaries: 
+            [ { id: utils.idByName('Company', 'Eni Oil')  },
+            { id: petroId } ],
+        concessionaries_props: [ 30, 70 ],
+    };
+    await( db.models.OilField.create(newItemData) );
+    
+    const findOpts = { where: { name: 'Campo Teste' } };
+    const newRecord = await( db.models.OilField.findAll(findOpts) );
+    const record = JSON.parse(JSON.stringify(newRecord));
+    
+    test.equal( petroId, record[0].concessionaries[1].id);
+    test.equal( 'Petrobras', record[0].concessionaries[1].name);
+    test.equal( 30, record[0].concessionaries_props[0]);
+    test.equal( 70, record[0].concessionaries_props[1]);
+    
+    test.done();
+},
+
 
 }
 
