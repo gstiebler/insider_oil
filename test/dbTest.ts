@@ -7,6 +7,10 @@ var utils = require('./lib/utils');
 import nodeunit = require('nodeunit');
 import ComboQueries = require('../db/queries/ComboQueries');
 
+function jsonfy(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 var group: nodeunit.ITestGroup = {
 
 updateWell: (test: nodeunit.Test) => {
@@ -30,6 +34,7 @@ updateWell: (test: nodeunit.Test) => {
 
 oilFieldConcessionaries: function(test) {
     const petroId = utils.idByName('Company', 'Petrobras');
+    const statoilId = utils.idByName('Company', 'Statoil');
     const newItemData = {
         name: 'Campo Teste',
         basin_id: utils.idByName('Basin', 'Tucano Central'),
@@ -45,12 +50,25 @@ oilFieldConcessionaries: function(test) {
     
     const findOpts = { where: { name: 'Campo Teste' } };
     const newRecord = await( db.models.OilField.findAll(findOpts) );
-    const record = JSON.parse(JSON.stringify(newRecord));
+    const record = jsonfy(newRecord);
     
+    test.equal( 2, record[0].concessionaries.length );
+    test.equal( 2, record[0].concessionaries_props.length );
     test.equal( petroId, record[0].concessionaries[1].id);
     test.equal( 'Petrobras', record[0].concessionaries[1].name);
     test.equal( 30, record[0].concessionaries_props[0]);
     test.equal( 70, record[0].concessionaries_props[1]);
+    
+    newRecord[0].concessionaries = [ { id: statoilId } ];
+    newRecord[0].concessionaries_props = [100];
+    await( newRecord[0].save() );
+    const recAfterSave = jsonfy( await( db.models.OilField.findAll(findOpts) ) );
+    
+    test.equal( 1, recAfterSave[0].concessionaries.length );
+    test.equal( 1, recAfterSave[0].concessionaries_props.length );
+    test.equal( statoilId, recAfterSave[0].concessionaries[0].id);
+    test.equal( 'Statoil', recAfterSave[0].concessionaries[0].name);
+    test.equal( 100, recAfterSave[0].concessionaries_props[0]);
     
     test.done();
 },
