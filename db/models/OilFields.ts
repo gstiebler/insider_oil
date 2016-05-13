@@ -91,6 +91,24 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                 return result.map( value => { return value.prop } );
             }
         },
+        formatted_concessionaries: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                const select = 'select c.name, round(ofc.prop * 100, 2) as percent ';
+                const fromStr = 'from oil_field_concessionaries ofc ';
+                const companyJoin = ' left outer join companies c on ofc.company_id = c.id ';
+                const where = 'where ofc.oil_field_id = ' + this.id;
+                const order = ' order by ofc.id';
+                const queryStr = select + fromStr + companyJoin+ where  + order;
+                const simpleQueryType = { type: sequelize.QueryTypes.SELECT};
+                const result = await( sequelize.query(queryStr, simpleQueryType) );
+                let concessionaries = ''; 
+                for(let row of result) {
+                    concessionaries += row.name + ': ' + row.percent + '%\n';
+                }
+                return concessionaries.substr(0, concessionaries.length - 1);
+            }
+        }
     }, 
     {
         underscored: true,

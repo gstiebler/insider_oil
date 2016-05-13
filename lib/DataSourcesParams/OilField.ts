@@ -23,6 +23,9 @@ const OilField: BaseDataSourceParams = {
             label: "Concessionárias %",
             isList: true
         },
+        formatted_concessionaries: {
+            label: "Concessionárias"
+        },
         userShore: {
             label: "Terra/Mar"
         },
