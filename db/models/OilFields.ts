@@ -23,10 +23,10 @@ function updateConcessionaries(db, oilField) {
                 prop: concessionaries_props[i] / 100.0
             };
             newConcessionariesRecords.push(ofcRecord);
-            prop_sum += concessionaries_props[i];
+            prop_sum += concessionaries_props[i] * 1.0;
         }
         if(Math.abs(prop_sum - 100.0) > 0.0001)
-            throw 'Valores não somam ' + prop_sum + '%';
+            throw 'Valores somam ' + prop_sum + '%';
         
         return db.OilFieldConcessionary.bulkCreate(newConcessionariesRecords);
     });
