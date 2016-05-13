@@ -48,5 +48,8 @@ module.exports = function(queryInterface) {
         {
             name: 'ProductionUnit'
         },
+        {
+            name: 'Refinery'
+        },
     ]);
 }

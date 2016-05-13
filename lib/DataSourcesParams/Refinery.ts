@@ -3,10 +3,10 @@ import BaseDataSourceParams = require('./BaseDataSourceParams');
 const Refinery: BaseDataSourceParams = {
     fields: {
         name: {
-            label: 'Poço'
+            label: 'Nome'
         },
         address: {
-            label: 'Poço'
+            label: 'Endereço'
         },
         telephones: {
             label: 'Telefone',
@@ -20,7 +20,7 @@ const Refinery: BaseDataSourceParams = {
         },
     },
     labelField: 'name',
-    gridFields: ['well_name', 'capacity'],
+    gridFields: ['name', 'capacity'],
     tableLabel: 'Refinarias',
     hasMap: false
 }

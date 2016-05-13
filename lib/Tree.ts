@@ -315,6 +315,12 @@ var tree: ITreeNode = {
         },
         */
         {
+            label: 'Refinarias',
+            child: {
+                source: 'Refineries'
+            }
+        },
+        {
             label: 'Empresas',
             child: {
                 source: 'Companies'

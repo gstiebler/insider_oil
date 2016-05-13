@@ -323,6 +323,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         //ProductionOffshore: 'Produção offshore',
         HydrocarbonEvidence: 'Indicíos de hidrocarbonetos',
         ProductionUnit: 'Unidades de produção',
+        Refinery: 'Refinarias',
     };
     
     res.json(list);

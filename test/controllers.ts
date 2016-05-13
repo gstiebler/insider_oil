@@ -418,6 +418,7 @@ allTablesMain: test => {
 	    'Well',
 	    'ProductionUnit',
 	    'ProductionWell',
+	    'Refinery',
 	];
 	
 	for(var model of models) {

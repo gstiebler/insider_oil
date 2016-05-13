@@ -30,6 +30,7 @@ const operations: IOperations = {
     HydrocarbonEvidence: BaseDataSourceOperations,
     ProductionUnit: BaseDataSourceOperations,
     ProductionWell: BaseDataSourceOperations,
+    Refinery: BaseDataSourceOperations,
 };
 
 export = operations;
