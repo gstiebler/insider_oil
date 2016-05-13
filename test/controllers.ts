@@ -45,20 +45,24 @@ function iterateTree(children, test) {
                 }
             }; 
             
-            const response = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
-            test.ok(response.records.length > 0, 'Não há registros em ' + item.label);
-            const firstRecord = response.records[0];
-            const firstField = response.fields[0];
-            const idField = firstField.ref.idField;
-            const modelField = firstField.ref.modelField;
-            const reqViewRecords = {
-            	query: {
-            		dataSource: firstRecord[modelField],
-            		id: firstRecord[idField]
-            	}	
-            };
-            const responseViewRecords = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqViewRecords);
-            test.ok( responseViewRecords.record.length > 0, 'Problema no viewRecords do datasource ' +  item.child.source)
+            try{
+                const response = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
+                test.ok(response.records.length > 0, 'Não há registros em ' + item.label);
+                const firstRecord = response.records[0];
+                const firstField = response.fields[0];
+                const idField = firstField.ref.idField;
+                const modelField = firstField.ref.modelField;
+                const reqViewRecords = {
+                    query: {
+                        dataSource: firstRecord[modelField],
+                        id: firstRecord[idField]
+                    }	
+                };
+                const responseViewRecords = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqViewRecords);
+                test.ok( responseViewRecords.record.length > 0, 'Problema no viewRecords do datasource ' +  item.child.source)   
+            } catch(err) {
+                test.ok(false, 'Error on table ' + item.label );
+            }
         }
     }
 }

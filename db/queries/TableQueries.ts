@@ -90,7 +90,6 @@ const oilField:ITableQuery = {
                     ['id', 'of_id'],
                     ['name', 'of_name'],
                     'state',
-                    'concessionaries'
                 ]
             },
             joinTables: [
@@ -130,11 +129,6 @@ const oilField:ITableQuery = {
                 idField: 'b_id',
                 valueField: 'b_name'
             }
-        },
-        {
-            label: 'Concessionárias',
-            fieldName: 'concessionaries',
-            type: 'VARCHAR'
         },
         {
             label: 'Estado',
