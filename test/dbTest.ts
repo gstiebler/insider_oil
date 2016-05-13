@@ -48,27 +48,36 @@ oilFieldConcessionaries: function(test) {
     };
     await( db.models.OilField.create(newItemData) );
     
+    // Create
     const findOpts = { where: { name: 'Campo Teste' } };
-    const newRecord = await( db.models.OilField.findAll(findOpts) );
+    const newRecord = await( db.models.OilField.findAll(findOpts) )[0];
     const record = jsonfy(newRecord);
     
-    test.equal( 2, record[0].concessionaries.length );
-    test.equal( 2, record[0].concessionaries_props.length );
-    test.equal( petroId, record[0].concessionaries[1].id);
-    test.equal( 'Petrobras', record[0].concessionaries[1].name);
-    test.equal( 30, record[0].concessionaries_props[0]);
-    test.equal( 70, record[0].concessionaries_props[1]);
+    test.equal( 2, record.concessionaries.length );
+    test.equal( 2, record.concessionaries_props.length );
+    test.equal( petroId, record.concessionaries[1].id);
+    test.equal( 'Petrobras', record.concessionaries[1].name);
+    test.equal( 30, record.concessionaries_props[0]);
+    test.equal( 70, record.concessionaries_props[1]);
     
-    newRecord[0].concessionaries = [ { id: statoilId } ];
-    newRecord[0].concessionaries_props = [100];
-    await( newRecord[0].save() );
-    const recAfterSave = jsonfy( await( db.models.OilField.findAll(findOpts) ) );
+    // Edit
+    newRecord.concessionaries = [ { id: statoilId } ];
+    newRecord.concessionaries_props = [100];
+    await( newRecord.save() );
+    const recAfterSave = jsonfy( await( db.models.OilField.findAll(findOpts) )[0] );
     
-    test.equal( 1, recAfterSave[0].concessionaries.length );
-    test.equal( 1, recAfterSave[0].concessionaries_props.length );
-    test.equal( statoilId, recAfterSave[0].concessionaries[0].id);
-    test.equal( 'Statoil', recAfterSave[0].concessionaries[0].name);
-    test.equal( 100, recAfterSave[0].concessionaries_props[0]);
+    test.equal( 1, recAfterSave.concessionaries.length );
+    test.equal( 1, recAfterSave.concessionaries_props.length );
+    test.equal( statoilId, recAfterSave.concessionaries[0].id);
+    test.equal( 'Statoil', recAfterSave.concessionaries[0].name);
+    test.equal( 100, recAfterSave.concessionaries_props[0]);
+    
+    // Delete
+    const oilFieldId = newRecord.id;
+    db.models.OilField.destroy( { where: { id: oilFieldId } } );
+    const delFindOpts = { where: { oil_field_id: oilFieldId } };
+    const recAfterDel = await( db.models.OilFieldConcessionary.findAll(delFindOpts) );
+    test.equal( 0, recAfterDel.length );
     
     test.done();
 },

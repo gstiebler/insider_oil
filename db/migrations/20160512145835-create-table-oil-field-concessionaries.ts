@@ -15,8 +15,9 @@ module.exports = {
               allowNull: false,
               references: {
                   model: 'oil_fields',
-                  key: 'id'
-              }
+                  key: 'id',
+              },
+              onDelete: 'CASCADE'
           },
           company_id: {
               type: Sequelize.INTEGER,
@@ -24,7 +25,8 @@ module.exports = {
               references: {
                   model: 'companies',
                   key: 'id'
-              }
+              },
+              onDelete: 'CASCADE'
           },
           prop: {
               type: Sequelize.FLOAT,
