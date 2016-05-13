@@ -28,6 +28,7 @@ params['Well'] = require('./Well');
 params['HydrocarbonEvidence'] = require('./HydrocarbonEvidence');
 params['ProductionUnit'] = require('./ProductionUnit');
 params['ProductionWell'] = require('./ProductionWell');
+params['Refinery'] = require('./ProductionWell');
 
 export = params;
 
