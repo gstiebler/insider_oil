@@ -15,14 +15,19 @@ function updateConcessionaries(db, oilField) {
         if (concessionaries.length != concessionaries_props.length)
             throw 'Tamanhos diferentes de concessionários';
         const newConcessionariesRecords = [];
+        var prop_sum = 0;
         for (var i = 0; i < concessionaries.length; i++) {
             const ofcRecord = {
                 oil_field_id: oilField.id,
                 company_id: concessionaries[i].id,
-                prop: concessionaries_props[i]
+                prop: concessionaries_props[i] / 100.0
             };
             newConcessionariesRecords.push(ofcRecord);
+            prop_sum += concessionaries_props[i];
         }
+        if(Math.abs(prop_sum - 100.0) > 0.0001)
+            throw 'Valores não somam ' + prop_sum + '%';
+        
         return db.OilFieldConcessionary.bulkCreate(newConcessionariesRecords);
     });
 }
@@ -76,7 +81,7 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
         concessionaries_props: {
             type: DataTypes.VIRTUAL,
             get: function() {
-                const select = 'select ofc.prop ';
+                const select = 'select round(ofc.prop * 100, 2) as prop ';
                 const fromStr = 'from oil_field_concessionaries ofc ';
                 const where = 'where ofc.oil_field_id = ' + this.id;
                 const order = ' order by ofc.id';

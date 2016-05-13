@@ -46,11 +46,20 @@ oilFieldConcessionaries: function(test) {
             { id: petroId } ],
         concessionaries_props: [ 30, 70 ],
     };
-    await( db.models.OilField.create(newItemData) );
+    // TODO test saving not summing 100%
+    /*try {
+	    await( db.sequelize.transaction(function(t) {
+            return db.models.OilField.create(newItemData);
+        }));
+        test.ok(false);
+    } catch(err) {
+        console.log(err);
+    }
+    newItemData.concessionaries_props = [ 30, 70 ]; */
+    const newRecord = await( db.models.OilField.create(newItemData) );
     
     // Create
     const findOpts = { where: { name: 'Campo Teste' } };
-    const newRecord = await( db.models.OilField.findAll(findOpts) )[0];
     const record = jsonfy(newRecord);
     
     test.equal( 2, record.concessionaries.length );
