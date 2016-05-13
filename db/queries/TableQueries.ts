@@ -523,6 +523,44 @@ export const queries:ITableQueries = {
         ]
     },
     
+    Refineries: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'refineries',
+                    fields: [
+                        'id',
+                        'name',
+                        'capacity',
+                    ]
+                },
+                extraFields: [
+                    ['"Refinery"', 'model'],
+                ],
+                joinTables: [],
+                filters: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'name'
+                }
+            },
+            {
+                label: 'Capacidade',
+                fieldName: 'capacity',
+                type: 'FLOAT'
+            },
+        ]
+    },
+    
     Wells: {
         queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {    
             const wellOpts:QueryGenerator.IQueryOpts = {
