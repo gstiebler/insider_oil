@@ -14,6 +14,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+        type: {
+          type: Sequelize.ENUM('ONSHORE', 'OFFSHORE'),
+	        allowNull: false,
+        },
       address: {
         type: Sequelize.STRING,
         allowNull: true
