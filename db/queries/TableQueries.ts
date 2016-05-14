@@ -816,6 +816,67 @@ export const queries:ITableQueries = {
         },
         fields: terminal.fields
     },
+    
+    Fleet: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'fleet',
+                    fields: [
+                        'id',
+                        'name',
+                        'year',
+                        'country',
+                        'type',
+                        'weight',
+                    ]
+                },
+                extraFields: [
+                    ['"Fleet"', 'model']
+                ],
+                joinTables: [],
+                filters: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'name'
+                }
+            },
+            {
+                label: 'Ano de construção',
+                fieldName: 'year',
+                type: 'INTEGER'
+            },
+            {
+                label: 'País de origem',
+                fieldName: 'country',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Tipo',
+                fieldName: 'type',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'País de origem',
+                fieldName: 'country',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Porte Bruto (DWT)',
+                fieldName: 'weight',
+                type: 'FLOAT'
+            },
+        ]
+    },
 };
 
 export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {

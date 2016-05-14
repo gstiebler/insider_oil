@@ -333,6 +333,12 @@ var tree: ITreeNode = {
             }
         },
         {
+            label: 'Frota Transpetro',
+            child: {
+                source: 'Fleet'
+            }
+        },
+        {
             label: 'Empresas',
             child: {
                 source: 'Companies'
