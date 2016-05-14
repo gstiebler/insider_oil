@@ -321,6 +321,18 @@ var tree: ITreeNode = {
             }
         },
         {
+            label: 'Terminais terrestres',
+            child: {
+                source: 'landTerminal'
+            }
+        },
+        {
+            label: 'Terminais marítimos',
+            child: {
+                source: 'seaTerminal'
+            }
+        },
+        {
             label: 'Empresas',
             child: {
                 source: 'Companies'

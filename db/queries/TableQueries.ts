@@ -81,6 +81,40 @@ const productionUnit:ITableQuery = {
 };
 
 
+
+const terminal:ITableQuery = {
+    queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        const options:QueryGenerator.IQueryOpts = {
+            table: {
+                name: 'terminals',
+                fields: [
+                    'id',
+                    'name',
+                ]
+            },
+            joinTables: [],
+            extraFields: [
+                ['"Terminal"', 'model'],
+            ],
+            filters: queryParams.filters,
+            order: queryParams.order
+        };
+        
+        return QueryGenerator.queryGenerator(options);
+    },
+    fields: [
+        {
+            label: 'Nome',
+            ref: {
+                modelField: 'model',
+                idField: 'id',
+                valueField: 'name'
+            }
+        },
+    ]
+};
+
+
 const oilField:ITableQuery = {
     queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
         const options:QueryGenerator.IQueryOpts = {
@@ -755,6 +789,32 @@ export const queries:ITableQueries = {
             return oilField.queryStrFn(queryParams);
         },
         fields: oilField.fields
+    },
+    
+    landTerminal: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+            queryParams.filters.push(
+                {
+                    field: 'type',
+                    equal: '"ONSHORE"'
+                }
+            );
+            return terminal.queryStrFn(queryParams);
+        },
+        fields: terminal.fields
+    },
+    
+    seaTerminal: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+            queryParams.filters.push(
+                {
+                    field: 'type',
+                    equal: '"OFFSHORE"'
+                }
+            );
+            return terminal.queryStrFn(queryParams);
+        },
+        fields: terminal.fields
     },
 };
 
