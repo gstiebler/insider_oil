@@ -12,7 +12,7 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
       },
         type: {
           type: Sequelize.ENUM('ONSHORE', 'OFFSHORE'),
