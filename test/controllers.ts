@@ -420,6 +420,7 @@ allTablesMain: test => {
 	    'ProductionWell',
 	    'Refinery',
 	    'Terminal',
+	    'Fleet',
 	];
 	
 	for(var model of models) {

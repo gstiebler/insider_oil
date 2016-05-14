@@ -325,6 +325,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         ProductionUnit: 'Unidades de produção',
         Refinery: 'Refinarias',
         Terminal: 'Terminais',
+        Fleet: 'Frota Transpetro',
     };
     
     res.json(list);

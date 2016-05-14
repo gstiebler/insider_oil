@@ -54,5 +54,8 @@ module.exports = function(queryInterface) {
         {
             name: 'Terminal'
         },
+        {
+            name: 'Fleet'
+        },
     ]);
 }

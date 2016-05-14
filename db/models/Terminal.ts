@@ -1,6 +1,5 @@
 'use strict';
 import Sequelize = require('sequelize');
-import { getListFieldObj } from '../../lib/ModelUtils';
 
 module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
   const Terminal = sequelize.define('Terminal', {
