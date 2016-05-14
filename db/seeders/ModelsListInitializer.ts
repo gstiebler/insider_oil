@@ -51,5 +51,8 @@ module.exports = function(queryInterface) {
         {
             name: 'Refinery'
         },
+        {
+            name: 'Terminal'
+        },
     ]);
 }

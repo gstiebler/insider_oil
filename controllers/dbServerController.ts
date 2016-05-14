@@ -324,6 +324,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         HydrocarbonEvidence: 'Indicíos de hidrocarbonetos',
         ProductionUnit: 'Unidades de produção',
         Refinery: 'Refinarias',
+        Terminal: 'Terminais',
     };
     
     res.json(list);

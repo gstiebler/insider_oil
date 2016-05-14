@@ -31,6 +31,7 @@ const operations: IOperations = {
     ProductionUnit: BaseDataSourceOperations,
     ProductionWell: BaseDataSourceOperations,
     Refinery: BaseDataSourceOperations,
+    Terminal: BaseDataSourceOperations,
 };
 
 export = operations;
