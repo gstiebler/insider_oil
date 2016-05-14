@@ -1,5 +1,5 @@
 'use strict';
-//import Sequelize = require('sequelize');  
+import Sequelize = require('sequelize');  
 
 module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes) {
   var OilFieldConcessionary = sequelize.define('OilFieldConcessionary', {
