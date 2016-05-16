@@ -22,6 +22,15 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
         }
     }
     
+    $scope.relatedBids = {
+        queryName: 'BidsByObject',
+        title: 'Licitações',
+        filters: {
+            obj_id: id,
+            dataSource: source
+        }
+    }
+    
     // show record values
     function showValues(viewData) {
         $scope.recordData = viewData.record;
