@@ -263,6 +263,24 @@ getPersonsByCompany:  (test: nodeunit.Test) => {
     test.done();
 },
 
+getBidsByObject: (test: nodeunit.Test) => {
+    const amazonasId = utils.idByName('Basin', 'Amazonas') ;
+    const filters = {
+        obj_id: amazonasId,
+        dataSource: 'Basin'
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'BidsByObject',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+
+    test.done();
+},
+
 }
 
 exports.group = fiberTests.convertTests( group, true );
