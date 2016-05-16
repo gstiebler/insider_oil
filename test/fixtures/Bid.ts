@@ -1,5 +1,6 @@
 'use strict';
 import Sequelize = require('sequelize');  
+import utils = require('../lib/utils');
 
 module.exports = function(db): Promise<any[]> {
     const Bid:Sequelize.Model<any, any> = db.models.Bid;
@@ -50,5 +51,10 @@ module.exports = function(db): Promise<any[]> {
         },
     ];
     
-    return Bid.bulkCreate(newRecordsData);
+    const promisesArray = [];
+    for(var bidObj of newRecordsData) {
+        promisesArray.push(Bid.create(bidObj));
+    }
+    
+    return Promise.all(promisesArray);
 }

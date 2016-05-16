@@ -1,6 +1,26 @@
 'use strict';
 import Sequelize = require('sequelize');
 
+function updateBid(db, bid) {
+    const object:any[] = bid.dataValues.object;
+    if(object == null || object.length != 1)
+        return;
+    
+    bid.model_id = object[0].model_id;
+    bid.obj_id = object[0].id;
+}
+
+function updateFieldsFunc(db) {
+    return function(bid) {
+        updateBid(db, bid);
+    }
+}
+
+function defineHooks(db) {
+	db.Bid.hook('beforeCreate', updateFieldsFunc(db));
+	db.Bid.hook('beforeUpdate', updateFieldsFunc(db));
+}
+
 module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
     const Bid = sequelize.define('Bid', {
         process_number: {
@@ -43,6 +63,12 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
             type: Sequelize.INTEGER,
             allowNull: true
         },
+        object: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                return '';
+            }
+        },
     },
         {
             underscored: true,
@@ -54,7 +80,8 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                         foreignKey: { allowNull: true }
                     };
                     Bid.belongsTo(models.ModelsList, opts);
-                }
+                },
+			    defineHooks: defineHooks
             }
         }
     );

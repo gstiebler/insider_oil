@@ -9,7 +9,6 @@ export function createFixtures():void {
     await( require('./Refinery')(db) );
     await( require('./Terminal')(db) );
     await( require('./Fleet')(db) );
-    await( require('./Bid')(db) );
     await( require('./Basin')(db) );
     await( require('./Block')(db) );
     await( require('./DrillingRigOffshore')(db) );
@@ -24,6 +23,7 @@ export function createFixtures():void {
     await( require('./ComercialDeclarationFixture')(db) );
     await( require('./HydrocarbonEvidence')(db) );
     await( require('./ProductionUnit')(db) );
+    await( require('./Bid')(db) );
     await( require('./ProductionWell')(db) );
     await( require('./Production')(db) );
 };
