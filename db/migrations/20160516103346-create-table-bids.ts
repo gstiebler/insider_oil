@@ -23,7 +23,7 @@ module.exports = {
         allowNull: true
       },
       qty_items: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: true
       },
       opening_moment: {
@@ -48,7 +48,7 @@ module.exports = {
       },
       model_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'models_list',
           key: 'id'
@@ -56,7 +56,7 @@ module.exports = {
       },
       obj_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       created_at: {
         allowNull: false,

@@ -9,6 +9,7 @@ export function createFixtures():void {
     await( require('./Refinery')(db) );
     await( require('./Terminal')(db) );
     await( require('./Fleet')(db) );
+    await( require('./Bid')(db) );
     await( require('./Basin')(db) );
     await( require('./Block')(db) );
     await( require('./DrillingRigOffshore')(db) );
