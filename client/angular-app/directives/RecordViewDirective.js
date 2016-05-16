@@ -7,9 +7,9 @@ var _$rv_scope;
 
 function formatByType(field) {
     if(field.type == 'DATE') {
-        field.value = _DateService.dateFormat(field.value);
+        return _DateService.dateFormat(field.value);
     } else if(field.type == 'DATETIME') {
-        field.value = _DateService.parseDateTime(field.value);
+        return _DateService.dateTimeFormat(field.value);
     } else {
         return field.value;    
     }                

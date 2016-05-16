@@ -933,7 +933,7 @@ export const queries:ITableQueries = {
             {
                 label: 'Data de abertura',
                 fieldName: 'opening_moment',
-                type: 'VARCHAR'
+                type: 'DATETIME'
             },
             {
                 label: 'Cidade de abertura',

@@ -26,10 +26,6 @@ function getFormatLinkFn(column) {
     }
 }
 
-function formatDate(value) {
-    return _DateService.dateFormat(value);
-}
-
 /**
  * DataTables callback to refresh the data. It's called when the order column change,
  * and when a page on pagination is clicked
@@ -94,7 +90,9 @@ function tableParamsChanged(tableParams) {
         }
         
         if(field.type == 'DATE') {
-            columns[i].render = { display: formatDate };
+            columns[i].render = { display: _DateService.dateFormat };
+        } else if(field.type == 'DATETIME') {
+            columns[i].render = { display: _DateService.dateTimeFormat };
         }
     }
     

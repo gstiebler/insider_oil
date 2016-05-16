@@ -47,7 +47,7 @@ function controllerFunc($scope, server, DateService) {
                     if(field.type == 'DATE') {
                         recordValue = DateService.dateFormat(recordValue);
                     } else if(field.type == 'DATETIME') {
-                        recordValue = DateService.parseDateTime(recordValue);
+                        recordValue = DateService.dateTimeFormat(recordValue);
                     }
                     item.value = recordValue;
                 }

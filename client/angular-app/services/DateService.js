@@ -15,13 +15,16 @@ app.service('DateService',  function() {
         return result;
     }
     
+
     /**
      * Formats date-time string. The date is expected to be in UTC
      * This functions converts from UTC to local time
      * @param {String} dateTimeStr 
      * @return {String} Formatted date string
      */
-    this.parseDateTime = function(dateTimeStr) {
+    this.dateTimeFormat = function(dateTimeStr) {
+        if(!dateTimeStr)
+            return '';
         var result = moment(dateTimeStr).format('DD/MM/YYYY HH:mm');
         return result;
     }
