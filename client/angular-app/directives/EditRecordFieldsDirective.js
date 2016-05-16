@@ -26,6 +26,7 @@ app.directive('recordFields', function() {
         },
         controller: ['$scope', 'server', function($scope, server) {
             $scope.dateFormat = 'dd/MM/yyyy';
+            $scope.dateTimeFormat = 'dd/MM/yyyy HH:mm';
             
             $scope.$watch('fields', function(fields){
                 if(!fields)
@@ -41,6 +42,7 @@ app.directive('recordFields', function() {
                     field.htmlId = getHtmlId(field);
                     field.hasRef = field.type == 'ref';
                     field.isDate = field.type == 'DATE';
+                    field.isDateTime = field.type == 'DATETIME';
                     if( field.hasRef ) {
                         if(hasValues) 
                             $scope.values[field.name] = $scope.values[field.name].toString();

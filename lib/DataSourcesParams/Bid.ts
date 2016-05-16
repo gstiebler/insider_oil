@@ -42,7 +42,7 @@ const Bid: BaseDataSourceParams = {
         }
     },
     labelField: "process_number",
-    gridFields: ["process_number", "modality", 'contract_object', 'opening_moment'],
+    gridFields: ["process_number", "modality", 'contract_object'],
     tableLabel: "Licitações",
     hasMap: false
 }
