@@ -421,6 +421,7 @@ allTablesMain: test => {
 	    'Refinery',
 	    'Terminal',
 	    'Fleet',
+	    'Bid',
 	];
 	
 	for(var model of models) {
