@@ -877,6 +877,76 @@ export const queries:ITableQueries = {
             },
         ]
     },
+    
+    Bids: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'bids',
+                    fields: [
+                        'id',
+                        'process_number',
+                        'modality',
+                        'contract_object',
+                        'qty_items',
+                        'opening_moment',
+                        'opening_local',
+                        'opening_city',
+                        'opening_state',
+                        'situation',
+                    ]
+                },
+                extraFields: [
+                    ['"Bid"', 'model']
+                ],
+                joinTables: [],
+                filters: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Número do processo',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'process_number'
+                }
+            },
+            {
+                label: 'Modalidade da licitação',
+                fieldName: 'modality',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Objeto da contratação',
+                fieldName: 'contract_object',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Quantidade de itens',
+                fieldName: 'qty_items',
+                type: 'INTEGER'
+            },
+            {
+                label: 'Data de abertura',
+                fieldName: 'opening_moment',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Cidade de abertura',
+                fieldName: 'opening_city',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Situação',
+                fieldName: 'situation',
+                type: 'VARCHAR'
+            },
+        ]
+    },
 };
 
 export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {

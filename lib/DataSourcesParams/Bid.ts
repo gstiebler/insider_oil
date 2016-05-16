@@ -19,7 +19,7 @@ const Bid: BaseDataSourceParams = {
             label: 'Data de abertura',
         },
         opening_local: {
-            label: 'E-Local de abertura',
+            label: 'Local de abertura',
         },
         opening_city: {
             label: 'Cidade de abertura',

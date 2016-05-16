@@ -339,6 +339,12 @@ var tree: ITreeNode = {
             }
         },
         {
+            label: 'Licitações',
+            child: {
+                source: 'Bids'
+            }
+        },
+        {
             label: 'Empresas',
             child: {
                 source: 'Companies'
