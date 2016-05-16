@@ -326,6 +326,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         Refinery: 'Refinarias',
         Terminal: 'Terminais',
         Fleet: 'Frota Transpetro',
+        Bid: 'Licitações',
     };
     
     res.json(list);

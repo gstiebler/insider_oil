@@ -33,6 +33,7 @@ const operations: IOperations = {
     Refinery: BaseDataSourceOperations,
     Terminal: BaseDataSourceOperations,
     Fleet: BaseDataSourceOperations,
+    Bid: BaseDataSourceOperations,
 };
 
 export = operations;

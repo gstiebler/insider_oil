@@ -31,6 +31,7 @@ params['ProductionWell'] = require('./ProductionWell');
 params['Refinery'] = require('./Refinery');
 params['Terminal'] = require('./Terminal');
 params['Fleet'] = require('./Fleet');
+params['Bid'] = require('./Bid');
 
 export = params;
 
