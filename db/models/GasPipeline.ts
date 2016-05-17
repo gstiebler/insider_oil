@@ -38,12 +38,12 @@ function loadRefObj(sequelize, gasPipeline, prefix: string) {
     const modelRecord = await(sequelize.models.ModelsList.findById(gasPipeline[modelField]));
     const referencedModel = sequelize.models[modelRecord.name];
     const referencedObj = await(referencedModel.findById(gasPipeline[objField]));
-    return {
+    return [{
         id: gasPipeline[objField],
         model_id: gasPipeline[modelField],
         model: modelRecord.name,
         name: referencedObj.name
-    };
+    }];
 }
 
 module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {

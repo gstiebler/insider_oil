@@ -98,8 +98,8 @@ GasPipeline: (test) => {
 
     test.equal('Plataforma de Produção de Ubarana 2', gp.src_instalation);  
     test.equal('Campo de Produção de Ubarana', gp.src_concession);  
-    test.equal('Capixaba', gp.dst_instalation.name); 
-    test.equal('Jiribatuba2', gp.dst_concession.name);
+    test.equal('Capixaba', gp.dst_instalation[0].name); 
+    test.equal('Jiribatuba2', gp.dst_concession[0].name);
        
     test.done();
 }

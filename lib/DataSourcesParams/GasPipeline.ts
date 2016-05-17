@@ -46,6 +46,19 @@ const GasPipeline: BaseDataSourceParams = {
             label: 'Concessão de destino',
             isProjectList: true
         },
+        
+        src_instalation_model_id: {
+            label: 'ignorar'
+        },
+        src_concession_model_id: {
+            label: 'ignorar'
+        },
+        dst_instalation_model_id: {
+            label: 'ignorar'
+        },
+        dst_concession_model_id: {
+            label: 'ignorar'
+        },
     },
     labelField: "name",
     gridFields: ["name", "state", 'classification', 'extension'],
