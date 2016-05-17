@@ -345,6 +345,12 @@ var tree: ITreeNode = {
             }
         },
         {
+            label: 'Contratos',
+            child: {
+                source: 'Contracts'
+            }
+        },
+        {
             label: 'Empresas',
             child: {
                 source: 'Companies'

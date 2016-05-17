@@ -947,6 +947,91 @@ export const queries:ITableQueries = {
             },
         ]
     },
+    
+    Contracts: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'contracts',
+                    fields: [
+                        'id',
+                        'supplier',
+                        'contract_object',
+                        'start',
+                        'end',
+                        'value',
+                        'situation',
+                    ]
+                },
+                extraFields: [
+                    ['"Contract"', 'model'],
+                    ['"Bid"', 'bid_model']
+                ],
+                joinTables: [
+                    {
+                        name: 'bids',
+                        fields: [
+                            ['id', 'bid_id'],
+                            ['process_number', 'bid_process_number'],
+                        ],
+                        joinField: 'contracts.bid_id'
+                    },
+                ],
+                filters: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Objeto da contratação',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'contract_object'
+                }
+            },
+            {
+                label: 'Fornecedor',
+                fieldName: 'supplier',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Objeto da contratação',
+                fieldName: 'contract_object',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Início da vigência',
+                fieldName: 'start',
+                type: 'DATE'
+            },
+            {
+                label: 'Fim da vigência',
+                fieldName: 'end',
+                type: 'DATE'
+            },
+            {
+                label: 'Valor',
+                fieldName: 'value',
+                type: 'FLOAT'
+            },
+            {
+                label: 'Situação',
+                fieldName: 'situation',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Licitação',
+                ref: {
+                    modelField: 'bid_model',
+                    idField: 'bid_id',
+                    valueField: 'bid_process_number'
+                }
+            },
+        ]
+    },
 };
 
 export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {
