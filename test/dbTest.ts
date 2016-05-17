@@ -95,7 +95,6 @@ oilFieldConcessionaries: function(test) {
 GasPipeline: (test) => {
     const gpId = utils.idByName('GasPipeline', 'GASODUTO LOR/UPN');
     const gp = jsonfy( await( db.models.GasPipeline.findById(gpId) ) );
-    console.log(gp);
 
     test.equal('Plataforma de Produção de Ubarana 2', gp.src_instalation);  
     test.equal('Campo de Produção de Ubarana', gp.src_concession);  

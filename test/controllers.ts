@@ -423,6 +423,7 @@ allTablesMain: test => {
 	    'Fleet',
 	    'Bid',
 	    'Contract',
+	    'GasPipeline',
 	];
 	
 	for(var model of models) {

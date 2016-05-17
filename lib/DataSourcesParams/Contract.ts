@@ -43,7 +43,7 @@ const Contract: BaseDataSourceParams = {
     },
     labelField: "contract_object",
     gridFields: ["contract_object", "supplier", 'value', 'start', 'end', 'situation'],
-    tableLabel: "Licitações",
+    tableLabel: "Contratos",
     hasMap: false
 }
 

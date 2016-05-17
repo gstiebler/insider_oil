@@ -330,6 +330,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         Fleet: 'Frota Transpetro',
         Bid: 'Licitações',
         Contract: 'Contratos',
+        GasPipeline: 'Gasodutos',
     };
     
     res.json(list);

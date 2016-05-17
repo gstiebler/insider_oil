@@ -35,6 +35,7 @@ const operations: IOperations = {
     Fleet: BaseDataSourceOperations,
     Bid: BaseDataSourceOperations,
     Contract: BaseDataSourceOperations,
+    GasPipeline: BaseDataSourceOperations,
 };
 
 export = operations;
