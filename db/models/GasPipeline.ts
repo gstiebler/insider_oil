@@ -6,7 +6,7 @@ var await = require('../../lib/await');
 function updateGasPipeRef(gasPipeline, prefix: string) {
     const modelField = prefix + '_model_id';
     const objField = prefix + '_obj_id';
-    const object: any[] = gasPipeline.dataValues.object;
+    const object: any[] = gasPipeline.dataValues[prefix];
     if (object == null || object.length != 1) {
         gasPipeline[modelField] = null;
         gasPipeline[objField] = null;
@@ -30,6 +30,10 @@ function defineHooks(db) {
 }
 
 function loadRefObj(prefix: string) {
+    const textField = prefix + '_text';
+    if(this[textField])
+        return this[textField];
+        
     const modelField = prefix + '_model_id';
     const objField = prefix + '_obj_id';
     const modelRecord = await(db.models.ModelsList.findById(this[modelField]));
