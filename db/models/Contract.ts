@@ -51,11 +51,13 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
         },
         additives_ids: {
             type: Sequelize.STRING,
-            allowNull: true
+            allowNull: true,
+            invisible: true
         },
         obj_id: {
             type: Sequelize.INTEGER,
-            allowNull: true
+            allowNull: true,
+            invisible: true
         },
         object: {
             type: DataTypes.VIRTUAL,
@@ -84,7 +86,7 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                     Contract.belongsTo(models.ModelsList, modelOpts);
 
                     const bidOpts: Sequelize.AssociationOptionsBelongsTo = {
-                        as: 'model',
+                        as: 'bid',
                         foreignKey: { allowNull: true }
                     };
                     Contract.belongsTo(models.Bid, bidOpts);

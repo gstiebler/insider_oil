@@ -44,7 +44,7 @@ app.directive('recordFields', function() {
                     field.isDate = field.type == 'DATE';
                     field.isDateTime = field.type == 'DATETIME';
                     if( field.hasRef ) {
-                        if(hasValues) 
+                        if(hasValues && $scope.values[field.name]) 
                             $scope.values[field.name] = $scope.values[field.name].toString();
                         
                         server.getComboValues( field.model, getOnComboValuesFn(field), $scope.onError );

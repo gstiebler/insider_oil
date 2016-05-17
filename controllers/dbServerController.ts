@@ -194,7 +194,9 @@ export function getComboValues(req: express.Request, res: express.Response) {
     const modelName:string = req.query.model;
     const model = dbUtils.getDataSource(modelName);
     const viewParams = dsParams[modelName];
-    const labelField = viewParams.labelField;  
+    var labelField = 'name';
+    if(viewParams) 
+        labelField = viewParams.labelField;  
     // default combo list 
     if(model) {
         const options = {
