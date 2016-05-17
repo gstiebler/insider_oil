@@ -193,10 +193,10 @@ export function deleteItem(req: express.Request, res: express.Response) { Sync(f
 export function getComboValues(req: express.Request, res: express.Response) {
     const modelName:string = req.query.model;
     const model = dbUtils.getDataSource(modelName);
-    const labelField = 'name';  
+    const viewParams = dsParams[modelName];
+    const labelField = viewParams.labelField;  
     // default combo list 
     if(model) {
-        // TODO using 'name' as field. Should change for label field configuration
         const options = {
             attributes: ['id', labelField],
             order: [labelField]
