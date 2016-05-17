@@ -88,7 +88,6 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
         },
 
         // source reference fields
-
         src_instalation_obj_id: {
             type: Sequelize.INTEGER,
             allowNull: true
