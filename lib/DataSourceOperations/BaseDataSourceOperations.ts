@@ -74,9 +74,13 @@ class DataSourceOperations implements IDataSourceOperations {
         for( let item of fields ) {
             item.value = record[item.name];
             
-            if(item.type == 'ref') {
+            if(item.type == 'ref') {          
+                const viewParams = dsParams[item.model];      
+                var labelField = 'name';
+                if(viewParams) 
+                    labelField = viewParams.labelField;  
                 item.ref = true;
-                item.name = record[item.association].name;
+                item.name = record[item.association][labelField];
             }
             recordValues.push(item);
         }
