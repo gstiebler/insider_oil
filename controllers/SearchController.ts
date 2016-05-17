@@ -59,6 +59,10 @@ import winston = require('winston');
         model: 'Fleet',
         fields: ['name']
     },
+    {
+        model: 'GasPipeline',
+        fields: ['name']
+    },
 ];
 
 // add ids to dataSources
