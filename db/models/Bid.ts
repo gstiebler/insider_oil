@@ -2,24 +2,21 @@
 import Sequelize = require('sequelize');
 var await = require('../../lib/await');
 
-function updateBid(db, bid) {
+function updateBid(bid) {
     const object:any[] = bid.dataValues.object;
-    if(object == null || object.length != 1)
-        return;
+    if(object == null || object.length != 1) {
+        bid.model_id = null;
+        bid.obj_id = null;
+        return;   
+    }
     
     bid.model_id = object[0].model_id;
     bid.obj_id = object[0].id;
 }
 
-function updateFieldsFunc(db) {
-    return function(bid) {
-        updateBid(db, bid);
-    }
-}
-
 function defineHooks(db) {
-	db.Bid.hook('beforeCreate', updateFieldsFunc(db));
-	db.Bid.hook('beforeUpdate', updateFieldsFunc(db));
+	db.Bid.hook('beforeCreate', updateBid);
+	db.Bid.hook('beforeUpdate', updateBid);
 }
 
 module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
