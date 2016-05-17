@@ -351,6 +351,12 @@ var tree: ITreeNode = {
             }
         },
         {
+            label: 'Gasodutos',
+            child: {
+                source: 'GasPipelines'
+            }
+        },
+        {
             label: 'Empresas',
             child: {
                 source: 'Companies'
