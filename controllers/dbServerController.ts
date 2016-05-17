@@ -237,14 +237,18 @@ export function viewRecord(req: express.Request, res: express.Response, next) {
         .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
     
     function onRecord(record) { Sync(function() {  
-        const dsOperations = DataSourceOperations[dataSourceName];
-        const recordValues = dsOperations.recordToViewValues(dataSourceName, record);
-        const viewParams = dsParams[dataSource.name];
-        const result = {
-            record: recordValues,
-            referencedObjects: viewParams.referencedObjectsOnView
-        };
-        res.json(result);
+        try {         
+            const dsOperations = DataSourceOperations[dataSourceName];
+            const recordValues = dsOperations.recordToViewValues(dataSourceName, record);
+            const viewParams = dsParams[dataSource.name];
+            const result = {
+                record: recordValues,
+                referencedObjects: viewParams.referencedObjectsOnView
+            };
+            res.json(result);   
+        } catch(err) {
+            ControllerUtils.getErrorFunc(res, 500, "Erro")(err);
+        }
         return null;
     })
     return null;

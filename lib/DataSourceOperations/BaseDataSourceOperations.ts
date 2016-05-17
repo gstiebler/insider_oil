@@ -80,7 +80,8 @@ class DataSourceOperations implements IDataSourceOperations {
                 if(viewParams) 
                     labelField = viewParams.labelField;  
                 item.ref = true;
-                item.name = record[item.association][labelField];
+                if(record[item.association])
+                    item.name = record[item.association][labelField];
             }
             recordValues.push(item);
         }
