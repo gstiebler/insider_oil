@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      supplier_id: {
+      supplier_identifier: {
         type: Sequelize.STRING,
         allowNull: true,
       },

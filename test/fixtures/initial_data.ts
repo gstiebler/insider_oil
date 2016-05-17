@@ -23,7 +23,8 @@ export function createFixtures():void {
     await( require('./ComercialDeclarationFixture')(db) );
     await( require('./HydrocarbonEvidence')(db) );
     await( require('./ProductionUnit')(db) );
-    await( require('./Bid')(db) );
     await( require('./ProductionWell')(db) );
     await( require('./Production')(db) );
+    await( require('./Bid')(db) );
+    await( require('./Contract')(db) );
 };
