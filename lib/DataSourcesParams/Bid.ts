@@ -31,10 +31,10 @@ const Bid: BaseDataSourceParams = {
             label: 'Situação'
         },
         model_id: {
-            label: 'Objeto'
+            label: 'ignorar'
         },
         obj_id: {
-            label: 'Objeto'
+            label: 'ignorar'
         },
         object: {
             label: 'Objeto',

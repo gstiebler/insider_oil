@@ -30,16 +30,16 @@ const Contract: BaseDataSourceParams = {
         bid_id: {
             label: 'Licitação'
         },
-        model_id: {
-            label: 'Objeto'
-        },
-        obj_id: {
-            label: 'Objeto'
-        },
         object: {
             label: 'Objeto',
             isProjectList: true
-        }
+        },
+        model_id: {
+            label: 'ignorar'
+        },
+        obj_id: {
+            label: 'ignorar'
+        },
     },
     labelField: "contract_object",
     gridFields: ["contract_object", "supplier", 'value', 'start', 'end', 'situation'],
