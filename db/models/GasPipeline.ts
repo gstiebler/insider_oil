@@ -30,8 +30,10 @@ function defineHooks(db) {
 
 function loadRefObj(sequelize, gasPipeline, prefix: string) {
     const textField = prefix + '_text';
-    if(gasPipeline[textField])
-        return gasPipeline[textField];
+    if(gasPipeline[textField]) {
+        return [];
+        //return gasPipeline[textField];
+    }
         
     const modelField = prefix + '_model_id';
     const objField = prefix + '_obj_id';

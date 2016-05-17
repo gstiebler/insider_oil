@@ -96,8 +96,8 @@ GasPipeline: (test) => {
     const gpId = utils.idByName('GasPipeline', 'GASODUTO LOR/UPN');
     const gp = jsonfy( await( db.models.GasPipeline.findById(gpId) ) );
 
-    test.equal('Plataforma de Produção de Ubarana 2', gp.src_instalation);  
-    test.equal('Campo de Produção de Ubarana', gp.src_concession);  
+    test.equal('Plataforma de Produção de Ubarana 2', gp.src_instalation_text);  
+    test.equal('Campo de Produção de Ubarana', gp.src_concession_text);  
     test.equal('Capixaba', gp.dst_instalation[0].name); 
     test.equal('Jiribatuba2', gp.dst_concession[0].name);
        
