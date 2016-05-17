@@ -1,6 +1,5 @@
 'use strict';
 import Sequelize = require('sequelize');
-import db = require('./index');
 var await = require('../../lib/await');
 
 function updateGasPipeRef(gasPipeline, prefix: string) {
@@ -29,22 +28,22 @@ function defineHooks(db) {
     db.GasPipeline.hook('beforeUpdate', updateAllGasPipeRefs);
 }
 
-function loadRefObj(prefix: string) {
+function loadRefObj(sequelize, gasPipeline, prefix: string) {
     const textField = prefix + '_text';
-    if(this[textField])
-        return this[textField];
+    if(gasPipeline[textField])
+        return gasPipeline[textField];
         
     const modelField = prefix + '_model_id';
     const objField = prefix + '_obj_id';
-    const modelRecord = await(db.models.ModelsList.findById(this[modelField]));
-    const referencedModel = db.models.models[modelRecord.name];
-    const referencedObj = await(referencedModel.findById(this[objField]));
-    return [{
-        id: this[objField],
-        model_id: this[modelField],
+    const modelRecord = await(sequelize.models.ModelsList.findById(gasPipeline[modelField]));
+    const referencedModel = sequelize.models[modelRecord.name];
+    const referencedObj = await(referencedModel.findById(gasPipeline[objField]));
+    return {
+        id: gasPipeline[objField],
+        model_id: gasPipeline[modelField],
         model: modelRecord.name,
         name: referencedObj.name
-    }];
+    };
 }
 
 module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
@@ -112,19 +111,19 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
         // virtual fields 
         src_instalation: {
             type: DataTypes.VIRTUAL,
-            get: function () {  return loadRefObj('src_instalation'); }
+            get: function () {  return loadRefObj(sequelize, this, 'src_instalation'); }
         },
         src_concession: {
             type: DataTypes.VIRTUAL,
-            get: function () {  return loadRefObj('src_concession'); }
+            get: function () {  return loadRefObj(sequelize, this, 'src_concession'); }
         },
         dst_instalation: {
             type: DataTypes.VIRTUAL,
-            get: function () {  return loadRefObj('dst_instalation'); }
+            get: function () {  return loadRefObj(sequelize, this, 'dst_instalation'); }
         },
         dst_concession: {
             type: DataTypes.VIRTUAL,
-            get: function () {  return loadRefObj('dst_concession'); }
+            get: function () {  return loadRefObj(sequelize, this, 'dst_concession'); }
         },
     },
         {
