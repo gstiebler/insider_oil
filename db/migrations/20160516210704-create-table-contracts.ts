@@ -23,11 +23,11 @@ module.exports = {
         allowNull: true
       },
       start: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true
       },
       end: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true
       },
       value: {

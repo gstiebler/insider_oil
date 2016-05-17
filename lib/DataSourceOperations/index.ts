@@ -34,6 +34,7 @@ const operations: IOperations = {
     Terminal: BaseDataSourceOperations,
     Fleet: BaseDataSourceOperations,
     Bid: BaseDataSourceOperations,
+    Contract: BaseDataSourceOperations,
 };
 
 export = operations;

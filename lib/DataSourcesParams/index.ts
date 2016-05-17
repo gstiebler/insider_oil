@@ -32,6 +32,7 @@ params['Refinery'] = require('./Refinery');
 params['Terminal'] = require('./Terminal');
 params['Fleet'] = require('./Fleet');
 params['Bid'] = require('./Bid');
+params['Contract'] = require('./Contract');
 
 export = params;
 

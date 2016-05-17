@@ -34,11 +34,11 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
             allowNull: true
         },
         start: {
-            type: Sequelize.DATE,
+            type: Sequelize.DATEONLY,
             allowNull: true
         },
         end: {
-            type: Sequelize.DATE,
+            type: Sequelize.DATEONLY,
             allowNull: true
         },
         value: {
