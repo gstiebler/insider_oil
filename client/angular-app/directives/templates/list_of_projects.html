@@ -6,7 +6,7 @@
                     <th>Projeto</th>
                     <th>Descrição</th>
                 </tr>
-                <tr ng-repeat="project in projects">
+                <tr ng-repeat="project in projects track by $index">
                     <td>{{project.name}}</td>
                     <td>{{project.description}}
                     <td><button class="btn btn-default" ng-click="removeItem(project)">Remover</button></td>
