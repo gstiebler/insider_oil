@@ -26,7 +26,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      src_location: {
+      src_location_text: {
         type: Sequelize.STRING,
         allowNull: true,
       },
@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      dst_location: {
+      dst_location_text: {
         type: Sequelize.STRING,
         allowNull: true,
       },
