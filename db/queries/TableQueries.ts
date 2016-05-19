@@ -1088,6 +1088,50 @@ export const queries:ITableQueries = {
             },
         ]
     },
+    
+    OilPipelines: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'gas_pipelines',
+                    fields: [
+                        'id',
+                        'name',
+                        'diameter',
+                        'extension',
+                    ]
+                },
+                extraFields: [
+                    ['"OilPipeline"', 'model']
+                ],
+                joinTables: [],
+                filters: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'name'
+                }
+            },
+            {
+                label: 'Diâmetro (pol)',
+                fieldName: 'diameter',
+                type: 'FLOAT'
+            },
+            {
+                label: 'Extensão (km)',
+                fieldName: 'extension',
+                type: 'FLOAT'
+            },
+        ]
+    },
 };
 
 export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {

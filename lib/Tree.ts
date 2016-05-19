@@ -357,6 +357,12 @@ var tree: ITreeNode = {
             }
         },
         {
+            label: 'Oleodutos',
+            child: {
+                source: 'OilPipelines'
+            }
+        },
+        {
             label: 'Empresas',
             child: {
                 source: 'Companies'
