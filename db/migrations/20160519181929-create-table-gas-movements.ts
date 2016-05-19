@@ -22,6 +22,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      value: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
       gas_pipeline_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

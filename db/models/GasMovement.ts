@@ -3,19 +3,23 @@ import Sequelize = require('sequelize');
 var await = require('../../lib/await');
 
 module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
-    const GasMovements = sequelize.define('GasMovements', {
-      product: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      period_year: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      period_month: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
+    const GasMovement = sequelize.define('GasMovement', {
+        product: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        period_year: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        period_month: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        value: {
+            type: Sequelize.FLOAT,
+            allowNull: false
+        },
     },
         {
             underscored: true,
@@ -26,10 +30,10 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                         as: 'gas_pipeline',
                         foreignKey: { allowNull: false }
                     };
-                    GasMovements.belongsTo(models.GasPipeline, gpOpts);
+                    GasMovement.belongsTo(models.GasPipeline, gpOpts);
                 },
             }
         }
     );
-    return GasMovements;
+    return GasMovement;
 };
