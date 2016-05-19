@@ -24,7 +24,7 @@ const GasMovement: BaseDataSourceParams = {
     },
     labelField: "name",
     gridFields: ['gas_pipeline_name', "product", "period_year", 'period_month', 'value'],
-    tableLabel: "Gasodutos",
+    tableLabel: "Movimentação de gasoduto",
     hasMap: false
 }
 

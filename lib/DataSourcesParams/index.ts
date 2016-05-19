@@ -35,6 +35,7 @@ params['Bid'] = require('./Bid');
 params['Contract'] = require('./Contract');
 params['GasPipeline'] = require('./GasPipeline');
 params['OilPipeline'] = require('./OilPipeline');
+params['GasMovement'] = require('./GasMovement');
 
 export = params;
 
