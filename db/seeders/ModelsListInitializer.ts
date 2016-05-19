@@ -60,5 +60,8 @@ module.exports = function(queryInterface) {
         {
             name: 'GasPipeline'
         },
+        {
+            name: 'OilPipeline'
+        },
     ]);
 }

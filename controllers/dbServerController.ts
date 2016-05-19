@@ -335,6 +335,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         Bid: 'Licitações',
         Contract: 'Contratos',
         GasPipeline: 'Gasodutos',
+        OilPipeline: 'Oleodutos',
     };
     
     res.json(list);
