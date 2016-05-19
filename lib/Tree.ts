@@ -82,262 +82,48 @@ var tree: ITreeNode = {
                 },
             ]
         },
-        /*{
-            label: 'Produção',
-            children: [
-                {
-                    label: 'Onshore',
-                    children: [
-                    ]
-                },
-                {
-                    label: 'Offshore',
-                    children: [
-                        {
-                            label: 'Campos em fase de desenvolvimento',
-                            child: {
-                                source: 'OilFieldDeveloping',
-                                filters: {
-                                    shore: 'off'
-                                }
-                            }
-                        },
-                        {
-                            label: 'Campos em fase de produção',
-                            child: {
-                                source: 'OilFieldProduction',
-                                filters: {
-                                    shore: 'off'
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    label: 'UEPs',
-                    children: [
-                        {
-                            label: 'Em construção',
-                            children: [
-                                {
-                                    label: 'FPSOs',
-                                    child: {
-                                        source: 'FPSOProduction',
-                                        filters: {
-                                            status: 'construction'
-                                        }
-                                    }
-                                },
-                                {
-                                    label: 'Fixas',
-                                    child: {
-                                        source: 'FPSOProduction'
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            label: 'Em operação',
-                            children: [
-                                {
-                                    label: 'FPSOs',
-                                    child: {
-                                        source: 'FPSOProduction',
-                                        filters: {
-                                            status: 'operation'
-                                        }
-                                    }
-                                },
-                                {
-                                    label: 'Fixas',
-                                    child: {
-                                        source: 'FPSOProduction'
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    label: 'Reservas',
-                    children: [
-                        {
-                            label: 'Reservas Provadas Óleo',
-                            children: [
-                                {
-                                    label: 'Onshore',
-                                    child: {
-                                        source: 'ReserveProvenOil',
-                                        filters: {
-                                            shore: 'on'
-                                        }
-                                    }
-                                },
-                                {
-                                    label: 'Offshore',
-                                    child: {
-                                        source: 'ReserveProvenOil',
-                                        filters: {
-                                            shore: 'off'
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            label: 'Reservas Provadas Gás',
-                            children: [
-                                {
-                                    label: 'Onshore',
-                                    child: {
-                                        source: 'ReserveProvenGas',
-                                        filters: {
-                                            shore: 'on'
-                                        }
-                                    }
-                                },
-                                {
-                                    label: 'Offshore',
-                                    child: {
-                                        source: 'ReserveProvenGas',
-                                        filters: {
-                                            shore: 'off'
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            label: 'Reservas Totais Óleo',
-                            children: [
-                                {
-                                    label: 'Onshore',
-                                    child: {
-                                        source: 'ReserveTotalOil',
-                                        filters: {
-                                            shore: 'on'
-                                        }
-                                    }
-                                },
-                                {
-                                    label: 'Offshore',
-                                    child: {
-                                        source: 'ReserveTotalOil',
-                                        filters: {
-                                            shore: 'off'
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            label: 'Reservas Totais Gás',
-                            children: [
-                                {
-                                    label: 'Onshore',
-                                    child: {
-                                        source: 'ReserveTotalGas',
-                                        filters: {
-                                            shore: 'on'
-                                        }
-                                    }
-                                },
-                                {
-                                    label: 'Offshore',
-                                    child: {
-                                        source: 'ReserveTotalGas',
-                                        filters: {
-                                            shore: 'off'
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            label: 'Notícias',
-            child: {
-                source: 'News'
-            }
-        },
         {
             label: 'Logística',
             children: [
                 {
-                    label: 'Barcos de apoio'
+                    label: 'Terminais terrestres',
+                    child: {
+                        source: 'landTerminal'
+                    }
                 },
                 {
-                    label: 'Oleodutos'
+                    label: 'Terminais marítimos',
+                    child: {
+                        source: 'seaTerminal'
+                    }
                 },
                 {
-                    label: 'Gasodutos'
+                    label: 'Frota Transpetro',
+                    child: {
+                        source: 'Fleet'
+                    }
                 },
                 {
-                    label: 'Terminais',
-                    children: [
-                        {
-                            label: 'Onshore'
-                        },
-                        {
-                            label: 'Offshore'
-                        }
-                    ]
+                    label: 'Gasodutos',
+                    child: {
+                        source: 'GasPipelines'
+                    }
                 },
                 {
-                    label: 'Tankers',
-                    children: [
-                        {
-                            label: 'Transpetro'
-                        },
-                        {
-                            label: 'Outros'
-                        }
-                    ]
-                }
+                    label: 'Oleodutos',
+                    child: {
+                        source: 'OilPipelines'
+                    }
+                },
             ]
         },
-        {
-            label: 'Downstream',        
-            children: [
-                {
-                    label: 'Refino'
-                },
-                {
-                    label: 'Produção de biodiesel'
-                },
-                {
-                    label: 'Venda de derivados'
-                }
-            ]
-        },
-        */
         {
             label: 'Refinarias',
             child: {
                 source: 'Refineries'
             }
         },
-        {
-            label: 'Terminais terrestres',
-            child: {
-                source: 'landTerminal'
-            }
-        },
-        {
-            label: 'Terminais marítimos',
-            child: {
-                source: 'seaTerminal'
-            }
-        },
-        {
-            label: 'Frota Transpetro',
-            child: {
-                source: 'Fleet'
-            }
-        },
+        
         {
             label: 'Licitações',
             child: {
@@ -348,18 +134,6 @@ var tree: ITreeNode = {
             label: 'Contratos',
             child: {
                 source: 'Contracts'
-            }
-        },
-        {
-            label: 'Gasodutos',
-            child: {
-                source: 'GasPipelines'
-            }
-        },
-        {
-            label: 'Oleodutos',
-            child: {
-                source: 'OilPipelines'
             }
         },
         {
