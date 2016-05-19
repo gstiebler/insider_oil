@@ -50,7 +50,7 @@ const OilPipeline: BaseDataSourceParams = {
         },
     },
     labelField: "name",
-    gridFields: ["name", "state", 'classification', 'extension'],
+    gridFields: ["name", 'extension', 'diameter', 'products', ],
     tableLabel: "Oleodutos",
     hasMap: false
 }
