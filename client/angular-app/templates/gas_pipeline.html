@@ -1,0 +1,11 @@
+<record-view record-data="recordData"></record-view>
+<hr>
+<show-query-data ng-model="relatedPersons"></show-query-data>
+<show-query-data ng-model="relatedBids"></show-query-data>
+<hr>
+<div ng-repeat="referencedObject in referencedObjects">
+    <show-query-data ng-model="referencedObject" ng-id="id"></show-query-data>
+    <hr>
+</div>
+<time-series-chart query-name="GasMovementsByGasPipeline" q-params="movementsQueryParams" chart-params="movementsChartParams" on-error="onError"></time-series-chart>
+<object-news model-name="source" obj-id="id" on-error="onError"></object-news>

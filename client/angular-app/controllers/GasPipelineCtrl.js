@@ -1,20 +1,20 @@
 'use strict';
-angular.module('InsiderOilApp').controller('ViewRecordController', 
-                ['$scope', 'server', '$routeParams', 'showError', '$location',
-        function($scope, server, $routeParams, showError, $location) {
+angular.module('InsiderOilApp').controller('GasPipelineController', 
+                ['$scope', 'server', '$routeParams', 'showError', 
+        function($scope, server, $routeParams, showError) {
     
-    var source = $routeParams.source;
+    var source = 'GasPipeline';
     var id = $routeParams.id;
-    if(source == 'OilField') {
-        $location.path("/app/oil_field").search({ id: id });
-    } else if(source == 'GasPipeline') {
-        $location.path("/app/gas_pipeline").search({ id: id });
-    }
-    
     $scope.id = id;
     $scope.source = source;
     $scope.onError = showError.show;
-    
+    $scope.movementsQueryParams = { gasPipeline: id };
+    $scope.movementsChartParams = {
+        yLabel: 'Movimentação',
+        yAxis: 'value',
+        xAxis: 'date_prod'
+    };
+        
     $scope.relatedPersons = {
         queryName: 'PersonsByProject',
         title: 'Pessoas',

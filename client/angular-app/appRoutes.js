@@ -50,6 +50,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'OilFieldController'	
 		})
 
+		.when('/app/gas_pipeline', {
+			templateUrl: 'app/templates/gas_pipeline.html',
+			controller: 'GasPipelineController'	
+		})
+
 		.when('/app/change_password', {
 			templateUrl: 'app/templates/change_password.html',
 			controller: 'ChangePasswordController'	
