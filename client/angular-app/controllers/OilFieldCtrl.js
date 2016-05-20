@@ -9,6 +9,11 @@ angular.module('InsiderOilApp').controller('OilFieldController',
     $scope.source = source;
     $scope.onError = showError.show;
     $scope.prodQueryParams = { oilField: id };
+    $scope.productionChartParams = {
+        yLabel: 'Produção (bbl/dia)',
+        yAxis: 'oil_production',
+        xAxis: 'date_prod'
+    };
         
     $scope.relatedPersons = {
         queryName: 'PersonsByProject',

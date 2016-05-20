@@ -45,12 +45,12 @@ function showChart(records) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     data.forEach(function(d) {
-        d.date = parseDate(d.date_prod);
+        d.date = parseDate(d[_$pc_scope.chartParams.xAxis]);
     });
 
      console.log(data); 
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.oil_production; })]);
+    y.domain([0, d3.max(data, function(d) { return d[_$pc_scope.chartParams.yAxis]; })]);
 
     svg.append("g")
         .attr("class", "x axis")
@@ -65,7 +65,7 @@ function showChart(records) {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Produção (bbl/dia)");
+        .text(_$pc_scope.chartParams.yLabel);
 
     svg.selectAll(".bar")
         .data(data)
@@ -73,8 +73,8 @@ function showChart(records) {
         .attr("class", "bar")
         .attr("x", function(d) { return x(d.date); })
         .attr("width", 5)
-        .attr("y", function(d) { return y(d.oil_production); })
-        .attr("height", function(d) { return height - y(d.oil_production); });
+        .attr("y", function(d) { return y(d[_$pc_scope.chartParams.yAxis]); })
+        .attr("height", function(d) { return height - y(d[_$pc_scope.chartParams.yAxis]); });
 }
 
 function pcController($scope, server) {
@@ -89,6 +89,7 @@ app.directive('timeSeriesChart', function() {
         scope: {
             queryName: '@queryName',
             qParams: '=qParams',
+            chartParams: '=chartParams',
             onError: '=onError',
         },
         controller:['$scope', 'server', pcController],
