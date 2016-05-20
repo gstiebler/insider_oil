@@ -92,14 +92,14 @@ app.service('server', ['$http', 'session',
         }, errorCallback);
     }
     
-    function getProduction( options, okCallback, errorCallback ) {
+    function getTimeSeries( options, okCallback, errorCallback ) {
         var params = { 
             queryName: options.queryName,
             queryParams: options.queryParams,
             token: session.getToken()
         };
         
-        $http.get('/production', { params: params }).
+        $http.get('/time_series', { params: params }).
         then(function(response) {
             okCallback(response.data);
         }, errorCallback);
@@ -225,7 +225,7 @@ app.service('server', ['$http', 'session',
     this.getTable = getTable;
     this.getQueryData = getQueryData;
     this.getTableData = getTableData;
-    this.getProduction = getProduction
+    this.getTimeSeries = getTimeSeries
     this.getModelFields = getModelFields;
     this.createNewItem = createNewItem;
     this.deleteItem = deleteItem;

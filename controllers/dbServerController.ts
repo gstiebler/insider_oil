@@ -15,7 +15,7 @@ import ComboQueries = require('../db/queries/ComboQueries');
 import QueriesById = require('../db/queries/QueriesById');
 import TableQueries = require('../db/queries/TableQueries');
 import QueryGenerator = require('../db/queries/QueryGenerator');
-import { getProductionData } from '../db/queries/ProductionQueries'
+import TimeSeriesQueries = require('../db/queries/TimeSeriesQueries');
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
  
 function getFieldTypes(fields) {
@@ -290,11 +290,11 @@ export function getTableQueryData(req: express.Request, res: express.Response):v
 })}
  
 
-export function getProduction(req: express.Request, res: express.Response):void {Sync(function(){
+export function getTimeSeries(req: express.Request, res: express.Response):void {Sync(function(){
     const queryParams = req.query.queryParams ? JSON.parse(req.query.queryParams) : {};
     const queryName:string = req.query.queryName;
 
-    getProductionData(queryName, queryParams).then( (results) => {
+    TimeSeriesQueries.getData(queryName, queryParams).then( (results) => {
         const result = {
             records: results
         };

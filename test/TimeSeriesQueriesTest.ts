@@ -7,18 +7,18 @@ import dbServerController = require('../controllers/dbServerController');
 
 var group: nodeunit.ITestGroup = {
 
-byField:  (test: nodeunit.Test) => {
+ProductionByField:  (test: nodeunit.Test) => {
     const jiritubaId = utils.idByName('OilField', 'Jiribatuba2');
     const queryParams = {
         oilField: jiritubaId   
     };
     const reqQueryValues = {
         query: { 
-            queryName: 'byField',
+            queryName: 'ProductionByField',
             queryParams: JSON.stringify(queryParams)
         }
     };
-    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getProduction, reqQueryValues);
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTimeSeries, reqQueryValues);
     //console.log(resQueryValues.records);
     test.equal(4, resQueryValues.records.length);
     test.equal( '07/2014', resQueryValues.records[0].date_prod);

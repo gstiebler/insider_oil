@@ -34,7 +34,7 @@ module.exports = function(app: express.Express) {
     app.post('/db_server/upload_file',             dbServerController.uploadFile);
     app.get('/get_query_data', session.authorize,  dbServerController.getQueryData);
     app.get('/get_table_data', session.authorize,  dbServerController.getTableQueryData);
-    app.get('/production', session.authorize,      dbServerController.getProduction);
+    app.get('/time_series', session.authorize,      dbServerController.getTimeSeries);
     
     app.get('/search', session.authorize,          searchController.main);
     

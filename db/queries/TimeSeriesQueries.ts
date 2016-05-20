@@ -3,7 +3,7 @@
 import db = require('../models');
 
 const queries = {
-    byField: (queryParams) => {
+    ProductionByField: (queryParams) => {
         const select = 'select sum(oil_production) as oil_production, ' +
             'sum(oil_condensed_production) as oil_condensed_production, ' +
             'sum(gas_associated_production) as gas_associated_production, ' +
@@ -19,7 +19,7 @@ const queries = {
     }
 };
 
-export function getProductionData(queryName: string, queryParams): Promise<any> {
+export function getData(queryName: string, queryParams): Promise<any> {
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const queryFn = queries[queryName];
     const queryStr = queryFn(queryParams);

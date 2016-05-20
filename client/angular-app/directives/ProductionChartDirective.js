@@ -10,7 +10,7 @@ function queryParamsChanged(qParams) {
         queryName: _$pc_scope.queryName,
         queryParams: qParams
      }
-    _server.getProduction(query, showChart, _$pc_scope.onError);
+    _server.getTimeSeries(query, showChart, _$pc_scope.onError);
 }
 
 function showChart(records) {
