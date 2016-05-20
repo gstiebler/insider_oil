@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('ProductionChartDirective', []);
+var app = angular.module('TimeSeriesChartDirective', []);
 
 var _server;
 var _$pc_scope;
@@ -83,7 +83,7 @@ function pcController($scope, server) {
     $scope.$watch('qParams', queryParamsChanged);
 }
 
-app.directive('productionChart', function() {
+app.directive('timeSeriesChart', function() {
     return {
         restrict: 'E',
         scope: {
@@ -92,6 +92,6 @@ app.directive('productionChart', function() {
             onError: '=onError',
         },
         controller:['$scope', 'server', pcController],
-        templateUrl: 'app/directives/templates/production_chart.html'
+        templateUrl: 'app/directives/templates/time_series_chart.html'
     };
 });

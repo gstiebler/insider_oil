@@ -26,7 +26,7 @@ exports.uglifyAngularJsFiles = function(env) {
         'directives/UploadExcelFileDirective.js',
         'directives/RecordViewDirective.js',
         'directives/ObjectNewsDirective.js',
-        'directives/ProductionChartDirective.js',
+        'directives/TimeSeriesChartDirective.js',
         'controllers/MainCtrl.js',
         'controllers/ModelViewCtrl.js',
         'controllers/CreateItemCtrl.js',
