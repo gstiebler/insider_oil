@@ -16,6 +16,16 @@ const queries = {
         const group = ' group by period_year, period_month ';
         const order = 'order by period_year, period_month';
         return select + from + pwJoin + ofJoin + where + group + order;
+    },
+    
+    GasMovementsByGasPipeline: (queryParams) => {
+        const select = 'select value, ' +
+            'concat(lpad(period_month, 2, "0"), "/", period_year) as date_prod ';
+        const from = 'from gas_movements gm ';
+        const where = 'where gm.gas_pipeline_id = ' + queryParams.gasPipeline +
+                ' and product = "Gas Liquefeito" ';
+        const order = 'order by period_year, period_month';
+        return select + from + where + order;
     }
 };
 

@@ -34,6 +34,31 @@ ProductionByField:  (test: nodeunit.Test) => {
     test.done();
 },
 
+GasMovementsByGasPipeline:  (test: nodeunit.Test) => {
+    const gpId = utils.idByName('GasPipeline', 'GASODUTO LOR/UPN');
+    const queryParams = {
+        gasPipeline: gpId   
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'GasMovementsByGasPipeline',
+            queryParams: JSON.stringify(queryParams)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTimeSeries, reqQueryValues);
+    test.equal(3, resQueryValues.records.length);
+
+    test.equal( '03/2014', resQueryValues.records[0].date_prod);
+    test.equal( '04/2014', resQueryValues.records[1].date_prod);
+    test.equal( '05/2014', resQueryValues.records[2].date_prod);
+    
+    test.equal( 9207, resQueryValues.records[0].value);
+    test.equal( 13121, resQueryValues.records[1].value);
+    test.equal( 12952, resQueryValues.records[2].value);
+    
+    test.done();
+},
+
 }
 
 exports.group = fiberTests.convertTests( group, true );
