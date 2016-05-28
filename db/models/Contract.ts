@@ -1,6 +1,7 @@
 'use strict';
 import Sequelize = require('sequelize');
 var await = require('../../lib/await');
+import ModelUtils = require('../../lib/ModelUtils');
 
 function updateContract(contract) {
     const object: any[] = contract.dataValues.object;
@@ -61,19 +62,7 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
         },
         object: {
             type: DataTypes.VIRTUAL,
-            get: function () {
-                if(!this.model_id)
-                    return [];
-                const modelRecord = await(sequelize.models.ModelsList.findById(this.model_id));
-                const referencedModel = sequelize.models[modelRecord.name];
-                const referencedObj = await(referencedModel.findById(this.obj_id));
-                return [{
-                    id: this.obj_id,
-                    model_id: this.model_id,
-                    model: modelRecord.name,
-                    name: referencedObj.name
-                }];
-            }
+            get: ModelUtils.getObjRefField
         },
     },
         {
