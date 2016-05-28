@@ -1,6 +1,6 @@
 'use strict';
 import Sequelize = require('sequelize');
-import db = require('../db/models');
+const await = require('../lib/await');
 
 export function getListFieldObj(textFieldName:string) {
     return {
@@ -15,6 +15,7 @@ export function getListFieldObj(textFieldName:string) {
 }
 
 export function getObjRefField() {
+    const db = require('../db/models');
     if(!this.model_id)
         return [];
     const modelRecord = await( db.models.ModelsList.findById(this.model_id));
