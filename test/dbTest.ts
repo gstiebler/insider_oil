@@ -102,6 +102,17 @@ GasPipeline: (test) => {
     test.equal('Jiribatuba2', gp.dst_concession[0].name);
        
     test.done();
+},
+
+Contract: (test) => {
+    const obj = { supplier: 'supplier' };
+    await( db.models.Contract.create(obj) );
+    const searchOpt = { where: obj };
+    const lastRecord = await( db.models.Contract.findOne(searchOpt) );
+    const refObj:any[] = lastRecord.object;
+    test.equal(0, refObj.length);
+       
+    test.done();
 }
 
 }

@@ -62,6 +62,8 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
         object: {
             type: DataTypes.VIRTUAL,
             get: function () {
+                if(!this.model_id)
+                    return [];
                 const modelRecord = await(sequelize.models.ModelsList.findById(this.model_id));
                 const referencedModel = sequelize.models[modelRecord.name];
                 const referencedObj = await(referencedModel.findById(this.obj_id));
