@@ -35,6 +35,12 @@ const OilField: BaseDataSourceParams = {
         stage: {
             label: "Estágio"
         },
+        block_name: {
+            label: "Bloco"
+        },
+        block_id: {
+            label: "Bloco"
+        },
     },
     labelField: "name",
     gridFields: ['name', 'basin_name', 'state', 'shore', 'stage'],

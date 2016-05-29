@@ -371,6 +371,14 @@ module.exports = {
 						key: 'id'
 					}
 				},
+				block_id: {
+					type: Sequelize.INTEGER,
+					allowNull: true,
+					references: {
+						model: 'blocks',
+						key: 'id'
+					}
+				},
 				created_at: {
 					type: Sequelize.DATE
 				},

@@ -120,6 +120,7 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                     foreignKey: {  allowNull: false }
                 };
                 OilField.belongsTo(models.Basin, opts);
+                OilField.belongsTo(models.Block, { as: 'block', foreignKey: { allowNull: true } } );
             },
 			defineHooks: defineHooks
         }
