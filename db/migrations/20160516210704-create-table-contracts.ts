@@ -34,6 +34,14 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: true
       },
+      contractor_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'companies',
+          key: 'id'
+        }
+      },
       situation: {
         type: Sequelize.STRING,
         allowNull: true

@@ -30,6 +30,12 @@ const Bid: BaseDataSourceParams = {
         situation: {
             label: 'Situação'
         },
+        contractor_name: {
+            label: 'Contratante'
+        },
+        contractor_id: {
+            label: 'Contratante'
+        },
         model_id: {
             label: 'ignorar'
         },

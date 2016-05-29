@@ -21,6 +21,12 @@ const Contract: BaseDataSourceParams = {
         value: {
             label: 'Valor do contrato',
         },
+        contractor_name: {
+            label: 'Contratante'
+        },
+        contractor_id: {
+            label: 'Contratante'
+        },
         situation: {
             label: 'Situação',
         },
