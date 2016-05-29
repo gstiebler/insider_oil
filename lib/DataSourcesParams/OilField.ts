@@ -45,7 +45,13 @@ const OilField: BaseDataSourceParams = {
     labelField: "name",
     gridFields: ['name', 'basin_name', 'state', 'shore', 'stage'],
     tableLabel: "Campos",
-    hasMap: false
+    hasMap: false,
+    referencedObjectsOnView:  [
+        {
+            queryName: 'hydrocarbonEvidencesByOilField',
+            title: 'Indícios de hidrocarbonetos'
+        }
+    ]
 };
 
 export = OilField;
