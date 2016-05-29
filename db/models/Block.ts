@@ -1,5 +1,8 @@
-module.exports = function(sequelize, DataTypes) {
-  var Block = sequelize.define('Block', {
+'use strict';
+import Sequelize = require('sequelize');
+
+module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
+  const Block = sequelize.define('Block', {
         name: {
           type: DataTypes.STRING,
           allowNull: false,
