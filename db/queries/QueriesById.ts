@@ -277,6 +277,60 @@ const queries:IQueriesById = {
         ]
     },
     
+    hydrocarbonEvidencesByOilField: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'hydrocarbon_evidences',
+                    fields: [ 'notification_date', 'fluids', 'depth' ]
+                },
+                extraFields: [],
+                joinTables: [
+                    {
+                        name: 'wells',
+                        fields: [
+                            ['name', 'well_name'],
+                        ],
+                        joinField: 'hydrocarbon_evidences.well_id'
+                    },
+                    {
+                        name: 'oil_fields',
+                        fields: [
+                            ['id', 'oil_field_id'],
+                        ],
+                        joinCond: 'oil_fields.block_id = wells.block_id'
+                    },
+                ],
+                filters: [ { field: 'oil_field_id', equal: filter.id } ],
+                order: [ { fieldName: 'notification_date', dir: 'asc' } ]
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Poço',
+                fieldName: 'well_name',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Data de notificação',
+                fieldName: 'notification_date',
+                type: 'DATE'
+            },
+            {
+                label: 'Fluidos',
+                fieldName: 'fluids',
+                type: 'VARCHAR'
+            },
+            {
+                label: "Lâmina d'água",
+                fieldName: 'depth',
+                type: 'FLOAT'
+            },
+        ]
+    },
+    
     wellsByBlock: {
         queryStrFn: (filter) => {        
             const wellOpts:QueryGenerator.IQueryOpts = {

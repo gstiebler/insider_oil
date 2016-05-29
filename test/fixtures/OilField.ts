@@ -18,7 +18,8 @@ module.exports = function(db) {
             basin_id: utils.idByName('Basin', 'Tucano Central'),
             state: 'Bahia',
             shore: 'on',
-            stage: 'production'
+            stage: 'production',
+            block_id: utils.idByName('Block', 'BM-BAR-1'),
         },
         {
             name: 'Abalone',

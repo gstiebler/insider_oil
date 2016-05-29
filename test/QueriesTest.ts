@@ -281,6 +281,24 @@ getBidsByObject: (test: nodeunit.Test) => {
     test.done();
 },
 
+hydrocarbonEvidencesByOilField: (test: nodeunit.Test) => {
+    const jiritubaId = utils.idByName('OilField', 'Jiribatuba2') ;
+    const filters = {
+        id: jiritubaId,
+        dataSource: 'Basin'
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'hydrocarbonEvidencesByOilField',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(3, resQueryValues.records.length);
+
+    test.done();
+},
+
 }
 
 exports.group = fiberTests.convertTests( group, true );

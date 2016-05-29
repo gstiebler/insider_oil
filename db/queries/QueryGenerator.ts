@@ -31,7 +31,8 @@ export interface ITableQueryOpts {
 }
  
 export interface IJoinTableQueryOpts extends ITableQueryOpts {
-    joinField: string;
+    joinField?: string;
+    joinCond?: string;
 }
  
 export interface IQueryOpts {
@@ -129,7 +130,13 @@ export function genOuterJoins(joinTables: IJoinTableQueryOpts[]): string {
     let resultQry = '';
     for(let joinTable of joinTables) {
         resultQry += ' left outer join ' + joinTable.name + ' on ';
-        resultQry += joinTable.name + '.id = ' + joinTable.joinField;
+        if(joinTable.joinField) {
+            resultQry += joinTable.name + '.id = ' + joinTable.joinField;   
+        } else if (joinTable.joinCond) {
+            resultQry += joinTable.joinCond; 
+        } else {
+            throw 'joinField nor joinCond found';
+        }
     }
     return resultQry;
 }
