@@ -24,7 +24,7 @@ module.exports = {
       }
     };
 
-    queryInterface.createTable('industry_segments', tableOpts);
+    return queryInterface.createTable('industry_segments', tableOpts);
   },
 
   down: function (queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

@@ -40,7 +40,7 @@ module.exports = {
       }
     };
 
-    queryInterface.createTable('fleet', tableOpts);
+    return queryInterface.createTable('fleet', tableOpts);
   },
 
   down: function (queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

@@ -111,7 +111,7 @@ module.exports = {
       }
     };
 
-    queryInterface.createTable('gas_pipelines', tableOpts);
+    return queryInterface.createTable('gas_pipelines', tableOpts);
   },
 
   down: function (queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

@@ -42,6 +42,14 @@ module.exports = {
           key: 'id'
         }
       },
+      segment_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'industry_segments',
+          key: 'id'
+        }
+      },
       situation: {
         type: Sequelize.STRING,
         allowNull: true
@@ -80,7 +88,7 @@ module.exports = {
       }
     };
 
-    queryInterface.createTable('contracts', tableOpts);
+    return queryInterface.createTable('contracts', tableOpts);
   },
 
   down: function (queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

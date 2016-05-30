@@ -76,7 +76,7 @@ module.exports = {
       }
     };
 
-    queryInterface.createTable('bids', tableOpts);
+    return queryInterface.createTable('bids', tableOpts);
   },
 
   down: function (queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

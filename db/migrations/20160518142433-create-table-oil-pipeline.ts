@@ -80,7 +80,7 @@ module.exports = {
       }
     };
 
-    queryInterface.createTable('oil_pipelines', tableOpts);
+    return queryInterface.createTable('oil_pipelines', tableOpts);
   },
 
   down: function (queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

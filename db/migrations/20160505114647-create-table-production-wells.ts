@@ -44,7 +44,7 @@ module.exports = {
       }
     };
 
-    queryInterface.createTable('production_wells', tableOpts);
+    return queryInterface.createTable('production_wells', tableOpts);
   },
 
   down: function (queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

@@ -36,7 +36,7 @@ module.exports = {
       }
     };
 
-    queryInterface.createTable('terminals', tableOpts);
+    return queryInterface.createTable('terminals', tableOpts);
   },
 
   down: function (queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

@@ -42,7 +42,7 @@ module.exports = {
           }
       };
 
-    queryInterface.createTable('oil_field_concessionaries', tableOpts);
+    return queryInterface.createTable('oil_field_concessionaries', tableOpts);
   },
 
   down: function(queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

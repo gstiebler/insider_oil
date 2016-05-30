@@ -44,7 +44,7 @@ module.exports = {
       }
     };
 
-    queryInterface.createTable('gas_movements', tableOpts);
+    return queryInterface.createTable('gas_movements', tableOpts);
   },
 
   down: function (queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

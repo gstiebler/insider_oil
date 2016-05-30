@@ -40,7 +40,7 @@ module.exports = {
             }
         };
 
-    queryInterface.createTable('hydrocarbon_evidences', tableOpts);
+    return queryInterface.createTable('hydrocarbon_evidences', tableOpts);
   },
 
   down: function(queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

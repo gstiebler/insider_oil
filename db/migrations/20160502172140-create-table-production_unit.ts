@@ -68,7 +68,7 @@ module.exports = {
         }
     };
             
-    queryInterface.createTable('production_units', tableOpts);
+    return queryInterface.createTable('production_units', tableOpts);
   },
 
   down: function(queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

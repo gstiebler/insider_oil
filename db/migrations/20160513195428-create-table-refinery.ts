@@ -40,7 +40,7 @@ module.exports = {
       }
     };
 
-    queryInterface.createTable('refineries', tableOpts);
+    return queryInterface.createTable('refineries', tableOpts);
   },
 
   down: function (queryInterface: Sequelize.QueryInterface, SequelizeVar: Sequelize.Sequelize) {

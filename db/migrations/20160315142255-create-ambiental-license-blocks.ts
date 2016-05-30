@@ -2,7 +2,7 @@
 
 module.exports = {
     up: function(queryInterface, Sequelize) {
-        queryInterface.createTable('ambiental_license_blocks', {
+        return queryInterface.createTable('ambiental_license_blocks', {
             // TODO remove this field
             id: {
                 type: Sequelize.INTEGER,
