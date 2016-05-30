@@ -27,6 +27,12 @@ const Bid: BaseDataSourceParams = {
         opening_state: {
             label: 'Estado'
         },
+        segment_name: {
+            label: 'Segmento'
+        },
+        segment_id: {
+            label: 'Segmento'
+        },
         situation: {
             label: 'Situação'
         },

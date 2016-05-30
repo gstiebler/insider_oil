@@ -29,6 +29,7 @@ module.exports = function(db): Promise<any[]> {
             opening_local: 'Processo Eletrônico',
             opening_city: null,
             opening_state: null,
+            segment_id: utils.idByName('IndustrySegment', 'Petróleo'),
             situation: 'Aberta',
             object: [{
                 model_id: utils.idByName('ModelsList', 'Block'),

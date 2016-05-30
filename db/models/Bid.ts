@@ -78,6 +78,7 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                     };
                     Bid.belongsTo(models.ModelsList, opts);
                     Bid.belongsTo(models.Company, { as: 'contractor', foreignKey: { allowNull: true } } );
+                    Bid.belongsTo(models.IndustrySegment, { as: 'segment', foreignKey: { allowNull: true } } );
                 },
 			    defineHooks: defineHooks
             }

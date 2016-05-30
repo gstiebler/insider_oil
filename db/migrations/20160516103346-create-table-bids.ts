@@ -50,6 +50,14 @@ module.exports = {
           key: 'id'
         }
       },
+      segment_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'industry_segments',
+          key: 'id'
+        }
+      },
       situation: {
         type: Sequelize.STRING,
         allowNull: true
