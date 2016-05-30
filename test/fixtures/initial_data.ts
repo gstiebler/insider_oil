@@ -5,7 +5,6 @@ var await = require('../../lib/await');
 export function createFixtures():void {
     await( require('../../db/seeders/ModelsListInitializer')(db) );
     await( require('./User')(db) );
-    await( require('./IndustrySegment')(db) );
     await( require('./Company')(db) );
     await( require('./Refinery')(db) );
     await( require('./Terminal')(db) );
@@ -29,6 +28,7 @@ export function createFixtures():void {
     await( require('./OilPipeline')(db) );
     await( require('./GasMovement')(db) );
     await( require('./Production')(db) );
+    await( require('./IndustrySegment')(db) );
     await( require('./Bid')(db) );
     await( require('./Contract')(db) );
 };

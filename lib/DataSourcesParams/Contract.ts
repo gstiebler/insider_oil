@@ -27,6 +27,12 @@ const Contract: BaseDataSourceParams = {
         contractor_id: {
             label: 'Contratante'
         },
+        segment_name: {
+            label: 'Segmento'
+        },
+        segment_id: {
+            label: 'Segmento'
+        },
         situation: {
             label: 'Situação',
         },
