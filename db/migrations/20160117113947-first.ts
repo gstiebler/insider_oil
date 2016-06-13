@@ -284,6 +284,14 @@ module.exports = {
 						key: 'id'
 					}
 				},
+				operator_id: {
+					type: Sequelize.INTEGER,
+					allowNull: true,
+					references: {
+						model: 'companies',
+						key: 'id'
+					}
+				},
 				created_at: {
 					type: Sequelize.DATE
 				},
@@ -337,6 +345,14 @@ module.exports = {
 						key: 'id'
 					}
                 },
+				operator_id: {
+					type: Sequelize.INTEGER,
+					allowNull: true,
+					references: {
+						model: 'companies',
+						key: 'id'
+					}
+				},
 				created_at: {
 					type: Sequelize.DATE
 				},

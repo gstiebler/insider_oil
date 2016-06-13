@@ -11,6 +11,12 @@ const DrillingRigOffshore: BaseDataSourceParams = {
         contractor_id: {
             label: "Contratante"
         },
+        operator_name: {
+            label: "Operador"
+        },
+        operator_id: {
+            label: "Operador"
+        },
         type: {
             label: "Tipo"
         },

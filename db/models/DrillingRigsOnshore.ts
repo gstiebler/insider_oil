@@ -41,6 +41,12 @@ function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataType
                     foreignKey: {  allowNull: false }
                 };
                 DrillingRigOnshore.belongsTo(models.Company, opts);
+
+                const optsOp:Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'operator', 
+                    foreignKey: {  allowNull: true }
+                };
+                DrillingRigOnshore.belongsTo(models.Company, optsOp);
             }
         }
     });
