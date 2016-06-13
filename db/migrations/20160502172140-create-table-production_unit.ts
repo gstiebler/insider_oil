@@ -58,6 +58,14 @@ module.exports = {
           type: Sequelize.DATEONLY,
           allowNull: true
         },
+        first_oil: {
+            type: Sequelize.DATEONLY,
+            allowNull: true
+        },
+        day_rate: {
+            type: Sequelize.FLOAT,
+	          allowNull: true
+        },  
         created_at: {
             allowNull: false,
             type: Sequelize.DATE

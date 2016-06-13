@@ -33,12 +33,17 @@ const ProductionUnit: BaseDataSourceParams = {
         start: {
             label: 'Início do contrato'
         },
-        
         end: {
             label: 'Término do contrato'
         },
         depth: {
             label: "Lâmina d'água"
+        },
+        first_oil: {
+            label: 'Início da produção'
+        },
+        day_rate: {
+            label: "Day rate"
         },
     },
     labelField: 'name',

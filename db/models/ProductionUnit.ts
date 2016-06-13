@@ -2,7 +2,7 @@
 import Sequelize = require('sequelize');  
 
 module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes) {
-  const ProductionUnit = sequelize.define('ProductionUnit', {
+    const ProductionUnit = sequelize.define('ProductionUnit', {
         name: {
           type: DataTypes.STRING,
           allowNull: false
@@ -43,6 +43,14 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
           type: DataTypes.DATEONLY,
           allowNull: true
         },
+        first_oil: {
+            type: Sequelize.DATEONLY,
+            allowNull: true
+        },
+        day_rate: {
+            type: Sequelize.FLOAT,
+	          allowNull: true
+        },  
     }, 
     {  
         underscored: true,
