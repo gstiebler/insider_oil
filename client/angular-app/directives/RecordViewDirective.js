@@ -43,7 +43,9 @@ app.directive('recordView', function() {
     return {
         restrict: 'E',
         scope: {
-            recordData: '=recordData'
+            recordData: '=recordData',
+            source: '=source',
+            id: '=ngId'
         },
         controller:['$scope', 'DateService', function($scope, DateService) {
             _DateService = DateService;
