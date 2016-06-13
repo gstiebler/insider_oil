@@ -7,7 +7,7 @@ export function getErrorFunc(res: express.Response, errorCode: number, msg: stri
         if((typeof error) == 'string')
             errors.push( { message: error } );
         res.status(errorCode).json( {
-            errorMsg: msg, 
+            errorMsg: msg + ' ' + error.message, 
             errors: errors 
         } )
         winston.error(error.stack);
