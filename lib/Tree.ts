@@ -82,7 +82,7 @@ var tree: ITreeNode = {
                 },
             ]
         },
-        {
+        /*{
             label: 'Logística',
             children: [
                 {
@@ -122,8 +122,7 @@ var tree: ITreeNode = {
             child: {
                 source: 'Refineries'
             }
-        },
-        
+        },*/
         {
             label: 'Licitações',
             child: {
