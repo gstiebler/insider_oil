@@ -27,6 +27,10 @@ function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataType
             type: DataTypes.FLOAT,
             allowNull: true
         },
+		photo: {
+			type: DataTypes.BLOB,
+			allowNull: true
+		},
     }, {
         underscored: true,
         tableName: 'drilling_rigs_onshore',

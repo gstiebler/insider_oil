@@ -29,6 +29,10 @@ const DrillingRigOffshore: BaseDataSourceParams = {
         day_rate: {
             label: "Day rate"
         },
+        photo: {
+            label: 'Foto',
+            isPhoto: true
+        },
         info: {
             label: "Informações",
             isMultiFieldText: true

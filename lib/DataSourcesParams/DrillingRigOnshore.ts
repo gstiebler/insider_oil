@@ -25,7 +25,11 @@ const DrillingRigOnshore: BaseDataSourceParams = {
         },
         day_rate: {
             label: "Day rate"
-        }
+        },
+        photo: {
+            label: 'Foto',
+            isPhoto: true
+        },
     },
     labelField: "name",
     gridFields: ["name", "contractor_name", "type", "end"],

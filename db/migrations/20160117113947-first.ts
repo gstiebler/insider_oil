@@ -268,6 +268,10 @@ module.exports = {
 					type: Sequelize.FLOAT,
 					allowNull: true
 				},
+				photo: {
+					type: Sequelize.BLOB('long'),
+					allowNull: true
+				},
 				info: {
 					type: Sequelize.TEXT,
 					allowNull: true
@@ -319,6 +323,10 @@ module.exports = {
 				},
 				day_rate: {
 					type: Sequelize.FLOAT,
+					allowNull: true
+				},
+				photo: {
+					type: Sequelize.BLOB('long'),
 					allowNull: true
 				},
 				contractor_id: {
