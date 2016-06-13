@@ -1,12 +1,11 @@
 'use strict';
 
-var tree = require('../lib/Tree');
 var Sync = require('sync');	
-var dbUtils = require('../lib/dbUtils');
-var winston = require('winston');
+import dbUtils = require("../lib/dbUtils");
+import  winston = require('winston');
 var await = require('../lib/await');
 
-exports.main = function(req, res, next) { Sync(function() {
+export function main(req, res, next) { Sync(function() {
     try{
         const dataSourceName = req.query.dataSource;
         const id = req.query.id;
