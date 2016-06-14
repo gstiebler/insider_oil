@@ -22,15 +22,18 @@ function onRecordDataChange(recordData) {
         return;
     var fieldValues = [];
     for(var i = 0; i < recordData.length; i++) {
+        if(!recordData[i].value || recordData[i].label == 'ignorar')
+            continue;
         if(recordData[i].isMultiFieldText) {
-            if(!recordData[i].value)
-                continue;
             var items = recordData[i].value.split('\n');
             for(var j = 0; j < items.length; j++) {
                 var newFieldInfo = { type: items[j].type };
                 var parts = items[j].split(':');
                 newFieldInfo.label = parts[0];
                 newFieldInfo.value = parts[1];
+
+                if(!newFieldInfo.value || newFieldInfo.label == 'ignorar')
+                    continue;
                 fieldValues.push(newFieldInfo);   
             }
         } else {
