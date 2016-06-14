@@ -20,6 +20,7 @@ const Contract: BaseDataSourceParams = {
         },
         value: {
             label: 'Valor do contrato',
+            isCurrency: true
         },
         contractor_name: {
             label: 'Contratante'

@@ -1015,7 +1015,7 @@ export const queries:ITableQueries = {
             {
                 label: 'Valor',
                 fieldName: 'value',
-                type: 'FLOAT'
+                type: 'CURRENCY'
             },
             {
                 label: 'Situação',
