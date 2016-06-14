@@ -33,7 +33,8 @@ const DrillingRigOffshore: BaseDataSourceParams = {
             label: "Fim"
         },
         day_rate: {
-            label: "Day rate"
+            label: "Day rate (US$)",
+            isCurrency: true
         },
         photo: {
             label: 'Foto',

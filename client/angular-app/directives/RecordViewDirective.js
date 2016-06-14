@@ -10,9 +10,11 @@ function formatByType(field) {
         return _DateService.dateFormat(field.value);
     } else if(field.type == 'DATETIME') {
         return _DateService.dateTimeFormat(field.value);
-    } else {
+    } else if (field.isCurrency) {
+        return _ModelViewService.formatCurrency(field.value);
+    }   else {
         return field.value;    
-    }                
+    }              
 }
 
 function onRecordDataChange(recordData) {
@@ -47,8 +49,10 @@ app.directive('recordView', function() {
             source: '=source',
             id: '=ngId'
         },
-        controller:['$scope', 'DateService', function($scope, DateService) {
+        controller:['$scope', 'DateService', 'ModelViewService', 
+                    function($scope, DateService, ModelViewService) {
             _DateService = DateService;
+            _ModelViewService = ModelViewService;
             _$rv_scope = $scope;
             $scope.$watch('recordData', onRecordDataChange);
         }],

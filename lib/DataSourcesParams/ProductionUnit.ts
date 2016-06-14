@@ -43,7 +43,8 @@ const ProductionUnit: BaseDataSourceParams = {
             label: 'Início da produção'
         },
         day_rate: {
-            label: "Day rate"
+            label: "Day rate (US$)",
+            isCurrency: true
         },
     },
     labelField: 'name',

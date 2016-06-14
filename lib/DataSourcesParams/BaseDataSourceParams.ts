@@ -7,6 +7,7 @@ interface IField {
     isPhoto?: boolean;
     isMultiFieldText?: boolean;
     isProjectList?: boolean;
+    isCurrency?: boolean;
     comboSource?: string;
 }
 
