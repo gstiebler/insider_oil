@@ -6,7 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
-var winston = require('winston');
+import winston = require('winston');
 var umzug = require('./lib/InitUmzug');
 var app = express();
 

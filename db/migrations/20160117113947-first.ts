@@ -278,7 +278,7 @@ module.exports = {
 				},
 				contractor_id: {
 					type: Sequelize.INTEGER,
-					allowNull: false,
+					allowNull: true,
 					references: {
 						model: 'companies',
 						key: 'id'
@@ -339,7 +339,7 @@ module.exports = {
 				},
 				contractor_id: {
 					type: Sequelize.INTEGER,
-					allowNull: false,
+					allowNull: true,
 					references: {
 						model: 'companies',
 						key: 'id'
