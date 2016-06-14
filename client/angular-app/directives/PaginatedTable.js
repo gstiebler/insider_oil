@@ -76,14 +76,15 @@ function tableParamsChanged(tableParams) {
         
     var dataTableElement = $('#mainTable');
     var columns = [];
+    var currencyColumnsIndexes = [];
     for(var i = 0; i < tableParams.fields.length; i++) {
         var field = tableParams.fields[i];
         if(field.ref) {
             columns.push({
                 data: field.ref.valueField,
-                title: field.label
+                title: field.label,
+                render: { display: getFormatLinkFn(field) }
             });
-            columns[i].render = { display: getFormatLinkFn(field) };
         } else {
             columns.push({
                 data: field.fieldName,
@@ -97,6 +98,7 @@ function tableParamsChanged(tableParams) {
             columns[i].render = { display: _DateService.dateTimeFormat };
         } else if(field.type == 'CURRENCY') {
             columns[i].render = { display: _ModelViewService.formatCurrency };
+            currencyColumnsIndexes.push(i);
         }
     }
     
@@ -112,7 +114,10 @@ function tableParamsChanged(tableParams) {
         serverSide: true,
         searching: false,
         dom: 'rtip', // constrols what parts of datatables is visible
-        ajax: ajaxFn
+        ajax: ajaxFn,
+        columnDefs: [
+            { className: "text-right", targets: currencyColumnsIndexes },
+        ]
     } );
 }
 
