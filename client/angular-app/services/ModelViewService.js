@@ -83,10 +83,24 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'DateSe
         }        
         return columns;
     }
+
+    
+    function formatCurrency(value) {
+        if(!value)
+            return '';
+
+        var opts = {
+             style: 'decimal', 
+             minimumFractionDigits: 2,
+             maximumFractionDigits: 2 
+        };
+        return value.toLocaleString('pt-BR', opts);
+    }
     
     
     this.uploadFile = uploadFile;
     this.getColumns = getColumns;
     this.formatExcelUploadResult = formatExcelUploadResult;
+    this.formatCurrency = formatCurrency;
     
 }]);

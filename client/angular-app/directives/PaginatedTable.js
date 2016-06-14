@@ -95,6 +95,8 @@ function tableParamsChanged(tableParams) {
             columns[i].render = { display: _DateService.dateFormat };
         } else if(field.type == 'DATETIME') {
             columns[i].render = { display: _DateService.dateTimeFormat };
+        } else if(field.type == 'CURRENCY') {
+            columns[i].render = { display: _ModelViewService.formatCurrency };
         }
     }
     

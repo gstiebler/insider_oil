@@ -463,9 +463,9 @@ export const queries:ITableQueries = {
                 type: 'VARCHAR'
             },
             {
-                label: 'Day rate',
+                label: 'Day rate (US$)',
                 fieldName: 'day_rate',
-                type: 'VARCHAR'
+                type: 'CURRENCY',
             }
         ]
     },
