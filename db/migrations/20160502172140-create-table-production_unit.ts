@@ -65,7 +65,11 @@ module.exports = {
         day_rate: {
             type: Sequelize.FLOAT,
 	          allowNull: true
-        },  
+        },
+				photo: {
+					type: Sequelize.BLOB('long'),
+					allowNull: true
+				},
         created_at: {
             allowNull: false,
             type: Sequelize.DATE

@@ -51,6 +51,10 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
             type: Sequelize.FLOAT,
 	          allowNull: true
         },  
+		photo: {
+			type: DataTypes.BLOB,
+			allowNull: true
+		},
     }, 
     {  
         underscored: true,

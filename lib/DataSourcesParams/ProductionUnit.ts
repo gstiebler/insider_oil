@@ -46,6 +46,10 @@ const ProductionUnit: BaseDataSourceParams = {
             label: "Day rate (US$)",
             isCurrency: true
         },
+        photo: {
+            label: 'Foto',
+            isPhoto: true
+        },
     },
     labelField: 'name',
     gridFields: ['name', 'oil_field_name', 'owner'],
