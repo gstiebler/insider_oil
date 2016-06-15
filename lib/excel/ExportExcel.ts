@@ -54,12 +54,7 @@ function exportExcel(records: any[], dataSource: dbUtils.ioDataSource, dataSourc
     for( var key in excelParams.fields ){
     	const fieldName = excelParams.fields[key];
     	fieldsArray.push(fieldName);
-    	
-		if(dataSource.associations[fieldName]) {
-			const paramName = fieldName + '_name';
-			fieldLabels.push(dsParam.fields[paramName].label);
-		} else
-			fieldLabels.push(dsParam.fields[fieldName].label);
+    	fieldLabels.push(key);
     }
     
     const dataArray = [];
