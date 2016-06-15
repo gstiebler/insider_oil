@@ -27,7 +27,7 @@ var group: nodeunit.ITestGroup = {
 importDrillingRigOffshore: function(test: nodeunit.Test) {
     var fixtureCount = 3;
     test.equal( fixtureCount, await( db.models.DrillingRigOffshore.findAll() ).length );  
-    var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
+    var excelBuf = fs.readFileSync('./test/data/drilling_rigs_offshore.xls');
     const result:IExcelUploadResponse = await(importExcel(excelBuf, 'DrillingRigOffshore'));
     const invalidRecordsStatus = result.invalidRecordsStatus;    
     const status = result.status;    
