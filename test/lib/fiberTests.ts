@@ -43,6 +43,7 @@ function showErrosOnCallback( test, callback ) {
     try {
         callback( test );
     } catch (e) {
+        winston.error(e);
         winston.error(e.stack);
     }
 }

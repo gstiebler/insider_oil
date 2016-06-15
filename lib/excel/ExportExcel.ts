@@ -68,7 +68,7 @@ function exportExcel(records: any[], dataSource: dbUtils.ioDataSource, dataSourc
     	const line = [];
     	for(var field of fieldsArray) {
     		var recordValue = record[field];
-    		if(dataSource.associations[field]) {
+    		if(dataSource.associations[field] && record[field]) {
     			recordValue = record[field].name; //TODO get the label field, not always the 'name' field
     		}
 			line.push(recordValue);

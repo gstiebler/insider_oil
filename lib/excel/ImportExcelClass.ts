@@ -98,7 +98,9 @@ export class ImportExcel {
         var searchParams = { name: value }; // TODO always using 'name' here
         try {
             var associatedRecord = await( association.target.findOne({ where: searchParams }) );
-            if(associatedRecord) {
+            if(!value || value == '') {
+                record[association.identifierField] = null;
+            } else if(associatedRecord) {
                 record[association.identifierField] = associatedRecord.id;
             } else {
                 throw "Valor '" + value + "' do campo '" + headerField + "' não encontrado.";

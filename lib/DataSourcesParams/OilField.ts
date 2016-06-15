@@ -1,5 +1,7 @@
 import BaseDataSourceParams = require('./BaseDataSourceParams');
 
+// Basin is usually redundant with Block. But it's importante because some
+// Oil Fields doesn't have the reference to a Block
 const OilField: BaseDataSourceParams = {
     fields: {
         name: {
@@ -51,7 +53,19 @@ const OilField: BaseDataSourceParams = {
             queryName: 'hydrocarbonEvidencesByOilField',
             title: 'Indícios de hidrocarbonetos'
         }
-    ]
+    ],
+    excelParams: {
+        keyField: "nome",
+        fields: {
+            'nome': 'name',
+            'bacia': 'basin',
+            'bloco': 'block',
+            'estado': 'state',
+            'concessionárias': 'concessionaries',
+            'terra/mar': 'shore',
+            'estágio': 'stage',
+        }
+    },
 };
 
 export = OilField;

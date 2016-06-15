@@ -217,6 +217,36 @@ productionWell: test => {
     test.done();
 },
 
+oilFields: test => {
+    var excelBuf = fs.readFileSync('./test/data/oil_fields.xlsx');
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'OilField'));
+    
+    const order = ['name'];
+    var rows = await( dbUtils.findAllCustom(db.models.OilField, { order: order }));
+    test.equal( 14, rows.length );  
+    var expectedStatus = "Registros criados: 1";
+    expectedStatus += "\nRegistros atualizados: 13";
+    expectedStatus += "\nRegistros inválidos: 0";
+    test.equal( expectedStatus, result.status );
+    
+    /*{
+        const record = rows[2];
+        test.equal('7AB 0060D RJS', record.name);
+        test.equal('7AB 0060D RJS', record.name_operator);
+        test.equal('Albacora', record.oil_field.name);
+        test.equal('Petrobras 52', record.production_unit.name);
+    } 
+    {
+        const record = rows[18];
+        test.equal('7VM 0071HPRJS', record.name);
+        test.equal('7VM 0071HPRJS', record.name_operator);
+        test.equal('Vermelho', record.oil_field.name);
+        test.equal('Petrobras 37', record.production_unit.name);
+    }   */
+    
+    test.done();
+},
+
 /*
 export: test => {
 	const excelBuf = ExportExcel.main('Well');
