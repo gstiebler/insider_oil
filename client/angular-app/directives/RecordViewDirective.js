@@ -5,6 +5,10 @@ var app = angular.module('RecordViewDirective', []);
 var _DateService;
 var _$rv_scope;
 
+function strContains(input, substr) {
+    return input.indexOf(substr) > -1;
+}
+
 function formatByType(field) {
     if(field.type == 'DATE') {
         return _DateService.dateFormat(field.value);
@@ -22,8 +26,11 @@ function onRecordDataChange(recordData) {
         return;
     var fieldValues = [];
     for(var i = 0; i < recordData.length; i++) {
-        if(!recordData[i].value || recordData[i].label == 'ignorar')
+        if(!recordData[i].value || 
+                strContains(recordData[i].label, 'ignorar') || 
+                strContains(recordData[i].label, 'admin')) {
             continue;
+        }
         if(recordData[i].isMultiFieldText) {
             var items = recordData[i].value.split('\n');
             for(var j = 0; j < items.length; j++) {
@@ -32,8 +39,11 @@ function onRecordDataChange(recordData) {
                 newFieldInfo.label = parts[0];
                 newFieldInfo.value = parts[1];
 
-                if(!newFieldInfo.value || newFieldInfo.label == 'ignorar')
+                if(!newFieldInfo.value || 
+                        strContains(newFieldInfo.label, 'ignorar') ||
+                        strContains(newFieldInfo.label, 'admin')) {
                     continue;
+                }
                 fieldValues.push(newFieldInfo);   
             }
         } else {

@@ -17,12 +17,12 @@ const OilField: BaseDataSourceParams = {
             label: "Estado"
         },
         concessionaries: {
-            label: "Concessionárias",
+            label: "Concessionárias (admin)",
             isManyToMany: true,
             comboSource: 'Company'
         },
         concessionaries_props: {
-            label: "Concessionárias %",
+            label: "Concessionárias % (admin)",
             isList: true
         },
         formatted_concessionaries: {
