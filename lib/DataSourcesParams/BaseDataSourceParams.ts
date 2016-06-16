@@ -8,6 +8,7 @@ interface IField {
     isMultiFieldText?: boolean;
     isProjectList?: boolean;
     isCurrency?: boolean;
+    isConcessionaries?: boolean;
     comboSource?: string;
 }
 

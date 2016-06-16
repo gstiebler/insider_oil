@@ -17,7 +17,8 @@ const OilField: BaseDataSourceParams = {
             label: "Estado"
         },
         concessionaries: {
-            label: "Concessionárias (admin)",
+            label: "Concessionárias",
+            isConcessionaries: true,
             isManyToMany: true,
             comboSource: 'Company'
         },
@@ -25,9 +26,10 @@ const OilField: BaseDataSourceParams = {
             label: "Concessionárias % (admin)",
             isList: true
         },
+        /* It's been shown with a custom formatter on record_view.html
         formatted_concessionaries: {
             label: "Concessionárias"
-        },
+        },*/
         formatted_shore: {
             label: "Terra/Mar"
         },

@@ -79,7 +79,7 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
         concessionaries: {
             type: DataTypes.VIRTUAL,
             get: function() {
-                const select = 'select c.name, c.id ';
+                const select = 'select c.name, c.id, ofc.prop ';
                 const fromStr = 'from oil_field_concessionaries ofc ';
                 const companyJoin = ' left outer join companies c on ofc.company_id = c.id ';
                 const where = 'where ofc.oil_field_id = ' + this.id;

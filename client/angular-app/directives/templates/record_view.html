@@ -32,6 +32,11 @@
                             <div ng-else-if="field.isPhoto" class="col-md-6">
                                 <img class="col-sm-10" src="/db_image?dataSource={{source}}&id={{id}}&fieldName={{field.name}}" ></img> 
                             </div>
+                            <div ng-else-if="field.isConcessionaries" class="col-md-6">
+                                <div ng-repeat="concessionary in field.value track by $index">
+                                    <a href="/app/view_record?source=Company&id={{concessionary.id}}">{{concessionary.name}}</a>: {{concessionary.prop * 100}}%
+                                </div> 
+                            </div>
                             <div ng-else class="col-md-6">
                                 <span class="col-sm-10">{{field.value}}</span>
                             </div>

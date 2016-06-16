@@ -66,7 +66,9 @@ oilFieldConcessionaries: function(test) {
     test.equal( 2, record.concessionaries_props.length );
     test.equal( petroId, record.concessionaries[1].id);
     test.equal( 'Petrobras', record.concessionaries[1].name);
+    test.equal( 0.3, record.concessionaries[0].prop);
     test.equal( 30, record.concessionaries_props[0]);
+    test.equal( 0.7, record.concessionaries[1].prop);
     test.equal( 70, record.concessionaries_props[1]);
     test.equal( 'Eni Oil: 30%\nPetrobras: 70%', record.formatted_concessionaries);
     
