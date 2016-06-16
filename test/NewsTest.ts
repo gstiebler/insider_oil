@@ -92,7 +92,10 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 	}
 
 	db.sequelize.transaction(function(t) {
-		return db.models.News.create(newsToBeCreated, { transaction: t }).then(finalizeTest).catch(function(e) {
+		return db.models.News.create(newsToBeCreated, { transaction: t })
+				.then(finalizeTest)
+				.catch(function(e) {
+			t.rollback();
 			db.models.News.findAll().then(countNews);
 		});
 	});

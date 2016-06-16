@@ -16,7 +16,7 @@ function getLinkParameters(linkStr) {
 }
 
 
-exports.getModelReferences = function(htmlText) {
+export function getModelReferences(htmlText: string): any[] {
 	const parsedHtml = cheerio.load(htmlText);
 
 	const obj = parsedHtml('a');
