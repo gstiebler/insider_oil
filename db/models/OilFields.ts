@@ -60,6 +60,18 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
           type: DataTypes.ENUM('on', 'off'),
           allowNull: false
         },
+        formatted_shore: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                if(this.shore == 'on') {
+                    return 'Terra';
+                } else if(this.shore == 'off') {
+                    return 'Mar';
+                } else {
+                    return 'Erro';
+                }
+            }
+        },
         stage: {
           type: DataTypes.ENUM('production', 'development'),
           allowNull: false

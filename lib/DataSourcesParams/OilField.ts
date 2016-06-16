@@ -28,14 +28,14 @@ const OilField: BaseDataSourceParams = {
         formatted_concessionaries: {
             label: "Concessionárias"
         },
-        userShore: {
+        formatted_shore: {
             label: "Terra/Mar"
         },
         shore: {
-            label: "Terra/Mar"
+            label: "ignorar"
         },
         stage: {
-            label: "Estágio"
+            label: "Estágio (admin)"
         },
         block_name: {
             label: "Bloco"
