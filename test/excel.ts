@@ -229,21 +229,6 @@ oilFields: test => {
     expectedStatus += "\nRegistros inválidos: 0";
     test.equal( expectedStatus, result.status );
     
-    /*{
-        const record = rows[2];
-        test.equal('7AB 0060D RJS', record.name);
-        test.equal('7AB 0060D RJS', record.name_operator);
-        test.equal('Albacora', record.oil_field.name);
-        test.equal('Petrobras 52', record.production_unit.name);
-    } 
-    {
-        const record = rows[18];
-        test.equal('7VM 0071HPRJS', record.name);
-        test.equal('7VM 0071HPRJS', record.name_operator);
-        test.equal('Vermelho', record.oil_field.name);
-        test.equal('Petrobras 37', record.production_unit.name);
-    }   */
-    
     test.done();
 },
 
@@ -256,7 +241,7 @@ export: test => {
 
 
 invalidHeader: function(test) {
-    var excelBuf = fs.readFileSync('./test/data/drilling_rigs.xls');
+    var excelBuf = fs.readFileSync('./test/data/drilling_rigs_offshore.xls');
     var workbook = XLSX.read(excelBuf, {type:"buffer"});
     var first_sheet_name = workbook.SheetNames[0];
     var worksheet = workbook.Sheets[first_sheet_name];
@@ -269,7 +254,28 @@ invalidHeader: function(test) {
         test.equal( "O cabeçalho do arquivo Excel não possui o campo sonda", err );
         test.done();
     } 
-}
+},
+
+productionUnits: test => {
+    var excelBuf = fs.readFileSync('./test/data/production_units.xlsx');
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'ProductionUnit'));
+    
+    var rows = await( dbUtils.findAllCustom(db.models.ProductionUnit, { order: ['name'] }));
+    test.equal( 9, rows.length );  
+    var expectedStatus = "Registros criados: 0";
+    expectedStatus += "\nRegistros atualizados: 9";
+    expectedStatus += "\nRegistros inválidos: 0";
+    test.equal( expectedStatus, result.status );
+    
+    {
+        const record = rows[0];
+        test.equal('Capixaba', record.name);
+        test.equal('2015-03-30', record.end.toJSON().substring(0, 10));
+        test.equal(302000.3, record.day_rate);
+    } 
+    
+    test.done();
+},
 
 
 };

@@ -26,7 +26,6 @@ const ProductionUnit: BaseDataSourceParams = {
         gas_processing_capacity: {
             label: 'Capacidade de processamento de gás (mm m3/d)'
         },
-        
         oil_storage_capacity: {
             label: 'Capacidade de estocagem de óleo (mbbl)'
         },
@@ -54,7 +53,25 @@ const ProductionUnit: BaseDataSourceParams = {
     labelField: 'name',
     gridFields: ['name', 'oil_field_name', 'owner'],
     tableLabel: 'Unidades de produção',
-    hasMap: false
+    hasMap: false,
+    excelParams: {
+        keyField: "nome",
+        fields: {
+            'nome': 'name',
+            'campo': 'oil_field',
+            'tipo': 'type',
+            'empresa proprietária': 'owner',
+            'situação': 'situation',
+            'capacidade de processamento de óleo': 'oil_processing_capacity',
+            'capacidade de processamento de gás': 'gas_processing_capacity',
+            'capacidade de estocagem de óleo': 'oil_storage_capacity',
+            'início do contrato': 'start',
+            'término do contrato': 'end',
+            "lâmina d'água": 'depth',
+            'início da produção': 'first_oil',
+            'day rate': 'day_rate',
+        }
+    },
 }
 
 export = ProductionUnit;

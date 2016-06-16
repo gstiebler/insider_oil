@@ -121,6 +121,8 @@ export class ImportExcel {
                 typeStr = model.attributes[fieldName].type.toString();
             } catch(e) { }
             const value = rowValues[col];
+            if(!value || value == '')
+                continue;
             const association = model.associations[fieldName];
             if(association) {
                 this.setRecordValueFromAssociation(record, value, headerField, association);

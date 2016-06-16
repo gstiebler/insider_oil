@@ -28,7 +28,7 @@ function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataType
           allowNull: true
         },
         day_rate: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.DOUBLE,
             allowNull: true
         },
 		photo: {

@@ -48,7 +48,7 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
             allowNull: true
         },
         day_rate: {
-            type: Sequelize.FLOAT,
+            type: Sequelize.DOUBLE,
 	          allowNull: true
         },  
 		photo: {

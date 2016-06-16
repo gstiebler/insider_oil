@@ -265,7 +265,7 @@ module.exports = {
 					allowNull: true
 				},
 				day_rate: {
-					type: Sequelize.FLOAT,
+					type: Sequelize.DOUBLE,
 					allowNull: true
 				},
 				photo: {
@@ -330,7 +330,7 @@ module.exports = {
 					allowNull: true
 				},
 				day_rate: {
-					type: Sequelize.FLOAT,
+					type: Sequelize.DOUBLE,
 					allowNull: true
 				},
 				photo: {
