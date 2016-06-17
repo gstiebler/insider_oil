@@ -3,6 +3,7 @@ var await = require('../await');
 var XLSX = require('xlsx');
 import dbUtils = require('../dbUtils');
 import dsParams = require('./../DataSourcesParams');
+import winston = require('winston');
 
 function datenum(v, date1904?:any) {
 	if(date1904) v+=1462;
@@ -91,7 +92,7 @@ export function main(dataSourceName: string) {
         const records = await( dbUtils.findAllCustom(dataSource) );
         return exportExcel(records, dataSource, dataSourceName);
     } catch(e) {
-    	console.error(e.stack);
+    	winston.error(e.stack);
     	throw e;
     }
 }

@@ -6,10 +6,14 @@ export function getErrorFunc(res: express.Response, errorCode: number, msg: stri
         var errors = error.errors ? error.errors : [];
         if((typeof error) == 'string')
             errors.push( { message: error } );
-        res.status(errorCode).json( {
-            errorMsg: msg + ' ' + error.message, 
+        const errObj = {
+            errorMsg: msg, 
             errors: errors 
-        } )
+        };
+        if(error.message) {
+            errObj.errorMsg += ' ' + error.message;
+        }
+        res.status(errorCode).json(errObj)
         winston.error(error.stack);
     };
 }

@@ -17,6 +17,7 @@ import TableQueries = require('../db/queries/TableQueries');
 import QueryGenerator = require('../db/queries/QueryGenerator');
 import TimeSeriesQueries = require('../db/queries/TimeSeriesQueries');
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
+import Sequelize = require('sequelize');
  
 function getFieldTypes(fields) {
     const types = {};
@@ -125,10 +126,13 @@ export function createItem(req: express.Request, res: express.Response, next) { 
     var modelName = req.body.model;
     var model = dbUtils.getDataSource(modelName);
 
-	db.sequelize.transaction(function(t) {
-	       return model.create(newItemData)
+	db.sequelize.transaction(function(t: Sequelize.Transaction) {
+	    return model.create(newItemData)
 	            .then(ControllerUtils.getOkFunc(res, "Registro criado com sucesso."))
-	           .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."));
+	           .catch(function(err) {
+                   t.rollback();
+                   ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro.")(err);
+               });
     });
 })}
 
