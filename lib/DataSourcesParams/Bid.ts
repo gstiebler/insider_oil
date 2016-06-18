@@ -56,7 +56,23 @@ const Bid: BaseDataSourceParams = {
     labelField: "process_number",
     gridFields: ["process_number", "modality", 'contract_object'],
     tableLabel: "Licitações",
-    hasMap: false
+    hasMap: false,
+    excelParams: {
+        keyField: 'processo',
+        fields: {
+            'processo': 'process_number',
+            'modalidade': 'modality',
+            'objeto do contrato': 'contract_object',
+            'quantidade de itens': 'qty_items',
+            'data de abertura': 'opening_moment',
+            'local de abertura': 'opening_local',
+            'cidade de abertura': 'opening_city',
+            'estado': 'opening_state',
+            'segmento': 'segment',
+            'situação': 'situation',
+            'contratante': 'contractor',
+        }
+    },
 }
 
 export = Bid;
