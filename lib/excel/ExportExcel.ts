@@ -5,11 +5,15 @@ import dbUtils = require('../dbUtils');
 import dsParams = require('./../DataSourcesParams');
 import winston = require('winston');
 
+const milisecondsInDay = 24 * 60 * 60 * 1000;
+const baseDateNum = 25569 * milisecondsInDay; // 01/01/1970
+
 function datenum(v, date1904?:any) {
 	if(date1904) v+=1462;
-	var epoch = Date.parse(v);
-    var newDate = new Date(Date.UTC(1899, 11, 30));
-	return (epoch - newDate.getMilliseconds()) / (24 * 60 * 60 * 1000);
+	const epoch = Date.parse(v);
+	const miliSum = epoch + baseDateNum ;
+	const result = miliSum / milisecondsInDay; 
+	return result;
 }
 
 function sheet_from_array_of_arrays(data: any[], opts?:any) {
