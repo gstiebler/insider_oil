@@ -4,6 +4,9 @@ var XLSX = require('xlsx');
 import dbUtils = require('../dbUtils');
 import dsParams = require('./../DataSourcesParams');
 import winston = require('winston');
+import moment = require('moment-timezone');
+
+var saoPauloZone = moment.tz.zone('America/Sao_Paulo');
 
 const milisecondsInDay = 24 * 60 * 60 * 1000;
 const baseDateNum = 25569 * milisecondsInDay; // 01/01/1970
@@ -66,8 +69,19 @@ function exportExcel(records: any[], dataSource: dbUtils.ioDataSource, dataSourc
     dataArray.push(fieldLabels);
     for(var record of records) {
     	const line = [];
-    	for(var field of fieldsArray) {
+    	for(var field of fieldsArray) {      
     		var recordValue = record[field];
+			var typeStr = 'VARCHAR';
+            try { // this try is due to an apparent bug with sequelize for ENUM fields
+                typeStr = dataSource.attributes[field].type.toString();
+            } catch(e) { }
+			if(typeStr == 'DATETIME') {
+				// Convert all the datetimes to Sao Paulo time zone
+				const offsetInMinutes = saoPauloZone.offset(recordValue);
+				const offsetInMiliseconds = offsetInMinutes * 60 * 1000;
+				recordValue = new Date(recordValue.getTime() - offsetInMiliseconds);
+				console.log(recordValue);
+			}
     		if(dataSource.associations[field] && record[field]) {
     			recordValue = record[field].name; //TODO get the label field, not always the 'name' field
     		}

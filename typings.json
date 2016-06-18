@@ -4,6 +4,8 @@
     "express": "registry:dt/express#4.0.0+20160317120654",
     "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160322035842",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
+    "moment": "registry:dt/moment#2.8.0+20160316155526",
+    "moment-timezone": "registry:dt/moment-timezone#0.2.5+20160329220348",
     "node": "registry:dt/node#4.0.0+20160330064709",
     "nodeunit": "registry:dt/nodeunit#0.0.0+20160316155526",
     "sequelize": "registry:dt/sequelize#3.4.1+20160423143634",
