@@ -277,6 +277,27 @@ productionUnits: test => {
     test.done();
 },
 
+bids: test => {
+    var excelBuf = fs.readFileSync('./test/data/bids.xlsx');
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Bid'));
+    
+    var rows = await( dbUtils.findAllCustom(db.models.Bid, { order: ['process_number'] }));
+    test.equal( 4, rows.length );  
+    var expectedStatus = "Registros criados: 1";
+    expectedStatus += "\nRegistros atualizados: 3";
+    expectedStatus += "\nRegistros inválidos: 0";
+    test.equal( expectedStatus, result.status );
+    
+    {
+        const record = rows[0];
+        test.equal('1234', record.process_number);
+        test.equal('1981-01-23T20:23', record.opening_moment.toJSON().substring(0, 16));
+        test.equal('objeto teste', record.contract_object);
+    }
+    
+    test.done();
+},
+
 
 };
 

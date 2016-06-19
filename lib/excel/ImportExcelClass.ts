@@ -126,7 +126,7 @@ export class ImportExcel {
             const association = model.associations[fieldName];
             if(association) {
                 this.setRecordValueFromAssociation(record, value, headerField, association);
-            } else if (typeStr == 'DATE') { // is date, should convert
+            } else if (typeStr == 'DATE' || typeStr == 'DATETIME') { // is date, should convert
                 record[fieldName] = this.getDateValue(value);
             } else if(typeStr.includes('VARCHAR')) {
                 record[fieldName] = this.cleanString(value);
@@ -145,7 +145,7 @@ export class ImportExcel {
     }
     
     cleanString(input:string): string {
-        return input.trim().replace(/\s+/g,' ');
+        return input.toString().trim().replace(/\s+/g,' ');
     }
     
     getWorkbook(excelBuf) {
