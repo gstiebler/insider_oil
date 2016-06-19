@@ -3,17 +3,20 @@
 import { ImportExcel, IOkFunc, IExcelUploadResponse } from './ImportExcelClass';
 import { BlockC } from './Block';
 import { Production } from './Production';
+import { Bid } from './Bid';
 
 function execute(excelBuf, modelName: string):Promise<IExcelUploadResponse> {
-    var importExcel:ImportExcel;
-    if(modelName == 'Block') {
-        importExcel = new BlockC();
-    } else if(modelName == 'Production') {
-        importExcel = new Production();
-    } else {
-        importExcel = new ImportExcel()
-    }
-    
+    const excelClasses = {
+        'Block': BlockC,
+        'Production': Production,
+        'Bid': Bid,
+    };
+
+    var excelClass = excelClasses[modelName];
+    if(!excelClass)
+        excelClass = ImportExcel;
+
+    const importExcel:ImportExcel = new excelClass();
     return importExcel.execute(excelBuf, modelName);
 }
 
