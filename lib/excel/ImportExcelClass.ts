@@ -7,6 +7,9 @@ import Sequelize = require('sequelize');
 var XLSX = require('xlsx');
 var Sync = require('sync');
 var await = require('../await');
+import moment = require('moment-timezone');
+
+const saoPauloZone = moment.tz.zone('America/Sao_Paulo');
 
 export interface IOkFunc {
     (status: string, recordsStatus: string[]): void;
@@ -221,6 +224,16 @@ export class ImportExcel {
         }); 
         });
         return promise;
+    }
+
+    getTimeInMillisecondsFromExcelTime(excelTime:number, baseDate:Date):number {
+        const dateOpeningMili = baseDate.getTime();
+        // Convert all the datetimes to Sao Paulo time zone
+        const tzOffsetInMinutes = saoPauloZone.offset(dateOpeningMili);
+        const timeFromExcelInMinutes = excelTime * 24 * 60;
+        const resultTimeUTCInMinutes = timeFromExcelInMinutes + tzOffsetInMinutes;
+        const result = resultTimeUTCInMinutes * 60000;
+        return result;
     }
 
 }
