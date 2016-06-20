@@ -11,6 +11,7 @@ var await = require('../lib/await');
 import nodeunit = require('nodeunit');
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 const moment = require('moment-timezone');
+var utils = require('./lib/utils');
 
 const saoPauloZone = moment.tz('America/Sao_Paulo');
 
@@ -296,6 +297,8 @@ bids: test => {
         test.equal('1234', record.process_number);
         test.equal('23/01/1981-20:23', moment.tz(record.opening_moment, 'America/Sao_Paulo').format('DD/MM/YYYY-HH:mm'));
         test.equal('objeto teste', record.contract_object);
+        test.equal( utils.idByName('OilField', 'Abalone'), record.obj_id );
+        test.equal( utils.idByName('ModelsList', 'OilField'), record.model_id );
     }
     
     test.done();
