@@ -99,3 +99,24 @@ export function searchLike(searchValue, numMaxResults) {
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     return db.sequelize.query(queryStr, simpleQueryType);
 }
+
+export function searchEqual(searchValue, numMaxResults) {
+    var queryStrings = [];
+    for( var i = 0; i < dataSources.length; i++) {
+    	const dataSource = dataSources[i];
+    	for( var j = 0; j < dataSource.fields.length; j++ ) {
+    		const model = db.models[dataSource.model];
+    		const fieldName = dataSource.fields[j];
+    		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model, ' + dataSource.model_id + ' as model_id, id ';
+            currQuery += ' from ' + model.getTableName();
+    		currQuery += ' where ' + fieldName + ' = "' + searchValue + '"';
+    		queryStrings.push(currQuery);
+    		queryStrings.push('\n union \n');
+    	}
+    }
+    
+    queryStrings[queryStrings.length - 1] = '\n limit ' + numMaxResults;
+    const queryStr = queryStrings.join('');
+    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
+    return db.sequelize.query(queryStr, simpleQueryType);
+}
