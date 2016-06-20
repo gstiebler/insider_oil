@@ -110,7 +110,7 @@ export class ImportExcel {
         }
     }
 
-    setRecord(record, header, fields, rowValues, model) {
+    setRecord(record, header:string[], fields, rowValues, model) {
         const _dsParams = dsParams[model.name];
         for( var col = 0; col < header.length; col++ ) {
             var headerField = header[col];

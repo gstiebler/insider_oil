@@ -6,7 +6,7 @@ import dsParams = require('./../DataSourcesParams');
 import winston = require('winston');
 import moment = require('moment-timezone');
 
-var saoPauloZone = moment.tz.zone('America/Sao_Paulo');
+const saoPauloZone = moment.tz.zone('America/Sao_Paulo');
 
 const milisecondsInDay = 24 * 60 * 60 * 1000;
 const baseDateNum = 25569 * milisecondsInDay; // 01/01/1970

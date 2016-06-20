@@ -10,6 +10,9 @@ import dbUtils = require('../lib/dbUtils');
 var await = require('../lib/await');
 import nodeunit = require('nodeunit');
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
+const moment = require('moment-timezone');
+
+const saoPauloZone = moment.tz('America/Sao_Paulo');
 
 function onError(error) {
     console.error(error.stack);
@@ -291,7 +294,7 @@ bids: test => {
     {
         const record = rows[0];
         test.equal('1234', record.process_number);
-        test.equal('1981-01-23T20:23', record.opening_moment.toJSON().substring(0, 16));
+        test.equal('23/01/1981-20:23', moment.tz(record.opening_moment, 'America/Sao_Paulo').format('DD/MM/YYYY-HH:mm'));
         test.equal('objeto teste', record.contract_object);
     }
     
