@@ -429,7 +429,7 @@ const queries:IQueriesById = {
     
     maintenanceDatesByProductionUnit: {
         queryStrFn: (filter) => {        
-            const wellOpts:QueryGenerator.IQueryOpts = {
+            const maintenanceOpts:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'maintenance_dates',
                     fields: [
@@ -454,7 +454,7 @@ const queries:IQueriesById = {
                 ]
             }
             
-            var query = QueryGenerator.queryGenerator(wellOpts);
+            var query = QueryGenerator.queryGenerator(maintenanceOpts);
             return query;
         },
         fields: [

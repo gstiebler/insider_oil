@@ -1,27 +1,15 @@
 'use strict';
-angular.module('InsiderOilApp').controller('ViewRecordController', 
-                ['$scope', 'server', '$routeParams', 'showError', '$location',
-        function($scope, server, $routeParams, showError, $location) {
+angular.module('InsiderOilApp').controller('ProductionUnitController', 
+                ['$scope', 'server', '$routeParams', 'showError', 
+        function($scope, server, $routeParams, showError) {
     
-    var source = $routeParams.source;
+    var source = 'ProductionUnit';
     var id = $routeParams.id;
-    {
-        var customSources = {
-            'OilField': "/app/oil_field",
-            'GasPipeline': "/app/gas_pipeline",
-            'ProductionUnit': "/app/production_unit",
-        };
-
-        var customSource = customSources[source];
-        if(customSource) {
-            $location.path(customSource).search({ id: id });
-        }
-    }
-    
     $scope.id = id;
     $scope.source = source;
     $scope.onError = showError.show;
-    
+    $scope.prodQueryParams = { id: id };
+        
     $scope.relatedPersons = {
         queryName: 'PersonsByProject',
         title: 'Pessoas',
@@ -37,6 +25,14 @@ angular.module('InsiderOilApp').controller('ViewRecordController',
         filters: {
             obj_id: id,
             dataSource: source
+        }
+    }
+    
+    $scope.relatedMaintenanceDates = {
+        queryName: 'maintenanceDatesByProductionUnit',
+        title: 'Datas de manutenção',
+        filters: {
+            id: id
         }
     }
     
