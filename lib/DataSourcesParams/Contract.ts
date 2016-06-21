@@ -3,6 +3,9 @@ import BaseDataSourceParams = require('./BaseDataSourceParams');
 
 const Contract: BaseDataSourceParams = {
     fields: {
+        user_uid: {
+            label: 'Id interno (admin)'
+        },
         supplier: {
             label: "Fornecedor"
         },
@@ -57,7 +60,23 @@ const Contract: BaseDataSourceParams = {
     labelField: "contract_object",
     gridFields: ["contract_object", "supplier", 'value', 'start', 'end', 'situation'],
     tableLabel: "Contratos",
-    hasMap: false
+    hasMap: false,
+    excelParams: {
+        keyField: 'user_uid',
+        fields: {
+            'Fornecedor': 'supplier',
+            'CNPJ/CPF': 'supplier_identifier',
+            'Objeto da contratação': 'contract_object',
+            'Início da vigência': 'start',
+            'Fim da vigência': 'end',
+            'Valor do contrato': 'value',
+            'Contratante': 'contractor',
+            'Segmento': 'segment',
+            'Situação': 'situation',
+            'Número dos aditivos': 'additives_ids',
+            'Licitação': 'bid',
+        }
+    },
 }
 
 export = Contract;

@@ -22,6 +22,11 @@ function defineHooks(db) {
 
 module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
     const Contract = sequelize.define('Contract', {
+      user_uid: {
+        allowNull: false,
+        unique: true,
+        type: Sequelize.STRING,
+      },
         supplier: {
             type: Sequelize.STRING,
             allowNull: true

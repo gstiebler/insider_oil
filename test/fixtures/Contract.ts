@@ -6,6 +6,7 @@ module.exports = function(db): Promise<any[]> {
     const Contract:Sequelize.Model<any, any> = db.models.Contract;
     const newRecordsData = [
         {
+            user_uid: '001',
             supplier: 'EXTERRAN SERVICOS DE OLEO E GAS',
             supplier_identifier: '02.805.820/0001-86',
             contract_object: 'SERVIÇOS DE CONSTRUÇÃO E MONTAGEM, SERVIÇOS DE COMPRESSÃO DE',
@@ -22,6 +23,7 @@ module.exports = function(db): Promise<any[]> {
             }]
         },
         {
+            user_uid: '300',
             supplier: 'ORTENG EQUIPAMENTOS E SISTEMAS LTDA',
             supplier_identifier: '19.884.626/0001-36',
             contract_object: 'SERVIÇOS DE CONSTRUÇÃO E MONTAGEM INDUSTRIAL ELÉTRICA',
@@ -37,6 +39,7 @@ module.exports = function(db): Promise<any[]> {
             }]
         },
         {
+            user_uid: '99',
             supplier: 'G&E MANUTENCAO E SERVICOS LTDA',
             supplier_identifier: '01.104.740/0001-30',
             contract_object: 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM',
