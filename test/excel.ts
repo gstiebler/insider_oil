@@ -304,6 +304,28 @@ bids: test => {
     test.done();
 },
 
+contracts: test => {
+    var excelBuf = fs.readFileSync('./test/data/contracts.xlsx');
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Contract'));
+    
+    var rows = await( dbUtils.findAllCustom(db.models.Contract, { order: ['user_uid'] }));
+    test.equal( 4, rows.length );  
+    var expectedStatus = "Registros criados: 1";
+    expectedStatus += "\nRegistros atualizados: 3";
+    expectedStatus += "\nRegistros inválidos: 0";
+    test.equal( expectedStatus, result.status );
+    
+    {
+        const record = rows[1]; 
+        test.equal('250', record.user_uid);
+        test.equal('Teste fornecedor', record.supplier);
+        test.equal(utils.idByName('Company', 'Petrobras'), record.contractor_id);
+    }
+    
+    test.done();
+},
+
+
 
 };
 

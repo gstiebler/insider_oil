@@ -98,7 +98,9 @@ export class ImportExcel {
     }
     
     setRecordValueFromAssociation(record, value, headerField, association) {
-        var searchParams = { name: value }; // TODO always using 'name' here
+        const labelField = dsParams[association.target.name].labelField;
+        var searchParams = {}; 
+        searchParams[labelField] = value;
         try {
             var associatedRecord = await( association.target.findOne({ where: searchParams }) );
             if(!value || value == '') {
