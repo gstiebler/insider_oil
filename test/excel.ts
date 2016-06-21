@@ -320,6 +320,8 @@ contracts: test => {
         test.equal('250', record.user_uid);
         test.equal('Teste fornecedor', record.supplier);
         test.equal(utils.idByName('Company', 'Petrobras'), record.contractor_id);
+        test.equal( utils.idByName('ProductionUnit', 'Cidade de Magaratiba'), record.obj_id );
+        test.equal( utils.idByName('ModelsList', 'ProductionUnit'), record.model_id );
     }
     
     test.done();
