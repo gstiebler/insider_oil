@@ -333,6 +333,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         //ProductionOffshore: 'Produção offshore',
         HydrocarbonEvidence: 'Indicíos de hidrocarbonetos',
         ProductionUnit: 'Unidades de produção',
+        MaintenanceDate: 'Datas de manutenção',
         Refinery: 'Refinarias',
         Terminal: 'Terminais',
         Fleet: 'Frota Transpetro',

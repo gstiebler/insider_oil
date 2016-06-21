@@ -413,7 +413,7 @@ allTablesMain: test => {
 	    'News',
 	    'OilField',
 	    'Person',
-	    'Reserve',
+	    'Reserve', 
 	    'Seismic',
 	    'Well',
 	    'ProductionUnit',
@@ -427,6 +427,7 @@ allTablesMain: test => {
 	    'OilPipeline',
 	    'GasMovement',
 	    'IndustrySegment',
+	    'MaintenanceDate',
 	];
 	
 	for(var model of models) {
