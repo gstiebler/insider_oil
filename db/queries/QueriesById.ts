@@ -425,7 +425,44 @@ const queries:IQueriesById = {
                 type: 'VARCHAR'
             }
         ]
-    }
+    },
+    
+    maintenanceDatesByProductionUnit: {
+        queryStrFn: (filter) => {        
+            const wellOpts:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'maintenance_dates',
+                    fields: [
+                        'period'
+                    ]
+                },
+                extraFields: [],
+                joinTables: [],
+                filters: [
+                    {
+                        field: 'maintenance_dates.production_unit_id',
+                        equal: filter.id
+                    }
+                ],
+                order: [
+                    {
+                        fieldName: 'period',
+                        dir: 'desc'
+                    }
+                ]
+            }
+            
+            var query = QueryGenerator.queryGenerator(wellOpts);
+            return query;
+        },
+        fields: [
+            {
+                label: 'Data',
+                fieldName: 'period',
+                type: 'DATE'
+            },
+        ]
+    },
 };
 
 export = queries;

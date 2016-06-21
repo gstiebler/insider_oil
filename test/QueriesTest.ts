@@ -299,6 +299,25 @@ hydrocarbonEvidencesByOilField: (test: nodeunit.Test) => {
     test.done();
 },
 
+maintenanceDatesByProductionUnit: (test: nodeunit.Test) => {
+    const capixabaId = utils.idByName('ProductionUnit', 'Capixaba') ;
+    const filters = {
+        id: capixabaId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'maintenanceDatesByProductionUnit',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+    test.equal('2015-10-20T00:00:00.000Z', resQueryValues.records[0].period);
+    test.equal('2010-02-20T00:00:00.000Z', resQueryValues.records[1].period);
+
+    test.done();
+},
+
 }
 
 exports.group = fiberTests.convertTests( group, true );
