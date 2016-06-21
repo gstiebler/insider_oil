@@ -281,6 +281,29 @@ getBidsByObject: (test: nodeunit.Test) => {
     test.done();
 },
 
+contractsByObject: (test: nodeunit.Test) => {
+    const amazonasId = utils.idByName('Basin', 'Amazonas') ;
+    const filters = {
+        obj_id: amazonasId,
+        dataSource: 'Basin'
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'contractsByObject',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+    {
+        const record = resQueryValues.records[0];
+        test.equal('ORTENG EQUIPAMENTOS E SISTEMAS LTDA', record.supplier);
+        test.equal('SERVIÇOS DE CONSTRUÇÃO E MONTAGEM INDUSTRIAL ELÉTRICA', record.contract_object);   
+    }
+
+    test.done();
+},
+
 hydrocarbonEvidencesByOilField: (test: nodeunit.Test) => {
     const jiritubaId = utils.idByName('OilField', 'Jiribatuba2') ;
     const filters = {

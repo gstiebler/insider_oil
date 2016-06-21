@@ -109,6 +109,27 @@ const queries:IQueriesById = {
         fields: TableQueries.queries['Bids'].fields
     },
     
+    contractsByObject: {
+        queryStrFn: (filters) => {
+            const modelsListFilter = {
+                name: filters.dataSource
+            }
+            const modelInList = await( db.models.ModelsList.find({ where: modelsListFilter }) );
+            
+            const customFilters = [
+                { field: 'contracts.model_id', equal: modelInList.id },
+                { field: 'contracts.obj_id', equal:filters.obj_id  },
+            ];
+            const queryParams: QueryGenerator.IQueryParams = {
+                filters: customFilters,
+                order: [ { fieldName: 'start', dir: 'desc' } ],
+                pagination: { first: 0, itemsPerPage: 100 }
+            };
+            return TableQueries.queries['Contracts'].queryStrFn(queryParams);
+        },
+        fields: TableQueries.queries['Contracts'].fields
+    },
+    
     ambientalLicenseByBlock: {
         queryStrFn: (filter) => {
             var query = 'select al.id, license, start, end, enterprise, entrepreneur, "AmbientalLicense" as model ';

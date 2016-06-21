@@ -51,7 +51,7 @@ module.exports = function(db): Promise<any[]> {
             bid_id: null,
             object: [{
                 model_id: utils.idByName('ModelsList', 'Basin'),
-                id: utils.idByName('Basin', 'Amazonas'),
+                id: utils.idByName('Basin', 'Alagoas'),
             }]
         },
     ];
