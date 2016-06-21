@@ -312,8 +312,8 @@ maintenanceDatesByProductionUnit: (test: nodeunit.Test) => {
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
     test.equal(2, resQueryValues.records.length);
-    test.equal('2015-10-20T00:00:00.000Z', resQueryValues.records[0].period);
-    test.equal('2010-02-20T00:00:00.000Z', resQueryValues.records[1].period);
+    test.equal('10/2015', resQueryValues.records[0].formatted_period);
+    test.equal('02/2010', resQueryValues.records[1].formatted_period);
 
     test.done();
 },

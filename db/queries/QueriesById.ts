@@ -436,7 +436,9 @@ const queries:IQueriesById = {
                         'period'
                     ]
                 },
-                extraFields: [],
+                extraFields: [
+                    ['concat(lpad(month(period), 2, "0"), "/",year(period))', 'formatted_period'],
+                ],
                 joinTables: [],
                 filters: [
                     {
@@ -458,8 +460,8 @@ const queries:IQueriesById = {
         fields: [
             {
                 label: 'Data',
-                fieldName: 'period',
-                type: 'DATE'
+                fieldName: 'formatted_period',
+                type: 'VARCHAR'
             },
         ]
     },
