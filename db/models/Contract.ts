@@ -51,6 +51,10 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
             type: Sequelize.FLOAT,
             allowNull: true
         },
+        currency: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
         situation: {
             type: Sequelize.STRING,
             allowNull: true

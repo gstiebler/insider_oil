@@ -39,6 +39,10 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: true
       },
+      currency: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       contractor_id: {
         type: Sequelize.INTEGER,
         allowNull: true,

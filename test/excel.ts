@@ -292,6 +292,7 @@ contracts: test => {
         test.equal(utils.idByName('Company', 'Petrobras'), record.contractor_id);
         test.equal( utils.idByName('ProductionUnit', 'Cidade de Magaratiba'), record.obj_id );
         test.equal( utils.idByName('ModelsList', 'ProductionUnit'), record.model_id );
+        test.equal( 'Euro', record.currency );
     }
     
     test.done();

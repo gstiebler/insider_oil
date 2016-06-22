@@ -25,6 +25,9 @@ const Contract: BaseDataSourceParams = {
             label: 'Valor do contrato',
             isCurrency: true
         },
+        currency: {
+            label: 'Moeda',
+        },
         contractor_name: {
             label: 'Contratante'
         },
@@ -71,6 +74,7 @@ const Contract: BaseDataSourceParams = {
             'início da vigência': 'start',
             'fim da vigência': 'end',
             'valor do contrato': 'value',
+            'moeda': 'currency',
             'contratante': 'contractor',
             'segmento': 'segment',
             'situação': 'situation',
