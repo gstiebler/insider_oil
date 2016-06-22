@@ -6,11 +6,11 @@
                 <table class="borderless table table-hover" data-height="500">
                     <thead>
                         <tr>
-                            <th ng-repeat="headerItem in header">{{headerItem}}</th>
+                            <th ng-repeat="headerItem in header track by $index">{{headerItem}}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="record in records">
+                        <tr ng-repeat="record in records track by $index">
                             <td ng-repeat="record_column in record">
                                 <div ng-if="record_column.model">
                                     <a href="/app/view_record?source={{record_column.model}}&id={{record_column.id}}" >{{record_column.value}}</a>   
