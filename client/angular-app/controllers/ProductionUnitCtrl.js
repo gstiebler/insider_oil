@@ -36,6 +36,15 @@ angular.module('InsiderOilApp').controller('ProductionUnitController',
         }
     }
     
+    $scope.relatedContracts = {
+        queryName: 'contractsByObject',
+        title: 'Contratos',
+        filters: {
+            obj_id: id,
+            dataSource: source
+        }
+    }
+    
     // show record values
     function showValues(viewData) {
         $scope.recordData = viewData.record;
