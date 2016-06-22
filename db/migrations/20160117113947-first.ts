@@ -698,6 +698,22 @@ module.exports = {
 						model: 'blocks',
 						key: 'id'
 					}
+				},      
+				oil_field_id: {
+					type: Sequelize.INTEGER,
+					allowNull: true,
+					references: {
+						model: 'oil_fields',
+						key: 'id'
+					}
+				},
+				production_unit_id: {
+					type: Sequelize.INTEGER,
+					allowNull: true,
+					references: {
+						model: 'production_units',
+						key: 'id'
+					}
 				},
 				created_at: {
 					type: Sequelize.DATE

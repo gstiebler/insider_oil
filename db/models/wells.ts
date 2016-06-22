@@ -120,6 +120,19 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                     as: 'block',
                     foreignKey: { allowNull: true }
                 };
+                Well.belongsTo(models.Block, blockOpts);
+                
+                const oilFieldAssociationOpts:Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'oil_field', 
+                    foreignKey: {  allowNull: true }
+                };
+                Well.belongsTo(models.OilField, oilFieldAssociationOpts );
+                
+                const productionUnitAssociationOpts:Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'production_unit', 
+                    foreignKey: {  allowNull: true }
+                };
+                Well.belongsTo(models.ProductionUnit, productionUnitAssociationOpts );
             }
         }
     }
