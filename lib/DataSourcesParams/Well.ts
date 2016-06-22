@@ -29,6 +29,18 @@ const Well: BaseDataSourceParams = {
         block_id: {
             label: "Bloco"
         },
+        oil_field_name: {
+            label: "Campo"
+        },
+        oil_field_id: {
+            label: "Campo"
+        },
+        production_unit_name: {
+            label: "Unidade de produção"
+        },
+        production_unit_id: {
+            label: "Unidade de produção"
+        },
         drilling_rig: {
             label: "Sonda"
         },
