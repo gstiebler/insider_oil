@@ -164,7 +164,7 @@ wellProduction: test => {
     const invalidRecordsStatus = result.invalidRecordsStatus;    
     const status = result.status;    
     
-    const order = ['period_year', 'period_month', 'production_well.name'];
+    const order = ['period_year', 'period_month', 'well.name'];
     var rows = await( dbUtils.findAllCustom(db.models.Production, { order: order }));
     test.equal( 10, rows.length );  
     var expectedStatus = "Registros criados: 2";
@@ -174,7 +174,7 @@ wellProduction: test => {
     
     {
         const record = rows[3];
-        test.equal('7AB 0047D RJS', record.production_well.name);
+        test.equal('7AB 0047D RJS', record.well.name);
         test.equal(329.222, record.oil_production);
         test.equal(0.0, record.oil_condensed_production);
         test.equal(6.1391, record.gas_associated_production);
@@ -184,38 +184,8 @@ wellProduction: test => {
     }  
     {
         const record = rows[5];
-        test.equal('7MRL 0062D RJS', record.production_well.name);
+        test.equal('7MRL 0062D RJS', record.well.name);
         test.equal(2325.89, record.oil_production);
-    }   
-    
-    test.done();
-},
-
-productionWell: test => {
-    var excelBuf = fs.readFileSync('./test/data/production_wells.xls');
-    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'ProductionWell'));
-    
-    const order = ['name'];
-    var rows = await( dbUtils.findAllCustom(db.models.ProductionWell, { order: order }));
-    test.equal( 20, rows.length );  
-    var expectedStatus = "Registros criados: 13";
-    expectedStatus += "\nRegistros atualizados: 3";
-    expectedStatus += "\nRegistros inválidos: 1";
-    test.equal( expectedStatus, result.status );
-    
-    {
-        const record = rows[2];
-        test.equal('7AB 0060D RJS', record.name);
-        test.equal('7AB 0060D RJS', record.name_operator);
-        test.equal('Albacora', record.oil_field.name);
-        test.equal('Petrobras 52', record.production_unit.name);
-    } 
-    {
-        const record = rows[18];
-        test.equal('7VM 0071HPRJS', record.name);
-        test.equal('7VM 0071HPRJS', record.name_operator);
-        test.equal('Vermelho', record.oil_field.name);
-        test.equal('Petrobras 37', record.production_unit.name);
     }   
     
     test.done();

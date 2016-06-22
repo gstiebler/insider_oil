@@ -95,7 +95,7 @@ export class Production extends ImportExcel {
                     }
                     
                     var searchParams = {
-                        production_well_id: wellRecord.id,
+                        well_id: wellRecord.id,
                         period_year: rowObj.period_year,
                         period_month: rowObj.period_month
                     };
@@ -112,7 +112,7 @@ export class Production extends ImportExcel {
                         record = {};
                         try {
                             _this.setRecord(record, header, rowObj);
-                            record.production_well_id = wellRecord.id;
+                            record.well_id = wellRecord.id;
                             await( model.create(record) );
                             insertedRecords++;
                         } catch(error) {

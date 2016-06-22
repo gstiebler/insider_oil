@@ -98,7 +98,7 @@ createWell: function(test) {
         query: { table: 'Well' }
     };
     const response = utils.getJsonResponse.sync(null, dbServerController.main, req2);
-    test.equal(4, response.records.length);
+    test.equal(11, response.records.length);
     test.equal('Novo poço', response.records[3].name);
     test.equal('Statoil', response.records[3].operator_name);
     test.done();
@@ -159,7 +159,7 @@ deleteWell: function(test) {
         query: { table: 'Well' }
     };
     const response2 = utils.getJsonResponse.sync(null, dbServerController.main, req2);
-    test.equal(2, response2.records.length);
+    test.equal(9, response2.records.length);
     test.done();
 },
 
@@ -291,7 +291,7 @@ listWells: function(test) {
     req.query.table = 'Well';
     const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
     // records
-    test.equal(3, response.records.length);
+    test.equal(10, response.records.length);
     test.equal('1A 0001 BA', response.records[0].name);
     test.equal('Petrobras', response.records[0].operator_name);
     // view params
@@ -310,7 +310,7 @@ modelFields: function(test) {
     };
     
     const response = utils.getJsonResponse.sync(null, dbServerController.modelFields, req);
-    test.equal(16, response.fields.length);
+    test.equal(18, response.fields.length);
     test.equal( 'name', response.fields[0].name );
     test.equal( 'Poço', response.fields[0].label );
     test.equal( 'VARCHAR(255)', response.fields[0].type );
@@ -361,7 +361,7 @@ getRecordViewWell: function(test) {
 
     const response = utils.getJsonResponse.sync(null, dbServerController.viewRecord, req);
     const record = response.record;
-    test.equal(16, record.length);
+    test.equal(18, record.length);
     test.equal('Poço', record[0].label);
     test.equal('1AGIP1RJS', record[0].value);
     
