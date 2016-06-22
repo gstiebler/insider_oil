@@ -45,7 +45,10 @@ class Well implements IDataSourceOperations {
                 item.model = tbNameModelMap[drillingRigObj.$modelOptions.tableName];
             } else if(item.type == 'ref') {
                 item.ref = true;
-                item.name = record[item.association].name;
+                if(record[item.association]) {
+                    // TODO get label field instead of name
+                    item.name = record[item.association].name;
+                }
             }
             recordValues.push(item);
         }
