@@ -27,7 +27,6 @@ params['Seismic'] = require('./Seismic');
 params['Well'] = require('./Well');
 params['HydrocarbonEvidence'] = require('./HydrocarbonEvidence');
 params['ProductionUnit'] = require('./ProductionUnit');
-params['ProductionWell'] = require('./ProductionWell');
 params['Refinery'] = require('./Refinery');
 params['Terminal'] = require('./Terminal');
 params['Fleet'] = require('./Fleet');

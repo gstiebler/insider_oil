@@ -417,7 +417,6 @@ allTablesMain: test => {
 	    'Seismic',
 	    'Well',
 	    'ProductionUnit',
-	    'ProductionWell',
 	    'Refinery',
 	    'Terminal',
 	    'Fleet',

@@ -29,7 +29,6 @@ const operations: IOperations = {
     Well: Well,
     HydrocarbonEvidence: BaseDataSourceOperations,
     ProductionUnit: BaseDataSourceOperations,
-    ProductionWell: BaseDataSourceOperations,
     Refinery: BaseDataSourceOperations,
     Terminal: BaseDataSourceOperations,
     Fleet: BaseDataSourceOperations,

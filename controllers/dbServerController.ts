@@ -312,7 +312,6 @@ export function sourcesList(req: express.Request, res: express.Response) {
         Basin: 'Bacias',
         Block: 'Blocos',
         Well: 'Poços',
-        ProductionWell: 'Poços de produção',
         ComercialDeclaration: 'Declarações de comercialidade',
         DrillingRigOffshore: 'Sondas offshore',
         DrillingRigOnshore: 'Sondas onshore',

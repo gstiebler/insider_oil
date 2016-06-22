@@ -88,7 +88,7 @@ export class Production extends ImportExcel {
                     const wellSearchParams = {
                         name: _this.cleanString(rowObj.name)
                     };
-                    const wellRecord = await( db.models.ProductionWell.findOne({ where: wellSearchParams }) );
+                    const wellRecord = await( db.models.Well.findOne({ where: wellSearchParams }) );
                     if(!wellRecord) {
                         invalidStatus.push( "Poço não encontrado " + rowObj.name );
                         continue;
