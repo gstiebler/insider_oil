@@ -10,7 +10,7 @@ const queries = {
             'sum(gas_non_associated_production) as gas_non_associated_production, ' +
             'concat(lpad(period_month, 2, "0"), "/", period_year) as date_prod ';
         const from = 'from production p ';
-	    const pwJoin = 'left outer join production_wells pw on p.production_well_id = pw.id ';
+	    const pwJoin = 'left outer join wells pw on p.well_id = pw.id ';
         const ofJoin = 'left outer join oil_fields of on pw.oil_field_id = of.id ';
         const where = 'where of.id = ' + queryParams.oilField;
         const group = ' group by period_year, period_month ';
