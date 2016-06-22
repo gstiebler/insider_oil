@@ -3,7 +3,7 @@ import utils = require('../lib/utils');
 module.exports = function(db) {
     return db.models.Production.bulkCreate([
         {
-            production_well_id: utils.idByName('ProductionWell', '7C 0137 BA'),
+            well_id: utils.idByName('ProductionWell', '7C 0137 BA'),
             period_year: 2015,
             period_month: 7,
             oil_production: 6.947,
@@ -14,7 +14,7 @@ module.exports = function(db) {
             water_production: 0.0016,
         },
         {
-            production_well_id: utils.idByName('ProductionWell', '7C 0137 BA'),
+            well_id: utils.idByName('ProductionWell', '7C 0137 BA'),
             period_year: 2014,
             period_month: 7,
             oil_production: 3.2134,
@@ -25,7 +25,7 @@ module.exports = function(db) {
             water_production: 0.416,
         },
         {
-            production_well_id: utils.idByName('ProductionWell', '7C 0137 BA'),
+            well_id: utils.idByName('ProductionWell', '7C 0137 BA'),
             period_year: 2015,
             period_month: 8,
             oil_production: 6.2134,
@@ -36,7 +36,7 @@ module.exports = function(db) {
             water_production: 0.0016,
         },
         {
-            production_well_id: utils.idByName('ProductionWell', '7CB 0009D SES'),
+            well_id: utils.idByName('ProductionWell', '7CB 0009D SES'),
             period_year: 2015,
             period_month: 7,
             oil_production: 3.947,
@@ -47,7 +47,7 @@ module.exports = function(db) {
             water_production: 0.0463,
         },
         {
-            production_well_id: utils.idByName('ProductionWell', '7CB 0009D SES'),
+            well_id: utils.idByName('ProductionWell', '7CB 0009D SES'),
             period_year: 2014,
             period_month: 8,
             oil_production: 6.2134,
@@ -58,7 +58,7 @@ module.exports = function(db) {
             water_production: 0.004,
         },
         {
-            production_well_id: utils.idByName('ProductionWell', '7CB 0009D SES'),
+            well_id: utils.idByName('ProductionWell', '7CB 0009D SES'),
             period_year: 2015,
             period_month: 8,
             oil_production: 9.2134,
@@ -69,7 +69,7 @@ module.exports = function(db) {
             water_production: 0.0016,
         },
         {
-            production_well_id: utils.idByName('ProductionWell', '7GA 0007D SES'),
+            well_id: utils.idByName('ProductionWell', '7GA 0007D SES'),
             period_year: 2015,
             period_month: 1,
             oil_production: 94.2134,
@@ -80,7 +80,7 @@ module.exports = function(db) {
             water_production: 0.004,
         },
         {
-            production_well_id: utils.idByName('ProductionWell', '7AB 0047D RJS'),
+            well_id: utils.idByName('ProductionWell', '7AB 0047D RJS'),
             period_year: 2015,
             period_month: 4,
             oil_production: 0.0,

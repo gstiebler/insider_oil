@@ -677,15 +677,15 @@ module.exports = {
 				},
 				lat: {
 					type: Sequelize.DECIMAL(10, 6),
-					allowNull: false
+					allowNull: true
 				},
 				lng: {
 					type: Sequelize.DECIMAL(10, 6),
-					allowNull: false
+					allowNull: true
 				},
 				operator_id: {
 					type: Sequelize.INTEGER,
-					allowNull: false,
+					allowNull: true,
 					references: {
 						model: 'companies',
 						key: 'id'
@@ -693,7 +693,7 @@ module.exports = {
 				},
 				block_id: {
 					type: Sequelize.INTEGER,
-					allowNull: false,
+					allowNull: true,
 					references: {
 						model: 'blocks',
 						key: 'id'

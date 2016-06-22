@@ -41,11 +41,11 @@ module.exports = {
 					type: Sequelize.FLOAT,
 					allowNull: false
 				},
-				production_well_id: {
+				well_id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 					references: {
-						model: 'production_wells',
+						model: 'wells',
 						key: 'id'
 					}
 				},

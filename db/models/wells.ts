@@ -1,6 +1,9 @@
-var await = require('../../lib/await');
+'use strict';
 
-module.exports = function(sequelize, DataTypes) {
+var await = require('../../lib/await');
+import Sequelize = require('sequelize');
+
+module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
   var Well = sequelize.define('Well', {
         name: {
           type: DataTypes.STRING,
@@ -13,11 +16,11 @@ module.exports = function(sequelize, DataTypes) {
         },
         lat: {
           type: DataTypes.DECIMAL(10, 6),
-          allowNull: false
+          allowNull: true
         },
         lng: {
           type: DataTypes.DECIMAL(10, 6),
-          allowNull: false
+          allowNull: true
         },
         drilling_rig_onshore_id: {
           type: DataTypes.INTEGER,
@@ -107,8 +110,16 @@ module.exports = function(sequelize, DataTypes) {
         },
         classMethods: {
             associate: function(models) {
-                Well.belongsTo(models.Company, { as: 'operator' } );
-                Well.belongsTo(models.Block, { as: 'block' } );
+                const companyOpts: Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'operator',
+                    foreignKey: { allowNull: true }
+                };
+                Well.belongsTo(models.Company, companyOpts);
+
+                const blockOpts: Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'block',
+                    foreignKey: { allowNull: true }
+                };
             }
         }
     }

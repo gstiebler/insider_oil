@@ -38,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'production',
         classMethods: {
             associate: function(models) {
-                Production.belongsTo(models.ProductionWell, { as: 'production_well', allowNull: false } );
+                Production.belongsTo(models.Well, { as: 'well', allowNull: false } );
             }
         }
     }
