@@ -107,7 +107,10 @@ GasPipeline: (test) => {
 },
 
 Contract: (test) => {
-    const obj = { supplier: 'supplier' };
+    const obj = {
+        user_uid: '304958',
+        supplier: 'supplier' 
+    };
     await( db.models.Contract.create(obj) );
     const searchOpt = { where: obj };
     const lastRecord = await( db.models.Contract.findOne(searchOpt) );
