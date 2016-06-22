@@ -62,7 +62,7 @@ first: function(test) {
     });
     
     function onWells(json) {
-        test.equal(3, json.records.length);
+        test.equal(10, json.records.length);
         test.equal('1A 0001 BA', json.records[0].name);
         
         server.close();
@@ -78,7 +78,7 @@ modelFields: function(test) {
     });
     
     function onWellFields(json) {
-        test.equal(16, json.fields.length);
+        test.equal(18, json.fields.length);
         
         test.equal('name', json.fields[0].name);
         test.equal('Poço', json.fields[0].label);
@@ -109,7 +109,7 @@ recordValues: function(test) {
     });
     
     function onWellValues(json) {
-        test.equal(16, json.fields.length);
+        test.equal(18, json.fields.length);
 
         test.equal('1AGIP1RJS', json.values.name);
         test.equal(operatorId, json.values.operator_id);
