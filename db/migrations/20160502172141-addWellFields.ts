@@ -98,6 +98,30 @@ module.exports = {
 			}
 		});
 
+		columnParams.push({
+			columnName: 'oil_field_id',
+			columnDesc: {
+				type: Sequelize.INTEGER,
+				allowNull: true,
+				references: {
+					model: 'oil_fields',
+					key: 'id'
+				}
+			}
+		});
+
+		columnParams.push({
+			columnName: 'production_unit_id',
+			columnDesc: {
+				type: Sequelize.INTEGER,
+				allowNull: true,
+				references: {
+					model: 'production_units',
+					key: 'id'
+				}
+			}
+		});
+
 		return promise_bb.each(columnParams, function(item) {
 			return queryInterface.addColumn('wells', item.columnName, item.columnDesc);
 		}).then(() => {

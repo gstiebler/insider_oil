@@ -2,6 +2,7 @@
 
 import fiberTests = require('./lib/fiberTests');
 import nodeunit = require('nodeunit');
+const await = require('../lib/await');
 
 var port = 3333;
 var InitializeServer = require('./lib/InitializeServer');

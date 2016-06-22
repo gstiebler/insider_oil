@@ -683,7 +683,7 @@ module.exports = {
 					type: Sequelize.DECIMAL(10, 6),
 					allowNull: true
 				},
-				operator_id: {
+				operator_id: { 
 					type: Sequelize.INTEGER,
 					allowNull: true,
 					references: {
@@ -699,22 +699,6 @@ module.exports = {
 						key: 'id'
 					}
 				},      
-				oil_field_id: {
-					type: Sequelize.INTEGER,
-					allowNull: true,
-					references: {
-						model: 'oil_fields',
-						key: 'id'
-					}
-				},
-				production_unit_id: {
-					type: Sequelize.INTEGER,
-					allowNull: true,
-					references: {
-						model: 'production_units',
-						key: 'id'
-					}
-				},
 				created_at: {
 					type: Sequelize.DATE
 				},
