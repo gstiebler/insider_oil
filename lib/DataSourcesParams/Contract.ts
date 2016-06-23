@@ -49,6 +49,9 @@ const Contract: BaseDataSourceParams = {
         bid_id: {
             label: 'Licitação'
         },
+        duration: {
+            label: 'Duração (dias)'
+        },
         object: {
             label: 'Objeto',
             isProjectList: true
@@ -61,7 +64,7 @@ const Contract: BaseDataSourceParams = {
         },
     },
     labelField: "user_uid",
-    gridFields: ["contract_object", "supplier", 'value', 'start', 'end', 'situation'],
+    gridFields: ["contract_object", "supplier", 'value', 'start', 'end', 'duration', 'situation'],
     tableLabel: "Contratos",
     hasMap: false,
     excelParams: {

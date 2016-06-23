@@ -77,6 +77,36 @@ basinsPagination:  (test: nodeunit.Test) => {
     test.done();
 },
 
+contracts:  (test: nodeunit.Test) => {
+    const queryParams:QueryGenerator.IQueryParams = {
+        order: [
+            {
+                fieldName: 'user_uid',
+                dir: 'asc'
+            }
+        ],
+        filters: [],
+        pagination: {
+            first: 0,
+            itemsPerPage: 5
+        }
+    }
+    
+    const reqQueryValues = {
+        query: {
+            queryName: 'Contracts',
+            queryParams: JSON.stringify(queryParams)
+        }
+    }; 
+    
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
+    test.equal( 3, resQueryValues.records.length );
+    test.equal( 3, resQueryValues.count );
+    test.equal( 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM', resQueryValues.records[2].contract_object );
+    test.equal( 21, resQueryValues.records[2].duration );
+    
+    test.done();
+},
 
 blocksInFilter:  (test: nodeunit.Test) => {
     const queryParams:QueryGenerator.IQueryParams = {

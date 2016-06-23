@@ -965,7 +965,8 @@ export const queries:ITableQueries = {
                 },
                 extraFields: [
                     ['"Contract"', 'model'],
-                    ['"Bid"', 'bid_model']
+                    ['"Bid"', 'bid_model'],
+                    ['datediff(contracts.end, contracts.start)', 'duration']
                 ],
                 joinTables: [
                     {
@@ -1011,6 +1012,11 @@ export const queries:ITableQueries = {
                 label: 'Fim da vigência',
                 fieldName: 'end',
                 type: 'DATE'
+            },
+            {
+                label: 'Duração (dias)',
+                fieldName: 'duration',
+                type: 'INTEGER'
             },
             {
                 label: 'Valor',
