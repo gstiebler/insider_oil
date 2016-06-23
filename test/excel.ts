@@ -298,6 +298,24 @@ contracts: test => {
     test.done();
 },
 
+companies: test => {
+    var excelBuf = fs.readFileSync('./test/data/companies.xlsx');
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Company'));
+    
+    var rows = await( dbUtils.findAllCustom(db.models.Company, { order: ['name'] }));
+    test.equal( 49, rows.length );  
+    var expectedStatus = "Registros criados: 3";
+    expectedStatus += "\nRegistros atualizados: 1";
+    expectedStatus += "\nRegistros inválidos: 0";
+    test.equal( expectedStatus, result.status );
+    
+    const record = await( db.models.Company.findOne({ where: {name: 'Pepsi'} }) ); 
+    test.equal('Pepsi', record.name);
+    test.equal(null, record.telephones);
+    
+    test.done();
+},
+
 
 
 };

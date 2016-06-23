@@ -29,7 +29,16 @@ const Company: BaseDataSourceParams = {
     labelField: "name",
     gridFields: ["name", "address"],
     tableLabel: "Empresas",
-    hasMap: false
+    hasMap: false,
+    excelParams: {
+        keyField: "nome",
+        fields: {
+            'nome': 'name',
+            'endereço': 'address',
+            'site': 'site',
+            'telefones': 'telephones',
+        }
+    },
 }
 
 export = Company;
