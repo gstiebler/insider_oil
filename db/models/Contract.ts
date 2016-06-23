@@ -3,6 +3,8 @@ import Sequelize = require('sequelize');
 var await = require('../../lib/await');
 import ModelUtils = require('../../lib/ModelUtils');
 
+const milisecondsInADay = 1000 * 60 * 60 * 24;
+
 function updateContract(contract) {
     const object: any[] = contract.dataValues.object;
     if (object == null || object.length != 1) {
@@ -63,6 +65,13 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
             type: Sequelize.STRING,
             allowNull: true,
             invisible: true
+        },
+        duration: {
+            type: Sequelize.VIRTUAL,
+            get: function() {
+                const milisecondsDiff = this.end - this.start 
+                return (milisecondsDiff / milisecondsInADay) + 1;
+            }
         },
         obj_id: {
             type: Sequelize.INTEGER,

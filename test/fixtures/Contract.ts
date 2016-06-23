@@ -44,7 +44,7 @@ module.exports = function(db): Promise<any[]> {
             supplier_identifier: '01.104.740/0001-30',
             contract_object: 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM',
             start: '2015-07-20',
-            end: '2016-05-27',
+            end: '2015-08-10',
             value: 17554089.76,
             situation: 'Ativo',
             additives_ids: '001',
