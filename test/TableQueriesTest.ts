@@ -103,7 +103,7 @@ contracts:  (test: nodeunit.Test) => {
     test.equal( 3, resQueryValues.records.length );
     test.equal( 3, resQueryValues.count );
     test.equal( 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM', resQueryValues.records[2].contract_object );
-    test.equal( 21, resQueryValues.records[2].duration );
+    test.equal( 22, resQueryValues.records[2].duration );
     
     test.done();
 },

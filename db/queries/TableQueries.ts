@@ -966,7 +966,7 @@ export const queries:ITableQueries = {
                 extraFields: [
                     ['"Contract"', 'model'],
                     ['"Bid"', 'bid_model'],
-                    ['datediff(contracts.end, contracts.start)', 'duration']
+                    ['datediff(contracts.end, contracts.start) + 1', 'duration']
                 ],
                 joinTables: [
                     {
