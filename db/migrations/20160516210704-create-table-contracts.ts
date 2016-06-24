@@ -36,7 +36,7 @@ module.exports = {
         allowNull: true
       },
       value: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.DOUBLE,
         allowNull: true
       },
       currency: {

@@ -119,7 +119,7 @@ Contract: (test) => {
        
     const fixtureContract99 = await( db.models.Contract.findOne({ where: {user_uid: '99'} }) );
     test.equal(22, fixtureContract99.duration);
-    test.equal(797913.6363636364, fixtureContract99.day_rate);
+    test.equal(797913.170909091, fixtureContract99.day_rate);
 
     const fixtureContract300 = await( db.models.Contract.findOne({ where: {user_uid: '300'} }) );
     test.equal(null, fixtureContract300.day_rate);

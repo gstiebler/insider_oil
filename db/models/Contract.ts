@@ -50,7 +50,7 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
             allowNull: true
         },
         value: {
-            type: Sequelize.FLOAT,
+            type: Sequelize.DOUBLE,
             allowNull: true
         },
         currency: {
