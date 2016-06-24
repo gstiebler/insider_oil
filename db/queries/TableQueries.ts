@@ -966,7 +966,8 @@ export const queries:ITableQueries = {
                 extraFields: [
                     ['"Contract"', 'model'],
                     ['"Bid"', 'bid_model'],
-                    ['datediff(contracts.end, contracts.start) + 1', 'duration']
+                    ['datediff(contracts.end, contracts.start) + 1', 'duration'],
+                    ['if(show_day_rate, value / (datediff(contracts.end, contracts.start) + 1), NULL)', 'day_rate']
                 ],
                 joinTables: [
                     {
@@ -1017,6 +1018,11 @@ export const queries:ITableQueries = {
                 label: 'Duração (dias)',
                 fieldName: 'duration',
                 type: 'INTEGER'
+            },
+            {
+                label: 'Day rate',
+                fieldName: 'day_rate',
+                type: 'CURRENCY'
             },
             {
                 label: 'Valor',
