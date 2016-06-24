@@ -117,8 +117,12 @@ Contract: (test) => {
     const refObj:any[] = lastRecord.object;
     test.equal(0, refObj.length);
        
-    const fixtureContract = await( db.models.Contract.findOne({ where: {user_uid: '99'} }) );
-    test.equal(22, fixtureContract.duration);
+    const fixtureContract99 = await( db.models.Contract.findOne({ where: {user_uid: '99'} }) );
+    test.equal(22, fixtureContract99.duration);
+    test.equal(797913.6363636364, fixtureContract99.day_rate);
+
+    const fixtureContract300 = await( db.models.Contract.findOne({ where: {user_uid: '300'} }) );
+    test.equal(null, fixtureContract300.day_rate);
 
     test.done();
 }

@@ -77,6 +77,19 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                 return (milisecondsDiff / milisecondsInADay) + 1;
             }
         },
+        day_rate: {
+            type: Sequelize.VIRTUAL,
+            get: function() {
+                if(!this.show_day_rate)
+                    return null;
+                const duration = this.duration; 
+                if(duration) {
+                    return this.value / duration;
+                } else {
+                    return null;
+                }
+            }
+        },
         obj_id: {
             type: Sequelize.INTEGER,
             allowNull: true,
