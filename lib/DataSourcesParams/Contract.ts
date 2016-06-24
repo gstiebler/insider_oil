@@ -67,7 +67,7 @@ const Contract: BaseDataSourceParams = {
         },
     },
     labelField: "user_uid",
-    gridFields: ["contract_object", "supplier", 'value', 'start', 'end', 'duration', 'situation'],
+    gridFields: ["contract_object", "supplier", 'value', 'start', 'end', 'situation'],
     tableLabel: "Contratos",
     hasMap: false,
     excelParams: {
