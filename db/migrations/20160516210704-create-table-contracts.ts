@@ -43,6 +43,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+      show_day_rate: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true
+      },
       contractor_id: {
         type: Sequelize.INTEGER,
         allowNull: true,

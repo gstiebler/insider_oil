@@ -28,6 +28,9 @@ const Contract: BaseDataSourceParams = {
         currency: {
             label: 'Moeda',
         },
+        show_day_rate: {
+            label: 'Mostrar day rate (admin)',
+        },
         contractor_name: {
             label: 'Contratante'
         },

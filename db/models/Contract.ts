@@ -55,6 +55,10 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
         },
         currency: {
             type: Sequelize.STRING,
+            allowNull: true,
+        },
+        show_day_rate: {
+            type: Sequelize.BOOLEAN,
             allowNull: true
         },
         situation: {
