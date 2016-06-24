@@ -43,6 +43,7 @@ app.directive('recordFields', function() {
                     field.hasRef = field.type == 'ref';
                     field.isDate = field.type == 'DATE';
                     field.isDateTime = field.type == 'DATETIME';
+                    field.isBool = field.type == 'TINYINT(1)';
                     if( field.hasRef ) {
                         if(hasValues && $scope.values[field.name]) 
                             $scope.values[field.name] = $scope.values[field.name].toString();

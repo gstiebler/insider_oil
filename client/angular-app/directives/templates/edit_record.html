@@ -42,6 +42,9 @@
                 <option ng-repeat="enumValue in field.enumValues track by $index" value="{{enumValue}}" >{{enumValue}}</option>
             </select>
         </div>
+        <div ng-else-if="field.isBool">
+            <input type="checkbox"  ng-model="values[field.name]" id="{{field.htmlId}}" >Checado</input>
+        </div>
         <div ng-else >
             <input type="text" class="form-control" id="{{field.htmlId}}" ng-model="values[field.name]"></input>
         </div>
