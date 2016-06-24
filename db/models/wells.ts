@@ -62,6 +62,34 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                 }
             }
         },
+        drilling_rig_uniname: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                const obj = this.drilling_rig_obj; 
+                if(obj) {
+                    return obj.name; 
+                } else {
+                    return '';
+                }
+            },
+            set: function(name) {
+                const onshore = await( sequelize.models.DrillingRigOnshore.findOne({ where: { name: name } }) );
+                if(onshore) {
+                    this.drilling_rig_onshore_id = onshore.id;
+                    this.drilling_rig_offshore_id = null;
+                    return;
+                }
+
+                const offshore = await( sequelize.models.DrillingRigOffshore.findOne({ where: { name: name } }) );
+                if(offshore) {
+                    this.drilling_rig_onshore_id = null;
+                    this.drilling_rig_offshore_id = offshore.id;
+                    return;
+                }
+                this.drilling_rig_onshore_id = null;
+                this.drilling_rig_offshore_id = null;
+            }
+        },
         type: {
           type: DataTypes.STRING,
           allowNull: true

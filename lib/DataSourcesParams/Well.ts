@@ -47,6 +47,9 @@ const Well: BaseDataSourceParams = {
         drilling_rig_onshore_id: {
             label: "Sonda"
         },
+        drilling_rig_uniname: {
+            label: "Sonda"
+        },
         type: {
             label: "Tipo"
         },
@@ -86,7 +89,20 @@ const Well: BaseDataSourceParams = {
             operadora: 'operator',
             bloco: 'block',
             latitude_dd: 'lat',
-            longitude_dd: 'lng'
+            longitude_dd: 'lng',
+            'bacia': 'basin',
+            'campo': 'oil_field',
+            'unidade de produção': 'production_unit',
+            'sonda': 'drilling_rig_uniname',
+            'tipo': 'type',
+            'categoria': 'category',
+            'reclassificação': 'reclassification',
+            'situação': 'situation',
+            'início': 'start',
+            'término': 'end',
+            'conclusão': 'conclusion',
+            'profundidade medida': 'measured_depth',
+            'profundidade': 'depth',
         }
     }
 }

@@ -316,6 +316,28 @@ companies: test => {
     test.done();
 },
 
+wells: test => {
+    var excelBuf = fs.readFileSync('./test/data/wells.xlsx');
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Well'));
+    
+    var rows = await( dbUtils.findAllCustom(db.models.Well, { order: ['name'] }));
+    test.equal( 10, rows.length );  
+    var expectedStatus = "Registros criados: 0";
+    expectedStatus += "\nRegistros atualizados: 10";
+    expectedStatus += "\nRegistros inválidos: 0";
+    test.equal( expectedStatus, result.status );
+
+    {
+        const record = rows[7];
+        
+        test.equal('7MRL 0054 RJS', record.name);
+        test.equal('Aban Abraham', record.drilling_rig_uniname);
+        test.equal(utils.idByName('OilField', 'Marlim'), record.oil_field_id);
+    }
+
+    test.done();
+},
+
 
 
 };
