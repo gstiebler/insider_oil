@@ -87,6 +87,7 @@ const Well: BaseDataSourceParams = {
         fields: {
             poco: 'name',
             operadora: 'operator',
+            'nome operador': 'name_operator',
             bloco: 'block',
             latitude_dd: 'lat',
             longitude_dd: 'lng',
