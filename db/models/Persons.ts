@@ -69,6 +69,10 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
+		info: {
+			type: DataTypes.TEXT,
+			allowNull: true
+		},
 		photo: {
 			type: DataTypes.BLOB,
 			allowNull: true

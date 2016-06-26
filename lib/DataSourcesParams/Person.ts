@@ -47,6 +47,10 @@ const Person: BaseDataSourceParams = {
             label: 'Foto',
             isPhoto: true
         },
+        info: {
+            label: "Informações",
+            isMultiFieldText: true
+        },
         projects: {
             label: 'Projetos',
             isProjectList: true
