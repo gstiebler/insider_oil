@@ -47,6 +47,18 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
+		directorship: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		management_sector: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		info: {
+			type: DataTypes.TEXT,
+			allowNull: true
+		},
 		email_text: {
 			type: DataTypes.TEXT,
 			allowNull: true,
@@ -59,18 +71,6 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		address: {
 			type: DataTypes.STRING,
-			allowNull: true
-		},
-		directorship: {
-			type: DataTypes.STRING,
-			allowNull: true
-		},
-		management_sector: {
-			type: DataTypes.STRING,
-			allowNull: true
-		},
-		info: {
-			type: DataTypes.TEXT,
 			allowNull: true
 		},
 		photo: {
