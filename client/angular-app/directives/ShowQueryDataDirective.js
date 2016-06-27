@@ -5,7 +5,7 @@ This directive is used to show records in a static table
 The source of the records is a custom query
 ******************/
 
-function controllerFunc($scope, server, DateService) {
+function controllerFunc($scope, server, DateService, ModelViewService) {
     var referencedObject = $scope.referencedObject;
     $scope.title = referencedObject.title;
     var filters = referencedObject.filters;
@@ -48,6 +48,9 @@ function controllerFunc($scope, server, DateService) {
                         recordValue = DateService.dateFormat(recordValue);
                     } else if(field.type == 'DATETIME') {
                         recordValue = DateService.dateTimeFormat(recordValue);
+                    } else if(field.type == 'CURRENCY') {
+                        recordValue = ModelViewService.formatCurrency(recordValue);
+                        item.rightAlign = true; 
                     }
                     item.value = recordValue;
                 }
@@ -70,7 +73,7 @@ app.directive('showQueryData', function() {
             id: '=ngId',
             onError: '=ngOnError'
         },
-        controller: ['$scope', 'server', 'DateService', controllerFunc],
+        controller: ['$scope', 'server', 'DateService', 'ModelViewService', controllerFunc],
        templateUrl: 'app/directives/templates/show_query_data.html'
     };
 });
