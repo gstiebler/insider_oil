@@ -79,27 +79,18 @@ function tableParamsChanged(tableParams) {
     var currencyColumnsIndexes = [];
     for(var i = 0; i < tableParams.fields.length; i++) {
         var field = tableParams.fields[i];
+        var columnObj = { title: field.label };
         if(field.ref) {
-            columns.push({
-                data: field.ref.valueField,
-                title: field.label,
-                render: { display: getFormatLinkFn(field) }
-            });
+            columnObj.data = field.ref.valueField,
+            columnObj.render = { display: getFormatLinkFn(field) };
         } else {
-            columns.push({
-                data: field.fieldName,
-                title: field.label
-            });
+            columnObj.data = field.fieldName;
+            columnObj.render = { display: _ModelViewService.formatFnByType };
+            if(field.type == 'CURRENCY') {
+                currencyColumnsIndexes.push(i);
+            }
         }
-        
-        if(field.type == 'DATE') {
-            columns[i].render = { display: _DateService.dateFormat };
-        } else if(field.type == 'DATETIME') {
-            columns[i].render = { display: _DateService.dateTimeFormat };
-        } else if(field.type == 'CURRENCY') {
-            columns[i].render = { display: _ModelViewService.formatCurrency };
-            currencyColumnsIndexes.push(i);
-        }
+        columns.push(columnObj);
     }
     
     _$scope.headerParams = { 

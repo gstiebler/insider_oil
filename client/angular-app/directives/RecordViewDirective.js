@@ -9,20 +9,6 @@ function strContains(input, substr) {
     return input.indexOf(substr) > -1;
 }
 
-function formatByType(field) {
-    if(field.type == 'DATE') {
-        return _DateService.dateFormat(field.value);
-    } else if(field.type == 'DATETIME') {
-        return _DateService.dateTimeFormat(field.value);
-    } else if (field.isCurrency) {
-        return _ModelViewService.formatCurrency(field.value);
-    } else if (field.type == 'FLOAT' || field.type == 'DOUBLE') {
-        return _ModelViewService.formatNumber(field.value);
-    } else {
-        return field.value;    
-    }              
-}
-
 function onRecordDataChange(recordData) {
     if(!recordData)
         return;
@@ -49,7 +35,7 @@ function onRecordDataChange(recordData) {
                 fieldValues.push(newFieldInfo);   
             }
         } else {
-            recordData[i].value = formatByType(recordData[i]);
+            recordData[i].value = _ModelViewService.formatByType(recordData[i]);
             fieldValues.push(recordData[i]);   
         }
     }

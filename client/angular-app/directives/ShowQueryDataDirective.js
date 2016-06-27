@@ -44,12 +44,9 @@ function controllerFunc($scope, server, DateService, ModelViewService) {
                     item.value = record[field.ref.valueField];
                 } else {
                     var recordValue = record[field.fieldName];
-                    if(field.type == 'DATE') {
-                        recordValue = DateService.dateFormat(recordValue);
-                    } else if(field.type == 'DATETIME') {
-                        recordValue = DateService.dateTimeFormat(recordValue);
-                    } else if(field.type == 'CURRENCY') {
-                        recordValue = ModelViewService.formatCurrency(recordValue);
+                    var fn = ModelViewService.formatFnByType(field);
+                    recordValue = fn(recordValue);
+                    if(field.type == 'CURRENCY') {
                         item.rightAlign = true; 
                     }
                     item.value = recordValue;

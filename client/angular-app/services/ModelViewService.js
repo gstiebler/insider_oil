@@ -107,6 +107,34 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'DateSe
         };
         return value.toLocaleString('pt-BR', opts);
     }
+
+    /**
+     * Format function by type of the field
+     */
+    function formatFnByType(field) {
+        if(!field)
+            return function(value) { return ''; };
+            
+        if(field.type == 'DATE') {
+            return DateService.dateFormat;
+        } else if(field.type == 'DATETIME') {
+            return DateService.dateTimeFormat;
+        } else if (field.isCurrency || field.type == 'CURRENCY') {
+            return formatCurrency;
+        } else if (field.type == 'FLOAT' || field.type == 'DOUBLE') {
+            return formatNumber;
+        } else {
+            return function(value) { return value; }; 
+        }    
+    }
+
+    /**
+     * Apply the format function to the field's value
+     */
+    function formatByType(field) {
+        var fn = formatFnByType(field); 
+        return fn(field.value);
+    }
     
     
     this.uploadFile = uploadFile;
@@ -114,5 +142,7 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'DateSe
     this.formatExcelUploadResult = formatExcelUploadResult;
     this.formatCurrency = formatCurrency;
     this.formatNumber = formatNumber;
+    this.formatByType = formatByType;
+    this.formatFnByType = formatFnByType;
     
 }]);
