@@ -96,11 +96,23 @@ app.service('ModelViewService', ['server','Flash', 'Upload', '$timeout', 'DateSe
         };
         return value.toLocaleString('pt-BR', opts);
     }
+
+    function formatNumber(value) {
+        if(!value)
+            return '';
+
+        var opts = {
+             style: 'decimal', 
+             maximumFractionDigits: 2 
+        };
+        return value.toLocaleString('pt-BR', opts);
+    }
     
     
     this.uploadFile = uploadFile;
     this.getColumns = getColumns;
     this.formatExcelUploadResult = formatExcelUploadResult;
     this.formatCurrency = formatCurrency;
+    this.formatNumber = formatNumber;
     
 }]);

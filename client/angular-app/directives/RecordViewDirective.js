@@ -16,7 +16,9 @@ function formatByType(field) {
         return _DateService.dateTimeFormat(field.value);
     } else if (field.isCurrency) {
         return _ModelViewService.formatCurrency(field.value);
-    }   else {
+    } else if (field.type == 'FLOAT' || field.type == 'DOUBLE') {
+        return _ModelViewService.formatNumber(field.value);
+    } else {
         return field.value;    
     }              
 }
