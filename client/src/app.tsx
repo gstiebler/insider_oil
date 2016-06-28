@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import * as session from './session';
+import * as server from './Server';
 
 interface IAppProps {
   model: string;
@@ -11,60 +12,58 @@ interface IAppProps {
 }
 
 interface IAppState {
-  editing?: string;
-  nowShowing?: string
+  username: string;
+  isAdmin: boolean;
 }
 
 
 class InsiderOilApp extends React.Component<IAppProps, IAppState> {
 
-  public state: IAppState;
-  private username: string;
-  private isAdmin: boolean;
+    public state: IAppState;     
 
   constructor(props: IAppProps) {
     super(props);
+    console.log('constructor');
 
-    var token = props.location.query.token;
-    if( token )
-        session.login( token );
-    else
-        token = session.getToken();    
-    
-
-    this.state = { 
-      editing: 'teste' 
+    this.state = {
+        username: '',
+        isAdmin: false
     };
 
+    var token = props.location.query.token;
+    if( token ) {
+        session.login( token );
+    } else {
+        token = session.getToken();
+    }    
+  
+    /*setState({
+        username: '',
+        isAdmin: false
+    });*/
+    server.getUserDetails(function(response) {
+      console.log('details arrived');
+       this.setState({
+            username: response.login,
+            isAdmin: response.admin
+        });
+    }.bind(this), function(result) {
+        if(result.status == 401) {
+          browserHistory.push('/');
+        }
+    });
 
-  }
-
-  public componentDidMount() {
-    var setState = this.setState;
-/*
+    /*
     var url = $location.search().url;
     if( url ) {
         var decodedURL = decodeURIComponent(url);
         $location.url(decodedURL);
     }
-    
-    server.getUserDetails(function(response) {
-        $scope.username = response.login;
-        $scope.isAdmin = response.admin;
-    }, function(result) {
-        if(result.status == 401) {
-            $window.location.href = '/';
-        }
-    });       
-    
-    $scope.showError = showError.show;
-    $scope.onProjectSelected = function(selectedItem) {
-    	var searchParams = {
-    		source: selectedItem.model,
-    		id: selectedItem.id
-    	};
-        $location.path("/app/view_record").search(searchParams);
-    }*/
+    */
+  }
+
+  public componentDidMount() {
+    console.log('didmount');
   }
 
   public render() {
@@ -82,7 +81,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
                 <div class="col-md-3 col-no-padding">
                   <div class="user-name">
                     Olá
-                    <span>{this.username} | </span>
+                    <span>{this.state.username} | </span>
                     <a href="#" onClick={ session.logout }>sair</a>
                   </div>
                 </div>
@@ -134,7 +133,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
                     <li class="nav-item">
                       <a href="/app/tree?nodeLabel=Empresas">Empresas</a>
                     </li>
-                    { this.isAdmin ? adminLink : '' }
+                    { this.state.isAdmin ? adminLink : '' }
                   </ul>
                 </div>
               </div>

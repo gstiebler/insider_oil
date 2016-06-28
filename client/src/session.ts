@@ -22,8 +22,6 @@ export function logout() {
     function logoutOk(response) {        
         cookie.set( 'token', '' );
         browserHistory.push('/');
-        //jquery.$window.location.href = '/';
-        //$location.path("/");
     }
     
     function logoutError(xhr, ajaxOptions, thrownError) {
