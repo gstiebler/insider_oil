@@ -63,33 +63,33 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
 
     return (
       <div class="container-1450">
-        <div class="top-menu">
-          <div class="container-fluid">
+        <div className="top-menu">
+          <div className="container-fluid">
             <div class="row">
-              <div class="col-md-4 col-hidden"></div>
-              <div class="col-no-padding col-md-8">
-                <div class="col-md-3 col-no-padding">
-                  <div class="user-name">
+              <div className="col-md-4 col-hidden"></div>
+              <div className="col-no-padding col-md-8">
+                <div className="col-md-3 col-no-padding">
+                  <div className="user-name">
                     Olá
                     <span>{this.state.username} | </span>
                     <a href="#" onClick={ session.logout }>sair</a>
                   </div>
                 </div>
-                <div class="col-md-3 col-no-padding">
-                  <div class="top-menu-item">
-                    <div class="top-menu-icon window"></div>
+                <div className="col-md-3 col-no-padding">
+                  <div className="top-menu-item">
+                    <div className="top-menu-icon window"></div>
                     Meu Dashboard
                   </div>
                 </div>
-                <div class="col-md-3 col-no-padding">
-                  <div class="top-menu-item">
-                    <div class="top-menu-icon user"></div>
+                <div className="col-md-3 col-no-padding">
+                  <div className="top-menu-item">
+                    <div className="top-menu-icon user"></div>
                     <a href="/app/change_password">Minha Conta</a>
                   </div>
                 </div>
-                <div class="col-md-3 col-no-padding">
-                  <div class="top-menu-item">
-                    <div class="top-menu-icon question"></div>
+                <div className="col-md-3 col-no-padding">
+                  <div className="top-menu-item">
+                    <div className="top-menu-icon question"></div>
                     SAC
                   </div>
                 </div>
@@ -97,30 +97,30 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
             </div>
           </div>
         </div>
-        <nav class="navbar navbar-default navbar-border-none" role="navigation">
-          <div class="container-fluid padding-lr-20">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="navbar-header navbar-brand-container">
+        <nav className="navbar navbar-default navbar-border-none" role="navigation">
+          <div className="container-fluid padding-lr-20">
+            <div className="row">
+              <div className="col-md-4">
+                <div className="navbar-header navbar-brand-container">
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span className="sr-only">Toggle navigation</span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand logo-topo" href="/app/" id="homeLink"></a>
+                  <a className="navbar-brand logo-topo" href="/app/" id="homeLink"></a>
                 </div>
               </div>
-              <div class="col-no-padding col-md-8">
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav navbar-nav-full">
-                    <li class="active nav-item">
+              <div className="col-no-padding col-md-8">
+                <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul className="nav navbar-nav navbar-nav-full">
+                    <li className="active nav-item">
                       <a href="/app/tree?nodeId=1">Dados</a>
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <a href="/app/tree?nodeLabel=Pessoas">Pessoas</a>
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <a href="/app/tree?nodeLabel=Empresas">Empresas</a>
                     </li>
                     { this.state.isAdmin ? adminLink : '' }
