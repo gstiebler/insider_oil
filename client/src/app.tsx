@@ -23,7 +23,6 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
 
   constructor(props: IAppProps) {
     super(props);
-    console.log('constructor');
 
     this.state = {
         username: '',
@@ -37,12 +36,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
         token = session.getToken();
     }    
   
-    /*setState({
-        username: '',
-        isAdmin: false
-    });*/
     server.getUserDetails(function(response) {
-      console.log('details arrived');
        this.setState({
             username: response.login,
             isAdmin: response.admin
@@ -60,10 +54,6 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
         $location.url(decodedURL);
     }
     */
-  }
-
-  public componentDidMount() {
-    console.log('didmount');
   }
 
   public render() {
