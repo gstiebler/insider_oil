@@ -56,8 +56,6 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
             $window.location.href = '/';
         }
     });       
-            
-    $scope.logout = session.logout; // functions
     
     $scope.showError = showError.show;
     $scope.onProjectSelected = function(selectedItem) {
@@ -85,7 +83,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
                   <div class="user-name">
                     Olá
                     <span>{this.username} | </span>
-                    <a href="#" onClick={ session.logout() }>sair</a>
+                    <a href="#" onClick={ session.logout }>sair</a>
                   </div>
                 </div>
                 <div class="col-md-3 col-no-padding">

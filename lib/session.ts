@@ -42,7 +42,7 @@ exports.authorizeHTML = function(req, res, next) {
 }
 
 
-exports.authorize = function(req, res, next) {
+export function authorize(req, res, next) {
     var token = req.query.token;
     if( !token )
         token = req.body.token;
