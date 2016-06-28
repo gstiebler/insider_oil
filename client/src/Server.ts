@@ -3,8 +3,9 @@ import * as jquery from 'jquery';
 
 
 function get(url: string, data: any, onSuccess?, onError?) {
+    data.token = session.getToken();
     var ajaxOpt:any = {
-        url: '/user/details',
+        url: url,
         data: data,
     };
     if(onSuccess) {
@@ -195,7 +196,7 @@ export function viewRecord(dataSource, id, okCallback, onError) {
 
 
 export function sourceList(onData, onError) {
-    http({}, $http.get, '/sources_list/', onData, onError);
+    get('/sources_list/', {}, onData, onError);
 }
 
 

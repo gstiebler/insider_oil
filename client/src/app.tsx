@@ -5,6 +5,7 @@ import * as ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import * as session from './session';
 import * as server from './Server';
+import { AdminList } from './AdminList';
 
 interface IAppProps {
   model: string;
@@ -56,9 +57,9 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
     */
   }
 
-  public render() {
+  public render():JSX.Element {
     var adminLink = <li className="nav-item" >
-                      <a href="/app/"><b>Admin</b></a>
+                      <Link to="/app/admin"><b>Admin</b></Link>
                     </li>;
 
     var userNameMenuItem = (
@@ -172,6 +173,7 @@ ReactDOM.render(
     <Route path="/" component={InsiderOilApp}/>
     <Route path="/app" component={InsiderOilApp}/>
     <Route path="/app/index.html" component={InsiderOilApp}/>
+    <Route path="/app/admin" component={AdminList}/>
   </Router>,
   document.getElementById('insideroilapp')
 );
