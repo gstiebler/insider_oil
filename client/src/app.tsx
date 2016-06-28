@@ -48,13 +48,10 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
         }
     });
 
-    /*
-    var url = $location.search().url;
+    var url = props.location.query.url;
     if( url ) {
-        var decodedURL = decodeURIComponent(url);
-        $location.url(decodedURL);
+        browserHistory.push(url);
     }
-    */
   }
 
   public render():JSX.Element {
