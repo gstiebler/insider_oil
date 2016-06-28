@@ -10,7 +10,7 @@ exports.makeLogin = function(req, res, next) {
     session.login( req.body.username, req.body.password, loginOk, loginError );
     
     function loginOk(token) {
-        res.redirect('/app/templates/index.html?token=' + token);
+        res.redirect('/app/index.html?token=' + token);
     }
     
     function loginError(errorMsg) {

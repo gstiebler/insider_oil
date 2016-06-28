@@ -7,6 +7,7 @@ import * as session from './session';
 
 interface IAppProps {
   model: string;
+  location: any;
 }
 
 interface IAppState {
@@ -23,6 +24,14 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
 
   constructor(props: IAppProps) {
     super(props);
+
+    var token = props.location.query.token;
+    if( token )
+        session.login( token );
+    else
+        token = session.getToken();    
+    
+
     this.state = { 
       editing: 'teste' 
     };
@@ -32,6 +41,32 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
 
   public componentDidMount() {
     var setState = this.setState;
+/*
+    var url = $location.search().url;
+    if( url ) {
+        var decodedURL = decodeURIComponent(url);
+        $location.url(decodedURL);
+    }
+    
+    server.getUserDetails(function(response) {
+        $scope.username = response.login;
+        $scope.isAdmin = response.admin;
+    }, function(result) {
+        if(result.status == 401) {
+            $window.location.href = '/';
+        }
+    });       
+            
+    $scope.logout = session.logout; // functions
+    
+    $scope.showError = showError.show;
+    $scope.onProjectSelected = function(selectedItem) {
+    	var searchParams = {
+    		source: selectedItem.model,
+    		id: selectedItem.id
+    	};
+        $location.path("/app/view_record").search(searchParams);
+    }*/
   }
 
   public render() {
