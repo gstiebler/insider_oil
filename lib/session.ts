@@ -13,7 +13,7 @@ function userFromToken( token, callback ) {
 }
 
 
-exports.login = function( username, password, loginOk, loginError ) {
+export function login( username, password, loginOk, loginError ) {
     db.models.User.findOne({ where: { 
                         login: username} 
     }).then( function(user) {
@@ -28,7 +28,7 @@ exports.login = function( username, password, loginOk, loginError ) {
 }
 
 
-exports.authorizeHTML = function(req, res, next) {
+export function authorizeHTML(req, res, next) {
     userFromToken( req.query.token, callback );
     
     function callback( user ) {
@@ -83,7 +83,7 @@ export function authorize(req, res, next) {
 }
 
 
-exports.logout = function( user ) {
+export function logout( user ) {
     user.token = '';
     user.save();
 }

@@ -2,12 +2,12 @@
 import db  = require('../db/models');
 var Sync = require('sync');
 
-exports.main = function(req, res, next) {
+export function main(req, res, next) {
   res.send('respond with a resource');
 };
 
 
-exports.userDetails = function(req, res, next) {
+export function userDetails(req, res, next) {
     const user = {
         login: req.user.login,
         name: req.user.name,
@@ -19,7 +19,7 @@ exports.userDetails = function(req, res, next) {
 }
 
 
-exports.changePassword = function(req, res, next) {
+export function changePassword(req, res, next) {
 Sync( () => {
     const oldPassword = req.body.params.oldPassword;
     const newPassword = req.body.params.newPassword;

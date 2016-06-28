@@ -1,12 +1,12 @@
-var session = require('../lib/session');
+import * as session from '../lib/session';
 
 
-exports.loginPage = function(req, res, next) {
+export function loginPage(req, res, next) {
     res.render('login', { title: 'Login'} );
 };
 
 
-exports.makeLogin = function(req, res, next) {
+export function makeLogin(req, res, next) {
     session.login( req.body.username, req.body.password, loginOk, loginError );
     
     function loginOk(token) {
@@ -19,7 +19,7 @@ exports.makeLogin = function(req, res, next) {
 };
 
 
-exports.makeLoginREST = function(req, res, next) {
+export function makeLoginREST(req, res, next) {
     session.login( req.body.username, req.body.password, loginOk, loginError );
     
     function loginOk(token) {
@@ -32,7 +32,7 @@ exports.makeLoginREST = function(req, res, next) {
 };
 
 
-exports.logout = function(req, res, next) {
+export function logout(req, res, next) {
     session.logout(req.user);
     res.json( { msg: 'Usuário deslogado.' } );
 }

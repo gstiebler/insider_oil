@@ -13,9 +13,6 @@ var app = express();
 // Make necessary migrations
 umzug.up();
 
-// Generate minified Angular js files
-require('./lib/uglifyJsFrontend').uglifyAngularJsFiles(app.get('env'));
-
 // Configure Winston log lib
 winston.level = 'error';
 if (app.get('env') == 'development') {

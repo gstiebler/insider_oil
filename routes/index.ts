@@ -1,10 +1,10 @@
 "use strict";
-var session = require('../lib/session');
 
+import session = require('../lib/session');
 var mainController = require('../controllers/mainController');
-var loginController = require('../controllers/loginController');
+import * as loginController from '../controllers/loginController';
 import dbServerController = require('../controllers/dbServerController');
-var usersController = require('../controllers/usersController');
+import * as usersController from '../controllers/usersController';
 var treeController = require('../controllers/TreeController');
 var searchController = require('../controllers/SearchController');
 import ExcelController = require('../controllers/ExcelController');
