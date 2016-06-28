@@ -5,9 +5,10 @@ import * as ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import * as server from './lib/Server';
 import * as session from './lib/session';
-import { AdminList } from './AdminList';
 import { TopMenu } from './TopMenu'
+import { AdminList } from './AdminList';
 import { AdminGrid } from './AdminGrid'
+import { AdminEdit } from './AdminEdit'
 
 interface IAppProps {
   model: string;
@@ -124,6 +125,7 @@ ReactDOM.render(
     <Route path="/app/" component={InsiderOilApp}>
       <Route path="admin" component={AdminList}/>
       <Route path="model_view" component={AdminGrid}/>
+      <Route path="edit_item" component={AdminEdit}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,
