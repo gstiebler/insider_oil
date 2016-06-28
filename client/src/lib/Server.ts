@@ -1,12 +1,12 @@
 import * as session from './session';
 import * as jquery from 'jquery';
 
-
-function get(url: string, data: any, onSuccess?, onError?) {
+function ajax(url: string, data: any, type:string, onSuccess?, onError?) {
     data.token = session.getToken();
     var ajaxOpt:any = {
         url: url,
         data: data,
+        type: type,
     };
     if(onSuccess) {
         ajaxOpt.success = onSuccess;
@@ -18,13 +18,20 @@ function get(url: string, data: any, onSuccess?, onError?) {
     jquery.ajax(ajaxOpt);
 }
 
-function http(params, httpFunc, path, okCallback, onError) {
-    params.token = session.getToken();
-    
-    httpFunc(path, { params: params })
-    .then(function(response) {
-        okCallback(response.data);
-    }, onError);
+function get(url: string, data: any, onSuccess?, onError?) {
+    ajax(url, data, 'GET', onSuccess, onError);
+}
+
+function put(url: string, data: any, onSuccess?, onError?) {
+    ajax(url, data, 'PUT', onSuccess, onError);
+}
+
+function post(url: string, data: any, onSuccess?, onError?) {
+    ajax(url, data, 'POST', onSuccess, onError);
+}
+
+function deleteHTTP(url: string, data: any, onSuccess?, onError?) {
+    ajax(url, data, 'DELETE', onSuccess, onError);
 }
     
 /**
@@ -51,10 +58,7 @@ export function getTable( table, options, okCallback, errorCallback ) {
         fieldNames: options.fieldNames,
         token: session.getToken()
     };
-    
-    get('/db_server/', { params: params }, function(response) {
-        okCallback(response.data);
-    }, errorCallback);
+    get('/db_server/', params, okCallback, errorCallback);
 }
 
 /**
@@ -129,7 +133,7 @@ export function createNewItem( modelName, newItemData, onSave, onError ) {
         token: session.getToken()
     };
     
-    $http.post('/create_item/', params ).then(onSave, onError);
+    post('/create_item/', params, onSave, onError);
 }
 
 
@@ -140,7 +144,7 @@ export function deleteItem( modelName, id, onDelete, onError ) {
         token: session.getToken()
     };
     
-    $http.delete('/delete_item/', { params: params }).then(onDelete, onError);
+    deleteHTTP('/delete_item/', params, onDelete, onError);
 }
 
 
@@ -150,11 +154,7 @@ export function getModelFieldsAndValues( modelName, id, okCallback, errorCallbac
         id: id,
         token: session.getToken()
     };
-    
-    $http.get('/record_values/', { params: params }).
-    then(function(response) {
-        okCallback(response.data);
-    }, errorCallback);
+    get('/record_values/', params, okCallback, errorCallback);
 }
 
 
@@ -165,24 +165,24 @@ export function saveItem( modelName, record, onSave, onError ) {
         token: session.getToken()
     };
     
-    $http.put('/save_item/', params ).then(onSave, onError);
+    put('/save_item/', params, onSave, onError);
 }
 
 
 export function getComboValues(modelName, okCallback, onError) {
     var params = { model: modelName };
-    http(params, $http.get, '/combo_values/', okCallback, onError);
+    get('/combo_values/', params, okCallback, onError);
 }
 
 
 export function getTree(okCallback, onError) {
-    http({}, $http.get, '/tree/', okCallback, onError);
+    get('/tree/', {}, okCallback, onError);
 }
 
 
 export function getSearchResult(searchValue, okCallback, onError) {
     var params = { searchValue: searchValue };
-    http(params, $http.get, '/search', okCallback, onError);
+    get('/search', params, okCallback, onError);
 }
 
 
@@ -191,7 +191,7 @@ export function viewRecord(dataSource, id, okCallback, onError) {
         dataSource: dataSource,
         id: id
     };
-    http(params, $http.get, '/view_record/', okCallback, onError);
+    get('/view_record/', params, okCallback, onError);
 }
 
 
@@ -205,7 +205,7 @@ export function changePassword(onData, onError, oldPassword, newPassword) {
         oldPassword: oldPassword,
         newPassword: newPassword	
     };
-    http(params, $http.put, '/user/change_password', onData, onError);
+    put('/user/change_password', params, onData, onError);
 }
 
 
@@ -213,13 +213,11 @@ export function downloadExcelFile(dataSource, onData, onError) {
     var params = {
         dataSource: dataSource	
     };
-    http(params, $http.get, '/download_excel', onData, onError);
+    get('/download_excel', params, onData, onError);
 }
 
 
 export function importFromURL(dataSource, onData, onError) {
-    var params = {
-        dataSource: dataSource	
-    };
-    http(params, $http.put, '/import_from_url', onData, onError);
+    var params = { dataSource: dataSource };
+    put('/import_from_url', params, onData, onError);
 }
