@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as session from './session';
+import * as session from './lib/session';
 
 interface IAppProps {
     username: string;

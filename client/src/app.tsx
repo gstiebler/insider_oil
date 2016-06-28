@@ -3,10 +3,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
-import * as server from './Server';
+import * as server from './lib/Server';
 import { AdminList } from './AdminList';
 import { TopMenu } from './TopMenu'
-import * as session from './session';
+import * as session from './lib/session';
 
 interface IAppProps {
   model: string;
