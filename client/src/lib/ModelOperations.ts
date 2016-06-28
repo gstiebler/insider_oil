@@ -1,13 +1,16 @@
 import { browserHistory } from 'react-router';
 import * as server from './Server';
 
+// TODO use polymorphism. Typescript!
 function createDefaultModelOperations(modelName) {
     var modelOperations = {
         editRecord: function(id) {
-            $location.path("/app/edit_item").search({ modelName: modelName, id: id });
+            var queryStr = "/app/edit_item?modelName=" + modelName + '&id=' + id;
+            browserHistory.push(queryStr);
         },
         createItem: function() {
-            $location.path("/app/create_item").search({ model: modelName });
+            var queryStr = "/app/create_item?modelName=" + modelName;
+            browserHistory.push(queryStr);
         },
         deleteItem: function(id, onDelete, onError) {
             server.deleteItem( modelName, id, onDelete, onError );
@@ -26,7 +29,8 @@ function createNewsOperations(modelName) {
     }
     
     modelOperations.editRecord = function(id) {
-        $location.path("/app/create_news").search({ id: id });
+        var queryStr = "/app/create_news?id=" + id;
+        browserHistory.push(queryStr);
     }
     
     return modelOperations;

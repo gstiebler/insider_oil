@@ -35,7 +35,7 @@ export function formatExcelUploadResult(response) {
     return statusStr;
 }
 
-
+/*
 export function uploadFile(file, modelName, doneCallback) {
     file.upload = Upload.upload({
         url: '/db_server/upload_file',
@@ -53,14 +53,14 @@ export function uploadFile(file, modelName, doneCallback) {
         });
     }, function (response) {
         if (response.status > 0) {
-            Flash.create('danger', response.data.errorMsg);
+            //Flash.create('danger', response.data.errorMsg);
         }
     }, function (evt) {
         file.progress = Math.min(100, parseInt(100.0 * 
                                     evt.loaded / evt.total));
     });
 }
-
+*/
 
 export function getColumns(viewParams, types) {
     var columns = [];

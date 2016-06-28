@@ -4,9 +4,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import * as server from './lib/Server';
+import * as session from './lib/session';
 import { AdminList } from './AdminList';
 import { TopMenu } from './TopMenu'
-import * as session from './lib/session';
+import { AdminGrid } from './AdminGrid'
 
 interface IAppProps {
   model: string;
@@ -122,6 +123,7 @@ ReactDOM.render(
     <Route path="/" component={InsiderOilApp}/>
     <Route path="/app/" component={InsiderOilApp}>
       <Route path="admin" component={AdminList}/>
+      <Route path="model_view" component={AdminGrid}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,
