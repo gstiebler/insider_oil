@@ -4,6 +4,7 @@ import * as showError from './lib/ShowError';
 import * as ModelOperations from './lib/ModelOperations';
 import * as ModelViewService from './lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
+import { AdminRecordFields } from './AdminRecordFields';
 
 interface IAppProps {
     location: any;
@@ -57,7 +58,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
         return (
             <div className="row">   
                 <form className="form-horizontal" role="form">
-                    <record-fields fields="fields" values="values" onError={ showError.show }></record-fields>
+                    <AdminRecordFields fields={ this.state.fields } values="values" onError={ showError.show }></AdminRecordFields>
                     <div className="form-group" >
                         <div className="col-sm-offset-2 col-sm-10">
                             <button className="btn btn-default" onClick={ this.saveItem.bind(this) } >Salvar</button>
