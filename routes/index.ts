@@ -54,7 +54,7 @@ module.exports = function(app: express.Express) {
     
     // all links from Angular App should be redirected to the index of the app
     // send the URL as parameter for the Angular App to make the redirection
-    app.get('/app/*', function (req, res) {
-        return res.redirect('/app/templates/index.html?url=' + encodeURIComponent(req.url));
-    });
+    /*app.get('/app/*', function (req, res) {
+        return res.redirect('/app/dist/index.html?url=' + encodeURIComponent(req.url));
+    });*/
 }

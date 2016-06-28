@@ -116,6 +116,10 @@ gulp.task("deploy", function (cb) {
     runSequence("build-app", "bundle-release", cb);
 });
 
+gulp.task("deploy-debug", function (cb) {
+    runSequence("build-app", "bundle", cb);
+});
+
 //******************************************************************************
 //* DEFAULT
 //******************************************************************************

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<base href="/">
+
+	<title>Insider Oil</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="app/ext_libs/bootstrap/dist/css/bootstrap.css">
+    <link rel='stylesheet' href='app/ext_libs/font-awesome/css/font-awesome.css'>
+    <link rel='stylesheet' href='app/ext_libs/bootstrap-table/dist/bootstrap-table.css'>
+    <!-- <link rel='stylesheet' href='bootstrap-table.css'> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.css"/>
+    
+	<link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link href="stylesheets/jquery.mCustomScrollbar.css" rel="stylesheet">
+
+    <!-- <script src='bootstrap-table.js'></script> -->
+    <script type="text/javascript" src="app/ext_libs/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.js"></script>
+    
+	<!-- Google -->
+    <script  src="https://maps.googleapis.com/maps/api/js"></script>
+
+</head>
+<body class="default-rules">
+    <section id="insideroilapp" class="container-1450"></section>
+	 
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <!-- Scroll JS -->
+        <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="js/ie10-viewport-bug-workaround.js"></script>
+        <script>
+        $(function () {
+          genaratept();
+          $(".plan").mCustomScrollbar({
+              theme:"insideoil"
+          });
+          $(".tag-body").mCustomScrollbar({
+              theme:"insideoil",
+              axis:"x"
+          });
+          $(".radio").mCustomScrollbar({
+              theme:"insideoil"
+          });
+        });
+        $( ".add-btn" ).on( "click", function() {
+          $(this).hide();
+          $( ".ad-window-body" ).fadeIn("slow");
+        });
+        $( ".ad-window-close" ).on( "click", function() {
+          $( ".ad-window-body" ).fadeOut("slow");
+          $( ".add-btn" ).fadeIn("slow");
+        });
+        $( ".control-label" ).on( "click", function() {
+          ( $( this ).has( ".radio-selects" ).length ? $( ".radio-selects" ).hide() & $( this ).find( ".radio-selects" ).show() : "" )
+        });
+        function genaratept() {
+          var a = $( ".flat" ).find( ".plan-wrapper" ).length;
+          var b = $( ".plan-wrapper" ).width() + 30;
+          $( ".flat" ).width( b * a);
+        }
+        </script>
+    
+</body>
+<script src='app/app.min.js'></script>
+</html>

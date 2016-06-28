@@ -37,8 +37,8 @@ app.use(bodyParser.json({limit: '20mb'}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
-app.use('/app/ext_libs', express.static(path.join(__dirname, '/../client/bower_components')));
-app.use('/app', express.static(path.join(__dirname, '/../client/angular-app')));
+app.use('/app/ext_libs', express.static(path.join(__dirname, '/../client/node_modules')));
+app.use('/app', express.static(path.join(__dirname, '/../client/dist')));
 
 routes(app);
 

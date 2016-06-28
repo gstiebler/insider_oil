@@ -25,12 +25,13 @@
     "browserify": "^13.0.1",
     "classnames": "^2.1.5",
     "d3": "^3.5.17",
-    "director": "^1.2.0",
+    "font-awesome": "^4.6.3",
     "gulp": "^3.9.1",
     "jquery": "^2.2.0",
     "moment": "^2.13.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
+    "react-router": "^2.5.1",
     "run-sequence": "^1.1.5",
     "underscore": "^1.8.3"
   }
