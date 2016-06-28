@@ -160,9 +160,14 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
     );
 
     return (
-      <div className="container-1450">
-        { menu }
-        { navBar }
+      <div>
+        <div className="container-1450">
+          { menu }
+          { navBar }
+        </div>
+        <div className="container-1450">
+          {this.props.children}
+        </div>
       </div>
     );
   }
@@ -171,9 +176,10 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={InsiderOilApp}/>
-    <Route path="/app" component={InsiderOilApp}/>
+    <Route path="/app/" component={InsiderOilApp}>
+      <Route path="admin" component={AdminList}/>
+    </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
-    <Route path="/app/admin" component={AdminList}/>
   </Router>,
   document.getElementById('insideroilapp')
 );

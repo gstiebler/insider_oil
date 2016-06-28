@@ -26,7 +26,6 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
         this.state = { sourcesList: [] };
 
         function onData(sourcesList) {
-            console.log(sourcesList);
             this.setState( { sourcesList: sourcesList } );
         }
 
@@ -49,15 +48,16 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
         var sourcesLinks = [];
         for( var key in this.state.sourcesList ) {
             var link = "/app/model_view?model=" + key;
-            sourcesLinks.push(<Link to={link} > {this.state.sourcesList[key]} </Link>);
+            var source = this.state.sourcesList[key];
+            sourcesLinks.push(<p><Link to={link} key={key}>{source}</Link></p>);
         }
 
         return (
             <div>
             <h4>
-                <a href="/app/model_view?model=News">Notícias</a>
+                <Link to="/app/model_view?model=News">Notícias</Link>
             </h4>
-            <p> { sourcesLinks } </p>
+            { sourcesLinks }
             { importProductionButton }
             </div>
         );
