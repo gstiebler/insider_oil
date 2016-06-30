@@ -48,7 +48,7 @@ export class ImportExcel {
     getHeader(worksheet, lineOffset) {
         var header = this.getRowValues(worksheet, lineOffset);
         for( var i = 0; i < header.length; i++ )
-            header[i] = header[i].toLowerCase();
+            header[i] = header[i].toLowerCase().trim();
         return header;
     }
 
