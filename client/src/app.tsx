@@ -127,7 +127,7 @@ ReactDOM.render(
       <Route path="admin" component={AdminList}/>
       <Route path="model_view" component={AdminGrid}/>
       <Route path="edit_item" component={AdminEdit}/>
-      <Route path="tree" component={AdminEdit}/>
+      <Route path="tree" component={Tree}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,

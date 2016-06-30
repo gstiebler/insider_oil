@@ -56,12 +56,13 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
     private initTable() {
         var dataTableElement:any = $('#mainTable');
 
+        var {columns, currencyColumnsIndexes} = this.genColumns();
+        
         this.state.headerParams = { 
             filterFields: columns,
             label: this.props.tableParams.label
         };
         
-        var {columns, currencyColumnsIndexes} = this.genColumns();
         this.state.dataTable = dataTableElement.DataTable( {
             columns: columns,
             language: ModelViewService.datatablesPtBrTranslation,

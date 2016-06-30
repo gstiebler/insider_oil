@@ -23,7 +23,7 @@ export class Tree extends React.Component<IAppProps, IAppState> {
 
         this.state = { 
             items: [],
-            tableParams: {},
+            tableParams: null,
             nodeId: props.location.query.nodeId,
             nodeLabel: props.location.query.nodeLabel,
             stack: []
@@ -58,7 +58,6 @@ export class Tree extends React.Component<IAppProps, IAppState> {
         return false;
     }
     
-    
     private showTree(tree) {
         var stack = [];
         var subTree = this.findItem(tree, stack);
@@ -79,8 +78,8 @@ export class Tree extends React.Component<IAppProps, IAppState> {
             var errorObj = { data: { errorMsg: 'Item da árvore não encontrado' } };
             showError.show(errorObj);
         }
+        this.setState(this.state);
     }
-    
     
     private showObjectsFromCategory(subTree) {
         this.state.tableParams = {
@@ -91,11 +90,23 @@ export class Tree extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
+    private componentWillReceiveProps(nextProps) {
+        this.state = { 
+            items: [],
+            tableParams: null,
+            nodeId: nextProps.location.query.nodeId,
+            nodeLabel: nextProps.location.query.nodeLabel,
+            stack: []
+        };
+
+        server.getTree(this.showTree.bind(this), showError.show);
+    } 
+
     public render(): JSX.Element {
         var stackh = this.state.stack.map( (item) => {
             var linkStr = "/app/tree?nodeId=" + item.id;
             return (                
-                <span>
+                <span key={item.label}>
                     > <Link to={ linkStr }>{item.label}</Link>
                 </span>
             );
@@ -103,7 +114,7 @@ export class Tree extends React.Component<IAppProps, IAppState> {
 
         var treeItems = this.state.items.map( (item) => {
             var linkStr = "/app/tree?nodeId=" + item.id;
-            return ( <p> <Link to={ linkStr }>{item.label}</Link> </p> );
+            return ( <p key={item.label}> <Link to={ linkStr }>{item.label}</Link> </p> );
         });
 
         return (
