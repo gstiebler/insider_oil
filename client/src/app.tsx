@@ -9,6 +9,7 @@ import { TopMenu } from './TopMenu'
 import { AdminList } from './AdminList';
 import { AdminGrid } from './AdminGrid'
 import { AdminEdit } from './AdminEdit'
+import { Tree } from './Tree'
 
 interface IAppProps {
   model: string;
@@ -80,7 +81,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav navbar-nav-full">
               <li className="active nav-item">
-                <a href="/app/tree?nodeId=1">Dados</a>
+                <Link to="/app/tree?nodeId=1">Dados</Link>
               </li>
               <li className="nav-item">
                 <a href="/app/tree?nodeLabel=Pessoas">Pessoas</a>
@@ -126,6 +127,7 @@ ReactDOM.render(
       <Route path="admin" component={AdminList}/>
       <Route path="model_view" component={AdminGrid}/>
       <Route path="edit_item" component={AdminEdit}/>
+      <Route path="tree" component={AdminEdit}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,
