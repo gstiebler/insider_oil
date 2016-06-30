@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import { Link, browserHistory } from 'react-router';
+import { PaginatedTable } from './PaginatedTable';
 
 interface IAppProps {
     location: any;
@@ -102,11 +103,7 @@ export class Tree extends React.Component<IAppProps, IAppState> {
 
         var treeItems = this.state.items.map( (item) => {
             var linkStr = "/app/tree?nodeId=" + item.id;
-            return (                
-                <p>
-                    > <Link to={ linkStr }>{item.label}</Link>
-                </p>
-            );
+            return ( <p> <Link to={ linkStr }>{item.label}</Link> </p> );
         });
 
         return (
@@ -116,7 +113,7 @@ export class Tree extends React.Component<IAppProps, IAppState> {
                 <div>{ stackh }</div>
                 <br/><br/>
                 <div>{ treeItems }</div>
-                { this.state.tableParams ? (<paginated-table table-params={ this.state.tableParams } ></paginated-table>) : null }
+                { this.state.tableParams ? (<PaginatedTable tableParams={ this.state.tableParams } ></PaginatedTable>) : null }
             </div>
         );
     }
