@@ -3,6 +3,7 @@ import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import * as ModelViewService from './lib/ModelViewUtils';
 import { Link, browserHistory } from 'react-router';
+import { PaginatedTableHeader } from './PaginatedTableHeader';
 
 interface IAppProps {
     tableParams: any;
@@ -123,10 +124,18 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         server.getTableData(options, setDataTablesRows, showError.show);
     }
 
+    private filterChanged(newFilter) {
+        if(JSON.stringify(newFilter) == JSON.stringify(filters))
+            return;
+        console.log(filters, newFilter);
+        filters = newFilter;
+        dataTable.draw();
+    } 
+
     public render(): JSX.Element {
         return (
             <div className="main-table table-responsive bootstrap-table">
-                <paginated-table-header header-params="headerParams" filter-changed="filterChanged"></paginated-table-header>
+                <PaginatedTableHeader headerParams={ this.state.headerParams } filterChanged={ this.filterChanged }></PaginatedTableHeader>
                 <table id="mainTable" className="table" cellspacing="0" width="100%"></table>
             </div>
         );
