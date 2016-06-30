@@ -1,8 +1,19 @@
 import * as React from 'react';
 import * as showError from './lib/ShowError';
 
+export interface FilterField {
+    data: string;
+    title: string;
+    render: any;
+}
+
+export interface HeaderParams {
+    filterFields: FilterField[];
+    label: string;
+}
+
 interface IAppProps {
-    headerParams: any;
+    headerParams: HeaderParams;
     filterChanged: any;
 }
 
@@ -24,7 +35,7 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
         };
     }
     
-    private componentWillReceiveProps(nextProps) {
+    private componentWillReceiveProps(nextProps:IAppProps) {
         this.state.selectedField = nextProps.headerParams.filterFields[0].data;
     }
 

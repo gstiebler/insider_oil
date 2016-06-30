@@ -3,14 +3,14 @@ import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import * as ModelViewService from './lib/ModelViewUtils';
 import { Link, browserHistory } from 'react-router';
-import { PaginatedTableHeader } from './PaginatedTableHeader';
+import { PaginatedTableHeader, HeaderParams, FilterField } from './PaginatedTableHeader';
 
 interface IAppProps {
     tableParams: any;
 }
 
 interface IAppState {
-    headerParams: any;
+    headerParams: HeaderParams;
     dataTable: any;
     filters: any[];
 }
@@ -21,7 +21,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = { 
-            headerParams: { filterFields: [] },
+            headerParams: { filterFields: [], label: '' },
             dataTable: {},
             filters: []
         };
@@ -36,12 +36,16 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
     }
 
     private genColumns() {
-        var columns = [];
+        var columns:FilterField[] = [];
         var { tableParams } = this.props;
         var currencyColumnsIndexes = [];
         for(var i = 0; i < tableParams.fields.length; i++) {
             var field = tableParams.fields[i];
-            var columnObj:any = { title: field.label };
+            var columnObj:FilterField = {
+                 title: field.label,
+                 data: '',
+                 render: {} 
+            };
             if(field.ref) {
                 columnObj.data = field.ref.valueField,
                 columnObj.render = { display: this.getFormatLinkFn(field) };
