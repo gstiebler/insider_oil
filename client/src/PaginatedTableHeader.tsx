@@ -9,7 +9,7 @@ interface IAppProps {
 interface IAppState {
     delayTimer: any;
     searchText: string;
-    selectedField: any;
+    selectedField: string;
 }
 
 export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> {
@@ -20,8 +20,12 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
         this.state = { 
             delayTimer: {},
             searchText: '',
-            selectedField: {}
+            selectedField: ''
         };
+    }
+    
+    private componentWillReceiveProps(nextProps) {
+        this.state.selectedField = nextProps.headerParams.filterFields[0].data;
     }
 
     private filterChanged() {
@@ -38,14 +42,16 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
     }
 
     private searchTextChanged(event) {
-        event.persist();
         this.state.searchText = event.target.value;
+        this.setState(this.state);
         clearTimeout(this.state.delayTimer);
         this.state.delayTimer = setTimeout(this.filterChanged.bind(this), 400);
+        event.persist();
     };
 
     private selectedFieldChanged(event) {
         this.state.searchText = '';
+        this.setState(this.state);
         this.state.selectedField = event.target.value;
         this.filterChanged();
     }
@@ -68,7 +74,7 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
                         <select onChange={this.selectedFieldChanged.bind(this)}>
                             { filterComboOptions }
                         </select>
-                        <input className="header-input" type="text" onChange={ this.searchTextChanged.bind(this) } ></input>
+                        <input className="header-input" type="text" value={this.state.searchText} onChange={ this.searchTextChanged.bind(this) } ></input>
                     </div>
                 </div>
             </div>
