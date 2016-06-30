@@ -85,7 +85,7 @@ function tableParamsChanged(tableParams) {
             columnObj.render = { display: getFormatLinkFn(field) };
         } else {
             columnObj.data = field.fieldName;
-            columnObj.render = { display: _ModelViewService.formatFnByType };
+            columnObj.render = { display: _ModelViewService.formatFnByType(field) };
             if(field.type == 'CURRENCY') {
                 currencyColumnsIndexes.push(i);
             }
