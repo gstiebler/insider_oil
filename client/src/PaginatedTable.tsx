@@ -47,7 +47,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
                 columnObj.render = { display: this.getFormatLinkFn(field) };
             } else {
                 columnObj.data = field.fieldName;
-                columnObj.render = { display: ModelViewService.formatFnByType };
+                columnObj.render = { display: ModelViewService.formatFnByType(field) };
                 if(field.type == 'CURRENCY') {
                     currencyColumnsIndexes.push(i);
                 }

@@ -279,18 +279,23 @@ export function getQueryData(req: express.Request, res: express.Response) {Sync(
  
 
 export function getTableQueryData(req: express.Request, res: express.Response):void {Sync(function(){
-    const queryParams:QueryGenerator.IQueryParams = req.query.queryParams ? JSON.parse(req.query.queryParams) : {};
+    const queryParams:QueryGenerator.IQueryParams = req.query.queryParams;
+    queryParams.filters = queryParams.filters ? queryParams.filters : [];
     const queryName:string = req.query.queryName;
     const fields = TableQueries.queries[queryName].fields;
 
-    TableQueries.getQueryResult(queryName, queryParams).then( (results) => {
-        const result = {
-            fields: fields,
-            records: results[0],
-            count: results[1][0].count
-        };
-        res.json(result);
-    }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
+    try {
+        TableQueries.getQueryResult(queryName, queryParams).then( (results) => {
+            const result = {
+                fields: fields,
+                records: results[0],
+                count: results[1][0].count
+            };
+            res.json(result);
+        }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
+    } catch(err) {
+        ControllerUtils.getErrorFunc(res, 500, "Erro")(err);
+    }
 })}
  
 

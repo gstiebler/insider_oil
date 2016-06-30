@@ -96,8 +96,8 @@ export function getTableData( options, okCallback, errorCallback ) {
         token: session.getToken()
     };
     
-    get('/get_table_data', { params: params }, function(response) {
-        okCallback(response.data);
+    get('/get_table_data', params, function(response) {
+        okCallback(response);
     }, errorCallback);
 }
 
