@@ -651,7 +651,7 @@ module.exports = {
 				},
 				block_id: {
 					type: Sequelize.INTEGER,
-					allowNull: false,
+					allowNull: true,
 					references: {
 						model: 'blocks',
 						key: 'id'

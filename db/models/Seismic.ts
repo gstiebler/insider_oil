@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'seismics',
         classMethods: {
             associate: function(models) {
-                Seismic.belongsTo(models.Block, { as: 'block', allowNull: false } );
+                Seismic.belongsTo(models.Block, { as: 'block', allowNull: true } );
             }
         }
     }
