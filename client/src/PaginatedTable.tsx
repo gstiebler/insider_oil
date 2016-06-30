@@ -21,13 +21,17 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = { 
-            headerParams: {},
+            headerParams: { filterFields: [] },
             dataTable: {},
             filters: []
         };
     }
 
     public componenteDidMount() {
+        this.initTable();
+    }
+
+    private componentWillReceiveProps(nextProps) {
         this.initTable();
     }
 
@@ -57,7 +61,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         var dataTableElement:any = $('#mainTable');
 
         var {columns, currencyColumnsIndexes} = this.genColumns();
-        
+
         this.state.headerParams = { 
             filterFields: columns,
             label: this.props.tableParams.label
