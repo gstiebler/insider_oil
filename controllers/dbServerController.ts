@@ -78,8 +78,12 @@ export function uploadFile(req: express.Request, res: express.Response, next) {
             winston.error(err);
             res.status(400).json( { errorMsg: err } );
         }
-        
-        importExcel(buf, model).then(onOk).catch(onError);
+         
+        try {
+            importExcel(buf, model).then(onOk).catch(onError);
+        } catch(err) {
+            res.status(400).json( { errorMsg: err } );
+        }
     }
       
     function onFinish() {
