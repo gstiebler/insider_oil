@@ -1,5 +1,7 @@
 import * as session from './session';
 import * as jquery from 'jquery';
+import * as remoteServer from '../../../controllers/dbServerController';
+import * as Promise from 'bluebird';
 
 function ajax(url: string, data: any, type:string, onSuccess?, onError?) {
     data.token = session.getToken();
@@ -20,6 +22,13 @@ function ajax(url: string, data: any, type:string, onSuccess?, onError?) {
 
 function get(url: string, data: any, onSuccess?, onError?) {
     ajax(url, data, 'GET', onSuccess, onError);
+}
+
+function getP(url: string, data: any):Promise<any> {
+    return new Promise<any>( function(resolve, reject) {
+        ajax(url, data, 'GET', (result) => { resolve(result) }, 
+                (error) => { reject(error) });
+    }
 }
 
 function put(url: string, data: any, onSuccess?, onError?) {
@@ -86,19 +95,20 @@ export function getQueryData( options, okCallback, errorCallback ) {
  *     order: string[]
  *     filters: {field, like}
  *     pagination: {first, itemsPerPage}
- * @param {Function} okCallback Result callback
- * @param {Function} errorCallback Error callback
  */
-export function getTableData( options, okCallback, errorCallback ) {
+export function getTableData( options ):Promise<remoteServer.TableQueryDataRes> {
     var params = { 
         queryName: options.queryName,
         queryParams: options.queryParams,
         token: session.getToken()
     };
     
-    get('/get_table_data', params, function(response) {
-        okCallback(response);
-    }, errorCallback);
+    return getP('/get_table_data', options);
+    /*return new Promise<remoteServer.TableQueryDataRes>( function(resolve, reject) {
+        get('/get_table_data', params, 
+                (response) => { resolve(response); }, 
+                (err) => { reject(err) });*/
+    });
 }
 
 export function getTimeSeries( options, okCallback, errorCallback ) {

@@ -4,6 +4,8 @@ import * as showError from './lib/ShowError';
 import * as ModelViewService from './lib/ModelViewUtils';
 import { Link, browserHistory } from 'react-router';
 import { PaginatedTableHeader, HeaderParams, FilterField } from './PaginatedTableHeader';
+import { TableQueryDataRes } from '../../controllers/dbServerController';
+
 
 interface IAppProps {
     tableParams: any;
@@ -123,7 +125,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
             }
         };
         
-        function setDataTablesRows(serverResult) {
+        function setDataTablesRows(serverResult:TableQueryDataRes) {
             var result = { 
                 aaData: serverResult.records,
                 recordsTotal: serverResult.count,
@@ -132,7 +134,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
             callback(result);
         }
         
-        server.getTableData(options, setDataTablesRows, showError.show);
+        server.getTableData(options).then(setDataTablesRows).catch(showError.show);
     }
 
     private filterChanged(newFilter) {
