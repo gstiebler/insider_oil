@@ -12,6 +12,7 @@ interface IAppProps {
 interface IAppState {
     headerParams: any;
     dataTable: any;
+    filters: any[];
 }
 
 export class PaginatedTable extends React.Component<IAppProps, IAppState> {
@@ -21,7 +22,8 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
 
         this.state = { 
             headerParams: {},
-            dataTable: {}
+            dataTable: {},
+            filters: []
         };
     }
 
@@ -108,7 +110,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
                     itemsPerPage: data.length 
                 },
                 order: orderColumns,
-                filters: filters
+                filters: this.state.filters
             }
         };
         
@@ -125,11 +127,11 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
     }
 
     private filterChanged(newFilter) {
-        if(JSON.stringify(newFilter) == JSON.stringify(filters))
+        if(JSON.stringify(newFilter) == JSON.stringify(this.state.filters))
             return;
-        console.log(filters, newFilter);
-        filters = newFilter;
-        dataTable.draw();
+        console.log(this.state.filters, newFilter);
+        this.state.filters = newFilter;
+        this.state.dataTable.draw();
     } 
 
     public render(): JSX.Element {
