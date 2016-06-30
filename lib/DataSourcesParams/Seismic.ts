@@ -32,11 +32,11 @@ const Seismic: BaseDataSourceParams = {
         keyField: 'processo',
         fields: {
             'processo': 'process',
-            'Empresa Autorizada': 'authorized_company',
-            'Publicação no DOU': 'dou_publi_date',
-            'Validade': 'end_date',
-            'Tecnologias Autorizadas': 'authorized_technologies',
-            'Bloco': 'block'
+            'empresa autorizada': 'authorized_company',
+            'publicação no dou': 'dou_publi_date',
+            'validade': 'end_date',
+            'tecnologias autorizadas': 'authorized_technologies',
+            'bloco': 'block'
         }
     }
 }
