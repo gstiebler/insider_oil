@@ -37,15 +37,16 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
         this.props.filterChanged(filterOpts);
     }
 
-    private searchTextChanged(value) {
-        this.state.searchText = value;
+    private searchTextChanged(event) {
+        event.persist();
+        this.state.searchText = event.target.value;
         clearTimeout(this.state.delayTimer);
         this.state.delayTimer = setTimeout(this.filterChanged.bind(this), 400);
     };
 
-    private selectedFieldChanged(selectedField) {
+    private selectedFieldChanged(event) {
         this.state.searchText = '';
-        this.state.selectedField = selectedField;
+        this.state.selectedField = event.target.value;
         this.filterChanged();
     }
 
@@ -64,10 +65,10 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
                 <div className="col-md-8 col-sm-6">
                     <div className="table-options-pages">
                         Filtrar por:
-                        <select onchange={this.selectedFieldChanged}>
+                        <select onChange={this.selectedFieldChanged.bind(this)}>
                             { filterComboOptions }
                         </select>
-                        <input className="header-input" type="text" oninput={ this.searchTextChanged } ></input>
+                        <input className="header-input" type="text" onChange={ this.searchTextChanged.bind(this) } ></input>
                     </div>
                 </div>
             </div>

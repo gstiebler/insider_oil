@@ -84,10 +84,10 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
                 <Link to="/app/tree?nodeId=1">Dados</Link>
               </li>
               <li className="nav-item">
-                <a href="/app/tree?nodeLabel=Pessoas">Pessoas</a>
+                <Link to="/app/tree?nodeLabel=Pessoas">Pessoas</Link>
               </li>
               <li className="nav-item">
-                <a href="/app/tree?nodeLabel=Empresas">Empresas</a>
+                <Link to="/app/tree?nodeLabel=Empresas">Empresas</Link>
               </li>
               { this.state.isAdmin ? adminLink : '' }
             </ul>

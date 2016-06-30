@@ -132,9 +132,9 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
     }
 
     private filterChanged(newFilter) {
-        if(JSON.stringify(newFilter) == JSON.stringify(this.state.filters))
-            return;
         console.log(this.state.filters, newFilter);
+        //if(JSON.stringify(newFilter) == JSON.stringify(this.state.filters))
+        //    return;
         this.state.filters = newFilter;
         this.state.dataTable.draw();
     } 
@@ -142,7 +142,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
     public render(): JSX.Element {
         return (
             <div className="main-table table-responsive bootstrap-table">
-                <PaginatedTableHeader headerParams={ this.state.headerParams } filterChanged={ this.filterChanged }></PaginatedTableHeader>
+                <PaginatedTableHeader headerParams={ this.state.headerParams } filterChanged={ this.filterChanged.bind(this) }></PaginatedTableHeader>
                 <table id="mainTable" className="table" cellspacing="0" width="100%"></table>
             </div>
         );
