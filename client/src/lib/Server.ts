@@ -28,7 +28,7 @@ function getP(url: string, data: any):Promise<any> {
     return new Promise<any>( function(resolve, reject) {
         ajax(url, data, 'GET', (result) => { resolve(result) }, 
                 (error) => { reject(error) });
-    }
+    });
 }
 
 function put(url: string, data: any, onSuccess?, onError?) {
@@ -108,7 +108,6 @@ export function getTableData( options ):Promise<remoteServer.TableQueryDataRes> 
         get('/get_table_data', params, 
                 (response) => { resolve(response); }, 
                 (err) => { reject(err) });*/
-    });
 }
 
 export function getTimeSeries( options, okCallback, errorCallback ) {
