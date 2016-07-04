@@ -262,20 +262,24 @@ export function viewRecord(req: express.Request, res: express.Response, next) {
 
 
 export function getQueryData(req: express.Request, res: express.Response) {Sync(function(){
-    const dataSourceName = req.query.dataSource;
-    const queryName = req.query.queryName;
-    const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
-    const queryById = QueriesById[queryName];
-    const queryStr = queryById.queryStrFn(filters);
-    const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
-    db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
-        const dsOperations = DataSourceOperations[dataSourceName];
-        const result = {
-            fields: queryById.fields,
-            records: records
-        };
-        res.json(result);
-    }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
+    try{
+        const dataSourceName = req.query.dataSource;
+        const queryName = req.query.queryName;
+        const filters = req.query.filters;
+        const queryById = QueriesById[queryName];
+        const queryStr = queryById.queryStrFn(filters);
+        const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
+        db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
+            const dsOperations = DataSourceOperations[dataSourceName];
+            const result = {
+                fields: queryById.fields,
+                records: records
+            };
+            res.json(result);
+        }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
+    } catch(err) {
+        ControllerUtils.getErrorFunc(res, 500, "Erro")(err);
+    }
 })}
 
 export function getTableQueryData(req: express.Request, res: express.Response):void {Sync(function(){
