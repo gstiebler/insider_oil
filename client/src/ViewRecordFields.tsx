@@ -79,7 +79,7 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
             } else if (field.isLink) {
                 fieldHtml = <a className="col-sm-10" href={field.value} target="_blank">{field.value}</a>;
             } else if (field.isHTML) {
-                fieldHtml = field.value;
+                fieldHtml = <div dangerouslySetInnerHTML={ {__html: field.value } } ></div>
             } else if (field.isList) {
                 var listItems = field.value.map((item) => { <span className="col-sm-10">{item}</span> });
                 fieldHtml = <div className="col-md-6">{ listItems } </div>;
