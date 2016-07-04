@@ -39,6 +39,9 @@ const OilField: BaseDataSourceParams = {
         stage: {
             label: "Estágio (admin)"
         },
+        updates: {
+            label: "Atualizações"
+        },
         block_name: {
             label: "Bloco"
         },
@@ -66,6 +69,7 @@ const OilField: BaseDataSourceParams = {
             'concessionárias': 'concessionaries',
             'terra/mar': 'shore',
             'estágio': 'stage',
+            'atualizações': 'updates',
         }
     },
 };

@@ -60,6 +60,10 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
           type: DataTypes.ENUM('on', 'off'),
           allowNull: false
         },
+        updates: {
+          type: DataTypes.TEXT,
+          allowNull: true
+        },
         formatted_shore: {
             type: DataTypes.VIRTUAL,
             get: function() {
