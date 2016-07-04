@@ -76,6 +76,13 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         var { id, source } = this.state;
         server.viewRecord( source, id, this.showValues.bind(this), showError.show );
     }
+
+    private componentWillReceiveProps(nextProps) {
+        var { id, source } = nextProps.location.query;
+        this.state.id = id;
+        this.state.source = source;
+        server.viewRecord( source, id, this.showValues.bind(this), showError.show );
+    } 
  
     // show record values
     private showValues(viewData) {
