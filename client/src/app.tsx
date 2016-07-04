@@ -8,6 +8,7 @@ import { AdminList } from './AdminList';
 import { AdminGrid } from './AdminGrid'
 import { AdminEdit } from './AdminEdit'
 import { Tree } from './Tree'
+import { ViewRecord } from './ViewRecord'
 
 interface IAppProps {
   model: string;
@@ -126,6 +127,7 @@ ReactDOM.render(
       <Route path="model_view" component={AdminGrid}/>
       <Route path="edit_item" component={AdminEdit}/>
       <Route path="tree" component={Tree}/>
+      <Route path="view_record" component={ViewRecord}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,

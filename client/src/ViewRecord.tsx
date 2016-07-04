@@ -15,7 +15,7 @@ interface IAppState {
     relatedBids: any;
     relatedContracts: any;
     recordData: any;
-    referencedObjects: any;
+    referencedObjects: any[];
 }
 
 export class ViewRecord extends React.Component<IAppProps, IAppState> {
@@ -54,7 +54,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                 }
             },            
             recordData: {},
-            referencedObjects: {},
+            referencedObjects: [],
         };
 
         var customSources = {
@@ -78,19 +78,23 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
     }
     
     public render(): React.ReactElement<any> {
+        var referencedObjects = this.state.referencedObjects.map((referencedObject) => {
+            return <div>
+                <ShowQueryData model={referencedObject} objId={this.state.id}></ShowQueryData>
+                <hr/>
+            </div>
+        });
+
         return (
             <div>
-                <record-view recordData="recordData" source="source" objId="id"></record-view>
+                <RecordViewFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></RecordViewFields>
                 <hr/>
-                <show-query-data model="relatedPersons"></show-query-data>
-                <show-query-data model="relatedBids"></show-query-data>
-                <show-query-data model="relatedContracts"></show-query-data>
+                <ShowQueryData model={this.state.relatedPersons}></ShowQueryData>
+                <ShowQueryData model={this.state.relatedBids}></ShowQueryData>
+                <ShowQueryData model={this.state.relatedContracts}></ShowQueryData>
                 <hr/>
-                <div ng-repeat="referencedObject in referencedObjects">
-                    <show-query-data model="referencedObject" objId="id"></show-query-data>
-                    <hr/>
-                </div>
-                <object-news modelName="source" objId="id" ></object-news>
+                { referencedObjects }
+                <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>
         );
     }
