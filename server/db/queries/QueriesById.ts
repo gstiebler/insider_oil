@@ -62,18 +62,19 @@ const queries:IQueriesById = {
         queryStrFn: (filters) => {
             const modelName = filters.modelName;
             const id = filters.id;
-            const modelIdQuery = 'select id from models_list where name = "' + modelName + '" group by id';
-            const newsIdQuery = 'SELECT news_id FROM news_models ' +
-                ' where model_id = (' + modelIdQuery + ')' +
-                ' and model_ref_id = ' + id;
-            const newsQuery = 'select id, title, created_at, "News" as model' +
-                ' from news ' +
-                ' where id in (' + newsIdQuery + ')';
+            const modelIdQuery = 'select m.id from models_list m where m.name = "' + modelName + '" group by m.id';
+            const newsIdQuery = 'SELECT nm.news_id FROM news_models nm ' +
+                ' where nm.model_id = (' + modelIdQuery + ')' +
+                ' and nm.model_ref_id = ' + id;
+            const newsQuery = 'select n.id, n.title, n.created_at, "News" as model, u.name as author_name' +
+                ' from news n' +
+                ' left outer join users u on n.author_id = u.id ' +
+                ' where n.id in (' + newsIdQuery + ')';
             return newsQuery;
         },
         fields: [
             {
-                label: 'Título',
+                label: 'TÃ­tulo',
                 ref: {
                     modelField: 'model',
                     idField: 'id',

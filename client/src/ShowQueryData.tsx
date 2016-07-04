@@ -99,7 +99,7 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
             var recordColumns = record.map((recordColumn, j:number):React.ReactElement<any> => {   
                 var valueHtml:React.ReactElement<any> = null;
                 if(recordColumn.model) {
-                    var url = StringUtils.format("/app/view_record?source={}&id={}", recordColumn.model, recordColumn.id);
+                    var url = StringUtils.format("/app/view_record?source={0}&id={1}", recordColumn.model, recordColumn.id);
                     valueHtml = <Link to={url} >{recordColumn.value}</Link>;
                 } else {
                     valueHtml = <div ng-else className="{'text-right': record_column.rightAlign}">{recordColumn.value}</div>;
