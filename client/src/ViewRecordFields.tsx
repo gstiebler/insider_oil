@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as showError from './lib/ShowError';
 import * as ModelViewService from './lib/ModelViewUtils';
 import { Link } from 'react-router';
+import { strContains } from './lib/StringUtils';
 
 interface IAppProps {
     location: any;
@@ -24,25 +25,23 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
         this.state = {
             record: []
         };
+    }
 
-        this.onRecordDataChange();
+    private componentDidMount() {
+        this.onRecordDataChange(this.props);
     }
 
     private componentWillReceiveProps(nextProps) {
-        this.onRecordDataChange();
+        this.onRecordDataChange(nextProps);
     }
 
-    private strContains(input, substr) {
-        return input.indexOf(substr) > -1;
-    }
-
-    private onRecordDataChange() {
-        var recordData = this.props.recordData;
+    private onRecordDataChange(props) {
+        var recordData = props.recordData;
         var fieldValues = [];
         for(var i = 0; i < recordData.length; i++) {
             if(!recordData[i].value || 
-                    this.strContains(recordData[i].label, 'ignorar') || 
-                    this.strContains(recordData[i].label, 'admin')) {
+                    strContains(recordData[i].label, 'ignorar') || 
+                    strContains(recordData[i].label, 'admin')) {
                 continue;
             }
             if(recordData[i].isMultiFieldText) {
@@ -54,8 +53,8 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
                     newFieldInfo.value = parts[1];
 
                     if(!newFieldInfo.value || 
-                            this.strContains(newFieldInfo.label, 'ignorar') ||
-                            this.strContains(newFieldInfo.label, 'admin')) {
+                            strContains(newFieldInfo.label, 'ignorar') ||
+                            strContains(newFieldInfo.label, 'admin')) {
                         continue;
                     }
                     fieldValues.push(newFieldInfo);   
@@ -66,6 +65,7 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
             }
         }
         this.state.record = fieldValues;
+        this.setState(this.state);
     }
     
     public render(): React.ReactElement<any> {

@@ -7,4 +7,8 @@ export function format(...args: any[]):string {
         oStr = oStr.replace(re, arguments[i]); 
     } 
     return oStr; 
-} 
+}
+
+export function strContains(input, substr) {
+    return input.indexOf(substr) > -1;
+}

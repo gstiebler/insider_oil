@@ -70,14 +70,18 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         if(customSource) {
             browserHistory.push(customSource + '?id=' + id)
         }
+    }
 
-        server.viewRecord( source, id, this.showValues, showError.show );
+    private componentDidMount() {
+        var { id, source } = this.state;
+        server.viewRecord( source, id, this.showValues.bind(this), showError.show );
     }
  
     // show record values
     private showValues(viewData) {
         this.state.recordData = viewData.record;
-        this.state.referencedObjects = viewData.referencedObjects;
+        this.state.referencedObjects = viewData.referencedObjects ? viewData.referencedObjects : [];
+        this.setState(this.state);
     }
     
     public render(): React.ReactElement<any> {

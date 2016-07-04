@@ -24,14 +24,13 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
     constructor(props: IAppProps) {
         super(props);
 
+        var referencedObject = this.props.model;
         this.state = {
             header: [],
             records: [],
-            title: ''
+            title: referencedObject.title
         };
 
-        var referencedObject = this.props.model;
-        this.state.title = referencedObject.title;
         var filters = referencedObject.filters;
         if(!filters) {
             filters = {};
@@ -42,7 +41,7 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
             filters: filters,
             queryName: referencedObject.queryName
         };
-        server.getQueryData(options, this.onData, showError.show);
+        server.getQueryData(options, this.onData.bind(this), showError.show);
     }
  
     private onData(data) {
