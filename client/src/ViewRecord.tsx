@@ -5,6 +5,7 @@ import * as showError from './lib/ShowError';
 import { Link, browserHistory } from 'react-router';
 import { ViewRecordFields } from './ViewRecordFields';
 import { ShowQueryData } from './ShowQueryData';
+import { ObjectNews } from './ObjectNews';
 
 interface IAppProps {
     location: any;
