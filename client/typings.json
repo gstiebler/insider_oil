@@ -1,13 +1,13 @@
 {
-  "dependencies": {},
-  "devDependencies": {},
-  "ambientDependencies": {
-    "bluebird": "registry:dt/bluebird#2.0.0+20160319051630",
-    "classnames": "registry:dt/classnames#0.0.0+20160316155526",
-    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c",
+  "name": "client",
+  "dependencies": {
+    "bluebird": "registry:npm/bluebird#3.3.4+20160622205516",
+    "react": "registry:npm/react#15.0.1+20160601175240",
+    "react-router": "registry:npm/react-router#2.4.0+20160628165748"
+  },
+  "globalDependencies": {
+    "jquery": "registry:dt/jquery#1.10.0+20160701124751",
     "js-cookie": "registry:dt/js-cookie#2.0.0+20160317120654",
-    "react": "registry:dt/react#0.14.0+20160621225615",
-    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
-    "react-router": "registry:dt/react-router#2.0.0+20160621215300"
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
   }
 }
