@@ -37,6 +37,9 @@
         <div ng-else-if="field.isMultiFieldText">
             <textarea type="text" class="form-control" id="{{field.htmlId}}" ng-model="values[field.name]"></textarea>
         </div>
+        <div ng-else-if="field.type.indexOf('TEXT') > -1">
+            <textarea type="text" class="form-control" id="{{field.htmlId}}" ng-model="values[field.name]"></textarea>
+        </div>
         <div ng-else-if="field.enumValues">
             <select class="form-control" ng-model="values[field.name]" id="{{field.htmlId}}"  >
                 <option ng-repeat="enumValue in field.enumValues track by $index" value="{{enumValue}}" >{{enumValue}}</option>
