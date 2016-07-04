@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import { Link, browserHistory } from 'react-router';
+import { ViewRecordFields } from './ViewRecordFields';
 
 interface IAppProps {
     location: any;
@@ -87,7 +88,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
 
         return (
             <div>
-                <RecordViewFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></RecordViewFields>
+                <ViewRecordFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></ViewRecordFields>
                 <hr/>
                 <ShowQueryData model={this.state.relatedPersons}></ShowQueryData>
                 <ShowQueryData model={this.state.relatedBids}></ShowQueryData>
