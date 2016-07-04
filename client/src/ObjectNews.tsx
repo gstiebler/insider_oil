@@ -32,7 +32,9 @@ export class ObjectNews extends React.Component<IAppProps, IAppState> {
                 id: this.props.objId
             }
         }
-        server.getQueryData(relateNewsQuery, this.onNews.bind(this), showError.show);
+        server.getQueryData(relateNewsQuery)
+            .then(this.onNews.bind(this))
+            .catch(showError.show);
     }    
     
     private onNews(newsData) {

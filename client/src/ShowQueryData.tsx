@@ -24,24 +24,26 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
     constructor(props: IAppProps) {
         super(props);
 
-        var referencedObject = this.props.model;
         this.state = {
             header: [],
             records: [],
-            title: referencedObject.title
+            title: this.props.model.title
         };
+    }
 
-        var filters = referencedObject.filters;
+    private componentDidMount() {
+        var filters =  this.props.model.filters;
         if(!filters) {
             filters = {};
             filters.id = this.props.objId;
         }
-        
         var options = { 
             filters: filters,
-            queryName: referencedObject.queryName
+            queryName:  this.props.model.queryName
         };
-        server.getQueryData(options, this.onData.bind(this), showError.show);
+        server.getQueryData(options)
+            .then(this.onData.bind(this))
+            .catch(showError.show);
     }
  
     private onData(data) {
@@ -90,24 +92,23 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
         }
 
         var headerHtml = this.state.header.map((headerItem) => {
-            return <th>{{headerItem}}</th>;
+            return <th key={headerItem}>{headerItem}</th>;
         });
 
-        var rowsHtml = this.state.records.map((record:any[]) => {          
-            var recordColumns = record.map((recordColumn):React.ReactElement<any> => {   
-                var recModel:React.ReactElement<any> = null;
+        var rowsHtml = this.state.records.map((record:any[], i:number) => {          
+            var recordColumns = record.map((recordColumn, j:number):React.ReactElement<any> => {   
+                var valueHtml:React.ReactElement<any> = null;
                 if(recordColumn.model) {
                     var url = StringUtils.format("/app/view_record?source={}&id={}", recordColumn.model, recordColumn.id);
-                    recModel = <Link to={url} >{recordColumn.value}</Link>;
-                }      
+                    valueHtml = <Link to={url} >{recordColumn.value}</Link>;
+                } else {
+                    valueHtml = <div ng-else className="{'text-right': record_column.rightAlign}">{recordColumn.value}</div>;
+                }
 
-                return <td>
-                        { recModel }
-                        <div ng-else ng-className="{'text-right': record_column.rightAlign}">{recordColumn.value}</div>
-                    </td>;
+                return <td key={j}> {valueHtml} </td>;
            });
 
-            return <tr>{recordColumns}</tr>
+            return <tr key={i}>{recordColumns}</tr>
         });
 
         var table =        

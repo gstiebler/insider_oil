@@ -73,19 +73,16 @@ export function getTable( table, options, okCallback, errorCallback ) {
 /**
  * Return multiple records from a query
  * @param {} options Options (queryName and filters)
- * @param {Function} okCallback Result callback
- * @param {Function} errorCallback Error callback
+ * @return Promise
  */
-export function getQueryData( options, okCallback, errorCallback ) {
+export function getQueryData(options):Promise<any> {
     var params = { 
         queryName: options.queryName,
         filters: options.filters,
         token: session.getToken()
     };
     
-    get('/get_query_data', { params: params }, function(response) {
-        okCallback(response.data);
-    }, errorCallback);
+    return getP('/get_query_data', params);
 }
 
 /**
@@ -104,10 +101,6 @@ export function getTableData( options ):Promise<remoteServer.TableQueryDataRes> 
     };
     
     return getP('/get_table_data', options);
-    /*return new Promise<remoteServer.TableQueryDataRes>( function(resolve, reject) {
-        get('/get_table_data', params, 
-                (response) => { resolve(response); }, 
-                (err) => { reject(err) });*/
 }
 
 export function getTimeSeries( options, okCallback, errorCallback ) {

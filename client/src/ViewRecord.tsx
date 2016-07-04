@@ -86,7 +86,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
     
     public render(): React.ReactElement<any> {
         var referencedObjects = this.state.referencedObjects.map((referencedObject) => {
-            return <div>
+            return <div key={referencedObject.queryName}>
                 <ShowQueryData model={referencedObject} objId={this.state.id}></ShowQueryData>
                 <hr/>
             </div>
