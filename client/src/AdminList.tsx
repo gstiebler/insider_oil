@@ -1,5 +1,3 @@
-/// <reference path="../typings/browser.d.ts"/>
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as server from './lib/Server';
@@ -37,7 +35,7 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
         //Flash.create('success', status );
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactElement<any> {
         /*
         var importProductionButton = (
             Importar Excel de produção

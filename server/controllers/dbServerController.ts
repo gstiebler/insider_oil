@@ -18,6 +18,7 @@ import QueryGenerator = require('../db/queries/QueryGenerator');
 import TimeSeriesQueries = require('../db/queries/TimeSeriesQueries');
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 import Sequelize = require('sequelize');
+import * as interfaces from '../../common/Interfaces';
  
 function getFieldTypes(fields) {
     const types = {};
@@ -276,12 +277,6 @@ export function getQueryData(req: express.Request, res: express.Response) {Sync(
         res.json(result);
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 })}
- 
-export interface TableQueryDataRes {
-    fields: any[];
-    records: any[];
-    count: number;
-}
 
 export function getTableQueryData(req: express.Request, res: express.Response):void {Sync(function(){
     const queryParams:QueryGenerator.IQueryParams = req.query.queryParams;
@@ -291,7 +286,7 @@ export function getTableQueryData(req: express.Request, res: express.Response):v
 
     try {
         TableQueries.getQueryResult(queryName, queryParams).then( (results) => {
-            const result:TableQueryDataRes = {
+            const result:interfaces.TableQueryDataRes = {
                 fields: fields,
                 records: results[0],
                 count: results[1][0].count

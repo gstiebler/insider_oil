@@ -54,7 +54,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
         browserHistory.push('/app/model_view?model=' + this.state.modelName);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactElement<any> {
         return (
             <div className="row">   
                 <form className="form-horizontal" role="form">

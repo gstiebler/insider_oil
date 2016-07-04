@@ -67,7 +67,7 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
         this.filterChanged();
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactElement<any> {
         var filterComboOptions = this.props.headerParams.filterFields.map((filterField) => {
             return <option key={filterField.title} value={filterField.data} >{filterField.title}</option>;
         });

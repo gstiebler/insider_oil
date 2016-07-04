@@ -102,7 +102,7 @@ export class Tree extends React.Component<IAppProps, IAppState> {
         server.getTree(this.showTree.bind(this), showError.show);
     } 
 
-    public render(): JSX.Element {
+    public render(): React.ReactElement<any> {
         var stackh = this.state.stack.map( (item) => {
             var linkStr = "/app/tree?nodeId=" + item.id;
             return (                

@@ -1,5 +1,3 @@
-/// <reference path="../typings/browser.d.ts"/>
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
@@ -56,7 +54,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
     }
   }
 
-  public render():JSX.Element {
+  public render():React.ReactElement<any> {
     var adminLink = <li className="nav-item" >
                       <Link to="/app/admin"><b>Admin</b></Link>
                     </li>;

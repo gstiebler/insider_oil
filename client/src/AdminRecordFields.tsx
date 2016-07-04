@@ -65,7 +65,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         return "html_id_" + field.name;
     }
 
-    private fieldHTML(field): JSX.Element {
+    private fieldHTML(field): React.ReactElement<any> {
 
         function optionsInCombo(values: any[]) {
             var options = [];
@@ -137,7 +137,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         }
     }
     
-    public render(): JSX.Element {
+    public render(): React.ReactElement<any> {
         var fieldsHTML = [];
         for(var field of this.props.fields) {
             fieldsHTML.push(

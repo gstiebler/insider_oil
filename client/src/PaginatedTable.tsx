@@ -4,7 +4,7 @@ import * as showError from './lib/ShowError';
 import * as ModelViewService from './lib/ModelViewUtils';
 import { Link, browserHistory } from 'react-router';
 import { PaginatedTableHeader, HeaderParams, FilterField } from './PaginatedTableHeader';
-import { TableQueryDataRes } from '../../controllers/dbServerController';
+import { TableQueryDataRes } from '../../common/Interfaces';
 
 
 interface IAppProps {
@@ -144,7 +144,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         this.state.dataTable.draw();
     } 
 
-    public render(): JSX.Element {
+    public render(): React.ReactElement<any> {
         return (
             <div className="main-table table-responsive bootstrap-table">
                 <PaginatedTableHeader headerParams={ this.state.headerParams } filterChanged={ this.filterChanged.bind(this) }></PaginatedTableHeader>

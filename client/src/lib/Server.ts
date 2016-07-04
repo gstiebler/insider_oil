@@ -1,6 +1,6 @@
 import * as session from './session';
 import * as jquery from 'jquery';
-import * as remoteServer from '../../../controllers/dbServerController';
+import * as remoteServer from '../../../common/Interfaces';
 import * as Promise from 'bluebird';
 
 function ajax(url: string, data: any, type:string, onSuccess?, onError?) {

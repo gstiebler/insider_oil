@@ -128,7 +128,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactElement<any> {
         //var uploadExcel = (<upload-excel-file model-name={this.state.modelName} on-file-uploaded="onFileUploaded" ></upload-excel-file>);
         var uploadExcel = null;
         return (

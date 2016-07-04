@@ -10,7 +10,7 @@ interface IAppState {
 
 export class TopMenu extends React.Component<IAppProps, IAppState> {
 
-    public render():JSX.Element {
+    public render(): React.ReactElement<any> {
 
         var userNameMenuItem = (
             <div className="col-md-3 col-no-padding">
