@@ -94,7 +94,7 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
             return <th>{{headerItem}}</th>;
         });
 
-        var rowsHtml = this.state.records.map((record:any[]) => {
+        var rowsHtml = this.state.records.map((record:any[]) => {          
             var recordColumns = record.map((recordColumn):React.ReactElement<any> => {   
                 var recModel:React.ReactElement<any> = null;
                 if(recordColumn.model) {
@@ -102,12 +102,11 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
                     recModel = <Link to={url} >{recordColumn.value}</Link>;
                 }      
 
-                return
-                    <td>
+                return <td>
                         { recModel }
                         <div ng-else ng-className="{'text-right': record_column.rightAlign}">{recordColumn.value}</div>
                     </td>;
-            });
+           });
 
             return <tr>{recordColumns}</tr>
         });
@@ -128,8 +127,7 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
                 <div className="main-table">
                     <div className="bootstrap-table fixed-table-container"> 
                         <div className="fixed-table-body"> 
-                            { table } 
-                        </div>
+                            { table } </div>
                     </div>
                 </div>
             </div>
