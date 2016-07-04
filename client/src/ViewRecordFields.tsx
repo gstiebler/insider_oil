@@ -105,7 +105,7 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
             }
 
             return (
-                <li>
+                <li key={field.label}>
                     { label }
                     <div className="col-md-6">{ fieldHtml }</div>
                 </li>
