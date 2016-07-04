@@ -77,7 +77,7 @@ gulp.task("bundle", function() {
 //******************************************************************************
 gulp.task("bundle-release", function() {
   
-    var libraryName = "myapp";
+    var libraryName = "app";
     var mainTsFilePath = "out/app.js";
     var outputFolder   = "dist/";
     var outputFileName = libraryName + ".min.js";
