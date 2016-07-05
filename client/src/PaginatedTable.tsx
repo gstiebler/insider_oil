@@ -5,6 +5,7 @@ import * as ModelViewService from './lib/ModelViewUtils';
 import { Link, browserHistory } from 'react-router';
 import { PaginatedTableHeader, HeaderParams, FilterField } from './PaginatedTableHeader';
 import { TableQueryDataRes } from '../../common/Interfaces';
+import * as StringUtils from './lib/StringUtils'; 
 
 
 interface IAppProps {
@@ -27,6 +28,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
             dataTable: {},
             filters: []
         };
+        window['paginatedTableRef'] = this;
     }
 
     public componenteDidMount() {
@@ -87,13 +89,22 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         } );
     }
 
+    private followLink(sourceName:string, id:number) {        
+        var opts = {
+            source: sourceName,
+            id: id
+        }
+        var queryStr = "/app/view_record" + StringUtils.formatUrlParams(opts);
+        browserHistory.push(queryStr);
+    }
+
     private getFormatLinkFn(column) {
         return function(value, type, row) {
             if(!value)
-                return '';
-            var linkStr = '<a href="/app/view_record?source=' + row[column.ref.modelField];
-            linkStr += '&id=' + row[column.ref.idField];
-            linkStr += '">' + value + '</a>'; 
+                return ''
+            var paramsStr = StringUtils.format("'{0}', {1}", row[column.ref.modelField], row[column.ref.idField]);
+            var linkStr = '<a href="" onclick="window.paginatedTableRef.followLink(' + 
+                    paramsStr + '); return false;">' + value + '</a>';
             return linkStr;
         }
     }
