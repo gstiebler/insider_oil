@@ -58,11 +58,11 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
         //Flash.create('success', status.data.msg);
         browserHistory.push('/app/model_view?model=' + this.state.modelName);
     }
-
+    
     public render(): React.ReactElement<any> {
         return (
             <div className="row">   
-                <form className="form-horizontal" role="form">
+                <form className="form-horizontal" role="form" onSubmit={(e) => {e.preventDefault();}}>
                     <AdminRecordFields fields={ this.state.fields } values={ this.state.values } ></AdminRecordFields>
                     <div className="form-group" >
                         <div className="col-sm-offset-2 col-sm-10">
