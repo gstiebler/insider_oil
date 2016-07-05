@@ -27,7 +27,7 @@ export interface IField {
     comboSource?: string;
     type?: string;
     model?: string;
-    enumValues?: any;
+    enumValues?: any[];
     association?: string;
     value?: any;
     ref?: boolean;

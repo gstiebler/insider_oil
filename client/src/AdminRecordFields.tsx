@@ -106,6 +106,15 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             return <input type="checkbox" checked={ this.state.values[field.name] } >Checado</input>
         } else if(field.isMultiFieldText) {
             return <textarea type="text" className="form-control" value={this.state.values[field.name]}/>
+        } else if(field.enumValues) {
+            var options = field.enumValues.map((enumValue, index) => {
+                return <option value={enumValue} >{enumValue}</option>
+            });
+            return (
+                <select className="form-control" >
+                    {options}
+                </select>
+            );
         } else if(field.isProjectList) {
             return <ListOfProjects value={this.state.values[field.name]} onChange={(value) => {console.log(value)} }/>
         } else {
@@ -120,12 +129,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             return (
                 <many-to-many id="{{field.htmlId}}" ng-model="values[field.name]" ng-combo-source="field.comboSource" on-error="onError"></many-to-many><br>
             );
-        } else if(field.enumValues) {
-            return (
-                <select className="form-control" ng-model="values[field.name]" id="{{field.htmlId}}"  >
-                    <option ng-repeat="enumValue in field.enumValues track by $index" value="{{enumValue}}" >{{enumValue}}</option>
-                </select>
-            );*/
+       */
         
     }
     
