@@ -49,7 +49,8 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             field.isDateTime = field.type == 'DATETIME';
             field.isBool = field.type == 'TINYINT(1)';
             if( field.hasRef ) {
-                this.state.values[field.name] = props.values[field.name].toString();
+                if(props.values[field.name])
+                    this.state.values[field.name] = props.values[field.name].toString();
                 server.getComboValues( field.model, this.onComboValues.bind(this, field.name), showError.show );
             } else if(field.isDate) {
                 var dateStr = props.values[field.name];
@@ -94,7 +95,6 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         } else if (field.type == 'DATE' || field.type == 'DATETIME') {
             var format = field.isDate ? "DD/MM/YYYY" : "DD/MM/YYY HH:mm";
             var dateStr = moment(this.state.values[field.name]).format(format);
-            console.log(dateStr);
             return  <DateTimeField 
                        mode={'date'}
                        inputFormat={format}
@@ -118,7 +118,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             );
         }  else if(field.isManyToMany) {
             return (
-                <ManyToMany />
+                <ManyToMany comboSource={field.comboSource}/>
             );
         } else if(field.isProjectList) {
             return <ListOfProjects value={this.state.values[field.name]} onChange={(value) => {console.log(value)} }/>
