@@ -142,7 +142,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         for(var field of this.props.fields) {
             fieldsHTML.push(
                 <div className="form-group" >
-                    <label classNameName="control-label col-sm-2" for={field.htmlId}>{field.label}:</label>
+                    <label className="control-label col-sm-2" for={field.htmlId}>{field.label}:</label>
                     <div className="col-sm-10">
                         { this.fieldHTML(field) }
                     </div>
