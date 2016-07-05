@@ -4,6 +4,7 @@ import * as showError from './lib/ShowError';
 var DateTimeField = require('react-bootstrap-datetimepicker');
 import * as moment from 'moment';
 import { ListOfInputs } from './ListOfInputs';
+import { ListOfProjects } from './ListOfProjects';
 
 interface IAppProps {
     fields: any[];
@@ -93,30 +94,22 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         } else if(field.isList) {
             return <ListOfInputs value={this.state.values[field.name]} onChange={(value) => {console.log(value)} }/>
         } else if(field.isBool) {
-            return (
-                <input type="checkbox" checked={ this.state.values[field.name] } >Checado</input>
-            );
+            return <input type="checkbox" checked={ this.state.values[field.name] } >Checado</input>
+        } else if(field.isMultiFieldText) {
+            return <textarea type="text" className="form-control" value={this.state.values[field.name]}/>
+        } else if(field.isProjectList) {
+            return <ListOfProjects value={this.state.values[field.name]} onChange={(value) => {console.log(value)} }/>
         } else {
-            return (
-                <input type="text" className="form-control" id={field.htmlId} value={ this.state.values[field.name] }></input>
-            );
+            return <input type="text" className="form-control" id={field.htmlId} value={ this.state.values[field.name] }/>
         }
         /*} else if(field.isPhoto) {
             return (
                 <photo-bytes-array id="{{field.htmlId}}" ds-bytes-array="values[field.name]"></photo-bytes-array>
             );
         
-        } else if(field.isProjectList) {
-            return (
-                <list-of-projects id="{{field.htmlId}}" ng-model="values[field.name]"></list-of-projects><br>
-            );
-        } else if(field.isManyToMany) {
+        }  else if(field.isManyToMany) {
             return (
                 <many-to-many id="{{field.htmlId}}" ng-model="values[field.name]" ng-combo-source="field.comboSource" on-error="onError"></many-to-many><br>
-            );
-        } else if(field.isMultiFieldText) {
-            return (
-                <textarea type="text" className="form-control" id="{{field.htmlId}}" ng-model="values[field.name]"></textarea>
             );
         } else if(field.enumValues) {
             return (
