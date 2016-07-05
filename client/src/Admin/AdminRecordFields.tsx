@@ -5,6 +5,7 @@ var DateTimeField = require('react-bootstrap-datetimepicker');
 import * as moment from 'moment';
 import { ListOfInputs } from './ListOfInputs';
 import { ListOfProjects } from './ListOfProjects';
+import { ManyToMany } from './ManyToMany';
 import { IField } from '../../../common/Interfaces';
 
 interface IARField extends IField {
@@ -115,6 +116,10 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                     {options}
                 </select>
             );
+        }  else if(field.isManyToMany) {
+            return (
+                <ManyToMany />
+            );
         } else if(field.isProjectList) {
             return <ListOfProjects value={this.state.values[field.name]} onChange={(value) => {console.log(value)} }/>
         } else {
@@ -125,10 +130,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                 <photo-bytes-array id="{{field.htmlId}}" ds-bytes-array="values[field.name]"></photo-bytes-array>
             );
         
-        }  else if(field.isManyToMany) {
-            return (
-                <many-to-many id="{{field.htmlId}}" ng-model="values[field.name]" ng-combo-source="field.comboSource" on-error="onError"></many-to-many><br>
-            );
+        
        */
         
     }
