@@ -38,6 +38,11 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
         this.state.description = "";
         this.setState(this.state);
     };
+
+    private onDescriptionChanged(event) {
+        this.state.description = event.target.value;
+        this.setState(this.state);
+    }
     
     public render(): React.ReactElement<any> {
         var projects = this.state.projects.map((project, index) => {
@@ -55,21 +60,25 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
                 <tr>
                     <td width="300">
                         <table class="table table-bordered">
-                            <tr>
-                                <th>Projeto</th>
-                                <th>Descrição</th>
-                            </tr>
-                            {projects}
+                            <tbody>
+                                <tr>
+                                    <th>Projeto</th>
+                                    <th>Descrição</th>
+                                </tr>
+                                {projects}
+                            </tbody>
                         </table>
                     </td>
                     <td>
                         <table class="table table-bordered">
-                            <tr>
-                                <td><ProjectSearch onSelected={ this.onProjectSelected.bind(this) } /></td>
-                            </tr>
-                            <tr>
-                                <td>Descrição: <input type="text" value={this.state.description} onChange={ (event) => { this.state.description = event.target.value } } /></td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td><ProjectSearch onSelected={ this.onProjectSelected.bind(this) } /></td>
+                                </tr>
+                                <tr>
+                                    <td>Descrição: <input type="text" value={this.state.description} onChange={ this.onDescriptionChanged.bind(this) } /></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </td>
                 </tr>
