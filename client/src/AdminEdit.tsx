@@ -35,6 +35,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
     private valuesArrived(data) {
         this.state.values = data.values;
         this.state.fields = data.fields;
+        this.setState(this.state);
     }
     
     private saveItem() {
