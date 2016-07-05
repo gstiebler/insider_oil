@@ -1,7 +1,6 @@
-import db = require('../../db/models');
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const Bid: BaseDataSourceParams = {
+const Bid: IBaseDataSourceParams = {
     fields: {
         process_number: {
             label: "Número do processo"

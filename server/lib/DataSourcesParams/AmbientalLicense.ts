@@ -1,6 +1,6 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const AmbientalLicense: BaseDataSourceParams = {
+const AmbientalLicense: IBaseDataSourceParams = {
     fields: {
         license: {
             label: 'Nro da licença'

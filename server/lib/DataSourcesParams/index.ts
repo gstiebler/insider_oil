@@ -1,12 +1,12 @@
 import fs = require('fs');
 import path = require('path');
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 const basename = path.basename(module.filename);
 
 import AmbientalLicense = require('./AmbientalLicense');
 
 interface IParams {
-    [name: string]: BaseDataSourceParams;
+    [name: string]: IBaseDataSourceParams;
 }
 
 let params:IParams = {};

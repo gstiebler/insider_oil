@@ -1,7 +1,6 @@
-import db = require('../../db/models');
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const GasPipeline: BaseDataSourceParams = {
+const GasPipeline: IBaseDataSourceParams = {
     fields: {
         name: {
             label: "Nome"

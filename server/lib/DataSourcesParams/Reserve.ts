@@ -1,6 +1,6 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const Reserve: BaseDataSourceParams = {
+const Reserve: IBaseDataSourceParams = {
     fields: {
         state: {
             label: 'Estado'

@@ -1,8 +1,8 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
 // Basin is usually redundant with Block. But it's importante because some
 // Oil Fields doesn't have the reference to a Block
-const OilField: BaseDataSourceParams = {
+const OilField: IBaseDataSourceParams = {
     fields: {
         name: {
             label: "Nome"

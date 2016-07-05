@@ -1,6 +1,6 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const Terminal: BaseDataSourceParams = {
+const Terminal:IBaseDataSourceParams = {
     fields: {
         name: {
             label: 'Nome'

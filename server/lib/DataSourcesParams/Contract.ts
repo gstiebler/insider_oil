@@ -1,7 +1,6 @@
-import db = require('../../db/models');
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const Contract: BaseDataSourceParams = {
+const Contract: IBaseDataSourceParams = {
     fields: {
         user_uid: {
             label: 'Id interno (admin)'

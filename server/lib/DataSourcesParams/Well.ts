@@ -1,6 +1,6 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const Well: BaseDataSourceParams = {
+const Well: IBaseDataSourceParams = {
     fields: {
         name: {
             label: "Poço"

@@ -1,6 +1,6 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const Company: BaseDataSourceParams = {
+const Company: IBaseDataSourceParams = {
     fields: {
         name: {
             label: "Empresa"

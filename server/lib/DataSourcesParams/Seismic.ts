@@ -1,6 +1,6 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const Seismic: BaseDataSourceParams = {
+const Seismic: IBaseDataSourceParams = {
     fields: {
         process: {
             label: "Processo"

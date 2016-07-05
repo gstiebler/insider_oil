@@ -1,6 +1,6 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const Fleet: BaseDataSourceParams = {
+const Fleet: IBaseDataSourceParams = {
     fields: {
         name: {
             label: 'Nome'

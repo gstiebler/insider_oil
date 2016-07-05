@@ -1,6 +1,6 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const Refinery: BaseDataSourceParams = {
+const Refinery: IBaseDataSourceParams = {
     fields: {
         name: {
             label: 'Nome'

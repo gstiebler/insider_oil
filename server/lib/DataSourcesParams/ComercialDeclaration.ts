@@ -1,6 +1,6 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const ComercialDeclaration: BaseDataSourceParams = {
+const ComercialDeclaration: IBaseDataSourceParams = {
     fields: {
         block_id: {
             label: 'Bloco'

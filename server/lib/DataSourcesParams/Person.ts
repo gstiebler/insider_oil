@@ -1,8 +1,6 @@
-import db = require('../../db/models');
-var await = require('../../lib/await');
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const Person: BaseDataSourceParams = {
+const Person: IBaseDataSourceParams = {
     fields: {
         name: {
             label: "Nome"

@@ -1,6 +1,6 @@
-import BaseDataSourceParams = require('./BaseDataSourceParams');
+import { IBaseDataSourceParams } from '../../../common/Interfaces';
 
-const DrillingRigOffshore: BaseDataSourceParams = {
+const DrillingRigOffshore: IBaseDataSourceParams = {
     fields: {
         name: {
             label: "Sonda Offshore"
