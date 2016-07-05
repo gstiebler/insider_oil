@@ -31,10 +31,6 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         window['paginatedTableRef'] = this;
     }
 
-    public componenteDidMount() {
-        this.initTable();
-    }
-
     private componentWillReceiveProps(nextProps) {
         this.initTable();
     }
