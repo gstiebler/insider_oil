@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
+var DateTimeField = require('react-bootstrap-datetimepicker');
+import * as moment from 'moment';
 
 var dateFormat = 'dd/MM/yyyy';
 var dateTimeFormat = 'dd/MM/yyyy HH:mm';
@@ -74,8 +76,8 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         function optionsInCombo(values: any[]): React.ReactElement<any>[] {
             if(!values)
                 return [];
-            return values.map((value) => {
-                return <option value={value.id} >{value.label}</option>;
+            return values.map((value, index) => {
+                return <option value={value.id} key={'c' + index}>{value.label}</option>;
             });
         }
 
@@ -85,24 +87,17 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                     { optionsInCombo(this.state.comboValues[field.name]) }
                 </select>
             ); 
-        } else if (field.isDate) {
-            return (
-                <p className="input-group" >
-                    <input type="text" className="form-control" uib-datepicker-popup={dateFormat} id={field.htmlId} ng-model="values[field.name]" is-open="id_opened" />
-                    <span className="input-group-btn">
-                        <button type="button" className="btn btn-default" ng-click="id_opened=true"><i className="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </p>   
-            );
-        } else if(field.isDateTime) {
-            return (
-                <p className="input-group" >
-                    <input type="text" className="form-control" uib-datepicker-popup={dateTimeFormat} id={field.htmlId} value={this.state.values[field.name]} is-open="id_opened" />
-                    <span className="input-group-btn">
-                        <button type="button" className="btn btn-default" ng-click="id_opened=true"><i className="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </p>   
-            );
+        } else if (field.isDate || field.isDateTime) {
+            var format = field.isDate ? "DD/MM/YYYY" : "DD/MM/YYY HH:mm";
+            var dateStr = moment(this.state.values[field.name]).format(format);
+            console.log(dateStr);
+            return  <DateTimeField 
+                       mode={'date'}
+                       inputFormat={format}
+                       dateTime={dateStr}
+                       format={format}
+                       className="form-control input-group"/>;
+        
         /*} else if(field.isPhoto) {
             return (
                 <photo-bytes-array id="{{field.htmlId}}" ds-bytes-array="values[field.name]"></photo-bytes-array>
