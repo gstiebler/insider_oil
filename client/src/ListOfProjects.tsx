@@ -36,6 +36,7 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
         selectedItem.description = this.state.description;
         this.state.projects.push(selectedItem);
         this.state.description = "";
+        this.props.onChange(this.state.projects);
         this.setState(this.state);
     };
 
