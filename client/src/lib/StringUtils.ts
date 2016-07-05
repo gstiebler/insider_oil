@@ -12,3 +12,12 @@ export function format(...args: any[]):string {
 export function strContains(input, substr) {
     return input.indexOf(substr) > -1;
 }
+
+export function formatUrlParams(params) {
+    var result = '?';
+    for(var key in params) {
+        result += key + '=' + params[key] + '&';
+    }
+    result = result.substr(0, result.length - 1);
+    return result;
+}
