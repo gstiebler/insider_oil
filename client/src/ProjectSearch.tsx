@@ -38,6 +38,8 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
 
     private onSuggestionSelected(event, { suggestion, suggestionValue, sectionIndex, method }) {
         this.props.onItemSelected(suggestion);
+        this.state.value = '';
+        this.setState(this.state);
     }
 
     /**
