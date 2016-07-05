@@ -8,6 +8,7 @@
   "globalDependencies": {
     "jquery": "registry:dt/jquery#1.10.0+20160701124751",
     "js-cookie": "registry:dt/js-cookie#2.0.0+20160317120654",
+    "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20160627163812",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
   }
 }

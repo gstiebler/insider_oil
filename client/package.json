@@ -30,6 +30,7 @@
     "js-cookie": "^2.1.2",
     "moment": "^2.13.0",
     "react": "^15.1.0",
+    "react-bootstrap": "^0.29.5",
     "react-bootstrap-datetimepicker": "0.0.22",
     "react-dom": "^15.1.0",
     "react-router": "^2.5.2",

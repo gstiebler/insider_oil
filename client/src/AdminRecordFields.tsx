@@ -3,9 +3,7 @@ import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 var DateTimeField = require('react-bootstrap-datetimepicker');
 import * as moment from 'moment';
-
-var dateFormat = 'dd/MM/yyyy';
-var dateTimeFormat = 'dd/MM/yyyy HH:mm';
+import { ListOfInputs } from './ListOfInputs';
 
 interface IAppProps {
     fields: any[];
@@ -35,7 +33,6 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
     private buildValues(props) {
         for( var i = 0; i < props.fields.length; i++ ) {
             var field = props.fields[i];
-            field.htmlId = this.getHtmlId(field);
             field.hasRef = field.type == 'ref';
             field.isDate = field.type == 'DATE';
             field.isDateTime = field.type == 'DATETIME';
@@ -67,10 +64,6 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
-    private getHtmlId(field) {
-        return "html_id_" + field.name;
-    }
-
     private fieldHTML(field): React.ReactElement<any> {
 
         function optionsInCombo(values: any[]): React.ReactElement<any>[] {
@@ -83,7 +76,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
 
         if(field.hasRef) {
             return (
-                <select className="form-control" value={ this.state.values[field.name] } id={field.htmlId} >
+                <select className="form-control" value={ this.state.values[field.name] } >
                     { optionsInCombo(this.state.comboValues[field.name]) }
                 </select>
             ); 
@@ -97,15 +90,22 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                        dateTime={dateStr}
                        format={format}
                        className="form-control input-group"/>;
-        
+        } else if(field.isList) {
+            return <ListOfInputs value={this.state.values[field.name]} onChange={(value) => {console.log(value)} }/>
+        } else if(field.isBool) {
+            return (
+                <input type="checkbox" checked={ this.state.values[field.name] } >Checado</input>
+            );
+        } else {
+            return (
+                <input type="text" className="form-control" id={field.htmlId} value={ this.state.values[field.name] }></input>
+            );
+        }
         /*} else if(field.isPhoto) {
             return (
                 <photo-bytes-array id="{{field.htmlId}}" ds-bytes-array="values[field.name]"></photo-bytes-array>
             );
-        } else if(field.isList) {
-            return (
-                <list-of-inputs id="{{field.htmlId}}" ng-model="values[field.name]"></list-of-inputs><br>
-            );
+        
         } else if(field.isProjectList) {
             return (
                 <list-of-projects id="{{field.htmlId}}" ng-model="values[field.name]"></list-of-projects><br>
@@ -124,15 +124,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                     <option ng-repeat="enumValue in field.enumValues track by $index" value="{{enumValue}}" >{{enumValue}}</option>
                 </select>
             );*/
-        } else if(field.isBool) {
-            return (
-                <input type="checkbox"  checked={ this.state.values[field.name] } id="{{field.htmlId}}" >Checado</input>
-            );
-        } else {
-            return (
-                <input type="text" className="form-control" id={field.htmlId} value={ this.state.values[field.name] }></input>
-            );
-        }
+        
     }
     
     public render(): React.ReactElement<any> {
