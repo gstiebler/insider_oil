@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as server from './lib/Server';
+import * as showError from './lib/ShowError';
 
 var dateFormat = 'dd/MM/yyyy';
 var dateTimeFormat = 'dd/MM/yyyy HH:mm';
@@ -7,7 +8,6 @@ var dateTimeFormat = 'dd/MM/yyyy HH:mm';
 interface IAppProps {
     fields: any[];
     values: any;
-    onError: any;
 }
 
 interface IAppState {
@@ -22,43 +22,44 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         this.state = {
             values: {}
         };
+    }
 
-        for( var i = 0; i < this.props.fields.length; i++ ) {
-            var field = this.props.fields[i];
+    private componentWillReceiveProps(nextProps) {
+        this.buildValues(nextProps);
+    }
+
+    private buildValues(props) {
+        for( var i = 0; i < props.fields.length; i++ ) {
+            var field = props.fields[i];
             field.htmlId = this.getHtmlId(field);
             field.hasRef = field.type == 'ref';
             field.isDate = field.type == 'DATE';
             field.isDateTime = field.type == 'DATETIME';
             field.isBool = field.type == 'TINYINT(1)';
             if( field.hasRef ) {
-                this.state.values[field.name] = this.props.values[field.name].toString();
-                server.getComboValues( field.model, this.getOnComboValuesFn(field), this.props.onError );
-            }
-            if(field.isDate) {
-                var dateStr = this.props.values[field.name];
+                this.state.values[field.name] = props.values[field.name].toString();
+                server.getComboValues( field.model, this.onComboValues.bind(this, field), showError.show );
+            } else if(field.isDate) {
+                var dateStr = props.values[field.name];
                 if(dateStr) {
                     var date = new Date(dateStr);
                     // TODO use moment.js
                     date.setTime( date.getTime() + date.getTimezoneOffset()*60*1000 ); // correction for timezone
                     this.state.values[field.name] = date;
                 }
-            }
-            if(field.isPhoto) {
-                var fieldValues = this.props.values[field.name];
+            } else if(field.isPhoto) {
+                var fieldValues = props.values[field.name];
                 if(fieldValues && fieldValues.data) {
                     this.state.values[field.name] = fieldValues.data;
                 }
+            } else {
+                this.state.values[field.name] = props.values[field.name];
             }
         }
     }
 
-    private getOnComboValuesFn(field) {
-    
-        function onComboValues(values) {
-            field.values = values;
-        }
-        
-        return onComboValues;
+    private onComboValues(field, values) {
+        field.values = values;
     }
 
     private getHtmlId(field) {
@@ -78,7 +79,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
 
         if(field.hasRef) {
             return (
-                <select className="form-control" ng-model={ this.state.values[field.name] } id={field.htmlId} >
+                <select className="form-control" value={ this.state.values[field.name] } id={field.htmlId} >
                     { optionsInCombo(this.state.values) }
                 </select>
             ); 
@@ -128,27 +129,24 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             );*/
         } else if(field.isBool) {
             return (
-                <input type="checkbox"  ng-model="values[field.name]" id="{{field.htmlId}}" >Checado</input>
+                <input type="checkbox"  checked={ this.state.values[field.name] } id="{{field.htmlId}}" >Checado</input>
             );
         } else {
             return (
-                <input type="text" className="form-control" id={field.htmlId} ng-model="values[field.name]"></input>
+                <input type="text" className="form-control" id={field.htmlId} value={ this.state.values[field.name] }></input>
             );
         }
     }
     
     public render(): React.ReactElement<any> {
-        var fieldsHTML = [];
-        for(var field of this.props.fields) {
-            fieldsHTML.push(
-                <div className="form-group" >
+        var fieldsHTML = this.props.fields.map((field, index) => {
+            return <div className="form-group" key={ 'fh' + index }>
                     <label className="control-label col-sm-2" for={field.htmlId}>{field.label}:</label>
                     <div className="col-sm-10">
                         { this.fieldHTML(field) }
                     </div>
                 </div>
-            );
-        }
+        });
 
         return (
             <div>

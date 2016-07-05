@@ -28,8 +28,12 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
             values: [],
             fields: []
         };
-        server.getModelFieldsAndValues(this.state.modelName, this.state.id, 
-                this.valuesArrived.bind(this), showError.show);
+    }
+
+    public componentDidMount() {
+        server.getModelFieldsAndValues(this.state.modelName, this.state.id)
+                .then(this.valuesArrived.bind(this))
+                .catch(showError.show);
     }
 
     private valuesArrived(data) {
@@ -59,7 +63,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
         return (
             <div className="row">   
                 <form className="form-horizontal" role="form">
-                    <AdminRecordFields fields={ this.state.fields } values="values" onError={ showError.show }></AdminRecordFields>
+                    <AdminRecordFields fields={ this.state.fields } values={ this.state.values } ></AdminRecordFields>
                     <div className="form-group" >
                         <div className="col-sm-offset-2 col-sm-10">
                             <button className="btn btn-default" onClick={ this.saveItem.bind(this) } >Salvar</button>
