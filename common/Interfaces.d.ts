@@ -25,6 +25,13 @@ export interface IField {
     isCurrency?: boolean;
     isConcessionaries?: boolean;
     comboSource?: string;
+    type?: string;
+    model?: string;
+    enumValues?: any;
+    association?: string;
+    value?: any;
+    ref?: boolean;
+    name?: string;
 }
 
 interface IExcelFieldMap {
@@ -36,7 +43,7 @@ interface IExcelParams {
     fields: IExcelFieldMap;
 }
 
-interface IFieldMap {
+export interface IFieldMap {
     [name: string]: IField;
 }
 

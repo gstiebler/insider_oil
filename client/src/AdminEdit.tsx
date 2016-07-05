@@ -5,6 +5,7 @@ import * as ModelOperations from './lib/ModelOperations';
 import * as ModelViewService from './lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
 import { AdminRecordFields } from './AdminRecordFields';
+import { IField } from '../../common/Interfaces';
 
 interface IAppProps {
     location: any;
@@ -14,7 +15,7 @@ interface IAppState {
     id: number;
     modelName: string;
     values: any[];
-    fields: any[];
+    fields: IField[];
 }
 
 export class AdminEdit extends React.Component<IAppProps, IAppState> {
@@ -58,7 +59,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
         //Flash.create('success', status.data.msg);
         browserHistory.push('/app/model_view?model=' + this.state.modelName);
     }
-    
+
     public render(): React.ReactElement<any> {
         return (
             <div className="row">   

@@ -5,9 +5,18 @@ var DateTimeField = require('react-bootstrap-datetimepicker');
 import * as moment from 'moment';
 import { ListOfInputs } from './ListOfInputs';
 import { ListOfProjects } from './ListOfProjects';
+import { IField } from '../../common/Interfaces';
+
+interface IARField extends IField {
+    hasRef?: boolean;
+    isDate?: boolean;
+    isDateTime?: boolean;
+    isBool?: boolean;
+    htmlId?: string;
+}
 
 interface IAppProps {
-    fields: any[];
+    fields: IARField[];
     values: any;
 }
 
@@ -27,11 +36,11 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         };
     }
 
-    private componentWillReceiveProps(nextProps) {
+    private componentWillReceiveProps(nextProps:IAppProps) {
         this.buildValues(nextProps);
     }
 
-    private buildValues(props) {
+    private buildValues(props:IAppProps) {
         for( var i = 0; i < props.fields.length; i++ ) {
             var field = props.fields[i];
             field.hasRef = field.type == 'ref';
@@ -65,7 +74,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
-    private fieldHTML(field): React.ReactElement<any> {
+    private fieldHTML(field:IARField): React.ReactElement<any> {
 
         function optionsInCombo(values: any[]): React.ReactElement<any>[] {
             if(!values)
@@ -75,13 +84,13 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             });
         }
 
-        if(field.hasRef) {
+        if(field.type == 'ref') {
             return (
                 <select className="form-control" value={ this.state.values[field.name] } >
                     { optionsInCombo(this.state.comboValues[field.name]) }
                 </select>
             ); 
-        } else if (field.isDate || field.isDateTime) {
+        } else if (field.type == 'DATE' || field.type == 'DATETIME') {
             var format = field.isDate ? "DD/MM/YYYY" : "DD/MM/YYY HH:mm";
             var dateStr = moment(this.state.values[field.name]).format(format);
             console.log(dateStr);
