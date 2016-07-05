@@ -31,6 +31,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         };
         this.state.modelName = props.location.query.model;
         this.state.datatableInitialized = false;
+        window['adminGridRef'] = this;
     }
 
     public componentDidMount() {
@@ -57,11 +58,8 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         var dataSet = [];
         for( var i = 0; i < modelData.records.length; i++) {
             var record = modelData.records[i];
-            var prelude = "angular.element(document.getElementById('angularContainer')).scope().";
-            var editFuncStr = prelude + "editRecord(" + record.id + ")";
-            var deleteFuncStr = prelude + "deleteRecord(" + record.id + ")";
-            record.edit = '<a class="btn btn-large btn-primary" onclick="' + editFuncStr + '")">Editar</a>';
-            record.delete = '<button class="btn btn-large btn-danger" onclick="' + deleteFuncStr + '">Apagar</button>';
+            record.edit = '<a class="btn btn-large btn-primary" onclick="window.adminGridRef.editRecord(' + record.id + ')">Editar</a>';
+            record.delete = '<button class="btn btn-large btn-danger" onclick="window.adminGridRef.deleteRecord(' + record.id + ')">Apagar</button>';
             dataSet.push(record);
         }
         
@@ -74,14 +72,12 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
     }
 
     private editRecord(id) {
-    	this.state.modelOperations.editRecord(id);
-        // I don't know why the line below should be here for the redirect to work
-        server.getTable(this.state.modelName, {}, this.showModel.bind(this), showError.show ); 
+    	this.state.modelOperations.editRecord(id); 
     }
     
     private deleteRecord(id) {
         if(confirm("Deseja realmente apagar o registro?")){
-        	this.state.modelOperations.deleteItem(id, this.onDelete, showError.show);
+        	this.state.modelOperations.deleteItem(id, this.onDelete.bind(this), showError.show);
         }
     }
     
@@ -110,7 +106,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
     }
     
     private getExcelFile() {
-    	server.downloadExcelFile(this.state.modelName, onExcelFile, showError.show);
+    	server.downloadExcelFile(this.state.modelName, onExcelFile.bind(this), showError.show);
     	
     	function onExcelFile(xlsxBinary) {
     		// var ba = str2ab(xlsxBinary);
@@ -120,7 +116,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
     }
     
     private importFromURL() {
-        server.importFromURL(this.state.modelName, onImportFromURL, showError.show);
+        server.importFromURL(this.state.modelName, onImportFromURL.bind(this), showError.show);
         
         function onImportFromURL(response) {
             // var statusStr = ModelViewService.formatExcelUploadResult(response);
