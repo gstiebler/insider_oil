@@ -57,7 +57,11 @@ const OilField: BaseDataSourceParams = {
         {
             queryName: 'hydrocarbonEvidencesByOilField',
             title: 'Indícios de hidrocarbonetos'
-        }
+        },
+        {
+            queryName: 'productionUnitByOilField',
+            title: 'Unidades de produção'
+        },
     ],
     excelParams: {
         keyField: "nome",

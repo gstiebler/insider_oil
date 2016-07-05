@@ -341,6 +341,25 @@ maintenanceDatesByProductionUnit: (test: nodeunit.Test) => {
     test.done();
 },
 
+productionUnitByOilField: (test: nodeunit.Test) => {
+    const jiritubaId = utils.idByName('OilField', 'Jiribatuba2') ;
+    const filters = {
+        id: jiritubaId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'productionUnitByOilField',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(5, resQueryValues.records.length);
+    test.equal('Capixaba', resQueryValues.records[0].pu_name);
+    test.equal('Cidade de Magaratiba', resQueryValues.records[1].pu_name);
+
+    test.done();
+},
+
 }
 
 exports.group = fiberTests.convertTests( group, true );
