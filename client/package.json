@@ -20,7 +20,6 @@
   "dependencies": {
     "bluebird": "^3.4.1",
     "bootstrap": "^3.3.6",
-    "bootstrap-table": "^1.10.1",
     "browserify": "^13.0.1",
     "classnames": "^2.1.5",
     "d3": "^3.5.17",
@@ -32,7 +31,7 @@
     "moment": "^2.13.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
-    "react-router": "^2.5.1",
+    "react-router": "^2.5.2",
     "run-sequence": "^1.1.5",
     "typescript": "^1.8.10",
     "underscore": "^1.8.3"
