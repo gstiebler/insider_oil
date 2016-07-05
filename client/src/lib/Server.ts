@@ -150,13 +150,13 @@ export function deleteItem( modelName, id, onDelete, onError ) {
 }
 
 
-export function getModelFieldsAndValues( modelName, id, okCallback, errorCallback ) {
+export function getModelFieldsAndValues( modelName, id ):Promise<any> {
     var params = { 
         model: modelName,
         id: id,
         token: session.getToken()
     };
-    get('/record_values/', params, okCallback, errorCallback);
+    return getP('/record_values/', params );
 }
 
 
