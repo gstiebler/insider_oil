@@ -4,3 +4,11 @@ export interface TableQueryDataRes {
     records: any[];
     count: number;
 }
+
+export interface SearchResults {
+    model: string;
+    modelLabel: string;
+    name: string;
+    id: number;
+    model_id: number;
+}

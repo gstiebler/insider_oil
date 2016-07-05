@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as showError from './lib/ShowError';
 import * as server from './lib/Server';
-//import Autosuggest from 'react-autosuggest';
+import { SearchResults } from '../../common/Interfaces'
+import * as Autosuggest from 'react-autosuggest';
 
 interface IAppProps {
     value: any[];
@@ -9,43 +10,63 @@ interface IAppProps {
 }
 
 interface IAppState {
-    searchOptions: any[];
+    value: '';
+    suggestions: SearchResults[];
 }
 
 export class ProjectSearch extends React.Component<IAppProps, IAppState> {
-
-    private searchResult: any;
 
     constructor(props: IAppProps) {
         super(props);
 
         this.state = {
-            searchOptions: []
+            value: '',
+            suggestions: []
         };
     }
-
-    private onSearchType(value) {
-        server.getSearchResult(value, this.onSearchResult.bind(this), showError.show);
-    }
     
-    private onSearchResult(results) {
-        this.state.searchOptions = [];
-        this.searchResult = {};
-        for(var i = 0; i < results.length; i++) {
-            var completeSearchKey = results[i].modelLabel + ': ' +results[i].name;
-            this.state.searchOptions.push(completeSearchKey);
-            this.searchResult[completeSearchKey] = results[i];
-        }
+    private onServerSearchResult(results:SearchResults[]) {
+        this.state.suggestions = results;
         this.setState(this.state);
     }
 
-    private onSelectItemOnSearchBox(value) {
-        this.props.onItemSelected(this.searchResult[value]);
+    private onUserTypeChar(event, { newValue }) {
+        server.getSearchResult(newValue, this.onServerSearchResult.bind(this), showError.show);
+        this.state.value = newValue;
+        this.setState(this.state);
+    }
+
+    private onSuggestionSelected(event, { suggestion, suggestionValue, sectionIndex, method }) {
+        this.props.onItemSelected(suggestion);
+    }
+
+    /**
+     * when suggestion selected, this function tells what should be the value of the input
+     */
+    private getSuggestionValue(suggestion) {
+        return suggestion.name;
+    } 
+
+    /**
+     * Renders an item in the list of suggestions
+     */
+    private renderSuggestion(suggestion:SearchResults) {
+        return <span>{suggestion.modelLabel + ': ' + suggestion.name}</span>
     }
     
     public render(): React.ReactElement<any> {
-        return (
-            <button />
+        const inputProps = {
+            placeholder: 'Digite o nome do projeto',
+            value: this.state.value,
+            onChange: this.onUserTypeChar.bind(this)
+        };
+
+        return (      
+            <Autosuggest suggestions={this.state.suggestions}
+                   getSuggestionValue={this.getSuggestionValue}
+                   renderSuggestion={this.renderSuggestion}
+                   onSuggestionSelected={this.onSuggestionSelected.bind(this)}
+                   inputProps={inputProps} />
         );
     }
 }

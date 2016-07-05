@@ -3,6 +3,7 @@
 import winston = require('winston');
 import search = require('../lib/search');
 import dsParams = require('../lib/DataSourcesParams');
+import { SearchResults } from '../../common/Interfaces'
 
 exports.main = function(req, res) {
 	const MAX_NUM_RESULTS = 5;
@@ -12,7 +13,7 @@ exports.main = function(req, res) {
         winston.error(error.stack);
     });
     function onResults(queryResults) {
-    	var results = [];
+    	var results:SearchResults[] = [];
 		for( var n = 0; n < queryResults.length; n++ ) {
 			const result = queryResults[n];
 			const modelParams = dsParams[result.model];
