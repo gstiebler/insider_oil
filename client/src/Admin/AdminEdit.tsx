@@ -1,11 +1,11 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
-import * as ModelOperations from './lib/ModelOperations';
-import * as ModelViewService from './lib/ModelViewUtils';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import * as ModelOperations from '../lib/ModelOperations';
+import * as ModelViewService from '../lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
 import { AdminRecordFields } from './AdminRecordFields';
-import { IField } from '../../common/Interfaces';
+import { IField } from '../../../common/Interfaces';
 
 interface IAppProps {
     location: any;

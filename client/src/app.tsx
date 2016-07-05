@@ -4,9 +4,9 @@ import { Router, Route, Link, browserHistory } from 'react-router';
 import * as server from './lib/Server';
 import * as session from './lib/session';
 import { TopMenu } from './TopMenu'
-import { AdminList } from './AdminList';
-import { AdminGrid } from './AdminGrid'
-import { AdminEdit } from './AdminEdit'
+import { AdminList } from './Admin/AdminList';
+import { AdminGrid } from './Admin/AdminGrid'
+import { AdminEdit } from './Admin/AdminEdit'
 import { Tree } from './Tree'
 import { ViewRecord } from './ViewRecord'
 

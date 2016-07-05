@@ -1,7 +1,7 @@
 import * as React from 'react';
-import * as showError from './lib/ShowError';
+import * as showError from '../lib/ShowError';
 import { Button } from 'react-bootstrap';
-import { ProjectSearch } from './ProjectSearch'
+import { ProjectSearch } from '../ProjectSearch'
 
 interface IAppProps {
     value: any[];

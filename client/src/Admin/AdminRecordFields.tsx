@@ -1,11 +1,11 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
 var DateTimeField = require('react-bootstrap-datetimepicker');
 import * as moment from 'moment';
 import { ListOfInputs } from './ListOfInputs';
 import { ListOfProjects } from './ListOfProjects';
-import { IField } from '../../common/Interfaces';
+import { IField } from '../../../common/Interfaces';
 
 interface IARField extends IField {
     hasRef?: boolean;

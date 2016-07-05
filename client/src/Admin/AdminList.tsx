@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
 import { Link } from 'react-router';
 
 interface IAppProps {
