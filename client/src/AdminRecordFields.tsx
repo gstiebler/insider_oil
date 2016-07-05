@@ -12,6 +12,7 @@ interface IAppProps {
 
 interface IAppState {
     values: any;
+    comboValues: any;
 }
 
 export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
@@ -20,7 +21,8 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = {
-            values: {}
+            values: {},
+            comboValues: {}
         };
     }
 
@@ -38,7 +40,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             field.isBool = field.type == 'TINYINT(1)';
             if( field.hasRef ) {
                 this.state.values[field.name] = props.values[field.name].toString();
-                server.getComboValues( field.model, this.onComboValues.bind(this, field), showError.show );
+                server.getComboValues( field.model, this.onComboValues.bind(this, field.name), showError.show );
             } else if(field.isDate) {
                 var dateStr = props.values[field.name];
                 if(dateStr) {
@@ -58,8 +60,9 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    private onComboValues(field, values) {
-        field.values = values;
+    private onComboValues(fieldName, values) {
+        this.state.comboValues[fieldName] = values;
+        this.setState(this.state);
     }
 
     private getHtmlId(field) {
@@ -68,19 +71,18 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
 
     private fieldHTML(field): React.ReactElement<any> {
 
-        function optionsInCombo(values: any[]) {
-            var options = [];
-            for(var value of values) {
-                options.push(
-                    <option value={value.id} >{value.label}</option>
-                );
-            }
+        function optionsInCombo(values: any[]): React.ReactElement<any>[] {
+            if(!values)
+                return [];
+            return values.map((value) => {
+                return <option value={value.id} >{value.label}</option>;
+            });
         }
 
         if(field.hasRef) {
             return (
                 <select className="form-control" value={ this.state.values[field.name] } id={field.htmlId} >
-                    { optionsInCombo(this.state.values) }
+                    { optionsInCombo(this.state.comboValues[field.name]) }
                 </select>
             ); 
         } else if (field.isDate) {

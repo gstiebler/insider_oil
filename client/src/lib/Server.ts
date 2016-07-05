@@ -172,7 +172,10 @@ export function saveItem( modelName, record, onSave, onError ) {
 
 
 export function getComboValues(modelName, okCallback, onError) {
-    var params = { model: modelName };
+    var params = { 
+        model: modelName,
+        token: session.getToken()
+    };
     get('/combo_values/', params, okCallback, onError);
 }
 
