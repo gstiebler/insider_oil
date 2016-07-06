@@ -76,9 +76,7 @@ export class ImageUpload extends React.Component<IAppProps, IAppState> {
 
         return (
             <div>
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <input type="file" onChange={this.handleImageChange.bind(this)} />
-                </form>
+                <input type="file" onChange={this.handleImageChange.bind(this)} />
                 {imagePreview}
             </div>
         )

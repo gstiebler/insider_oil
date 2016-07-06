@@ -47,7 +47,7 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
         for( var key in this.state.sourcesList ) {
             var link = "/app/model_view?model=" + key;
             var source = this.state.sourcesList[key];
-            sourcesLinks.push(<p><Link to={link} key={key}>{source}</Link></p>);
+            sourcesLinks.push(<p key={key}><Link to={link} >{source}</Link></p>);
         }
 
         return (
