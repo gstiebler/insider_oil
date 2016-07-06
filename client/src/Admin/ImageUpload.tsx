@@ -10,6 +10,15 @@ function arrayBufferToBase64( buffer ) {
     return window.btoa( binary );
 }
 
+function base64ToArray( base64 ) {
+    var base64str = atob(base64);
+    var bytes = new Array( base64str.length );
+    for(var i = 0; i < base64str.length; i++) {
+        bytes[i] = base64str.charCodeAt(i);
+    }
+    return bytes;
+}
+
 interface IAppProps {
     value: any;
     onChange: any;
@@ -52,7 +61,10 @@ export class ImageUpload extends React.Component<IAppProps, IAppState> {
             file: file,
             imageBase64: reader.result
         });
-        this.props.onChange(reader.result);
+
+        var dsBase64 = reader.result;
+        var trimmedBase64 = dsBase64.substring(dsBase64.search(';base64,') + 8, dsBase64.length);
+        this.props.onChange(base64ToArray(trimmedBase64));
     }
 
     public render() {
