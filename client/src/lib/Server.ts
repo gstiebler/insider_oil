@@ -116,22 +116,20 @@ export function getTimeSeries( options, okCallback, errorCallback ) {
 }
 
 
-export function getModelFields( model, okCallback, errorCallback ) {
+export function getModelFields(model):Promise<any> {
     var params = { 
         model: model,
         token: session.getToken()
     };
     
-    get('/model_fields/', { params: params }, function(response) {
-        okCallback(response.data.fields);
-    }, errorCallback);
+    return getP('/model_fields/', params );
 }
 
 
 export function createNewItem( modelName, newItemData, onSave, onError ) {
     var params = {
         model: modelName,
-        newItemData: newItemData,
+        newItemData: JSON.stringify(newItemData),
         token: session.getToken()
     };
     

@@ -123,7 +123,7 @@ export function recordValues(req: express.Request, res: express.Response, next) 
 
 
 export function createItem(req: express.Request, res: express.Response, next) { Sync(function() {
-    var newItemData = req.body.newItemData;
+    var newItemData = JSON.parse(req.body.newItemData);
     var modelName = req.body.model;
     var model = dbUtils.getDataSource(modelName);
 

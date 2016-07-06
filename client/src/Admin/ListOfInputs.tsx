@@ -17,7 +17,7 @@ export class ListOfInputs extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = {
-            items: props.value
+            items: props.value ? props.value : []
         };
     }
 
