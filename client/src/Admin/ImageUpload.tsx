@@ -47,8 +47,6 @@ export class ImageUpload extends React.Component<IAppProps, IAppState> {
     }
 
     private handleImageChange(e) {
-        e.preventDefault();
-
         let reader = new FileReader();
         let file = e.target.files[0];
 
