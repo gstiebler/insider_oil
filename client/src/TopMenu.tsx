@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as session from './lib/session';
+import { Link } from 'react-router';
 
 interface IAppProps {
     username: string;
@@ -35,7 +36,7 @@ export class TopMenu extends React.Component<IAppProps, IAppState> {
         <div className="col-md-3 col-no-padding">
             <div className="top-menu-item">
             <div className="top-menu-icon user"></div>
-            <a href="/app/change_password">Minha Conta</a>
+            <Link to={"/app/change_password"}>Minha Conta</Link>
             </div>
         </div>
         );

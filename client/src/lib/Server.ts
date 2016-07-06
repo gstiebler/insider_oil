@@ -31,6 +31,13 @@ function getP(url: string, data: any):Promise<any> {
     });
 }
 
+function putP(url: string, data: any):Promise<any> {
+    return new Promise<any>( function(resolve, reject) {
+        ajax(url, data, 'PUT', (result) => { resolve(result) }, 
+                (error) => { reject(error) });
+    });
+}
+
 function put(url: string, data: any, onSuccess?, onError?) {
     ajax(url, data, 'PUT', onSuccess, onError);
 }
@@ -203,12 +210,12 @@ export function sourceList(onData, onError) {
 }
 
 
-export function changePassword(onData, onError, oldPassword, newPassword) {
+export function changePassword(oldPassword, newPassword):Promise<any> {
     var params = {
         oldPassword: oldPassword,
         newPassword: newPassword	
     };
-    put('/user/change_password', params, onData, onError);
+    return putP('/user/change_password', params);
 }
 
 
