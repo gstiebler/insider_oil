@@ -37,6 +37,7 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
         for(var i = 0; i < values.length; i++) {
             this.comboValuesMap[values[i].id] = values[i].label;
         }
+        this.selectedId = values[0].id;
     }
 
     private remove(index) {
@@ -81,7 +82,7 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
                         </td>
                         <td>
                             <button className="btn btn-default" onClick={this.add.bind(this)}>Adicionar</button><br/>
-                            <select onClick={(e, value) => {this.selectedId = value}}>
+                            <select onChange={(e) => {this.selectedId = e.target.value}}>
                                 {comboItems}
                             </select>  
                         </td>
