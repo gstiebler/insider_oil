@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { ListOfInputs } from './ListOfInputs';
 import { ListOfProjects } from './ListOfProjects';
 import { ManyToMany } from './ManyToMany';
+import { ImageUpload } from './ImageUpload';
 import { IField } from '../../../common/Interfaces';
 
 interface IARField extends IField {
@@ -117,22 +118,14 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                 </select>
             );
         }  else if(field.isManyToMany) {
-            return (
-                <ManyToMany comboSource={field.comboSource}/>
-            );
+            return <ManyToMany comboSource={field.comboSource}/>
+        } else if(field.isPhoto) {
+            return <ImageUpload value={ this.state.values[field.name]} onChange={(v) => {console.log(v.length)}}/>
         } else if(field.isProjectList) {
             return <ListOfProjects value={this.state.values[field.name]} onChange={(value) => {console.log(value)} }/>
         } else {
             return <input type="text" className="form-control" id={field.htmlId} value={ this.state.values[field.name] }/>
         }
-        /*} else if(field.isPhoto) {
-            return (
-                <photo-bytes-array id="{{field.htmlId}}" ds-bytes-array="values[field.name]"></photo-bytes-array>
-            );
-        
-        
-       */
-        
     }
     
     public render(): React.ReactElement<any> {
