@@ -5,13 +5,14 @@ import * as server from './lib/Server';
 import * as session from './lib/session';
 import { TopMenu } from './TopMenu'
 import { AdminList } from './Admin/AdminList';
-import { AdminGrid } from './Admin/AdminGrid'
-import { AdminEdit } from './Admin/AdminEdit'
-import { AdminCreate } from './Admin/AdminCreate'
-import { Tree } from './Tree'
-import { ViewRecord } from './ViewRecord'
-import { Flash } from './Flash'
-import { ChangePassword } from './ChangePassword'
+import { AdminGrid } from './Admin/AdminGrid';
+import { AdminEdit } from './Admin/AdminEdit';
+import { AdminCreate } from './Admin/AdminCreate';
+import { Tree } from './Tree';
+import { ViewRecord } from './ViewRecord';
+import { OilFieldView } from './OilFieldView';
+import { Flash } from './Flash';
+import { ChangePassword } from './ChangePassword';
 
 interface IAppProps {
   model: string;
@@ -133,6 +134,7 @@ ReactDOM.render(
       <Route path="create_item" component={AdminCreate}/>
       <Route path="tree" component={Tree}/>
       <Route path="view_record" component={ViewRecord}/>
+      <Route path="oil_field" component={OilFieldView}/>
       <Route path="change_password" component={ChangePassword}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>

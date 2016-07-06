@@ -12,7 +12,7 @@ interface IAppProps {
 interface IAppState {
 }
 
-export class Flash extends React.Component<IAppProps, IAppState> {
+export class TimeSeriesChart extends React.Component<IAppProps, IAppState> {
 
     constructor(props: IAppProps) {
         super(props);
