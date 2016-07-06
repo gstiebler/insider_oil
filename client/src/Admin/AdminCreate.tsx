@@ -6,6 +6,7 @@ import * as ModelViewService from '../lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
 import { AdminRecordFields } from './AdminRecordFields';
 import { IField } from '../../../common/Interfaces';
+import * as Flash from '../Flash'
 
 interface IAppProps {
     location: any;
@@ -52,7 +53,7 @@ export class AdminCreate extends React.Component<IAppProps, IAppState> {
     }
     
     private onSave(status) {
-        //Flash.create('success', status.data.msg);
+        Flash.create('success', status.msg);
         browserHistory.push('/app/model_view?model=' + this.state.modelName);
     }
 

@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import { Link } from 'react-router';
+import * as Flash from '../Flash'
 
 interface IAppProps {
     model: string;
@@ -31,8 +32,7 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
     }
 
     private onProductionFileUploaded(status) {
-        console.log(status);
-        //Flash.create('success', status );
+        Flash.create('success', status );
     }
 
     public render(): React.ReactElement<any> {

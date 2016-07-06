@@ -10,6 +10,7 @@ import { AdminEdit } from './Admin/AdminEdit'
 import { AdminCreate } from './Admin/AdminCreate'
 import { Tree } from './Tree'
 import { ViewRecord } from './ViewRecord'
+import { Flash } from './Flash'
 
 interface IAppProps {
   model: string;
@@ -113,6 +114,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
           { navBar }
         </div>
         <div className="container-1450">
+          <Flash timeout={5000}/>
           {this.props.children}
         </div>
       </div>

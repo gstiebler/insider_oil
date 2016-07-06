@@ -4,6 +4,7 @@ import * as showError from '../lib/ShowError';
 import * as ModelOperations from '../lib/ModelOperations';
 import * as ModelViewService from '../lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
+import * as Flash from '../Flash'
 
 interface IAppProps {
     location: any;
@@ -82,7 +83,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
     }
     
     private onDelete(status) {
-        //Flash.create('success', status.data.msg );
+        Flash.create('success', status.msg );
         server.getTable(this.state.modelName, {}, this.showModel.bind(this), showError.show ); 
     }
     
@@ -92,7 +93,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
     
         
     private onFileUploaded(status) {
-        //Flash.create('success', status );
+        Flash.create('success', status );
         server.getTable(this.state.modelName, {}, this.showModel.bind(this), showError.show );
     }
     
