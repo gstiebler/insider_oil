@@ -1,23 +1,5 @@
 import * as React from 'react';
-
-function arrayBufferToBase64( buffer ) {
-    var binary = '';
-    var bytes = new Uint8Array( buffer );
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode( bytes[ i ] );
-    }
-    return window.btoa( binary );
-}
-
-function base64ToArray( base64 ) {
-    var base64str = atob(base64);
-    var bytes = new Array( base64str.length );
-    for(var i = 0; i < base64str.length; i++) {
-        bytes[i] = base64str.charCodeAt(i);
-    }
-    return bytes;
-}
+import { arrayBufferToBase64, base64ToArray, removeBase64Header } from '../lib/BytesUtils';
 
 interface IAppProps {
     value: any;
@@ -61,7 +43,7 @@ export class ImageUpload extends React.Component<IAppProps, IAppState> {
         });
 
         var dsBase64 = reader.result;
-        var trimmedBase64 = dsBase64.substring(dsBase64.search(';base64,') + 8, dsBase64.length);
+        var trimmedBase64 = removeBase64Header(dsBase64);
         this.props.onChange(base64ToArray(trimmedBase64));
     }
 

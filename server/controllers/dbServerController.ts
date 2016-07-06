@@ -65,22 +65,17 @@ export function main(req: express.Request, res: express.Response, next) {
 
 
 export function uploadFile(req: express.Request, res: express.Response, next) {
-    fileUpload.receive( req, onFile, onFinish );
+    var buf = JSON.parse(req.body.data);
+    var model = req.body.model;
+    importExcel(buf, model).then(onOk).catch(onError);
 
-    function onFile(fileName, buf) {
-    	winston.debug( "File name: " + fileName );
-        var model = req.query.table;
-        
-        function onOk(result:IExcelUploadResponse) {
-            res.json( { status: result.status, recordsStatus: result.invalidRecordsStatus } );
-        }
-        
-        function onError(err) {
-            winston.error(err);
-            res.status(400).json( { errorMsg: err } );
-        }
-        
-        importExcel(buf, model).then(onOk).catch(onError);
+    function onOk(result:IExcelUploadResponse) {
+        res.json( { status: result.status, recordsStatus: result.invalidRecordsStatus } );
+    }
+    
+    function onError(err) {
+        winston.error(err);
+        res.status(400).json( { errorMsg: err } );
     }
       
     function onFinish() {

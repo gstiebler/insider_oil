@@ -35,33 +35,6 @@ export function formatExcelUploadResult(response) {
     return statusStr;
 }
 
-/*
-export function uploadFile(file, modelName, doneCallback) {
-    file.upload = Upload.upload({
-        url: '/db_server/upload_file',
-        data: { file: file },
-        params: {
-            table: modelName
-        }
-    });
-
-    file.upload.then(function (response) {
-        $timeout(function () {
-            file.result = response.data;
-            var statusStr = formatExcelUploadResult(response.data);
-            doneCallback(statusStr);
-        });
-    }, function (response) {
-        if (response.status > 0) {
-            //Flash.create('danger', response.data.errorMsg);
-        }
-    }, function (evt) {
-        file.progress = Math.min(100, parseInt(100.0 * 
-                                    evt.loaded / evt.total));
-    });
-}
-*/
-
 export function getColumns(viewParams, types) {
     var columns = [];
     for( var i = 0; i < viewParams.gridFields.length; i++) {

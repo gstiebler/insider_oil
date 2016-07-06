@@ -5,6 +5,7 @@ import * as ModelOperations from '../lib/ModelOperations';
 import * as ModelViewService from '../lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
 import * as Flash from '../Flash'
+import { ExcelUploadButton } from './ExcelUploadButton'
 
 interface IAppProps {
     location: any;
@@ -120,14 +121,12 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         server.importFromURL(this.state.modelName, onImportFromURL.bind(this), showError.show);
         
         function onImportFromURL(response) {
-            // var statusStr = ModelViewService.formatExcelUploadResult(response);
-            // onFileUploaded(statusStr);
+            var statusStr = ModelViewService.formatExcelUploadResult(response);
+            this.onFileUploaded(statusStr);
         }
     }
 
     public render(): React.ReactElement<any> {
-        //var uploadExcel = (<upload-excel-file model-name={this.state.modelName} on-file-uploaded="onFileUploaded" ></upload-excel-file>);
-        var uploadExcel = null;
         return (
             <div>
                 <h1>{this.state.viewParams.tableLabel}</h1>
@@ -137,9 +136,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
                 <button className="btn btn-large btn-success" onClick={ this.state.modelOperations.createItem } >Adicionar {this.state.viewParams.tableLabel}</button><br/><br/>
                 { this.state.viewParams.hasMap ? (<button className="btn btn-large btn-success" onClick={ this.showMap } >Mapa</button>) : <div/> }
                 <br/><br/><br/>
-                <h4>Enviar arquivo Excel</h4>
-                { uploadExcel }
-                <button onClick={ this.importFromURL } >Importar Excel da URL</button><br/><br/>
+                <ExcelUploadButton modelName={this.state.modelName} /><br/>
                 <button onClick={ this.getExcelFile } >Baixar arquivo Excel</button>
             </div>
         );

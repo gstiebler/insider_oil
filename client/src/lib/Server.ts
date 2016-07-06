@@ -38,6 +38,13 @@ function putP(url: string, data: any):Promise<any> {
     });
 }
 
+export function postP(url: string, data: any):Promise<any> {
+    return new Promise<any>( function(resolve, reject) {
+        ajax(url, data, 'POST', (result) => { resolve(result) }, 
+                (error) => { reject(error) });
+    });
+}
+
 function put(url: string, data: any, onSuccess?, onError?) {
     ajax(url, data, 'PUT', onSuccess, onError);
 }
