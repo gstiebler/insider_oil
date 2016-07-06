@@ -6,6 +6,8 @@ import * as ModelViewService from '../lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
 import * as Flash from '../Flash'
 import { ExcelUploadButton } from './ExcelUploadButton'
+import { str2ab } from '../lib/BytesUtils';
+import * as FileSaver from 'file-saver'; 
 
 interface IAppProps {
     location: any;
@@ -98,22 +100,13 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         server.getTable(this.state.modelName, {}, this.showModel.bind(this), showError.show );
     }
     
-    private str2ab(str) {
-    	  var buf = new ArrayBuffer(str.length);
-    	  var bufView = new Uint8Array(buf);
-    	  for (var i=0, strLen=str.length; i<strLen; i++) {
-    	    bufView[i] = str.charCodeAt(i);
-    	  }
-    	  return buf;
-    }
-    
     private getExcelFile() {
     	server.downloadExcelFile(this.state.modelName, onExcelFile.bind(this), showError.show);
     	
     	function onExcelFile(xlsxBinary) {
-    		// var ba = str2ab(xlsxBinary);
-    		// var blob = new Blob([ba], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-    		// saveAs(blob, "arquivo.xlsx");
+    		var ba = str2ab(xlsxBinary);
+    		var blob = new Blob([ba], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    		FileSaver.saveAs(blob, "arquivo.xlsx");
     	}
     }
     
@@ -137,7 +130,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
                 { this.state.viewParams.hasMap ? (<button className="btn btn-large btn-success" onClick={ this.showMap } >Mapa</button>) : <div/> }
                 <br/><br/><br/>
                 <ExcelUploadButton modelName={this.state.modelName} /><br/>
-                <button onClick={ this.getExcelFile } >Baixar arquivo Excel</button>
+                <button onClick={ this.getExcelFile.bind(this) } >Baixar arquivo Excel</button>
             </div>
         );
     }

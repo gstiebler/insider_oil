@@ -20,3 +20,12 @@ export function base64ToArray( base64 ) {
 export function removeBase64Header(dsBase64) {
     return dsBase64.substring(dsBase64.search(';base64,') + 8, dsBase64.length);
 }
+
+export function str2ab(str) {
+    var buf = new ArrayBuffer(str.length);
+    var bufView = new Uint8Array(buf);
+    for (var i=0, strLen=str.length; i<strLen; i++) {
+        bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
+}
