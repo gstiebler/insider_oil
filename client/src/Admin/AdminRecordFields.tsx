@@ -82,7 +82,6 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         var value = event;
         if(event.target)
             value = event.target.value;
-        console.log(fieldName, value);
         this.state.values[fieldName] = value;
         this.props.onChange( this.state.values ); 
         this.setState(this.state);

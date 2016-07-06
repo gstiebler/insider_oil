@@ -140,7 +140,7 @@ export function createItem(req: express.Request, res: express.Response, next) { 
 
 export function saveItem(req: express.Request, res: express.Response, next) { Sync(function() {
     var dsName = req.body.model;
-    var recordData = req.body.record;
+    var recordData = JSON.parse(req.body.record);
     var dataSource = dbUtils.getDataSource(dsName);
     const dsOps = DataSourceOperations[dsName];     
     dataSource.findById( recordData.id )

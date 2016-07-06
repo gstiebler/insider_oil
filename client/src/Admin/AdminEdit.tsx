@@ -52,7 +52,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
             itemData[prop] = value;
         }
         itemData.id = this.state.id;    
-        server.saveItem( this.state.modelName, itemData, this.onSave, showError.show );
+        server.saveItem( this.state.modelName, itemData, this.onSave.bind(this), showError.show );
     }
     
     private onSave(status) {

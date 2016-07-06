@@ -163,7 +163,7 @@ export function getModelFieldsAndValues( modelName, id ):Promise<any> {
 export function saveItem( modelName, record, onSave, onError ) {
     var params = {
         model: modelName,
-        record: record,
+        record: JSON.stringify(record),
         token: session.getToken()
     };
     

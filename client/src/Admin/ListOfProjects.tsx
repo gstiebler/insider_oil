@@ -20,7 +20,7 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = {
-            projects: props.value,
+            projects: props.value ? props.value : [],
             selectedProject: {},
             description: ''
         };
