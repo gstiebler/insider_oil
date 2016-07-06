@@ -64,7 +64,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
         return (
             <div className="row">   
                 <form className="form-horizontal" role="form" onSubmit={(e) => {e.preventDefault();}}>
-                    <AdminRecordFields fields={ this.state.fields } values={ this.state.values } ></AdminRecordFields>
+                    <AdminRecordFields fields={ this.state.fields } values={ this.state.values } onChange={(v) => {this.state.values = v}} />
                     <div className="form-group" >
                         <div className="col-sm-offset-2 col-sm-10">
                             <button className="btn btn-default" onClick={ this.saveItem.bind(this) } >Salvar</button>

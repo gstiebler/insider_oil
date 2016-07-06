@@ -3,7 +3,9 @@ import * as showError from '../lib/ShowError';
 import * as server from '../lib/Server';
 
 interface IAppProps {
-    comboSource: any;
+    comboSource: string;
+    value: any[];
+    onChange: any;
 }
 
 interface IAppState {
@@ -21,7 +23,7 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
 
         this.state = {
             comboValues: [],
-            modelValues: []
+            modelValues: props.value
         };
     }
 
@@ -43,6 +45,7 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
     private remove(index) {
         this.state.modelValues.splice(index, 1);
         this.setState(this.state);
+        this.props.onChange(this.state.modelValues);
     }
     
     private add() {
@@ -53,6 +56,7 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
         };
         this.state.modelValues.push(newItem);
         this.setState(this.state);
+        this.props.onChange(this.state.modelValues);
     }
     
     public render(): React.ReactElement<any> {

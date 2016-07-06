@@ -20,6 +20,7 @@ interface IARField extends IField {
 interface IAppProps {
     fields: IARField[];
     values: any;
+    onChange: any;
 }
 
 interface IAppState {
@@ -77,6 +78,16 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
+    private onChange(fieldName, event) {
+        var value = event;
+        if(event.target)
+            value = event.target.value;
+        console.log(fieldName, value);
+        this.state.values[fieldName] = value;
+        this.props.onChange( this.state.values ); 
+        this.setState(this.state);
+    }
+
     private fieldHTML(field:IARField): React.ReactElement<any> {
 
         function optionsInCombo(values: any[]): React.ReactElement<any>[] {
@@ -89,7 +100,9 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
 
         if(field.type == 'ref') {
             return (
-                <select className="form-control" value={ this.state.values[field.name] } >
+                <select className="form-control" 
+                        value={ this.state.values[field.name] }
+                        onChange={this.onChange.bind(this, field.name)} >
                     { optionsInCombo(this.state.comboValues[field.name]) }
                 </select>
             ); 
@@ -101,30 +114,44 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                        inputFormat={format}
                        dateTime={dateStr}
                        format={format}
+                       onChange={this.onChange.bind(this, field.name)}
                        className="form-control input-group"/>;
         } else if(field.isList) {
-            return <ListOfInputs value={this.state.values[field.name]} onChange={(value) => {console.log(value)} }/>
+            return <ListOfInputs value={this.state.values[field.name]} 
+                                 onChange={this.onChange.bind(this, field.name) }/>
         } else if(field.isBool) {
-            return <input type="checkbox" checked={ this.state.values[field.name] } >Checado</input>
+            return <input type="checkbox" 
+                          checked={ this.state.values[field.name] } 
+                          onChange={this.onChange.bind(this, field.name)}>Checado</input>
         } else if(field.isMultiFieldText) {
-            return <textarea type="text" className="form-control" value={this.state.values[field.name]}/>
+            return <textarea type="text" className="form-control" 
+                             value={this.state.values[field.name]}
+                             onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.enumValues) {
             var options = field.enumValues.map((enumValue, index) => {
                 return <option value={enumValue} >{enumValue}</option>
             });
             return (
-                <select className="form-control" >
+                <select className="form-control" 
+                        value={this.state.values[field.name]} 
+                        onChange={this.onChange.bind(this, field.name)}>
                     {options}
                 </select>
             );
         }  else if(field.isManyToMany) {
-            return <ManyToMany comboSource={field.comboSource}/>
+            return <ManyToMany comboSource={field.comboSource} 
+                               value={this.state.values[field.name]}
+                               onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.isPhoto) {
-            return <ImageUpload value={ this.state.values[field.name]} onChange={(v) => {console.log(v.length)}}/>
+            return <ImageUpload value={ this.state.values[field.name]} 
+                                onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.isProjectList) {
-            return <ListOfProjects value={this.state.values[field.name]} onChange={(value) => {console.log(value)} }/>
+            return <ListOfProjects value={this.state.values[field.name]} 
+                                   onChange={this.onChange.bind(this, field.name)}/>
         } else {
-            return <input type="text" className="form-control" id={field.htmlId} value={ this.state.values[field.name] }/>
+            return <input type="text" className="form-control" 
+                          value={ this.state.values[field.name] } 
+                          onChange={this.onChange.bind(this, field.name)}/>
         }
     }
     
