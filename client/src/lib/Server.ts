@@ -56,8 +56,7 @@ function deleteHTTP(url: string, data: any, onSuccess?, onError?) {
  * @param {Function} onError Error callback
  */
 export function getUserDetails(onData, onError) {
-    var params = { token: session.getToken() };
-    get('/user/details', params, onData, onError);
+    get('/user/details', {}, onData, onError);
 }
 
 /**
@@ -72,7 +71,6 @@ export function getTable( table, options, okCallback, errorCallback ) {
         table: table,
         filters: options.filters,
         fieldNames: options.fieldNames,
-        token: session.getToken()
     };
     get('/db_server/', params, okCallback, errorCallback);
 }
@@ -86,7 +84,6 @@ export function getQueryData(options):Promise<any> {
     var params = { 
         queryName: options.queryName,
         filters: options.filters,
-        token: session.getToken()
     };
     
     return getP('/get_query_data', params);
@@ -101,34 +98,18 @@ export function getQueryData(options):Promise<any> {
  *     pagination: {first, itemsPerPage}
  */
 export function getTableData( options ):Promise<remoteServer.TableQueryDataRes> {
-    var params = { 
-        queryName: options.queryName,
-        queryParams: options.queryParams,
-        token: session.getToken()
-    };
-    
     return getP('/get_table_data', options);
 }
 
 export function getTimeSeries( options, okCallback, errorCallback ) {
-    var params = { 
-        queryName: options.queryName,
-        queryParams: options.queryParams,
-        token: session.getToken()
-    };
-    
-    get('/time_series', { params: params }, function(response) {
+    get('/time_series', options, function(response) {
         okCallback(response.data);
     }, errorCallback);
 }
 
 
 export function getModelFields(model):Promise<any> {
-    var params = { 
-        model: model,
-        token: session.getToken()
-    };
-    
+    var params = { model: model, };
     return getP('/model_fields/', params );
 }
 
@@ -137,7 +118,6 @@ export function createNewItem( modelName, newItemData, onSave, onError ) {
     var params = {
         model: modelName,
         newItemData: JSON.stringify(newItemData),
-        token: session.getToken()
     };
     
     post('/create_item/', params, onSave, onError);
@@ -148,7 +128,6 @@ export function deleteItem( modelName, id, onDelete, onError ) {
     var params = {
         model: modelName,
         id: id,
-        token: session.getToken()
     };
     
     deleteHTTP('/delete_item/', params, onDelete, onError);
@@ -159,7 +138,6 @@ export function getModelFieldsAndValues( modelName, id ):Promise<any> {
     var params = { 
         model: modelName,
         id: id,
-        token: session.getToken()
     };
     return getP('/record_values/', params );
 }
@@ -169,7 +147,6 @@ export function saveItem( modelName, record, onSave, onError ) {
     var params = {
         model: modelName,
         record: JSON.stringify(record),
-        token: session.getToken()
     };
     
     put('/save_item/', params, onSave, onError);
@@ -179,7 +156,6 @@ export function saveItem( modelName, record, onSave, onError ) {
 export function getComboValues(modelName, okCallback, onError) {
     var params = { 
         model: modelName,
-        token: session.getToken()
     };
     get('/combo_values/', params, okCallback, onError);
 }
@@ -197,10 +173,7 @@ export function getSearchResult(searchValue, okCallback, onError) {
 
 
 export function viewRecord(dataSource, id, okCallback, onError) {
-    var params = { 
-        dataSource: dataSource,
-        id: id
-    };
+    var params = { dataSource, id };
     get('/view_record/', params, okCallback, onError);
 }
 
@@ -211,23 +184,18 @@ export function sourceList(onData, onError) {
 
 
 export function changePassword(oldPassword, newPassword):Promise<any> {
-    var params = {
-        oldPassword: oldPassword,
-        newPassword: newPassword	
-    };
+    var params = { oldPassword, newPassword	};
     return putP('/user/change_password', params);
 }
 
 
 export function downloadExcelFile(dataSource, onData, onError) {
-    var params = {
-        dataSource: dataSource	
-    };
+    var params = { dataSource };
     get('/download_excel', params, onData, onError);
 }
 
 
 export function importFromURL(dataSource, onData, onError) {
-    var params = { dataSource: dataSource };
+    var params = { dataSource };
     put('/import_from_url', params, onData, onError);
 }
