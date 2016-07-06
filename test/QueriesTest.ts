@@ -68,18 +68,18 @@ getPersonsByProject:  (test: nodeunit.Test) => {
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
     test.equal(1, resQueryValues.records.length);
     const record = resQueryValues.records[0];
-    test.equal('Guilherme Stiebler', record.name);
+    test.equal('Guilherme Stiebler', record.p_name);
     test.equal('diretor', record.description);
-    test.equal('Person', record.model);
+    test.equal('Person', record.p_model);
     
     test.equal('Nome', resQueryValues.fields[0].label);
-    test.equal('model', resQueryValues.fields[0].ref.modelField);
-    test.equal('id', resQueryValues.fields[0].ref.idField);
-    test.equal('name', resQueryValues.fields[0].ref.valueField);
+    test.equal('p_model', resQueryValues.fields[0].ref.modelField);
+    test.equal('p_id', resQueryValues.fields[0].ref.idField);
+    test.equal('p_name', resQueryValues.fields[0].ref.valueField);
     
-    test.equal('Cargo', resQueryValues.fields[1].label);
-    test.equal('position', resQueryValues.fields[1].fieldName);
-    test.equal('VARCHAR', resQueryValues.fields[1].type);
+    test.equal('Cargo', resQueryValues.fields[2].label);
+    test.equal('position', resQueryValues.fields[2].fieldName);
+    test.equal('VARCHAR', resQueryValues.fields[2].type);
 
     test.done();
 },
