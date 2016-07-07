@@ -108,10 +108,8 @@ export function getTableData( options ):Promise<remoteServer.TableQueryDataRes> 
     return getP('/get_table_data', options);
 }
 
-export function getTimeSeries( options, okCallback, errorCallback ) {
-    get('/time_series', options, function(response) {
-        okCallback(response.data);
-    }, errorCallback);
+export function getTimeSeries(options):Promise<any> {
+    return getP('/time_series', options);
 }
 
 

@@ -299,7 +299,7 @@ export function getTableQueryData(req: express.Request, res: express.Response):v
  
 
 export function getTimeSeries(req: express.Request, res: express.Response):void {Sync(function(){
-    const queryParams = req.query.queryParams ? JSON.parse(req.query.queryParams) : {};
+    const queryParams = req.query.queryParams;
     const queryName:string = req.query.queryName;
 
     TimeSeriesQueries.getData(queryName, queryParams).then( (results) => {

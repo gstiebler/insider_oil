@@ -21,16 +21,23 @@ export class TimeSeriesChart extends React.Component<IAppProps, IAppState> {
         };
     }
 
-        
-    private componentWillReceiveProps(newProps:IAppProps) {
+    private componentDidMount() {
+        this.getChartData(this.props);
+    }
+
+    private getChartData(props:IAppProps) {
         var query = { 
-            queryName: newProps.queryName,
-            queryParams: newProps.qParams
+            queryName: props.queryName,
+            queryParams: props.qParams
         }
-        server.getTimeSeries(query, this.showChart.bind(this), showError.show);
+        server.getTimeSeries(query)
+            .then(this.showChart.bind(this))
+            .catch(showError.show);
     }
 
     private showChart(records) {
+        if(!records)
+            return;
         var data = records.records;
         if(data.length == 0)
             return;
@@ -68,7 +75,6 @@ export class TimeSeriesChart extends React.Component<IAppProps, IAppState> {
             d.date = parseDate(d[chartParams.xAxis]);
         });
 
-        console.log(data); 
         x.domain(d3.extent(data, function(d:any) { return d.date; }));
         y.domain([0, d3.max(data, function(d) { return d[chartParams.yAxis]; })]);
 
