@@ -4,6 +4,7 @@ import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import { Link } from 'react-router';
 import * as Flash from '../Flash'
+import { ExcelUploadButton } from './ExcelUploadButton'
 
 interface IAppProps {
     model: string;
@@ -36,13 +37,6 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): React.ReactElement<any> {
-        /*
-        var importProductionButton = (
-            Importar Excel de produção
-            <upload-excel-file model-name="'Production'" on-file-uploaded="onProductionFileUploaded" ></upload-excel-file>
-        );*/
-        var importProductionButton = null;
-
         var sourcesLinks = [];
         for( var key in this.state.sourcesList ) {
             var link = "/app/model_view?model=" + key;
@@ -56,7 +50,8 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
                 <Link to="/app/model_view?model=News">Notícias</Link>
             </h4>
             { sourcesLinks }
-            { importProductionButton }
+            Importar Excel de produção
+            <ExcelUploadButton modelName="Production" /><br/>
             </div>
         );
     }
