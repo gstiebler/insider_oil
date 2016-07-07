@@ -39,6 +39,9 @@ const OilField: IBaseDataSourceParams = {
         stage: {
             label: "Estágio (admin)"
         },
+        updates: {
+            label: "Atualizações"
+        },
         block_name: {
             label: "Bloco"
         },
@@ -54,7 +57,11 @@ const OilField: IBaseDataSourceParams = {
         {
             queryName: 'hydrocarbonEvidencesByOilField',
             title: 'Indícios de hidrocarbonetos'
-        }
+        },
+        {
+            queryName: 'productionUnitByOilField',
+            title: 'Unidades de produção'
+        },
     ],
     excelParams: {
         keyField: "nome",
@@ -66,6 +73,7 @@ const OilField: IBaseDataSourceParams = {
             'concessionárias': 'concessionaries',
             'terra/mar': 'shore',
             'estágio': 'stage',
+            'atualizações': 'updates',
         }
     },
 };

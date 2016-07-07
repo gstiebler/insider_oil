@@ -29,9 +29,10 @@ app.directive('objectNews', function() {
             objId: '=objId',
             onError: '=onError',
         },
-        controller:['$scope', 'server', function($scope, server) {
+        controller:['$scope', 'server', 'DateService', function($scope, server, DateService) {
             _server = server;
             _$scope = $scope;
+            $scope.dateFormat = DateService.dateFormat;
             $scope.$watch('objId', onObjIdChange);
         }],
         templateUrl: 'app/directives/templates/object_news.html'

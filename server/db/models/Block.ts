@@ -39,7 +39,11 @@ module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.D
         concessionaries: {
           type: DataTypes.STRING,
           allowNull: true
-        }
+        },
+        updates: {
+          type: DataTypes.TEXT,
+          allowNull: true
+        },
     }, 
     {
         underscored: true,

@@ -208,6 +208,10 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: true
 				},
+				updates: {
+					type: Sequelize.TEXT,
+					allowNull: true
+				},
 				operator_id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
@@ -386,6 +390,10 @@ module.exports = {
 				stage: {
 					type: Sequelize.ENUM('production', 'development'),
 					allowNull: false
+				},
+				updates: {
+					type: Sequelize.TEXT,
+					allowNull: true
 				},
 				basin_id: {
 					type: Sequelize.INTEGER,
@@ -651,7 +659,7 @@ module.exports = {
 				},
 				block_id: {
 					type: Sequelize.INTEGER,
-					allowNull: false,
+					allowNull: true,
 					references: {
 						model: 'blocks',
 						key: 'id'

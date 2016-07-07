@@ -338,6 +338,24 @@ wells: test => {
     test.done();
 },
 
+seismics: test => {
+    var excelBuf = fs.readFileSync('./test/data/seismics.xlsx');
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Seismic'));
+    
+    var rows = await( dbUtils.findAllCustom(db.models.Seismic, { order: ['process'] }));
+    test.equal( 3, rows.length );  
+    var expectedStatus = "Registros criados: 0";
+    expectedStatus += "\nRegistros atualizados: 3";
+    expectedStatus += "\nRegistros inválidos: 0";
+    test.equal( expectedStatus, result.status );
+    {
+        const record = rows[2];
+        test.equal('muita tecnologia', record.authorized_technologies);
+    }
+
+    test.done();
+},
+
 
 
 };

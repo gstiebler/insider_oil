@@ -40,7 +40,10 @@ const Block: IBaseDataSourceParams = {
         },
         concessionaries: {
             label: 'Concessionários'
-        }
+        },
+        updates: {
+            label: "Atualizações"
+        },
     },
     labelField: 'name',
     gridFields: ['name', 'operator_name'],
@@ -60,7 +63,8 @@ const Block: IBaseDataSourceParams = {
             '3p vencimento': 'end_3',
             'vencimento último pad': 'end_last',
             status: 'status',
-            'concessionários': 'concessionaries'
+            'concessionários': 'concessionaries',
+            'atualizações': 'updates',
         }
     },
     referencedObjectsOnView:  [

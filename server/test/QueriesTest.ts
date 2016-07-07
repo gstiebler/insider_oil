@@ -68,18 +68,18 @@ getPersonsByProject:  (test: nodeunit.Test) => {
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
     test.equal(1, resQueryValues.records.length);
     const record = resQueryValues.records[0];
-    test.equal('Guilherme Stiebler', record.name);
+    test.equal('Guilherme Stiebler', record.p_name);
     test.equal('diretor', record.description);
-    test.equal('Person', record.model);
+    test.equal('Person', record.p_model);
     
     test.equal('Nome', resQueryValues.fields[0].label);
-    test.equal('model', resQueryValues.fields[0].ref.modelField);
-    test.equal('id', resQueryValues.fields[0].ref.idField);
-    test.equal('name', resQueryValues.fields[0].ref.valueField);
+    test.equal('p_model', resQueryValues.fields[0].ref.modelField);
+    test.equal('p_id', resQueryValues.fields[0].ref.idField);
+    test.equal('p_name', resQueryValues.fields[0].ref.valueField);
     
-    test.equal('Cargo', resQueryValues.fields[1].label);
-    test.equal('position', resQueryValues.fields[1].fieldName);
-    test.equal('VARCHAR', resQueryValues.fields[1].type);
+    test.equal('Cargo', resQueryValues.fields[2].label);
+    test.equal('position', resQueryValues.fields[2].fieldName);
+    test.equal('VARCHAR', resQueryValues.fields[2].type);
 
     test.done();
 },
@@ -337,6 +337,25 @@ maintenanceDatesByProductionUnit: (test: nodeunit.Test) => {
     test.equal(2, resQueryValues.records.length);
     test.equal('10/2015', resQueryValues.records[0].formatted_period);
     test.equal('02/2010', resQueryValues.records[1].formatted_period);
+
+    test.done();
+},
+
+productionUnitByOilField: (test: nodeunit.Test) => {
+    const jiritubaId = utils.idByName('OilField', 'Jiribatuba2') ;
+    const filters = {
+        id: jiritubaId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'productionUnitByOilField',
+            filters: JSON.stringify(filters)
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(5, resQueryValues.records.length);
+    test.equal('Capixaba', resQueryValues.records[0].pu_name);
+    test.equal('Cidade de Magaratiba', resQueryValues.records[1].pu_name);
 
     test.done();
 },

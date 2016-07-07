@@ -122,7 +122,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             return <input type="checkbox" 
                           checked={ this.state.values[field.name] } 
                           onChange={this.onChange.bind(this, field.name)}>Checado</input>
-        } else if(field.isMultiFieldText) {
+        } else if(field.isMultiFieldText || (field.type.indexOf('TEXT') > -1)) {
             return <textarea type="text" className="form-control" 
                              value={this.state.values[field.name]}
                              onChange={this.onChange.bind(this, field.name)}/>

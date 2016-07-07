@@ -28,21 +28,72 @@ const queries:IQueriesById = {
             }
             const modelInList = await( db.models.ModelsList.find({ where: modelsListFilter }) );
             
-            var query = 'select p.id, p.name, p.position, pp.description, "Person" as model ';
-            query += 'from persons p, person_projects pp ';
-            query += 'where pp.person_id = p.id ';
-            query += '   and pp.model_id = ' + modelInList.id;
-            query += '   and pp.model_ref_id = ' + filters.project_id;
-            query += ' order by p.name ';
+            const personOpts:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'person_projects',
+                    fields: [
+                        'description'
+                    ]
+                },
+                extraFields: [
+                    ['"Person"', 'p_model'],
+                    ['"Company"', 'c_model'],
+                ],
+                joinTables: [
+                    {
+                        name: 'persons',
+                        fields: [
+                            ['id', 'p_id'],
+                            ['name', 'p_name'],
+                            'position',
+                        ],
+                        joinField: 'person_projects.person_id'
+                    },
+                    {
+                        name: 'companies',
+                        fields: [
+                            ['id', 'c_id'],
+                            ['name', 'c_name']
+                        ],
+                        joinField: 'persons.company_id'
+                    },
+                ],
+                filters: [
+                    {
+                        field: 'person_projects.model_id',
+                        equal: modelInList.id
+                    },
+                    {
+                        field: 'person_projects.model_ref_id',
+                        equal: filters.project_id
+                    }
+                ],
+                order: [
+                    {
+                        fieldName: 'p_name',
+                        dir: 'asc'
+                    }
+                ]
+            }
+            
+            var query = QueryGenerator.queryGenerator(personOpts);
             return query;
         },
         fields: [
             {
                 label: 'Nome',
                 ref: {
-                    modelField: 'model',
-                    idField: 'id',
-                    valueField: 'name'
+                    modelField: 'p_model',
+                    idField: 'p_id',
+                    valueField: 'p_name'
+                }
+            },
+            {
+                label: 'Empresa',
+                ref: {
+                    modelField: 'c_model',
+                    idField: 'c_id',
+                    valueField: 'c_name'
                 }
             },
             {
@@ -483,6 +534,60 @@ const queries:IQueriesById = {
             {
                 label: 'Data',
                 fieldName: 'formatted_period',
+                type: 'VARCHAR'
+            },
+        ]
+    },
+
+    productionUnitByOilField: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'production_units',
+                    fields: [
+                        ['id', 'pu_id'],
+                        ['name', 'pu_name'],
+                        'owner',
+                        'situation'
+                    ]
+                },
+                joinTables: [],
+                extraFields: [
+                    ['"ProductionUnit"', 'model'],
+                ],
+                filters: [
+                    {
+                        field: 'production_units.oil_field_id',
+                        equal: filter.id
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'pu_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+        {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'pu_id',
+                    valueField: 'pu_name'
+                }
+            },
+            {
+                label: 'Empresa proprietária',
+                fieldName: 'owner',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Situação',
+                fieldName: 'situation',
                 type: 'VARCHAR'
             },
         ]

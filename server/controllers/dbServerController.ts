@@ -63,11 +63,14 @@ export function main(req: express.Request, res: express.Response, next) {
     }
 }
 
-
 export function uploadFile(req: express.Request, res: express.Response, next) {
     var buf = JSON.parse(req.body.data);
     var model = req.body.model;
-    importExcel(buf, model).then(onOk).catch(onError);
+    try {
+        importExcel(buf, model).then(onOk).catch(onError);
+    } catch(err) {
+        res.status(400).json( { errorMsg: err } );
+    }
 
     function onOk(result:IExcelUploadResponse) {
         res.json( { status: result.status, recordsStatus: result.invalidRecordsStatus } );
