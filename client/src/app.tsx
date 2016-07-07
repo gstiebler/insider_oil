@@ -132,7 +132,7 @@ ReactDOM.render(
       <Route path="admin" component={AdminList}/>
       <Route path="model_view" component={AdminGrid}/>
       <Route path="edit_item" component={AdminEdit}/>
-      <Route path="edit_news" component={NewsEdit}/>
+      <Route path="create_news" component={NewsEdit}/>
       <Route path="create_item" component={AdminCreate}/>
       <Route path="tree" component={Tree}/>
       <Route path="view_record" component={ViewRecord}/>

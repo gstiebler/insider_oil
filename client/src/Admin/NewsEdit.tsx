@@ -4,6 +4,7 @@ import * as showError from '../lib/ShowError';
 import { browserHistory } from 'react-router';
 import { ProjectSearch } from '../ProjectSearch'
 import * as Flash from '../Flash'
+import * as ReactQuill from 'react-quill';
 
 interface IAppProps {
     location: any;
@@ -48,11 +49,13 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
     private onServerData(data) {
         this.state.title = data.values.title;
         this.state.content = data.values.content;
+        this.setState(this.state);
     }
 
-    private onProjectSelected = function(selectedItem) {
+    private onProjectSelected(selectedItem) {
     	var linkStr = '<a href="/app/view_record?source=' + selectedItem.model + '&id=' + selectedItem.id + '">' + selectedItem.name + '</a>';
     	this.state.content = this.insertLinkInContent(this.state.content, linkStr);
+        this.setState(this.state);
     }
 
     private insertLinkInContent(previousContent, linkStr) {
@@ -80,16 +83,16 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
     }
 	
 	private onSave(status) {
-	    Flash.create('success', status.data.msg);
+	    Flash.create('success', status.msg);
 	    browserHistory.push("/app/model_view?model=" + this.modelName);
 	}  
 
     public render(): React.ReactElement<any> {
-        return (
+        return ( <div>
             <h4 className="col-sm-2" >{this.state.mainTitle}</h4>
             <br/><br/><br/><br/>
             <div className="row">   
-                <form className="form-horizontal" role="form">
+                <form className="form-horizontal" role="form" onSubmit={(e) => {e.preventDefault();}}>
                     <div className="form-group">
                         <label className="control-label col-sm-2" for="title_box">Título:</label>
                         <div className="col-sm-10">
@@ -102,8 +105,11 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                     <div className="form-group">
                         <label className="control-label col-sm-2" for="content_box">Notícia:</label>
                         <div className="col-sm-10">
+                            <ReactQuill theme="snow" 
+                                        value={this.state.content}
+                                        onChange={(v) => {this.state.content = v;})}/>
+                                        
                             Busca: <ProjectSearch onItemSelected={this.onProjectSelected.bind(this)} />
-                            <div text-angular ng-model="content"></div><br/>
                             <button className="btn btn-default" onClick={() => {console.log(this.state.content)}}>print html</button>
                         </div>
                     </div>
@@ -115,6 +121,6 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                     </div>
                 </form>
             </div> 
-        );
+        </div>);
     }
 }
