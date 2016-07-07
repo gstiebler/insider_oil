@@ -1,4 +1,5 @@
 git pull
+./install.sh
 cd client
 gulp deploy
 cd ../server
