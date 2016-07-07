@@ -50,6 +50,18 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
         this.state.content = data.values.content;
     }
 
+    private onProjectSelected = function(selectedItem) {
+    	var linkStr = '<a href="/app/view_record?source=' + selectedItem.model + '&id=' + selectedItem.id + '">' + selectedItem.name + '</a>';
+    	this.state.content = this.insertLinkInContent(this.state.content, linkStr);
+    }
+
+    private insertLinkInContent(previousContent, linkStr) {
+        var symbolPos = previousContent.lastIndexOf('<');
+        var beforeSymbolStr = previousContent.slice(0, symbolPos);
+        var afterSymboStr = previousContent.slice(symbolPos, previousContent.length);
+        return beforeSymbolStr + linkStr + afterSymboStr;
+    }
+
     private saveItem() {
         server.getUserDetails(this.onUserDataArrived.bind(this), showError.show);
 	}
@@ -81,22 +93,24 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                     <div className="form-group">
                         <label className="control-label col-sm-2" for="title_box">Título:</label>
                         <div className="col-sm-10">
-                            <input type="text" className="form-control" id="title_box" ng-model="title"/>
+                            <input type="text" className="form-control" 
+                                   value={this.state.title}
+                                   onChange={(e) => {this.state.title = e.target.value;}} />
                         </div>    
                     </div>
                     
                     <div className="form-group">
                         <label className="control-label col-sm-2" for="content_box">Notícia:</label>
                         <div className="col-sm-10">
-                            Busca: <ProjectSearch on-item-selected="onProjectSelected" />
-                            <div text-angular id="content_box_html" ng-model="content"></div><br/>
-                            <button className="btn btn-default" ng-click="printHtml()" >print html</button>
+                            Busca: <ProjectSearch onItemSelected={this.onProjectSelected.bind(this)} />
+                            <div text-angular ng-model="content"></div><br/>
+                            <button className="btn btn-default" onClick={() => {console.log(this.state.content)}}>print html</button>
                         </div>
                     </div>
                         
                     <div className="form-group">
                         <div className="col-sm-offset-2 col-sm-10">
-                            <button className="btn btn-default" ng-click="saveItem()" >Salvar</button>
+                            <button className="btn btn-default" onClick={this.saveItem.bind(this)} >Salvar</button>
                         </div>
                     </div>
                 </form>
