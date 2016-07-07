@@ -41,7 +41,8 @@ export class Flash extends React.Component<IAppProps, IAppState> {
         var className = "alert alert-" + this.state.className;
         var result = null;
         if(message && message != '') {
-            result = <div className={className} role="alert">{message}</div>
+            result = <div className={className} role="alert"
+                        dangerouslySetInnerHTML={ {__html: message } }></div>
         }
         return result;
     }
