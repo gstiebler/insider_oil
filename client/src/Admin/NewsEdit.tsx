@@ -43,6 +43,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                 .catch(showError.show);
         } else {
             this.state.mainTitle = "Nova notícia"
+            this.setState(this.state);
         }
     }
 
@@ -98,7 +99,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                         <div className="col-sm-10">
                             <input type="text" className="form-control" 
                                    value={this.state.title}
-                                   onChange={(e) => {this.state.title = e.target.value;}} />
+                                   onChange={(e) => {this.state.title = e.target.value; this.setState(this.state);}} />
                         </div>    
                     </div>
                     
@@ -107,13 +108,18 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                         <div className="col-sm-10">
                             <ReactQuill theme="snow" 
                                         value={this.state.content}
-                                        onChange={(v) => {this.state.content = v;})}/>
+                                        onChange={(v) => {this.state.content = v;this.setState(this.state);}}/>
                                         
                             Busca: <ProjectSearch onItemSelected={this.onProjectSelected.bind(this)} />
-                            <button className="btn btn-default" onClick={() => {console.log(this.state.content)}}>print html</button>
                         </div>
                     </div>
-                        
+                    <div className="form-group">
+                        <div className="col-sm-offset-2 col-sm-10">
+                            <textarea rows="8" cols="100"
+                                      value={this.state.content}
+                                      onChange={(e) => {this.state.content = e.target.value;this.setState(this.state);}}/>
+                        </div>    
+                    </div>
                     <div className="form-group">
                         <div className="col-sm-offset-2 col-sm-10">
                             <button className="btn btn-default" onClick={this.saveItem.bind(this)} >Salvar</button>

@@ -69,17 +69,6 @@ export class OilFieldView extends React.Component<IAppProps, IAppState> {
                 xAxis: 'date_prod'
             }
         };
-
-        var customSources = {
-            'OilField': "/app/oil_field",
-            'GasPipeline': "/app/gas_pipeline",
-            'ProductionUnit': "/app/production_unit",
-        };
-
-        var customSource = customSources[source];
-        if(customSource) {
-            browserHistory.push(customSource + '?id=' + id)
-        }
     }
 
     protected componentDidMount() {
