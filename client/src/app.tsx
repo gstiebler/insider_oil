@@ -7,6 +7,7 @@ import { TopMenu } from './TopMenu'
 import { AdminList } from './Admin/AdminList';
 import { AdminGrid } from './Admin/AdminGrid';
 import { AdminEdit } from './Admin/AdminEdit';
+import { NewsEdit } from './Admin/NewsEdit';
 import { AdminCreate } from './Admin/AdminCreate';
 import { Tree } from './Tree';
 import { ViewRecord } from './ViewRecord';
@@ -131,6 +132,7 @@ ReactDOM.render(
       <Route path="admin" component={AdminList}/>
       <Route path="model_view" component={AdminGrid}/>
       <Route path="edit_item" component={AdminEdit}/>
+      <Route path="edit_news" component={NewsEdit}/>
       <Route path="create_item" component={AdminCreate}/>
       <Route path="tree" component={Tree}/>
       <Route path="view_record" component={ViewRecord}/>
