@@ -81,6 +81,7 @@ gulp.task("bundle-release", function() {
     var mainTsFilePath = "out/app.js";
     var outputFolder   = "dist/";
     var outputFileName = libraryName + ".min.js";
+    process.env.NODE_ENV = 'production';
 
     var bundler = browserify({
         debug: false,
