@@ -26,7 +26,11 @@ const queries:IQueriesById = {
             const modelsListFilter = {
                 name: filters.dataSource
             }
+            let modelListId = -1;
             const modelInList = await( db.models.ModelsList.find({ where: modelsListFilter }) );
+            if(modelInList) {
+                modelListId = modelInList.id;
+            }
             
             const personOpts:QueryGenerator.IQueryOpts = {
                 table: {
@@ -61,7 +65,7 @@ const queries:IQueriesById = {
                 filters: [
                     {
                         field: 'person_projects.model_id',
-                        equal: modelInList.id
+                        equal: modelListId
                     },
                     {
                         field: 'person_projects.model_ref_id',
@@ -138,17 +142,21 @@ const queries:IQueriesById = {
                 type: 'DATE'
             },
         ]
-    },
+    }, 
     
     BidsByObject: {
         queryStrFn: (filters) => {
             const modelsListFilter = {
                 name: filters.dataSource
             }
+            let modelListId = -1;
             const modelInList = await( db.models.ModelsList.find({ where: modelsListFilter }) );
+            if(modelInList) {
+                modelListId = modelInList.id;
+            }
             
             const customFilters = [
-                { field: 'model_id', equal: modelInList.id },
+                { field: 'model_id', equal: modelListId },
                 { field: 'obj_id', equal:filters.obj_id  },
             ];
             const queryParams: QueryGenerator.IQueryParams = {
@@ -166,10 +174,14 @@ const queries:IQueriesById = {
             const modelsListFilter = {
                 name: filters.dataSource
             }
+            let modelListId = -1;
             const modelInList = await( db.models.ModelsList.find({ where: modelsListFilter }) );
+            if(modelInList) {
+                modelListId = modelInList.id;
+            }
             
             const customFilters = [
-                { field: 'contracts.model_id', equal: modelInList.id },
+                { field: 'contracts.model_id', equal: modelListId },
                 { field: 'contracts.obj_id', equal:filters.obj_id  },
             ];
             const queryParams: QueryGenerator.IQueryParams = {
