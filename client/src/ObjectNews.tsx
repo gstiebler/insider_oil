@@ -60,29 +60,34 @@ export class ObjectNews extends React.Component<IAppProps, IAppState> {
             </li>
         });
        
-        return (
-            <div className="main-news" ng-if="newsData.length > 0">
-                <div className="page-header">
-                    <h2>Noticias Relacionadas</h2>
-                </div>
-                <div id="carousel"/>
-                <div className="row">
-                    <div className="carousel slide fade-quote-carousel">
-                        <ol className="carousel-indicators">
-                            <li data-target=".fade-quote-carousel" data-slide-to="0" className="active"></li>
-                            <li data-target=".fade-quote-carousel" data-slide-to="1"></li>
-                            <li data-target=".fade-quote-carousel" data-slide-to="2"></li>
-                        </ol>
-                        <div className="carousel-inner">
-                            <div className="active item">
-                                <ul>
-                                    {newsItems}
-                                </ul>
+        var result = null;
+        if(newsItems.length > 0) {
+            result = (
+                <div className="main-news">
+                    <div className="page-header">
+                        <h2>Noticias Relacionadas</h2>
+                    </div>
+                    <div id="carousel"/>
+                    <div className="row">
+                        <div className="carousel slide fade-quote-carousel">
+                            <ol className="carousel-indicators">
+                                <li data-target=".fade-quote-carousel" data-slide-to="0" className="active"></li>
+                                <li data-target=".fade-quote-carousel" data-slide-to="1"></li>
+                                <li data-target=".fade-quote-carousel" data-slide-to="2"></li>
+                            </ol>
+                            <div className="carousel-inner">
+                                <div className="active item">
+                                    <ul>
+                                        {newsItems}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            )
+        }
+
+        return result;
     }
 }
