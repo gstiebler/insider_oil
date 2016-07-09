@@ -155,7 +155,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         return (
             <div className="main-table table-responsive bootstrap-table">
                 <PaginatedTableHeader headerParams={ this.state.headerParams } filterChanged={ this.filterChanged.bind(this) }></PaginatedTableHeader>
-                <table id="mainTable" className="table" cellspacing="0" width="100%"></table>
+                <table id="mainTable" className="table" cellSpacing="0" width="100%"></table>
             </div>
         );
     }

@@ -24,6 +24,7 @@ interface IAppProps {
 interface IAppState {
     username: string;
     isAdmin: boolean;
+    url: string;
 }
 
 
@@ -36,7 +37,8 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
 
     this.state = {
         isAdmin: false,
-        username: ''
+        username: '',
+        url: props.location.query.url
     };
 
     var token = props.location.query.token;
@@ -54,12 +56,13 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
           browserHistory.push('/');
         }
     });
-
-    var url = props.location.query.url;
-    if( url ) {
-        browserHistory.push(url);
-    }
   }
+
+    public componentWillMount() {
+      if( this.state.url ) {
+          browserHistory.push(this.state.url);
+      }
+    }
 
   public render():React.ReactElement<any> {
     var adminLink = <li className="nav-item" >

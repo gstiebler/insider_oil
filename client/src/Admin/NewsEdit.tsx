@@ -95,7 +95,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
             <div className="row">   
                 <form className="form-horizontal" role="form" onSubmit={(e) => {e.preventDefault();}}>
                     <div className="form-group">
-                        <label className="control-label col-sm-2" for="title_box">Título:</label>
+                        <label className="control-label col-sm-2" htmlFor="title_box">Título:</label>
                         <div className="col-sm-10">
                             <input type="text" className="form-control" 
                                    value={this.state.title}
@@ -104,9 +104,9 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                     </div>
                     
                     <div className="form-group" style={{border: "3px"}}>
-                        <label className="control-label col-sm-2" for="content_box">Notícia:</label>
+                        <label className="control-label col-sm-2" htmlFor="content_box">Notícia:</label>
                         <div className="col-sm-10">
-                            <table className="table table-bordered"> <tbody> <tr> <td>
+                            <table className="table table-bordered"><tbody><tr><td>
                                 <ReactQuill theme="snow" 
                                         value={this.state.content}
                                         onChange={(v) => {this.state.content = v;this.setState(this.state);}}/>
