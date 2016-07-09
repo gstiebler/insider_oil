@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as showError from '../lib/ShowError';
-import { Button } from 'react-bootstrap';
 import { ProjectSearch } from '../ProjectSearch'
 
 interface IAppProps {
@@ -51,7 +50,7 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
                 <tr key={'item' + index}>
                     <td>{project.name}</td>
                     <td>{project.description}</td>
-                    <td><Button className="btn btn-default" onClick={ this.removeItem.bind(this, index) }>Remover</Button></td>
+                    <td><button className="btn btn-default" onClick={ this.removeItem.bind(this, index) }>Remover</button></td>
                 </tr>
             );  
         });
