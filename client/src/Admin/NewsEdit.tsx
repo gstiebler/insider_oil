@@ -103,13 +103,14 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                         </div>    
                     </div>
                     
-                    <div className="form-group">
+                    <div className="form-group" style={{border: "3px"}}>
                         <label className="control-label col-sm-2" for="content_box">Notícia:</label>
                         <div className="col-sm-10">
-                            <ReactQuill theme="snow" 
+                            <table className="table table-bordered"> <tbody> <tr> <td>
+                                <ReactQuill theme="snow" 
                                         value={this.state.content}
                                         onChange={(v) => {this.state.content = v;this.setState(this.state);}}/>
-                                        
+                            </td></tr></tbody></table>   
                             Busca: <ProjectSearch onItemSelected={this.onProjectSelected.bind(this)} />
                         </div>
                     </div>
