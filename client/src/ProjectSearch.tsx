@@ -25,13 +25,16 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
         };
     }
     
+    private onSuggestionsUpdateRequested({ value }) {
+        server.getSearchResult(value, this.onServerSearchResult.bind(this), showError.show);
+    }
+
     private onServerSearchResult(results:SearchResults[]) {
         this.state.suggestions = results;
         this.setState(this.state);
     }
 
     private onUserTypeChar(event, { newValue }) {
-        server.getSearchResult(newValue, this.onServerSearchResult.bind(this), showError.show);
         this.state.value = newValue;
         this.setState(this.state);
     }
@@ -68,6 +71,7 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
                    getSuggestionValue={this.getSuggestionValue}
                    renderSuggestion={this.renderSuggestion}
                    onSuggestionSelected={this.onSuggestionSelected.bind(this)}
+                   onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested.bind(this)}
                    inputProps={inputProps} />
         );
     }
