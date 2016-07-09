@@ -121,7 +121,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         } else if(field.isBool) {
             return <input type="checkbox" 
                           checked={ this.state.values[field.name] } 
-                          onChange={this.onChange.bind(this, field.name)}>Checado</input>
+                          onChange={this.onChange.bind(this, field.name)} />
         } else if(field.isMultiFieldText || (field.type.indexOf('TEXT') > -1)) {
             return <textarea type="text" className="form-control" 
                              value={this.state.values[field.name]}
@@ -157,7 +157,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<any> {
         var fieldsHTML = this.props.fields.map((field, index) => {
             return <div className="form-group" key={ 'fh' + index }>
-                    <label className="control-label col-sm-2" for={field.htmlId}>{field.label}:</label>
+                    <label className="control-label col-sm-2">{field.label}:</label>
                     <div className="col-sm-10">
                         { this.fieldHTML(field) }
                     </div>

@@ -51,17 +51,17 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
                 <tr key={'item' + index}>
                     <td>{project.name}</td>
                     <td>{project.description}</td>
-                    <td><Button class="btn btn-default" onClick={ this.removeItem.bind(this, index) }>Remover</Button></td>
+                    <td><Button className="btn btn-default" onClick={ this.removeItem.bind(this, index) }>Remover</Button></td>
                 </tr>
             );  
         });
 
         return (
-            <table class="table">
+            <table className="table">
                 <tbody>
                     <tr>
                         <td width="300">
-                            <table class="table table-bordered">
+                            <table className="table table-bordered">
                                 <tbody>
                                     <tr>
                                         <th>Projeto</th>
@@ -72,7 +72,7 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
                             </table>
                         </td>
                         <td>
-                            <table class="table table-bordered">
+                            <table className="table table-bordered">
                                 <tbody>
                                     <tr>
                                         <td><ProjectSearch onItemSelected={ this.onProjectSelected.bind(this) } /></td>

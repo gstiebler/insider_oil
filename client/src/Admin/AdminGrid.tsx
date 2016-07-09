@@ -124,7 +124,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
             <div>
                 <h1>{this.state.viewParams.tableLabel}</h1>
                 <div className="table-responsive">
-                    <table id="mainTable" className="table table-striped table-bordered" cellspacing="0" width="100%"></table>
+                    <table id="mainTable" className="table table-striped table-bordered" width="100%"></table>
                 </div>
                 <button className="btn btn-large btn-success" onClick={ this.state.modelOperations.createItem } >Adicionar {this.state.viewParams.tableLabel}</button><br/><br/>
                 { this.state.viewParams.hasMap ? (<button className="btn btn-large btn-success" onClick={ this.showMap } >Mapa</button>) : <div/> }
