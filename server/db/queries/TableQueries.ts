@@ -956,7 +956,7 @@ export const queries:ITableQueries = {
                     fields: [
                         'id',
                         'supplier',
-                        'contract_object',
+                        ['contract_object', 'c_contract_object'],
                         'start',
                         'end',
                         'value',
@@ -991,17 +991,12 @@ export const queries:ITableQueries = {
                 ref: {
                     modelField: 'model',
                     idField: 'id',
-                    valueField: 'contract_object'
+                    valueField: 'c_contract_object'
                 }
             },
             {
                 label: 'Fornecedor',
                 fieldName: 'supplier',
-                type: 'VARCHAR'
-            },
-            {
-                label: 'Objeto da contratação',
-                fieldName: 'contract_object',
                 type: 'VARCHAR'
             },
             {

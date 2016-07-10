@@ -21,10 +21,11 @@ export function getObjRefField() {
     const modelRecord = await( db.models.ModelsList.findById(this.model_id));
     const referencedModel = db.models[modelRecord.name];
     const referencedObj = await(referencedModel.findById(this.obj_id));
+    const refObjName = referencedObj ? referencedObj.name : null;
     return [{
         id: this.obj_id,
         model_id: this.model_id,
         model: modelRecord.name,
-        name: referencedObj.name
+        name: refObjName
     }];
 }
