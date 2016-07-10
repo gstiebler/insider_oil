@@ -86,8 +86,12 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
             } else if (field.isProjectList) {
                 var listItems = field.value.map((item) => { 
                     var url = "/app/view_record?source=" + item.model + "&id=" + item.id;
-                    <Link className="col-sm-10" to={url} >{item.name}</Link>
-                    { item.description ? <span> - Descrição: {item.description}</span> : null } 
+                    return (
+                        <div>
+                            <Link className="col-sm-10" to={url} >{item.name}</Link>
+                            { item.description ? <span> - Descrição: {item.description}</span> : null }
+                        </div>
+                    ); 
                 });
                 fieldHtml = <div className="col-md-6">{ listItems } </div>;
             } else if (field.isPhoto) {
