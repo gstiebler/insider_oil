@@ -97,6 +97,9 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
               <li className="nav-item">
                 <Link to="/app/tree?nodeLabel=Empresas">Empresas</Link>
               </li>
+              <li className="nav-item">
+                <Link to="/app/tree?nodeLabel=Notícias">Notícias</Link>
+              </li>
               { this.state.isAdmin ? adminLink : '' }
             </ul>
           </div>

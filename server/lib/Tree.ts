@@ -147,6 +147,12 @@ var tree: ITreeNode = {
                 source: 'Persons'
             }
         },
+        {
+            label: 'Notícias',
+            child: {
+                source: 'News'
+            }
+        },
     ]
 };
 

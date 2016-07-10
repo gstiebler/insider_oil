@@ -1144,6 +1144,44 @@ export const queries:ITableQueries = {
             },
         ]
     },
+
+    News: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'news',
+                    fields: [
+                        'id',
+                        'title',
+                        'created_at',
+                    ]
+                },
+                extraFields: [
+                    ['"News"', 'model']
+                ],
+                joinTables: [],
+                filters: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Título',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'title'
+                }
+            },
+            {
+                label: 'Data publicação',
+                fieldName: 'created_at',
+                type: 'DATETIME'
+            },
+        ]
+    },
 };
 
 export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {
