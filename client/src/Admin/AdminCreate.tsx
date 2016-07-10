@@ -59,7 +59,6 @@ export class AdminCreate extends React.Component<IAppProps, IAppState> {
 
     private fieldValuesChanged(value) {
         this.state.values = value;
-        this.setState(this.state);
     }
 
     public render(): React.ReactElement<any> {

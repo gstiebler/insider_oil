@@ -85,6 +85,12 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             value = event.target.value;
         value = value == '' ? null : value;
         this.state.values[fieldName] = value;
+        this.props.onChange( this.state.values );
+    }
+
+    private onChangeDate(fieldName, format, value) {
+        var formattedValue = moment(value, format).toDate();
+        this.state.values[fieldName] = formattedValue;
         this.props.onChange( this.state.values ); 
         this.setState(this.state);
     }
@@ -109,21 +115,13 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             ); 
         } else if (field.type == 'DATE' || field.type == 'DATETIME') {
             var format = field.isDate ? "DD/MM/YYYY" : "DD/MM/YYY HH:mm";
-
-            function onChangeDate(value) {
-                var formattedValue = moment(value, format).toDate();
-                this.state.values[field.name] = formattedValue;
-                this.props.onChange( this.state.values ); 
-                this.setState(this.state);
-            }
-
             var dateStr = moment(this.state.values[field.name]).format(format);
             return  <DateTimeField 
                        mode={'date'}
                        inputFormat={format}
                        dateTime={dateStr}
                        format={format}
-                       onChange={onChangeDate.bind(this)}
+                       onChange={this.onChangeDate.bind(this, field.name, format)}
                        className="form-control input-group"/>;
         } else if(field.isList) {
             return <ListOfInputs value={this.state.values[field.name]} 
