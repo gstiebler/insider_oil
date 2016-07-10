@@ -38,11 +38,6 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
         this.props.onChange(this.state.projects);
     };
-
-    private onDescriptionChanged(event) {
-        this.state.description = event.target.value;
-        this.setState(this.state);
-    }
     
     public render(): React.ReactElement<any> {
         var projects = this.state.projects.map((project, index) => {
@@ -77,7 +72,8 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
                                         <td><ProjectSearch onItemSelected={ this.onProjectSelected.bind(this) } /></td>
                                     </tr>
                                     <tr>
-                                        <td>Descrição: <input type="text" value={this.state.description} onChange={ this.onDescriptionChanged.bind(this) } /></td>
+                                        <td>Descrição: <input type="text" defaultValue={this.state.description} 
+                                                                          onChange={ (e) => {this.state.description = e.target.value;} } /></td>
                                     </tr>
                                 </tbody>
                             </table>

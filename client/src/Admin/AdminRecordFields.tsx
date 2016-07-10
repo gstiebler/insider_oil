@@ -84,6 +84,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         if(event.target)
             value = event.target.value;
         value = value == '' ? null : value;
+        console.log(value);
         this.state.values[fieldName] = value;
         this.props.onChange( this.state.values );
     }
@@ -108,8 +109,8 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         if(field.type == 'ref') {
             return (
                 <select className="form-control" 
-                        value={ this.state.values[field.name] }
-                        onChange={this.onChange.bind(this, field.name)} >
+                        defaultValue={ this.state.values[field.name] }
+                        onChange={this.onChange.bind(this, field.name)}>
                     { optionsInCombo(this.state.comboValues[field.name]) }
                 </select>
             ); 
@@ -128,11 +129,11 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                                  onChange={this.onChange.bind(this, field.name) }/>
         } else if(field.isBool) {
             return <input type="checkbox" 
-                          checked={ this.state.values[field.name] } 
-                          onChange={this.onChange.bind(this, field.name)} />
+                          defaultValue={ this.state.values[field.name] } 
+                          onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.isMultiFieldText || (field.type.indexOf('TEXT') > -1)) {
             return <textarea type="text" className="form-control" 
-                             value={this.state.values[field.name]}
+                             defaultValue={this.state.values[field.name]}
                              onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.enumValues) {
             var options = field.enumValues.map((enumValue, index) => {
@@ -140,7 +141,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             });
             return (
                 <select className="form-control" 
-                        value={this.state.values[field.name]} 
+                        defaultValue={this.state.values[field.name]} 
                         onChange={this.onChange.bind(this, field.name)}>
                     {options}
                 </select>
@@ -150,14 +151,14 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                                value={this.state.values[field.name]}
                                onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.isPhoto) {
-            return <ImageUpload value={ this.state.values[field.name]} 
+            return <ImageUpload defaultValue={ this.state.values[field.name]} 
                                 onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.isProjectList) {
             return <ListOfProjects value={this.state.values[field.name]} 
                                    onChange={this.onChange.bind(this, field.name)}/>
         } else {
             return <input type="text" className="form-control" 
-                          value={ this.state.values[field.name] } 
+                          defaultValue={ this.state.values[field.name] } 
                           onChange={this.onChange.bind(this, field.name)}/>
         }
     }
