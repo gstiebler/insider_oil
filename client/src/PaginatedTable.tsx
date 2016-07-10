@@ -131,17 +131,18 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
                 filters: this.state.filters
             }
         };
-        
-        function setDataTablesRows(serverResult:TableQueryDataRes) {
-            var result = { 
-                aaData: serverResult.records,
-                recordsTotal: serverResult.count,
-                recordsFiltered: serverResult.count 
-            };
-            callback(result);
-        }
-        
-        server.getTableData(options).then(setDataTablesRows).catch(showError.show);
+        server.getTableData(options)
+            .then(this.onTableData.bind(this, callback))
+            .catch(showError.show);
+    }
+
+    private onTableData(callback, serverResult:TableQueryDataRes) {
+        var result = { 
+            aaData: serverResult.records,
+            recordsTotal: serverResult.count,
+            recordsFiltered: serverResult.count 
+        };
+        callback(result);
     }
 
     private filterChanged(newFilter) {
