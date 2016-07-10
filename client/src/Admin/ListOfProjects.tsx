@@ -27,16 +27,16 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
 
     private removeItem(index) {
         this.state.projects.splice(index, 1);
-        this.props.onChange(this.state.projects);
         this.setState(this.state);
+        this.props.onChange(this.state.projects);
     };
     
     private onProjectSelected(selectedItem) {
         selectedItem.description = this.state.description;
         this.state.projects.push(selectedItem);
         this.state.description = "";
-        this.props.onChange(this.state.projects);
         this.setState(this.state);
+        this.props.onChange(this.state.projects);
     };
 
     private onDescriptionChanged(event) {

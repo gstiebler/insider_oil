@@ -57,17 +57,22 @@ export class AdminCreate extends React.Component<IAppProps, IAppState> {
         browserHistory.push('/app/model_view?model=' + this.state.modelName);
     }
 
+    private fieldValuesChanged(value) {
+        this.state.values = value;
+        this.setState(this.state);
+    }
+
     public render(): React.ReactElement<any> {
         return (
             <div className="row">   
-                <form className="form-horizontal" role="form" onSubmit={(e) => {e.preventDefault();}}>
-                    <AdminRecordFields fields={ this.state.fields } values={ this.state.values } onChange={(v) => {this.state.values = v}} />
+                <div className="form-horizontal">
+                    <AdminRecordFields fields={ this.state.fields } values={ this.state.values } onChange={this.fieldValuesChanged.bind(this)} />
                     <div className="form-group" >
                         <div className="col-sm-offset-2 col-sm-10">
                             <button className="btn btn-default" onClick={ this.saveItem.bind(this) } >Salvar</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div> 
         );
     }

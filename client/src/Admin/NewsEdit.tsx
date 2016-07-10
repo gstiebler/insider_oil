@@ -93,7 +93,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
             <h4 className="col-sm-2" >{this.state.mainTitle}</h4>
             <br/><br/><br/><br/>
             <div className="row">   
-                <form className="form-horizontal" role="form" onSubmit={(e) => {e.preventDefault();}}>
+                <div className="form-horizontal">
                     <div className="form-group">
                         <label className="control-label col-sm-2" htmlFor="title_box">Título:</label>
                         <div className="col-sm-10">
@@ -126,7 +126,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                             <button className="btn btn-default" onClick={this.saveItem.bind(this)} >Salvar</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div> 
         </div>);
     }
