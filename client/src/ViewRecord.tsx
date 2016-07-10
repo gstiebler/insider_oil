@@ -68,7 +68,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
 
         var customSource = customSources[source];
         if(customSource) {
-            browserHistory.push(customSource + '?id=' + id)
+            browserHistory.replace(customSource + '?id=' + id)
         }
     }
 
