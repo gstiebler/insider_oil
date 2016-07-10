@@ -49,7 +49,7 @@ export class ChangePassword extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<any> {
         return ( 
             <div className="row">   
-                <form className="form-horizontal" role="form" onSubmit={(e) => {e.preventDefault();}}>
+                <div className="form-horizontal" >
                     <div className="form-group">
                         <label className="control-label col-sm-2" for="current_password">Senha atual:</label>
                         <input className="col-sm-10 form-control" type="password" 
@@ -73,7 +73,7 @@ export class ChangePassword extends React.Component<IAppProps, IAppState> {
                             <button className="btn btn-default" onClick={this.changePassword.bind(this)} >Mudar senha</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>    
         );
     }
