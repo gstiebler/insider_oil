@@ -73,7 +73,8 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    private onComboValues(fieldName, values) {
+    private onComboValues(fieldName, values:any[]) {
+        values.unshift({id: null, label: ''});
         this.state.comboValues[fieldName] = values;
         this.setState(this.state);
     }
@@ -82,6 +83,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         var value = event;
         if(event.target)
             value = event.target.value;
+        value = value == '' ? null : value;
         this.state.values[fieldName] = value;
         this.props.onChange( this.state.values ); 
         this.setState(this.state);
