@@ -43,9 +43,10 @@ export function getViewParams(req: express.Request, res: express.Response, next)
 }
  
 export function getTableData(req: express.Request, res: express.Response, next) {
-    const modelName: string = req.query.table;
-    const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
-    const fieldNames = req.query.fieldNames;
+    const query: ni.GetTableData.req = req.query;
+    const modelName: string = query.table;
+    const filters = query.filters ? JSON.parse(query.filters) : {};
+    const fieldNames = query.fieldNames;
     const dataSource = dbUtils.getDataSource(modelName);
     if(!dataSource) {
     	ControllerUtils.getErrorFunc(res, 500, "Modelo não encontrado")({});
@@ -63,7 +64,8 @@ export function getTableData(req: express.Request, res: express.Response, next) 
         try {
             dbUtils.simplifyArray( dataSource, records );
             const filteredRecords = dbUtils.filterShowFields(records, showFields);
-            res.json( filteredRecords );
+            const ioRes:ni.GetTableData.res = { records: filteredRecords }; 
+            res.json( ioRes );
         } catch(e) {
             ControllerUtils.getErrorFunc(res, 500, "Erro")(e);
         }});

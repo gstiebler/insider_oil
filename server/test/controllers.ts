@@ -288,18 +288,15 @@ listWells: function(test) {
     test.equal( "Modelo não encontrado", errorResponse.error.errorMsg );
     test.equal( 0, errorResponse.error.errors.length );
     
-    req.query.table = 'Well';
-    const response = utils.getJsonResponse.sync(null, dbServerController.getTableData, req);
+    const query2:ni.GetTableData.req = { 
+        table: 'Well'
+    }; 
+    const req2 = { query: query2 };
+    const res2:ni.GetTableData.res = utils.getJsonResponse.sync(null, dbServerController.getTableData, req2);
     // records
-    test.equal(10, response.records.length);
-    test.equal('1A 0001 BA', response[0].name);
-    test.equal('Petrobras', response[0].operator_name);
-    // view params
-    test.equal( 'Poços', response.viewParams.tableLabel );
-    test.equal( 'name', response.viewParams.labelField );
-    test.equal( 'Poço', response.viewParams.fields.name.label );
-    test.equal( 'Operador', response.viewParams.fields.operator_name.label );
-    test.equal( 'Latitude', response.viewParams.fields.lat.label );
+    test.equal(10, res2.records.length);
+    test.equal('1A 0001 BA', res2.records[0].name);
+    test.equal('Petrobras', res2.records[0].operator_name);
     test.done();
 },
 

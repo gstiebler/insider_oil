@@ -16,3 +16,17 @@ export namespace GetViewParams {
         types: any;
     }
 }
+
+export namespace GetTableData {
+    export const url = 'db_server';
+
+    export interface req {
+        table: string;
+        filters?: any;
+        fieldNames?: any;
+    }
+
+    export interface res {
+        records: any[];
+    }
+}
