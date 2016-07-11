@@ -30,16 +30,20 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
             title: this.props.model.title
         };
     }
+    
+    private componentWillReceiveProps(nextProps: IAppProps) {
+        this.getQueryData(nextProps);
+    }
 
-    private componentDidMount() {
-        var filters =  this.props.model.filters;
+    private getQueryData(props: IAppProps) {
+        var filters =  props.model.filters;
         if(!filters) {
             filters = {};
-            filters.id = this.props.objId;
+            filters.id = props.objId;
         }
         var options = { 
             filters: filters,
-            queryName:  this.props.model.queryName
+            queryName:  props.model.queryName
         };
         server.getQueryData(options)
             .then(this.onData.bind(this))
@@ -130,6 +134,7 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
                             { table } </div>
                     </div>
                 </div>
+                <hr/>
             </div>
         );
     }

@@ -294,14 +294,12 @@ export function viewRecord(req: express.Request, res: express.Response, next) {
 
 export function getQueryData(req: express.Request, res: express.Response) {Sync(function(){
     try{
-        const dataSourceName = req.query.dataSource;
         const queryName = req.query.queryName;
         const filters = req.query.filters;
         const queryById = QueriesById[queryName];
         const queryStr = queryById.queryStrFn(filters);
         const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
         db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
-            const dsOperations = DataSourceOperations[dataSourceName];
             const result = {
                 fields: queryById.fields,
                 records: records

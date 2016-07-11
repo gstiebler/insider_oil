@@ -14,9 +14,11 @@ interface IAppProps {
 interface IAppState {
     id: number;
     source: string;
-    relatedPersons: any;
-    relatedBids: any;
-    relatedContracts: any;
+    fixedRefObjects: {
+        relatedPersons: any;
+        relatedBids: any;
+        relatedContracts: any;
+    }
     recordData: any;
     referencedObjects: any[];
 }
@@ -32,6 +34,25 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         this.state = {
             id: id,
             source: source,
+            fixedRefObjects: this.getFixedRefObjects(source, id),        
+            recordData: {},
+            referencedObjects: [],
+        };
+
+        var customSources = {
+            'OilField': "/app/oil_field",
+            'GasPipeline': "/app/gas_pipeline",
+            'ProductionUnit': "/app/production_unit",
+        };
+
+        var customSource = customSources[source];
+        if(customSource) {
+            browserHistory.replace(customSource + '?id=' + id)
+        }
+    }
+
+    private getFixedRefObjects(source, id) {
+        return {
             relatedPersons: {
                 queryName: 'PersonsByProject',
                 title: 'Pessoas',
@@ -55,20 +76,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                     obj_id: id,
                     dataSource: source
                 }
-            },            
-            recordData: {},
-            referencedObjects: [],
-        };
-
-        var customSources = {
-            'OilField': "/app/oil_field",
-            'GasPipeline': "/app/gas_pipeline",
-            'ProductionUnit': "/app/production_unit",
-        };
-
-        var customSource = customSources[source];
-        if(customSource) {
-            browserHistory.replace(customSource + '?id=' + id)
+            },  
         }
     }
 
@@ -77,10 +85,11 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         server.viewRecord( source, id, this.showValues.bind(this), showError.show );
     }
 
-    private componentWillReceiveProps(nextProps) {
+    private componentWillReceiveProps(nextProps: IAppProps) {
         var { id, source } = nextProps.location.query;
         this.state.id = id;
         this.state.source = source;
+        this.state.fixedRefObjects = this.getFixedRefObjects(source, id);
         server.viewRecord( source, id, this.showValues.bind(this), showError.show );
     } 
  
@@ -95,7 +104,6 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         var referencedObjects = this.state.referencedObjects.map((referencedObject) => {
             return <div key={referencedObject.queryName}>
                 <ShowQueryData model={referencedObject} objId={this.state.id}></ShowQueryData>
-                <hr/>
             </div>
         });
 
@@ -103,10 +111,9 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
             <div>
                 <ViewRecordFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></ViewRecordFields>
                 <hr/>
-                <ShowQueryData model={this.state.relatedPersons}></ShowQueryData>
-                <ShowQueryData model={this.state.relatedBids}></ShowQueryData>
-                <ShowQueryData model={this.state.relatedContracts}></ShowQueryData>
-                <hr/>
+                <ShowQueryData model={this.state.fixedRefObjects.relatedPersons}></ShowQueryData>
+                <ShowQueryData model={this.state.fixedRefObjects.relatedBids}></ShowQueryData>
+                <ShowQueryData model={this.state.fixedRefObjects.relatedContracts}></ShowQueryData>
                 { referencedObjects }
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>
