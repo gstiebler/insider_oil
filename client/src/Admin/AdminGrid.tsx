@@ -50,6 +50,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         var columns = ModelViewService.getColumns(res.viewParams, res.types);
         columns.push( { title: "Editar", data: 'edit' } );
         columns.push( { title: "Apagar", data: 'delete' } );
+        columns.push( { title: "Ficha", data: 'view_record' } );
         
         this.state.dataTable = this.state.dataTableElement.DataTable( {
             columns: columns,
@@ -92,8 +93,8 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         const req:GetTableData.req = { 
             table: this.state.modelName,
             pagination: {
-                first: parseInt(data.start),
-                itemsPerPage: parseInt(data.length) 
+                first: data.start,
+                itemsPerPage: data.length 
             },
             order: orderColumns,
             filters: filters
@@ -109,6 +110,8 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
             var record = res.records[i];
             record.edit = '<a class="btn btn-large btn-primary" onclick="window.adminGridRef.editRecord(' + record.id + ')">Editar</a>';
             record.delete = '<button class="btn btn-large btn-danger" onclick="window.adminGridRef.deleteRecord(' + record.id + ')">Apagar</button>';
+            var paramsStr = 'source=' + this.state.modelName + '&id=' + record.id; 
+            record.view_record = '<a href="/app/view_record?' + paramsStr + '">Ficha</a>';
             dataSet.push(record);
         }
 
