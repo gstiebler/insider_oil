@@ -70,7 +70,7 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
     
     public render(): React.ReactElement<any> {
         var fields = this.state.record.map((field):React.ReactElement<any> => {
-            var label:React.ReactElement<any> = <div className="col-md-6"> {field.label} </div>;
+            var label:React.ReactElement<any> = <div className="col-md-6" key={field.label}> {field.label} </div>;
 
             var fieldHtml:React.ReactElement<any> = null;
             if(field.ref) {
@@ -81,13 +81,13 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
             } else if (field.isHTML) {
                 fieldHtml = <div dangerouslySetInnerHTML={ {__html: field.value } } ></div>
             } else if (field.isList) {
-                var listItems = field.value.map((item) => { <span className="col-sm-10">{item}</span> });
+                var listItems = field.value.map((item, index) => { <span className="col-sm-10" key={'i'+index}>{item}</span> });
                 fieldHtml = <div className="col-md-6">{ listItems } </div>;
             } else if (field.isProjectList) {
-                var listItems = field.value.map((item) => { 
+                var listItems = field.value.map((item, index) => { 
                     var url = "/app/view_record?source=" + item.model + "&id=" + item.id;
                     return (
-                        <div>
+                        <div key={'pl' + index}>
                             <Link className="col-sm-10" to={url} >{item.name}</Link>
                             { item.description ? <span> - Descrição: {item.description}</span> : null }
                         </div>
@@ -101,7 +101,7 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
                 var listItems = field.value.map((concessionary) => { 
                     var url = "/app/view_record?source=Company&id=" + concessionary.id;
                     var labelHtml:string = ": " + concessionary.prop * 100 + "%";
-                    return <div><Link to={url}>{concessionary.name}</Link>{labelHtml}</div>; 
+                    return <div key={concessionary.name}><Link to={url}>{concessionary.name}</Link>{labelHtml}</div>; 
                 });
                 fieldHtml = <div className="col-md-6">{ listItems } </div>;
             } else {
