@@ -84,7 +84,6 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         if(event.target)
             value = event.target.value;
         value = value == '' ? null : value;
-        console.log(value);
         this.state.values[fieldName] = value;
         this.props.onChange( this.state.values );
     }
@@ -128,9 +127,15 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             return <ListOfInputs value={this.state.values[field.name]} 
                                  onChange={this.onChange.bind(this, field.name) }/>
         } else if(field.isBool) {
+            function onCheckboxChange(event) {
+                var value = !this.state.values[field.name];
+                this.onChange(field.name, value);
+                this.setState(this.state);
+            }
+
             return <input type="checkbox" 
-                          defaultValue={ this.state.values[field.name] } 
-                          onChange={this.onChange.bind(this, field.name)}/>
+                          checked={ this.state.values[field.name] } 
+                          onChange={onCheckboxChange.bind(this)}/>
         } else if(field.isMultiFieldText || (field.type.indexOf('TEXT') > -1)) {
             return <textarea type="text" className="form-control" 
                              defaultValue={this.state.values[field.name]}
