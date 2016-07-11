@@ -73,7 +73,9 @@ export function getTableData(req: express.Request, res: express.Response, next) 
     // TODO only get selected fields
     const findOpts = {
         where: filterObj,
-        order: orderObj
+        order: orderObj,
+        offset: parseInt(pagination.first),
+        limit: parseInt(pagination.itemsPerPage)
     }
     dbUtils.findAllCustom(dataSource, findOpts).then(sendRecords)
         .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));

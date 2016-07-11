@@ -92,8 +92,8 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         const req:GetTableData.req = { 
             table: this.state.modelName,
             pagination: {
-                first: data.start,
-                itemsPerPage: data.length 
+                first: parseInt(data.start),
+                itemsPerPage: parseInt(data.length) 
             },
             order: orderColumns,
             filters: filters

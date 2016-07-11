@@ -33,8 +33,8 @@ export namespace GetTableData {
         filters?: IFilter[];
         fieldNames?: any;
         pagination?: {
-            first: number;
-            itemsPerPage: number;
+            first: string;
+            itemsPerPage: string;
         },
         order?: IOrderColumn[]
     }
