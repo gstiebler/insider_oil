@@ -48,6 +48,7 @@ export function getTableData(req: express.Request, res: express.Response, next) 
     const filters = query.filters;
     const fieldNames = query.fieldNames;
     const order = query.order;
+    const pagination = query.pagination;
     const dataSource = dbUtils.getDataSource(modelName);
     if(!dataSource) {
     	ControllerUtils.getErrorFunc(res, 500, "Modelo não encontrado")({});
@@ -81,7 +82,11 @@ export function getTableData(req: express.Request, res: express.Response, next) 
         try {
             dbUtils.simplifyArray( dataSource, records );
             const filteredRecords = dbUtils.filterShowFields(records, showFields);
-            const ioRes:ni.GetTableData.res = { records: filteredRecords }; 
+            const count = await( dataSource.count({ where: filterObj }) );
+            const ioRes:ni.GetTableData.res = { 
+                records: filteredRecords,
+                count
+            }; 
             res.json( ioRes );
         } catch(e) {
             ControllerUtils.getErrorFunc(res, 500, "Erro")(e);

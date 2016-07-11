@@ -41,5 +41,6 @@ export namespace GetTableData {
 
     export interface res {
         records: any[];
+        count: number;
     }
 }

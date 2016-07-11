@@ -114,8 +114,8 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
 
         var result = { 
             aaData: dataSet,
-            recordsTotal: 3,
-            recordsFiltered: 3 
+            recordsTotal: res.count,
+            recordsFiltered: res.count 
         };
         callback(result);
         return null;

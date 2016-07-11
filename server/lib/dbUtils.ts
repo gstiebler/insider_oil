@@ -8,6 +8,7 @@ export interface ioDataSource {
     findById(id: number, options?: any): any;
     create(newItemData: any): any;
     destroy(options?: any): any;
+    count(options: any): Promise<any>;
     tableAttributes: any;
     attributes: [string, any];
     associations: [string, any];
@@ -86,6 +87,9 @@ function createDataSource(dataSourceName: string): ioDataSource {
         },
         destroy: function(options) {
             return dataSourceParams.model.destroy(options);
+        },
+        count: (options) => {
+            return dataSourceParams.model.count(options);
         },
         associations: dataSourceParams.model.associations,
         attributes: dataSourceParams.model.attributes,
