@@ -8,7 +8,7 @@ import * as Flash from '../Flash'
 import { ExcelUploadButton } from './ExcelUploadButton'
 import { str2ab } from '../lib/BytesUtils';
 import * as FileSaver from 'file-saver'; 
-import * as ni from '../../../common/NetworkInterfaces';
+import { GetViewParams, GetTableData } from '../../../common/NetworkInterfaces';
 
 interface IAppProps {
     location: any;
@@ -17,6 +17,7 @@ interface IAppProps {
 interface IAppState {
     viewParams: any;
     dataTableElement: any;
+    dataTable: any;
     modelOperations: any;
     modelName: string;
 }
@@ -28,31 +29,29 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
 
         this.state = { 
             viewParams: {},
-            dataTableElement: {},
+            dataTableElement: null,
             modelOperations: {},
-            modelName: props.location.query.model
+            modelName: props.location.query.model,
+            dataTable: null
         };
         window['adminGridRef'] = this;
     }
 
     public componentDidMount() {
         this.state.dataTableElement = $('#mainTable');
-    }
-
-    private componentWillReceiveProps(nextProps: IAppProps) {
         this.state.modelOperations = ModelOperations.getModelOperations(this.state.modelName);
-        const req:ni.GetViewParams.req = { table: this.state.modelName }; 
-        server.getP(ni.GetViewParams.url, req)
+        const req:GetViewParams.req = { table: this.state.modelName }; 
+        server.getP('/view_params', req)
             .then(this.initTable.bind(this))
             .catch(showError.show);
     }
 
-    private initTable(res: ni.GetViewParams.res) {
+    private initTable(res: GetViewParams.res) {
         var columns = ModelViewService.getColumns(res.viewParams, res.types);
         columns.push( { title: "Editar", data: 'edit' } );
         columns.push( { title: "Apagar", data: 'delete' } );
         
-        this.state.dataTableElement.DataTable( {
+        this.state.dataTable = this.state.dataTableElement.DataTable( {
             columns: columns,
             language: ModelViewService.datatablesPtBrTranslation,
             processing: true, // show processing message when loading rows
@@ -64,7 +63,8 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
 
         this.state.viewParams = res.viewParams;
         this.setState(this.state);
-        this.state.dataTableElement.draw();
+        this.state.dataTable.draw();
+        return null;
     }
 
      /**
@@ -72,23 +72,38 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
      * and when a page on pagination is clicked
      */
     private ajaxFn(data, callback, settings) {
-        var orderColumns = [];
+        var orderColumns: GetTableData.IOrderColumn[] = [];
         for(var i = 0; i < data.order.length; i++) {
             var columnIndex = data.order[i].column;
-            var orderObj = {
+            var orderObj:GetTableData.IOrderColumn = {
                 fieldName: data.columns[columnIndex].data,
                 dir: data.order[i].dir
             };
             orderColumns.push( orderObj );
         }
 
-        const req:ni.GetTableData.req = { table: this.state.modelName }; 
-        server.getP(ni.GetTableData.url, req)
-            .then(this.initTable.bind(this, callback))
+        const filters: GetTableData.IFilter[] = [];
+        if(data.search.value && data.search.value != '') {
+            filters.push({
+                field: orderColumns[0].fieldName,
+                value: data.search.value,
+            });
+        }
+        const req:GetTableData.req = { 
+            table: this.state.modelName,
+            pagination: {
+                first: data.start,
+                itemsPerPage: data.length 
+            },
+            order: orderColumns,
+            filters: filters
+        }; 
+        server.getP('/table_data', req)
+            .then(this.onTableData.bind(this, callback))
             .catch(showError.show);
     }
 
-    private onTableData(callback, res:ni.GetTableData.res) {
+    private onTableData(callback, res:GetTableData.res) {
         var dataSet = [];
         for( var i = 0; i < res.records.length; i++) {
             var record = res.records[i];
@@ -103,6 +118,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
             recordsFiltered: 3 
         };
         callback(result);
+        return null;
     }
 
     private editRecord(id) {

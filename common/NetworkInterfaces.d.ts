@@ -5,7 +5,6 @@ interface teste {
 }
 
 export namespace GetViewParams {
-    export const url = 'view_params';
 
     export interface req {
         table: string;
@@ -18,12 +17,26 @@ export namespace GetViewParams {
 }
 
 export namespace GetTableData {
-    export const url = 'db_server';
+
+    export interface IOrderColumn {
+        fieldName: string;
+        dir: string;
+    }
+
+    export interface IFilter {
+        field: string;
+        value: string;
+    }
 
     export interface req {
         table: string;
-        filters?: any;
+        filters?: IFilter[];
         fieldNames?: any;
+        pagination?: {
+            first: number;
+            itemsPerPage: number;
+        },
+        order?: IOrderColumn[]
     }
 
     export interface res {

@@ -45,19 +45,36 @@ export function getViewParams(req: express.Request, res: express.Response, next)
 export function getTableData(req: express.Request, res: express.Response, next) {
     const query: ni.GetTableData.req = req.query;
     const modelName: string = query.table;
-    const filters = query.filters ? JSON.parse(query.filters) : {};
+    const filters = query.filters;
     const fieldNames = query.fieldNames;
+    const order = query.order;
     const dataSource = dbUtils.getDataSource(modelName);
     if(!dataSource) {
     	ControllerUtils.getErrorFunc(res, 500, "Modelo não encontrado")({});
         return;
     }
     const viewParams = dsParams[dataSource.name];
+
+    const filterObj:any = {};
+    if(filters) {
+        for(var filter of filters) {
+            filterObj[filter.field] = { $like: '%' + filter.value + '%' };
+        }
+    }
+
+    const orderObj = order.map((orderItem) => {
+        return [orderItem.fieldName, orderItem.dir.toUpperCase()];
+    });
+
     var showFields = fieldNames;
     if(!showFields)
         showFields = viewParams.gridFields;
     // TODO only get selected fields
-    dbUtils.findAllCustom(dataSource, {}, filters).then(sendRecords)
+    const findOpts = {
+        where: filterObj,
+        order: orderObj
+    }
+    dbUtils.findAllCustom(dataSource, findOpts).then(sendRecords)
         .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
     
     function sendRecords(records) {Sync(function() {
