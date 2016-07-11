@@ -10,7 +10,7 @@ var loginController = require('../controllers/loginController');
 var SearchController = require('../controllers/SearchController');
 var Sync = require('sync');
 var utils = require('./lib/utils');
-//var Future = Sync.Future();
+import * as ni from '../../common/NetworkInterfaces';
 
 
 function testRenderFn(test, errorMsg) {
@@ -97,10 +97,10 @@ createWell: function(test) {
     const req2 = {
         query: { table: 'Well' }
     };
-    const response = utils.getJsonResponse.sync(null, dbServerController.main, req2);
-    test.equal(11, response.records.length);
-    test.equal('Novo poço', response.records[3].name);
-    test.equal('Statoil', response.records[3].operator_name);
+    const response = utils.getJsonResponse.sync(null, dbServerController.getTableData, req2);
+    test.equal(11, response.length);
+    test.equal('Novo poço', response[3].name);
+    test.equal('Statoil', response[3].operator_name);
     test.done();
 },
 
@@ -158,8 +158,8 @@ deleteWell: function(test) {
     const req2 = {
         query: { table: 'Well' }
     };
-    const response2 = utils.getJsonResponse.sync(null, dbServerController.main, req2);
-    test.equal(9, response2.records.length);
+    const response2 = utils.getJsonResponse.sync(null, dbServerController.getTableData, req2);
+    test.equal(9, response2.length);
     test.done();
 },
 
@@ -259,9 +259,9 @@ importBlocksFromURL: function(test) {
         }
     };    
     
-    const resListBlocks = utils.getJsonResponse.sync(null, dbServerController.main, reqListBlocks);
+    const resListBlocks = utils.getJsonResponse.sync(null, dbServerController.getTableData, reqListBlocks);
     // records
-    test.ok(resListBlocks.records.length > 330);
+    test.ok(resListBlocks.length > 330);
     
     test.done();
 },
@@ -283,17 +283,17 @@ listWells: function(test) {
         }
     };    
     
-    const errorResponse = utils.getJsonResponse.sync(null, dbServerController.main, req);
+    const errorResponse = utils.getJsonResponse.sync(null, dbServerController.getTableData, req);
     test.equal( 500, errorResponse.code ); // test HTTP error code
     test.equal( "Modelo não encontrado", errorResponse.error.errorMsg );
     test.equal( 0, errorResponse.error.errors.length );
     
     req.query.table = 'Well';
-    const response = utils.getJsonResponse.sync(null, dbServerController.main, req);
+    const response = utils.getJsonResponse.sync(null, dbServerController.getTableData, req);
     // records
     test.equal(10, response.records.length);
-    test.equal('1A 0001 BA', response.records[0].name);
-    test.equal('Petrobras', response.records[0].operator_name);
+    test.equal('1A 0001 BA', response[0].name);
+    test.equal('Petrobras', response[0].operator_name);
     // view params
     test.equal( 'Poços', response.viewParams.tableLabel );
     test.equal( 'name', response.viewParams.labelField );
@@ -303,6 +303,18 @@ listWells: function(test) {
     test.done();
 },
 
+getWellsViewParams: (test: nodeunit.Test) => { 
+    const query:ni.GetViewParams.req = { table: 'Well' };  
+    const req = { query };
+    const res:ni.GetViewParams.res = utils.getJsonResponse.sync(null, dbServerController.getViewParams, req);
+
+    test.equal( 'Poços', res.viewParams.tableLabel );
+    test.equal( 'name', res.viewParams.labelField );
+    test.equal( 'Poço', res.viewParams.fields['name'].label );
+    test.equal( 'Operador', res.viewParams.fields['operator_name'].label );
+    test.equal( 'Latitude', res.viewParams.fields['lat'].label );
+    test.done();
+},
 
 modelFields: function(test) {
     const req = {
@@ -386,7 +398,7 @@ adminTablesIntegrity: test => {
         const req = {
             query: { table: dataSourceName }
         };
-        let responseRecords = utils.getJsonResponse.sync(null, dbServerController.main, req);
+        let responseRecords = utils.getJsonResponse.sync(null, dbServerController.getTableData, req);
         test.ok(responseRecords.records, 'Problem with model ' + dataSourceName);
         if(responseRecords.records) {
             test.ok(responseRecords.records.length >= 2, 'Problem with model ' + dataSourceName + 
@@ -436,7 +448,7 @@ allTablesMain: test => {
 	        }
 	    };
         try {
-            const response = utils.getJsonResponse.future(null, dbServerController.main, req);
+            const response = utils.getJsonResponse.future(null, dbServerController.getTableData, req);
             for(var gridField of response.result.viewParams.gridFields) {
                 if(gridField == 'id') continue;
                 test.ok(response.result.viewParams.fields[gridField], 'Grid field not found: ' + gridField + ' in ' + model);

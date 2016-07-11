@@ -19,6 +19,7 @@ import TimeSeriesQueries = require('../db/queries/TimeSeriesQueries');
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 import Sequelize = require('sequelize');
 import * as interfaces from '../../common/Interfaces';
+import * as ni from '../../common/NetworkInterfaces';
  
 function getFieldTypes(fields) {
     const types = {};
@@ -26,9 +27,22 @@ function getFieldTypes(fields) {
         types[fields[i].name] = fields[i].type; 
     }
     return types;
+} 
+
+export function getViewParams(req: express.Request, res: express.Response, next) {
+    const query: ni.GetViewParams.req = req.query;
+    const modelName: string = query.table;
+    const dataSource = dbUtils.getDataSource(modelName);
+    const viewParams = dsParams[dataSource.name];
+    viewParams.gridFields.push('id');
+    const dsOperations = DataSourceOperations[modelName];
+    const fields = dsOperations.getModelFields(modelName);
+    var types = getFieldTypes(fields);
+    const ioRes: ni.GetViewParams.res = { viewParams, types };
+    res.json(ioRes);
 }
  
-export function main(req: express.Request, res: express.Response, next) {
+export function getTableData(req: express.Request, res: express.Response, next) {
     const modelName: string = req.query.table;
     const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
     const fieldNames = req.query.fieldNames;
@@ -47,16 +61,9 @@ export function main(req: express.Request, res: express.Response, next) {
     
     function sendRecords(records) {Sync(function() {
         try {
-            viewParams.gridFields.push('id');
             dbUtils.simplifyArray( dataSource, records );
-            const dsOperations = DataSourceOperations[modelName];
-            const fields = dsOperations.getModelFields(modelName);
-            const responseObj = {
-                records: dbUtils.filterShowFields(records, showFields),
-                viewParams: viewParams,
-                types: getFieldTypes(fields)
-            };
-            res.json( responseObj );
+            const filteredRecords = dbUtils.filterShowFields(records, showFields);
+            res.json( filteredRecords );
         } catch(e) {
             ControllerUtils.getErrorFunc(res, 500, "Erro")(e);
         }});

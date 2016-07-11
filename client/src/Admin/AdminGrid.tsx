@@ -16,7 +16,6 @@ interface IAppProps {
 interface IAppState {
     viewParams: any;
     dataTableElement: any;
-    datatableInitialized: boolean;
     modelOperations: any;
     modelName: string;
 }
@@ -29,35 +28,35 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         this.state = { 
             viewParams: {},
             dataTableElement: {},
-            datatableInitialized: false,
             modelOperations: {},
-            modelName: ''
+            modelName: props.location.query.model
         };
-        this.state.modelName = props.location.query.model;
-        this.state.datatableInitialized = false;
         window['adminGridRef'] = this;
     }
 
     public componentDidMount() {
         this.state.dataTableElement = $('#mainTable');
         this.state.modelOperations = ModelOperations.getModelOperations(this.state.modelName);
-        server.getTable(this.state.modelName, {}, this.showModel.bind(this), showError.show );
     }
 
-    private showModel(modelData) {
-        if(modelData.records.length == 0) return;
+    private componentWillReceiveProps(nextProps) {
+        this.initTable();
+    }
+
+    private initTable() {
+        var columns = ModelViewService.getColumns(modelData.viewParams, modelData.types);
+        columns.push( { title: "Editar", data: 'edit' } );
+        columns.push( { title: "Apagar", data: 'delete' } );
         
-        if(!this.state.datatableInitialized) {
-            var columns = ModelViewService.getColumns(modelData.viewParams, modelData.types);
-            columns.push( { title: "Editar", data: 'edit' } );
-            columns.push( { title: "Apagar", data: 'delete' } );
-            
-            this.state.dataTableElement.DataTable( {
-                columns: columns,
-                language: ModelViewService.datatablesPtBrTranslation
-            } );
-            this.state.datatableInitialized = true;
-        }
+        this.state.dataTableElement.DataTable( {
+            columns: columns,
+            language: ModelViewService.datatablesPtBrTranslation,
+            processing: true, // show processing message when loading rows
+            serverSide: true,
+            searching: true,
+            //dom: 'rtip', // constrols what parts of datatables is visible
+            ajax: this.ajaxFn.bind(this)
+        } );
         
         var dataSet = [];
         for( var i = 0; i < modelData.records.length; i++) {
@@ -73,6 +72,39 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
 
         this.state.viewParams = modelData.viewParams;
         this.setState(this.state);
+    }
+
+     /**
+     * DataTables callback to refresh the data. It's called when the order column change,
+     * and when a page on pagination is clicked
+     */
+    private ajaxFn(data, callback, settings) {
+        var orderColumns = [];
+        for(var i = 0; i < data.order.length; i++) {
+            var columnIndex = data.order[i].column;
+            var orderObj = {
+                fieldName: data.columns[columnIndex].data,
+                dir: data.order[i].dir
+            };
+            orderColumns.push( orderObj );
+        }
+        
+        var options = {
+            table: this.state.modelName,
+        };
+
+        server.getTable(options)
+            .then(this.onTableData.bind(this))
+            .catch(showError.show);
+    }
+
+    private onTableData(callback, serverResult) {
+        var result = { 
+            aaData: serverResult.records,
+            recordsTotal: serverResult.count,
+            recordsFiltered: serverResult.count 
+        };
+        callback(result);
     }
 
     private editRecord(id) {

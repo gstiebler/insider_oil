@@ -6,6 +6,7 @@ import { Link, browserHistory } from 'react-router';
 import { PaginatedTableHeader, HeaderParams, FilterField } from './PaginatedTableHeader';
 import { TableQueryDataRes } from '../../common/Interfaces';
 import * as StringUtils from './lib/StringUtils'; 
+import { genColumns } from './lib/TableUtils';
 
 
 interface IAppProps {
@@ -35,36 +36,11 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         this.initTable();
     }
 
-    private genColumns() {
-        var columns:FilterField[] = [];
-        var { tableParams } = this.props;
-        var currencyColumnsIndexes = [];
-        for(var i = 0; i < tableParams.fields.length; i++) {
-            var field = tableParams.fields[i];
-            var columnObj:FilterField = {
-                 title: field.label,
-                 data: '',
-                 render: {} 
-            };
-            if(field.ref) {
-                columnObj.data = field.ref.valueField,
-                columnObj.render = { display: this.getFormatLinkFn(field) };
-            } else {
-                columnObj.data = field.fieldName;
-                columnObj.render = { display: ModelViewService.formatFnByType(field) };
-                if(field.type == 'CURRENCY') {
-                    currencyColumnsIndexes.push(i);
-                }
-            }
-            columns.push(columnObj);
-        }
-        return {columns, currencyColumnsIndexes};
-    }
-
     private initTable() {
         var dataTableElement:any = $('#mainTable');
 
-        var {columns, currencyColumnsIndexes} = this.genColumns();
+        var { tableParams } = this.props;
+        var {columns, currencyColumnsIndexes} = genColumns(tableParams);
 
         this.state.headerParams = { 
             filterFields: columns,
@@ -92,17 +68,6 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         }
         var queryStr = "/app/view_record" + StringUtils.formatUrlParams(opts);
         browserHistory.push(queryStr);
-    }
-
-    private getFormatLinkFn(column) {
-        return function(value, type, row) {
-            if(!value)
-                return ''
-            var paramsStr = StringUtils.format("'{0}', {1}", row[column.ref.modelField], row[column.ref.idField]);
-            var linkStr = '<a href="" onclick="window.paginatedTableRef.followLink(' + 
-                    paramsStr + '); return false;">' + value + '</a>';
-            return linkStr;
-        }
     }
 
     /**

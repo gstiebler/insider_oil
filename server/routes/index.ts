@@ -10,6 +10,7 @@ var searchController = require('../controllers/SearchController');
 import ExcelController = require('../controllers/ExcelController');
 var imageController = require('../controllers/ImageController');
 import express = require("express");
+import * as ni from '../../common/NetworkInterfaces';
 
 module.exports = function(app: express.Express) {
     // Main route
@@ -22,7 +23,8 @@ module.exports = function(app: express.Express) {
     app.put('/login/logout',    session.authorize, loginController.logout );
     
     // DB Server
-    app.get('/db_server/', session.authorize,      dbServerController.main);
+    app.get('/db_server/', session.authorize,      dbServerController.getTableData);
+    app.get('/' + ni.GetViewParams.url, session.authorize, dbServerController.getViewParams);
     app.get('/model_fields/', session.authorize,   dbServerController.modelFields);
     app.get('/record_values/',  session.authorize, dbServerController.recordValues);
     app.get('/view_record/',   session.authorize,  dbServerController.viewRecord);

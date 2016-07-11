@@ -6,7 +6,7 @@ import Sequelize = require('sequelize');
 import winston   = require('winston');
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../../../db/config/config.json');
+var config    = require(__dirname + '/../../../../db/config/config.json');
 
 
 var models:any = {};

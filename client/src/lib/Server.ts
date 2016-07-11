@@ -68,18 +68,9 @@ export function getUserDetails(onData, onError) {
 
 /**
  * Return multiple records
- * @param {String} table Name of the datasource
- * @param {} options Options (filters and fields)
- * @param {Function} okCallback Result callback
- * @param {Function} errorCallback Error callback
  */
-export function getTable( table, options, okCallback, errorCallback ) {
-    var params = { 
-        table: table,
-        filters: options.filters,
-        fieldNames: options.fieldNames,
-    };
-    get('/db_server/', params, okCallback, errorCallback);
+export function getTable(params):Promise<any> {
+    return getP('/db_server/', params);
 }
 
 /**
