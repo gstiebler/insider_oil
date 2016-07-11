@@ -20,6 +20,56 @@ interface IQueriesById {
     [name: string]: IQueryById;
 }
 
+function wellsByDrillingRigOffshoreQueryOpts(filter):QueryGenerator.IQueryOpts {
+    return {
+        table: {
+            name: 'wells',
+            fields: [
+                ['id', 'w_id'],
+                ['name', 'well_name'],
+                'start'
+            ]
+        },
+        joinTables: [],
+        extraFields: [
+            ['"Well"', 'model'],
+        ],
+        filters: [
+            {
+                field: 'wells.drilling_rig_offshore_id',
+                equal: filter.id
+            }
+        ],
+        order: [ 
+            {
+                fieldName: 'well_name',
+                dir: 'asc'
+            }
+        ],
+    };
+}
+const wellsByDrillingRigOffshore = {
+    queryStrFn: (filter) => {
+        const options:QueryGenerator.IQueryOpts = wellsByDrillingRigOffshoreQueryOpts(filter);
+        return QueryGenerator.queryGenerator(options);
+    },
+    fields: [
+    {
+            label: 'Poço',
+            ref: {
+                modelField: 'model',
+                idField: 'w_id',
+                valueField: 'well_name'
+            }
+        },
+        {
+            label: 'Início',
+            fieldName: 'start',
+            type: 'DATE'
+        },
+    ]
+}
+
 const queries:IQueriesById = {
     PersonsByProject: {
         queryStrFn: (filters) => {
@@ -603,6 +653,22 @@ const queries:IQueriesById = {
                 type: 'VARCHAR'
             },
         ]
+    },
+
+    wellsByDrillingRigOffshore: wellsByDrillingRigOffshore,
+
+    wellsByDrillingRigOnshore: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = wellsByDrillingRigOffshoreQueryOpts(filter);
+            options.filters = [
+                {
+                    field: 'wells.drilling_rig_onshore_id',
+                    equal: filter.id 
+                }
+            ]
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: wellsByDrillingRigOffshore.fields
     },
 };
 

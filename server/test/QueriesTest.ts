@@ -2,7 +2,7 @@
 
 import fiberTests = require('./lib/fiberTests');
 var utils = require('./lib/utils');
-import nodeunit = require('nodeunit');
+import * as nodeunit from 'nodeunit';
 import dbServerController = require('../controllers/dbServerController');
 
 var group: nodeunit.ITestGroup = {
@@ -358,6 +358,40 @@ productionUnitByOilField: (test: nodeunit.Test) => {
     test.equal('Cidade de Magaratiba', resQueryValues.records[1].pu_name);
 
     test.done();
+},
+
+wellsByDrillingRigOffshore: (test: nodeunit.Test) => {
+    const abanId = utils.idByName('DrillingRigOffshore', 'Aban Abraham');
+    const filters = {
+        id: abanId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'wellsByDrillingRigOffshore',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+
+    test.done(); 
+},
+
+wellsByDrillingRigOnshore: (test: nodeunit.Test) => {
+    const nicId = utils.idByName('DrillingRigOnshore', 'NIC-01');
+    const filters = {
+        id: nicId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'wellsByDrillingRigOnshore',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+
+    test.done(); 
 },
 
 }

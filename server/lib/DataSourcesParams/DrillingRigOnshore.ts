@@ -50,7 +50,13 @@ const DrillingRigOnshore: IBaseDataSourceParams = {
             empresa: 'contractor',
             vencimento: 'end',
         }
-    }
+    },
+    referencedObjectsOnView:  [
+        {
+            queryName: 'wellsByDrillingRigOnshore',
+            title: 'Poços'
+        },
+    ]
 }
 
 export = DrillingRigOnshore;

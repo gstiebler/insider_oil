@@ -80,6 +80,8 @@ export function getWhereStr(filters: IFilter[], aliasMap?): string {
             whereStr += ') and ';
         } else if (filter.equal) {
             whereStr += field + ' = ' + filter.equal + ' and ';
+        } else {
+            throw 'Invalid filter';
         }
     }
     whereStr = whereStr.substr(0, whereStr.length - 4);

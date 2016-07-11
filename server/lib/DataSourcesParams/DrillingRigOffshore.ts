@@ -60,7 +60,13 @@ const DrillingRigOffshore: IBaseDataSourceParams = {
             início: 'start',
             fim: 'end',
         }
-    }
+    },
+    referencedObjectsOnView:  [
+        {
+            queryName: 'wellsByDrillingRigOffshore',
+            title: 'Poços'
+        },
+    ]
 }
 
 export = DrillingRigOffshore
