@@ -8,6 +8,7 @@ import * as Flash from '../Flash'
 import { ExcelUploadButton } from './ExcelUploadButton'
 import { str2ab } from '../lib/BytesUtils';
 import * as FileSaver from 'file-saver'; 
+import * as ni from '../../../common/NetworkInterfaces';
 
 interface IAppProps {
     location: any;
@@ -36,15 +37,18 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
 
     public componentDidMount() {
         this.state.dataTableElement = $('#mainTable');
+    }
+
+    private componentWillReceiveProps(nextProps: IAppProps) {
         this.state.modelOperations = ModelOperations.getModelOperations(this.state.modelName);
+        const req:ni.GetViewParams.req = { table: this.state.modelName }; 
+        server.getP(ni.GetViewParams.url, req)
+            .then(this.initTable.bind(this))
+            .catch(showError.show);
     }
 
-    private componentWillReceiveProps(nextProps) {
-        this.initTable();
-    }
-
-    private initTable() {
-        var columns = ModelViewService.getColumns(modelData.viewParams, modelData.types);
+    private initTable(res: ni.GetViewParams.res) {
+        var columns = ModelViewService.getColumns(res.viewParams, res.types);
         columns.push( { title: "Editar", data: 'edit' } );
         columns.push( { title: "Apagar", data: 'delete' } );
         
@@ -57,21 +61,10 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
             //dom: 'rtip', // constrols what parts of datatables is visible
             ajax: this.ajaxFn.bind(this)
         } );
-        
-        var dataSet = [];
-        for( var i = 0; i < modelData.records.length; i++) {
-            var record = modelData.records[i];
-            record.edit = '<a class="btn btn-large btn-primary" onclick="window.adminGridRef.editRecord(' + record.id + ')">Editar</a>';
-            record.delete = '<button class="btn btn-large btn-danger" onclick="window.adminGridRef.deleteRecord(' + record.id + ')">Apagar</button>';
-            dataSet.push(record);
-        }
-        
-        var oTable = this.state.dataTableElement.dataTable();
-        oTable.fnClearTable();
-        oTable.fnAddData( dataSet );
 
-        this.state.viewParams = modelData.viewParams;
+        this.state.viewParams = res.viewParams;
         this.setState(this.state);
+        this.state.dataTableElement.draw();
     }
 
      /**
@@ -88,21 +81,26 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
             };
             orderColumns.push( orderObj );
         }
-        
-        var options = {
-            table: this.state.modelName,
-        };
 
-        server.getTable(options)
-            .then(this.onTableData.bind(this))
+        const req:ni.GetTableData.req = { table: this.state.modelName }; 
+        server.getP(ni.GetTableData.url, req)
+            .then(this.initTable.bind(this, callback))
             .catch(showError.show);
     }
 
-    private onTableData(callback, serverResult) {
+    private onTableData(callback, res:ni.GetTableData.res) {
+        var dataSet = [];
+        for( var i = 0; i < res.records.length; i++) {
+            var record = res.records[i];
+            record.edit = '<a class="btn btn-large btn-primary" onclick="window.adminGridRef.editRecord(' + record.id + ')">Editar</a>';
+            record.delete = '<button class="btn btn-large btn-danger" onclick="window.adminGridRef.deleteRecord(' + record.id + ')">Apagar</button>';
+            dataSet.push(record);
+        }
+
         var result = { 
-            aaData: serverResult.records,
-            recordsTotal: serverResult.count,
-            recordsFiltered: serverResult.count 
+            aaData: dataSet,
+            recordsTotal: 3,
+            recordsFiltered: 3 
         };
         callback(result);
     }
@@ -119,7 +117,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
     
     private onDelete(status) {
         Flash.create('success', status.msg );
-        server.getTable(this.state.modelName, {}, this.showModel.bind(this), showError.show ); 
+        this.state.dataTableElement.draw(); 
     }
     
     private showMap() {
@@ -129,7 +127,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         
     private onFileUploaded(status) {
         Flash.create('success', status );
-        server.getTable(this.state.modelName, {}, this.showModel.bind(this), showError.show );
+        this.state.dataTableElement.draw(); 
     }
     
     private getExcelFile() {

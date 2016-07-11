@@ -2,6 +2,7 @@ import * as session from './session';
 import * as jquery from 'jquery';
 import * as remoteServer from '../../../common/Interfaces';
 import * as Promise from 'bluebird';
+import * as ni from '../../../common/NetworkInterfaces';
 
 function ajax(url: string, data: any, type:string, onSuccess?, onError?) {
     data.token = session.getToken();
@@ -24,7 +25,7 @@ function get(url: string, data: any, onSuccess?, onError?) {
     ajax(url, data, 'GET', onSuccess, onError);
 }
 
-function getP(url: string, data: any):Promise<any> {
+export function getP(url: string, data: any):Promise<any> {
     return new Promise<any>( function(resolve, reject) {
         ajax(url, data, 'GET', (result) => { resolve(result) }, 
                 (error) => { reject(error) });
@@ -64,13 +65,6 @@ function deleteHTTP(url: string, data: any, onSuccess?, onError?) {
  */
 export function getUserDetails(onData, onError) {
     get('/user/details', {}, onData, onError);
-}
-
-/**
- * Return multiple records
- */
-export function getTable(params):Promise<any> {
-    return getP('/db_server/', params);
 }
 
 /**

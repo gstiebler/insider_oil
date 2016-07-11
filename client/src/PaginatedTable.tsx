@@ -111,8 +111,6 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
     }
 
     private filterChanged(newFilter) {
-        //if(JSON.stringify(newFilter) == JSON.stringify(this.state.filters))
-        //    return;
         this.state.filters = newFilter;
         this.state.dataTable.draw();
     } 
