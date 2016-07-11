@@ -30,6 +30,10 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
             title: this.props.model.title
         };
     }
+
+    private componentDidMount() {
+        this.getQueryData(this.props);
+    }
     
     private componentWillReceiveProps(nextProps: IAppProps) {
         this.getQueryData(nextProps);
