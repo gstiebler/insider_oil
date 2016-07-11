@@ -35,7 +35,7 @@ gulp.task("build-app", function() {
     return gulp.src([
             "src/**/**.ts",
             "src/**/**.tsx",
-            "typings/main.d.ts/",
+            "typings/index.d.ts/",
             "source/interfaces/interfaces.d.ts"
         ])
         .pipe(tsc(tsProject))
