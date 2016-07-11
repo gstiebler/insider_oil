@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
-var DateTimeField = require('react-bootstrap-datetimepicker');
+import * as DateTimeField from 'react-bootstrap-datetimepicker';
 import * as moment from 'moment';
 import { ListOfInputs } from './ListOfInputs';
 import { ListOfProjects } from './ListOfProjects';
