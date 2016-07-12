@@ -360,6 +360,23 @@ productionUnitByOilField: (test: nodeunit.Test) => {
     test.done();
 },
 
+productionUnitByBlock: (test: nodeunit.Test) => {
+    const barId = utils.idByName('Block', 'BM-BAR-1') ;
+    const filters = {
+        id: barId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'productionUnitByBlock',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+
+    test.done();
+},
+
 wellsByDrillingRigOffshore: (test: nodeunit.Test) => {
     const abanId = utils.idByName('DrillingRigOffshore', 'Aban Abraham');
     const filters = {

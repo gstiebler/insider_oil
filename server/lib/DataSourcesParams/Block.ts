@@ -83,7 +83,11 @@ const Block: IBaseDataSourceParams = {
         {
             queryName: 'hydrocarbonEvidencesByBlock',
             title: 'Indícios de hidrocarbonetos'
-        }
+        },
+        {
+            queryName: 'productionUnitByBlock',
+            title: 'Unidades de produção'
+        },
     ]
 }
 

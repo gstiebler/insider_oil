@@ -666,6 +666,60 @@ const queries:IQueriesById = {
             },
         ]
     },
+    
+    productionUnitByBlock: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'production_units',
+                    fields: [
+                        ['id', 'pu_id'],
+                        ['name', 'pu_name'],
+                        'owner',
+                        'situation'
+                    ]
+                },
+                joinTables: [],
+                extraFields: [
+                    ['"ProductionUnit"', 'model'],
+                ],
+                filters: [
+                    {
+                        field: 'production_units.block_id',
+                        equal: filter.id
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'pu_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+        {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'pu_id',
+                    valueField: 'pu_name'
+                }
+            },
+            {
+                label: 'Empresa proprietária',
+                fieldName: 'owner',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Situação',
+                fieldName: 'situation',
+                type: 'VARCHAR'
+            },
+        ]
+    },
 
     wellsByDrillingRigOffshore: wellsByDrillingRigOffshore,
 
