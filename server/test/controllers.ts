@@ -517,6 +517,58 @@ customComboQuery: (test) => {
     test.done();
 },
 
+listCompaniesPagination: function(test) {
+    const query: ni.GetTableData.req = { 
+        table: 'Company',
+        pagination: {
+            first: '10',
+            itemsPerPage: '7'
+        },
+        order: [
+            {
+                fieldName: 'name',
+                dir: 'DESC'
+            }
+        ]
+    } 
+    const req = { query };    
+    const res:ni.GetTableData.res = utils.getJsonResponse.sync(null, dbServerController.getTableData, req);
+    // records
+    test.equal(7, res.records.length);
+    test.equal('Rosneft', res.records[0].name);
+    test.equal('Petrobras', res.records[6].name);
+    test.done();
+},
+
+listCompaniesSearch: function(test) {
+    const query: ni.GetTableData.req = { 
+        table: 'Company',
+        pagination: {
+            first: '0',
+            itemsPerPage: '7'
+        },
+        order: [
+            {
+                fieldName: 'name',
+                dir: 'DESC'
+            }
+        ],
+        filters: [
+            {
+                field: 'name',
+                value: 'petro'
+            }
+        ]
+    } 
+    const req = { query };    
+    const res:ni.GetTableData.res = utils.getJsonResponse.sync(null, dbServerController.getTableData, req);
+    // records
+    test.equal(7, res.records.length);
+    test.equal('Vipetro', res.records[0].name);
+    test.equal('Alvopetro', res.records[6].name);
+    test.done();
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );
