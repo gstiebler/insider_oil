@@ -57,35 +57,34 @@ export function getOrderByStr(orderOpts: IOrderOpts[]): string {
 }
 
 export function getWhereStr(filters: IFilter[], aliasMap?): string {
-    let whereStr = '';
-    
-    if(filters.length == 0) 
-        return whereStr;
-        
-    whereStr = ' where ';
-    for(let filter of filters) {
+    const filterStrs = [];
+    for(var filter of filters) {
         let field = filter.field;
         
         if(aliasMap && aliasMap[field])
             field = aliasMap[field];
         
         if(filter.like) {
-            whereStr += field + ' like "%' + filter.like + '%" and ';
+            filterStrs.push(field + ' like "%' + filter.like + '%"');
         } else if (filter.in) {
-            whereStr += field + ' in (';
-            for(let id of filter.in) {
-                whereStr += id + ', '
+            if(filter.in.length < 1) {
+                filterStrs.push(field + ' in (-1)');
+            } else {
+                const idsStr = filter.in.join(', ');
+                filterStrs.push(field + ' in (' + idsStr + ')');
             }
-            whereStr = whereStr.substr(0, whereStr.length - 2);
-            whereStr += ') and ';
         } else if (filter.equal) {
-            whereStr += field + ' = ' + filter.equal + ' and ';
+            filterStrs.push(field + ' = ' + filter.equal);
         } else {
             throw 'Invalid filter';
         }
+    };
+    
+    if(filterStrs.length == 0) {
+        return '';
+    } else {
+        return ' where ' + filterStrs.join(' and ') + ' ';
     }
-    whereStr = whereStr.substr(0, whereStr.length - 4);
-    return whereStr;
 }
 
 export function getPaginationStr(pagiOpts: IPaginationOpts): string {
