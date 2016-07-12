@@ -17,7 +17,7 @@ newsFromObject:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'NewsByObject',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -34,7 +34,7 @@ newsFromObject:  (test: nodeunit.Test) => {
     const reqNewNews = {
         body: { 
             model: 'News',
-            newItemData: newNews
+            newItemData: JSON.stringify(newNews)
         }
     };
     utils.getJsonResponse.sync(null, dbServerController.createItem, reqNewNews);
@@ -45,7 +45,7 @@ newsFromObject:  (test: nodeunit.Test) => {
 
     // testing with an invalid id
     filters.id = 5450;
-    reqQueryValues.query.filters = JSON.stringify(filters);
+    reqQueryValues.query.filters = filters;
     const newsResultsWrongId = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
     test.equal(0, newsResultsWrongId.records.length);
 
@@ -62,7 +62,7 @@ getPersonsByProject:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'PersonsByProject',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -93,7 +93,7 @@ getAmbientalLicensesByBlock:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'ambientalLicenseByBlock',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -125,7 +125,7 @@ getComercialDeclarationsByBlock:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'comercialDeclarationsByBlock',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -157,7 +157,7 @@ getWellsByBlock:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'wellsByBlock',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -202,7 +202,7 @@ getSeismicsByBlock:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'seismicsByBlock',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -233,7 +233,7 @@ getHydrocarbonEvidencesByBlock:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'hydrocarbonEvidencesByBlock',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -254,7 +254,7 @@ getPersonsByCompany:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'personsByCompany',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -272,7 +272,7 @@ getBidsByObject: (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'BidsByObject',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -290,7 +290,7 @@ contractsByObject: (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'contractsByObject',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -298,7 +298,7 @@ contractsByObject: (test: nodeunit.Test) => {
     {
         const record = resQueryValues.records[0];
         test.equal('ORTENG EQUIPAMENTOS E SISTEMAS LTDA', record.supplier);
-        test.equal('SERVIÇOS DE CONSTRUÇÃO E MONTAGEM INDUSTRIAL ELÉTRICA', record.contract_object);   
+        test.equal('SERVIÇOS DE CONSTRUÇÃO E MONTAGEM INDUSTRIAL ELÉTRICA', record.c_contract_object);   
     }
 
     test.done();
@@ -313,7 +313,7 @@ hydrocarbonEvidencesByOilField: (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'hydrocarbonEvidencesByOilField',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -330,7 +330,7 @@ maintenanceDatesByProductionUnit: (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'maintenanceDatesByProductionUnit',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
@@ -349,7 +349,7 @@ productionUnitByOilField: (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'productionUnitByOilField',
-            filters: JSON.stringify(filters)
+            filters: filters
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);

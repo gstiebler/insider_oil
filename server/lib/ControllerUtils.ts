@@ -3,6 +3,9 @@ import winston = require('winston');
 
 export function getErrorFunc(res: express.Response, errorCode: number, msg: string) {
     return function(error) { 
+        if(!error)
+            return;
+            
         var errors = error.errors ? error.errors : [];
         if((typeof error) == 'string') {
             errors.push( { message: error } );

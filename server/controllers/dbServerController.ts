@@ -166,7 +166,7 @@ export function createItem(req: express.Request, res: express.Response, next) { 
                    ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro.")(err);
                });
     });
-})}
+}, ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."))}
 
 
 export function saveItem(req: express.Request, res: express.Response, next) { Sync(function() {
@@ -185,7 +185,7 @@ export function saveItem(req: express.Request, res: express.Response, next) { Sy
             .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível salvar o registro."));
         return null;
     }
-})}
+}, ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."))}
 
 
 export function deleteItem(req: express.Request, res: express.Response) { Sync(function() {
@@ -223,7 +223,7 @@ export function deleteItem(req: express.Request, res: express.Response) { Sync(f
         errorFunc(error);
     }
 
-})}
+}, ControllerUtils.getErrorFunc(res, 404, "Não foi possível apagar o registro."))}
 
 
 export function getComboValues(req: express.Request, res: express.Response) {
@@ -293,23 +293,19 @@ export function viewRecord(req: express.Request, res: express.Response, next) {
 
 
 export function getQueryData(req: express.Request, res: express.Response) {Sync(function(){
-    try{
-        const queryName = req.query.queryName;
-        const filters = req.query.filters;
-        const queryById = QueriesById[queryName];
-        const queryStr = queryById.queryStrFn(filters);
-        const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
-        db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
-            const result = {
-                fields: queryById.fields,
-                records: records
-            };
-            res.json(result);
-        }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
-    } catch(err) {
-        ControllerUtils.getErrorFunc(res, 500, "Erro")(err);
-    }
-})}
+    const queryName = req.query.queryName;
+    const filters = req.query.filters;
+    const queryById = QueriesById[queryName];
+    const queryStr = queryById.queryStrFn(filters);
+    const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
+    db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
+        const result = {
+            fields: queryById.fields,
+            records: records
+        };
+        res.json(result);
+    }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os registros."))}
 
 export function getTableQueryData(req: express.Request, res: express.Response):void {Sync(function(){
     const queryParams:QueryGenerator.IQueryParams = req.query.queryParams;
@@ -317,19 +313,16 @@ export function getTableQueryData(req: express.Request, res: express.Response):v
     const queryName:string = req.query.queryName;
     const fields = TableQueries.queries[queryName].fields;
 
-    try {
-        TableQueries.getQueryResult(queryName, queryParams).then( (results) => {
-            const result:interfaces.TableQueryDataRes = {
-                fields: fields,
-                records: results[0],
-                count: results[1][0].count
-            };
-            res.json(result);
-        }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
-    } catch(err) {
-        ControllerUtils.getErrorFunc(res, 500, "Erro")(err);
-    }
-})}
+    TableQueries.getQueryResult(queryName, queryParams).then( (results) => {
+        const result:interfaces.TableQueryDataRes = {
+            fields: fields,
+            records: results[0],
+            count: results[1][0].count
+        };
+        res.json(result);
+    }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
+
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os registros."))}
  
 
 export function getTimeSeries(req: express.Request, res: express.Response):void {Sync(function(){
@@ -342,7 +335,7 @@ export function getTimeSeries(req: express.Request, res: express.Response):void 
         };
         res.json(result);
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
-})}
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 
 
 export function sourcesList(req: express.Request, res: express.Response) {

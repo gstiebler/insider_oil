@@ -23,8 +23,8 @@ getPerson: test => {
     
     test.equal('Nome', response.fields[0].label);
     test.equal('name', response.fields[0].name);
-    test.equal('E-mail', response.fields[2].label);
-    test.equal('emails', response.fields[2].name);
+    test.equal('E-mail', response.fields[5].label);
+    test.equal('emails', response.fields[5].name);
     
     const telephones = ['+55 21 234-5678', '98989-9498'];
     test.equal(JSON.stringify(telephones), JSON.stringify(response.values.telephones));
@@ -34,30 +34,31 @@ getPerson: test => {
 
 
 createPerson: test => {
+    const newItemData = {
+        name: 'Michael Jackson',
+        company_id: 2,
+        email: 'name.example.com',
+        telephones: [
+            '333',
+            '444',
+            '555'
+        ],
+        projects: [
+            {
+                model_id: utils.idByName('ModelsList', 'Block'),
+                id: utils.idByName('Block', 'ES-M-529'),
+                description: 'Diretor'
+            },
+            {
+                model_id: utils.idByName('ModelsList', 'DrillingRigOnshore'),
+                id: utils.idByName('DrillingRigOnshore', 'BS-04'),
+            }
+        ]
+    };
     const newItemReq = {
         body: { 
             model: 'Person',
-            newItemData: {
-                name: 'Michael Jackson',
-                company_id: 2,
-                email: 'name.example.com',
-                telephones: [
-                    '333',
-                    '444',
-                    '555'
-                ],
-                projects: [
-                    {
-                        model_id: utils.idByName('ModelsList', 'Block'),
-                        id: utils.idByName('Block', 'ES-M-529'),
-                        description: 'Diretor'
-                    },
-                    {
-                        model_id: utils.idByName('ModelsList', 'DrillingRigOnshore'),
-                        id: utils.idByName('DrillingRigOnshore', 'BS-04'),
-                    }
-                ]
-            }
+            newItemData: JSON.stringify(newItemData)
         }
     };
     
@@ -74,7 +75,7 @@ createPerson: test => {
     
     const responseValues = responseGet.values;
     test.equal('Michael Jackson', responseValues.name);
-    test.equal(JSON.stringify(newItemReq.body.newItemData.telephones), JSON.stringify(responseValues.telephones));
+    test.equal(JSON.stringify(newItemData.telephones), JSON.stringify(responseValues.telephones));
     // test projects
     test.equal(2, responseValues.projects.length);
     test.equal('Block', responseValues.projects[0].model);
@@ -92,30 +93,31 @@ createPerson: test => {
 
 
 editPerson: test => {
+    const recordReq = {
+        id: 2,
+        name: 'Michael Jackson',
+        company_id: utils.idByName('Company', 'Eni Oil'),
+        emails: '[name.example.com]',
+        telephones: [
+            '333',
+            '444',
+            '555'
+        ],
+        projects: [
+            {
+                model_id: utils.idByName('ModelsList', 'Block'),
+                id: utils.idByName('Block', 'ES-M-529'),
+            },
+            {
+                model_id: utils.idByName('ModelsList', 'DrillingRigOnshore'),
+                id: utils.idByName('DrillingRigOnshore', 'BS-04'),
+            }
+        ]
+    };
     const reqSave = {
         body: { 
             model: 'Person',
-            record: {
-                id: 2,
-                name: 'Michael Jackson',
-                company_id: utils.idByName('Company', 'Eni Oil'),
-                emails: '[name.example.com]',
-                telephones: [
-                    '333',
-                    '444',
-                    '555'
-                ],
-                projects: [
-                    {
-                        model_id: utils.idByName('ModelsList', 'Block'),
-                        id: utils.idByName('Block', 'ES-M-529'),
-                    },
-                    {
-                        model_id: utils.idByName('ModelsList', 'DrillingRigOnshore'),
-                        id: utils.idByName('DrillingRigOnshore', 'BS-04'),
-                    }
-                ]
-            }
+            record: JSON.stringify(recordReq)
         }
     };
         

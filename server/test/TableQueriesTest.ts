@@ -29,7 +29,7 @@ basinsLikeFilter:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: {
             queryName: 'Basins',
-            queryParams: JSON.stringify(queryParams)
+            queryParams: queryParams
         }
     }; 
     
@@ -61,7 +61,7 @@ basinsPagination:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: {
             queryName: 'Basins',
-            queryParams: JSON.stringify(queryParams)
+            queryParams: queryParams
         }
     }; 
     
@@ -95,14 +95,14 @@ contracts:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: {
             queryName: 'Contracts',
-            queryParams: JSON.stringify(queryParams)
+            queryParams: queryParams
         }
     }; 
     
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
     test.equal( 3, resQueryValues.records.length );
     test.equal( 3, resQueryValues.count );
-    test.equal( 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM', resQueryValues.records[2].contract_object );
+    test.equal( 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM', resQueryValues.records[2].c_contract_object );
     test.equal( 22, resQueryValues.records[2].duration );
     test.equal( 797913.170909091, resQueryValues.records[2].day_rate );
     test.equal( null, resQueryValues.records[0].day_rate );
@@ -140,7 +140,7 @@ blocksInFilter:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: {
             queryName: 'Blocks',
-            queryParams: JSON.stringify(queryParams)
+            queryParams: queryParams
         }
     }; 
     
