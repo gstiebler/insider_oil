@@ -13,7 +13,8 @@ var request = require('request');
 function getUrl(url, params, token, callback) {
      params.token = token;
     
-    request({url: 'http://localhost:' + port + url, form: params}, function (error, response, body) {
+    const urlStr = 'http://localhost:' + port + url;
+    request({url: urlStr, form: params}, function (error, response, body) {
         if(error) {
             console.log('error: ', error);
         } else if (response.statusCode == 200) {
@@ -58,7 +59,7 @@ first: function(test) {
     var server = InitializeServer(port);
     
     getToken(function(token){
-        getUrl('/db_server?table=Well', {}, token, onWells);
+        getUrl('/table_data?table=Well', {}, token, onWells);
     });
     
     function onWells(json) {
@@ -78,7 +79,7 @@ modelFields: function(test) {
     });
     
     function onWellFields(json) {
-        test.equal(18, json.fields.length);
+        test.equal(19, json.fields.length);
         
         test.equal('name', json.fields[0].name);
         test.equal('Poço', json.fields[0].label);
@@ -88,10 +89,10 @@ modelFields: function(test) {
         test.equal('Longitude', json.fields[3].label);
         test.equal('DECIMAL(10,6)', json.fields[3].type);
         
-        test.equal('operator_id', json.fields[14].name);
-        test.equal('Operador', json.fields[14].label);
-        test.equal('ref', json.fields[14].type);
-        test.equal('Company', json.fields[14].model);
+        test.equal('operator_id', json.fields[15].name);
+        test.equal('Operador', json.fields[15].label);
+        test.equal('ref', json.fields[15].type);
+        test.equal('Company', json.fields[15].model);
         
         server.close();
         test.done();
@@ -109,7 +110,7 @@ recordValues: function(test) {
     });
     
     function onWellValues(json) {
-        test.equal(18, json.fields.length);
+        test.equal(19, json.fields.length);
 
         test.equal('1AGIP1RJS', json.values.name);
         test.equal(operatorId, json.values.operator_id);
