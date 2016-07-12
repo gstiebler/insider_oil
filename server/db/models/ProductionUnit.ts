@@ -61,11 +61,17 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
         tableName: 'production_units',
         classMethods: {
             associate: function(models) {
-                const opts:Sequelize.AssociationOptionsBelongsTo = {
+                const oilFieldOpts:Sequelize.AssociationOptionsBelongsTo = {
                     as: 'oil_field', 
-                    foreignKey: {  allowNull: false }
+                    foreignKey: {  allowNull: true }
                 };
-                ProductionUnit.belongsTo(models.OilField, opts );
+                ProductionUnit.belongsTo(models.OilField, oilFieldOpts );
+
+                const blockOpts:Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'block', 
+                    foreignKey: {  allowNull: true }
+                };
+                ProductionUnit.belongsTo(models.Block, blockOpts );
             }
         }
     }

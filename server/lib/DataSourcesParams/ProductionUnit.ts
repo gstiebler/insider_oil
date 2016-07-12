@@ -11,6 +11,12 @@ const ProductionUnit: IBaseDataSourceParams = {
         oil_field_name: {
             label: 'Campo'
         },
+        block_id: {
+            label: 'Bloco'
+        },
+        block_name: {
+            label: 'Bloco'
+        },
         type: {
             label: 'Tipo'
         },
@@ -51,7 +57,7 @@ const ProductionUnit: IBaseDataSourceParams = {
         },
     },
     labelField: 'name',
-    gridFields: ['name', 'oil_field_name', 'owner'],
+    gridFields: ['name', 'oil_field_name', 'block_name', 'owner'],
     tableLabel: 'Unidades de produção',
     hasMap: false,
     excelParams: {
@@ -59,6 +65,7 @@ const ProductionUnit: IBaseDataSourceParams = {
         fields: {
             'nome': 'name',
             'campo': 'oil_field',
+            'bloco': 'block',
             'tipo': 'type',
             'empresa proprietária': 'owner',
             'situação': 'situation',

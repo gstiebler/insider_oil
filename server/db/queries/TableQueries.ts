@@ -39,10 +39,19 @@ const productionUnit:ITableQuery = {
                     ],
                     joinField: 'production_units.oil_field_id'
                 },
+                {
+                    name: 'blocks',
+                    fields: [
+                        ['id', 'b_id'],
+                        ['name', 'b_name'],
+                    ],
+                    joinField: 'production_units.block_id'
+                },
             ],
             extraFields: [
                 ['"ProductionUnit"', 'model'],
                 ['"OilField"', 'of_model'],
+                ['"Block"', 'b_model'],
             ],
             filters: queryParams.filters,
             order: queryParams.order
@@ -65,6 +74,14 @@ const productionUnit:ITableQuery = {
                 modelField: 'of_model',
                 idField: 'of_id',
                 valueField: 'of_name'
+            }
+        },
+        {
+            label: 'Bloco',
+            ref: {
+                modelField: 'b_model',
+                idField: 'b_id',
+                valueField: 'b_name'
             }
         },
         {

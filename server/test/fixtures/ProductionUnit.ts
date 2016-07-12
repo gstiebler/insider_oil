@@ -42,12 +42,12 @@ module.exports = function(db): Promise<any[]> {
         },
         {
             name: 'Petrobras 37',
-            oil_field_id: utils.idByName('OilField', 'Jiribatuba2'),
+            oil_block: utils.idByName('Block', 'BM-BAR-1'),
             type: 'FPSO',
         },
         {
             name: 'Petrobras 52',
-            oil_field_id: utils.idByName('OilField', 'Jiribatuba2'),
+            oil_block: utils.idByName('Block', 'BM-BAR-1'),
             type: 'FPSO',
         },
     ];
