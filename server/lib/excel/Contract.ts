@@ -2,6 +2,7 @@
 
 import { ImportExcel } from './ImportExcelClass';
 import search = require('../search');
+import { IFrontEndProject } from '../../../common/Interfaces';
 const await = require('../await');
 
 export class Contract extends ImportExcel {
@@ -12,13 +13,15 @@ export class Contract extends ImportExcel {
     }
 
     setObject(record, header, rowValues) {
-        const objectStr = this.valueFromHeaderName(rowValues, header, 'objeto');
-        const searchResult:any[] = await( search.searchEqual(objectStr, 1) );
-        if(searchResult.length == 0) {
-            record.object = [];
-        } else {
-            record.object = searchResult;
-        }
+        const objectStr:string = this.valueFromHeaderName(rowValues, header, 'objeto');
+        const objects = objectStr.split(',');
+        record.projects = []; 
+        objects.map((projectStr) => {
+            const searchResult:IFrontEndProject[] = await( search.searchEqual(objectStr, 1) );
+            if(searchResult.length > 0) {
+                record.projects.push(searchResult[0]);
+            }
+        });
     }
 
     valueFromHeaderName(rowValues, header:string[], columnTitle:string):any {

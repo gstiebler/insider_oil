@@ -11,6 +11,7 @@ var await = require('../lib/await');
 import nodeunit = require('nodeunit');
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 const moment = require('moment-timezone');
+import { IFrontEndProject } from '../../common/Interfaces';
 var utils = require('./lib/utils');
 
 const saoPauloZone = moment.tz('America/Sao_Paulo');
@@ -287,11 +288,12 @@ contracts: test => {
     
     {
         const record = rows[1]; 
+        const projects:IFrontEndProject[] = record.projects;
         test.equal('250', record.user_uid);
         test.equal('Teste fornecedor', record.supplier);
         test.equal(utils.idByName('Company', 'Petrobras'), record.contractor_id);
-        test.equal( utils.idByName('ProductionUnit', 'Cidade de Magaratiba'), record.obj_id );
-        test.equal( utils.idByName('ModelsList', 'ProductionUnit'), record.model_id );
+        test.equal( utils.idByName('ProductionUnit', 'Cidade de Magaratiba'), projects[0].id );
+        test.equal( utils.idByName('ModelsList', 'ProductionUnit'), projects[0].model_id );
         test.equal( 'Euro', record.currency );
     }
     

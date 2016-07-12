@@ -13,12 +13,12 @@ function updateContractProjects(db, contract) {
     const options = { where: { contract_id: contract.id } };
     db.ContractProjects.destroy(options).then(() => {
         const newProjectRecords = [];
-        for(var i = 0; i < projects.length; i++) {
-            var projectRecord = { 
+        for(var project of projects) {
+            const projectRecord = { 
                 contract_id: contract.id,
-                model_id: projects[i].model_id,
-                obj_id: projects[i].id,
-                description: projects[i].description
+                model_id: project.model_id,
+                obj_id: project.id,
+                description: project.description
             };
             newProjectRecords.push(projectRecord);
         }
