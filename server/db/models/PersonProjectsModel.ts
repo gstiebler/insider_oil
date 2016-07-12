@@ -1,6 +1,6 @@
 "use strict";
 
-function getProjects(sequelize, personId) {
+function getProjectsFromPerson(sequelize, personId) {
     var modelRefsQueryStr = 'select m.id as model_id, p.model_ref_id as id, m.name as model, p.description ';
     modelRefsQueryStr += 'from person_projects p, models_list m ';
     modelRefsQueryStr += 'where p.model_id = m.id ';
@@ -64,7 +64,7 @@ module.exports = function(sequelize, DataTypes) {
 				PersonProjects.belongsTo(models.Person, { as : 'person' });
 				PersonProjects.belongsTo(models.ModelsList, { as : 'model' });
 			},
-            getProjects: getProjects
+            getProjects: getProjectsFromPerson
 		}
 	});
 

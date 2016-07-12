@@ -1,6 +1,6 @@
 "use strict";
 
-function getProjects(sequelize, contractId) {
+function getProjectsFromContract(sequelize, contractId) {
     var modelRefsQueryStr = 'select m.id as model_id, cp.obj_id as id, m.name as model, cp.description ';
     modelRefsQueryStr += 'from contract_projects cp, models_list m ';
     modelRefsQueryStr += 'where cp.model_id = m.id ';
@@ -65,7 +65,7 @@ module.exports = function(sequelize, DataTypes) {
 				ContractProjects.belongsTo(models.Contract, { as : 'contract' });
 				ContractProjects.belongsTo(models.ModelsList, { as : 'model' });
 			},
-            getProjects: getProjects
+            getProjects: getProjectsFromContract
 		}
 	});
 

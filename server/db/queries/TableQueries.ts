@@ -954,7 +954,7 @@ export const queries:ITableQueries = {
                 table: {
                     name: 'contracts',
                     fields: [
-                        'id',
+                        ['id', 'c_id'],
                         'supplier',
                         ['contract_object', 'c_contract_object'],
                         'start',
@@ -990,7 +990,7 @@ export const queries:ITableQueries = {
                 label: 'Objeto da contratação',
                 ref: {
                     modelField: 'model',
-                    idField: 'id',
+                    idField: 'c_id',
                     valueField: 'c_contract_object'
                 }
             },

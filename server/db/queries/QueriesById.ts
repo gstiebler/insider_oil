@@ -230,12 +230,24 @@ const queries:IQueriesById = {
                 modelListId = modelInList.id;
             }
             
-            const customFilters = [
-                { field: 'contracts.model_id', equal: modelListId },
-                { field: 'contracts.obj_id', equal:filters.obj_id  },
-            ];
+            const contractProjectsFilters = {
+                model_id: modelListId,
+                obj_id: filters.obj_id
+            };
+            const contractProjects = 
+                await( db.models.ContractProjects.findAll({ where: contractProjectsFilters }) );
+            const contractIds = contractProjects.map((cp) => { 
+                return cp.contract_id; 
+            });
+            const contractFilters = [
+                {
+                    field: 'c_id',
+                    in: contractIds
+                }
+            ]
+
             const queryParams: QueryGenerator.IQueryParams = {
-                filters: customFilters,
+                filters: contractFilters,
                 order: [ { fieldName: 'start', dir: 'desc' } ],
                 pagination: { first: 0, itemsPerPage: 100 }
             };

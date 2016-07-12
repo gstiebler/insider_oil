@@ -54,15 +54,9 @@ const Contract: IBaseDataSourceParams = {
         duration: {
             label: 'Duração (dias)'
         },
-        object: {
+        projects: {
             label: 'Objeto',
             isProjectList: true
-        },
-        model_id: {
-            label: 'ignorar'
-        },
-        obj_id: {
-            label: 'ignorar'
         },
     },
     labelField: "user_uid",
