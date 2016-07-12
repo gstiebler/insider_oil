@@ -110,6 +110,34 @@ contracts:  (test: nodeunit.Test) => {
     test.done();
 },
 
+DrillingRigs:  (test: nodeunit.Test) => {
+    const queryParams:QueryGenerator.IQueryParams = {
+        order: [
+            {
+                fieldName: 'dr_name',
+                dir: 'asc'
+            }
+        ],
+        filters: [],
+        pagination: {
+            first: 0,
+            itemsPerPage: 5
+        }
+    }
+    
+    const reqQueryValues = {
+        query: {
+            queryName: 'DrillingRigs',
+            queryParams: queryParams
+        }
+    }; 
+    
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
+    test.equal( 5, resQueryValues.records.length );
+    
+    test.done();
+},
+
 blocksInFilter:  (test: nodeunit.Test) => {
     const queryParams:QueryGenerator.IQueryParams = {
         order: [

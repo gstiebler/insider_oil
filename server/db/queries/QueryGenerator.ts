@@ -26,7 +26,7 @@ export interface IPaginationOpts {
 type Field = string | string[];
 
 export interface ITableQueryOpts {
-    name: string;
+    name: Field;
     fields: Field[];
 }
  
@@ -96,12 +96,18 @@ export function getPaginationStr(pagiOpts: IPaginationOpts): string {
 }
 
 export function genTableSelectStr(tableQryOpts: ITableQueryOpts, aliasMap):string {
-    let resultQry = '';
+    let resultQry = '';    
+    var joinTableName = tableQryOpts.name;
+    var tableAlias = joinTableName;
+    if((typeof joinTableName) != 'string') {
+        tableAlias = joinTableName[1];
+        joinTableName = joinTableName[0] + ' as ' + tableAlias;
+    }
     for(let field of tableQryOpts.fields) {
         if(typeof field == 'string') {
-            resultQry += tableQryOpts.name + '.' + field;
+            resultQry += tableAlias + '.' + field;
         } else {
-            const completeFieldName = tableQryOpts.name + '.' + field[0];
+            const completeFieldName = tableAlias + '.' + field[0];
             resultQry += completeFieldName + ' as ' + field[1];
             aliasMap[field[1]] = completeFieldName; 
         }  
@@ -130,9 +136,15 @@ export function genSelectStr(queryOpts: IQueryOpts, aliasMap):string {
 export function genOuterJoins(joinTables: IJoinTableQueryOpts[]): string {
     let resultQry = '';
     for(let joinTable of joinTables) {
-        resultQry += ' left outer join ' + joinTable.name + ' on ';
+        var joinTableName = joinTable.name;
+        var tableAlias = joinTableName;
+        if((typeof joinTableName) != 'string') {
+            tableAlias = joinTableName[1];
+            joinTableName = joinTableName[0] + ' as ' + tableAlias;
+        }
+        resultQry += ' left outer join ' + joinTableName + ' on ';
         if(joinTable.joinField) {
-            resultQry += joinTable.name + '.id = ' + joinTable.joinField;   
+            resultQry += tableAlias + '.id = ' + joinTable.joinField;   
         } else if (joinTable.joinCond) {
             resultQry += joinTable.joinCond; 
         } else {

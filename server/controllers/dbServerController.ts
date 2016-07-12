@@ -253,7 +253,7 @@ export function getComboValues(req: express.Request, res: express.Response) {
         const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
         db.sequelize.query(queryStr, simpleQueryType)
             .then(onValues) 
-            .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possí­vel carregar os registros."));;
+            .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possí­vel carregar os registros."));
     } 
     function onValues(values) {
         var valuesArray = [];

@@ -398,18 +398,27 @@ export const queries:ITableQueries = {
                 },
                 joinTables: [
                     {
-                        name: 'companies',
+                        name: ['companies', 'contractor'],
                         fields: [
                             ['id', 'contractor_id'],
                             ['name', 'contractor_name'],
                         ],
                         joinField: 'drilling_rigs_onshore.contractor_id'
-                    }
+                    },
+                    {
+                        name: ['companies', 'operator'],
+                        fields: [
+                            ['id', 'operator_id'],
+                            ['name', 'operator_name'],
+                        ],
+                        joinField: 'drilling_rigs_onshore.operator_id'
+                    },
                 ],
                 extraFields: [
                     ['"DrillingRigOnshore"', 'model'],
                     ['"Terra"', 'land_sea'],
-                    ['"Company"', 'contractor_model']
+                    ['"Company"', 'contractor_model'],
+                    ['"Company"', 'operator_model']
                 ],
                 filters: queryParams.filters,
                 order: []
@@ -418,6 +427,7 @@ export const queries:ITableQueries = {
             
             options.table.name = 'drilling_rigs_offshore';
             options.joinTables[0].joinField = 'drilling_rigs_offshore.contractor_id';
+            options.joinTables[1].joinField = 'drilling_rigs_offshore.operator_id';
             options.extraFields[0] = ['"DrillingRigOffshore"', 'model'];
             options.extraFields[1] = ['"Mar"', 'land_sea'];
             const offshoreQryStr = QueryGenerator.queryGenerator(options);
@@ -435,11 +445,19 @@ export const queries:ITableQueries = {
                 }
             },
             {
-                label: 'Operador',
+                label: 'Contratante',
                 ref: {
                     modelField: 'contractor_model',
                     idField: 'contractor_id',
                     valueField: 'contractor_name'
+                }
+            },
+            {
+                label: 'Operator',
+                ref: {
+                    modelField: 'operator_model',
+                    idField: 'operator_id',
+                    valueField: 'operator_name'
                 }
             },
             {
