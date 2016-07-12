@@ -94,6 +94,11 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         this.props.onChange( this.state.values ); 
         this.setState(this.state);
     }
+    
+    private onComboChange(fieldName, value) {
+        this.onChange(fieldName, value);
+        this.setState(this.state);
+    }
 
     private fieldHTML(field:IARField): React.ReactElement<any> {
 
@@ -108,8 +113,8 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         if(field.type == 'ref') {
             return (
                 <select className="form-control" 
-                        defaultValue={ this.state.values[field.name] }
-                        onChange={this.onChange.bind(this, field.name)}>
+                        value={ this.state.values[field.name] }
+                        onChange={this.onComboChange.bind(this, field.name)}>
                     { optionsInCombo(this.state.comboValues[field.name]) }
                 </select>
             ); 
