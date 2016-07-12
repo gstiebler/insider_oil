@@ -15,7 +15,7 @@ ProductionByField:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'ProductionByField',
-            queryParams: JSON.stringify(queryParams)
+            queryParams: queryParams
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTimeSeries, reqQueryValues);
@@ -42,7 +42,7 @@ GasMovementsByGasPipeline:  (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'GasMovementsByGasPipeline',
-            queryParams: JSON.stringify(queryParams)
+            queryParams: queryParams
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTimeSeries, reqQueryValues);

@@ -63,19 +63,24 @@ export function getTableData(req: express.Request, res: express.Response, next) 
         }
     }
 
-    const orderObj = order.map((orderItem) => {
-        return [orderItem.fieldName, orderItem.dir.toUpperCase()];
-    });
+    var orderObj = [];
+    if(order) {
+            orderObj = order.map((orderItem) => {
+            return [orderItem.fieldName, orderItem.dir.toUpperCase()];
+        });
+    }
 
     var showFields = fieldNames;
     if(!showFields)
         showFields = viewParams.gridFields;
     // TODO only get selected fields
-    const findOpts = {
+    const findOpts:any = {
         where: filterObj,
         order: orderObj,
-        offset: parseInt(pagination.first),
-        limit: parseInt(pagination.itemsPerPage)
+    }
+    if(pagination) {
+        findOpts.offset = parseInt(pagination.first);
+        findOpts.limit = parseInt(pagination.itemsPerPage);
     }
     dbUtils.findAllCustom(dataSource, findOpts).then(sendRecords)
         .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));

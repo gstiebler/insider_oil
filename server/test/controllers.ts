@@ -41,7 +41,7 @@ function iterateTree(children, test) {
             const reqQueryValues = {
                 query: {
                     queryName: item.child.source,
-                    queryParams: JSON.stringify(queryParams)
+                    queryParams: queryParams
                 }
             }; 
             
@@ -70,18 +70,19 @@ function iterateTree(children, test) {
 var group:nodeunit.ITestGroup = {
 
 createWell: function(test) {
+    const newItemData = {
+        name: '',
+        operator_id: 4,
+        state: 'AC',
+        basin_id: 2,
+        lat: 333,
+        lng: 444,
+        block_id: 2
+    }
     const req = {
         body: { 
             model: 'Well',
-            newItemData: {
-                name: '',
-                operator_id: 4,
-                state: 'AC',
-                basin_id: 2,
-                lat: 333,
-                lng: 444,
-                block_id: 2
-            }
+            newItemData: JSON.stringify(newItemData)
         }
     };
     
@@ -91,33 +92,36 @@ createWell: function(test) {
     test.equal( 1, errorResponse.error.errors.length );
     test.equal( "Nome não pode ser nulo", errorResponse.error.errors[0].message );
     
-    req.body.newItemData.name = 'Novo poço';
+    newItemData.name = 'Novo poço';
+    req.body.newItemData = JSON.stringify(newItemData);
     utils.getJsonResponse.sync(null, dbServerController.createItem, req);
     
     const req2 = {
         query: { table: 'Well' }
     };
-    const response = utils.getJsonResponse.sync(null, dbServerController.getTableData, req2);
-    test.equal(11, response.length);
-    test.equal('Novo poço', response[3].name);
-    test.equal('Statoil', response[3].operator_name);
+    const response:ni.GetTableData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getTableData, req2);
+    test.equal(11, response.records.length);
+    test.equal('Novo poço', response.records[3].name);
+    test.equal('Statoil', response.records[3].operator_name);
     test.done();
 },
 
 
 editWell: function(test) {
+    const record = {
+        id: 2,
+        name: '',
+        operator_id: 4,
+        state: 'AC',
+        bacia: 'Bacia nova',
+        lat: 333,
+        lng: 444
+    }
     const req = {
         body: { 
             model: 'Well',
-            record: {
-                id: 2,
-                name: '',
-                operator_id: 4,
-                state: 'AC',
-                bacia: 'Bacia nova',
-                lat: 333,
-                lng: 444
-            }
+            record: JSON.stringify(record)
         }
     };
         
@@ -127,7 +131,8 @@ editWell: function(test) {
     test.equal( 1, errorResponse.error.errors.length );
     test.equal( "Nome não pode ser nulo", errorResponse.error.errors[0].message );
     
-    req.body.record.name = 'Novo poço';
+    record.name = 'Novo poço';
+    req.body.record = JSON.stringify(record);
     const response = utils.getJsonResponse.sync(null, dbServerController.saveItem, req);
     test.equal('Registro salvo com sucesso.', response.msg);
     
@@ -147,7 +152,7 @@ editWell: function(test) {
 
 deleteWell: function(test) {
     const req = {
-        query: { 
+        body: { 
             model: 'Well',
             id: 2
         }
@@ -158,8 +163,9 @@ deleteWell: function(test) {
     const req2 = {
         query: { table: 'Well' }
     };
-    const response2 = utils.getJsonResponse.sync(null, dbServerController.getTableData, req2);
-    test.equal(9, response2.length);
+    const response2:ni.GetTableData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getTableData, req2);
+    test.equal(9, response2.records.length);
     test.done();
 },
 
@@ -167,7 +173,7 @@ deleteWell: function(test) {
 doNotDelReferencedObjsInNews: function(test) {
     const camamuId = utils.idByName('Basin', 'Camamu');
     const reqDelCamamu = {
-        query: { 
+        body: { 
             model: 'Basin',
             id: camamuId
         }
@@ -192,7 +198,7 @@ doNotDelReferencedObjsInNews: function(test) {
 doNotDelReferencedPersonProject: function(test) {
     const amazonasId = utils.idByName('Basin', 'Amazonas');
     const reqDelAmazonas = {
-        query: { 
+        body: { 
             model: 'Basin',
             id: amazonasId
         }
@@ -237,12 +243,12 @@ loginHTML: function(test) {
     loginController.makeLogin(req, res3);
     
     function redirect(url) {
-        test.equal( '/app/templates/index.html?token', url.split('=')[0] );
+        test.equal( '/app/index.html?token', url.split('=')[0] );
         test.done();
     }
 },
 
-
+/*
 importBlocksFromURL: function(test) {
     const reqImport = {
         body: { 
@@ -252,22 +258,22 @@ importBlocksFromURL: function(test) {
     const resImport = utils.getJsonResponse.sync(null, ExcelController.importExcelFromURL, reqImport);    
     //test.equal('Registros criados: 341\nRegistros atualizados: 3\nRegistros inválidos: 3', resImport.status);
 
-
    const reqListBlocks = {
         query: { 
             table: 'Block',
         }
     };    
     
-    const resListBlocks = utils.getJsonResponse.sync(null, dbServerController.getTableData, reqListBlocks);
+    const resListBlocks:ni.GetTableData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getTableData, reqListBlocks);
     // records
-    test.ok(resListBlocks.length > 330);
+    test.ok(resListBlocks.records.length > 330);
     
     test.done();
 },
+*/
 
 };
-
 
 var notModDBGroup:nodeunit.ITestGroup = {
 
@@ -319,7 +325,7 @@ modelFields: function(test) {
     };
     
     const response = utils.getJsonResponse.sync(null, dbServerController.modelFields, req);
-    test.equal(18, response.fields.length);
+    test.equal(19, response.fields.length);
     test.equal( 'name', response.fields[0].name );
     test.equal( 'Poço', response.fields[0].label );
     test.equal( 'VARCHAR(255)', response.fields[0].type );
@@ -332,10 +338,10 @@ modelFields: function(test) {
     test.equal( 'Sonda', response.fields[4].label );
     test.equal( 'ref', response.fields[4].type );
     
-    test.equal( 'operator_id', response.fields[14].name );
-    test.equal( 'Operador', response.fields[14].label );
-    test.equal( 'ref', response.fields[14].type );
-    test.equal( 'Company', response.fields[14].model );
+    test.equal( 'operator_id', response.fields[15].name );
+    test.equal( 'Operador', response.fields[15].label );
+    test.equal( 'ref', response.fields[15].type );
+    test.equal( 'Company', response.fields[15].model );
     test.done();
 },
 
@@ -370,21 +376,21 @@ getRecordViewWell: function(test) {
 
     const response = utils.getJsonResponse.sync(null, dbServerController.viewRecord, req);
     const record = response.record;
-    test.equal(18, record.length);
+    test.equal(19, record.length);
     test.equal('Poço', record[0].label);
     test.equal('1AGIP1RJS', record[0].value);
     
-    test.equal('Reclassificação', record[7].label);
+    test.equal('Reclassificação', record[8].label);
     test.equal('Latitude', record[2].label);
     
     test.equal('Sonda', record[4].label);
     test.equal('NIC-01', record[4].name);
     
-    test.equal('Operador', record[14].label);
-    test.equal(2, record[14].value);
-    test.equal(true, record[14].ref);
-    test.equal('Company', record[14].model);
-    test.equal('Eni Oil', record[14].name);
+    test.equal('Operador', record[15].label);
+    test.equal(2, record[15].value);
+    test.equal(true, record[15].ref);
+    test.equal('Company', record[15].model);
+    test.equal('Eni Oil', record[15].name);
     
     test.done();
 },
@@ -395,7 +401,8 @@ adminTablesIntegrity: test => {
         const req = {
             query: { table: dataSourceName }
         };
-        let responseRecords = utils.getJsonResponse.sync(null, dbServerController.getTableData, req);
+        let responseRecords:ni.GetTableData.res = 
+            utils.getJsonResponse.sync(null, dbServerController.getTableData, req);
         test.ok(responseRecords.records, 'Problem with model ' + dataSourceName);
         if(responseRecords.records) {
             test.ok(responseRecords.records.length >= 2, 'Problem with model ' + dataSourceName + 
@@ -445,10 +452,11 @@ allTablesMain: test => {
 	        }
 	    };
         try {
-            const response = utils.getJsonResponse.future(null, dbServerController.getTableData, req);
-            for(var gridField of response.result.viewParams.gridFields) {
+            const response:ni.GetViewParams.res = 
+                    utils.getJsonResponse.sync(null, dbServerController.getViewParams, req);
+            for(var gridField of response.viewParams.gridFields) {
                 if(gridField == 'id') continue;
-                test.ok(response.result.viewParams.fields[gridField], 'Grid field not found: ' + gridField + ' in ' + model);
+                test.ok(response.viewParams.fields[gridField], 'Grid field not found: ' + gridField + ' in ' + model);
             }
         } catch(err) {
             test.ok(false, err + ' on table ' + model);
