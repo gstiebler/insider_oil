@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as showError from './lib/ShowError';
 import * as server from './lib/Server';
-import { SearchResults } from '../../common/Interfaces'
 import * as Autosuggest from 'react-autosuggest';
+import { IFrontEndProject } from '../../common/Interfaces';
 
 interface IAppProps {
     value: any[];
@@ -11,7 +11,7 @@ interface IAppProps {
 
 interface IAppState {
     value: '';
-    suggestions: SearchResults[];
+    suggestions: IFrontEndProject[];
 }
 
 export class ProjectSearch extends React.Component<IAppProps, IAppState> {
@@ -29,7 +29,7 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
         server.getSearchResult(value, this.onServerSearchResult.bind(this), showError.show);
     }
 
-    private onServerSearchResult(results:SearchResults[]) {
+    private onServerSearchResult(results:IFrontEndProject[]) {
         this.state.suggestions = results;
         this.setState(this.state);
     }
@@ -48,14 +48,14 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
     /**
      * when suggestion selected, this function tells what should be the value of the input
      */
-    private getSuggestionValue(suggestion) {
+    private getSuggestionValue(suggestion:IFrontEndProject) {
         return suggestion.name;
     } 
 
     /**
      * Renders an item in the list of suggestions
      */
-    private renderSuggestion(suggestion:SearchResults) {
+    private renderSuggestion(suggestion:IFrontEndProject) {
         return <span>{suggestion.modelLabel + ': ' + suggestion.name}</span>
     }
     

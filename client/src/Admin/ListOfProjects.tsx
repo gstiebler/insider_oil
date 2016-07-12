@@ -1,14 +1,15 @@
 import * as React from 'react';
 import * as showError from '../lib/ShowError';
 import { ProjectSearch } from '../ProjectSearch'
+import { IFrontEndProject } from '../../../common/Interfaces';
 
 interface IAppProps {
-    value: any[];
+    value: IFrontEndProject[];
     onChange: any;
 }
 
 interface IAppState {
-    projects: any[];
+    projects: IFrontEndProject[];
     selectedProject: any;
     description: string;
 }
@@ -31,7 +32,7 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
         this.props.onChange(this.state.projects);
     };
     
-    private onProjectSelected(selectedItem) {
+    private onProjectSelected(selectedItem:IFrontEndProject) {
         selectedItem.description = this.state.description;
         this.state.projects.push(selectedItem);
         this.state.description = "";

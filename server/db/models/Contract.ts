@@ -1,25 +1,34 @@
 'use strict';
 import Sequelize = require('sequelize');
-var await = require('../../lib/await');
 import ModelUtils = require('../../lib/ModelUtils');
+import { IFrontEndProject } from '../../../common/Interfaces';
+var await = require('../../lib/await');
 
 const milisecondsInADay = 1000 * 60 * 60 * 24;
 
-function updateContract(contract) {
-    const object: any[] = contract.dataValues.object;
-    if (object == null || object.length != 1) {
-        contract.model_id = null;
-        contract.obj_id = null;
+function updateContractProjects(db, contract) {
+    const projects:IFrontEndProject[] = contract.dataValues.projects;
+    if(projects == null)
         return;
-    }
-
-    contract.model_id = object[0].model_id;
-    contract.obj_id = object[0].id;
+    const options = { where: { contract_id: contract.id } };
+    db.ContractProjects.destroy(options).then(() => {
+        const newProjectRecords = [];
+        for(var i = 0; i < projects.length; i++) {
+            var projectRecord = { 
+                contract_id: contract.id,
+                model_id: projects[i].model_id,
+                obj_id: projects[i].id,
+                description: projects[i].description
+            };
+            newProjectRecords.push(projectRecord);
+        }
+        return db.ContractProjects.bulkCreate(newProjectRecords);
+    });
 }
 
 function defineHooks(db) {
-    db.Contract.hook('beforeCreate', updateContract);
-    db.Contract.hook('beforeUpdate', updateContract);
+	db.Contract.hook('afterCreate', updateContractProjects.bind(this, db));
+	db.Contract.hook('beforeUpdate', updateContractProjects.bind(this, db));
 }
 
 module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
@@ -90,27 +99,20 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                 }
             }
         },
-        obj_id: {
-            type: Sequelize.INTEGER,
-            allowNull: true,
-            invisible: true
-        },
-        object: {
+        projects: {
             type: DataTypes.VIRTUAL,
-            get: ModelUtils.getObjRefField
-        },
+            get: function() {
+                const projectsPromise = sequelize.models.ContractProjects.getProjects(sequelize, this.id);
+                const projects = await( projectsPromise );
+                return projects;
+            }
+        }
     },
         {
             underscored: true,
             tableName: 'contracts',
             classMethods: {
                 associate: function (models) {
-                    const modelOpts: Sequelize.AssociationOptionsBelongsTo = {
-                        as: 'model',
-                        foreignKey: { allowNull: true }
-                    };
-                    Contract.belongsTo(models.ModelsList, modelOpts);
-
                     const bidOpts: Sequelize.AssociationOptionsBelongsTo = {
                         as: 'bid',
                         foreignKey: { allowNull: true }

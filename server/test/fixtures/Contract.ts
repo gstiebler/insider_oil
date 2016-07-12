@@ -18,7 +18,7 @@ module.exports = function(db): Promise<any[]> {
             bid_id: null,
             show_day_rate: false,
             segment_id: utils.idByName('IndustrySegment', 'Petróleo'),
-            object: [{
+            projects: [{
                 model_id: utils.idByName('ModelsList', 'Basin'),
                 id: utils.idByName('Basin', 'Amazonas'),
             }]
@@ -35,7 +35,7 @@ module.exports = function(db): Promise<any[]> {
             additives_ids: '801-800-004-003-002-001',
             bid_id: 2,
             show_day_rate: false,
-            object: [{
+            projects: [{
                 model_id: utils.idByName('ModelsList', 'Basin'),
                 id: utils.idByName('Basin', 'Amazonas'),
             }]
@@ -52,7 +52,7 @@ module.exports = function(db): Promise<any[]> {
             additives_ids: '001',
             bid_id: null,
             show_day_rate: true,
-            object: [{
+            projects: [{
                 model_id: utils.idByName('ModelsList', 'Basin'),
                 id: utils.idByName('Basin', 'Alagoas'),
             }]

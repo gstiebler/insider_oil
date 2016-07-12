@@ -5,14 +5,6 @@ export interface TableQueryDataRes {
     count: number;
 }
 
-export interface SearchResults {
-    model: string;
-    modelLabel: string;
-    name: string;
-    id: number;
-    model_id: number;
-}
-
 export interface IField {
     label: string;
     isManyToMany?: boolean;
@@ -62,4 +54,13 @@ export interface IBaseDataSourceParams {
     excelParams?: IExcelParams;
     urlSource?: string;
     referencedObjectsOnView?: IRefObjectsOnView[];
+}
+
+export interface IFrontEndProject {
+    model?: string;
+    modelLabel?: string;
+    description?: string;
+    name?: string;
+    id: number;
+    model_id: number;
 }

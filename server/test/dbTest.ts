@@ -6,6 +6,7 @@ var await = require('../lib/await');
 var utils = require('./lib/utils');
 import nodeunit = require('nodeunit');
 import ComboQueries = require('../db/queries/ComboQueries');
+import { IFrontEndProject } from '../../common/Interfaces';
 
 function jsonfy(obj) {
     return JSON.parse(JSON.stringify(obj));
@@ -107,15 +108,32 @@ GasPipeline: (test) => {
 },
 
 Contract: (test) => {
+    const amazonId = utils.idByName('Basin', 'Amazonas'); 
+    const basinId = utils.idByName('ModelsList', 'Basin');
+    const projectsToCreate:IFrontEndProject[] =[
+        {
+            model_id:basinId ,
+            id: amazonId,
+            description: 'project 1'
+        },
+        {
+            model_id: utils.idByName('ModelsList', 'Block'),
+            id: utils.idByName('Block', 'BM-BAR-1'),
+        },
+    ] 
     const obj = {
         user_uid: '304958',
-        supplier: 'supplier' 
+        supplier: 'supplier',
+        projects: projectsToCreate
     };
     await( db.models.Contract.create(obj) );
-    const searchOpt = { where: obj };
+    const searchOpt = { where: { user_uid: obj.user_uid } };
     const lastRecord = await( db.models.Contract.findOne(searchOpt) );
-    const refObj:any[] = lastRecord.object;
-    test.equal(0, refObj.length);
+    const projects:IFrontEndProject[] = lastRecord.projects;
+    test.equal(2, projects.length);
+    test.equal('project 1', projects[0].description);
+    test.equal(amazonId, projects[0].id);
+    test.equal(basinId, projects[0].model_id);
        
     const fixtureContract99 = await( db.models.Contract.findOne({ where: {user_uid: '99'} }) );
     test.equal(22, fixtureContract99.duration);

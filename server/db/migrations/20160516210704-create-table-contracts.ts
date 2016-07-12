@@ -71,18 +71,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      model_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'models_list',
-          key: 'id'
-        }
-      },
-      obj_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true
-      },
       bid_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
