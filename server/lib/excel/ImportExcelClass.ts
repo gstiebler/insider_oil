@@ -52,15 +52,18 @@ export class ImportExcel {
         return header;
     }
 
-
     validateHeader(header, modelName) {
         var excelParams = dsParams[modelName].excelParams;
+        const missingFields = [];
         for( var key in excelParams.fields ){
-            if( header.indexOf(key.toLowerCase()) < 0 )
-                throw "O cabeçalho do arquivo Excel não possui o campo " + key;
+            if( header.indexOf(key.toLowerCase()) < 0 ) {
+                missingFields.push(key);
+            }
+        }
+        if(missingFields.length > 0) {
+            throw "O cabeçalho do arquivo Excel não possui o(s) campo(s) " + missingFields.join(', ');
         }
     }  
-
 
     XLSnum2date(v) {
         var date = XLSX.SSF.parse_date_code(v);
@@ -73,7 +76,6 @@ export class ImportExcel {
         val.setUTCSeconds(date.S);
         return val;
     }
-
 
     str2date(dateStr) {
         try {
