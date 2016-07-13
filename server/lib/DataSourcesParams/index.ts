@@ -37,6 +37,7 @@ params['OilPipeline'] = require('./OilPipeline');
 params['GasMovement'] = require('./GasMovement');
 params['IndustrySegment'] = require('./IndustrySegment');
 params['MaintenanceDate'] = require('./MaintenanceDate');
+params['ExcelImportLog'] = require('./ExcelImportLog');
 
 export = params;
 

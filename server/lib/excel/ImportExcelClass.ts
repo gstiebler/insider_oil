@@ -191,7 +191,8 @@ export class ImportExcel {
                     invalidStatus.push( 'Registro ' + row + ': ' + msg ); // pseudoerror. It's about not finding a record
                 }
                 
-                for( var row = 1 + _this.lineOffset; row <= range.e.r; row++ ) {
+                const numRows = range.e.r;
+                for( var row = 1 + _this.lineOffset; row <= numRows; row++ ) {
                     const rowValues = _this.getRowValues(worksheet, row);
                     const searchParams:any = {};
                     var searchKeyValue = rowValues[keyFieldIndexInExcel];
@@ -216,13 +217,32 @@ export class ImportExcel {
                             addError(error, row);
                         }
                     }
+                    
+                    if((row % 1000) == 0) {
+                        db.models.ExcelImportLog.create({
+                            model: modelName,
+                            status: 'Atualização ' + row + '/' + numRows
+                        });
+                    }
                 }
                 status += "Registros criados: " + insertedRecords;
                 status += "\nRegistros atualizados: " + updatedRecords;
                 status += "\nRegistros inválidos: " + invalidStatus.length;
+
+                db.models.ExcelImportLog.create({
+                    model: modelName,
+                    status: 'OK',
+                    result: status + '\n' + invalidStatus.join('\n')
+                });
+
                 resolve( { status: status, invalidRecordsStatus: invalidStatus });
             } catch(err) {
                 winston.error('Erro ao importar: ', row, err);
+                db.models.ExcelImportLog.create({
+                    model: modelName,
+                    status: 'ERROR',
+                    result: JSON.stringify(err)
+                });
                 reject(err);
             }
         }); 
