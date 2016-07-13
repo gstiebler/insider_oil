@@ -7,10 +7,16 @@ import { PaginatedTableHeader, HeaderParams, FilterField } from './PaginatedTabl
 import { TableQueryDataRes } from '../../common/Interfaces';
 import * as StringUtils from './lib/StringUtils'; 
 import { genColumns } from './lib/TableUtils';
+import { IField } from '../../common/Interfaces';
 
+export interface ITableParams {
+    label: string;
+    fields: IField[];
+    source: string;  
+}
 
 interface IAppProps {
-    tableParams: any;
+    tableParams: ITableParams;
 }
 
 interface IAppState {

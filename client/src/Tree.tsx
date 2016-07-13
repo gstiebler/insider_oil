@@ -2,7 +2,8 @@ import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import { Link, browserHistory } from 'react-router';
-import { PaginatedTable } from './PaginatedTable';
+import { PaginatedTable, ITableParams } from './PaginatedTable';
+import { ITreeNode, IField } from '../../common/Interfaces';
 
 interface IAppProps {
     location: any;
@@ -10,7 +11,7 @@ interface IAppProps {
 
 interface IAppState {
     items: any[];
-    tableParams: any;
+    tableParams: ITableParams;
     nodeId: number;
     nodeLabel: string;
     stack: any[];
@@ -32,14 +33,14 @@ export class Tree extends React.Component<IAppProps, IAppState> {
         server.getTree(this.showTree.bind(this), showError.show);
     }
 
-    private makeItem(subTree) {
+    private makeItem(subTree:ITreeNode):ITreeNode {
         return {
             label: subTree.label,
             id: subTree.id
         };
     }
     
-    private findItem(tree, stack) {
+    private findItem(tree:ITreeNode, stack):ITreeNode {
         if(tree.id == this.state.nodeId || tree.label == this.state.nodeLabel) {
             stack.push( this.makeItem(tree) );
             return tree;
@@ -55,10 +56,10 @@ export class Tree extends React.Component<IAppProps, IAppState> {
             }
         } 
         
-        return false;
+        return null;
     }
     
-    private showTree(tree) {
+    private showTree(tree:ITreeNode) {
         var stack = [];
         var subTree = this.findItem(tree, stack);
         stack.reverse();
@@ -81,11 +82,11 @@ export class Tree extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
     
-    private showObjectsFromCategory(subTree) {
+    private showObjectsFromCategory(subTree:ITreeNode) {
         this.state.tableParams = {
             label: subTree.label,
             fields: subTree.child.fields,
-            source: subTree.child.source  
+            source: subTree.child.source   
         };
         this.setState(this.state);
     }

@@ -1,8 +1,4 @@
-interface IRef {
-    modelField: string;
-    idField: string;
-    valueField: string;
-}
+import { IRef } from '../../../common/Interfaces';
 
 export interface IField {
     label: string;

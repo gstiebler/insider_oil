@@ -1,7 +1,8 @@
 'use strict';
 
-import tree = require('../lib/Tree');
+import * as tree from '../lib/Tree';
+import * as express from "express";
 
-exports.main = function(req, res, next) {
+exports.main = function(req: express.Request, res: express.Response) {
     res.json(tree);
 };

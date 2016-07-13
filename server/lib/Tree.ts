@@ -1,19 +1,7 @@
 'use strict';
 
 import TableQueries = require('../db/queries/TableQueries');
-
-interface ITreeChild {
-    source: string;
-    filters?: any;
-    fields?: any;
-}
-
-interface ITreeNode {
-    label: string;
-    id?: number;
-    child?: ITreeChild;
-    children?: ITreeNode[];
-}
+import { ITreeNode } from '../../common/Interfaces';
 
 var tree: ITreeNode = {
     label: "Oil & Gas",

@@ -5,6 +5,12 @@ export interface TableQueryDataRes {
     count: number;
 }
 
+interface IRef {
+    modelField: string;
+    idField: string;
+    valueField: string;
+}
+
 export interface IField {
     label: string;
     isManyToMany?: boolean;
@@ -16,13 +22,13 @@ export interface IField {
     isProjectList?: boolean;
     isCurrency?: boolean;
     isConcessionaries?: boolean;
-    comboSource?: string;
+    comboSource?: string; 
     type?: string;
     model?: string;
     enumValues?: any[];
     association?: string;
     value?: any;
-    ref?: boolean;
+    ref?: IRef | boolean;
     name?: string;
 }
 
@@ -63,4 +69,17 @@ export interface IFrontEndProject {
     name?: string;
     id: number;
     model_id: number;
+}
+
+interface ITreeChild {
+    source: string;
+    filters?: any;
+    fields?: IField[];
+}
+
+interface ITreeNode {
+    label: string;
+    id?: number;
+    child?: ITreeChild;
+    children?: ITreeNode[];
 }
