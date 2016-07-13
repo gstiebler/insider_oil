@@ -163,6 +163,14 @@ export class ImportExcel {
         return XLSX.utils.decode_range(worksheet['!ref']);
     }
 
+    private genStatusStr(insertedRecords, updatedRecords, invalidStatus) {
+        var status = '';
+        status += "Registros criados: " + insertedRecords;
+        status += "\nRegistros atualizados: " + updatedRecords;
+        status += "\nRegistros inválidos: " + invalidStatus.length;
+        return status;
+    }
+
     execute(excelBuf, modelName: string):Promise<IExcelUploadResponse> {
         const workbook = this.getWorkbook(excelBuf);
         const first_sheet_name = workbook.SheetNames[0];
@@ -182,7 +190,6 @@ export class ImportExcel {
         
         const promise = new Promise<IExcelUploadResponse>( function(resolve, reject) { Sync( function() {
             try{
-                var status = "";
                 var invalidStatus: string[] = [];
                 function addError(error, row) {
                     var msg = error.message;
@@ -219,15 +226,15 @@ export class ImportExcel {
                     }
                     
                     if((row % 1000) == 0) {
+                        const partialStatus = _this.genStatusStr(insertedRecords, updatedRecords, invalidStatus);
                         db.models.ExcelImportLog.create({
                             model: modelName,
-                            status: 'Atualização ' + row + '/' + numRows
+                            status: 'Atualização ' + row + '/' + numRows,
+                            result: partialStatus + '\n' + invalidStatus.join('\n')
                         });
                     }
                 }
-                status += "Registros criados: " + insertedRecords;
-                status += "\nRegistros atualizados: " + updatedRecords;
-                status += "\nRegistros inválidos: " + invalidStatus.length;
+                const status = _this.genStatusStr(insertedRecords, updatedRecords, invalidStatus);
 
                 db.models.ExcelImportLog.create({
                     model: modelName,
