@@ -148,6 +148,12 @@ var tree: ITreeNode = {
             }
         },
         {
+            label: 'Projetos',
+            child: {
+                source: 'Projects'
+            }
+        },
+        {
             label: 'Notícias',
             child: {
                 source: 'News'

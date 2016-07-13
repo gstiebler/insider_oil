@@ -806,6 +806,53 @@ export const queries:ITableQueries = {
         fields: productionUnit.fields
     },
     
+    Projects: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'production_units',
+                    fields: [
+                        'id',
+                        'name',
+                        'status',
+                    ]
+                },
+                extraFields: [
+                    ['"ProductionUnit"', 'model']
+                ],
+                joinTables: [],
+                filters: queryParams.filters,
+                order: queryParams.order
+            };
+
+            options.filters.push({
+                field: 'status',
+                in: [
+                    '"Em projeto"',
+                    '"Em construção"',
+                    '"Em licitação"',
+                ]
+            });
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'name'
+                }
+            },
+            {
+                label: 'Status',
+                fieldName: 'status',
+                type: 'VARCHAR'
+            },
+        ]
+    },
+    
     oilFielsdProduction: {
         queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
             queryParams.filters.push(

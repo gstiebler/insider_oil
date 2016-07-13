@@ -3,7 +3,7 @@
 interface IFilter {
     field: string;
     like?: string;
-    in?: number[];
+    in?: any[];
     equal?: string;
 }
 
