@@ -67,6 +67,12 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
         this.state.record = fieldValues;
         this.setState(this.state);
     }
+
+    private insertBR(input:string): React.ReactElement<any>[] {                        
+        return input.split('\n').map((text, index) => {
+            return <div key={'text' + index}>{text} <br/></div>;
+        })
+    }
     
     public render(): React.ReactElement<any> {
         var fields = this.state.record.map((field):React.ReactElement<any> => {
@@ -105,7 +111,7 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
                 });
                 fieldHtml = <div className="col-md-6">{ listItems } </div>;
             } else {
-                fieldHtml = <span className="col-sm-10">{field.value}</span>
+                fieldHtml = <span className="col-sm-10"> { this.insertBR(field.value) } </span>
             }
 
             return (
