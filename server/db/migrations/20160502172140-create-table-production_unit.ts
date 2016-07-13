@@ -34,6 +34,20 @@ module.exports = {
         type: Sequelize.ENUM('FPSO', 'FIXED', 'SEMI'),
         allowNull: false
       },
+      status: {
+        type: Sequelize.ENUM('Em operação', 
+                             'Em comissionamento', 
+                             'Revamp',
+                             'Parada programada',
+                             'Em projeto',
+                             'Em construção',
+                             'Em licitação'),
+        allowNull: true
+      },
+      general_info: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
       owner: {
         type: Sequelize.STRING,
         allowNull: true

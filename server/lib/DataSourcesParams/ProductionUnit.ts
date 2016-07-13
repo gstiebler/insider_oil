@@ -20,6 +20,12 @@ const ProductionUnit: IBaseDataSourceParams = {
         type: {
             label: 'Tipo'
         },
+        status: {
+            label: 'Status'
+        },
+        general_info: {
+            label: 'Informações'
+        },
         owner: {
             label: 'Empresa proprietária'
         },
@@ -57,7 +63,7 @@ const ProductionUnit: IBaseDataSourceParams = {
         },
     },
     labelField: 'name',
-    gridFields: ['name', 'oil_field_name', 'block_name', 'owner'],
+    gridFields: ['name', 'oil_field_name', 'block_name', 'status', 'owner'],
     tableLabel: 'Unidades de produção',
     hasMap: false,
     excelParams: {

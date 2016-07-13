@@ -26,6 +26,7 @@ const productionUnit:ITableQuery = {
                 fields: [
                     ['id', 'pu_id'],
                     ['name', 'pu_name'],
+                    'status',
                     'owner',
                     'situation'
                 ]
@@ -83,6 +84,11 @@ const productionUnit:ITableQuery = {
                 idField: 'b_id',
                 valueField: 'b_name'
             }
+        },
+        {
+            label: 'Status',
+            fieldName: 'status',
+            type: 'VARCHAR'
         },
         {
             label: 'Empresa proprietária',
