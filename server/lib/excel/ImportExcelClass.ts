@@ -172,24 +172,25 @@ export class ImportExcel {
     }
 
     execute(excelBuf, modelName: string):Promise<IExcelUploadResponse> {
-        const workbook = this.getWorkbook(excelBuf);
-        const first_sheet_name = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[first_sheet_name];
-        
-        const header = this.getHeader(worksheet, this.lineOffset);
-        this.validateHeader(header, modelName);
-        
-        const excelParams = dsParams[modelName].excelParams;
-        const keyFieldIndexInExcel = header.indexOf( excelParams.keyField );
-        const modelKeyField = excelParams.fields[ excelParams.keyField ];
-        const model = db.models[modelName];
-        const range = this.getRange(worksheet);
-        let insertedRecords = 0;
-        let updatedRecords = 0;
         const _this = this;
         
         const promise = new Promise<IExcelUploadResponse>( function(resolve, reject) { Sync( function() {
             try{
+                const workbook = _this.getWorkbook(excelBuf);
+                const first_sheet_name = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[first_sheet_name];
+                
+                const header = _this.getHeader(worksheet, _this.lineOffset);
+                _this.validateHeader(header, modelName);
+                
+                const excelParams = dsParams[modelName].excelParams;
+                const keyFieldIndexInExcel = header.indexOf( excelParams.keyField );
+                const modelKeyField = excelParams.fields[ excelParams.keyField ];
+                const model = db.models[modelName];
+                const range = _this.getRange(worksheet);
+                let insertedRecords = 0;
+                let updatedRecords = 0;
+
                 var invalidStatus: string[] = [];
                 function addError(error, row) {
                     var msg = error.message;
