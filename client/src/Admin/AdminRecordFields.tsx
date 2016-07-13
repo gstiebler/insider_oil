@@ -147,7 +147,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                              onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.enumValues) {
             var options = field.enumValues.map((enumValue, index) => {
-                return <option value={enumValue} >{enumValue}</option>
+                return <option value={enumValue} key={'enum' + index}>{enumValue}</option>
             });
             return (
                 <select className="form-control" 
