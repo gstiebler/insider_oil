@@ -27,7 +27,8 @@
     "typings": "^1.0.4",
     "umzug": "^1.11.0",
     "winston": "^2.1.1",
-    "xlsx": "^0.8.0"
+    "xlsx": "^0.8.0",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "selenium-webdriver": "^2.48.2"

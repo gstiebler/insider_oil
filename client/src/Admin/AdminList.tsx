@@ -42,7 +42,7 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
         Flash.create('success', 'Arquivo pronto para ser enviado');
         var params = { data: JSON.stringify(kmlStr), }
         server.postP('/db_server/upload_blocks_kml', params)
-            .then(res => Flash.create('success', 'KML de Blocos carregado'))
+            .then(res => Flash.create('success', 'KML de Blocos carregado: ' + res))
             .catch(showError.show);
         return null;
     }

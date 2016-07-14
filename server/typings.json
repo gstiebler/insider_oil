@@ -16,6 +16,7 @@
     "underscore": "registry:dt/underscore#1.7.0+20160622050840",
     "validator": "registry:dt/validator#4.5.1+20160316155526",
     "winston": "registry:dt/winston#0.0.0+20160417152829",
-    "xlsx": "registry:dt/xlsx#0.0.0+20160316155526"
+    "xlsx": "registry:dt/xlsx#0.0.0+20160316155526",
+    "xml2js": "registry:dt/xml2js#0.0.0+20160317120654"
   }
 }

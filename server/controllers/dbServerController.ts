@@ -20,6 +20,7 @@ import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 import Sequelize = require('sequelize');
 import * as interfaces from '../../common/Interfaces';
 import * as ni from '../../common/NetworkInterfaces';
+import * as ImportKML from '../lib/ImportKml';
  
 function getFieldTypes(fields) {
     const types = {};
@@ -125,8 +126,10 @@ export function uploadFile(req: express.Request, res: express.Response, next) {
 }
 
 export function uploadBlocksKml(req: express.Request, res: express.Response, next) {
-    var buf = JSON.parse(req.body.data);
-    console.log(buf);
+    var kmlStr = JSON.parse(req.body.data);
+    ImportKML.importBlocks(kmlStr)
+        .then((status:string) => res.json( { status: status} ))
+        .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }
 
 
