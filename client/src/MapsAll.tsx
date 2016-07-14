@@ -2,32 +2,6 @@ import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 
-var map;
-var infoWindow;
-
-function showArrays(event) {
-    // Since this polygon has only one path, we can call getPath() to return the
-    // MVCArray of LatLngs.
-    var vertices = this.getPath();
-
-    var contentString = '<b>Bermuda Triangle polygon</b><br>' +
-        'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() +
-        '<br>' + '<a href="http://www.google.com">Google</a>';
-
-    // Iterate over the vertices.
-    for (var i =0; i < vertices.getLength(); i++) {
-        var xy = vertices.getAt(i);
-        contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
-            xy.lng();
-    }
-
-    // Replace the info window's content and position.
-    infoWindow.setContent(contentString);
-    infoWindow.setPosition(event.latLng);
-
-    infoWindow.open(map);
-}
-
 interface IAppProps {
 }
 
@@ -36,7 +10,9 @@ interface IAppState {
 
 export class MapsAll extends React.Component<IAppProps, IAppState> {
 
-    public state: IAppState;
+    private map:any;
+    private infoWindow:any;
+    private googleMaps:any;
 
     constructor(props: IAppProps) {
         super(props);
@@ -45,35 +21,52 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
-        map = new google.maps.Map(document.getElementById('map'), {
+        this.initMap();
+        server.getP('/get_map_data', {})
+            .then(this.onMapData.bind(this))
+            .catch(showError.show);
+    }    
+
+    private initMap() {
+        this.googleMaps = google;
+        this.map = new this.googleMaps.maps.Map(document.getElementById('map'), {
             zoom: 5,
             center: {lat: 24.886, lng: -70.268},
-            mapTypeId: google.maps.MapTypeId.TERRAIN
+            mapTypeId: this.googleMaps.maps.MapTypeId.TERRAIN
         });
 
-        // Define the LatLng coordinates for the polygon.
-        var triangleCoords = [
-            {lat: 25.774, lng: -80.190},
-            {lat: 18.466, lng: -66.118},
-            {lat: 32.321, lng: -64.757}
-        ];
+        this.infoWindow = new this.googleMaps.maps.InfoWindow;
+    }
 
-        // Construct the polygon.
-        var bermudaTriangle = new google.maps.Polygon({
-            paths: triangleCoords,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 3,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35
+    private onMapData(mapData) {
+        mapData.blocks.map(block => {// Construct the polygon.
+            var polygons = JSON.parse(block.polygons);
+            polygons.map(polygon => {
+                var gPolygon = new this.googleMaps.maps.Polygon({
+                    paths: polygon,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35
+                });
+                gPolygon.setMap(this.map);
+
+                // Add a listener for the click event.
+                gPolygon.addListener('click', this.showArrays.bind(this, block));
+            });
         });
-        bermudaTriangle.setMap(map);
+    }
 
-        infoWindow = new google.maps.InfoWindow;
+    private showArrays(block, event) {
+        var contentString = '<b>Bloco: </b>' + block.name + '<br/>'
 
-        // Add a listener for the click event.
-        bermudaTriangle.addListener('click', showArrays);
-    }    
+        // Replace the info window's content and position.
+        this.infoWindow.setContent(contentString);
+        this.infoWindow.setPosition(event.latLng);
+
+        this.infoWindow.open(this.map);
+    }
 
     public render(): React.ReactElement<any> {
         const style = {
