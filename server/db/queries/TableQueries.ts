@@ -642,6 +642,7 @@ export const queries:ITableQueries = {
                 table: {
                     name: 'wells',
                     fields: [
+                        ['id', 'well_id'],
                         ['name', 'well_name'],
                         'name_operator',
                         'type',
@@ -654,6 +655,7 @@ export const queries:ITableQueries = {
                     ]
                 },
                 extraFields: [
+                    ['"Well"', 'model_well'],
                     ['"Block"', 'model_block'],
                     ['"Company"', 'model_operator'],
                     ['if(isnull(drilling_rigs_onshore.name), "DrillingRigOffshore", "DrillingRigOnshore")', 'dr_model'],
@@ -696,17 +698,20 @@ export const queries:ITableQueries = {
         },
         fields: [
             {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model_well',
+                    idField: 'well_id',
+                    valueField: 'well_name'
+                }
+            },
+            {
                 label: 'Operador',
                 ref: {
                     modelField: 'model_operator',
                     idField: 'operator_id',
                     valueField: 'operator_name'
                 }
-            },
-            {
-                label: 'Nome',
-                fieldName: 'well_name',
-                type: 'VARCHAR'
             },
             {
                 label: 'Nome operador', 
