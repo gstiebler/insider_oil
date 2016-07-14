@@ -212,6 +212,10 @@ module.exports = {
 					type: Sequelize.TEXT,
 					allowNull: true
 				},
+				polygons: {
+					type: Sequelize.TEXT,
+					allowNull: true
+				},
 				operator_id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,

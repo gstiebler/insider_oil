@@ -44,6 +44,10 @@ module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.D
           type: DataTypes.TEXT,
           allowNull: true
         },
+				polygons: {
+					type: DataTypes.TEXT,
+					allowNull: true
+				},
     }, 
     {
         underscored: true,
