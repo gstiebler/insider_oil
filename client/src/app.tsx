@@ -15,6 +15,7 @@ import { OilFieldView } from './OilFieldView';
 import { ProductionUnitView } from './ProductionUnitView';
 import { Flash } from './Flash';
 import { ChangePassword } from './ChangePassword';
+import { MapsAll } from './MapsAll';
 
 interface IAppProps {
   model: string;
@@ -98,6 +99,9 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
                 <Link to="/app/tree?nodeLabel=Empresas">Empresas</Link>
               </li>
               <li className="nav-item">
+                <Link to="/app/maps_all">Mapas</Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/app/tree?nodeLabel=Notícias">Notícias</Link>
               </li>
               { this.state.isAdmin ? adminLink : '' }
@@ -145,6 +149,7 @@ ReactDOM.render(
       <Route path="view_record" component={ViewRecord}/>
       <Route path="oil_field" component={OilFieldView}/>
       <Route path="production_unit" component={ProductionUnitView}/>
+      <Route path="maps_all" component={MapsAll}/>
       <Route path="change_password" component={ChangePassword}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
