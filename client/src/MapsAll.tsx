@@ -30,9 +30,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     private initMap() {
         this.googleMaps = google;
         this.map = new this.googleMaps.maps.Map(document.getElementById('map'), {
-            zoom: 5,
-            center: {lat: 24.886, lng: -70.268},
-            mapTypeId: this.googleMaps.maps.MapTypeId.TERRAIN
+            zoom: 4,
+            center: {lat: -10.0, lng: -53.0},
+            mapTypeId: this.googleMaps.maps.MapTypeId.HYBRID
         });
 
         this.infoWindow = new this.googleMaps.maps.InfoWindow;
@@ -59,7 +59,8 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     }
 
     private showArrays(block, event) {
-        var contentString = '<b>Bloco: </b>' + block.name + '<br/>'
+        const url = '/app/view_record?source=Block&id=' + block.id;
+        var contentString = '<b>Bloco: </b><a href="' + url + '">' + block.name + '</a>'
 
         // Replace the info window's content and position.
         this.infoWindow.setContent(contentString);
@@ -71,7 +72,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<any> {
         const style = {
             width: '800px',
-            height: '500px'
+            height: '700px'
         }
         return (
             <div>
