@@ -15,10 +15,12 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
             type: DataTypes.ENUM('Em operação', 
                                  'Em comissionamento', 
                                  'Revamp',
+                                 'Parada',
                                  'Parada programada',
                                  'Em projeto',
                                  'Em construção',
-                                 'Em licitação'),
+                                 'Em licitação',
+                                 'Em desativação'),
 	        allowNull: true
         },
         general_info: {
