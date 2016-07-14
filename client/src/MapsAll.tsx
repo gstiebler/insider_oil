@@ -10,7 +10,7 @@ interface IAppState {
 
 export class MapsAll extends React.Component<IAppProps, IAppState> {
 
-    private map:any;
+    private gMap:any;
     private infoWindow:any;
     private googleMaps:any;
 
@@ -29,7 +29,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
 
     private initMap() {
         this.googleMaps = google;
-        this.map = new this.googleMaps.maps.Map(document.getElementById('map'), {
+        this.gMap = new this.googleMaps.maps.Map(document.getElementById('map'), {
             zoom: 4,
             center: {lat: -10.0, lng: -53.0},
             mapTypeId: this.googleMaps.maps.MapTypeId.HYBRID
@@ -41,6 +41,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     private onMapData(mapData) {
         mapData.blocks.map(block => {// Construct the polygon.
             var polygons = JSON.parse(block.polygons);
+            if(!polygons) {
+                return;
+            }
             polygons.map(polygon => {
                 var gPolygon = new this.googleMaps.maps.Polygon({
                     paths: polygon,
@@ -50,7 +53,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                     fillColor: '#FF0000',
                     fillOpacity: 0.35
                 });
-                gPolygon.setMap(this.map);
+                gPolygon.setMap(this.gMap);
 
                 // Add a listener for the click event.
                 gPolygon.addListener('click', this.showArrays.bind(this, block));
@@ -66,7 +69,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         this.infoWindow.setContent(contentString);
         this.infoWindow.setPosition(event.latLng);
 
-        this.infoWindow.open(this.map);
+        this.infoWindow.open(this.gMap);
     }
 
     public render(): React.ReactElement<any> {
