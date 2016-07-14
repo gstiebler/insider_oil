@@ -76,8 +76,14 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     }    
 
     public render(): React.ReactElement<any> {
+        const style = {
+            width: '800px',
+            height: '500px'
+        }
         return (
-            <div id="map"></div>
+            <div>
+                <div id="map" style={style} />
+            </div>
         );
     }
 }
