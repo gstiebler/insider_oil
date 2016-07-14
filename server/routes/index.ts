@@ -34,6 +34,7 @@ module.exports = function(app: express.Express) {
     app.delete('/delete_item/', session.authorize, dbServerController.deleteItem);
     app.get('/combo_values/', session.authorize,   dbServerController.getComboValues);
     app.post('/db_server/upload_file',             dbServerController.uploadFile);
+    app.post('/db_server/upload_blocks_kml', dbServerController.uploadBlocksKml);
     app.get('/get_query_data', session.authorize,  dbServerController.getQueryData);
     app.get('/get_table_data', session.authorize,  dbServerController.getTableQueryData);
     app.get('/time_series', session.authorize,      dbServerController.getTimeSeries);

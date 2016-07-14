@@ -3,9 +3,9 @@ import * as Flash from '../Flash'
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import { postP } from '../lib/Server';
-import { ButtonUploadFileAsArray } from './ButtonUploadFileAsArray';
+import { ButtonUploadFile } from './ButtonUploadFile';
 import { formatExcelUploadResult } from '../lib/ModelViewUtils';
-
+import { base64ToArray } from '../lib/BytesUtils';
 
 interface IAppProps {
     modelName: string;
@@ -19,10 +19,11 @@ export class ExcelUploadButton extends React.Component<IAppProps, IAppState> {
         super(props);
     }
     
-    private onFileLoad(array: number[]) {
+    private onFileLoad(base64Str: string) {
+        var convertedArray = base64ToArray(base64Str);
         Flash.create('success', 'Arquivo pronto para ser enviado');
         var params = {
-             data: JSON.stringify(array),
+             data: JSON.stringify(convertedArray),
              model: this.props.modelName
         }
         postP('/db_server/upload_file', params)
@@ -34,7 +35,7 @@ export class ExcelUploadButton extends React.Component<IAppProps, IAppState> {
         return ( 
             <div className="highlight" >
                 <h4>Enviar arquivo Excel</h4>
-                <ButtonUploadFileAsArray onFileLoad={this.onFileLoad.bind(this)} />
+                <ButtonUploadFile onFileLoad={this.onFileLoad.bind(this)} />
             </div>  
         );
     }

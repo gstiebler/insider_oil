@@ -124,6 +124,11 @@ export function uploadFile(req: express.Request, res: express.Response, next) {
     };
 }
 
+export function uploadBlocksKml(req: express.Request, res: express.Response, next) {
+    var buf = JSON.parse(req.body.data);
+    console.log(buf);
+}
+
 
 export function modelFields(req: express.Request, res: express.Response, next) {
     var modelName = req.query.model;

@@ -32,19 +32,20 @@ export function StrToByteArray(str) {
     return buf;
 }
 
-export function ReadFileToArray(file: Blob):Promise<number[]> {
+export function ReadFileToBase64Str(file: Blob):Promise<string> {
 
     function onFileLoad(reader, resolve) {
         var dsBase64 = reader.result;
         var trimmedBase64 = removeBase64Header(dsBase64);
-        var convertedArray = base64ToArray(trimmedBase64);
-        resolve(convertedArray);
+        resolve(trimmedBase64);
+        return null;
     }
 
     return new Promise<any>( function(resolve, reject) {
         let reader = new FileReader();
-        reader.onloadend = this.onFileLoad.bind(this, reader, resolve);
+        reader.onloadend = onFileLoad.bind(this, reader, resolve);
         // TODO read as byte array and avoid base64 conversion
         reader.readAsDataURL(file);
+        return null;
     });
 }

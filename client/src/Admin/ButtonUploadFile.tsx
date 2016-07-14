@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as showError from '../lib/ShowError';
 import { postP } from '../lib/Server';
-import { ReadFileToArray } from '../lib/BytesUtils';
+import { ReadFileToBase64Str } from '../lib/BytesUtils';
 
 
 interface IAppProps {
@@ -11,7 +11,7 @@ interface IAppProps {
 interface IAppState {
 }
 
-export class ButtonUploadFileAsArray extends React.Component<IAppProps, IAppState> {
+export class ButtonUploadFile extends React.Component<IAppProps, IAppState> {
 
     constructor(props: IAppProps) {
         super(props);
@@ -22,7 +22,7 @@ export class ButtonUploadFileAsArray extends React.Component<IAppProps, IAppStat
 
     private onFileSelected(event) {
         let file = event.target.files[0];
-        ReadFileToArray(file)
+        ReadFileToBase64Str(file)
             .then(this.props.onFileLoad)
             .catch(showError.show);
     }
