@@ -40,6 +40,9 @@ class Well implements IDataSourceOperations {
                 
                 item.ref = true;
                 const drillingRigObj = record.drilling_rig_obj;
+                if(!drillingRigObj) {
+                    continue;
+                }
                 item.name = drillingRigObj.name;
                 item.value = drillingRigObj.id;
                 item.model = tbNameModelMap[drillingRigObj.$modelOptions.tableName];

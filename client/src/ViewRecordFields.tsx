@@ -68,7 +68,10 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
-    private insertBR(input:string): React.ReactElement<any>[] {                        
+    private insertBR(input:string): React.ReactElement<any>[] { 
+        if(!(typeof input == 'string')) {
+            return [<div key={'text' + 0}>{input} <br/></div>];
+        }                       
         return input.split('\n').map((text, index) => {
             return <div key={'text' + index}>{text} <br/></div>;
         })
