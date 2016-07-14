@@ -27,18 +27,20 @@ export function importBlocks(kmlStr:string):Promise<string> {
         kmlPolygons.map(linearRing => {
             const coordinatesRawStr:string = linearRing.coordinates[0];
             const coordinatesStr = coordinatesRawStr.replace(/\n/g, '').replace(/\t/g, '');
-            const coordinates = coordinatesStr.split(',').map((floatStr:string):number => {
-                const floatStrs = floatStr.split(' ');
-                return parseFloat(floatStrs[floatStrs.length-1]);
-            });
 
             const polygons = [];
-            for(var i = 0; i < coordinates.length - 1; i += 2) {
+            const coordinateStrs = coordinatesStr.split(' ');
+            const coordinates = coordinateStrs.map((floatStr:string) => {
+                const floatStrs = floatStr.split(',');
+                if(floatStrs.length != 3) {
+                    return;
+                }
                 polygons.push({
-                    lat: coordinates[i],
-                    lng: coordinates[i + 1]
+                    lat: parseFloat(floatStrs[1]),
+                    lng: parseFloat(floatStrs[0])
                 });
-            }
+            });
+
             regions.push(polygons);
         });
         return regions;
@@ -46,6 +48,7 @@ export function importBlocks(kmlStr:string):Promise<string> {
 
     function processBlockKml(kmlObj:any):string {
         const missingBlocks:string[] = [];
+        var okBlocks = 0;
         const Placemarks = kmlObj.kml.Document[0].Folder[0].Placemark
         Placemarks.map(placemark => {
             const simpleData = placemark.ExtendedData[0].SchemaData[0].SimpleData;
@@ -59,8 +62,9 @@ export function importBlocks(kmlStr:string):Promise<string> {
             const regions = getRegions(placemark, BlockName);
             block.polygons = JSON.stringify(regions);
             await( block.save() );
+            okBlocks++;
         });
-        return 'status';
+        return okBlocks + ' importados com sucesso. Os seguintes blocos não foram encontrados: ' + missingBlocks.join('\n');
     }
 
     return new Promise((resolve, reject) => {

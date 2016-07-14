@@ -132,7 +132,6 @@ export function uploadBlocksKml(req: express.Request, res: express.Response, nex
         .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }
 
-
 export function modelFields(req: express.Request, res: express.Response, next) {
     var modelName = req.query.model;
     const dsOperations = DataSourceOperations[modelName];
@@ -352,7 +351,7 @@ export function getTimeSeries(req: express.Request, res: express.Response):void 
 
 export function getMapData(req: express.Request, res: express.Response):void {Sync(function(){
     const blockGetAllOptions = {
-        attributes: ['id', 'polygons']
+        attributes: ['id', 'name', 'polygons']
     }
     const blocks = await( db.models.Block.findAll(blockGetAllOptions) );
     res.json( { blocks } );
