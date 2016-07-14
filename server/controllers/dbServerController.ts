@@ -350,6 +350,13 @@ export function getTimeSeries(req: express.Request, res: express.Response):void 
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 
+export function getMapData(req: express.Request, res: express.Response):void {Sync(function(){
+    const blockGetAllOptions = {
+        attributes: ['id', 'polygons']
+    }
+    const blocks = await( db.models.Block.findAll(blockGetAllOptions) );
+    res.json( { blocks } );
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 
 export function sourcesList(req: express.Request, res: express.Response) {
     var list = {

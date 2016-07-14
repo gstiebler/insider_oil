@@ -38,6 +38,7 @@ module.exports = function(app: express.Express) {
     app.get('/get_query_data', session.authorize,  dbServerController.getQueryData);
     app.get('/get_table_data', session.authorize,  dbServerController.getTableQueryData);
     app.get('/time_series', session.authorize,      dbServerController.getTimeSeries);
+    app.get('/get_map_data', session.authorize,     dbServerController.getMapData);
     
     app.get('/search', session.authorize,          searchController.main);
     
