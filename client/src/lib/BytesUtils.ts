@@ -1,3 +1,5 @@
+import * as Promise from 'bluebird';
+
 export function arrayBufferToBase64( buffer ) {
     var binary = '';
     var bytes = new Uint8Array( buffer );
@@ -8,7 +10,7 @@ export function arrayBufferToBase64( buffer ) {
     return window.btoa( binary );
 }
 
-export function base64ToArray( base64 ) {
+export function base64ToArray( base64 ):number[] {
     var base64str = atob(base64);
     var bytes = new Array( base64str.length );
     for(var i = 0; i < base64str.length; i++) {
@@ -21,11 +23,28 @@ export function removeBase64Header(dsBase64) {
     return dsBase64.substring(dsBase64.search(';base64,') + 8, dsBase64.length);
 }
 
-export function str2ab(str) {
+export function StrToByteArray(str) {
     var buf = new ArrayBuffer(str.length);
     var bufView = new Uint8Array(buf);
     for (var i=0, strLen=str.length; i<strLen; i++) {
         bufView[i] = str.charCodeAt(i);
     }
     return buf;
+}
+
+export function ReadFileToArray(file: Blob):Promise<number[]> {
+
+    function onFileLoad(reader, resolve) {
+        var dsBase64 = reader.result;
+        var trimmedBase64 = removeBase64Header(dsBase64);
+        var convertedArray = base64ToArray(trimmedBase64);
+        resolve(convertedArray);
+    }
+
+    return new Promise<any>( function(resolve, reject) {
+        let reader = new FileReader();
+        reader.onloadend = this.onFileLoad.bind(this, reader, resolve);
+        // TODO read as byte array and avoid base64 conversion
+        reader.readAsDataURL(file);
+    });
 }

@@ -6,7 +6,7 @@ import * as ModelViewService from '../lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
 import * as Flash from '../Flash'
 import { ExcelUploadButton } from './ExcelUploadButton'
-import { str2ab } from '../lib/BytesUtils';
+import { StrToByteArray } from '../lib/BytesUtils';
 import * as FileSaver from 'file-saver'; 
 import { GetViewParams, GetTableData } from '../../../common/NetworkInterfaces';
 
@@ -153,7 +153,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
     	server.downloadExcelFile(this.state.modelName, onExcelFile.bind(this), showError.show);
     	
     	function onExcelFile(xlsxBinary) {
-    		var ba = str2ab(xlsxBinary);
+    		var ba = StrToByteArray(xlsxBinary);
     		var blob = new Blob([ba], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
     		FileSaver.saveAs(blob, "arquivo.xlsx");
     	}
