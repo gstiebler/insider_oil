@@ -3,6 +3,7 @@ import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import { Map, IMapObj, googleRef } from './Maps/Map';
 import { Polygon } from './Maps/Polygon';
+import { Marker } from './Maps/Marker';
 import { IGeoPoint } from '../../common/Interfaces';
 
 interface IAppProps {
@@ -15,8 +16,12 @@ interface IAppState {
 export class MapsAll extends React.Component<IAppProps, IAppState> {
 
     private mapObj: IMapObj;
+
     private blockMPolygons: Polygon[];
     private blocksVisible: boolean;
+
+    private productionUnitMMarkers: Marker[];
+    private productionUnitsVisible: boolean;
 
     constructor(props: IAppProps) {
         super(props);
@@ -31,6 +36,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         };
         this.blockMPolygons = [];
         this.blocksVisible = true;
+        this.productionUnitsVisible = true;
     }
 
     private componentDidMount() {
@@ -41,16 +47,17 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
 
     private onMapData(mapData) {
         this.addBlocksToMap(mapData.blocks);
+        this.addProductionUnitsToMap(mapData.productionUnits);
     }
 
     private addBlocksToMap(blocks) {
         this.blockMPolygons = [];
         blocks.map(block => {
-            var polygons = JSON.parse(block.polygons);
+            var polygons:IGeoPoint[][] = JSON.parse(block.polygons);
             if(!polygons) {
                 return;
             }
-            polygons.map((polygon:IGeoPoint[]) => {
+            polygons.map((polygon) => {
                 var mPolygon = new Polygon(this.mapObj, polygon);
                 mPolygon.setBillboardFn(() => {
                     const url = '/app/view_record?source=Block&id=' + block.id;
@@ -58,6 +65,22 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                 });
                 this.blockMPolygons.push(mPolygon);
             });
+        });
+    }
+
+    private addProductionUnitsToMap(productionUnits) {
+        this.productionUnitMMarkers = [];
+        productionUnits.map(productionUnit => {
+            var coordinates:IGeoPoint = JSON.parse(productionUnit.coordinates);
+            if(!coordinates) {
+                return;
+            }
+            var mMarker = new Marker(this.mapObj, coordinates);
+            mMarker.setBillboardFn(() => {
+                const url = '/app/view_record?source=ProductionUnit&id=' + productionUnit.id;
+                return '<b>Unidade de produção: </b><a href="' + url + '">' + productionUnit.name + '</a>'
+            });
+            this.productionUnitMMarkers.push(mMarker);
         });
     }
 

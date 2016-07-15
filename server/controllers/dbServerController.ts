@@ -354,7 +354,14 @@ export function getMapData(req: express.Request, res: express.Response):void {Sy
         attributes: ['id', 'name', 'polygons']
     }
     const blocks = await( db.models.Block.findAll(blockGetAllOptions) );
-    res.json( { blocks } );
+
+    const productionUnitsGetAllOptions = {
+        attributes: ['id', 'name', 'coordinates'],
+        where: { coordinates: { $ne: null } }
+    }
+    const productionUnits = await( db.models.ProductionUnit.findAll(productionUnitsGetAllOptions) );
+
+    res.json( { blocks, productionUnits } );
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 
 export function sourcesList(req: express.Request, res: express.Response) {

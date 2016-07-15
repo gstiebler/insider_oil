@@ -23,6 +23,10 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                                  'Em desativação'),
 	        allowNull: true
         },
+        coordinates: {
+            type: DataTypes.TEXT,
+            allowNull: true
+        },
         general_info: {
             type: DataTypes.TEXT,
             allowNull: true

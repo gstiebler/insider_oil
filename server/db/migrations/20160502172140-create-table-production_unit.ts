@@ -46,6 +46,10 @@ module.exports = {
                              'Em desativação'),
         allowNull: true
       },
+      coordinates: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
       general_info: {
         type: Sequelize.TEXT,
         allowNull: true
