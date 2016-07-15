@@ -83,3 +83,8 @@ interface ITreeNode {
     child?: ITreeChild;
     children?: ITreeNode[];
 }
+
+interface IGeoPoint {
+    lat: number;
+    lng: number;
+}
