@@ -1,16 +1,13 @@
 import { IMapObj, googleRef } from './Map';
 import { IGeoPoint } from '../../../common/Interfaces';
+import { BaseMapItem } from './BaseMapItem';
 
-export class Polygon {
-
-    private mapObj: IMapObj;
-    private gPolygon: any;
-    private billboardFn: any;
+export class Polygon extends BaseMapItem {
 
     constructor(mapObj: IMapObj, polygon: IGeoPoint[]) {
-        this.mapObj = mapObj;
+        super(mapObj);
 
-        this.gPolygon = new googleRef.maps.Polygon({
+        const gPolygon = new googleRef.maps.Polygon({
             paths: polygon,
             strokeColor: '#FF0000',
             strokeOpacity: 0.8,
@@ -18,28 +15,9 @@ export class Polygon {
             fillColor: '#FF0000',
             fillOpacity: 0.35
         });
-       this. gPolygon.setMap(this.mapObj.gMap);
-    }
-
-    public setBillboardFn(billboardFn) {
-        this.billboardFn = billboardFn;
-
-        // Add a listener for the click event.
-        this.gPolygon.addListener('click', this.showBillboard.bind(this));
-    }
-
-    private showBillboard(event) {
-        var contentString = this.billboardFn();
-
-        // Replace the info window's content and position.
-        this.mapObj.infoWindow.setContent(contentString);
-        this.mapObj.infoWindow.setPosition(event.latLng);
-
-        this.mapObj.infoWindow.open(this.mapObj.gMap);
-    }
-
-    public setVisibility(visible: boolean) {
-        this.gPolygon.setMap(visible ? this.mapObj.gMap : null);
+        gPolygon.setMap(this.mapObj.gMap);
+       
+        this.setGMapItem(gPolygon);
     }
 
 }
