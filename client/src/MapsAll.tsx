@@ -5,6 +5,7 @@ import { Map, IMapObj, googleRef } from './Maps/Map';
 import { Polygon } from './Maps/Polygon';
 import { Marker } from './Maps/Marker';
 import { IGeoPoint } from '../../common/Interfaces';
+import { BaseMapItem } from './Maps/BaseMapItem';
 
 interface IAppProps {
 }
@@ -36,6 +37,8 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         };
         this.blockMPolygons = [];
         this.blocksVisible = true;
+        
+        this.productionUnitMMarkers = [];
         this.productionUnitsVisible = true;
     }
 
@@ -51,7 +54,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     }
 
     private addBlocksToMap(blocks) {
-        this.blockMPolygons = [];
+        this.blockMPolygons.length = 0;
         blocks.map(block => {
             var polygons:IGeoPoint[][] = JSON.parse(block.polygons);
             if(!polygons) {
@@ -69,7 +72,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     }
 
     private addProductionUnitsToMap(productionUnits) {
-        this.productionUnitMMarkers = [];
+        this.productionUnitMMarkers.length = 0;
         const platformImage = 'images/platform.png';
         productionUnits.map(productionUnit => {
             var coordinates:IGeoPoint = JSON.parse(productionUnit.coordinates);
@@ -85,10 +88,10 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         });
     }
 
-    private changeBlocksVisibility(event) {
-        this.blocksVisible = !this.blocksVisible;
-        for(let mPolygon of this.blockMPolygons) {
-            mPolygon.setVisibility(this.blocksVisible);
+    private changeMapsItemsVisibility(mObjects: BaseMapItem[], visibilityFieldName: string, event) {
+        this[visibilityFieldName] = !this[visibilityFieldName];
+        for(let mObject of mObjects) {
+            mObject.setVisibility(this[visibilityFieldName]);
         }
     }
 
@@ -103,7 +106,11 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                     receiveMapObj={(mo) => this.mapObj = mo}
                     style={style} />
                 <input type="checkbox" defaultChecked={true}
-                    onChange={this.changeBlocksVisibility.bind(this)}/> Exibir blocos
+                    onChange={this.changeMapsItemsVisibility.bind(this, this.blockMPolygons, 'blocksVisible')}/> 
+                    Exibir blocos<br/>
+                <input type="checkbox" defaultChecked={true}
+                    onChange={this.changeMapsItemsVisibility.bind(this, this.productionUnitMMarkers, 'productionUnitsVisible')}/> 
+                    Exibir unidades de produção
             </div>
         );
     }
