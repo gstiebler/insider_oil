@@ -21,10 +21,11 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     constructor(props: IAppProps) {
         super(props);
 
+        const rioDeJaneiroCoords = {lat: -23.0, lng: -43.0};
         this.state = {
             initialState: {
-                zoom: 4,
-                center: {lat: -10.0, lng: -53.0},
+                zoom: 7,
+                center: rioDeJaneiroCoords,
                 mapTypeId: googleRef.maps.MapTypeId.HYBRID
             }
         };
@@ -69,13 +70,14 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
 
     public render(): React.ReactElement<any> {
         const style = {
-            width: '800px',
-            height: '700px'
+            width: '100%',
+            height: 700
         }
         return (
             <div>
                 <Map initialState={this.state.initialState}
-                    receiveMapObj={(mo) => this.mapObj = mo} />
+                    receiveMapObj={(mo) => this.mapObj = mo}
+                    style={style} />
                 <input type="checkbox" defaultChecked={true}
                     onChange={this.changeBlocksVisibility.bind(this)}/> Exibir blocos
             </div>

@@ -42,8 +42,8 @@ export class Map extends React.Component<IAppProps, IAppState> {
 
     public render(): React.ReactElement<any> {
         const style = {
-            width: '800px',
-            height: '700px'
+            width: 100 + '%',
+            height: 700
         }
         return (
             <div>
