@@ -70,12 +70,13 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
 
     private addProductionUnitsToMap(productionUnits) {
         this.productionUnitMMarkers = [];
+        const platformImage = 'images/platform.png';
         productionUnits.map(productionUnit => {
             var coordinates:IGeoPoint = JSON.parse(productionUnit.coordinates);
             if(!coordinates) {
                 return;
             }
-            var mMarker = new Marker(this.mapObj, coordinates);
+            var mMarker = new Marker(this.mapObj, coordinates, platformImage);
             mMarker.setBillboardFn(() => {
                 const url = '/app/view_record?source=ProductionUnit&id=' + productionUnit.id;
                 return '<b>Unidade de produção: </b><a href="' + url + '">' + productionUnit.name + '</a>'

@@ -7,13 +7,14 @@ export class Marker {
     private gMarker: any;
     private billboardFn: any;
 
-    constructor(mapObj: IMapObj, position: IGeoPoint) {
+    constructor(mapObj: IMapObj, position: IGeoPoint, iconImage: string) {
         this.mapObj = mapObj;
 
         this.gMarker = new googleRef.maps.Marker({
             position: position,
             map: this.mapObj.gMap,
-            title: 'Hello World!'
+            title: 'Hello World!',
+            icon: iconImage
         });
     }
 
