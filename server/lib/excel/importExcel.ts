@@ -5,6 +5,7 @@ import { BlockC } from './Block';
 import { Production } from './Production';
 import { Bid } from './Bid';
 import { Contract } from './Contract';
+import { ProductionUnit } from './ProductionUnit';
 
 function execute(excelBuf, modelName: string):Promise<IExcelUploadResponse> {
     const excelClasses = {
@@ -12,6 +13,7 @@ function execute(excelBuf, modelName: string):Promise<IExcelUploadResponse> {
         'Production': Production,
         'Bid': Bid,
         'Contract': Contract,
+        'ProductionUnit': ProductionUnit,
     };
 
     var excelClass = excelClasses[modelName];

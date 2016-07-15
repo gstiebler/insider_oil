@@ -247,6 +247,7 @@ productionUnits: test => {
         test.equal('Capixaba', record.name);
         test.equal('2015-03-30', record.end.toJSON().substring(0, 10));
         test.equal(302000.3, record.day_rate);
+        test.equal('{"lat":-21.23799528,"lng":-39.96288806}', record.coordinates);
     } 
     
     test.done();
