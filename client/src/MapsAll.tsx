@@ -15,6 +15,8 @@ interface IAppState {
 export class MapsAll extends React.Component<IAppProps, IAppState> {
 
     private mapObj: IMapObj;
+    private blockMPolygons: Polygon[];
+    private blocksVisible: boolean;
 
     constructor(props: IAppProps) {
         super(props);
@@ -26,6 +28,8 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                 mapTypeId: googleRef.maps.MapTypeId.HYBRID
             }
         };
+        this.blockMPolygons = [];
+        this.blocksVisible = true;
     }
 
     private componentDidMount() {
@@ -39,6 +43,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     }
 
     private addBlocksToMap(blocks) {
+        this.blockMPolygons = [];
         blocks.map(block => {
             var polygons = JSON.parse(block.polygons);
             if(!polygons) {
@@ -50,8 +55,16 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                     const url = '/app/view_record?source=Block&id=' + block.id;
                     return '<b>Bloco: </b><a href="' + url + '">' + block.name + '</a>'
                 });
+                this.blockMPolygons.push(mPolygon);
             });
         });
+    }
+
+    private changeBlocksVisibility(event) {
+        this.blocksVisible = !this.blocksVisible;
+        for(let mPolygon of this.blockMPolygons) {
+            mPolygon.setVisibility(this.blocksVisible);
+        }
     }
 
     public render(): React.ReactElement<any> {
@@ -60,8 +73,12 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             height: '700px'
         }
         return (
-            <Map initialState={this.state.initialState}
-                 receiveMapObj={(mo) => this.mapObj = mo} />
+            <div>
+                <Map initialState={this.state.initialState}
+                    receiveMapObj={(mo) => this.mapObj = mo} />
+                <input type="checkbox" defaultChecked={true}
+                    onChange={this.changeBlocksVisibility.bind(this)}/> Exibir blocos
+            </div>
         );
     }
 }

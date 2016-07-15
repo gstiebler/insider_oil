@@ -37,5 +37,9 @@ export class Polygon {
 
         this.mapObj.infoWindow.open(this.mapObj.gMap);
     }
-    
+
+    public setVisibility(visible: boolean) {
+        this.gPolygon.setMap(visible ? this.mapObj.gMap : null);
+    }
+
 }
