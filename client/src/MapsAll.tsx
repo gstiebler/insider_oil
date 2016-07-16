@@ -22,14 +22,14 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     private blockMPolygons: Polygon[];
     private blocksVisible: boolean;
 
+    private oilFieldMPolygons: Polygon[];
+    private oilFieldsVisible: boolean;
+
     private productionUnitMMarkers: Marker[];
     private productionUnitsVisible: boolean;
 
     private gasPipeLayer: KmlLayer;
     private gasPipelinesVisible: boolean;
-
-    private oilFieldsLayer: KmlLayer;
-    private oilFieldsVisible: boolean;
 
     constructor(props: IAppProps) {
         super(props);
@@ -44,12 +44,14 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         };
         this.blockMPolygons = [];
         this.blocksVisible = true;
+
+        this.oilFieldMPolygons = [];
+        this.oilFieldsVisible = true;
         
         this.productionUnitMMarkers = [];
         this.productionUnitsVisible = true;
 
         this.gasPipelinesVisible = true;
-        this.oilFieldsVisible = true;
     }
 
     private componentDidMount() {
@@ -58,11 +60,11 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             .catch(showError.show);
 
         this.gasPipeLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Gasodutos.kml');
-        this.oilFieldsLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Campos_de_Produção.kml');
     }
 
     private onMapData(mapData) {
         this.addBlocksToMap(mapData.blocks);
+        this.addOilFieldsToMap(mapData.oilFields);
         this.addProductionUnitsToMap(mapData.productionUnits);
     }
 
@@ -74,12 +76,32 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                 return;
             }
             polygons.map((polygon) => {
-                var mPolygon = new Polygon(this.mapObj, polygon);
+                const title = 'Bloco: ' + block.name;
+                var mPolygon = new Polygon(this.mapObj, polygon, title, '#FF0000');
                 mPolygon.setBillboardFn(() => {
                     const url = '/app/view_record?source=Block&id=' + block.id;
                     return '<b>Bloco: </b><a href="' + url + '">' + block.name + '</a>'
                 });
                 this.blockMPolygons.push(mPolygon);
+            });
+        });
+    }
+
+    private addOilFieldsToMap(oilFields) {
+        this.oilFieldMPolygons.length = 0;
+        oilFields.map(oilField => {
+            var polygons:IGeoPoint[][] = JSON.parse(oilField.polygons);
+            if(!polygons) {
+                return;
+            }
+            polygons.map((polygon) => {
+                const title = 'Campo: ' + oilField.name;
+                var mPolygon = new Polygon(this.mapObj, polygon, title, '#FFFF00');
+                mPolygon.setBillboardFn(() => {
+                    const url = '/app/view_record?source=OilField&id=' + oilField.id;
+                    return '<b>Campo: </b><a href="' + url + '">' + oilField.name + '</a>'
+                });
+                this.oilFieldMPolygons.push(mPolygon);
             });
         });
     }
@@ -92,7 +114,8 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             if(!coordinates) {
                 return;
             }
-            var mMarker = new Marker(this.mapObj, coordinates, platformImage);
+            const title = 'Unidade de produção: ' + productionUnit.name;
+            var mMarker = new Marker(this.mapObj, coordinates, platformImage, title);
             mMarker.setBillboardFn(() => {
                 const url = '/app/view_record?source=ProductionUnit&id=' + productionUnit.id;
                 return '<b>Unidade de produção: </b><a href="' + url + '">' + productionUnit.name + '</a>'
@@ -129,14 +152,14 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                     onChange={this.changeMapsItemsVisibility.bind(this, this.blockMPolygons, 'blocksVisible')}/> 
                     Exibir blocos<br/>
                 <input type="checkbox" defaultChecked={true}
+                    onChange={this.changeMapsItemsVisibility.bind(this, this.oilFieldMPolygons, 'blocksVisible')}/> 
+                    Exibir campos<br/>
+                <input type="checkbox" defaultChecked={true}
                     onChange={this.changeMapsItemsVisibility.bind(this, this.productionUnitMMarkers, 'productionUnitsVisible')}/> 
                     Exibir unidades de produção<br/>
                 <input type="checkbox" defaultChecked={true}
                     onChange={this.changeKmlLayerVisibility.bind(this, 'gasPipeLayer', 'gasPipelinesVisible')}/> 
                     Exibir gasodutos<br/>
-                <input type="checkbox" defaultChecked={true}
-                    onChange={this.changeKmlLayerVisibility.bind(this, 'oilFieldsLayer', 'oilFieldsVisible')}/> 
-                    Exibir campos<br/>
             </div>
         );
     }

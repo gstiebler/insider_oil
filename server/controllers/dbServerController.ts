@@ -358,11 +358,20 @@ export function getTimeSeries(req: express.Request, res: express.Response):void 
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 
+/**
+ * Returns map data to feed the map with all the objects
+ */
 export function getMapData(req: express.Request, res: express.Response):void {Sync(function(){
     const blockGetAllOptions = {
         attributes: ['id', 'name', 'polygons']
     }
     const blocks = await( db.models.Block.findAll(blockGetAllOptions) );
+    
+    const oilFieldGetAllOptions = {
+        attributes: ['id', 'name', 'polygons'],
+        where: { polygons: { $ne: null } }
+    }
+    const oilFields = await( db.models.OilField.findAll(oilFieldGetAllOptions) );
 
     const productionUnitsGetAllOptions = {
         attributes: ['id', 'name', 'coordinates'],
@@ -370,9 +379,12 @@ export function getMapData(req: express.Request, res: express.Response):void {Sy
     }
     const productionUnits = await( db.models.ProductionUnit.findAll(productionUnitsGetAllOptions) );
 
-    res.json( { blocks, productionUnits } );
+    res.json( { blocks, oilFields, productionUnits } );
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 
+/**
+ * Returns the list of objects that have a admin page
+ */
 export function sourcesList(req: express.Request, res: express.Response) {
     var list = {
         Basin: 'Bacias',

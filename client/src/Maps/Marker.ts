@@ -4,13 +4,13 @@ import { BaseMapItem } from './BaseMapItem';
 
 export class Marker extends BaseMapItem {
 
-    constructor(mapObj: IMapObj, position: IGeoPoint, iconImage: string) {
+    constructor(mapObj: IMapObj, position: IGeoPoint, iconImage: stringtitle) {
         super(mapObj);
 
         const gMarker = new googleRef.maps.Marker({
             position: position,
             map: this.mapObj.gMap,
-            title: 'Hello World!',
+            title,
             icon: iconImage
         });
 
