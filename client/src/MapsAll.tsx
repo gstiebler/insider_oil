@@ -48,8 +48,8 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             .then(this.onMapData.bind(this))
             .catch(showError.show);
 
-        const gasPipeLayer = new KmlLayer(this.mapObj, 'http://insideroil.com/maps/Gasodutos.kml');
-        const oilFieldsLayer = new KmlLayer(this.mapObj, 'http://insideroil.com/maps/Campos_de_Produção.kml');
+        const gasPipeLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Gasodutos.kml');
+        const oilFieldsLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Campos_de_Produção.kml');
     }
 
     private onMapData(mapData) {
