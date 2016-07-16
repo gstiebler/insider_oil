@@ -4,7 +4,7 @@ import { BaseMapItem } from './BaseMapItem';
 
 export class Marker extends BaseMapItem {
 
-    constructor(mapObj: IMapObj, position: IGeoPoint, iconImage: stringtitle) {
+    constructor(mapObj: IMapObj, position: IGeoPoint, iconImage: string, title: string) {
         super(mapObj);
 
         const gMarker = new googleRef.maps.Marker({

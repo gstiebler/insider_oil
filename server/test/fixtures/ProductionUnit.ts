@@ -9,6 +9,7 @@ module.exports = function(db): Promise<any[]> {
             name: 'Capixaba',
             oil_field_id: utils.idByName('OilField', 'Jiribatuba2'),
             type: 'FPSO',
+            coordinates: '{"lat":-21.23799528,"lng":-39.96288806}'
         },
         {
             name: 'Cidade de Magaratiba',
