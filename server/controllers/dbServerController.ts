@@ -125,9 +125,18 @@ export function uploadFile(req: express.Request, res: express.Response, next) {
     };
 }
 
-export function uploadBlocksKml(req: express.Request, res: express.Response, next) {
-    var kmlStr = JSON.parse(req.body.data);
-    ImportKML.importBlocks(kmlStr)
+export function uploadKml(req: express.Request, res: express.Response, next) {
+    const model = req.body.model;
+    const kmlStr = JSON.parse(req.body.data);
+    const importFuncs = {
+        Block: ImportKML.importBlocks,
+        OilField: ImportKML.importOilFields
+    }
+    const importFunc:ImportKML.IImportFunc = importFuncs[model];
+    if(!importFunc) {
+        throw 'Modelo não encontrado: ' + model;
+    }
+    importFunc(kmlStr)
         .then((status:string) => res.json( { status: status} ))
         .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }

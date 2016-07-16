@@ -37,12 +37,12 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
         Flash.create('success', status );
     }
 
-    private onBlocksKmlLoad(base64Str: string) {
+    private onKmlLoad(model:string, base64Str: string) {
         var kmlStr = atob(base64Str); 
         Flash.create('success', 'Arquivo pronto para ser enviado');
-        var params = { data: JSON.stringify(kmlStr), }
-        server.postP('/db_server/upload_blocks_kml', params)
-            .then(res => Flash.create('success', 'KML de Blocos carregado: ' + res.status))
+        var params = { model, data: JSON.stringify(kmlStr), }
+        server.postP('/db_server/upload_kml', params)
+            .then(res => Flash.create('success', 'KML processado: ' + res.status))
             .catch(showError.show);
         return null;
     }
@@ -67,7 +67,10 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
             <ExcelUploadButton modelName="Production" /><br/>
             <hr/>
             Importar arquivo KML de Blocos
-            <ButtonUploadFile onFileLoad={this.onBlocksKmlLoad.bind(this)} />
+            <ButtonUploadFile onFileLoad={this.onKmlLoad.bind(this, 'Block')} />
+            <hr/>
+            Importar arquivo KML de Campos
+            <ButtonUploadFile onFileLoad={this.onKmlLoad.bind(this, 'OilField')} />
             <hr/>
             </div>
         );

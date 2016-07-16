@@ -24,6 +24,13 @@ if (env == 'test') {
 }
 	
 winston.info('environment: ', env);
+
+config.define = {
+    underscored: true,
+    charset: 'utf8',
+    collate: 'utf8_general_ci',
+    timestamps: true
+};
 	
 if (config.use_env_variable) {
   var sequelize = new Sequelize(process.env[config.use_env_variable]);
