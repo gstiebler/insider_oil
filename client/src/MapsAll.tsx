@@ -51,7 +51,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         this.productionUnitMMarkers = [];
         this.productionUnitsVisible = true;
 
-        this.gasPipelinesVisible = true;
+        this.gasPipelinesVisible = false;
     }
 
     private componentDidMount() {
@@ -60,6 +60,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             .catch(showError.show);
 
         this.gasPipeLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Gasodutos.kml');
+        this.gasPipeLayer.setVisibility(false);
     }
 
     private onMapData(mapData) {
@@ -157,7 +158,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                 <input type="checkbox" defaultChecked={true}
                     onChange={this.changeMapsItemsVisibility.bind(this, this.productionUnitMMarkers, 'productionUnitsVisible')}/> 
                     Exibir unidades de produção<br/>
-                <input type="checkbox" defaultChecked={true}
+                <input type="checkbox" defaultChecked={false}
                     onChange={this.changeKmlLayerVisibility.bind(this, 'gasPipeLayer', 'gasPipelinesVisible')}/> 
                     Exibir gasodutos<br/>
             </div>
