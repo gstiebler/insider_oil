@@ -25,6 +25,12 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     private productionUnitMMarkers: Marker[];
     private productionUnitsVisible: boolean;
 
+    private gasPipeLayer: KmlLayer;
+    private gasPipelinesVisible: boolean;
+
+    private oilFieldsLayer: KmlLayer;
+    private oilFieldsVisible: boolean;
+
     constructor(props: IAppProps) {
         super(props);
 
@@ -41,6 +47,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         
         this.productionUnitMMarkers = [];
         this.productionUnitsVisible = true;
+
+        this.gasPipelinesVisible = true;
+        this.oilFieldsVisible = true;
     }
 
     private componentDidMount() {
@@ -48,8 +57,8 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             .then(this.onMapData.bind(this))
             .catch(showError.show);
 
-        const gasPipeLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Gasodutos.kml');
-        const oilFieldsLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Campos_de_Produção.kml');
+        this.gasPipeLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Gasodutos.kml');
+        this.oilFieldsLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Campos_de_Produção.kml');
     }
 
     private onMapData(mapData) {
@@ -99,6 +108,13 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         }
     }
 
+    private changeKmlLayerVisibility(kmlLayerKeyName, visibilityKeyName: string, event) {
+        // it's getting by keyname because the member is not initialized when render is called
+        const kmlLayer: KmlLayer = this[kmlLayerKeyName];
+        this[visibilityKeyName] = !this[visibilityKeyName];
+        kmlLayer.setVisibility(this[visibilityKeyName]);
+    }
+
     public render(): React.ReactElement<any> {
         const style = {
             width: '100%',
@@ -114,7 +130,13 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                     Exibir blocos<br/>
                 <input type="checkbox" defaultChecked={true}
                     onChange={this.changeMapsItemsVisibility.bind(this, this.productionUnitMMarkers, 'productionUnitsVisible')}/> 
-                    Exibir unidades de produção
+                    Exibir unidades de produção<br/>
+                <input type="checkbox" defaultChecked={true}
+                    onChange={this.changeKmlLayerVisibility.bind(this, 'gasPipeLayer', 'gasPipelinesVisible')}/> 
+                    Exibir gasodutos<br/>
+                <input type="checkbox" defaultChecked={true}
+                    onChange={this.changeKmlLayerVisibility.bind(this, 'oilFieldsLayer', 'oilFieldsVisible')}/> 
+                    Exibir campos<br/>
             </div>
         );
     }
