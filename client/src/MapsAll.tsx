@@ -2,10 +2,11 @@ import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import { Map, IMapObj, googleRef } from './Maps/Map';
-import { Polygon } from './Maps/Polygon';
-import { Marker } from './Maps/Marker';
 import { IGeoPoint } from '../../common/Interfaces';
 import { BaseMapItem } from './Maps/BaseMapItem';
+import { Polygon } from './Maps/Polygon';
+import { Marker } from './Maps/Marker';
+import { KmlLayer } from './Maps/KmlLayer';
 
 interface IAppProps {
 }
@@ -46,6 +47,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         server.getP('/get_map_data', {})
             .then(this.onMapData.bind(this))
             .catch(showError.show);
+
+        const gasPipeLayer = new KmlLayer(this.mapObj, 'http://insideroil.com/maps/Gasodutos.kml');
+        const oilFieldsLayer = new KmlLayer(this.mapObj, 'http://insideroil.com/maps/Campos_de_Produção.kml');
     }
 
     private onMapData(mapData) {
