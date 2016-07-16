@@ -3,7 +3,6 @@
 import Sequelize = require('sequelize');  
 var await = require('../../lib/await');
 
-
 function updateConcessionaries(db, oilField) {
     const options = { where: { oil_field_id: oilField.id } };
     // remove all records from OilFieldConcessionary associated with this oil field
@@ -63,6 +62,10 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
         updates: {
           type: DataTypes.TEXT,
           allowNull: true
+        },
+        polygons: {
+            type: DataTypes.TEXT,
+            allowNull: true
         },
         formatted_shore: {
             type: DataTypes.VIRTUAL,
@@ -139,7 +142,9 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                 OilField.belongsTo(models.Block, { as: 'block', foreignKey: { allowNull: true } } );
             },
 			defineHooks: defineHooks
-        }
+        },
+        charset: 'utf8',
+        collate: 'utf8_general_ci',
     }    
   );
   

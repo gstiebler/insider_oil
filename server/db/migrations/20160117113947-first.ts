@@ -370,7 +370,6 @@ module.exports = {
 			}
 		});
 		
-		
 		parameters.push({
 			table: 'oil_fields',
 			fields: {
@@ -396,6 +395,10 @@ module.exports = {
 					allowNull: false
 				},
 				updates: {
+					type: Sequelize.TEXT,
+					allowNull: true
+				},
+				polygons: {
 					type: Sequelize.TEXT,
 					allowNull: true
 				},
