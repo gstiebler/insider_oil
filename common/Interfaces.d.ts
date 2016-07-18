@@ -33,6 +33,13 @@ export interface IField {
     name?: string;
 }
 
+interface IFilter {
+    field: string;
+    like?: string;
+    in?: any[];
+    equal?: string;
+}
+
 interface IExcelFieldMap {
     [name: string]: string;
 }

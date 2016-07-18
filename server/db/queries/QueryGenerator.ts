@@ -1,11 +1,6 @@
 'use strict';
 
-interface IFilter {
-    field: string;
-    like?: string;
-    in?: any[];
-    equal?: string;
-}
+import { IFilter } from '../../../common/Interfaces';
 
 export interface IOrderOpts {
     fieldName: string;

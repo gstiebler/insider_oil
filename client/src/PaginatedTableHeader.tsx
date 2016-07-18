@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as showError from './lib/ShowError';
+import { IFilter } from '../../common/Interfaces';
 
 export interface FilterField {
     data: string;
@@ -40,7 +41,7 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
     }
 
     private filterChanged() {
-        var filterOpts = [
+        var filterOpts:IFilter[] = [
             {
                 field: this.state.selectedField,
                 like: this.state.searchText
