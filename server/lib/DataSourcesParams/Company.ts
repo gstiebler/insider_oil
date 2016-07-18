@@ -19,6 +19,10 @@ const Company: IBaseDataSourceParams = {
             label: 'Telefone',
             isList: true  
         },
+        segments: {
+            label: 'Segmentos',
+            isList: true  
+        },
     },
     referencedObjectsOnView:  [
         {

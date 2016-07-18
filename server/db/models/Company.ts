@@ -27,6 +27,12 @@ module.exports = function(sequelize, DataTypes) {
             invisible: true 
         },
         telephones: getListFieldObj('telephones_text'),
+				segments_text: {
+					type: DataTypes.TEXT('tiny'),
+					allowNull: true
+				},
+        // internal field to store values from the segments field
+        segments: getListFieldObj('segments_text'),
     }, 
     {
         underscored: true,

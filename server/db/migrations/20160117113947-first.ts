@@ -83,6 +83,10 @@ module.exports = {
 					type: Sequelize.TEXT('tiny'),
 					allowNull: true
 				},
+				segments_text: {
+					type: Sequelize.TEXT('tiny'),
+					allowNull: true
+				},
 				created_at: {
 					type: Sequelize.DATE
 				},
