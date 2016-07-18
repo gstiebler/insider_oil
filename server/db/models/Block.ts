@@ -1,6 +1,32 @@
 'use strict';
 import Sequelize = require('sequelize');
 import { coordToString, stringToCoord } from '../../lib/Geo';
+import { IGeoPoint } from '../../../common/Interfaces';
+
+function updatePolygons(block) {
+    const polygons_admin:string = block.dataValues.polygons_admin;
+    if(!polygons_admin || polygons_admin.length == 0) {
+        return;
+    }
+
+    const polygons:IGeoPoint[][] = [];
+    const polygonsStr = polygons_admin.split('*');
+    for(var polygonStr of polygonsStr) {
+       const polygon:IGeoPoint[] = [];
+       const points = polygonStr.split('\n');
+       for(var point of points) {
+          const coords = point.split(',');
+          if(coords.length != 2) {
+              continue;
+          }
+          const lat = parseFloat(coords[0].trim());
+          const lng = parseFloat(coords[1].trim());
+          polygon.push({ lat, lng });
+       }
+       polygons.push(polygon);
+    } 
+    block.polygons = JSON.stringify(polygons);
+}
 
 module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const Block = sequelize.define('Block', {
@@ -64,7 +90,7 @@ module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.D
                   }
                   polygonsStrs.push(pointStrs.join('\n'));
                 }
-                return polygonsStrs.join('-\n');
+                return polygonsStrs.join('\n*\n');
             }
         },
     }, 
@@ -75,6 +101,10 @@ module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.D
             associate: function(models) {
                 Block.belongsTo(models.Company, { as: 'operator' } );
                 Block.belongsTo(models.Basin, { as: 'basin' } );
+            },
+			      defineHooks: function(db) {
+                db.Block.hook('beforeCreate', updatePolygons);
+                db.Block.hook('beforeUpdate', updatePolygons);
             }
         }
     }
