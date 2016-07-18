@@ -90,7 +90,9 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
             } else if (field.isHTML) {
                 fieldHtml = <div dangerouslySetInnerHTML={ {__html: field.value } } ></div>
             } else if (field.isList) {
-                var listItems = field.value.map((item, index) => { <span className="col-sm-10" key={'i'+index}>{item}</span> });
+                var listItems = field.value.map((item, index) => { 
+                    return <div className="col-sm-10" key={'i'+index}>{item}<br/></div> 
+                });
                 fieldHtml = <div className="col-md-6">{ listItems } </div>;
             } else if (field.isProjectList) {
                 var listItems = field.value.map((item, index) => { 
