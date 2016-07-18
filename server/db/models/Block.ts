@@ -1,7 +1,6 @@
 'use strict';
 import Sequelize = require('sequelize');
-import { coordToString, stringToCoord } from '../../lib/Geo';
-import { IGeoPoint } from '../../../common/Interfaces';
+import { polygonsToStr, strToPolygons } from '../../lib/Geo';
 
 function updatePolygons(block) {
     const polygons_admin:string = block.dataValues.polygons_admin;
@@ -9,23 +8,7 @@ function updatePolygons(block) {
         return;
     }
 
-    const polygons:IGeoPoint[][] = [];
-    const polygonsStr = polygons_admin.split('*');
-    for(var polygonStr of polygonsStr) {
-       const polygon:IGeoPoint[] = [];
-       const points = polygonStr.split('\n');
-       for(var point of points) {
-          const coords = point.split(',');
-          if(coords.length != 2) {
-              continue;
-          }
-          const lat = parseFloat(coords[0].trim());
-          const lng = parseFloat(coords[1].trim());
-          polygon.push({ lat, lng });
-       }
-       polygons.push(polygon);
-    } 
-    block.polygons = JSON.stringify(polygons);
+    block.polygons = JSON.stringify(strToPolygons(polygons_admin));
 }
 
 module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
@@ -79,18 +62,9 @@ module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.D
             type: DataTypes.VIRTUAL,
             get: function() {
                 if(!this.polygons || this.polygons.length == 0) {
-                  return;
+                  return null;
                 }
-                const polygonsStrs:string[] = [];
-                const polygons = JSON.parse(this.polygons);
-                for(var polygon of polygons) {
-                  const pointStrs:string[] = [];
-                  for(var point of polygon) {
-                    pointStrs.push(coordToString(point));
-                  }
-                  polygonsStrs.push(pointStrs.join('\n'));
-                }
-                return polygonsStrs.join('\n*\n');
+                return polygonsToStr(JSON.parse(this.polygons));
             }
         },
     }, 

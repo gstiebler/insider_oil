@@ -2,6 +2,16 @@
 
 import Sequelize = require('sequelize');  
 var await = require('../../lib/await');
+import { polygonsToStr, strToPolygons } from '../../lib/Geo';
+
+function updatePolygons(oilField) {
+    const polygons_admin:string = oilField.dataValues.polygons_admin;
+    if(!polygons_admin || polygons_admin.length == 0) {
+        return;
+    }
+
+    oilField.polygons = JSON.stringify(strToPolygons(polygons_admin));
+}
 
 function updateConcessionaries(db, oilField) {
     const options = { where: { oil_field_id: oilField.id } };
@@ -31,17 +41,15 @@ function updateConcessionaries(db, oilField) {
     });
 }
 
-
-function updateFieldsFunc(db) {
-    return function (oilField) {
-        return updateConcessionaries(db, oilField);
-    }
+function beforeUpdate(db, oilField) {
+    updateConcessionaries(db, oilField);
+    updatePolygons(oilField);
 }
 
-
 function defineHooks(db) {
-	db.OilField.hook('afterCreate', updateFieldsFunc(db));
-	db.OilField.hook('beforeUpdate', updateFieldsFunc(db));
+    db.OilField.hook('beforeCreate', updatePolygons);
+	db.OilField.hook('afterCreate', updateConcessionaries.bind(this, db));
+	db.OilField.hook('beforeUpdate', beforeUpdate.bind(this, db));
 }
 
 
@@ -66,6 +74,15 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
         polygons: {
             type: DataTypes.TEXT,
             allowNull: true
+        },
+        polygons_admin: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                if(!this.polygons || this.polygons.length == 0) {
+                  return null;
+                }
+                return polygonsToStr(JSON.parse(this.polygons));
+            }
         },
         formatted_shore: {
             type: DataTypes.VIRTUAL,

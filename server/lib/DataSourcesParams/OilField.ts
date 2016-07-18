@@ -48,6 +48,10 @@ const OilField: IBaseDataSourceParams = {
         block_id: {
             label: "Bloco"
         },
+        polygons_admin: {
+            label: "Polígonos (admin)",
+            isTextArea: true
+        },
     },
     labelField: "name",
     gridFields: ['name', 'basin_name', 'state', 'shore', 'stage'],
