@@ -4,15 +4,6 @@ import Sequelize = require('sequelize');
 var await = require('../../lib/await');
 import { polygonsToStr, strToPolygons } from '../../lib/Geo';
 
-function updatePolygons(oilField) {
-    const polygons_admin:string = oilField.dataValues.polygons_admin;
-    if(!polygons_admin || polygons_admin.length == 0) {
-        return;
-    }
-
-    oilField.polygons = JSON.stringify(strToPolygons(polygons_admin));
-}
-
 function updateConcessionaries(db, oilField) {
     const options = { where: { oil_field_id: oilField.id } };
     // remove all records from OilFieldConcessionary associated with this oil field
@@ -41,15 +32,9 @@ function updateConcessionaries(db, oilField) {
     });
 }
 
-function beforeUpdate(db, oilField) {
-    updateConcessionaries(db, oilField);
-    updatePolygons(oilField);
-}
-
 function defineHooks(db) {
-    db.OilField.hook('beforeCreate', updatePolygons);
 	db.OilField.hook('afterCreate', updateConcessionaries.bind(this, db));
-	db.OilField.hook('beforeUpdate', beforeUpdate.bind(this, db));
+	db.OilField.hook('beforeUpdate', updateConcessionaries.bind(this, db));
 }
 
 
@@ -82,6 +67,12 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                   return null;
                 }
                 return polygonsToStr(JSON.parse(this.polygons));
+            },
+            set: function(polygons_admin:string) {
+                if(!polygons_admin || polygons_admin.length == 0) {
+                    return;
+                }
+                this.polygons = JSON.stringify(strToPolygons(polygons_admin));
             }
         },
         formatted_shore: {

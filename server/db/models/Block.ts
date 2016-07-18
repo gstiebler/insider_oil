@@ -2,15 +2,6 @@
 import Sequelize = require('sequelize');
 import { polygonsToStr, strToPolygons } from '../../lib/Geo';
 
-function updatePolygons(block) {
-    const polygons_admin:string = block.dataValues.polygons_admin;
-    if(!polygons_admin || polygons_admin.length == 0) {
-        return;
-    }
-
-    block.polygons = JSON.stringify(strToPolygons(polygons_admin));
-}
-
 module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const Block = sequelize.define('Block', {
         name: {
@@ -65,6 +56,13 @@ module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.D
                   return null;
                 }
                 return polygonsToStr(JSON.parse(this.polygons));
+            },
+            set: function(polygons_admin:string) {
+                if(!polygons_admin || polygons_admin.length == 0) {
+                    return;
+                }
+
+                this.polygons = JSON.stringify(strToPolygons(polygons_admin));
             }
         },
     }, 
@@ -76,10 +74,6 @@ module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.D
                 Block.belongsTo(models.Company, { as: 'operator' } );
                 Block.belongsTo(models.Basin, { as: 'basin' } );
             },
-			      defineHooks: function(db) {
-                db.Block.hook('beforeCreate', updatePolygons);
-                db.Block.hook('beforeUpdate', updatePolygons);
-            }
         }
     }
   );
