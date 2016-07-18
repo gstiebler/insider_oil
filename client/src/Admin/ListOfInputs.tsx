@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as showError from '../lib/ShowError';
-import { Button } from 'react-bootstrap';
 
 interface IAppProps {
     value: any[];
@@ -44,22 +43,22 @@ export class ListOfInputs extends React.Component<IAppProps, IAppState> {
             return (
                 <tr key={'item' + index}>
                     <td><input type="text" value={item} onChange={this.updateItem.bind(this, index)}/><br/></td>
-                    <td><Button class="btn btn-default" onClick={this.removeItem.bind(this, index)}>Remover</Button></td>
+                    <td><button className="btn btn-default" onClick={this.removeItem.bind(this, index)}>Remover</button></td>
                 </tr>
             );  
         });
 
         return (
-            <table class="table">
+            <table className="table">
                 <tbody>
                     <tr>
                         <td width="300">
-                            <table class="table">
+                            <table className="table">
                                 <tbody> {items} </tbody>
                             </table>
                         </td>
                         <td>
-                            <Button onClick={this.addItem.bind(this)}>Adicionar</Button><br/>
+                            <button onClick={this.addItem.bind(this)}>Adicionar</button><br/>
                         </td>
                     </tr>
                 </tbody>
