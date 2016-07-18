@@ -19,6 +19,7 @@ export interface IField {
     isLink?: boolean;
     isPhoto?: boolean;
     isMultiFieldText?: boolean;
+    isTextArea?: boolean;
     isProjectList?: boolean;
     isCurrency?: boolean;
     isConcessionaries?: boolean;

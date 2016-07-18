@@ -1,5 +1,6 @@
 'use strict';
 import Sequelize = require('sequelize');
+import { coordToString, stringToCoord } from '../../lib/Geo';
 
 module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const Block = sequelize.define('Block', {
@@ -48,6 +49,24 @@ module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.D
 					type: DataTypes.TEXT,
 					allowNull: true
 				},
+        polygons_admin: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                if(!this.polygons || this.polygons.length == 0) {
+                  return;
+                }
+                const polygonsStrs:string[] = [];
+                const polygons = JSON.parse(this.polygons);
+                for(var polygon of polygons) {
+                  const pointStrs:string[] = [];
+                  for(var point of polygon) {
+                    pointStrs.push(coordToString(point));
+                  }
+                  polygonsStrs.push(pointStrs.join('\n'));
+                }
+                return polygonsStrs.join('-\n');
+            }
+        },
     }, 
     {
         underscored: true,

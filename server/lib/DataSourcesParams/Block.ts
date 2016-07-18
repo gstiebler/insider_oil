@@ -44,6 +44,10 @@ const Block: IBaseDataSourceParams = {
         updates: {
             label: "Atualizações"
         },
+        polygons_admin: {
+            label: "Polígonos (admin)",
+            isTextArea: true
+        },
     },
     labelField: 'name',
     gridFields: ['name', 'operator_name'],

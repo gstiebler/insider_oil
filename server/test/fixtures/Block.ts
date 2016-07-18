@@ -13,7 +13,8 @@ module.exports = function(db) {
             end_3 : '2014-04-20',
             end_last: '2016-12-31',
             status: 'SUSPENSO',
-            concessionaries: '*Petrobras - 75%, ONGC Campos - 25%'
+            concessionaries: '*Petrobras - 75%, ONGC Campos - 25%',
+            polygons: '[[{"lat":-1.83,"lng":-42.625},{"lat":-1.83,"lng":-42.75},{"lat":-2,"lng":-42.75}]]'
         },
         {
             name: 'ES-M-529',

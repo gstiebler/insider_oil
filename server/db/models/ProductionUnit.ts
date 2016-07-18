@@ -1,33 +1,10 @@
 'use strict';
-import * as Sequelize from 'sequelize';  
-import { IGeoPoint } from '../../../common/Interfaces';
-
-/**
- * Receives the coords in the form: '{"lat":-21.23799528,"lng":-39.96288806}'
- * and returns: '-21.23799528, -39.96288806'
- */
-function coordStrToString(coordStr: string):string {
-    const coords:IGeoPoint = JSON.parse(coordStr);
-    return coords.lat + ', ' + coords.lng;
-}
-
-/**
- * Receives the coords in the form: '-21.23799528, -39.96288806'
- * and returns: '{"lat":-21.23799528,"lng":-39.96288806}'
- */
-function stringToCoordStr(strWithCoords: string):string {
-    if(!strWithCoords || strWithCoords.length == 0) {
-        return null;
-    }
-
-    const parts:string[] = strWithCoords.split(',');
-    const lat = parseFloat(parts[0].trim());
-    const lng = parseFloat(parts[1].trim());
-    return JSON.stringify({ lat, lng });
-}
+import * as Sequelize from 'sequelize'; 
+import { coordToString, stringToCoord } from '../../lib/Geo';
 
 function updateCoordinates(productionUnit) {
-    productionUnit.coordinates = stringToCoordStr(productionUnit.dataValues.coords_admin);
+    const coords = stringToCoord(productionUnit.dataValues.coords_admin);
+    productionUnit.coordinates = JSON.stringify(coords);
 }
 
 module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes) {
@@ -59,7 +36,10 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
         coords_admin: {
             type: DataTypes.VIRTUAL,
             get: function() {
-                return coordStrToString(this.coordinates);
+                if(!this.coordinates || this.coordinates.length == 0) {
+                    return null;
+                }
+                return coordToString(JSON.parse(this.coordinates));
             }
         },
         general_info: {
