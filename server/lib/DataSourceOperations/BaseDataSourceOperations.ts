@@ -62,7 +62,7 @@ class DataSourceOperations implements IDataSourceOperations {
     
     addAttributesToRecord(record, attributes, dataSource) {
         for(var attributeName in attributes) {
-            const tableAttribute = dataSource.tableAttributes[attributeName];
+            const tableAttribute = dataSource.fieldRawAttributesMap[attributeName];
             if(tableAttribute && tableAttribute.invisible) continue;
             record[attributeName] = attributes[attributeName];
         }

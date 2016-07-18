@@ -23,7 +23,7 @@ const ProductionUnit: IBaseDataSourceParams = {
         status: {
             label: 'Status'
         },
-        coordinates: {
+        coords_admin: {
             label: 'Coordenadas (admin)'
         },
         general_info: {
