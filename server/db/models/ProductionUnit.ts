@@ -2,11 +2,6 @@
 import * as Sequelize from 'sequelize'; 
 import { coordToString, stringToCoord } from '../../lib/Geo';
 
-function updateCoordinates(productionUnit) {
-    const coords = stringToCoord(productionUnit.dataValues.coords_admin);
-    productionUnit.coordinates = JSON.stringify(coords);
-}
-
 module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes) {
     const ProductionUnit = sequelize.define('ProductionUnit', {
         name: {
@@ -40,6 +35,10 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                     return null;
                 }
                 return coordToString(JSON.parse(this.coordinates));
+            },
+            set: function(coordsStr) {
+                const coords = stringToCoord(coordsStr);
+                this.coordinates = JSON.stringify(coords);
             }
         },
         general_info: {
@@ -108,10 +107,6 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                 };
                 ProductionUnit.belongsTo(models.Block, blockOpts );
             },
-			defineHooks: function(db) {
-                db.ProductionUnit.hook('beforeCreate', updateCoordinates);
-                db.ProductionUnit.hook('beforeUpdate', updateCoordinates);
-            }
         }
     }
   );
