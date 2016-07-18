@@ -332,12 +332,19 @@ export function getTableQueryData(req: express.Request, res: express.Response):v
     const queryParams:QueryGenerator.IQueryParams = req.query.queryParams;
     queryParams.filters = queryParams.filters ? queryParams.filters : [];
     const queryName:string = req.query.queryName;
-    const fields = TableQueries.queries[queryName].fields;
+    const query = TableQueries.queries[queryName];
+    const fields = query.fields;
 
     TableQueries.getQueryResult(queryName, queryParams).then( (results) => {
+        const records = results[0];
+        if(query.recordProcessor) {
+            for(var record of records) {
+                query.recordProcessor(record);
+            }
+        }
         const result:interfaces.TableQueryDataRes = {
-            fields: fields,
-            records: results[0],
+            fields,
+            records,
             count: results[1][0].count
         };
         res.json(result);

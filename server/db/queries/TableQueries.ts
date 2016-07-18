@@ -12,6 +12,7 @@ interface IQueryStrFn {
 interface ITableQuery {
     queryStrFn: IQueryStrFn;
     fields: BaseQuery.IField[];
+    recordProcessor?: any;
 }
 
 interface ITableQueries {
@@ -243,7 +244,8 @@ export const queries:ITableQueries = {
                     fields: [
                         'id',
                         'name',
-                        'address'
+                        'address',
+                        'segments_text'
                     ]
                 },
                 extraFields: [
@@ -270,7 +272,16 @@ export const queries:ITableQueries = {
                 fieldName: 'address',
                 type: 'VARCHAR'
             },
-        ]
+            {
+                label: 'Segmentos',
+                fieldName: 'segments_text',
+                type: 'VARCHAR'
+            },
+        ],
+        recordProcessor: record => {
+            const segments = JSON.parse(record.segments_text);
+            record.segments_text = segments ? segments.join(', ') : '';
+        }
     },
     
     /** Blocks */
