@@ -69,3 +69,16 @@ export namespace SendErrorReport {
         msg: string;
     }
 }
+
+export namespace GetQueryData {
+
+    export interface req {
+        queryName: string;
+        filters: any;
+    }
+
+    export interface res {
+        fields: any;
+        records: any[];
+    }
+}

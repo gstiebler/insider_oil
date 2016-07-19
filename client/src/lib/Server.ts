@@ -72,12 +72,7 @@ export function getUserDetails(onData, onError) {
  * @param {} options Options (queryName and filters)
  * @return Promise
  */
-export function getQueryData(options):Promise<any> {
-    var params = { 
-        queryName: options.queryName,
-        filters: options.filters,
-    };
-    
+export function getQueryData(params: ni.GetQueryData.req):Promise<ni.GetQueryData.res> {
     return getP('/get_query_data', params);
 }
 

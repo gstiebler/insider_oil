@@ -65,8 +65,9 @@ export function viewRecord(req: express.Request, res: express.Response, next) {
 }
 
 export function getQueryData(req: express.Request, res: express.Response) {Sync(function(){
-    const queryName = req.query.queryName;
-    const filters = req.query.filters;
+    const query: ni.GetQueryData.req = req.query;
+    const queryName = query.queryName;
+    const filters = query.filters;
     const queryById = QueriesById[queryName];
     const queryStr = queryById.queryStrFn(filters);
     const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};

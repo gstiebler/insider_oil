@@ -1,10 +1,16 @@
 import { IMapObj } from './Map';
+import * as Promise from 'bluebird';
+import * as Flash from '../Flash'
+
+interface IBillboardFunction {
+    (): Promise<string>;
+} 
 
 export class BaseMapItem {
 
     protected mapObj: IMapObj;
     private gMapItem: any;
-    private billboardFn: any;
+    private billboardFn: IBillboardFunction;
 
     constructor(mapObj: IMapObj) {
         this.mapObj = mapObj;
@@ -14,7 +20,7 @@ export class BaseMapItem {
         this.gMapItem = gMapItem;
     }
 
-    public setBillboardFn(billboardFn) {
+    public setBillboardFn(billboardFn: IBillboardFunction) {
         this.billboardFn = billboardFn;
 
         // Add a listener for the click event.
@@ -22,11 +28,15 @@ export class BaseMapItem {
     }
 
     private showBillboard(event) {
-        var contentString = this.billboardFn();
+        this.billboardFn()
+            .then(this.onBillboardContent.bind(this, event.latLng))
+            .catch((error) => { Flash.create('warning', error); });
+    }
 
+    private onBillboardContent(latLng, contentString: string) {
         // Replace the info window's content and position.
         this.mapObj.infoWindow.setContent(contentString);
-        this.mapObj.infoWindow.setPosition(event.latLng);
+        this.mapObj.infoWindow.setPosition(latLng);
 
         this.mapObj.infoWindow.open(this.mapObj.gMap);
     }
