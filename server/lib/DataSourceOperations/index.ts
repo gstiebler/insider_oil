@@ -40,6 +40,7 @@ const operations: IOperations = {
     IndustrySegment: BaseDataSourceOperations,
     MaintenanceDate: BaseDataSourceOperations,
     ExcelImportLog: BaseDataSourceOperations,
+    ErrorReport: BaseDataSourceOperations,
 };
 
 export = operations;

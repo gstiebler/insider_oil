@@ -428,6 +428,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         GasMovement: 'Movimentação de gasoduto',
         IndustrySegment: 'Segmentos',
         ExcelImportLog: 'Log da importação de Excel',
+        ErrorReport: 'Reports de erros ',
     };
     
     res.json(list);

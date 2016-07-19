@@ -443,6 +443,7 @@ allTablesMain: test => {
 	    'GasMovement',
 	    'IndustrySegment',
 	    'MaintenanceDate',
+	    'ErrorReport',
 	];
 	
 	for(var model of models) {
