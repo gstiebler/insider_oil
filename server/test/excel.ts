@@ -224,9 +224,9 @@ invalidHeader: function(test) {
     var modifiedExcelBuf = XLSX.write(workbook, {type:"buffer"});
     
     try {
-        importExcel(modifiedExcelBuf, 'DrillingRigOffshore');
+        await( importExcel(modifiedExcelBuf, 'DrillingRigOffshore') );
     } catch(err) {
-        test.equal( "O cabeçalho do arquivo Excel não possui o campo sonda", err );
+        test.equal( "O cabeçalho do arquivo Excel não possui o(s) campo(s) sonda", err );
         test.done();
     } 
 },
