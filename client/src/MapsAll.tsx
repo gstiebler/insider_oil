@@ -9,6 +9,31 @@ import { Marker } from './Maps/Marker';
 import { KmlLayer } from './Maps/KmlLayer';
 import * as Promise from 'bluebird';
 
+
+function showBillboard(object, modelName: string, billboardHTMLfn): Promise<string> {
+    return new Promise<string>(function(resolve, reject) {
+        const req = {
+            queryName: 'NewsByObject',
+            filters: {
+                modelName,
+                id: object.id
+            }
+        };
+        server.getQueryData(req)
+        .then(res => {
+            var result = billboardHTMLfn(object);
+            if(res.records.length > 0) {
+                result += '<hr/><b>Notícias:</b>';
+            }
+            for(var newsRecord of res.records) {
+                const newsUrl = '/app/view_record?source=News&id=' + newsRecord.id;
+                result += '<br/><a href="' + newsUrl + '">' + newsRecord.title + '</a>';
+            }
+            resolve(result);
+        }).catch(reject);
+    });
+}
+
 interface IAppProps {
 }
 
@@ -72,26 +97,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
 
     private addBlocksToMap(blocks) {
 
-        function blockBillboard(block): Promise<string> {
-            return new Promise<string>(function(resolve, reject) {
-                const req = {
-                    queryName: 'NewsByObject',
-                    filters: {
-                        modelName: 'Block',
-                        id: block.id
-                    }
-                };
-                server.getQueryData(req)
-                .then(res => {
-                    const url = '/app/view_record?source=Block&id=' + block.id;
-                    var result = '<b>Bloco: </b><a href="' + url + '">' + block.name + '</a>';
-                    for(var newsRecord of res.records) {
-                        const newsUrl = '/app/view_record?source=News&id=' + newsRecord.id;
-                        result += '<br/><a href="' + newsUrl + '">' + newsRecord.title + '</a>';
-                    }
-                    resolve(result);
-                }).catch(reject);
-            });
+        function blockBillboard(block):string {
+            const url = '/app/view_record?source=Block&id=' + block.id;
+            return '<b>Bloco: </b><a href="' + url + '">' + block.name + '</a>';
         }
 
         this.blockMPolygons.length = 0;
@@ -103,7 +111,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             polygons.map((polygon) => {
                 const title = 'Bloco: ' + block.name;
                 var mPolygon = new Polygon(this.mapObj, polygon, title, '#FF0000');
-                mPolygon.setBillboardFn(blockBillboard.bind(this, block));
+                mPolygon.setBillboardFn(showBillboard.bind(this, block, 'Block', blockBillboard));
                 this.blockMPolygons.push(mPolygon);
             });
         });
@@ -111,12 +119,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
 
     private addOilFieldsToMap(oilFields) {
 
-        function oilFieldsBillboard(oilField): Promise<string> {
-            return new Promise<string>(function(resolve, reject) {
-                const url = '/app/view_record?source=OilField&id=' + oilField.id;
-                const result =  '<b>Campo: </b><a href="' + url + '">' + oilField.name + '</a>';
-                resolve(result);
-            });
+        function oilFieldBillboard(oilField):string {
+            const url = '/app/view_record?source=OilField&id=' + oilField.id;
+            return '<b>Campo: </b><a href="' + url + '">' + oilField.name + '</a>';
         }
 
         this.oilFieldMPolygons.length = 0;
@@ -128,7 +133,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             polygons.map((polygon) => {
                 const title = 'Campo: ' + oilField.name;
                 var mPolygon = new Polygon(this.mapObj, polygon, title, '#FFFF00');
-                mPolygon.setBillboardFn(oilFieldsBillboard.bind(this, oilField));
+                mPolygon.setBillboardFn(showBillboard.bind(this, oilField, 'OilField', oilFieldBillboard));
                 this.oilFieldMPolygons.push(mPolygon);
             });
         });
@@ -136,12 +141,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
 
     private addProductionUnitsToMap(productionUnits) {
 
-        function productionUnitBillboard(productionUnit): Promise<string> {
-            return new Promise<string>(function(resolve, reject) {
-                const url = '/app/view_record?source=ProductionUnit&id=' + productionUnit.id;
-                const result = '<b>Unidade de produção: </b><a href="' + url + '">' + productionUnit.name + '</a>'
-                resolve(result);
-            });
+        function productionUnitBillboard(productionUnit):string {
+            const url = '/app/view_record?source=ProductionUnit&id=' + productionUnit.id;
+            return '<b>Unidade de produção: </b><a href="' + url + '">' + productionUnit.name + '</a>'
         }
 
         this.productionUnitMMarkers.length = 0;
@@ -153,7 +155,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             }
             const title = 'Unidade de produção: ' + productionUnit.name;
             var mMarker = new Marker(this.mapObj, coordinates, platformImage, title);
-            mMarker.setBillboardFn(productionUnitBillboard.bind(this, productionUnit));
+            mMarker.setBillboardFn(showBillboard.bind(this, productionUnit, 'ProductionUnit', productionUnitBillboard));
             this.productionUnitMMarkers.push(mMarker);
         });
     }
