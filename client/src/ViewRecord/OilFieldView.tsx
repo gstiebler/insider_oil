@@ -7,24 +7,19 @@ import { ViewRecordFields } from './ViewRecordFields';
 import { ShowQueryData } from '../ShowQueryData';
 import { ObjectNews } from '../ObjectNews';
 import { TimeSeriesChart } from '../TimeSeriesChart';
+import { ErrorReport } from '../ErrorReport';
+import * as ViewRecord from './ViewRecord';
 
 interface IAppProps {
     location: any;
 }
 
-interface IAppState {
-    id: number;
-    source: string;
-    relatedPersons: any;
-    relatedBids: any;
-    relatedContracts: any;
-    recordData: any;
-    referencedObjects: any[];
+interface IAppState extends ViewRecord.IAppState {
     prodQueryParams: any;
     productionChartParams: any;
 }
 
-export class OilFieldView extends React.Component<IAppProps, IAppState> {
+export class OilFieldView extends ViewRecord.ViewRecord {
 
     public state: IAppState;
 
@@ -35,33 +30,11 @@ export class OilFieldView extends React.Component<IAppProps, IAppState> {
         var source = 'OilField';
         this.state = {
             id: id,
-            source: source,
-            relatedPersons: {
-                queryName: 'PersonsByProject',
-                title: 'Pessoas',
-                filters: {
-                    project_id: id,
-                    dataSource: source
-                },
-            },
-            relatedBids: {
-                queryName: 'BidsByObject',
-                title: 'Licitações',
-                filters: {
-                    obj_id: id,
-                    dataSource: source
-                }
-            },
-            relatedContracts: {
-                queryName: 'contractsByObject',
-                title: 'Contratos',
-                filters: {
-                    obj_id: id,
-                    dataSource: source
-                }
-            },            
-            recordData: {},
-            referencedObjects: [],
+            source: source,     
+            recordData: [],
+            allReferencedObjects: [],
+            objectLabel: '',
+            url: props.location.basename + props.location.pathname + props.location.search,
             prodQueryParams: { oilField: id },
             productionChartParams: {
                 yLabel: 'Produção (bbl/dia)',
@@ -70,46 +43,15 @@ export class OilFieldView extends React.Component<IAppProps, IAppState> {
             }
         };
     }
-
-    protected componentDidMount() {
-        var { id, source } = this.state;
-        server.viewRecord( source, id)
-            .then(this.showValues.bind(this))
-            .catch(showError.show);
-    }
-
-    private componentWillReceiveProps(nextProps) {
-        var { id } = nextProps.location.query;
-        this.state.id = id;
-        server.viewRecord(this.state.source, id)
-            .catch(this.showValues.bind(this))
-            .catch(showError.show);
-    } 
- 
-    // show record values
-    private showValues(viewData) {
-        this.state.recordData = viewData.record;
-        this.state.referencedObjects = viewData.referencedObjects ? viewData.referencedObjects : [];
-        this.setState(this.state);
-    }
     
     public render(): React.ReactElement<any> {
-        var referencedObjects = this.state.referencedObjects.map((referencedObject) => {
-            return <div key={referencedObject.queryName}>
-                <ShowQueryData model={referencedObject} objId={this.state.id}></ShowQueryData>
-                <hr/>
-            </div>
-        });
-
         return (
             <div>
+                <ErrorReport objectLabel={this.state.objectLabel}
+                             url={this.state.url} />
                 <ViewRecordFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></ViewRecordFields>
                 <hr/>
-                <ShowQueryData model={this.state.relatedPersons}></ShowQueryData>
-                <ShowQueryData model={this.state.relatedBids}></ShowQueryData>
-                <ShowQueryData model={this.state.relatedContracts}></ShowQueryData>
-                <hr/>
-                { referencedObjects }
+                { this.getRefObjectsElements() }
                 <TimeSeriesChart queryName="ProductionByField"
                                  qParams={this.state.prodQueryParams}
                                  chartParams={this.state.productionChartParams}/>

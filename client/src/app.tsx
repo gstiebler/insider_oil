@@ -12,7 +12,6 @@ import { AdminCreate } from './Admin/AdminCreate';
 import { Tree } from './Tree';
 import { ViewRecord } from './ViewRecord/ViewRecord';
 import { OilFieldView } from './ViewRecord/OilFieldView';
-import { ProductionUnitView } from './ViewRecord/ProductionUnitView';
 import { Flash } from './Flash';
 import { ChangePassword } from './ChangePassword';
 import { MapsAll } from './MapsAll';
@@ -148,7 +147,6 @@ ReactDOM.render(
       <Route path="tree" component={Tree}/>
       <Route path="view_record" component={ViewRecord}/>
       <Route path="oil_field" component={OilFieldView}/>
-      <Route path="production_unit" component={ProductionUnitView}/>
       <Route path="maps_all" component={MapsAll}/>
       <Route path="change_password" component={ChangePassword}/>
     </Route>

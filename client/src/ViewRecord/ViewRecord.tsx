@@ -13,16 +13,11 @@ interface IAppProps {
     location: any;
 }
 
-interface IAppState {
+export interface IAppState {
     id: number;
     source: string;
-    fixedRefObjects: {
-        relatedPersons: any;
-        relatedBids: any;
-        relatedContracts: any;
-    }
     recordData: any[];
-    referencedObjects: any[];
+    allReferencedObjects: any[];
     objectLabel: string;
     url:string;
 }
@@ -31,16 +26,21 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
 
     public state: IAppState;
 
+    private fixedRefObjects: {
+        relatedPersons: any;
+        relatedBids: any;
+        relatedContracts: any;
+    };
+
     constructor(props: IAppProps) {
         super(props);
 
         var { id, source } = props.location.query;
         this.state = {
             id: id,
-            source: source,
-            fixedRefObjects: this.getFixedRefObjects(source, id),        
+            source: source,      
             recordData: [],
-            referencedObjects: [],
+            allReferencedObjects: [],
             objectLabel: '',
             url: props.location.basename + props.location.pathname + props.location.search
         };
@@ -48,7 +48,6 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         var customSources = {
             'OilField': "/app/oil_field",
             'GasPipeline': "/app/gas_pipeline",
-            'ProductionUnit': "/app/production_unit",
         };
 
         var customSource = customSources[source];
@@ -57,7 +56,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    private getFixedRefObjects(source, id) {
+    public getFixedRefObjects(source, id) {
         return {
             relatedPersons: {
                 queryName: 'PersonsByProject',
@@ -86,49 +85,52 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    private componentDidMount() {
+    public componentDidMount() {
         var { id, source } = this.state;
         server.viewRecord( source, id)
             .then(this.showValues.bind(this))
             .catch(showError.show);
     }
 
-    private componentWillReceiveProps(nextProps: IAppProps) {
+    public componentWillReceiveProps(nextProps: IAppProps) {
         var { id, source } = nextProps.location.query;
         this.state.id = id;
         this.state.source = source;
-        this.state.fixedRefObjects = this.getFixedRefObjects(source, id);
         server.viewRecord( source, id)
             .then(this.showValues.bind(this))
             .catch(showError.show);
     } 
  
     // show record values
-    private showValues(viewData:ni.GetViewRecord.res) {
+    public showValues(viewData:ni.GetViewRecord.res) {
         this.state.recordData = viewData.record;
         this.state.objectLabel = viewData.record[0].value;
-        this.state.referencedObjects = viewData.referencedObjects ? viewData.referencedObjects : [];
+        const customReferencedObjs = viewData.referencedObjects ? viewData.referencedObjects : [];
+        const fixedRefObjects = this.getFixedRefObjects(this.state.source, this.state.id);
+        this.state.allReferencedObjects = [];
+        Array.prototype.push.apply(this.state.allReferencedObjects, customReferencedObjs);
+        Array.prototype.push.apply(this.state.allReferencedObjects, fixedRefObjects);
         this.setState(this.state);
         return null;
     }
-    
-    public render(): React.ReactElement<any> {
-        var referencedObjects = this.state.referencedObjects.map((referencedObject) => {
+
+    public getRefObjectsElements(): React.ReactElement<any>[] {
+        var referencedObjects = this.state.allReferencedObjects.map((referencedObject) => {
             return <div key={referencedObject.queryName}>
                 <ShowQueryData model={referencedObject} objId={this.state.id}></ShowQueryData>
             </div>
         });
-
+        return referencedObjects;
+    }
+    
+    public render(): React.ReactElement<any> {
         return (
             <div>
                 <ErrorReport objectLabel={this.state.objectLabel}
                              url={this.state.url} />
                 <ViewRecordFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></ViewRecordFields>
                 <hr/>
-                <ShowQueryData model={this.state.fixedRefObjects.relatedPersons}></ShowQueryData>
-                <ShowQueryData model={this.state.fixedRefObjects.relatedBids}></ShowQueryData>
-                <ShowQueryData model={this.state.fixedRefObjects.relatedContracts}></ShowQueryData>
-                { referencedObjects }
+                { this.getRefObjectsElements() }
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>
         );
