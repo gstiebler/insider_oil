@@ -31,4 +31,5 @@ export function createFixtures():void {
     await( require('./Bid')(db) );
     await( require('./Contract')(db) );
     await( require('./MaintenanceDates')(db) );
+    await( require('./ErrorReport')(db) );
 };
