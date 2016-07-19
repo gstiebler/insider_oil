@@ -109,6 +109,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         this.state.objectLabel = viewData.record[0].value;
         this.state.referencedObjects = viewData.referencedObjects ? viewData.referencedObjects : [];
         this.setState(this.state);
+        return null;
     }
     
     public render(): React.ReactElement<any> {

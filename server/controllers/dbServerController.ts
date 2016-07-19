@@ -162,31 +162,20 @@ export function modelFields(req: express.Request, res: express.Response, next) {
     res.json( { fields: fields } );
 }
 
-
-export function recordValues(req: express.Request, res: express.Response, next) {
+export function recordValues(req: express.Request, res: express.Response, next) { Sync(function(){
     var dsName = req.query.model;
     var id = req.query.id;
     const dataSource = dbUtils.getDataSource(dsName);
     const dsOps = DataSourceOperations[dsName];
-    dataSource.findById(id)
-        .then(onRecord)
-        .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
+    const record = await( dataSource.findById(id) );
+    const dsOperations = DataSourceOperations[dsName];
+    var fields = dsOperations.getModelFields(dsName);
     
-    function onRecord(record) { Sync(function(){
-        try{
-            const dsOperations = DataSourceOperations[dsName];
-            var fields = dsOperations.getModelFields(dsName);
-            
-            res.json({ 
-                values: record,
-                fields: fields
-            });
-        } catch(error) {
-            ControllerUtils.getErrorFunc(res, 500, "Problemas ao recuperar o registro")(error);
-        }
-    });}
-}
-
+    res.json({ 
+        values: record,
+        fields: fields
+    });
+}, ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));}
 
 export function createItem(req: express.Request, res: express.Response, next) { Sync(function() {
     var newItemData = JSON.parse(req.body.newItemData);
