@@ -4,6 +4,7 @@ import fiberTests = require('./lib/fiberTests');
 var utils = require('./lib/utils');
 import * as nodeunit from 'nodeunit';
 import dbServerController = require('../controllers/dbServerController');
+import * as AdminController from '../controllers/AdminController';
 
 var group: nodeunit.ITestGroup = {
 
@@ -37,7 +38,7 @@ newsFromObject:  (test: nodeunit.Test) => {
             newItemData: JSON.stringify(newNews)
         }
     };
-    utils.getJsonResponse.sync(null, dbServerController.createItem, reqNewNews);
+    utils.getJsonResponse.sync(null, AdminController.createItem, reqNewNews);
 
 	// should have 2 news from this oil field now
     const moreNewsFromObject = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);

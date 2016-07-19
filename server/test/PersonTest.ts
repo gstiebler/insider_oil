@@ -4,6 +4,7 @@ import fiberTests = require('./lib/fiberTests');
 import db = require('../db/models');
 import dbServerController = require('../controllers/dbServerController');
 import nodeunit = require('nodeunit');
+import * as AdminController from '../controllers/AdminController';
 
 const utils = require('./lib/utils');
 
@@ -17,7 +18,7 @@ getPerson: test => {
             id: 2
         }
     };
-    const response = utils.getJsonResponse.sync(null, dbServerController.recordValues, req);
+    const response = utils.getJsonResponse.sync(null, AdminController.recordValues, req);
     test.equal('Felipe', response.values.name);
     test.equal(2, response.values.company_id);
     
@@ -62,7 +63,7 @@ createPerson: test => {
         }
     };
     
-    const res = utils.getJsonResponse.sync(null, dbServerController.createItem, newItemReq);
+    const res = utils.getJsonResponse.sync(null, AdminController.createItem, newItemReq);
     test.equal(res.msg, 'Registro criado com sucesso.');
 
     const reqGet = {
@@ -71,7 +72,7 @@ createPerson: test => {
             id: 4
         }
     };
-    const responseGet = utils.getJsonResponse.sync(null, dbServerController.recordValues, reqGet);
+    const responseGet = utils.getJsonResponse.sync(null, AdminController.recordValues, reqGet);
     
     const responseValues = responseGet.values;
     test.equal('Michael Jackson', responseValues.name);
@@ -121,7 +122,7 @@ editPerson: test => {
         }
     };
         
-    const response = utils.getJsonResponse.sync(null, dbServerController.saveItem, reqSave);
+    const response = utils.getJsonResponse.sync(null, AdminController.saveItem, reqSave);
     test.equal('Registro salvo com sucesso.', response.msg);
     
     const reqGet = {
@@ -130,7 +131,7 @@ editPerson: test => {
             id: 2
         }
     };
-    const responseGet = utils.getJsonResponse.sync(null, dbServerController.recordValues, reqGet);
+    const responseGet = utils.getJsonResponse.sync(null, AdminController.recordValues, reqGet);
     test.equal('Michael Jackson', responseGet.values.name);
     test.equal(2, responseGet.values.company_id);
     test.equal('[name.example.com]', responseGet.values.emails);
