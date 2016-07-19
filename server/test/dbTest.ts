@@ -147,4 +147,29 @@ Contract: (test) => {
 
 }
 
+var notModGroup: nodeunit.ITestGroup = {
+
+BlockCoords: (test) => {
+const coordsStrs = [
+        '-20,    -40',
+        '-22.0001000, -41.0003   ',
+        '  -20.0,  -44   ',
+        '*',
+        '-22.0000, -39.3   ',
+        '  -22.0,  -38   ',
+    ];
+    const coordsStr = coordsStrs.join('\n');
+    const block = db.models.Block.build({
+        name: 'teste',
+        polygons_admin: coordsStr
+    });
+
+    const expectedStr = '-20, -40\n-22.0001, -41.0003\n-20, -44\n*\n-22, -39.3\n-22, -38';
+    test.equal(expectedStr, block.polygons_admin);
+    test.done();
+}
+
+}
+
 exports.group = fiberTests.convertTests( group, false );
+exports.group = fiberTests.convertTests( notModGroup, true );
