@@ -141,6 +141,20 @@ export function uploadKml(req: express.Request, res: express.Response, next) {
         .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }
 
+export function sendErrorReport(req: express.Request, res: express.Response, next) {
+    const body:ni.SendErrorReport.req = req.body;
+    const errorReportRecord = {
+        url: body.url,
+        description: body.description,
+        reporter_id: req.user.id, 
+        status: 'Em aberto'
+    }
+    db.models.ErrorReport.create(errorReportRecord).then(result => {
+        const resObj: ni.SendErrorReport.res = { msg: 'OK' };
+        res.json(resObj);
+    }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
+}
+
 export function modelFields(req: express.Request, res: express.Response, next) {
     var modelName = req.query.model;
     const dsOperations = DataSourceOperations[modelName];

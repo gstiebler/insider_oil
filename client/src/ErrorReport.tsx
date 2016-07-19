@@ -1,5 +1,9 @@
 import * as React from 'react';
 import * as Modal from 'react-modal';
+import { postP } from './lib/Server';
+import * as showError from './lib/ShowError';
+import * as Flash from './Flash'
+import { SendErrorReport } from '../../common/NetworkInterfaces'
 
 interface IAppProps {
     objectLabel: string;
@@ -9,6 +13,7 @@ interface IAppProps {
 
 interface IAppState {
     modalIsOpen: boolean;
+    description: string;
 }
 
 export class ErrorReport extends React.Component<IAppProps, IAppState> {
@@ -17,16 +22,36 @@ export class ErrorReport extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = {
-            modalIsOpen: false
+            modalIsOpen: false,
+            description: ''
         };
     }
 
     private closeModal() {
-        this.setState({ modalIsOpen: false });
+        this.state.modalIsOpen = false;
+        this.setState(this.state);
     }
 
     private openModal() {
-        this.setState({ modalIsOpen: true });
+        this.state.modalIsOpen = true;
+        this.setState(this.state);
+    }
+
+    private sendReport() {
+        const report:SendErrorReport.req = { 
+            url: this.props.url,
+            description: this.state.description 
+        };
+        postP('/send_error_report', report)
+            .then(this.onReportSent.bind(this))
+            .catch(showError.show);
+
+        this.state.modalIsOpen = false;
+        this.setState(this.state);
+    }
+
+    private onReportSent(res: SendErrorReport.res) {
+        Flash.create('success', 'Erro enviado com sucesso' );
     }
 
     public render(): React.ReactElement<any> {
@@ -50,11 +75,16 @@ export class ErrorReport extends React.Component<IAppProps, IAppState> {
                         <div className="modal-body">
                             <h4>Objeto: <b>{this.props.objectLabel}</b></h4><hr/>
                             Descrição:
-                            <textarea type="text" rows={8} className="form-control" /> 
+                            <textarea type="text" rows={8} className="form-control"
+                                      onChange={e => { this.state.description = e.target.value; }} /> 
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-default" onClick={this.closeModal.bind(this)} >Fechar</button>
-                            <button type="button" className="btn btn-primary" >Enviar</button>
+                            <button type="button" 
+                                    className="btn btn-default" 
+                                    onClick={this.closeModal.bind(this)} >Fechar</button>
+                            <button type="button" 
+                                    className="btn btn-primary"
+                                    onClick={this.sendReport.bind(this)} >Enviar</button>
                         </div>
                     </div>
                 </Modal>

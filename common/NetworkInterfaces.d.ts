@@ -57,3 +57,15 @@ export namespace GetViewRecord {
         referencedObjects: Interfaces.IRefObjectsOnView[];
     }
 }
+
+export namespace SendErrorReport {
+
+    export interface req {
+        url: string;
+        description: string;
+    }
+
+    export interface res {
+        msg: string;
+    }
+}
