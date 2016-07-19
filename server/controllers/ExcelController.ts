@@ -10,6 +10,7 @@ import importExcel = require('../lib/excel/importExcel');
 import dsParams = require('../lib/DataSourcesParams');
 import express = require("express");
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
+import winston = require('winston');
 
 
 export function downloadExcel(req: express.Request, res: express.Response, next) { Sync(function() {
@@ -43,4 +44,27 @@ export function importExcelFromURL(req: express.Request, res: express.Response) 
     function onOk(result:IExcelUploadResponse) {
         res.json( { status: result.status, recordsStatus: result.invalidRecordsStatus } );
     }
+}
+
+export function uploadFile(req: express.Request, res: express.Response, next) {
+    var buf = JSON.parse(req.body.data);
+    var model = req.body.model;
+    try {
+        importExcel(buf, model).then(onOk).catch(onError);
+    } catch(err) {
+        res.status(400).json( { errorMsg: err } );
+    }
+
+    function onOk(result:IExcelUploadResponse) {
+        res.json( { status: result.status, recordsStatus: result.invalidRecordsStatus } );
+    }
+    
+    function onError(err) {
+        winston.error(err);
+        res.status(400).json( { errorMsg: err } );
+    }
+      
+    function onFinish() {
+    	winston.info('Done parsing form!');
+    };
 }

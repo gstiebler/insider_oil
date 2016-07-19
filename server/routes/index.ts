@@ -11,6 +11,7 @@ import ExcelController = require('../controllers/ExcelController');
 var imageController = require('../controllers/ImageController');
 import express = require("express");
 import * as ni from '../../common/NetworkInterfaces';
+import * as AdminController from '../controllers/AdminController';
 
 module.exports = function(app: express.Express) {
     // Main route
@@ -23,18 +24,18 @@ module.exports = function(app: express.Express) {
     app.put('/login/logout',    session.authorize, loginController.logout );
     
     // DB Server
-    app.get('/table_data', session.authorize, dbServerController.getTableData);
-    app.get('/view_params', session.authorize, dbServerController.getViewParams);
-    app.get('/model_fields/', session.authorize,   dbServerController.modelFields);
-    app.get('/record_values/',  session.authorize, dbServerController.recordValues);
+    app.get('/table_data', session.authorize, AdminController.getTableData);
+    app.get('/view_params', session.authorize, AdminController.getViewParams);
+    app.get('/model_fields/', session.authorize,   AdminController.modelFields);
+    app.get('/record_values/',  session.authorize, AdminController.recordValues);
     app.get('/view_record/',   session.authorize,  dbServerController.viewRecord);
-    app.post('/create_item/',  session.authorize,  dbServerController.createItem);
-    app.put('/save_item/',   session.authorize,    dbServerController.saveItem);
-    app.get('/sources_list/',  session.authorize,  dbServerController.sourcesList);
-    app.delete('/delete_item/', session.authorize, dbServerController.deleteItem);
-    app.get('/combo_values/', session.authorize,   dbServerController.getComboValues);
-    app.post('/db_server/upload_file',             dbServerController.uploadFile);
-    app.post('/db_server/upload_kml', dbServerController.uploadKml);
+    app.post('/create_item/',  session.authorize,  AdminController.createItem);
+    app.put('/save_item/',   session.authorize,    AdminController.saveItem);
+    app.get('/sources_list/',  session.authorize,  AdminController.sourcesList);
+    app.delete('/delete_item/', session.authorize, AdminController.deleteItem);
+    app.get('/combo_values/', session.authorize,   AdminController.getComboValues);
+    app.post('/db_server/upload_file',             ExcelController.uploadFile);
+    app.post('/db_server/upload_kml', AdminController.uploadKml);
     app.post('/send_error_report', session.authorize, dbServerController.sendErrorReport);
     app.get('/get_query_data', session.authorize,  dbServerController.getQueryData);
     app.get('/get_table_data', session.authorize,  dbServerController.getTableQueryData);
