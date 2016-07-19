@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
 import { Link, browserHistory } from 'react-router';
 import { ViewRecordFields } from './ViewRecordFields';
-import { ShowQueryData } from './ShowQueryData';
-import { ObjectNews } from './ObjectNews';
-import { TimeSeriesChart } from './TimeSeriesChart';
+import { ShowQueryData } from '../ShowQueryData';
+import { ObjectNews } from '../ObjectNews';
+import { TimeSeriesChart } from '../TimeSeriesChart';
 
 interface IAppProps {
     location: any;
@@ -17,6 +17,7 @@ interface IAppState {
     source: string;
     relatedPersons: any;
     relatedBids: any;
+    relatedMaintenanceDates: any;
     relatedContracts: any;
     recordData: any;
     referencedObjects: any[];
@@ -24,7 +25,7 @@ interface IAppState {
     productionChartParams: any;
 }
 
-export class OilFieldView extends React.Component<IAppProps, IAppState> {
+export class ProductionUnitView extends React.Component<IAppProps, IAppState> {
 
     public state: IAppState;
 
@@ -32,7 +33,7 @@ export class OilFieldView extends React.Component<IAppProps, IAppState> {
         super(props);
 
         var { id } = props.location.query;
-        var source = 'OilField';
+        var source = 'ProductionUnit';
         this.state = {
             id: id,
             source: source,
@@ -50,6 +51,13 @@ export class OilFieldView extends React.Component<IAppProps, IAppState> {
                 filters: {
                     obj_id: id,
                     dataSource: source
+                }
+            },
+            relatedMaintenanceDates: {
+                queryName: 'maintenanceDatesByProductionUnit',
+                title: 'Datas de manutenção',
+                filters: {
+                    id: id
                 }
             },
             relatedContracts: {
@@ -73,7 +81,7 @@ export class OilFieldView extends React.Component<IAppProps, IAppState> {
 
     protected componentDidMount() {
         var { id, source } = this.state;
-        server.viewRecord( source, id)
+        server.viewRecord(source, id)
             .then(this.showValues.bind(this))
             .catch(showError.show);
     }
@@ -81,8 +89,8 @@ export class OilFieldView extends React.Component<IAppProps, IAppState> {
     private componentWillReceiveProps(nextProps) {
         var { id } = nextProps.location.query;
         this.state.id = id;
-        server.viewRecord(this.state.source, id)
-            .catch(this.showValues.bind(this))
+        server.viewRecord( this.state.source, id)
+            .then(this.showValues.bind(this))
             .catch(showError.show);
     } 
  
@@ -105,14 +113,12 @@ export class OilFieldView extends React.Component<IAppProps, IAppState> {
             <div>
                 <ViewRecordFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></ViewRecordFields>
                 <hr/>
+                <ShowQueryData model={this.state.relatedMaintenanceDates}></ShowQueryData>
                 <ShowQueryData model={this.state.relatedPersons}></ShowQueryData>
                 <ShowQueryData model={this.state.relatedBids}></ShowQueryData>
                 <ShowQueryData model={this.state.relatedContracts}></ShowQueryData>
                 <hr/>
                 { referencedObjects }
-                <TimeSeriesChart queryName="ProductionByField"
-                                 qParams={this.state.prodQueryParams}
-                                 chartParams={this.state.productionChartParams}/>
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>
         );

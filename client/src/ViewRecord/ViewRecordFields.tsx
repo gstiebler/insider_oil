@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as showError from './lib/ShowError';
-import * as ModelViewService from './lib/ModelViewUtils';
+import * as showError from '../lib/ShowError';
+import * as ModelViewService from '../lib/ModelViewUtils';
 import { Link } from 'react-router';
-import { strContains } from './lib/StringUtils';
+import { strContains } from '../lib/StringUtils';
 
 interface IAppProps {
     location: any;
