@@ -23,9 +23,12 @@ const Contract: IBaseDataSourceParams = {
         status: {
             label: 'Status',
         },
+        created_at: {
+            label: 'Reportado em',
+        },
     },
     labelField: "user_uid",
-    gridFields: ['url', 'reporter_name', 'status', 'resonsible_name', 'created_at'],
+    gridFields: ['url', 'reporter_name', 'status', 'responsible_name', 'created_at'],
     tableLabel: "Reports de erro",
     hasMap: false,
 }

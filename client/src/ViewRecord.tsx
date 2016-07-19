@@ -6,6 +6,7 @@ import { Link, browserHistory } from 'react-router';
 import { ViewRecordFields } from './ViewRecordFields';
 import { ShowQueryData } from './ShowQueryData';
 import { ObjectNews } from './ObjectNews';
+import { ErrorReport } from './ErrorReport';
 
 interface IAppProps {
     location: any;
@@ -109,6 +110,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
 
         return (
             <div>
+                <ErrorReport />
                 <ViewRecordFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></ViewRecordFields>
                 <hr/>
                 <ShowQueryData model={this.state.fixedRefObjects.relatedPersons}></ShowQueryData>
