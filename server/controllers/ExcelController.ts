@@ -21,7 +21,6 @@ export function downloadExcel(req: express.Request, res: express.Response, next)
     res.send(binaryWorkbook);
 }) }
 
-
 export function importExcelFromURL(req: express.Request, res: express.Response) {
     const dataSourceName:string = req.body.params.dataSource;
     const viewParams = dsParams[dataSourceName];

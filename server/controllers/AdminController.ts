@@ -34,7 +34,7 @@ export function getViewParams(req: express.Request, res: express.Response, next)
     res.json(ioRes);
 }
  
-export function getTableData(req: express.Request, res: express.Response, next) {
+export function getTableData(req: express.Request, res: express.Response, next) {Sync(function() {
     const query: ni.GetTableData.req = req.query;
     const modelName: string = query.table;
     const filters = query.filters;
@@ -74,24 +74,16 @@ export function getTableData(req: express.Request, res: express.Response, next) 
         findOpts.offset = parseInt(pagination.first);
         findOpts.limit = parseInt(pagination.itemsPerPage);
     }
-    dbUtils.findAllCustom(dataSource, findOpts).then(sendRecords)
-        .catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
-    
-    function sendRecords(records) {Sync(function() {
-        try {
-            dbUtils.simplifyArray( dataSource, records );
-            const filteredRecords = dbUtils.filterShowFields(records, showFields);
-            const count = await( dataSource.count({ where: filterObj }) );
-            const ioRes:ni.GetTableData.res = { 
-                records: filteredRecords,
-                count
-            }; 
-            res.json( ioRes );
-        } catch(e) {
-            ControllerUtils.getErrorFunc(res, 500, "Erro")(e);
-        }});
-    }
-}
+    const records = await( dbUtils.findAllCustom(dataSource, findOpts) );
+    dbUtils.simplifyArray( dataSource, records );
+    const filteredRecords = dbUtils.filterShowFields(records, showFields);
+    const count = await( dataSource.count({ where: filterObj }) );
+    const ioRes:ni.GetTableData.res = { 
+        records: filteredRecords,
+        count
+    }; 
+    res.json( ioRes );
+}, ControllerUtils.getErrorFunc(res, 500, "Erro"))};
 
 export function modelFields(req: express.Request, res: express.Response, next) {
     var modelName = req.query.model;
@@ -135,19 +127,12 @@ export function saveItem(req: express.Request, res: express.Response, next) { Sy
     var recordData = JSON.parse(req.body.record);
     var dataSource = dbUtils.getDataSource(dsName);
     const dsOps = DataSourceOperations[dsName];     
-    dataSource.findById( recordData.id )
-        .then(onFindRecord)
-        .catch(ControllerUtils.getErrorFunc(res, 404, "Não foi possível encontrar o registro."));
-    
-    function onFindRecord(record) {
-        dsOps.addAttributesToRecord(record, recordData, dataSource);
-        record.save()
-            .then(ControllerUtils.getOkFunc(res, "Registro salvo com sucesso."))
-            .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível salvar o registro."));
-        return null;
-    }
+    const record = await( dataSource.findById( recordData.id ) );
+    dsOps.addAttributesToRecord(record, recordData, dataSource);
+    record.save()
+        .then(ControllerUtils.getOkFunc(res, "Registro salvo com sucesso."))
+        .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível salvar o registro."));
 }, ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."))}
-
 
 export function deleteItem(req: express.Request, res: express.Response) { Sync(function() {
     function hasReferencedObj() {
