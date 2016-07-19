@@ -185,7 +185,37 @@ blocksInFilter:  (test: nodeunit.Test) => {
     test.equal( 'Potiguar', resQueryValues.records[1].basin_name );
     
     test.done();
-}
+},
+
+companies:  (test: nodeunit.Test) => {
+    const queryParams:QueryGenerator.IQueryParams = {
+        order: [
+            {
+                fieldName: 'name',
+                dir: 'asc'
+            }
+        ],
+        filters: [],
+        pagination: {
+            first: 0,
+            itemsPerPage: 5
+        }
+    }
+    
+    const reqQueryValues = {
+        query: {
+            queryName: 'Companies',
+            queryParams: queryParams
+        }
+    }; 
+    
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
+    test.equal( 5, resQueryValues.records.length );
+    test.equal( 46, resQueryValues.count );
+    test.equal( 'Gás, Petróleo', resQueryValues.records[0].segments_text );
+    
+    test.done();
+},
     
 }
 

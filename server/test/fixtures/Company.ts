@@ -126,7 +126,8 @@ module.exports = function(db) {
             name: 'BPMB Parnaíba'
         },
         {
-            name: 'Alvopetro'
+            name: 'Alvopetro',
+            segments: ['Gás', 'Petróleo']
         },
         {
             name: 'Petrosynergy'
