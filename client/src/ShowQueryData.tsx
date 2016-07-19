@@ -92,6 +92,7 @@ export class ShowQueryData extends React.Component<IAppProps, IAppState> {
         }
         this.state.records = showRecords;
         this.setState(this.state);
+        return null;
     }
     
     public render(): React.ReactElement<any> {

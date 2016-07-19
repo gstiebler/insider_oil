@@ -162,9 +162,9 @@ export function getSearchResult(searchValue, okCallback, onError) {
 }
 
 
-export function viewRecord(dataSource, id, okCallback, onError) {
-    var params = { dataSource, id };
-    get('/view_record/', params, okCallback, onError);
+export function viewRecord(dataSource, id):Promise<ni.GetViewRecord.res> {
+    const params:ni.GetViewRecord.req = { dataSource, id };
+    return getP('/view_record/', params);
 }
 
 

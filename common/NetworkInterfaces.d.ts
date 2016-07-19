@@ -44,3 +44,16 @@ export namespace GetTableData {
         count: number;
     }
 }
+
+export namespace GetViewRecord {
+
+    export interface req {
+        dataSource: string;
+        id: number;
+    }
+
+    export interface res {
+        record: any[];
+        referencedObjects: Interfaces.IRefObjectsOnView[];
+    }
+}

@@ -81,13 +81,17 @@ export class ProductionUnitView extends React.Component<IAppProps, IAppState> {
 
     protected componentDidMount() {
         var { id, source } = this.state;
-        server.viewRecord( source, id, this.showValues.bind(this), showError.show );
+        server.viewRecord(source, id)
+            .then(this.showValues.bind(this))
+            .catch(showError.show);
     }
 
     private componentWillReceiveProps(nextProps) {
         var { id } = nextProps.location.query;
         this.state.id = id;
-        server.viewRecord( this.state.source, id, this.showValues.bind(this), showError.show );
+        server.viewRecord( this.state.source, id)
+            .then(this.showValues.bind(this))
+            .catch(showError.show);
     } 
  
     // show record values

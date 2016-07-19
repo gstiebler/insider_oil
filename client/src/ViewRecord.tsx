@@ -7,6 +7,7 @@ import { ViewRecordFields } from './ViewRecordFields';
 import { ShowQueryData } from './ShowQueryData';
 import { ObjectNews } from './ObjectNews';
 import { ErrorReport } from './ErrorReport';
+import * as ni from '../../common/NetworkInterfaces';
 
 interface IAppProps {
     location: any;
@@ -20,8 +21,10 @@ interface IAppState {
         relatedBids: any;
         relatedContracts: any;
     }
-    recordData: any;
+    recordData: any[];
     referencedObjects: any[];
+    objectLabel: string;
+    url:string;
 }
 
 export class ViewRecord extends React.Component<IAppProps, IAppState> {
@@ -36,8 +39,10 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
             id: id,
             source: source,
             fixedRefObjects: this.getFixedRefObjects(source, id),        
-            recordData: {},
+            recordData: [],
             referencedObjects: [],
+            objectLabel: '',
+            url: props.location.basename + props.location.pathname + props.location.search
         };
 
         var customSources = {
@@ -83,7 +88,9 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
 
     private componentDidMount() {
         var { id, source } = this.state;
-        server.viewRecord( source, id, this.showValues.bind(this), showError.show );
+        server.viewRecord( source, id)
+            .then(this.showValues.bind(this))
+            .catch(showError.show);
     }
 
     private componentWillReceiveProps(nextProps: IAppProps) {
@@ -91,12 +98,15 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         this.state.id = id;
         this.state.source = source;
         this.state.fixedRefObjects = this.getFixedRefObjects(source, id);
-        server.viewRecord( source, id, this.showValues.bind(this), showError.show );
+        server.viewRecord( source, id)
+            .then(this.showValues.bind(this))
+            .catch(showError.show);
     } 
  
     // show record values
-    private showValues(viewData) {
+    private showValues(viewData:ni.GetViewRecord.res) {
         this.state.recordData = viewData.record;
+        this.state.objectLabel = viewData.record[0].value;
         this.state.referencedObjects = viewData.referencedObjects ? viewData.referencedObjects : [];
         this.setState(this.state);
     }
@@ -110,7 +120,8 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
 
         return (
             <div>
-                <ErrorReport />
+                <ErrorReport objectLabel={this.state.objectLabel}
+                             url={this.state.url} />
                 <ViewRecordFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></ViewRecordFields>
                 <hr/>
                 <ShowQueryData model={this.state.fixedRefObjects.relatedPersons}></ShowQueryData>

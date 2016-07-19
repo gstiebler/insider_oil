@@ -284,8 +284,9 @@ export function getComboValues(req: express.Request, res: express.Response) {
 }
 
 export function viewRecord(req: express.Request, res: express.Response, next) {
-    const dataSourceName = req.query.dataSource;
-    const id = req.query.id;
+    const query:ni.GetViewRecord.req = req.query;
+    const dataSourceName = query.dataSource;
+    const id = query.id;
     const dataSource = dbUtils.getDataSource(dataSourceName);
     const options: any = {};
     options.include = [{all: true}];
@@ -298,7 +299,7 @@ export function viewRecord(req: express.Request, res: express.Response, next) {
             const dsOperations = DataSourceOperations[dataSourceName];
             const recordValues = dsOperations.recordToViewValues(dataSourceName, record);
             const viewParams = dsParams[dataSource.name];
-            const result = {
+            const result:ni.GetViewRecord.res = {
                 record: recordValues,
                 referencedObjects: viewParams.referencedObjectsOnView
             };
