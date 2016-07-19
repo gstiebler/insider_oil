@@ -20,6 +20,7 @@ module.exports = function(db): Promise<any[]> {
             name: 'Cidade de São Paulo',
             oil_field_id: utils.idByName('OilField', 'Abalone'),
             type: 'FIXED',
+            status: 'Em construção'
         },
         {
             name: 'Cidade de São Vicente',
@@ -30,6 +31,7 @@ module.exports = function(db): Promise<any[]> {
             name: 'Pioneer',
             oil_field_id: utils.idByName('OilField', 'Baleia Anã'),
             type: 'SEMI',
+            status: 'Em projeto'
         },
         {
             name: 'Pioneiro de Libra',

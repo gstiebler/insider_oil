@@ -353,7 +353,7 @@ productionUnitByOilField: (test: nodeunit.Test) => {
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(5, resQueryValues.records.length);
+    test.equal(3, resQueryValues.records.length);
     test.equal('Capixaba', resQueryValues.records[0].pu_name);
     test.equal('Cidade de Magaratiba', resQueryValues.records[1].pu_name);
 
