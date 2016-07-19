@@ -88,6 +88,12 @@ const ProductionUnit: IBaseDataSourceParams = {
             'day rate': 'day_rate',
         }
     },
+    referencedObjectsOnView:  [
+        {
+            queryName: 'maintenanceDatesByProductionUnit',
+            title: 'Datas de manutenção'
+        },
+    ]
 }
 
 export = ProductionUnit;
