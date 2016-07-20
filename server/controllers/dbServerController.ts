@@ -1,7 +1,6 @@
 'use strict';
 
 import db = require('../db/models');
-var fileUpload = require('../lib/fileUpload');
 var Sync = require('sync');
 var await = require('../lib/await');
 import ControllerUtils = require('../lib/ControllerUtils');
@@ -23,7 +22,7 @@ export function sendErrorReport(req: express.Request, res: express.Response, nex
     const body:ni.SendErrorReport.req = req.body;
     const errorReportRecord = {
         url: body.url,
-        description: body.description,
+        description: body.description, 
         reporter_id: req.user.id, 
         status: 'Em aberto'
     }
