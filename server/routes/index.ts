@@ -1,23 +1,23 @@
 "use strict";
-
+ 
 import session = require('../lib/session');
-var mainController = require('../controllers/mainController');
 import * as loginController from '../controllers/loginController';
 import dbServerController = require('../controllers/dbServerController');
 import * as usersController from '../controllers/usersController';
-var treeController = require('../controllers/TreeController');
-var searchController = require('../controllers/SearchController');
+import * as treeController from '../controllers/TreeController';
+import * as searchController from '../controllers/SearchController';
 import ExcelController = require('../controllers/ExcelController');
-var imageController = require('../controllers/ImageController');
+import * as imageController from '../controllers/ImageController';
 import express = require("express");
 import * as ni from '../../common/NetworkInterfaces';
 import * as AdminController from '../controllers/AdminController';
 import * as MapsController from '../controllers/MapsController';
 
-module.exports = function(app: express.Express) {
-    // Main route
-    app.get('/', session.authorizeHTML, mainController.main );
+module.exports = function(app: express.Express) {    
     
+    app.get('/', function (req, res) {
+        return res.redirect('/login');
+    });
     // Login
     app.get('/login/',                             loginController.loginPage );
     app.post('/login/',                            loginController.makeLogin );

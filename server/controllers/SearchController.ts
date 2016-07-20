@@ -5,7 +5,7 @@ import search = require('../lib/search');
 import dsParams = require('../lib/DataSourcesParams');
 import { IFrontEndProject } from '../../common/Interfaces'
 
-exports.main = function(req, res) {
+export function main(req, res) {
 	const MAX_NUM_RESULTS = 5;
     const searchValue = req.query.searchValue;
    
