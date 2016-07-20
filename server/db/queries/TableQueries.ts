@@ -847,6 +847,8 @@ export const queries:ITableQueries = {
                     '"Em projeto"',
                     '"Em construção"',
                     '"Em licitação"',
+                    '"Parada"',
+                    '"Em desativação"',
                 ]
             });
             

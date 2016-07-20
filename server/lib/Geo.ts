@@ -5,6 +5,9 @@ import { IGeoPoint } from '../../common/Interfaces';
  * and returns: '-21.23799528, -39.96288806'
  */
 export function coordToString(coords:IGeoPoint):string {
+    if(!coords) {
+        return null;
+    }
     return coords.lat + ', ' + coords.lng;
 }
 
