@@ -81,18 +81,20 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
-        server.getP('/get_map_data', {})
-            .then(this.onMapData.bind(this))
+        server.getP('/maps/blocks', {})
+            .then(res => { this.addBlocksToMap(res.blocks) })
+            .catch(showError.show);
+            
+        server.getP('/maps/oil_fields', {})
+            .then(res => { this.addOilFieldsToMap(res.oilFields) })
+            .catch(showError.show);
+
+        server.getP('/maps/production_units', {})
+            .then(res => { this.addProductionUnitsToMap(res.productionUnits) })
             .catch(showError.show);
 
         this.gasPipeLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Gasodutos.kml');
         this.gasPipeLayer.setVisibility(false);
-    }
-
-    private onMapData(mapData) {
-        this.addBlocksToMap(mapData.blocks);
-        this.addOilFieldsToMap(mapData.oilFields);
-        this.addProductionUnitsToMap(mapData.productionUnits);
     }
 
     private addBlocksToMap(blocks) {

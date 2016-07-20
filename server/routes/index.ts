@@ -12,6 +12,7 @@ var imageController = require('../controllers/ImageController');
 import express = require("express");
 import * as ni from '../../common/NetworkInterfaces';
 import * as AdminController from '../controllers/AdminController';
+import * as MapsController from '../controllers/MapsController';
 
 module.exports = function(app: express.Express) {
     // Main route
@@ -39,8 +40,10 @@ module.exports = function(app: express.Express) {
     app.post('/send_error_report', session.authorize, dbServerController.sendErrorReport);
     app.get('/get_query_data', session.authorize,  dbServerController.getQueryData);
     app.get('/get_table_data', session.authorize,  dbServerController.getTableQueryData);
-    app.get('/time_series', session.authorize,      dbServerController.getTimeSeries);
-    app.get('/get_map_data', session.authorize,     dbServerController.getMapData);
+    app.get('/time_series', session.authorize,     dbServerController.getTimeSeries);
+    app.get('/maps/blocks', session.authorize,     MapsController.getBlocks);
+    app.get('/maps/oil_fields', session.authorize, MapsController.getOilFields);
+    app.get('/maps/production_units', session.authorize, MapsController.getProductionUnits);
     
     app.get('/search', session.authorize,          searchController.main);
     
