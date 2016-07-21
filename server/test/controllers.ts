@@ -5,9 +5,9 @@ import dbServerController = require('../controllers/dbServerController');
 import ExcelController = require('../controllers/ExcelController');
 import QueryGenerator = require('../db/queries/QueryGenerator');
 import nodeunit = require('nodeunit');
-var TreeController = require('../controllers/TreeController');
+import TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
-var SearchController = require('../controllers/SearchController');
+import SearchController = require('../controllers/SearchController');
 var Sync = require('sync');
 var utils = require('./lib/utils');
 import * as ni from '../../common/NetworkInterfaces';
@@ -178,6 +178,16 @@ search: test => {
     test.equal('Block', searchResults[0].model);
     test.equal('Parnaíba Gás Natural', searchResults[2].name);
     test.equal('Company', searchResults[2].model);
+    
+    test.done();
+},
+
+dashboard: test => {
+    var dashboardData:ni.GetDashboardData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getDashboardData, {});
+	test.equal(3, dashboardData.numBids);
+	test.equal(3, dashboardData.numContracts);
+	test.equal(3, dashboardData.numPersons);
     
     test.done();
 },

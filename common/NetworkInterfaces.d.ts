@@ -82,3 +82,14 @@ export namespace GetQueryData {
         records: any[];
     }
 }
+
+export namespace GetDashboardData {
+
+    export interface req {}
+
+    export interface res {
+        numBids: number;
+        numContracts: number;
+        numPersons: number;
+    }
+}

@@ -113,3 +113,12 @@ export function getTimeSeries(req: express.Request, res: express.Response):void 
         res.json(result);
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+
+export function getDashboardData(req: express.Request, res: express.Response):void {Sync(function(){
+    const dashboardData:ni.GetDashboardData.res = {
+        numBids: await( db.models.Bid.count() ),
+        numContracts: await( db.models.Contract.count() ),
+        numPersons: await( db.models.Person.count() )
+    }
+    res.json(dashboardData);
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
