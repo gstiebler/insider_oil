@@ -21,7 +21,8 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
             dashboardData: {
                 numBids: 0,
                 numContracts: 0,
-                numPersons: 0
+                numPersons: 0,
+                numProjects: 0
             }
         };
     }
@@ -55,7 +56,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
                 <img src="images/icon_dashboard_2.png" alt=""/>
                 <h3>
                     <DashboardCounter count={this.state.dashboardData.numBids} />
-                    <span>BIDs</span>
+                    <span>OPORTUNIDADES</span>
                 </h3>
                 <h4>Licitações</h4>
                 <Link className="button" to="/app/tree?nodeLabel=Licitações">Explore</Link>
@@ -79,7 +80,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
                 <img src="images/icon_dashboard_4.png" alt=""/>
                 <h3>
                     <DashboardCounter count={this.state.dashboardData.numPersons} />
-                    <span>PESSOAS-CHAVE</span>
+                    <span>CONTATOS</span>
                 </h3>
                 <h4>Pessoas</h4>
                 <Link className="button" to="/app/tree?nodeLabel=Pessoas">Explore</Link>
