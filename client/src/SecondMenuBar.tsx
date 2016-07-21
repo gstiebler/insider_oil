@@ -45,7 +45,7 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav navbar-nav-full">
               <li className="active nav-item">
-                <Link to="/app/overview">Overview</Link>
+                <Link to="/app/dashboard">Dashboard</Link>
               </li>
               <li className="nav-item">
                 <Link to="/app/tree?nodeId=1">Dados</Link>

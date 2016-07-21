@@ -19,8 +19,8 @@ import { MapsAll } from './MapsAll';
 import { Dashboard } from './Dashboard';
 
 interface IAppProps {
-  model: string;
-  location: any;
+    model: string;
+    location: any;
 }
 
 interface IAppState {
@@ -32,62 +32,63 @@ interface IAppState {
 
 class InsiderOilApp extends React.Component<IAppProps, IAppState> {
 
-    public state: IAppState;     
+    constructor(props: IAppProps) {
+        super(props);
 
-  constructor(props: IAppProps) {
-    super(props);
+        this.state = {
+            isAdmin: false,
+            username: '',
+            url: props.location.query.url
+        };
 
-    this.state = {
-        isAdmin: false,
-        username: '',
-        url: props.location.query.url
-    };
-
-    var token = props.location.query.token;
-    if( token ) {
-        session.login( token );
-    }  
-  
-    server.getUserDetails(function(response) {
-       this.setState({
-            username: response.login,
-            isAdmin: response.admin
+        var token = props.location.query.token;
+        if( token ) {
+            session.login( token );
+        }  
+      
+        server.getUserDetails(function(response) {
+            this.setState({
+                username: response.login,
+                isAdmin: response.admin
+            });
+        }.bind(this), function(result) {
+            if(result.status == 401) {
+                browserHistory.push('/');
+            }
         });
-    }.bind(this), function(result) {
-        if(result.status == 401) {
-          browserHistory.push('/');
-        }
-    });
-  }
 
-    public componentWillMount() {
-      if( this.state.url ) {
-          browserHistory.push(this.state.url);
-      }
+        if(props.location.pathname == 'app/' || props.location.pathname == 'app/index.html') {
+            browserHistory.replace('/app/dashboard')
+        }
     }
 
-  public render():React.ReactElement<any> {
-    return (
-      <div>
-        <div className="container-1450">
-          <TopMenu username={this.state.username} ></TopMenu>
-          <SecondMenuBar isAdmin={this.state.isAdmin} />
-        </div>
-        <div className="container-1450">
-          <Flash timeout={5000}/>
-          {this.props.children}
-        </div>
-      </div>
-    );
-  }
+    public componentWillMount() {
+        if( this.state.url ) {
+            browserHistory.push(this.state.url);
+        }
+    }
+
+    public render():React.ReactElement<any> {
+        return (
+          <div>
+            <div className="container-1450">
+              <TopMenu username={this.state.username} ></TopMenu>
+              <SecondMenuBar isAdmin={this.state.isAdmin} />
+            </div>
+            <div className="container-1450">
+              <Flash timeout={5000}/>
+              {this.props.children}
+            </div>
+          </div>
+        );
+    }
 }
 
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={InsiderOilApp}/>
     <Route path="/app" component={InsiderOilApp}>
-      <Route path="" component={Dashboard}/>
-      <Route path="overview" component={Dashboard}/>
+      <Route path="dashboard" component={Dashboard}/>
       <Route path="admin" component={AdminList}/>
       <Route path="model_view" component={AdminGrid}/>
       <Route path="edit_item" component={AdminEdit}/>
