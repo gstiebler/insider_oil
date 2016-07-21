@@ -8,6 +8,7 @@ import { ShowQueryData } from '../ShowQueryData';
 import { ObjectNews } from '../ObjectNews';
 import { ErrorReport } from '../ErrorReport';
 import * as ni from '../../../common/NetworkInterfaces';
+import { IRefObjectsOnView } from '../../../common/Interfaces';
 
 interface IAppProps {
     location: any;
@@ -17,7 +18,7 @@ export interface IAppState {
     id: number;
     source: string;
     recordData: any[];
-    allReferencedObjects: any[];
+    allReferencedObjects: IRefObjectsOnView[];
     objectLabel: string;
     url:string;
 }
@@ -52,7 +53,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    public getFixedRefObjects(source, id):any[] {
+    public getFixedRefObjects(source, id):IRefObjectsOnView[] {
         return [ 
             {
                 queryName: 'PersonsByProject',

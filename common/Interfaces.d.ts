@@ -53,10 +53,11 @@ export interface IFieldMap {
     [name: string]: IField;
 }
 
-interface IRefObjectsOnView {
+export interface IRefObjectsOnView {
     queryName: string;
     title: string;
     filterField?: string;
+    filters?: any;
 }
 
 export interface IBaseDataSourceParams {
