@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import * as ni from '../../common/NetworkInterfaces';
+import { Link } from 'react-router';
 
 interface IAppProps {
 }
@@ -50,7 +51,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
                 <img src="images/icon_dashboard_2.png" alt=""/>
                 <h3><span className="count">{this.state.dashboardData.numBids}</span><span>BIDs</span></h3>
                 <h4>Licitações</h4>
-                <a className="button" href="javascript:void(0);">Explore</a>
+                <Link className="button" to="/app/tree?nodeLabel=Licitações">Explore</Link>
             </div>
         );
 
@@ -59,7 +60,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
                 <img src="images/icon_dashboard_3.png" alt=""/>
                 <h3><span className="count">{this.state.dashboardData.numContracts}</span><span>E&P</span></h3>
                 <h4>Contratos</h4>
-                <a className="button" href="javascript:void(0);">Explore</a>
+                <Link className="button" to="/app/tree?nodeLabel=Contratos">Explore</Link>
             </div>
         );
 
@@ -68,7 +69,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
                 <img src="images/icon_dashboard_4.png" alt=""/>
                 <h3><span className="count">{this.state.dashboardData.numPersons}</span><span>PESSOAS-CHAVE</span></h3>
                 <h4>Pessoas</h4>
-                <a className="button" href="javascript:void(0);">Explore</a>
+                <Link className="button" to="/app/tree?nodeLabel=Pessoas">Explore</Link>
             </div>
         );
 
