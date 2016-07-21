@@ -36,6 +36,21 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
+    private componentDidUpdate() {
+        // animate counters
+        $('.count').each(function () {
+            $(this).prop('Counter', 0).animate({
+                Counter: $(this).text()
+            }, {
+                duration: 2000,
+                easing: 'swing',
+                step: function (now) {
+                    $(this).text(Math.ceil(now));
+                }
+            });
+        });
+    }
+
     public render(): React.ReactElement<any> {
         const barrels = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">

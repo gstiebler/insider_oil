@@ -13,7 +13,8 @@ const Company: IBaseDataSourceParams = {
             isPhoto: true
         },
         site: {
-            label: "Site"
+            label: "Site",
+            isLink: true
         },
         telephones: {
             label: 'Telefone',
