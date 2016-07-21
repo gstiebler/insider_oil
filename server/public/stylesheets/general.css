@@ -1,0 +1,71 @@
+/* ALterações feitas por Rique Botelho - http://riquebotelho.com */
+
+.main-charts{}
+.main-charts .page-header{border: none;}
+.main-charts h2{font-family: "Avenir LT Std 95 Black"; color: #0e454f; font-size: 28px; text-transform: uppercase;}
+.main-charts h3{font-family: "Avenir LT Std 95 Black"; color: #0e454f; font-size: 56px;}
+.main-charts h3 span.count{font-family: "Avenir LT Std 95 Black"; color: #0e454f; font-size: 56px;}
+.main-charts h3 span{color: #989898; font-size: 20px; display: block; margin-bottom: 20px;}
+.main-charts h4{font-family: "Avenir LT Std 95 Black"; color: #144d5c; font-size: 14px; text-transform: uppercase;}
+.main-charts h5{font-family: "Avenir LT Std 95 Black"; color: #454545; font-size: 14px; text-transform: uppercase;}
+.main-charts .button{background-color: #8edb82; color: #fff; font-weight: 400; font-size: 18px; font-family: "Avenir LT Std 55 Roman"; line-height: 50px; display: block; max-width: 150px; margin: 20px auto; text-decoration: none;}
+.main-charts .button:hover{background-color: #83ca75;}
+.main-charts hr{border-top: 3px solid #e0e0e0;}
+.main-charts #charts{}
+.main-charts #charts .wrapper-chart{position: relative; padding: 20px; background-color: #304051; min-height: 370px;}
+.main-charts #charts .button{margin: 20px 0 20px auto; text-align: center;}
+.main-charts #charts .chart{height: 330px; padding: 20px; background: linear-gradient(to bottom, #345 0%, #234 100%);}
+.main-charts #charts #chart2{width: 100%; height: 300px; margin: 30px auto 0; display: block;}
+.main-charts #charts #chart2 #numbers{width: 10%; height: 100%; margin: 0; padding: 0; display: inline-block; float: left;}
+.main-charts #charts #chart2 #numbers li{text-align: right; padding-right: 1em; list-style: none; height: 29px; border-bottom: 1px solid #444; position: relative; bottom: 30px;}
+.main-charts #charts #chart2 #numbers li:last-child{height: 30px;}
+.main-charts #charts #chart2 #numbers li span{color: #eee; position: absolute; bottom: 0; right: 10px;}
+.main-charts #charts #chart2 #bars{display: inline-block; width: 90%; height: 300px; padding: 0; margin: 0;}
+.main-charts #charts #chart2 #bars li{display: table-cell; width: 100px; height: 300px; margin: 0; text-align: center; position: relative;}
+.main-charts #charts #chart2 #bars li .bar{display: block; width: 70px; margin-left: 15px; background: #49E; position: absolute; bottom: 0;}
+.main-charts #charts #chart2 #bars li .bar:hover {background: #5AE; cursor: pointer;}
+.main-charts #charts #chart2 #bars li .bar:hover:before{color: white; content: attr(data-percentage) '%'; position: relative; bottom: 20px;}
+.main-charts #charts #chart2 #bars li span{color: #eee; width: 100%; position: absolute; bottom: -2em; left: 0; text-align: center;}
+.main-charts #charts #chart3{position: absolute; width: 100%; height: 300px; top: 40px; left: 0;}
+.main-charts #charts #chart3 path:hover{opacity: 0.65;}
+.main-charts #charts .doughnutTip{position: absolute; min-width: 30px; max-width: 300px; padding: 5px 15px; border-radius: 1px; background: rgba(0, 0, 0, 0.8); color: #ddd; font-size: 17px; text-shadow: 0 1px 0 #000; text-transform: uppercase; text-align: center; line-height: 1.3; letter-spacing: .06em; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); pointer-events: none;}
+.main-charts #charts .doughnutTip::after{position: absolute; left: 50%; bottom: -6px; content: ""; height: 0; margin: 0 0 0 -6px; border-right: 5px solid transparent; border-left: 5px solid transparent; border-top: 6px solid rgba(0, 0, 0, 0.7); line-height: 0;}
+.main-charts #charts .doughnutSummary{position: absolute; top: 50%; left: 50%; color: #d5d5d5; text-align: center; text-shadow: 0 -1px 0 #111; cursor: default;}
+.main-charts #charts .doughnutSummaryTitle{position: absolute; top: 50%; width: 100%; margin-top: -27%; font-size: 22px; letter-spacing: .06em;}
+.main-charts #charts .doughnutSummaryNumber{position: absolute; top: 50%; width: 100%; margin-top: -15%; font-size: 55px;}
+.main-charts #charts #chart4{margin: 20px auto;}
+
+.hotnews{height: 40px; position: relative;}
+.hotnews .blockname{height: 40px; position: absolute; top: 0; left: 0; z-index: 10; background-color: #78c36a; padding: 0 20px; line-height: 40px; color: #ffffff; text-transform: uppercase; font-family: "Avenir LT Std 95 Black"; font-size: 14px;}
+.hotnews .TickerNews{width: 100%; height: 40px; line-height: 40px;}
+.hotnews .ti_wrapper{width: 100%; position: relative; overflow: hidden; height: 40px;}
+.hotnews .ti_slide{width: 30000px; position: relative; left: 0; top: 0;}
+.hotnews .ti_content{width: 8000px; position: relative; float: left;}
+.hotnews .ti_news{float: left; margin-left: 20px;}
+.hotnews .ti_news a{display: block; margin-right: 10px; color: #ffffff; text-decoration: none; font-family: "Avenir LT Std 55 Roman"; font-size: 14px;}
+.hotnews .ti_news a.all span{color: #78c36a;}
+.hotnews .ti_news a.all span:after{content: "•"; margin-left: 5px; color: #78c36a;}
+.hotnews .ti_news a.data span{color: #f3a847;}
+.hotnews .ti_news a.data span:after{content: "•"; margin-left: 5px; color: #f3a847;}
+.hotnews .TickerNews.default_theme{background-color: #0e454f; color:#fff}
+
+#searchform{padding: 6px;}
+#searchform input{height: auto; font-size: 14px; border: none; background-color: #eeeeee; border-radius: 0; outline: 0 none; box-shadow: none;}
+#searchform button{font-size: 23px; border: none; background-color: #eeeeee; border-radius: 0; color: #888888; padding: 4px 10px;}
+
+.navbar-default .navbar-nav>li>a{color: #0e454f;}
+.sidebar-nav{padding: 9px 0;}
+.dropdown-menu .sub-menu{left: 100%; position: absolute; top: 0; visibility: hidden; margin-top: -1px;}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{color: #ffffff; background-color: #0e454f;}
+.dropdown-menu li:hover .sub-menu{visibility: visible;}
+.dropdown:hover .dropdown-menu{display: block; box-shadow: none; border: none; padding: 0;}
+.nav-tabs .dropdown-menu, .nav-pills .dropdown-menu, .navbar .dropdown-menu{margin-top: 0;}
+.navbar .sub-menu:before{border-bottom: 7px solid transparent; border-left: none; border-right: 7px solid rgba(0, 0, 0, 0.2); border-top: 7px solid transparent; left: -7px; top: 10px;}
+.navbar .sub-menu:after{border-top: 6px solid transparent; border-left: none; border-right: 6px solid #fff; border-bottom: 6px solid transparent; left: 10px; top: 11px; left: -6px;}
+
+#footer{padding: 10px 40px; background-color: #0e454f;}
+#footer ul{list-style: none; margin: 0; padding: 0;}
+#footer ul li{display: inline-block; font-family: "Avenir LT Std 55 Roman"; font-size: 12px; padding: 0 5px; color: #ffffff; line-height: 45px;}
+#footer ul li:after{content: "|"; display: inline-block; margin-left: 10px;}
+#footer ul li:last-child:after{display: none;}
+#footer ul li a{color: #ffffff;}
