@@ -4,6 +4,7 @@ import { Router, Route, Link, browserHistory } from 'react-router';
 import * as server from './lib/Server';
 import * as session from './lib/session';
 import { TopMenu } from './TopMenu'
+import { SecondMenuBar } from './SecondMenuBar'
 import { AdminList } from './Admin/AdminList';
 import { AdminGrid } from './Admin/AdminGrid';
 import { AdminEdit } from './Admin/AdminEdit';
@@ -15,6 +16,7 @@ import { OilFieldView } from './ViewRecord/OilFieldView';
 import { Flash } from './Flash';
 import { ChangePassword } from './ChangePassword';
 import { MapsAll } from './MapsAll';
+import { Dashboard } from './Dashboard';
 
 interface IAppProps {
   model: string;
@@ -65,66 +67,11 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
     }
 
   public render():React.ReactElement<any> {
-    var adminLink = <li className="nav-item" >
-                      <Link to="/app/admin"><b>Admin</b></Link>
-                    </li>;
-
-
-    var logo = (
-      <div className="col-md-4">
-        <div className="navbar-header navbar-brand-container">
-          <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span className="sr-only">Toggle navigation</span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-          </button>
-          <a className="navbar-brand logo-topo" href="/app/" id="homeLink"></a>
-        </div>
-      </div>
-    );
-
-    var navBarItems = (
-        <div className="col-no-padding col-md-8">
-          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul className="nav navbar-nav navbar-nav-full">
-              <li className="active nav-item">
-                <Link to="/app/tree?nodeId=1">Dados</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/app/tree?nodeLabel=Pessoas">Pessoas</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/app/tree?nodeLabel=Empresas">Empresas</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/app/maps_all">Mapas</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/app/tree?nodeLabel=Notícias">Notícias</Link>
-              </li>
-              { this.state.isAdmin ? adminLink : '' }
-            </ul>
-          </div>
-        </div>
-    );
-
-    var navBar = (
-      <nav className="navbar navbar-default navbar-border-none" role="navigation">
-          <div className="container-fluid padding-lr-20">
-            <div className="row">
-              { logo }
-              { navBarItems }
-            </div>
-          </div>
-        </nav>
-    );
-
     return (
       <div>
         <div className="container-1450">
           <TopMenu username={this.state.username} ></TopMenu>
-          { navBar }
+          <SecondMenuBar isAdmin={this.state.isAdmin} />
         </div>
         <div className="container-1450">
           <Flash timeout={5000}/>
@@ -138,7 +85,9 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={InsiderOilApp}/>
-    <Route path="/app/" component={InsiderOilApp}>
+    <Route path="/app" component={InsiderOilApp}>
+      <Route path="" component={Dashboard}/>
+      <Route path="overview" component={Dashboard}/>
       <Route path="admin" component={AdminList}/>
       <Route path="model_view" component={AdminGrid}/>
       <Route path="edit_item" component={AdminEdit}/>
