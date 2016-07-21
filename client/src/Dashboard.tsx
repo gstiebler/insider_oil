@@ -38,15 +38,15 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): React.ReactElement<any> {
-        const barrels = (
+        const projects = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
-                <img src="images/icon_dashboard_1.png" alt=""/>
+                <img src="images/icon_fabric.png" alt=""/>
                 <h3>
-                    <DashboardCounter count={this.state.dashboardData.numBids} />
-                    <span>BARRIL</span>
+                    <DashboardCounter count={this.state.dashboardData.numProjects} />
+                    <span>PROJETOS</span>
                 </h3>
-                <h4>Produção de óleo / dia</h4>
-                <a className="button" href="javascript:void(0);">Explore</a>
+                <h4>Projetos ativos</h4>
+                <Link className="button" to="/app/tree?nodeLabel=Projetos">Explore</Link>
             </div>
         );
 
@@ -88,6 +88,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
 
         const overview = (
             <div className="row">
+                { projects }
                 { bids }
                 { contracts }
                 { persons }
