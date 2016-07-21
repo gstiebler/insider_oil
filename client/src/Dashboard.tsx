@@ -3,6 +3,7 @@ import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import * as ni from '../../common/NetworkInterfaces';
 import { Link } from 'react-router';
+import { DashboardCounter } from './DashboardCounter';
 
 interface IAppProps {
 }
@@ -36,26 +37,12 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
-    private componentDidUpdate() {
-        // animate counters
-        $('.count').each(function () {
-            $(this).prop('Counter', 0).animate({
-                Counter: $(this).text()
-            }, {
-                duration: 2000,
-                easing: 'swing',
-                step: function (now) {
-                    $(this).text(Math.ceil(now));
-                }
-            });
-        });
-    }
-
     public render(): React.ReactElement<any> {
         const barrels = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_1.png" alt=""/>
-                <h3><span className="count">69</span><span>BARRIL</span></h3>
+                <DashboardCounter count={this.state.dashboardData.numBids} />
+                <span>BARRIL</span>
                 <h4>Produção de óleo / dia</h4>
                 <a className="button" href="javascript:void(0);">Explore</a>
             </div>
@@ -64,7 +51,8 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         const bids = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_2.png" alt=""/>
-                <h3><span className="count">{this.state.dashboardData.numBids}</span><span>BIDs</span></h3>
+                <DashboardCounter count={this.state.dashboardData.numBids} />
+                <span>BIDs</span>
                 <h4>Licitações</h4>
                 <Link className="button" to="/app/tree?nodeLabel=Licitações">Explore</Link>
             </div>
@@ -73,7 +61,8 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         const contracts = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_3.png" alt=""/>
-                <h3><span className="count">{this.state.dashboardData.numContracts}</span><span>E&P</span></h3>
+                <DashboardCounter count={this.state.dashboardData.numContracts} />
+                <span>E&P</span>
                 <h4>Contratos</h4>
                 <Link className="button" to="/app/tree?nodeLabel=Contratos">Explore</Link>
             </div>
@@ -82,7 +71,8 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         const persons = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_4.png" alt=""/>
-                <h3><span className="count">{this.state.dashboardData.numPersons}</span><span>PESSOAS-CHAVE</span></h3>
+                <DashboardCounter count={this.state.dashboardData.numPersons} />
+                <span>PESSOAS-CHAVE</span>
                 <h4>Pessoas</h4>
                 <Link className="button" to="/app/tree?nodeLabel=Pessoas">Explore</Link>
             </div>
