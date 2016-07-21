@@ -26,11 +26,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
 
     public state: IAppState;
 
-    private fixedRefObjects: {
-        relatedPersons: any;
-        relatedBids: any;
-        relatedContracts: any;
-    };
+    private fixedRefObjects: any[];
 
     constructor(props: IAppProps) {
         super(props);
@@ -56,9 +52,9 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    public getFixedRefObjects(source, id) {
-        return {
-            relatedPersons: {
+    public getFixedRefObjects(source, id):any[] {
+        return [ 
+            {
                 queryName: 'PersonsByProject',
                 title: 'Pessoas',
                 filters: {
@@ -66,7 +62,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                     dataSource: source
                 },
             },
-            relatedBids: {
+            {
                 queryName: 'BidsByObject',
                 title: 'Licitações',
                 filters: {
@@ -74,7 +70,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                     dataSource: source
                 }
             },
-            relatedContracts: {
+            {
                 queryName: 'contractsByObject',
                 title: 'Contratos',
                 filters: {
@@ -82,7 +78,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                     dataSource: source
                 }
             },  
-        }
+        ]
     }
 
     public componentDidMount() {
