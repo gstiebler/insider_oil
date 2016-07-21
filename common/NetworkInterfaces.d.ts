@@ -91,5 +91,6 @@ export namespace GetDashboardData {
         numBids: number;
         numContracts: number;
         numPersons: number;
+        numProjects: number;
     }
 }
