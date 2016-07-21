@@ -24,31 +24,33 @@ module.exports = function(app: express.Express) {
     app.post('/login_rest/',                       loginController.makeLoginREST );
     app.put('/login/logout',    session.authorize, loginController.logout );
     
-    // DB Server
     app.get('/table_data', session.authorize, AdminController.getTableData);
     app.get('/view_params', session.authorize, AdminController.getViewParams);
     app.get('/model_fields/', session.authorize,   AdminController.modelFields);
     app.get('/record_values/',  session.authorize, AdminController.recordValues);
-    app.get('/view_record/',   session.authorize,  dbServerController.viewRecord);
     app.post('/create_item/',  session.authorize,  AdminController.createItem);
     app.put('/save_item/',   session.authorize,    AdminController.saveItem);
     app.get('/sources_list/',  session.authorize,  AdminController.sourcesList);
     app.delete('/delete_item/', session.authorize, AdminController.deleteItem);
     app.get('/combo_values/', session.authorize,   AdminController.getComboValues);
-    app.post('/db_server/upload_file',             ExcelController.uploadFile);
     app.post('/db_server/upload_kml', AdminController.uploadKml);
+    
+    app.post('/db_server/upload_file',             ExcelController.uploadFile);
+    app.get('/download_excel', session.authorize,  ExcelController.downloadExcel);
+    app.put('/import_from_url', session.authorize,  ExcelController.importExcelFromURL);
+
     app.post('/send_error_report', session.authorize, dbServerController.sendErrorReport);
     app.get('/get_query_data', session.authorize,  dbServerController.getQueryData);
     app.get('/get_table_data', session.authorize,  dbServerController.getTableQueryData);
     app.get('/time_series', session.authorize,     dbServerController.getTimeSeries);
+    app.get('/view_record/',   session.authorize,  dbServerController.viewRecord);
+    app.get('/dashboard_data/',  session.authorize, dbServerController.getDashboardData);
+
     app.get('/maps/blocks', session.authorize,     MapsController.getBlocks);
     app.get('/maps/oil_fields', session.authorize, MapsController.getOilFields);
     app.get('/maps/production_units', session.authorize, MapsController.getProductionUnits);
     
     app.get('/search', session.authorize,          searchController.main);
-    
-    app.get('/download_excel', session.authorize,  ExcelController.downloadExcel);
-    app.put('/import_from_url', session.authorize,  ExcelController.importExcelFromURL);
     
     // Users
     app.get('/user/',                session.authorize, usersController.main );

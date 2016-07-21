@@ -1,11 +1,13 @@
 import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
+import * as ni from '../../common/NetworkInterfaces';
 
 interface IAppProps {
 }
 
 interface IAppState {
+    dashboardData: ni.GetDashboardData.res;
 }
 
 export class Dashboard extends React.Component<IAppProps, IAppState> {
@@ -13,11 +15,24 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
     constructor(props: IAppProps) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            dashboardData: {
+                numBids: 0,
+                numContracts: 0,
+                numPersons: 0
+            }
+        };
     }
 
     private componentDidMount() {
+        server.getP('/dashboard_data', {})
+            .then(this.onDashboardData.bind(this))
+            .catch(showError.show);
+    }
 
+    private onDashboardData(res:ni.GetDashboardData.res) {
+        this.state.dashboardData = res;
+        this.setState(this.state);
     }
 
     public render(): React.ReactElement<any> {
@@ -33,7 +48,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         const bids = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_2.png" alt=""/>
-                <h3><span className="count">67</span><span>BIDs</span></h3>
+                <h3><span className="count">{this.state.dashboardData.numBids}</span><span>BIDs</span></h3>
                 <h4>Licitações</h4>
                 <a className="button" href="javascript:void(0);">Explore</a>
             </div>
@@ -42,7 +57,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         const contracts = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_3.png" alt=""/>
-                <h3><span className="count">1367</span><span>E&P</span></h3>
+                <h3><span className="count">{this.state.dashboardData.numContracts}</span><span>E&P</span></h3>
                 <h4>Contratos</h4>
                 <a className="button" href="javascript:void(0);">Explore</a>
             </div>
@@ -51,7 +66,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         const persons = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_4.png" alt=""/>
-                <h3><span className="count">14367</span><span>PESSOAS-CHAVE</span></h3>
+                <h3><span className="count">{this.state.dashboardData.numPersons}</span><span>PESSOAS-CHAVE</span></h3>
                 <h4>Pessoas</h4>
                 <a className="button" href="javascript:void(0);">Explore</a>
             </div>
