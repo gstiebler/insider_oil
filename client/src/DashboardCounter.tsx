@@ -24,10 +24,6 @@ export class DashboardCounter extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): React.ReactElement<any> {
-        return (
-            <h3>
-                <span className="count" ref="countRef" >{this.props.count}</span>
-            </h3>
-        );
+        return <span className="count" ref="countRef" >{this.props.count}</span>
     }
 }

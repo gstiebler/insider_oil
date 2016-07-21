@@ -41,8 +41,10 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         const barrels = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_1.png" alt=""/>
-                <DashboardCounter count={this.state.dashboardData.numBids} />
-                <span>BARRIL</span>
+                <h3>
+                    <DashboardCounter count={this.state.dashboardData.numBids} />
+                    <span>BARRIL</span>
+                </h3>
                 <h4>Produção de óleo / dia</h4>
                 <a className="button" href="javascript:void(0);">Explore</a>
             </div>
@@ -51,8 +53,10 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         const bids = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_2.png" alt=""/>
-                <DashboardCounter count={this.state.dashboardData.numBids} />
-                <span>BIDs</span>
+                <h3>
+                    <DashboardCounter count={this.state.dashboardData.numBids} />
+                    <span>BIDs</span>
+                </h3>
                 <h4>Licitações</h4>
                 <Link className="button" to="/app/tree?nodeLabel=Licitações">Explore</Link>
             </div>
@@ -61,8 +65,10 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         const contracts = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_3.png" alt=""/>
-                <DashboardCounter count={this.state.dashboardData.numContracts} />
-                <span>E&P</span>
+                <h3>
+                    <DashboardCounter count={this.state.dashboardData.numContracts} />
+                    <span>E&P</span>
+                </h3>
                 <h4>Contratos</h4>
                 <Link className="button" to="/app/tree?nodeLabel=Contratos">Explore</Link>
             </div>
@@ -71,8 +77,10 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
         const persons = (
             <div className=" col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
                 <img src="images/icon_dashboard_4.png" alt=""/>
-                <DashboardCounter count={this.state.dashboardData.numPersons} />
-                <span>PESSOAS-CHAVE</span>
+                <h3>
+                    <DashboardCounter count={this.state.dashboardData.numPersons} />
+                    <span>PESSOAS-CHAVE</span>
+                </h3>
                 <h4>Pessoas</h4>
                 <Link className="button" to="/app/tree?nodeLabel=Pessoas">Explore</Link>
             </div>
