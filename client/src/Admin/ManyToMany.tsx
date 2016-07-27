@@ -23,7 +23,7 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
 
         this.state = {
             comboValues: [],
-            modelValues: props.value
+            modelValues: props.value ? props.value : []
         };
     }
 
