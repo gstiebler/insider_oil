@@ -62,6 +62,10 @@ export function viewRecord(req: express.Request, res: express.Response, next) {
     };
 }
 
+/**
+ * Get objects filtered by another object. It's used to show subqueries,
+ * or objects associated with a given object
+ */
 export function getQueryData(req: express.Request, res: express.Response) {Sync(function(){
     const query: ni.GetQueryData.req = req.query;
     const queryName = query.queryName;
@@ -78,6 +82,10 @@ export function getQueryData(req: express.Request, res: express.Response) {Sync(
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os registros."))}
 
+/**
+ * Get the list of all the objects of a type, with pagination and
+ * custom user filters
+ */
 export function getTableQueryData(req: express.Request, res: express.Response):void {Sync(function(){
     const queryParams:QueryGenerator.IQueryParams = req.query.queryParams;
     queryParams.filters = queryParams.filters ? queryParams.filters : [];
