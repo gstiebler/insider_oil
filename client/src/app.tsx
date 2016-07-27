@@ -44,7 +44,10 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
         var token = props.location.query.token;
         if( token ) {
             session.login( token );
-        }  
+        } else {
+            window.location.replace('/login');
+            return;
+        }
       
         server.getUserDetails(function(response) {
             this.setState({
@@ -58,7 +61,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
         });
 
         if(props.location.pathname == 'app/' || props.location.pathname == 'app/index.html') {
-            browserHistory.replace('/app/dashboard')
+            browserHistory.replace('/app/dashboard');
         }
     }
 
