@@ -45,8 +45,11 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
         if( token ) {
             session.login( token );
         } else {
-            window.location.replace('/login');
-            return;
+            token = session.getToken();
+            if(!token) {
+                window.location.replace('/login');
+                return;
+            }
         }
       
         server.getUserDetails(function(response) {
