@@ -16,6 +16,7 @@ export class Production extends ImportExcel {
         this.lineOffset = 5;
         this.headerFields = {
             name: 'anp',
+            name_operator: 'operador',
             oil_field: 'campo',
             period: 'período',
             oil_production: 'óleo (bbl/dia)',
@@ -86,7 +87,10 @@ export class Production extends ImportExcel {
                     const rowValues = _this.getRowValues(worksheet, row);
                     const rowObj = _this.rowValuesToObj(rowValues, headerIndexes);
                     const wellSearchParams = {
-                        name: _this.cleanString(rowObj.name)
+                        $or: {
+                            name: _this.cleanString(rowObj.name),
+                            name_operator: _this.cleanString(rowObj.name_operator)
+                        }
                     };
                     const wellRecord = await( db.models.Well.findOne({ where: wellSearchParams }) );
                     if(!wellRecord) {

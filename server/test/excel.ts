@@ -160,7 +160,7 @@ importPersons: test => {
 
 
 wellProduction: test => {
-    var excelBuf = fs.readFileSync('./test/data/production.xls');
+    var excelBuf = fs.readFileSync('./test/data/production.xlsx');
     const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Production'));
     const invalidRecordsStatus = result.invalidRecordsStatus;    
     const status = result.status;    
