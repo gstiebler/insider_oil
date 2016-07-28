@@ -4,6 +4,7 @@ import { ImportExcel, IExcelUploadResponse } from './ImportExcelClass';
 import { IOkFunc } from './ImportExcelClass';
 import db = require( '../../db/models' );
 import winston = require('winston');
+import dsParams = require('./../DataSourcesParams');
 var Sync = require('sync');
 var await = require('../await');
 
@@ -43,14 +44,6 @@ export class Production extends ImportExcel {
         return header;
     }
     
-    validateHeader(header, modelName) {
-        for( var key in this.headerFields ){
-            const excelLabel = this.headerFields[key];
-            if( header.indexOf(excelLabel.toLowerCase()) < 0 )
-                throw "O cabeçalho do arquivo Excel não possui o campo " + excelLabel;
-        }
-    } 
-    
     setRecord(record, header, rowObj) {
         for(let rowKey in rowObj) {
             record[rowKey] = rowObj[rowKey];
@@ -70,7 +63,10 @@ export class Production extends ImportExcel {
                 _this.validateHeader(header, modelName);
                 const headerIndexes = _this.headerToIndexes(header);
                 
-                const model = db.models.Production;
+                const excelParams = dsParams[modelName].excelParams;
+                const keyFieldIndexInExcel = header.indexOf( excelParams.keyField );
+                const modelKeyField = excelParams.fields[ excelParams.keyField ];
+                const model = db.models[modelName];
                 const range = _this.getRange(worksheet);
                 let insertedRecords = 0;
                 let updatedRecords = 0;

@@ -31,6 +31,21 @@ const Production: IBaseDataSourceParams = {
     gridFields: ['basin_name', 'well_operator', 'oil_production', 'gas_associated_production'],
     tableLabel: 'Produção',
     hasMap: false,
+    excelParams: {
+        keyField: "bloco",
+        fields: {
+            'anp': 'name',
+            'operador': 'name_operator',
+            'campo': 'oil_field',
+            'período': 'period',
+            'óleo (bbl/dia)': 'oil_production',
+            'condensado (bbl/dia)': 'oil_condensed_production',
+            'associado': 'gas_associated_production',
+            'não associado': 'gas_associated_production',
+            'volume gás royalties (mm³/dia)': 'gas_royaties_volume',
+            'água (bbl/dia)': 'water_production',
+        }
+    },
 }
 
 export = Production;
