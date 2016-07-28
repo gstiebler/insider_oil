@@ -6,7 +6,9 @@ export function getListFieldObj(textFieldName:string) {
     return {
         type: Sequelize.VIRTUAL,
         get: function() {
-            return JSON.parse(this[textFieldName]);
+            const value = this[textFieldName];
+            if(!value) return null;
+            return JSON.parse(value);
         },
         set: function(newValue) {
             this[textFieldName] = JSON.stringify(newValue);

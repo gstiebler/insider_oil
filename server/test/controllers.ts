@@ -195,13 +195,13 @@ dashboard: test => {
 
 getRecord: test => {
     const query:ni.GetRecord.req = {
-        dataSource: 'Block',
-        id: 2
+        optionsName: 'SingleNews',
+        id: utils.idByValue('News', 'title', 'Petrobrás compra Statoil')
     }
     const res:ni.GetRecord.res = 
         utils.getJsonResponse.sync(null, dbServerController.getRecord, { query });
 
-    test.equal('ES-M-529', res.record.name);
+    test.equal('Petrobrás compra Statoil', res.record.title);
     
     test.done();
 },

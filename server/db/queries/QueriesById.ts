@@ -179,7 +179,7 @@ const queries:IQueriesById = {
         },
         fields: [
             {
-                label: 'TÃ­tulo',
+                label: 'Tí­tulo',
                 ref: {
                     modelField: 'model',
                     idField: 'id',

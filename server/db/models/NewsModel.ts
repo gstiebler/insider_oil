@@ -62,10 +62,6 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.TEXT,
 			allowNull: false
 		},
-		author_id: {
-			type: DataTypes.INTEGER,
-			allowNull: false
-		}
 	}, 
 	{
 		underscored: true,

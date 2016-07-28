@@ -14,6 +14,7 @@ import TableQueries = require('../db/queries/TableQueries');
 import QueryGenerator = require('../db/queries/QueryGenerator');
 import TimeSeriesQueries = require('../db/queries/TimeSeriesQueries');
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
+import { getRecordOptions, IGetRecordOptions } from '../lib/GetRecordOptions';
 import Sequelize = require('sequelize');
 import * as interfaces from '../../common/Interfaces';
 import * as ni from '../../common/NetworkInterfaces';
@@ -64,10 +65,8 @@ export function viewRecord(req: express.Request, res: express.Response, next) {
 
 export function getRecord(req: express.Request, res: express.Response, next) {Sync(function(){
     const query:ni.GetRecord.req = req.query;
-    const dataSourceName = query.dataSource;
-    const dataSource = dbUtils.getDataSource(dataSourceName);
-    const options = { include: [{all: true}] };
-    const record = await( dataSource.findById(query.id, options) );
+    const recordOptions:IGetRecordOptions = getRecordOptions[query.optionsName];
+    const record = await( recordOptions.model.findById(query.id, recordOptions.seqOptions) );
     const result:ni.GetRecord.res = { record };
     res.json(result);
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar o registro."))}

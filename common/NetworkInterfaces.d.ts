@@ -61,7 +61,7 @@ export namespace GetViewRecord {
 export namespace GetRecord {
 
     export interface req {
-        dataSource: string;
+        optionsName: string;
         id: number;
     }
 
