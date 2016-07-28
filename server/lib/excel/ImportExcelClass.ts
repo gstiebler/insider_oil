@@ -11,6 +11,19 @@ import moment = require('moment-timezone');
 
 const saoPauloZone = moment.tz.zone('America/Sao_Paulo');
 
+interface ISaveRecord {
+    worksheet: any;
+    row: number;
+    keyFieldIndexInExcel: number;
+    modelKeyField: string;
+    model: any;
+    header: any;
+    insertedRecords: number;
+    updatedRecords: number;
+    excelParams: any;
+    invalidStatus: string[];
+};
+
 export interface IOkFunc {
     (status: string, recordsStatus: string[]): void;
 }
@@ -184,66 +197,48 @@ export class ImportExcel {
                 _this.validateHeader(header, modelName);
                 
                 const excelParams = dsParams[modelName].excelParams;
-                const keyFieldIndexInExcel = header.indexOf( excelParams.keyField );
-                const modelKeyField = excelParams.fields[ excelParams.keyField ];
-                const model = db.models[modelName];
                 const range = _this.getRange(worksheet);
-                let insertedRecords = 0;
-                let updatedRecords = 0;
 
-                var invalidStatus: string[] = [];
-                function addError(error, row) {
-                    var msg = error.message;
-                    if(!msg)
-                        msg = error;
-                    invalidStatus.push( 'Registro ' + row + ': ' + msg ); // pseudoerror. It's about not finding a record
-                }
+                const saveRecordData: ISaveRecord = {
+                    worksheet,
+                    row: -1,
+                    keyFieldIndexInExcel: header.indexOf( excelParams.keyField ),
+                    modelKeyField: excelParams.fields[ excelParams.keyField ],
+                    model: db.models[modelName],
+                    header,
+                    insertedRecords: 0,
+                    updatedRecords: 0,
+                    excelParams,
+                    invalidStatus: []
+                };
                 
                 const numRows = range.e.r;
                 for( var row = 1 + _this.lineOffset; row <= numRows; row++ ) {
-                    const rowValues = _this.getRowValues(worksheet, row);
-                    const searchParams:any = {};
-                    var searchKeyValue = rowValues[keyFieldIndexInExcel];
-                    searchKeyValue = _this.cleanString(searchKeyValue)
-                    searchParams[modelKeyField] = searchKeyValue;
-                    var record = await( model.findOne({ where: searchParams }) );
-                    if( record ) {
-                        try {
-                            _this.setRecord(record, header, excelParams.fields, rowValues, model);
-                            await( record.save() );
-                            updatedRecords++;
-                        } catch(error) {
-                            addError(error, row);
-                        }
-                    } else {
-                        record = {};
-                        try {
-                            _this.setRecord(record, header, excelParams.fields, rowValues, model);
-                            await( model.create(record) );
-                            insertedRecords++;
-                        } catch(error) {
-                            addError(error, row);
-                        }
-                    }
+                    saveRecordData.row = row;
+                   _this.saveRecord(saveRecordData);
                     
                     if((row % 1000) == 0) {
-                        const partialStatus = _this.genStatusStr(insertedRecords, updatedRecords, invalidStatus);
+                        const partialStatus = _this.genStatusStr(saveRecordData.insertedRecords, 
+                                                                 saveRecordData.updatedRecords, 
+                                                                 saveRecordData.invalidStatus);
                         db.models.ExcelImportLog.create({
                             model: modelName,
                             status: 'Atualização ' + row + '/' + numRows,
-                            result: partialStatus + '\n' + invalidStatus.join('\n')
+                            result: partialStatus + '\n' + saveRecordData.invalidStatus.join('\n')
                         });
                     }
                 }
-                const status = _this.genStatusStr(insertedRecords, updatedRecords, invalidStatus);
+                const status = _this.genStatusStr(saveRecordData.insertedRecords,
+                                                  saveRecordData.updatedRecords, 
+                                                  saveRecordData.invalidStatus);
 
                 db.models.ExcelImportLog.create({
                     model: modelName,
                     status: 'OK',
-                    result: status + '\n' + invalidStatus.join('\n')
+                    result: status + '\n' + saveRecordData.invalidStatus.join('\n')
                 });
 
-                resolve( { status: status, invalidRecordsStatus: invalidStatus });
+                resolve( { status: status, invalidRecordsStatus: saveRecordData.invalidStatus });
             } catch(err) {
                 winston.error('Erro ao importar: ', row, err);
                 db.models.ExcelImportLog.create({
@@ -256,6 +251,40 @@ export class ImportExcel {
         }); 
         });
         return promise;
+    }
+
+    protected saveRecord(d: ISaveRecord) {
+        const rowValues = this.getRowValues(d.worksheet, d.row);
+        const searchParams:any = {};
+        var searchKeyValue = rowValues[d.keyFieldIndexInExcel];
+        searchKeyValue = this.cleanString(searchKeyValue)
+        searchParams[d.modelKeyField] = searchKeyValue;
+        var record = await( d.model.findOne({ where: searchParams }) );
+        if( record ) {
+            try {
+                this.setRecord(record, d.header, d.excelParams.fields, rowValues, d.model);
+                await( record.save() );
+                d.updatedRecords++;
+            } catch(error) {
+                this.addError(error, d.row, d.invalidStatus);
+            }
+        } else {
+            record = {};
+            try {
+                this.setRecord(record, d.header, d.excelParams.fields, rowValues, d.model);
+                await( d.model.create(record) );
+                d.insertedRecords++;
+            } catch(error) {
+                this.addError(error, d.row, d.invalidStatus);
+            }
+        }
+    }
+
+    private addError(error, row, invalidStatus) {
+        var msg = error.message;
+        if(!msg)
+            msg = error;
+        invalidStatus.push( 'Registro ' + row + ': ' + msg ); // pseudoerror. It's about not finding a record
     }
 
     getTimeInMillisecondsFromExcelTime(excelTime:number, baseDate:Date):number {
