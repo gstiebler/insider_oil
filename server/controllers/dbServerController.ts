@@ -62,6 +62,16 @@ export function viewRecord(req: express.Request, res: express.Response, next) {
     };
 }
 
+export function getRecord(req: express.Request, res: express.Response, next) {Sync(function(){
+    const query:ni.GetRecord.req = req.query;
+    const dataSourceName = query.dataSource;
+    const dataSource = dbUtils.getDataSource(dataSourceName);
+    const options = { include: [{all: true}] };
+    const record = await( dataSource.findById(query.id, options) );
+    const result:ni.GetRecord.res = { record };
+    res.json(result);
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar o registro."))}
+
 /**
  * Get objects filtered by another object. It's used to show subqueries,
  * or objects associated with a given object

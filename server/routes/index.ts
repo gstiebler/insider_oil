@@ -44,6 +44,7 @@ module.exports = function(app: express.Express) {
     app.get('/get_table_data', session.authorize,  dbServerController.getTableQueryData);
     app.get('/time_series', session.authorize,     dbServerController.getTimeSeries);
     app.get('/view_record/',   session.authorize,  dbServerController.viewRecord);
+    app.get('/get_record/',   session.authorize,  dbServerController.getRecord);
     app.get('/dashboard_data/',  session.authorize, dbServerController.getDashboardData);
 
     app.get('/maps/blocks', session.authorize,     MapsController.getBlocks);

@@ -193,6 +193,19 @@ dashboard: test => {
     test.done();
 },
 
+getRecord: test => {
+    const query:ni.GetRecord.req = {
+        dataSource: 'Block',
+        id: 2
+    }
+    const res:ni.GetRecord.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getRecord, { query });
+
+    test.equal('ES-M-529', res.record.name);
+    
+    test.done();
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );

@@ -58,6 +58,18 @@ export namespace GetViewRecord {
     }
 }
 
+export namespace GetRecord {
+
+    export interface req {
+        dataSource: string;
+        id: number;
+    }
+
+    export interface res {
+        record: any;
+    }
+}
+
 export namespace SendErrorReport {
 
     export interface req {
