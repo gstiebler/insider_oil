@@ -57,13 +57,13 @@ module.exports = function(db) {
             production_unit_id: utils.idByName('ProductionUnit', 'Pioneer'),
         },
         {
-            name: '7MRL 0054 RJS',
+            name: '7MRL-0054-RJS',
             name_operator: '7MRL 0054 RJS',
             oil_field_id: utils.idByName('OilField', 'Marlim'),
             production_unit_id: utils.idByName('ProductionUnit', 'Pioneer'),
         },
         {
-            name: '7MRL 0062D RJS',
+            name: '7MRL-0062D-RJS',
             name_operator: '7MRL 0062D RJS',
             oil_field_id: utils.idByName('OilField', 'Marlim'),
             production_unit_id: utils.idByName('ProductionUnit', 'Pioneer'),

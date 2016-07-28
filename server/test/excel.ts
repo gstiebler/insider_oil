@@ -169,8 +169,8 @@ wellProduction: test => {
     var rows = await( dbUtils.findAllCustom(db.models.Production, { order: order }));
     test.equal( 10, rows.length );  
     var expectedStatus = "Registros criados: 2";
-    expectedStatus += "\nRegistros atualizados: 1";
-    expectedStatus += "\nRegistros inválidos: 14";
+    expectedStatus += "\nRegistros atualizados: 2";
+    expectedStatus += "\nRegistros inválidos: 13";
     test.equal( expectedStatus, status );
     
     {
@@ -185,7 +185,7 @@ wellProduction: test => {
     }  
     {
         const record = rows[5];
-        test.equal('7MRL 0062D RJS', record.well.name);
+        test.equal('7MRL-0062D-RJS', record.well.name);
         test.equal(2325.89, record.oil_production);
     }   
     

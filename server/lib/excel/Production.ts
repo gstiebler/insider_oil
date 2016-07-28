@@ -54,13 +54,17 @@ export class Production extends ImportExcel {
         const headerIndexes = this.headerToIndexes(d.header);
         const rowValues = this.getRowValues(d.worksheet, d.row);
         const rowObj = this.rowValuesToObj(rowValues, headerIndexes);
-        const wellSearchParams = {
-            $or: {
-                name: this.cleanString(rowObj.name),
-                name_operator: this.cleanString(rowObj.name_operator)
-            }
-        };
-        const wellRecord = await( db.models.Well.findOne({ where: wellSearchParams }) );
+
+        const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
+        const select = 'select id ';
+        const from = ' from wells ';
+        var where = ' where name = "' + this.cleanString(rowObj.name) + '" ';
+        where += ' or name_operator = "' + this.cleanString(rowObj.name_operator) + '" ';
+        where += ' or replace(name, "-", "") = "' + this.cleanString(rowObj.name) + '" ';
+        where += ' or replace(name_operator, "-", "") = "' + this.cleanString(rowObj.name_operator) + '" ';
+        const queryStr = select + from + where;
+        const queryRes = await( db.sequelize.query(queryStr, simpleQueryType) );
+        const wellRecord = queryRes && queryRes.length > 0 ? queryRes[0] : null;
         if(!wellRecord) {
             d.invalidStatus.push( "Poço não encontrado " + rowObj.name );
             return false;
