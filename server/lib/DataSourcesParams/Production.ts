@@ -39,7 +39,7 @@ const Production: IBaseDataSourceParams = {
             label: 'Mês'
         },
     },
-    labelField: 'well_operator',
+    labelField: 'well_name',
     gridFields: ['period_year', 'period_month', 'oil_production', 'well_name'],
     tableLabel: 'Produção',
     hasMap: false,
