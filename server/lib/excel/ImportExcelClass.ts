@@ -11,7 +11,7 @@ import moment = require('moment-timezone');
 
 const saoPauloZone = moment.tz.zone('America/Sao_Paulo');
 
-interface ISaveRecord {
+export interface ISaveRecord {
     worksheet: any;
     row: number;
     keyFieldIndexInExcel: number;
@@ -215,7 +215,9 @@ export class ImportExcel {
                 const numRows = range.e.r;
                 for( var row = 1 + _this.lineOffset; row <= numRows; row++ ) {
                     saveRecordData.row = row;
-                   _this.saveRecord(saveRecordData);
+                    if(!_this.saveRecord(saveRecordData)) {
+                        continue;
+                    }
                     
                     if((row % 1000) == 0) {
                         const partialStatus = _this.genStatusStr(saveRecordData.insertedRecords, 
@@ -253,7 +255,7 @@ export class ImportExcel {
         return promise;
     }
 
-    protected saveRecord(d: ISaveRecord) {
+    protected saveRecord(d: ISaveRecord):boolean {
         const rowValues = this.getRowValues(d.worksheet, d.row);
         const searchParams:any = {};
         var searchKeyValue = rowValues[d.keyFieldIndexInExcel];
@@ -278,9 +280,10 @@ export class ImportExcel {
                 this.addError(error, d.row, d.invalidStatus);
             }
         }
+        return true;
     }
 
-    private addError(error, row, invalidStatus) {
+    protected addError(error, row, invalidStatus) {
         var msg = error.message;
         if(!msg)
             msg = error;

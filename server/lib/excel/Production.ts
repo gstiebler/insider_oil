@@ -1,6 +1,6 @@
 "use strict";
 
-import { ImportExcel, IExcelUploadResponse } from './ImportExcelClass';
+import { ImportExcel, IExcelUploadResponse, ISaveRecord } from './ImportExcelClass';
 import { IOkFunc } from './ImportExcelClass';
 import db = require( '../../db/models' );
 import winston = require('winston');
@@ -49,109 +49,50 @@ export class Production extends ImportExcel {
             record[rowKey] = rowObj[rowKey];
         }  
     }
-    
-    execute(excelBuf, modelName: string):Promise<IExcelUploadResponse> {
-        const _this = this;
-        
-        const promise = new Promise<IExcelUploadResponse>( function(resolve, reject) { Sync( function() {
-            try{
-                const workbook = _this.getWorkbook(excelBuf);
-                const first_sheet_name = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[first_sheet_name];
-                
-                const header = _this.getHeader(worksheet, _this.lineOffset);
-                _this.validateHeader(header, modelName);
-                const headerIndexes = _this.headerToIndexes(header);
-                
-                const excelParams = dsParams[modelName].excelParams;
-                const keyFieldIndexInExcel = header.indexOf( excelParams.keyField );
-                const modelKeyField = excelParams.fields[ excelParams.keyField ];
-                const model = db.models[modelName];
-                const range = _this.getRange(worksheet);
-                let insertedRecords = 0;
-                let updatedRecords = 0;
 
-                var invalidStatus: string[] = [];
-                function addError(error, row) {
-                    var msg = error.message;
-                    if(!msg)
-                        msg = error;
-                    invalidStatus.push( 'Registro ' + row + ': ' + msg ); // pseudoerror. It's about not finding a record
-                }
-                
-                const numRows = range.e.r;
-                for( var row = 1 + _this.lineOffset; row <= numRows; row++ ) {
-                    const rowValues = _this.getRowValues(worksheet, row);
-                    const rowObj = _this.rowValuesToObj(rowValues, headerIndexes);
-                    const wellSearchParams = {
-                        $or: {
-                            name: _this.cleanString(rowObj.name),
-                            name_operator: _this.cleanString(rowObj.name_operator)
-                        }
-                    };
-                    const wellRecord = await( db.models.Well.findOne({ where: wellSearchParams }) );
-                    if(!wellRecord) {
-                        invalidStatus.push( "Poço não encontrado " + rowObj.name );
-                        continue;
-                    }
-                    
-                    var searchParams = {
-                        well_id: wellRecord.id,
-                        period_year: rowObj.period_year,
-                        period_month: rowObj.period_month
-                    };
-                    var record = await( model.findOne({ where: searchParams }) );
-                    if( record ) {
-                        try {
-                            _this.setRecord(record, header, rowObj);
-                            await( record.save() );
-                            updatedRecords++;
-                        } catch(error) {
-                            addError(error, row);
-                        }
-                    } else {
-                        record = {};
-                        try {
-                            _this.setRecord(record, header, rowObj);
-                            record.well_id = wellRecord.id;
-                            await( model.create(record) );
-                            insertedRecords++;
-                        } catch(error) {
-                            addError(error, row);
-                        }
-                    }
-                    
-                    if((row % 1000) == 0) {
-                        const partialStatus = _this.genStatusStr(insertedRecords, updatedRecords, invalidStatus);
-                        db.models.ExcelImportLog.create({
-                            model: modelName,
-                            status: 'Atualização ' + row + '/' + numRows,
-                            result: partialStatus + '\n' + invalidStatus.join('\n')
-                        });
-                    }
-                }
-                const status = _this.genStatusStr(insertedRecords, updatedRecords, invalidStatus);
-
-                db.models.ExcelImportLog.create({
-                    model: modelName,
-                    status: 'OK',
-                    result: status + '\n' + invalidStatus.join('\n')
-                });
-
-                resolve( { status: status, invalidRecordsStatus: invalidStatus });
-            } catch(err) {
-                winston.error('Erro ao importar: ', row, err);
-                db.models.ExcelImportLog.create({
-                    model: modelName,
-                    status: 'ERROR',
-                    result: JSON.stringify(err)
-                });
-                reject(err);
+    protected saveRecord(d: ISaveRecord):boolean {
+        const headerIndexes = this.headerToIndexes(d.header);
+        const rowValues = this.getRowValues(d.worksheet, d.row);
+        const rowObj = this.rowValuesToObj(rowValues, headerIndexes);
+        const wellSearchParams = {
+            $or: {
+                name: this.cleanString(rowObj.name),
+                name_operator: this.cleanString(rowObj.name_operator)
             }
-        }); 
-        });
-        return promise;
-    } 
+        };
+        const wellRecord = await( db.models.Well.findOne({ where: wellSearchParams }) );
+        if(!wellRecord) {
+            d.invalidStatus.push( "Poço não encontrado " + rowObj.name );
+            return false;
+        }
+        
+        var searchParams = {
+            well_id: wellRecord.id,
+            period_year: rowObj.period_year,
+            period_month: rowObj.period_month
+        };
+        var record = await( d.model.findOne({ where: searchParams }) );
+        if( record ) {
+            try {
+                this.setRecord(record, d.header, rowObj);
+                await( record.save() );
+                d.updatedRecords++;
+            } catch(error) {
+                this.addError(error, d.row, d.invalidStatus);
+            }
+        } else {
+            record = {};
+            try {
+                this.setRecord(record, d.header, rowObj);
+                record.well_id = wellRecord.id;
+                await( d.model.create(record) );
+                d.insertedRecords++;
+            } catch(error) {
+                this.addError(error, d.row, d.invalidStatus);
+            }
+        }
+        return true;
+    }
     
     headerToIndexes(header:string[]) {
         const headerIndexes = {};
