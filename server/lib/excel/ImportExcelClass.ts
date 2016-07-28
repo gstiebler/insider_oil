@@ -163,7 +163,7 @@ export class ImportExcel {
         return XLSX.utils.decode_range(worksheet['!ref']);
     }
 
-    private genStatusStr(insertedRecords, updatedRecords, invalidStatus) {
+    protected genStatusStr(insertedRecords, updatedRecords, invalidStatus) {
         var status = '';
         status += "Registros criados: " + insertedRecords;
         status += "\nRegistros atualizados: " + updatedRecords;

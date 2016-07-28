@@ -58,23 +58,23 @@ export class Production extends ImportExcel {
     }
     
     execute(excelBuf, modelName: string):Promise<IExcelUploadResponse> {
-        const workbook = this.getWorkbook(excelBuf);
-        const first_sheet_name = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[first_sheet_name];
-        
-        const header = this.getHeader(worksheet, this.lineOffset);
-        this.validateHeader(header, modelName);
-        const headerIndexes = this.headerToIndexes(header);
-        
-        const model = db.models.Production;
-        const range = this.getRange(worksheet);
-        let insertedRecords = 0;
-        let updatedRecords = 0;
         const _this = this;
         
         const promise = new Promise<IExcelUploadResponse>( function(resolve, reject) { Sync( function() {
             try{
-                var status = "";
+                const workbook = _this.getWorkbook(excelBuf);
+                const first_sheet_name = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[first_sheet_name];
+                
+                const header = _this.getHeader(worksheet, _this.lineOffset);
+                _this.validateHeader(header, modelName);
+                const headerIndexes = _this.headerToIndexes(header);
+                
+                const model = db.models.Production;
+                const range = _this.getRange(worksheet);
+                let insertedRecords = 0;
+                let updatedRecords = 0;
+
                 var invalidStatus: string[] = [];
                 function addError(error, row) {
                     var msg = error.message;
@@ -83,7 +83,8 @@ export class Production extends ImportExcel {
                     invalidStatus.push( 'Registro ' + row + ': ' + msg ); // pseudoerror. It's about not finding a record
                 }
                 
-                for( var row = 1 + _this.lineOffset; row <= range.e.r; row++ ) {
+                const numRows = range.e.r;
+                for( var row = 1 + _this.lineOffset; row <= numRows; row++ ) {
                     const rowValues = _this.getRowValues(worksheet, row);
                     const rowObj = _this.rowValuesToObj(rowValues, headerIndexes);
                     const wellSearchParams = {
@@ -123,13 +124,32 @@ export class Production extends ImportExcel {
                             addError(error, row);
                         }
                     }
+                    
+                    if((row % 1000) == 0) {
+                        const partialStatus = _this.genStatusStr(insertedRecords, updatedRecords, invalidStatus);
+                        db.models.ExcelImportLog.create({
+                            model: modelName,
+                            status: 'Atualização ' + row + '/' + numRows,
+                            result: partialStatus + '\n' + invalidStatus.join('\n')
+                        });
+                    }
                 }
-                status += "Registros criados: " + insertedRecords;
-                status += "\nRegistros atualizados: " + updatedRecords;
-                status += "\nRegistros inválidos: " + invalidStatus.length;
+                const status = _this.genStatusStr(insertedRecords, updatedRecords, invalidStatus);
+
+                db.models.ExcelImportLog.create({
+                    model: modelName,
+                    status: 'OK',
+                    result: status + '\n' + invalidStatus.join('\n')
+                });
+
                 resolve( { status: status, invalidRecordsStatus: invalidStatus });
             } catch(err) {
                 winston.error('Erro ao importar: ', row, err);
+                db.models.ExcelImportLog.create({
+                    model: modelName,
+                    status: 'ERROR',
+                    result: JSON.stringify(err)
+                });
                 reject(err);
             }
         }); 
