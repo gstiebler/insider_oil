@@ -64,8 +64,13 @@ module.exports = function(app: express.Express) {
     // TODO !autorize!
     app.get('/db_image',                                imageController.main );
     
-    // all links from Angular App should be redirected to the index of the app
-    // send the URL as parameter for the Angular App to make the redirection
+    app.get('/s3/images/*', function (req, res) {
+        const parts = req.url.split('/');
+        return res.redirect('https://s3-sa-east-1.amazonaws.com/insider-oil/images/' + parts.pop() );
+    });
+
+    // all links from React App should be redirected to the index of the app
+    // send the URL as parameter for the React App to make the redirection
     app.get('/app/*', function (req, res) {
         return res.redirect('/app/?url=' + encodeURIComponent(req.url));
     });
