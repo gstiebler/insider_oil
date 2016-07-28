@@ -26,9 +26,21 @@ const Production: IBaseDataSourceParams = {
         water_production: {
             label: 'Água (bbl/dia)'
         },
+        well_id: {
+            label: 'Poço'
+        },
+        well_name: {
+            label: 'Poço'
+        },
+        period_year: {
+            label: 'Ano'
+        },
+        period_month: {
+            label: 'Mês'
+        },
     },
     labelField: 'well_operator',
-    gridFields: ['basin_name', 'well_operator', 'oil_production', 'gas_associated_production'],
+    gridFields: ['period_year', 'period_month', 'oil_production', 'well_name'],
     tableLabel: 'Produção',
     hasMap: false,
     excelParams: {

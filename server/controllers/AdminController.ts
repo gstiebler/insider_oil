@@ -245,6 +245,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         OilPipeline: 'Oleodutos',
         GasMovement: 'Movimentação de gasoduto',
         IndustrySegment: 'Segmentos',
+        Production: 'Produção de poços',
         ExcelImportLog: 'Log da importação de Excel',
         ErrorReport: 'Reports de erros ',
     };
