@@ -17,6 +17,7 @@ import { Flash } from './Flash';
 import { ChangePassword } from './ChangePassword';
 import { MapsAll } from './MapsAll';
 import { Dashboard } from './Dashboard';
+import { NewsSingle } from './NewsSingle';
 
 interface IAppProps {
     model: string;
@@ -105,6 +106,7 @@ ReactDOM.render(
       <Route path="oil_field" component={OilFieldView}/>
       <Route path="maps_all" component={MapsAll}/>
       <Route path="change_password" component={ChangePassword}/>
+      <Route path="view_new" component={NewsSingle}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,

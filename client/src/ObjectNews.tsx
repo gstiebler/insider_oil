@@ -44,7 +44,7 @@ export class ObjectNews extends React.Component<IAppProps, IAppState> {
  
     public render(): React.ReactElement<any> {
         var newsItems = this.state.newsData.map((newsItem, index) => {
-            var url = StringUtils.format("/app/view_record?source=News&id={0}", newsItem.id);
+            var url = StringUtils.format("/app/view_new?id={0}", newsItem.id);
             return <li key={index}>
                 <Link to={url}><h3>{newsItem.title}</h3></Link>
                 <div className="col-md-12 col-no-padding">
