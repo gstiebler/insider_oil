@@ -53,9 +53,10 @@ export class NewsSingle extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<any> {
         const record = this.state.record;
         return (
-            <div className="main-news">
+            <div className="news-single">
                 <h3>{record.title}</h3>
-                <div dangerouslySetInnerHTML={ {__html: record.content } } ></div>
+                <div className="content"
+                    dangerouslySetInnerHTML={ {__html: record.content } } ></div>
                 <div className="col-md-12 col-no-padding">
                     <div className="col-md-6 col-no-padding">
                         <div className="item-related">

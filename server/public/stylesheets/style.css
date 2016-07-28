@@ -863,6 +863,31 @@
     font-family: "Avenir LT Std 55 Roman";
     font-size: 16px
 }
+.news-single {
+    width: 960px;
+    margin: 22.5px auto 0 auto;
+}
+.news-single .content {
+    color: #989898;
+    font-weight: normal; 
+    line-height: 1.6; 
+    margin-bottom: 17px;
+}
+.news-single h3 {
+    color: #78c36a;
+    font-family: "Avenir LT Std 85 Heavy";
+}
+.news-single .item-related {
+    font-family: "Avenir LT Std 85 Heavy";
+    color: #747474;
+    display: inline-block;
+    margin-right: 20px
+}
+.news-single .item-related>span {
+    margin-left: 5px;
+    padding: 3px 5px 3px 5px;
+    background-color: #e8e8e8
+}
 @font-face {
     font-family: 'Avenir LT Std 95 Black';
     font-style: normal;
