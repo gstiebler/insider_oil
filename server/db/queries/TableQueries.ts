@@ -1283,6 +1283,72 @@ export const queries:ITableQueries = {
             },
         ]
     },
+
+    Production: {
+        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'production',
+                    fields: [
+                        ['id', 'production_id'],
+                        'oil_production',
+                        'oil_condensed_production',
+                        'gas_associated_production',
+                        'gas_non_associated_production',
+                    ]
+                },
+                extraFields: [
+                    ['"Production"', 'model'],
+                    ['"Well"', 'well_model'],
+                    ['gas_associated_production + gas_non_associated_production', 'gas_prod'],
+                    ['oil_production + oil_condensed_production', 'oil_prod'],
+                    ['concat(period_year, concat("/", lpad(period_month, 2, "0")))', 'formatted_date'],
+                ],
+                joinTables: [
+                    {
+                        name: 'wells',
+                        fields: [
+                            ['id', 'well_id'],
+                            ['name', 'well_name'],
+                        ],
+                        joinField: 'production.well_id'
+                    },
+                ],
+                filters: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Data',
+                ref: {
+                    modelField: 'model',
+                    idField: 'production_id',
+                    valueField: 'formatted_date'
+                }
+            },
+            {
+                label: 'Poço',
+                ref: {
+                    modelField: 'well_model',
+                    idField: 'well_id',
+                    valueField: 'well_name'
+                }
+            },
+            {
+                label: 'Óleo',
+                fieldName: 'oil_prod',
+                type: 'FLOAT'
+            },
+            {
+                label: 'Gás',
+                fieldName: 'gas_prod',
+                type: 'FLOAT'
+            },
+        ]
+    },
 };
 
 export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {
