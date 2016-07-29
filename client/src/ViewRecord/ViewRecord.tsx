@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { ViewRecordFields } from './ViewRecordFields';
 import { ShowQueryData } from '../ShowQueryData';
 import { ObjectNews } from '../ObjectNews';

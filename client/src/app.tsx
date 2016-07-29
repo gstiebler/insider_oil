@@ -10,7 +10,6 @@ import { AdminGrid } from './Admin/AdminGrid';
 import { AdminEdit } from './Admin/AdminEdit';
 import { NewsEdit } from './Admin/NewsEdit';
 import { AdminCreate } from './Admin/AdminCreate';
-import { Tree } from './Tree';
 import { ViewRecord } from './ViewRecord/ViewRecord';
 import { OilFieldView } from './ViewRecord/OilFieldView';
 import { Flash } from './Flash';
@@ -19,6 +18,7 @@ import { MapsAll } from './MapsAll';
 import { Dashboard } from './Dashboard';
 import { NewsSingle } from './NewsSingle';
 import { PaginatedTableView } from './PaginatedTableView'; 
+import { DataList } from './DataList'; 
 
 interface IAppProps {
     model: string;
@@ -102,13 +102,13 @@ ReactDOM.render(
       <Route path="edit_item" component={AdminEdit}/>
       <Route path="create_news" component={NewsEdit}/>
       <Route path="create_item" component={AdminCreate}/>
-      <Route path="tree" component={Tree}/>
       <Route path="view_record" component={ViewRecord}/>
       <Route path="oil_field" component={OilFieldView}/>
       <Route path="maps_all" component={MapsAll}/>
       <Route path="change_password" component={ChangePassword}/>
       <Route path="view_new" component={NewsSingle}/>
-      <Route path="blocks" component={PaginatedTableView}/>
+      <Route path="paginated_table_view" component={PaginatedTableView}/>
+      <Route path="data_list" component={DataList}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,

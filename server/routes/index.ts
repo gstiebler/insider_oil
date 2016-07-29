@@ -4,7 +4,6 @@ import session = require('../lib/session');
 import * as loginController from '../controllers/loginController';
 import dbServerController = require('../controllers/dbServerController');
 import * as usersController from '../controllers/usersController';
-import * as treeController from '../controllers/TreeController';
 import * as searchController from '../controllers/SearchController';
 import ExcelController = require('../controllers/ExcelController');
 import * as imageController from '../controllers/ImageController';
@@ -58,9 +57,6 @@ module.exports = function(app: express.Express) {
     app.get('/user/',                session.authorize, usersController.main );
     app.get('/user/details',         session.authorize, usersController.userDetails );
     app.put('/user/change_password', session.authorize, usersController.changePassword );
-    
-    // Tree
-    app.get('/tree/',           session.authorize, treeController.main );
     
     // TODO !autorize!
     app.get('/db_image',                                imageController.main );

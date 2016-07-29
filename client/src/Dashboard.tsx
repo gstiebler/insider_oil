@@ -47,7 +47,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
                     <span>PROJETOS</span>
                 </h3>
                 <h4>Projetos ativos</h4>
-                <Link className="button" to="/app/tree?nodeLabel=Projetos">Explore</Link>
+                <Link className="button" to="/app/paginated_table_view?source=Projects">Explore</Link>
             </div>
         );
 
@@ -59,7 +59,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
                     <span>OPORTUNIDADES</span>
                 </h3>
                 <h4>Licitações</h4>
-                <Link className="button" to="/app/tree?nodeLabel=Licitações">Explore</Link>
+                <Link className="button" to="/app/paginated_table_view?source=Bids">Explore</Link>
             </div>
         );
 
@@ -71,7 +71,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
                     <span>E&P</span>
                 </h3>
                 <h4>Contratos</h4>
-                <Link className="button" to="/app/tree?nodeLabel=Contratos">Explore</Link>
+                <Link className="button" to="/app/paginated_table_view?source=Contracts">Explore</Link>
             </div>
         );
 
@@ -83,7 +83,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
                     <span>CONTATOS</span>
                 </h3>
                 <h4>Pessoas</h4>
-                <Link className="button" to="/app/tree?nodeLabel=Pessoas">Explore</Link>
+                <Link className="button" to="/app/paginated_table_view?source=Persons">Explore</Link>
             </div>
         );
 

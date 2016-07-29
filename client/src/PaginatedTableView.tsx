@@ -16,8 +16,12 @@ interface IAppState {
 
 export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
 
+    private source: string;
+
     constructor(props: IAppProps) {
         super(props);
+
+        this.source = props.location.query.source;
 
         this.state = {
             tableParams: null
@@ -25,7 +29,7 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
     }
 
     public componentDidMount() {
-        getFields('Blocks')
+        getFields(this.source)
             .then(this.onFields.bind(this))
             .catch(showError.show);
     }
@@ -33,8 +37,8 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
     private onFields(res: IField[]) {
         this.state.tableParams = {
             fields: res,
-            label: 'Blocos',
-            source: 'Blocks'
+            label: 'Label',
+            source: this.source
         };
         this.setState(this.state);
     }

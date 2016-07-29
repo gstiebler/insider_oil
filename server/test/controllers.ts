@@ -5,7 +5,6 @@ import dbServerController = require('../controllers/dbServerController');
 import ExcelController = require('../controllers/ExcelController');
 import QueryGenerator = require('../db/queries/QueryGenerator');
 import nodeunit = require('nodeunit');
-import TreeController = require('../controllers/TreeController');
 var loginController = require('../controllers/loginController');
 import SearchController = require('../controllers/SearchController');
 var Sync = require('sync');
@@ -152,12 +151,6 @@ getRecordViewWell: function(test) {
     test.equal('Company', record[15].model);
     test.equal('Eni Oil', record[15].name);
     
-    test.done();
-},
-
-treeIntegrity: test => {
-    const tree = utils.getJsonResponse.sync(null, TreeController.main, null);
-    iterateTree(tree.children, test);
     test.done();
 },
 

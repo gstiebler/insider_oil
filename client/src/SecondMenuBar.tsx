@@ -48,19 +48,19 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
                 <Link to="/app/dashboard">Dashboard</Link>
               </li>
               <li className="nav-item">
-                <Link to="/app/tree?nodeId=1">Dados</Link>
+                <Link to="/app/data_list">Dados</Link>
               </li>
               <li className="nav-item">
-                <Link to="/app/tree?nodeLabel=Pessoas">Pessoas</Link>
+                <Link to="/app/paginated_table_view?source=Persons">Pessoas</Link>
               </li>
               <li className="nav-item">
-                <Link to="/app/tree?nodeLabel=Empresas">Empresas</Link>
+                <Link to="/app/paginated_table_view?source=Companies">Empresas</Link>
               </li>
               <li className="nav-item">
                 <Link to="/app/maps_all">Mapas</Link>
               </li>
               <li className="nav-item">
-                <Link to="/app/tree?nodeLabel=Notícias">Notícias</Link>
+                <Link to="/app/paginated_table_view?source=News">Notícias</Link>
               </li>
               { this.props.isAdmin ? adminLink : '' }
             </ul>
