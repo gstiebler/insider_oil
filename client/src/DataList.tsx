@@ -16,44 +16,64 @@ export class DataList extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): React.ReactElement<any> {
-        const exploration = (            
+        const exploration = (
             <div className="col-md-6">
-                <span className="col-md-4">Exploração</span>
-                <div className="col-md-8">
+                <span className="col-md-2">Exploração</span>
+                <div className="col-md-10">
                     <div className="row">
-                        <Link to="/app/paginated_table_view?source=Blocks" 
-                            className="col-md-6">Blocos</Link>
-                        <Link to="/app/paginated_table_view?source=DrillingRigs" 
-                            className="col-md-6">Sondas</Link>
+                        <div className="col-md-6">
+                            <Link to="/app/paginated_table_view?source=Blocks"
+                                className="button">Blocos</Link>
+                        </div>
+                        <div className="col-md-6">
+                            <Link to="/app/paginated_table_view?source=DrillingRigs"
+                                className="button">Sondas</Link>
+                        </div>
                     </div>
+                    <br/>
                     <div className="row">
-                        <Link to="/app/paginated_table_view?source=Wells" 
-                            className="col-md-6">Poços</Link>
-                        <Link to="/app/paginated_table_view?source=Seismics" 
-                            className="col-md-6">Sísmica</Link>
+                        <div className="col-md-6">
+                            <Link to="/app/paginated_table_view?source=Wells"
+                                className="button">Poços</Link>
+                        </div>
+                        <div className="col-md-6">
+                            <Link to="/app/paginated_table_view?source=Seismics"
+                                className="button">Sísmica</Link>
+                        </div>
                     </div>
                 </div>
                 <hr/>
             </div>
         );
 
-        const production = (            
+        const production = (
             <div className="col-md-6">
-                <span className="col-md-4">Produção</span>
-                <div className="col-md-8">
+                <span className="col-md-2">Produção</span>
+                <div className="col-md-10">
                     <div className="row">
-                        <Link to="/app/paginated_table_view?source=FPSOs" 
-                            className="col-md-4">FPSOs</Link>
-                        <Link to="/app/paginated_table_view?source=FixedProductionUnits" 
-                            className="col-md-4">UPEs Fixas</Link>
-                        <Link to="/app/paginated_table_view?source=SemiSubmersibleProductionUnits" 
-                            className="col-md-4">UPEs FPSOs Semi</Link>
+                        <div className="col-md-4">
+                            <Link to="/app/paginated_table_view?source=FPSOs"
+                                className="button">FPSOs</Link>
+                        </div>
+                        <div className="col-md-4">
+                            <Link to="/app/paginated_table_view?source=FixedProductionUnits"
+                                className="button">UPEs Fixas</Link>
+                        </div>
+                        <div className="col-md-4">
+                            <Link to="/app/paginated_table_view?source=SemiSubmersibleProductionUnits"
+                                className="button">UPEs FPSOs Semi</Link>
+                        </div>
                     </div>
+                    <br/>
                     <div className="row">
-                        <Link to="/app/paginated_table_view?source=oilFielsdProduction" 
-                            className="col-md-6">Campos em Produção</Link>
-                        <Link to="/app/paginated_table_view?source=oilFieldsDevelopment" 
-                            className="col-md-6">Campos em desenvolvimento</Link>
+                        <div className="col-md-6">
+                            <Link to="/app/paginated_table_view?source=oilFielsdProduction"
+                                className="button">Campos em Produção</Link>
+                        </div>
+                        <div className="col-md-6">
+                            <Link to="/app/paginated_table_view?source=oilFieldsDevelopment"
+                                className="button">Campos em desenvolvimento</Link>
+                        </div>
                     </div>
                 </div>
                 <hr/>
@@ -61,29 +81,35 @@ export class DataList extends React.Component<IAppProps, IAppState> {
         );
 
         return (
-            <div>
+            <div className="data-list">
                 <div className="row">
                     { exploration }
                     { production }
                 </div>
+                <hr/>
                 <div className="row">
-                    <div className="col-md-6">
-                        <Link to="/app/paginated_table_view?source=Bids" 
-                            className="col-md-4">Licitações</Link>
+                    <div className="col-md-1"/>
+                    <div className="col-md-5">
+                        <Link to="/app/paginated_table_view?source=Bids"
+                            className="button">Licitações</Link>
                     </div>
-                    <div className="col-md-6">
-                        <Link to="/app/paginated_table_view?source=Contracts" 
-                            className="col-md-4">Contratos</Link>
+                    <div className="col-md-1"/>
+                    <div className="col-md-5">
+                        <Link to="/app/paginated_table_view?source=Contracts"
+                            className="button">Contratos</Link>
                     </div>
                 </div>
+                <hr/>
                 <div className="row">
-                    <div className="col-md-6">
-                        <Link to="/app/paginated_table_view?source=Companies" 
-                            className="col-md-4">Empresas</Link>
+                    <div className="col-md-1"/>
+                    <div className="col-md-5">
+                        <Link to="/app/paginated_table_view?source=Companies"
+                            className="button">Empresas</Link>
                     </div>
-                    <div className="col-md-6">
-                        <Link to="/app/paginated_table_view?source=Persons" 
-                            className="col-md-4">Pessoas</Link>
+                    <div className="col-md-1"/>
+                    <div className="col-md-5">
+                        <Link to="/app/paginated_table_view?source=Persons"
+                            className="button">Pessoas</Link>
                     </div>
                 </div>
             </div>

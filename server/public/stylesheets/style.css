@@ -888,6 +888,16 @@
     padding: 3px 5px 3px 5px;
     background-color: #e8e8e8
 }
+.data-list .button {
+    background-color: #8edb82;
+    color: #fff;
+    font-size: 14px; 
+    font-family: "Avenir LT Std 55 Roman"; 
+    line-height: 50px; 
+    display: block; 
+    text-decoration: none;
+    text-align: center;
+}
 @font-face {
     font-family: 'Avenir LT Std 95 Black';
     font-style: normal;
