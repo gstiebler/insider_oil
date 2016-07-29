@@ -206,6 +206,14 @@ getRecord: test => {
     test.done();
 },
 
+getTableQueriesFields: (test: nodeunit.Test) => { 
+    const res:ni.GetTableQueriesFields.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getTableQueriesFields, {});
+    
+    test.equal('Nome', res['Blocks'][0].label);
+    test.done();
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );

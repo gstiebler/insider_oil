@@ -38,19 +38,22 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         window['paginatedTableRef'] = this;
     }
 
-    private componentWillReceiveProps(nextProps) {
-        this.initTable();
+    private componentWillReceiveProps(nextProps: IAppProps) {
+        if(!nextProps.tableParams) {
+            return;
+        }
+        this.initTable(nextProps);
     }
 
-    private initTable() {
+    private initTable(props: IAppProps) {
         var dataTableElement:any = $('#mainTable');
 
-        var { tableParams } = this.props;
+        var { tableParams } = props;
         var {columns, currencyColumnsIndexes} = genColumns(tableParams);
 
         this.state.headerParams = { 
             filterFields: columns,
-            label: this.props.tableParams.label
+            label: tableParams.label
         };
         
         this.state.dataTable = dataTableElement.DataTable( {
@@ -60,7 +63,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
             serverSide: true,
             searching: false,
             dom: 'rtip', // constrols what parts of datatables is visible
-            ajax: this.ajaxFn.bind(this),
+            ajax: this.ajaxFn.bind(this, props),
             columnDefs: [
                 { className: "text-right", targets: currencyColumnsIndexes },
             ]
@@ -80,7 +83,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
      * DataTables callback to refresh the data. It's called when the order column change,
      * and when a page on pagination is clicked
      */
-    private ajaxFn(data, callback, settings) {
+    private ajaxFn(props: IAppProps, data, callback, settings) {
         var orderColumns = [];
         for(var i = 0; i < data.order.length; i++) {
             var columnIndex = data.order[i].column;
@@ -92,7 +95,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         }
         
         var options = {
-            queryName: this.props.tableParams.source,
+            queryName: props.tableParams.source,
             queryParams: {
                 pagination: {
                     first: data.start,

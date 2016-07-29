@@ -150,3 +150,11 @@ export function getDashboardData(req: express.Request, res: express.Response):vo
     }
     res.json(dashboardData);
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+
+export function getTableQueriesFields(req: express.Request, res: express.Response):void {Sync(function(){
+    const result:ni.GetTableQueriesFields.res = {};
+    for(var queryName in TableQueries.queries) {
+        result[queryName] = TableQueries.queries[queryName].fields;
+    }
+    res.json(result);
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}

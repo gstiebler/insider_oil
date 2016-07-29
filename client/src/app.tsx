@@ -18,6 +18,7 @@ import { ChangePassword } from './ChangePassword';
 import { MapsAll } from './MapsAll';
 import { Dashboard } from './Dashboard';
 import { NewsSingle } from './NewsSingle';
+import { PaginatedTableView } from './PaginatedTableView'; 
 
 interface IAppProps {
     model: string;
@@ -107,6 +108,7 @@ ReactDOM.render(
       <Route path="maps_all" component={MapsAll}/>
       <Route path="change_password" component={ChangePassword}/>
       <Route path="view_new" component={NewsSingle}/>
+      <Route path="blocks" component={PaginatedTableView}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,

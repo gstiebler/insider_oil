@@ -106,3 +106,12 @@ export namespace GetDashboardData {
         numProjects: number;
     }
 }
+
+export namespace GetTableQueriesFields {
+
+    export interface req {}
+
+    export interface res {
+        [tableQuery: number]: Interfaces.IFieldMap;
+    }
+}
