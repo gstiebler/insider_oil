@@ -324,9 +324,9 @@ wells: test => {
     const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Well'));
     
     var rows = await( dbUtils.findAllCustom(db.models.Well, { order: ['name'] }));
-    test.equal( 10, rows.length );  
-    var expectedStatus = "Registros criados: 0";
-    expectedStatus += "\nRegistros atualizados: 10";
+    test.equal( 12, rows.length );  
+    var expectedStatus = "Registros criados: 2";
+    expectedStatus += "\nRegistros atualizados: 8";
     expectedStatus += "\nRegistros inválidos: 0";
     test.equal( expectedStatus, result.status );
 

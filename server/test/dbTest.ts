@@ -171,5 +171,5 @@ const coordsStrs = [
 
 }
 
+exports.notModDBGroup = fiberTests.convertTests( notModGroup, true );
 exports.group = fiberTests.convertTests( group, false );
-exports.group = fiberTests.convertTests( notModGroup, true );
