@@ -29,13 +29,15 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
     }
 
     public componentDidMount() {
-        getFields(this.source)
-            .then(this.onFields.bind(this))
-            .catch(showError.show);
+        this.getFields();
     }
 
     private componentWillReceiveProps(nextProps: IAppProps) {
         this.source = nextProps.location.query.source;
+        this.getFields();
+    }
+
+    private getFields() {
         getFields(this.source)
             .then(this.onFields.bind(this))
             .catch(showError.show);
@@ -48,6 +50,7 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
             source: this.source
         };
         this.setState(this.state);
+        return null;
     }
 
     public render(): React.ReactElement<any> {
