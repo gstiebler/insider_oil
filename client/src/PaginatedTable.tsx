@@ -31,8 +31,8 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = { 
-            headerParams: { filterFields: [], label: '' },
-            dataTable: {},
+            headerParams: null,
+            dataTable: null,
             filters: []
         };
         window['paginatedTableRef'] = this;
@@ -42,20 +42,33 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         if(!nextProps.tableParams) {
             return;
         }
-        this.initTable(nextProps);
+        //this.initTable(nextProps);
+        this.setState(this.state);
+    }
+
+    private componentDidUpdate() {
+        this.initTable(this.props);
     }
 
     private initTable(props: IAppProps) {
         var dataTableElement:any = $('#mainTable');
 
         var { tableParams } = props;
+        if(!tableParams) {
+            return;
+        }
+        console.log(tableParams);
         var {columns, currencyColumnsIndexes} = genColumns(tableParams);
+        console.log(columns);
 
         this.state.headerParams = { 
             filterFields: columns,
             label: tableParams.label
         };
         
+        if(this.state.dataTable) {
+            this.state.dataTable.destroy();
+        }
         this.state.dataTable = dataTableElement.DataTable( {
             columns: columns,
             language: ModelViewService.datatablesPtBrTranslation,
@@ -125,9 +138,13 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
     } 
 
     public render(): React.ReactElement<any> {
+        const tableHeader = this.state.headerParams ? 
+            ( <PaginatedTableHeader headerParams={ this.state.headerParams } filterChanged={ this.filterChanged.bind(this) }></PaginatedTableHeader> ) :
+            null;
+
         return (
             <div className="main-table table-responsive bootstrap-table">
-                <PaginatedTableHeader headerParams={ this.state.headerParams } filterChanged={ this.filterChanged.bind(this) }></PaginatedTableHeader>
+                { tableHeader }
                 <table id="mainTable" className="table" cellSpacing="0" width="100%"></table>
             </div>
         );

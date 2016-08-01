@@ -60,7 +60,8 @@ gulp.task("bundle", function() {
 
     var bundler = browserify({
         debug: true,
-        standalone : libraryName
+        standalone : libraryName,
+        fast: true
     });
     
     return bundler.add(mainTsFilePath)

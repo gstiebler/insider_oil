@@ -77,7 +77,7 @@ export class Production extends ImportExcel {
         };
         var record = await( d.model.findOne({ where: searchParams }) );
         if( record ) {
-            try {
+            try { 
                 this.setRecord(record, d.header, rowObj);
                 await( record.save() );
                 d.updatedRecords++;
