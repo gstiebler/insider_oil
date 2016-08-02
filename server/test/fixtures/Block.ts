@@ -1,7 +1,7 @@
 import utils = require('../lib/utils');
 
 module.exports = function(db) {
-    return db.models.Block.bulkCreate([
+    const blockObjs = [
         {
             name: 'BM-BAR-1',
             basin_id: utils.idByName('Basin', 'Recôncavo'),
@@ -15,9 +15,9 @@ module.exports = function(db) {
             status: 'SUSPENSO',
             polygons: '[[{"lat":-1.83,"lng":-42.625},{"lat":-1.83,"lng":-42.75},{"lat":-2,"lng":-42.75}]]',
             concessionaries: 
-                [ { id: 2  },
-                { id: 16  } ],
-            concessionaries_props: [ 30, 70 ],
+                [ { id: utils.idByName('Company', 'Eni Oil')  },
+                { id: utils.idByName('Company', 'Petrobras')  } ],
+            concessionaries_props: [ 33, 67 ],
         },
         {
             name: 'ES-M-529',
@@ -43,5 +43,12 @@ module.exports = function(db) {
             end_last: '2016-06-25',
             status: ''
         }
-    ]);
+    ];
+
+    const promisesArray = [];
+    for(var blockObj of blockObjs) {
+        promisesArray.push(db.models.Block.create(blockObj));
+    }
+    
+    return Promise.all(promisesArray);
 }

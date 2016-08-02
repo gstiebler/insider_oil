@@ -832,6 +832,66 @@ const queries:IQueriesById = {
             },
         ]
     },
+
+    blocksConcessionaryByCompany: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'block_concessionaries',
+                    fields: []
+                },
+                joinTables: [
+                    {
+                        name: 'blocks',
+                        fields: [
+                            ['id', 'bl_id'],
+                            ['name', 'bl_name'],
+                            'status'
+                        ],
+                        joinField: 'block_concessionaries.block_id'
+                    },
+                ],
+                extraFields: [
+                    ['"Block"', 'model'],
+                    ['concat(block_concessionaries.prop * 100.0, "%")', 'prop']
+                ],
+                filters: [
+                    {
+                        field: 'block_concessionaries.company_id',
+                        equal: filter.id
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'bl_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Bloco',
+                ref: {
+                    modelField: 'model',
+                    idField: 'bl_id',
+                    valueField: 'bl_name'
+                }
+            },
+            {
+                label: 'Status',
+                fieldName: 'status',
+                type: 'VARCHAR'
+            },
+            {
+                label: '%',
+                fieldName: 'prop',
+                type: 'FLOAT'
+            },
+        ]
+    },
 };
 
 export = queries;

@@ -10,8 +10,8 @@ module.exports = function(db) {
             shore: 'on',
             stage: 'production',
             concessionaries: 
-                [ { id: 2  },
-                { id: 16  } ],
+                [ { id: utils.idByName('Company', 'Eni Oil')  },
+                { id: utils.idByName('Company', 'Petrobras')  } ],
             concessionaries_props: [ 30, 70 ],
         },
         {
