@@ -10,6 +10,14 @@ interface IAppProps {
 interface IAppState {
 }
 
+interface IPost {
+	img: string;
+	title: string;
+	date?: string;
+	content?: string;
+	author?: string;
+}
+
 export class Insights extends React.Component<IAppProps, IAppState> {
 
     constructor(props: IAppProps) {
@@ -21,6 +29,135 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
     private componentDidMount() {
     }
+
+    private getOtherPosts(postsData: IPost[]): React.ReactElement<any> {
+        const otherPostsItems:React.ReactElement<any>[] = postsData.map((item) => {
+            return (                
+                <li>
+                    <a href="#"><img src={item.img} alt=""/></a>
+                    <h3 className="post-title"><a href="#">{item.title}</a></h3>
+                    <span className="date"><a href="#">{item.date}</a></span>
+                </li>
+            );
+        });
+
+        return (
+            <div className="other-posts">
+                <ul className="no-bullet">
+                    { otherPostsItems }
+                </ul>
+            </div>
+        );
+    }
+
+	private getMiniCarroussel(title: string, postsData: IPost[]): React.ReactElement<any> {
+
+        const carrousselPostItems:React.ReactElement<any>[] = postsData.map((item) => {
+			return (
+				<div className="four column carousel-item">
+					<a href="#"><img src={item.img} alt=""/></a>
+
+					<div className="post-container">
+						<h2 className="post-title">{item.title}</h2>
+						<div className="post-content">
+							<p>{item.content}</p>
+						</div>
+					</div>
+
+					<div className="post-meta">
+						<span className="date"><a href="#">{item.date}</a></span>
+					</div>
+				</div>
+			);
+		});
+
+		return (
+            <div className="clearfix mb10 oh">
+				<h4 className="cat-title">title</h4>
+				<div className="carousel-container">
+					<div className="carousel-navigation">
+						<a className="carousel-prev"></a>
+						<a className="carousel-next"></a>
+					</div>
+					<div className="carousel-item-holder row" data-index="0">
+						{ carrousselPostItems }
+					</div>
+				</div>
+			</div>
+        );
+	}
+
+
+	private getArticle(category: string, postData: IPost, otherPostsData: IPost[]): React.ReactElement<any> {
+        const otherPosts = this.getOtherPosts(otherPostsData);
+
+		return (
+			<article className="six column">
+				<h4 className="cat-title"><a href="#">{category}</a></h4>
+				<div className="post-image">
+					<a href="#"><img src={postData.img} alt=""/></a>
+				</div>
+
+				<div className="post-container">
+					<h2 className="post-title">{postData.title}</h2>
+					<div className="post-content">
+						<p>{postData.content}</p>
+					</div>
+				</div>
+
+				<div className="post-meta">
+					<span className="author"><a href="#">{postData.author}</a></span>
+					<span className="date"><a href="#">{postData.date}</a></span>
+				</div>
+
+				{ otherPosts }
+			</article>
+        );
+	}
+
+	private getTab(id:string, tabPostsData: IPost[]): React.ReactElement<any> {
+		const tabItems = tabPostsData.map((item) => {
+			return (				
+				<li>
+					<a href="#"><img alt="" src={item.img}/></a>
+					<h3><a href="#">{item.title}</a></h3>
+					<div className="post-date">{item.date}</div>
+				</li>
+			);
+		});
+
+ 		return (
+			<div id={id}>
+				<ul>
+					{tabItems}
+				</ul>
+			</div>
+        );
+	}
+
+	private getFlexSlider(flexSliderPostsData: IPost[]): React.ReactElement<any> {
+		const fsItems = flexSliderPostsData.map((item) => {
+			return (
+				<li>
+					<a href="#"><img alt="" src={item.img}/></a>
+					<div className="flex-caption">
+						<div className="desc">
+							<h1><a href="#">{item.title}</a></h1>
+							<p>{item.content}</p>
+						</div>
+					</div>
+				</li>
+			);
+		});
+
+		return (
+			<div className="flexslider mb25">
+				<ul className="slides no-bullet inline-list m0">
+					{ fsItems }
+				</ul>
+			</div>   
+		);
+	}
 
     public render(): React.ReactElement<any> {
         /*const tagCloud = (
@@ -41,245 +178,121 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
         const tagCloud = null;
 
-        const otherPosts = (
-            <div className="other-posts">
-							<ul className="no-bullet">
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">Check Out the New Recommended Resources on Webdesigntuts+</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">15 Great Last-Minute Gifts for Web Designers</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">How to Create an SEO-Friendly URL Structure</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-							</ul>
-						</div>
-        );
+		const otherPostsData = [
+            {
+                img: 'http://placehold.it/50x50',
+				title: 'Check Out the New Recommended Resources on Webdesigntuts+',
+				date: '13 Jan 2013'
+            },
+            {
+                img: 'http://placehold.it/50x50',
+				title: '15 Great Last-Minute Gifts for Web Designers',
+				date: '13 Jan 2013'
+            },
+            {
+                img: 'http://placehold.it/50x50',
+				title: 'How to Create an SEO-Friendly URL Structure',
+				date: '13 Jan 2013'
+            },
+        ];
 
-        const miniCarroussel = (
-            <div className="clearfix mb10 oh">
-					<h4 className="cat-title">Business</h4>
-					<div className="carousel-container">
-						<div className="carousel-navigation">
-							<a className="carousel-prev"></a>
-							<a className="carousel-next"></a>
-						</div>
-						<div className="carousel-item-holder row" data-index="0">
-							<div className="four column carousel-item">
-								<a href="#"><img src="http://placehold.it/300x250" alt=""/></a>
+		const miniCarrousselData = [
+            {
+                img: 'http://placehold.it/300x250',
+				title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 3',
+				content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
+				date: '13 Jan 2013'
+            },
+            {
+                img: 'http://placehold.it/300x250',
+				title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 3',
+				content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
+				date: '13 Jan 2013'
+            },
+            {
+                img: 'http://placehold.it/300x250',
+				title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 3',
+				content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
+				date: '13 Jan 2013'
+            },
+            {
+                img: 'http://placehold.it/300x250',
+				title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 3',
+				content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
+				date: '13 Jan 2013'
+            },
+            {
+                img: 'http://placehold.it/300x250',
+				title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 3',
+				content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
+				date: '13 Jan 2013'
+            },
+		];
 
-								<div className="post-container">
-									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features 3</h2>
-									<div className="post-content">
-										<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
-									</div>
-								</div>
+		const articleData:IPost = {
+			img: 'http://placehold.it/300x220',
+			title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 6',
+			content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
+			author: 'nextwpthemes',
+			date: '13 Jan 2013',
+		};
 
-								<div className="post-meta">
-									<span className="comments"><a href="#">24</a></span>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</div>
-							</div>
-							<div className="four column carousel-item">
-								<a href="#"><img src="http://placehold.it/300x250" alt=""/></a>
+		const tabData:IPost[] = [
+			{
+				img: 'http://placehold.it/60x60',
+				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
+				date: 'March 05, 2012'
+			},
+			{
+				img: 'http://placehold.it/60x60',
+				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
+				date: 'March 05, 2012'
+			},
+			{
+				img: 'http://placehold.it/60x60',
+				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
+				date: 'March 05, 2012'
+			},
+			{
+				img: 'http://placehold.it/60x60',
+				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
+				date: 'March 05, 2012'
+			},
+		];
 
-								<div className="post-container">
-									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features</h2>
-									<div className="post-content">
-										<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
-									</div>
-								</div>
+		const flexSliderData:IPost[] = [
+			{
+				img: 'http://placehold.it/620x350',
+				title: 'Maecenas mattis, tortor ut posuere aliquam.',
+				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
+			},
+			{
+				img: 'http://placehold.it/620x350',
+				title: '>Maecenas mattis',
+				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
+			},
+			{
+				img: 'http://placehold.it/620x350',
+				title: 'Maecenas mattis, tortor ut posuere aliquam, tortor ut posuere aliquam, tortor ut posuere aliquam',
+				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
+			},
+			{
+				img: 'http://placehold.it/620x350',
+				title: 'Maecenas mattis, tortor ut posuere aliquam.',
+				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
+			},
+		];
 
-								<div className="post-meta">
-									<span className="comments"><a href="#">24</a></span>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</div>
-							</div>
-							<div className="four column carousel-item">
-								<a href="#"><img src="http://placehold.it/300x250" alt=""/></a>
+        const miniCarroussel = this.getMiniCarroussel('Business', miniCarrousselData); 
 
-								<div className="post-container">
-									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features 4</h2>
-									<div className="post-content">
-										<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
-									</div>
-								</div>
+		const businessArticle = this.getArticle('Business', articleData, otherPostsData);
+		const technologyArticle = this.getArticle('Technology', articleData, otherPostsData);
 
-								<div className="post-meta">
-									<span className="comments"><a href="#">24</a></span>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</div>
-							</div>
-							<div className="four column carousel-item">
-								<a href="#"><img src="http://placehold.it/300x250" alt=""/></a>
+		const popularTab = this.getTab('popular-tab', tabData);
+		const recentTab = this.getTab('recent-tab', tabData);
+		const commentsTab = this.getTab('comments-tab', tabData);
 
-								<div className="post-container">
-									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features</h2>
-									<div className="post-content">
-										<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
-									</div>
-								</div>
-
-								<div className="post-meta">
-									<span className="comments"><a href="#">24</a></span>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</div>
-							</div>
-							<div className="four column carousel-item">
-								<a href="#"><img src="http://placehold.it/300x250" alt=""/></a>
-
-								<div className="post-container">
-									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features 5</h2>
-									<div className="post-content">
-										<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
-									</div>
-								</div>
-
-								<div className="post-meta">
-									<span className="comments"><a href="#">24</a></span>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-        );
-
-        const businessArticle = (
-<article className="six column">
-						<h4 className="cat-title"><a href="#">Business</a></h4>
-						<div className="post-image">
-							<a href="#"><img src="http://placehold.it/300x220" alt=""/></a>
-						</div>
-
-						<div className="post-container">
-							<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features 6</h2>
-							<div className="post-content">
-								<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
-							</div>
-						</div>
-
-						<div className="post-meta">
-							<span className="comments"><a href="#">24</a></span>
-							<span className="author"><a href="#">nextwpthemes</a></span>
-							<span className="date"><a href="#">13 Jan 2013</a></span>
-						</div>
-
-                        { otherPosts }
-					</article>
-        );
-
-        const technologyArticle = (
-<article className="six column">
-						<h4 className="cat-title"><a href="#">Techology</a></h4>
-						<div className="post-image">
-							<a href="#"><img src="http://placehold.it/300x220" alt=""/></a>
-						</div>
-
-						<div className="post-container">
-							<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features 7</h2>
-							<div className="post-content">
-								<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
-							</div>
-						</div>
-
-						<div className="post-meta">
-							<span className="comments"><a href="#">24</a></span>
-							<span className="author"><a href="#">nextwpthemes</a></span>
-							<span className="date"><a href="#">13 Jan 2013</a></span>
-						</div>
-
-                        { otherPosts }
-					</article>
-        );
-
-        const popularTab = (
-                    <div id="popular-tab">
-		        			<ul>
-		        				<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		        					<h3><a href="#">Dictum ipsum vel laoreet. Sed convallis quam ut elit</a></h3>
-		        					<div className="post-date">March 25, 2012</div>
-		        				</li>
-		        				<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		        					<h3><a href="#">Dictum ipsum vel laoreet. Sed convallis quam ut elit</a></h3>
-		        					<div className="post-date">March 22, 2012</div>
-		        				</li>
-		        				<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		        					<h3><a href="#">Dictum ipsum vel laoreet. Sed convallis quam ut elit</a></h3>
-		        					<div className="post-date">March 05, 2012</div>
-		        				</li>
-		        				<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		        					<h3><a href="#">Dictum ipsum vel laoreet. Sed convallis quam ut elit</a></h3>
-		        					<div className="post-date">March 05, 2012</div>
-		        				</li>
-		        			</ul>
-		        		</div>
-        );
-
-        const recentTab = (
-                <div id="recent-tab">
-		        			<ul>
-		        				<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		        					<h3><a href="#">Dictum ipsum vel laoreet. Sed convallis quam ut elit</a></h3>
-		        					<div className="post-date">March 25, 2012</div>
-		        				</li>
-		        				<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		        					<h3><a href="#">Dictum ipsum vel laoreet. Sed convallis quam ut elit</a></h3>
-		        					<div className="post-date">March 22, 2012</div>
-		        				</li>
-		        				<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		        					<h3><a href="#">Dictum ipsum vel laoreet. Sed convallis quam ut elit</a></h3>
-		        					<div className="post-date">March 05, 2012</div>
-		        				</li>
-		        				<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		        					<h3><a href="#">Dictum ipsum vel laoreet. Sed convallis quam ut elit</a></h3>
-		        					<div className="post-date">March 05, 2012</div>
-		        				</li>
-		        			</ul>
-		        		</div>
-        );
-
-        const commentsTab = (
-                    <div id="comments-tab">
-		       				<ul>
-		       					<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		        					<h3><a href="#">admin says:</a></h3>
-		        					<div className="author-comment">Nice theme, indeed :)</div>
-		        				</li>
-		        				<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-	        						<h3><a href="#">faton says:</a></h3>
-		       						<div className="author-comment">very nice post!</div>
-		       					</li>
-		       					<li>
-		       						<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		       						<h3><a href="#">sami says:</a></h3>
-		       						<div className="author-comment">Nice theme I’m gonna use it on my next site. I loved the layout and ...</div>
-		       					</li>
-		       					<li>
-		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
-		        					<h3><a href="#">sami says:</a></h3>
-		        					<div className="author-comment">Nice theme I’m gonna use it on my next site. I loved the layout and ...</div>
-		        				</li>
-		        			</ul>
-		        		</div>
-        );
+		const flexSlider = this.getFlexSlider(flexSliderData);
 
         const sideBar = (
 			<aside id="sidebar" className="four column pull-right">
@@ -302,74 +315,24 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 			</aside>
         );
 
-        const flexSlider = (
-    <div className="flexslider mb25">
-					<ul className="slides no-bullet inline-list m0">
-						<li>
-				     		<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
-				     		<div className="flex-caption">
-				                <div className="desc">
-				                	<h1><a href="#">Maecenas mattis, tortor ut posuere aliquam.</a></h1>
-				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
-				                </div>
-				            </div>
-						</li>
-						<li>
-							<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
-				     		<div className="flex-caption">
-				                <div className="desc">
-				                	<h1><a href="#">Maecenas mattis</a></h1>
-				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
-				                </div>
-				            </div>
-				   		</li>
-				   		<li>
-				     		<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
-				     		<div className="flex-caption">
-				                <div className="desc">
-				                	<h1><a href="#">Maecenas mattis, tortor ut posuere aliquam, tortor ut posuere aliquam, tortor ut posuere aliquam</a></h1>
-				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
-				                </div>
-				            </div>
-						</li>
-						<li>
-							<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
-				     		<div className="flex-caption">
-				                <div className="desc">
-				                	<h1><a href="#">Maecenas mattis, tortor ut posuere aliquam, tortor ut posuere aliquam, tortor ut posuere aliquam</a></h1>
-				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
-				                </div>
-				            </div>
-				   		</li>
-					</ul>
-				</div>    
-        );
-
         return (
-	<section className="container row clearfix">
-		{/* Inner Container */}
-		<section className="inner-container clearfix">
-			{/* <!-- Content */}
-			<section id="content" className="eight column row pull-left">
-				{ flexSlider }
-
-				<section className="row">
-					{ businessArticle }
-					{ technologyArticle }
-				</section>
-
-                { miniCarroussel }
-
-				<section className="row">
-					{ businessArticle }
-					{ technologyArticle }
+			<section className="container row clearfix">
+				<section className="inner-container clearfix">
+					<section id="content" className="eight column row pull-left">
+						{ flexSlider }
+						<section className="row">
+							{ businessArticle }
+							{ technologyArticle }
+						</section>
+						{ miniCarroussel }
+						<section className="row">
+							{ businessArticle }
+							{ technologyArticle }
+						</section>
+					</section>
+					{ sideBar }
 				</section>
 			</section>
-
-            { sideBar }
-            
-		</section>
-	</section>
         );
     }
 }
