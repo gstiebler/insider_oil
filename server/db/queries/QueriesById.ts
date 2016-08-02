@@ -736,6 +736,102 @@ const queries:IQueriesById = {
         },
         fields: wellsByDrillingRigOffshore.fields
     },
+
+    blocksOperatedByCompany: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'blocks',
+                    fields: [
+                        ['id', 'bl_id'],
+                        ['name', 'bl_name'],
+                        'status',
+                    ]
+                },
+                joinTables: [],
+                extraFields: [
+                    ['"Block"', 'model'],
+                ],
+                filters: [
+                    {
+                        field: 'blocks.operator_id',
+                        equal: filter.id
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'bl_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+        {
+                label: 'Bloco',
+                ref: {
+                    modelField: 'model',
+                    idField: 'bl_id',
+                    valueField: 'bl_name'
+                }
+            },
+            {
+                label: 'Status',
+                fieldName: 'status',
+                type: 'VARCHAR'
+            },
+        ]
+    },
+
+    oilFieldsOperatedByCompany: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'oil_fields',
+                    fields: [
+                        ['id', 'of_id'],
+                        ['name', 'of_name'],
+                        'stage',
+                    ]
+                },
+                joinTables: [],
+                extraFields: [
+                    ['"OilField"', 'model'],
+                ],
+                filters: [
+                    {
+                        field: 'oil_fields.operator_id',
+                        equal: filter.id
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'of_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+        {
+                label: 'Campo',
+                ref: {
+                    modelField: 'model',
+                    idField: 'of_id',
+                    valueField: 'of_name'
+                }
+            },
+            {
+                label: 'Estágio',
+                fieldName: 'stage',
+                type: 'VARCHAR'
+            },
+        ]
+    },
 };
 
 export = queries;

@@ -95,6 +95,16 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                     foreignKey: {  allowNull: false }
                 };
                 OilField.belongsTo(models.Basin, opts);
+
+                const operatorOpts:Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'operator', 
+                    foreignKey: {  allowNull: true }
+                };
+                OilField.belongsTo(models.Company, {
+                    as: 'operator', 
+                    foreignKey: {  allowNull: true }
+                });
+
                 OilField.belongsTo(models.Block, { as: 'block', foreignKey: { allowNull: true } } );
             },
 			defineHooks: defineHooks
