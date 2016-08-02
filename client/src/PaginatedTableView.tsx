@@ -12,7 +12,7 @@ interface IAppProps {
 
 interface IAppState {
     tableParams: ITableParams;
-    show: boolean;
+    show: boolean; // it's only here to compensate a Datatables bug
 }
 
 export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
