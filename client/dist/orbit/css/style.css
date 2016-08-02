@@ -323,7 +323,7 @@ body > header .inner-header {
 .flex-caption { position: absolute; left: 0; bottom: 0; font-size: 13px; padding: 18px 20px; color: #fff; height: 100px; width: 100%; overflow: hidden; background: rgba(0,0,0, 0.5); background: url(http://www.htmltocss.com/rgbatopng.php?rgba=0,0,0,0.5)\0/; }
 .flex-caption .desc { height: 60px; overflow: hidden; }
 .flex-caption h1 { line-height: normal; margin: 0; }
-.flex-caption a { color: #fc7100; margin-bottom: 7px; font-family: 'PT Sans'; font-size: 18px; line-height: 20px; display: block; }
+.flex-caption a { color: #78c36a; margin-bottom: 7px; font-family: 'PT Sans'; font-size: 18px; line-height: 20px; display: block; }
 .flex-caption p { line-height: 17px }
 
 /* Direction Nav */
@@ -364,7 +364,7 @@ body > header .inner-header {
     color: #fff;
     margin: 0px;
     padding: 9px 14px 8px 42px;
-    background: #fc7100 url(../images/cat-icon.png) no-repeat 5px center;
+    background: #0f454f url(../images/cat-icon.png) no-repeat 5px center;
 }
 
 .cat-title a {
@@ -668,7 +668,7 @@ footer .widget-title {
 
 .tabs-widget .tab-links li.active a {
     color: #fff;
-    background: #fc7100;
+    background: #0f454f;
     border: 1px solid #fc7100;
 }
 
@@ -734,7 +734,7 @@ footer .widget-title {
 }
 
 .tabs-widget > div h3 a {
-    color: #fc7100;
+    color: #78c36a;
     display: block;
     font-size: 13px;
 }
