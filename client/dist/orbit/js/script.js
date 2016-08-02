@@ -120,7 +120,7 @@ $(document).ready(function($) {
     /*-------------------------------------------------*/
 	/* =  Tabs Widget - { Popular, Recent and Comments }
 	/*-------------------------------------------------*/
-	$('.tab-links li a').live('click', function(e){
+	$(document).on('click', '.tab-links li a', function(e){
 		e.preventDefault();
 		if (!$(this).parent('li').hasClass('active')){
 			var link = $(this).attr('href');
