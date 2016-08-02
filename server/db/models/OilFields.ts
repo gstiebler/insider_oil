@@ -122,7 +122,7 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
             type: DataTypes.VIRTUAL,
             get: function() {
                 const select = 'select c.name, round(ofc.prop * 100, 2) as percent ';
-                const fromStr = 'from oil_field_concessionaries ofc ';
+                const fromStr = 'from oil_field_concessionaries ofc '; 
                 const companyJoin = ' left outer join companies c on ofc.company_id = c.id ';
                 const where = 'where ofc.oil_field_id = ' + this.id;
                 const order = ' order by ofc.id';

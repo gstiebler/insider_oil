@@ -12,6 +12,7 @@ interface IAppProps {
 
 interface IAppState {
     tableParams: ITableParams;
+    show: boolean;
 }
 
 export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
@@ -24,7 +25,8 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
         this.source = props.location.query.source;
 
         this.state = {
-            tableParams: null
+            tableParams: null,
+            show: false
         };
     }
 
@@ -38,6 +40,8 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
     }
 
     private getFields() {
+        this.state.show = false;
+        this.setState(this.state);
         getFields(this.source)
             .then(this.onFields.bind(this))
             .catch(showError.show);
@@ -54,9 +58,13 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): React.ReactElement<any> {
+        if(!this.state.show) {
+            this.state.show = true;
+            return <div></div>;
+        }
         return (
             <div>
-                <PaginatedTable tableParams={ this.state.tableParams } />
+                { this.state.tableParams ? <PaginatedTable tableParams={ this.state.tableParams } /> : null }
             </div>
         );
     }

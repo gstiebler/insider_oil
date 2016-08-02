@@ -42,33 +42,35 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         if(!nextProps.tableParams) {
             return;
         }
-        //this.initTable(nextProps);
+        this.initHeader(nextProps);
+        this.setState(this.state);
+    }
+
+    private componentDidMount() {
+        this.initHeader(this.props);
         this.setState(this.state);
     }
 
     private componentDidUpdate() {
+        this.initHeader(this.props);
         this.initTable(this.props);
+    }
+
+    private initHeader(props) {
+        var { tableParams } = props;
+        var {columns, currencyColumnsIndexes} = genColumns(tableParams);
+        this.state.headerParams = { 
+            filterFields: columns,
+            label: tableParams.label
+        };
     }
 
     private initTable(props: IAppProps) {
         var dataTableElement:any = $('#mainTable');
 
         var { tableParams } = props;
-        if(!tableParams) {
-            return;
-        }
-        console.log(tableParams);
         var {columns, currencyColumnsIndexes} = genColumns(tableParams);
-        console.log(columns);
-
-        this.state.headerParams = { 
-            filterFields: columns,
-            label: tableParams.label
-        };
         
-        if(this.state.dataTable) {
-            this.state.dataTable.destroy();
-        }
         this.state.dataTable = dataTableElement.DataTable( {
             columns: columns,
             language: ModelViewService.datatablesPtBrTranslation,
@@ -130,6 +132,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
             recordsFiltered: serverResult.count 
         };
         callback(result);
+        return null;
     }
 
     private filterChanged(newFilter) {
@@ -138,9 +141,10 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
     } 
 
     public render(): React.ReactElement<any> {
-        const tableHeader = this.state.headerParams ? 
-            ( <PaginatedTableHeader headerParams={ this.state.headerParams } filterChanged={ this.filterChanged.bind(this) }></PaginatedTableHeader> ) :
-            null;
+        if(!this.state.headerParams) {
+            return <div></div>;
+        }
+        const tableHeader = <PaginatedTableHeader headerParams={ this.state.headerParams } filterChanged={ this.filterChanged.bind(this) }></PaginatedTableHeader>;
 
         return (
             <div className="main-table table-responsive bootstrap-table">
