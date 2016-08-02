@@ -19,6 +19,7 @@ import { Dashboard } from './Dashboard';
 import { NewsSingle } from './NewsSingle';
 import { PaginatedTableView } from './PaginatedTableView'; 
 import { DataList } from './DataList'; 
+import { Insights } from './Insights'; 
 
 interface IAppProps {
     model: string;
@@ -109,6 +110,7 @@ ReactDOM.render(
       <Route path="view_new" component={NewsSingle}/>
       <Route path="paginated_table_view" component={PaginatedTableView}/>
       <Route path="data_list" component={DataList}/>
+      <Route path="insights" component={Insights}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,
