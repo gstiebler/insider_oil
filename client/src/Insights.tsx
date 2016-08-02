@@ -41,74 +41,8 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
         const tagCloud = null;
 
-        return (
-	<section className="container row clearfix">
-		{/* Inner Container */}
-		<section className="inner-container clearfix">
-			{/* <!-- Content */}
-			<section id="content" className="eight column row pull-left">
-				<div className="flexslider mb25">
-					<ul className="slides no-bullet inline-list m0">
-						<li>
-				     		<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
-				     		<div className="flex-caption">
-				                <div className="desc">
-				                	<h1><a href="#">Maecenas mattis, tortor ut posuere aliquam.</a></h1>
-				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
-				                </div>
-				            </div>
-						</li>
-						<li>
-							<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
-				     		<div className="flex-caption">
-				                <div className="desc">
-				                	<h1><a href="#">Maecenas mattis</a></h1>
-				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
-				                </div>
-				            </div>
-				   		</li>
-				   		<li>
-				     		<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
-				     		<div className="flex-caption">
-				                <div className="desc">
-				                	<h1><a href="#">Maecenas mattis, tortor ut posuere aliquam, tortor ut posuere aliquam, tortor ut posuere aliquam</a></h1>
-				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
-				                </div>
-				            </div>
-						</li>
-						<li>
-							<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
-				     		<div className="flex-caption">
-				                <div className="desc">
-				                	<h1><a href="#">Maecenas mattis, tortor ut posuere aliquam, tortor ut posuere aliquam, tortor ut posuere aliquam</a></h1>
-				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
-				                </div>
-				            </div>
-				   		</li>
-					</ul>
-				</div>
-
-				<section className="row">
-					<article className="six column">
-						<h4 className="cat-title"><a href="#">Business</a></h4>
-						<div className="post-image">
-							<a href="#"><img src="http://placehold.it/300x220" alt=""/></a>
-						</div>
-
-						<div className="post-container">
-							<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features</h2>
-							<div className="post-content">
-								<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
-							</div>
-						</div>
-
-						<div className="post-meta">
-							<span className="comments"><a href="#">24</a></span>
-							<span className="author"><a href="#">nextwpthemes</a></span>
-							<span className="date"><a href="#">13 Jan 2013</a></span>
-						</div>
-
-						<div className="other-posts">
+        const otherPosts = (
+            <div className="other-posts">
 							<ul className="no-bullet">
 								<li>
 									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
@@ -127,50 +61,10 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 								</li>
 							</ul>
 						</div>
-					</article>
-                    
-					<article className="six column">
-						<h4 className="cat-title"><a href="#">Techology</a></h4>
-						<div className="post-image">
-							<a href="#"><img src="http://placehold.it/300x220" alt=""/></a>
-						</div>
+        );
 
-						<div className="post-container">
-							<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features</h2>
-							<div className="post-content">
-								<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
-							</div>
-						</div>
-
-						<div className="post-meta">
-							<span className="comments"><a href="#">24</a></span>
-							<span className="author"><a href="#">nextwpthemes</a></span>
-							<span className="date"><a href="#">13 Jan 2013</a></span>
-						</div>
-
-						<div className="other-posts">
-							<ul className="no-bullet">
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">Check Out the New Recommended Resources on Webdesigntuts+</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">15 Great Last-Minute Gifts for Web Designers</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">How to Create an SEO-Friendly URL Structure</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-							</ul>
-						</div>
-					</article>
-				</section>
-
-				<div className="clearfix mb10 oh">
+        const miniCarroussel = (
+            <div className="clearfix mb10 oh">
 					<h4 className="cat-title">Business</h4>
 					<div className="carousel-container">
 						<div className="carousel-navigation">
@@ -182,7 +76,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 								<a href="#"><img src="http://placehold.it/300x250" alt=""/></a>
 
 								<div className="post-container">
-									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features</h2>
+									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features 3</h2>
 									<div className="post-content">
 										<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
 									</div>
@@ -212,7 +106,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 								<a href="#"><img src="http://placehold.it/300x250" alt=""/></a>
 
 								<div className="post-container">
-									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features</h2>
+									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features 4</h2>
 									<div className="post-content">
 										<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
 									</div>
@@ -242,7 +136,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 								<a href="#"><img src="http://placehold.it/300x250" alt=""/></a>
 
 								<div className="post-container">
-									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features</h2>
+									<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features 5</h2>
 									<div className="post-content">
 										<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
 									</div>
@@ -256,16 +150,17 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 						</div>
 					</div>
 				</div>
+        );
 
-				<section className="row">
-					<article className="six column">
+        const businessArticle = (
+<article className="six column">
 						<h4 className="cat-title"><a href="#">Business</a></h4>
 						<div className="post-image">
 							<a href="#"><img src="http://placehold.it/300x220" alt=""/></a>
 						</div>
 
 						<div className="post-container">
-							<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features</h2>
+							<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features 6</h2>
 							<div className="post-content">
 								<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
 							</div>
@@ -277,35 +172,19 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 							<span className="date"><a href="#">13 Jan 2013</a></span>
 						</div>
 
-						<div className="other-posts">
-							<ul className="no-bullet">
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">Check Out the New Recommended Resources on Webdesigntuts+</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">15 Great Last-Minute Gifts for Web Designers</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">How to Create an SEO-Friendly URL Structure</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-							</ul>
-						</div>
+                        { otherPosts }
 					</article>
-                    
-					<article className="six column">
+        );
+
+        const technologyArticle = (
+<article className="six column">
 						<h4 className="cat-title"><a href="#">Techology</a></h4>
 						<div className="post-image">
 							<a href="#"><img src="http://placehold.it/300x220" alt=""/></a>
 						</div>
 
 						<div className="post-container">
-							<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features</h2>
+							<h2 className="post-title">Create a Flexible Folded Paper Effect Using CSS3 Features 7</h2>
 							<div className="post-content">
 								<p>Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non</p>
 							</div>
@@ -317,29 +196,12 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 							<span className="date"><a href="#">13 Jan 2013</a></span>
 						</div>
 
-						<div className="other-posts">
-							<ul className="no-bullet">
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">Check Out the New Recommended Resources on Webdesigntuts+</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">15 Great Last-Minute Gifts for Web Designers</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-								<li>
-									<a href="#"><img src="http://placehold.it/50x50" alt=""/></a>
-									<h3 className="post-title"><a href="#">How to Create an SEO-Friendly URL Structure</a></h3>
-									<span className="date"><a href="#">13 Jan 2013</a></span>
-								</li>
-							</ul>
-						</div>
+                        { otherPosts }
 					</article>
-				</section>
-			</section>
-            
+        );
+
+        const sideBar = (
+
 			<aside id="sidebar" className="four column pull-right">
 				<ul className="no-bullet">
 					<li className="widget tabs-widget clearfix">
@@ -430,6 +292,74 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 					</li>
 				</ul>
 			</aside>
+        );
+
+        const flexSlider = (
+    <div className="flexslider mb25">
+					<ul className="slides no-bullet inline-list m0">
+						<li>
+				     		<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
+				     		<div className="flex-caption">
+				                <div className="desc">
+				                	<h1><a href="#">Maecenas mattis, tortor ut posuere aliquam.</a></h1>
+				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
+				                </div>
+				            </div>
+						</li>
+						<li>
+							<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
+				     		<div className="flex-caption">
+				                <div className="desc">
+				                	<h1><a href="#">Maecenas mattis</a></h1>
+				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
+				                </div>
+				            </div>
+				   		</li>
+				   		<li>
+				     		<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
+				     		<div className="flex-caption">
+				                <div className="desc">
+				                	<h1><a href="#">Maecenas mattis, tortor ut posuere aliquam, tortor ut posuere aliquam, tortor ut posuere aliquam</a></h1>
+				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
+				                </div>
+				            </div>
+						</li>
+						<li>
+							<a href="#"><img alt="" src="http://placehold.it/620x350"/></a>
+				     		<div className="flex-caption">
+				                <div className="desc">
+				                	<h1><a href="#">Maecenas mattis, tortor ut posuere aliquam, tortor ut posuere aliquam, tortor ut posuere aliquam</a></h1>
+				                	<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
+				                </div>
+				            </div>
+				   		</li>
+					</ul>
+				</div>    
+        );
+
+        return (
+	<section className="container row clearfix">
+		{/* Inner Container */}
+		<section className="inner-container clearfix">
+			{/* <!-- Content */}
+			<section id="content" className="eight column row pull-left">
+				{ flexSlider }
+
+				<section className="row">
+					{ businessArticle }
+					{ technologyArticle }
+				</section>
+
+                { miniCarroussel }
+
+				<section className="row">
+					{ businessArticle }
+					{ technologyArticle }
+				</section>
+			</section>
+
+            { sideBar }
+            
 		</section>
 	</section>
         );
