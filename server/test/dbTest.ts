@@ -32,7 +32,6 @@ updateWell: (test: nodeunit.Test) => {
     test.done();
 },
 
-
 oilFieldConcessionaries: function(test) {
     const petroId = utils.idByName('Company', 'Petrobras');
     const statoilId = utils.idByName('Company', 'Statoil');
@@ -90,6 +89,66 @@ oilFieldConcessionaries: function(test) {
     db.models.OilField.destroy( { where: { id: oilFieldId } } );
     const delFindOpts = { where: { oil_field_id: oilFieldId } };
     const recAfterDel = await( db.models.OilFieldConcessionary.findAll(delFindOpts) );
+    test.equal( 0, recAfterDel.length );
+    
+    test.done();
+},
+
+blockConcessionaries: function(test) {
+    const petroId = utils.idByName('Company', 'Petrobras');
+    const statoilId = utils.idByName('Company', 'Statoil');
+    const newItemData = {
+        name: 'Bloco Teste',
+        basin_id: utils.idByName('Basin', 'Tucano Central'),
+        operator_id: utils.idByName('Company', 'Petrobras'),
+        concessionaries: 
+            [ { id: utils.idByName('Company', 'Eni Oil')  },
+            { id: petroId } ],
+        concessionaries_props: [ 30, 70 ],
+    };
+    // TODO test saving not summing 100%
+    /*try {
+	    await( db.sequelize.transaction(function(t) {
+            return db.models.OilField.create(newItemData);
+        }));
+        test.ok(false);
+    } catch(err) {
+        console.log(err);
+    }
+    newItemData.concessionaries_props = [ 30, 70 ]; */
+    const newRecord = await( db.models.Block.create(newItemData) );
+    
+    // Create
+    const record = jsonfy(newRecord);
+    
+    test.equal( 2, record.concessionaries.length );
+    test.equal( 2, record.concessionaries_props.length );
+    test.equal( petroId, record.concessionaries[1].id);
+    test.equal( 'Petrobras', record.concessionaries[1].name);
+    test.equal( 0.3, record.concessionaries[0].prop);
+    test.equal( 30, record.concessionaries_props[0]);
+    test.equal( 0.7, record.concessionaries[1].prop);
+    test.equal( 70, record.concessionaries_props[1]);
+    test.equal( 'Eni Oil: 30%\nPetrobras: 70%', record.formatted_concessionaries);
+    
+    // Edit
+    newRecord.concessionaries = [ { id: statoilId } ];
+    newRecord.concessionaries_props = [100];
+    await( newRecord.save() );
+    const findOpts = { where: { name: 'Bloco Teste' } };
+    const recAfterSave = jsonfy( await( db.models.Block.findAll(findOpts) )[0] );
+    
+    test.equal( 1, recAfterSave.concessionaries.length );
+    test.equal( 1, recAfterSave.concessionaries_props.length );
+    test.equal( statoilId, recAfterSave.concessionaries[0].id);
+    test.equal( 'Statoil', recAfterSave.concessionaries[0].name);
+    test.equal( 100, recAfterSave.concessionaries_props[0]);
+    
+    // Delete
+    const blockId = newRecord.id;
+    db.models.Block.destroy( { where: { id: blockId } } );
+    const delFindOpts = { where: { block_id: blockId } };
+    const recAfterDel = await( db.models.BlockConcessionary.findAll(delFindOpts) );
     test.equal( 0, recAfterDel.length );
     
     test.done();

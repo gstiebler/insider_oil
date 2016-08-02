@@ -13,8 +13,11 @@ module.exports = function(db) {
             end_3 : '2014-04-20',
             end_last: '2016-12-31',
             status: 'SUSPENSO',
-            concessionaries: '*Petrobras - 75%, ONGC Campos - 25%',
-            polygons: '[[{"lat":-1.83,"lng":-42.625},{"lat":-1.83,"lng":-42.75},{"lat":-2,"lng":-42.75}]]'
+            polygons: '[[{"lat":-1.83,"lng":-42.625},{"lat":-1.83,"lng":-42.75},{"lat":-2,"lng":-42.75}]]',
+            concessionaries: 
+                [ { id: 2  },
+                { id: 16  } ],
+            concessionaries_props: [ 30, 70 ],
         },
         {
             name: 'ES-M-529',
@@ -26,8 +29,7 @@ module.exports = function(db) {
             end_2: '2015-03-28',
             end_3 : '2019-12-31',
             end_last: '2019-12-31',
-            status: 'PAD EM ANÁLISE',
-            concessionaries: '*Perenco Brasil - 40%, OGX - 50%, Sinochem Petróleo - 10%'
+            status: 'PAD EM ANÁLISE'
         },
         {
             name: 'PN-T-102',
@@ -39,8 +41,7 @@ module.exports = function(db) {
             end_2: '2014-03-12',
             end_3 : null,
             end_last: '2016-06-25',
-            status: '',
-            concessionaries: '*Parnaíba Gás Natural - 50%, Imetame - 16.67%, Delp - 16.665%, Orteng - 16.665%'
+            status: ''
         }
     ]);
 }
