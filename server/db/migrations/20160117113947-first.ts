@@ -208,10 +208,6 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: true
 				},
-				concessionaries: {
-					type: Sequelize.STRING,
-					allowNull: true
-				},
 				updates: {
 					type: Sequelize.TEXT,
 					allowNull: true
