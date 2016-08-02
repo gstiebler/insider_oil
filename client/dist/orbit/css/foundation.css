@@ -9,12 +9,6 @@ body { background: white; font-family: "Helvetica Neue", "Helvetica", Helvetica,
 /* Links ---------------------- */
 a img { border: none; }
 
-a { color: #fc7100; text-decoration: none; line-height: inherit; }
-
-a:hover { color: #e36600; }
-
-a:focus { color: #e36600; }
-
 p a, p a:visited { line-height: inherit; }
 
 /* Misc ---------------------- */
