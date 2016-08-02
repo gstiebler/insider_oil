@@ -200,18 +200,8 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 					</article>
         );
 
-        const sideBar = (
-
-			<aside id="sidebar" className="four column pull-right">
-				<ul className="no-bullet">
-					<li className="widget tabs-widget clearfix">
-		        		<ul className="tab-links no-bullet clearfix">
-		        			<li className="active"><a href="#popular-tab">Popular</a></li>
-		        			<li><a href="#recent-tab">Recent</a></li>
-		        			<li><a href="#comments-tab">Comments</a></li>
-		        		</ul>
-
-		        		<div id="popular-tab">
+        const popularTab = (
+                    <div id="popular-tab">
 		        			<ul>
 		        				<li>
 		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
@@ -235,8 +225,10 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 		        				</li>
 		        			</ul>
 		        		</div>
+        );
 
-		        		<div id="recent-tab">
+        const recentTab = (
+                <div id="recent-tab">
 		        			<ul>
 		        				<li>
 		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
@@ -260,8 +252,10 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 		        				</li>
 		        			</ul>
 		        		</div>
+        );
 
-		       			<div id="comments-tab">
+        const commentsTab = (
+                    <div id="comments-tab">
 		       				<ul>
 		       					<li>
 		        					<a href="#"><img alt="" src="http://placehold.it/60x60"/></a>
@@ -285,6 +279,20 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 		        				</li>
 		        			</ul>
 		        		</div>
+        );
+
+        const sideBar = (
+			<aside id="sidebar" className="four column pull-right">
+				<ul className="no-bullet">
+					<li className="widget tabs-widget clearfix">
+		        		<ul className="tab-links no-bullet clearfix">
+		        			<li className="active"><a href="#popular-tab">Popular</a></li>
+		        			<li><a href="#recent-tab">Recent</a></li>
+		        			<li><a href="#comments-tab">Comments</a></li>
+		        		</ul>
+		        		{ popularTab }
+                        { recentTab }
+		        		{ commentsTab }
 					</li>
 					<li className="widget widget_tag_cloud clearfix">
 						<h3 className="widget-title">Tags</h3>
