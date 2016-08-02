@@ -6,8 +6,8 @@ import { polygonsToStr, strToPolygons } from '../../lib/Geo';
 import * as consLib from '../../lib/ConcessionariesUtils';
 
 function defineHooks(db) {
-	db.OilField.hook('afterCreate', consLib.updateConcessionaries.bind(this, db));
-	db.OilField.hook('beforeUpdate', consLib.updateConcessionaries.bind(this, db));
+	db.OilField.hook('afterCreate', consLib.updateConcessionaries.bind(this, db, 'OilFieldConcessionary', 'oil_field_id'));
+	db.OilField.hook('beforeUpdate', consLib.updateConcessionaries.bind(this, db, 'OilFieldConcessionary', 'oil_field_id'));
 }
 
 module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes) {
@@ -66,19 +66,22 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
         concessionaries: {
             type: DataTypes.VIRTUAL,
             get: function() { 
-                return consLib.getConcessionaries(sequelize, this.id) 
+                return consLib.getConcessionaries(sequelize, this.id, 
+                                'oil_field_concessionaries', 'oil_field_id'); 
             }
         },
         concessionaries_props: {
             type: DataTypes.VIRTUAL,
             get: function() { 
-                return consLib.getConcessionariesProps(sequelize, this.id) 
+                return consLib.getConcessionariesProps(sequelize, this.id, 
+                                'oil_field_concessionaries', 'oil_field_id');
             }
         },
         formatted_concessionaries: {
             type: DataTypes.VIRTUAL,
             get: function() { 
-                return consLib.getFormattedConcessionaries(sequelize, this.id) 
+                return consLib.getFormattedConcessionaries(sequelize, this.id, 
+                                'oil_field_concessionaries', 'oil_field_id'); 
             }
         }
     }, 
