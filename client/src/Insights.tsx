@@ -31,9 +31,9 @@ export class Insights extends React.Component<IAppProps, IAppState> {
     }
 
     private getOtherPosts(postsData: IPost[]): React.ReactElement<any> {
-        const otherPostsItems:React.ReactElement<any>[] = postsData.map((item) => {
+        const otherPostsItems:React.ReactElement<any>[] = postsData.map((item, index) => {
             return (                
-                <li>
+                <li key={'op' + index}>
                     <a href="#"><img src={item.img} alt=""/></a>
                     <h3 className="post-title"><a href="#">{item.title}</a></h3>
                     <span className="date"><a href="#">{item.date}</a></span>
@@ -52,9 +52,9 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
 	private getMiniCarroussel(title: string, postsData: IPost[]): React.ReactElement<any> {
 
-        const carrousselPostItems:React.ReactElement<any>[] = postsData.map((item) => {
+        const carrousselPostItems:React.ReactElement<any>[] = postsData.map((item, index) => {
 			return (
-				<div className="four column carousel-item">
+				<div className="four column carousel-item" key={'cp' + index}>
 					<a href="#"><img src={item.img} alt=""/></a>
 
 					<div className="post-container">
@@ -116,9 +116,9 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 	}
 
 	private getTab(id:string, tabPostsData: IPost[]): React.ReactElement<any> {
-		const tabItems = tabPostsData.map((item) => {
+		const tabItems = tabPostsData.map((item, index) => {
 			return (				
-				<li>
+				<li key={'tab' + index}>
 					<a href="#"><img alt="" src={item.img}/></a>
 					<h3><a href="#">{item.title}</a></h3>
 					<div className="post-date">{item.date}</div>
@@ -136,9 +136,9 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 	}
 
 	private getFlexSlider(flexSliderPostsData: IPost[]): React.ReactElement<any> {
-		const fsItems = flexSliderPostsData.map((item) => {
+		const fsItems = flexSliderPostsData.map((item, index) => {
 			return (
-				<li>
+				<li key={'fs' + index}>
 					<a href="#"><img alt="" src={item.img}/></a>
 					<div className="flex-caption">
 						<div className="desc">
@@ -268,7 +268,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 			},
 			{
 				img: 'http://placehold.it/620x350',
-				title: '>Maecenas mattis',
+				title: 'Maecenas mattis',
 				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
 			},
 			{
