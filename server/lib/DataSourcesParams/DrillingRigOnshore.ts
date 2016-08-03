@@ -47,8 +47,12 @@ const DrillingRigOnshore: IBaseDataSourceParams = {
         fields: {
             tipo: 'type',
             sonda: 'name',
-            empresa: 'contractor',
-            vencimento: 'end',
+            contratante: 'contractor',
+            operador: 'operator',
+            status: 'status',
+            início: 'start',
+            fim: 'end',
+            'day rate': 'day_rate',
         }
     },
     referencedObjectsOnView:  [
