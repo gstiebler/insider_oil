@@ -5,6 +5,7 @@ import db = require('../models');
 import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
 import * as TableQueries from './TableQueries';
+import * as su from '../../lib/StringUtils';
 
 /** function that returns the SQL query string */
 interface IQueryStrFn {
@@ -14,6 +15,7 @@ interface IQueryStrFn {
 interface IQueryById {
     queryStrFn: IQueryStrFn;
     fields: BaseQuery.IField[];
+    recordProcessor?: any;
 }
 
 interface IQueriesById {
@@ -838,7 +840,9 @@ const queries:IQueriesById = {
             const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'block_concessionaries',
-                    fields: []
+                    fields: [
+                        'prop'
+                    ]
                 },
                 joinTables: [
                     {
@@ -853,7 +857,6 @@ const queries:IQueriesById = {
                 ],
                 extraFields: [
                     ['"Block"', 'model'],
-                    ['concat(block_concessionaries.prop * 100.0, "%")', 'prop']
                 ],
                 filters: [
                     {
@@ -871,6 +874,9 @@ const queries:IQueriesById = {
             
             return QueryGenerator.queryGenerator(options);
         },
+        recordProcessor: record => {
+            record.formatted_prop = su.formatPercentage(record.prop);
+        },
         fields: [
             {
                 label: 'Bloco',
@@ -887,7 +893,7 @@ const queries:IQueriesById = {
             },
             {
                 label: '%',
-                fieldName: 'prop',
+                fieldName: 'formatted_prop',
                 type: 'FLOAT'
             },
         ]
