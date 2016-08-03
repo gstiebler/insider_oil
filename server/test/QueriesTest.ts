@@ -442,6 +442,7 @@ oilFieldsOperatedByCompany: (test: nodeunit.Test) => {
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
     test.equal(2, resQueryValues.records.length);
+    test.equal('Produção', resQueryValues.records[0].formatted_stage);
 
     test.done(); 
 },
@@ -476,6 +477,7 @@ oilFieldConcessionaryByCompany: (test: nodeunit.Test) => {
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
     test.equal(1, resQueryValues.records.length);
+    test.equal('Produção', resQueryValues.records[0].formatted_stage);
 
     test.done(); 
 },

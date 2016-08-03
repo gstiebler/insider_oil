@@ -795,12 +795,12 @@ const queries:IQueriesById = {
                     fields: [
                         ['id', 'of_id'],
                         ['name', 'of_name'],
-                        'stage',
                     ]
                 },
                 joinTables: [],
                 extraFields: [
                     ['"OilField"', 'model'],
+                    ['if(stage = "production", "Produção", "Desenvolvimento")', 'formatted_stage'],
                 ],
                 filters: [
                     {
@@ -829,7 +829,7 @@ const queries:IQueriesById = {
             },
             {
                 label: 'Estágio',
-                fieldName: 'stage',
+                fieldName: 'formatted_stage',
                 type: 'VARCHAR'
             },
         ]
@@ -914,13 +914,13 @@ const queries:IQueriesById = {
                         fields: [
                             ['id', 'of_id'],
                             ['name', 'of_name'],
-                            'stage'
                         ],
                         joinField: 'oil_field_concessionaries.oil_field_id'
                     },
                 ],
                 extraFields: [
                     ['"OilField"', 'model'],
+                    ['if(stage = "production", "Produção", "Desenvolvimento")', 'formatted_stage'],
                 ],
                 filters: [
                     {
@@ -952,7 +952,7 @@ const queries:IQueriesById = {
             },
             {
                 label: 'Estágio',
-                fieldName: 'stage',
+                fieldName: 'formatted_stage',
                 type: 'VARCHAR'
             },
             {
