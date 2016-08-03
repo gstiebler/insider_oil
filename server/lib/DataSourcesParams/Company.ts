@@ -30,6 +30,22 @@ const Company: IBaseDataSourceParams = {
             queryName: 'personsByCompany',
             title: 'Pessoas'
         },
+        {
+            queryName: 'blocksOperatedByCompany',
+            title: 'Blocos operados'
+        },
+        {
+            queryName: 'oilFieldsOperatedByCompany',
+            title: 'Campos operados'
+        },
+        {
+            queryName: 'blocksConcessionaryByCompany',
+            title: 'Participação em blocos exploratórios'
+        },
+        {
+            queryName: 'oilFieldConcessionaryByCompany',
+            title: 'Participação em campos'
+        },
     ],
     labelField: "name",
     gridFields: ["name", "address"],
