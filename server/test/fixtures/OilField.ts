@@ -103,5 +103,10 @@ module.exports = function(db) {
         },
     ];
 
-    return db.models.OilField.bulkCreate(parameters);
+    const promisesArray = [];
+    for(var oilFieldObj of parameters) {
+        promisesArray.push(db.models.OilField.create(oilFieldObj));
+    }
+    
+    return Promise.all(promisesArray);
 }

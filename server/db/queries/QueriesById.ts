@@ -898,6 +898,70 @@ const queries:IQueriesById = {
             },
         ]
     },
+    
+    oilFieldConcessionaryByCompany: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'oil_field_concessionaries',
+                    fields: [
+                        'prop'
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'oil_fields',
+                        fields: [
+                            ['id', 'of_id'],
+                            ['name', 'of_name'],
+                            'stage'
+                        ],
+                        joinField: 'oil_field_concessionaries.oil_field_id'
+                    },
+                ],
+                extraFields: [
+                    ['"OilField"', 'model'],
+                ],
+                filters: [
+                    {
+                        field: 'oil_field_concessionaries.company_id',
+                        equal: filter.id
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'of_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        recordProcessor: record => {
+            record.formatted_prop = su.formatPercentage(record.prop);
+        },
+        fields: [
+            {
+                label: 'Campo',
+                ref: {
+                    modelField: 'model',
+                    idField: 'of_id',
+                    valueField: 'of_name'
+                }
+            },
+            {
+                label: 'Estágio',
+                fieldName: 'stage',
+                type: 'VARCHAR'
+            },
+            {
+                label: '%',
+                fieldName: 'formatted_prop',
+                type: 'FLOAT'
+            },
+        ]
+    },
 };
 
 export = queries;
