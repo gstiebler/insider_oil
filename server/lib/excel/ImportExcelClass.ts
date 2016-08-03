@@ -34,12 +34,6 @@ export interface IExcelUploadResponse {
 }
 
 export class ImportExcel {
-    
-    lineOffset: number;
-    
-    constructor() {
-        this.lineOffset = 0;
-    }
 
     getRowValues(worksheet, row) {
         var rowValues = [];
@@ -56,6 +50,10 @@ export class ImportExcel {
         }
         
         return rowValues;
+    }
+
+    protected getLineOffset(worksheet):number {
+        return 0;
     }
 
     getHeader(worksheet, lineOffset) {
@@ -192,8 +190,8 @@ export class ImportExcel {
                 const workbook = _this.getWorkbook(excelBuf);
                 const first_sheet_name = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[first_sheet_name];
-                
-                const header = _this.getHeader(worksheet, _this.lineOffset);
+                const lineOffset = _this.getLineOffset(worksheet);
+                const header = _this.getHeader(worksheet, lineOffset);
                 _this.validateHeader(header, modelName);
                 
                 const excelParams = dsParams[modelName].excelParams;
@@ -213,7 +211,7 @@ export class ImportExcel {
                 };
                 
                 const numRows = range.e.r;
-                for( var row = 1 + _this.lineOffset; row <= numRows; row++ ) {
+                for( var row = 1 + lineOffset; row <= numRows; row++ ) {
                     saveRecordData.row = row;
                     if(!_this.saveRecord(saveRecordData)) {
                         continue;

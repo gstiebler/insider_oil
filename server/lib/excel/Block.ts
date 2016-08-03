@@ -3,10 +3,9 @@
 import { ImportExcel } from './ImportExcelClass';
 
 export class BlockC extends ImportExcel {
-    
-    constructor() {
-        super();
-        this.lineOffset = 10;
-    } 
+
+    protected getLineOffset(worksheet):number {
+        return 10;
+    }
     
 }
