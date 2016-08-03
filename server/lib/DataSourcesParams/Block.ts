@@ -38,15 +38,22 @@ const Block: IBaseDataSourceParams = {
         status: {
             label: 'Status'
         },
-        concessionaries: {
-            label: 'Concessionários'
-        },
         updates: {
             label: "Atualizações"
         },
         polygons_admin: {
             label: "Polígonos (admin)",
             isTextArea: true
+        },
+        concessionaries: {
+            label: "Concessionárias",
+            isConcessionaries: true,
+            isManyToMany: true,
+            comboSource: 'Company'
+        },
+        concessionaries_props: {
+            label: "Concessionárias % (admin)",
+            isList: true
         },
     },
     labelField: 'name',

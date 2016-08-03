@@ -83,6 +83,11 @@ export function getQueryData(req: express.Request, res: express.Response) {Sync(
     const queryStr = queryById.queryStrFn(filters);
     const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
     db.sequelize.query(queryStr, simpleQueryType).then( (records) => {
+        if(queryById.recordProcessor) {
+            for(var record of records) {
+                queryById.recordProcessor(record);
+            }
+        }
         const result = {
             fields: queryById.fields,
             records: records

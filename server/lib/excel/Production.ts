@@ -11,10 +11,11 @@ var await = require('../await');
 export class Production extends ImportExcel {
     
     headerFields: any;
+    private firstHeaderLine: number;
     
     constructor() {
         super();
-        this.lineOffset = 5;
+        this.firstHeaderLine = -1;
         this.headerFields = {
             name: 'anp',
             name_operator: 'operador',
@@ -27,12 +28,31 @@ export class Production extends ImportExcel {
             gas_royaties_volume: 'volume gás royalties (mm³/dia)',
             water_production: 'água (bbl/dia)',
         };
-    } 
+    }
+
+    protected getLineOffset(worksheet):number {
+        var currLine = 1;
+        // detect first empty row
+        for(; currLine < 50; currLine++) {
+            const row = this.getRowValues(worksheet, currLine);
+            if(row[0] == '') {
+                break;
+            }
+        }
+        // detect header after empty rows
+        for(; currLine < 50; currLine++) {
+            const row = this.getRowValues(worksheet, currLine);
+            if(row[0] != '') {
+                this.firstHeaderLine = currLine;
+                return currLine + 1;
+            }
+        }
+        return -1;
+    }
     
     getHeader(worksheet, lineOffset) {
-        const firstHeaderLine = 4;
-        const header = this.getRowValues(worksheet, firstHeaderLine);
-        const header2 = this.getRowValues(worksheet, firstHeaderLine + 1);
+        const header = this.getRowValues(worksheet, this.firstHeaderLine);
+        const header2 = this.getRowValues(worksheet, this.firstHeaderLine + 1);
         for( var i = 0; i < header.length; i++ ) {
             header[i] = header[i].toLowerCase();
             if(header2[i] == '') {

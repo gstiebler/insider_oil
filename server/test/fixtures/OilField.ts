@@ -1,21 +1,23 @@
 import utils = require('../lib/utils');
 
 module.exports = function(db) {
-    return db.models.OilField.bulkCreate([
+    const parameters = [
         {
             name: 'Anambé',
             basin_id: utils.idByName('Basin', 'Potiguar'),
+            operator_id: utils.idByName('Company', 'Petrobras'),
             state: 'Alagoas',
             shore: 'on',
             stage: 'production',
             concessionaries: 
-                [ { id: 2  },
-                { id: 16  } ],
+                [ { id: utils.idByName('Company', 'Eni Oil')  },
+                { id: utils.idByName('Company', 'Petrobras')  } ],
             concessionaries_props: [ 30, 70 ],
         },
         {
             name: 'Jiribatuba2',
             basin_id: utils.idByName('Basin', 'Tucano Central'),
+            operator_id: utils.idByName('Company', 'Petrobras'),
             state: 'Bahia',
             shore: 'on',
             stage: 'production',
@@ -24,6 +26,7 @@ module.exports = function(db) {
         {
             name: 'Abalone',
             basin_id: utils.idByName('Basin', 'Recôncavo'),
+            operator_id: utils.idByName('Company', 'Statoil'),
             state: 'Espírito Santo',
             shore: 'off',
             stage: 'production'
@@ -98,5 +101,12 @@ module.exports = function(db) {
             shore: 'off',
             stage: 'production'
         },
-    ]);
+    ];
+
+    const promisesArray = [];
+    for(var oilFieldObj of parameters) {
+        promisesArray.push(db.models.OilField.create(oilFieldObj));
+    }
+    
+    return Promise.all(promisesArray);
 }
