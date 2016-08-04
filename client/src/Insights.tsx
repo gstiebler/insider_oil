@@ -2,20 +2,13 @@ import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import * as ni from '../../common/NetworkInterfaces';
+import { IInsight } from '../../common/Interfaces';
 import { Link } from 'react-router';
 
 interface IAppProps {
 }
 
 interface IAppState {
-}
-
-interface IPost {
-	img: string;
-	title: string;
-	date?: string;
-	content?: string;
-	author?: string;
 }
 
 export class Insights extends React.Component<IAppProps, IAppState> {
@@ -30,11 +23,11 @@ export class Insights extends React.Component<IAppProps, IAppState> {
     private componentDidMount() {
     }
 
-    private getOtherPosts(postsData: IPost[]): React.ReactElement<any> {
+    private getOtherPosts(postsData: IInsight[]): React.ReactElement<any> {
         const otherPostsItems:React.ReactElement<any>[] = postsData.map((item, index) => {
             return (                
                 <li key={'op' + index}>
-                    <a href="#"><img src={item.img} alt=""/></a>
+                    <a href="#"><img src={item.imgUrl} alt=""/></a>
                     <h3 className="post-title"><a href="#">{item.title}</a></h3>
                     <span className="date"><a href="#">{item.date}</a></span>
                 </li>
@@ -50,12 +43,12 @@ export class Insights extends React.Component<IAppProps, IAppState> {
         );
     }
 
-	private getMiniCarroussel(title: string, postsData: IPost[]): React.ReactElement<any> {
+	private getMiniCarroussel(title: string, postsData: IInsight[]): React.ReactElement<any> {
 
         const carrousselPostItems:React.ReactElement<any>[] = postsData.map((item, index) => {
 			return (
 				<div className="four column carousel-item" key={'cp' + index}>
-					<a href="#"><img src={item.img} alt=""/></a>
+					<a href="#"><img src={item.imgUrl} alt=""/></a>
 
 					<div className="post-container">
 						<h2 className="post-title">{item.title}</h2>
@@ -88,14 +81,14 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 	}
 
 
-	private getArticle(category: string, postData: IPost, otherPostsData: IPost[]): React.ReactElement<any> {
+	private getArticle(category: string, postData: IInsight, otherPostsData: IInsight[]): React.ReactElement<any> {
         const otherPosts = this.getOtherPosts(otherPostsData);
 
 		return (
 			<article className="six column">
 				<h4 className="cat-title"><a href="#">{category}</a></h4>
 				<div className="post-image">
-					<a href="#"><img src={postData.img} alt=""/></a>
+					<a href="#"><img src={postData.imgUrl} alt=""/></a>
 				</div>
 
 				<div className="post-container">
@@ -115,11 +108,11 @@ export class Insights extends React.Component<IAppProps, IAppState> {
         );
 	}
 
-	private getTab(id:string, tabPostsData: IPost[]): React.ReactElement<any> {
+	private getTab(id:string, tabPostsData: IInsight[]): React.ReactElement<any> {
 		const tabItems = tabPostsData.map((item, index) => {
 			return (				
 				<li key={'tab' + index}>
-					<a href="#"><img alt="" src={item.img}/></a>
+					<a href="#"><img alt="" src={item.imgUrl}/></a>
 					<h3><a href="#">{item.title}</a></h3>
 					<div className="post-date">{item.date}</div>
 				</li>
@@ -135,11 +128,11 @@ export class Insights extends React.Component<IAppProps, IAppState> {
         );
 	}
 
-	private getFlexSlider(flexSliderPostsData: IPost[]): React.ReactElement<any> {
+	private getFlexSlider(flexSliderPostsData: IInsight[]): React.ReactElement<any> {
 		const fsItems = flexSliderPostsData.map((item, index) => {
 			return (
 				<li key={'fs' + index}>
-					<a href="#"><img alt="" src={item.img}/></a>
+					<a href="#"><img alt="" src={item.imgUrl}/></a>
 					<div className="flex-caption">
 						<div className="desc">
 							<h1><a href="#">{item.title}</a></h1>
@@ -229,55 +222,55 @@ export class Insights extends React.Component<IAppProps, IAppState> {
             },
 		];
 
-		const articleData:IPost = {
-			img: 'http://placehold.it/300x220',
+		const articleData:IInsight = {
+			imgUrl: 'http://placehold.it/300x220',
 			title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 6',
 			content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
 			author: 'nextwpthemes',
 			date: '13 Jan 2013',
 		};
 
-		const tabData:IPost[] = [
+		const tabData:IInsight[] = [
 			{
-				img: 'http://placehold.it/60x60',
+				imgUrl: 'http://placehold.it/60x60',
 				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
 				date: 'March 05, 2012'
 			},
 			{
-				img: 'http://placehold.it/60x60',
+				imgUrl: 'http://placehold.it/60x60',
 				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
 				date: 'March 05, 2012'
 			},
 			{
-				img: 'http://placehold.it/60x60',
+				imgUrl: 'http://placehold.it/60x60',
 				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
 				date: 'March 05, 2012'
 			},
 			{
-				img: 'http://placehold.it/60x60',
+				imgUrl: 'http://placehold.it/60x60',
 				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
 				date: 'March 05, 2012'
 			},
 		];
 
-		const flexSliderData:IPost[] = [
+		const flexSliderData:IInsight[] = [
 			{
-				img: 'http://placehold.it/620x350',
+				imgUrl: 'http://placehold.it/620x350',
 				title: 'Maecenas mattis, tortor ut posuere aliquam.',
 				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
 			},
 			{
-				img: 'http://placehold.it/620x350',
+				imgUrl: 'http://placehold.it/620x350',
 				title: 'Maecenas mattis',
 				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
 			},
 			{
-				img: 'http://placehold.it/620x350',
+				imgUrl: 'http://placehold.it/620x350',
 				title: 'Maecenas mattis, tortor ut posuere aliquam, tortor ut posuere aliquam, tortor ut posuere aliquam',
 				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
 			},
 			{
-				img: 'http://placehold.it/620x350',
+				imgUrl: 'http://placehold.it/620x350',
 				title: 'Maecenas mattis, tortor ut posuere aliquam.',
 				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
 			},

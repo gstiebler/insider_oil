@@ -112,27 +112,18 @@ export namespace GetTableQueriesFields {
     }
 }
 
-export interface IInsight {
-    id: number;
-    title: string;
-    content: string;
-    author: string;
-    imgUrl: string;
-    date: string;
-}
-
 export namespace Insights {
 
     export interface req {}
 
     export interface res {
-        carroussel: IInsight[];
-        section1Articles: IInsight[];
-        section2Articles: IInsight[];
-        section3Articles: IInsight[];
-        section4Articles: IInsight[];
-        popular: IInsight[];
-        recent: IInsight[];
-        flexSlider: IInsight[];
+        carroussel: Interfaces.IInsight[];
+        section1Articles: Interfaces.IInsight[];
+        section2Articles: Interfaces.IInsight[];
+        section3Articles: Interfaces.IInsight[];
+        section4Articles: Interfaces.IInsight[];
+        popular: Interfaces.IInsight[];
+        recent: Interfaces.IInsight[];
+        flexSlider: Interfaces.IInsight[];
     }
 }

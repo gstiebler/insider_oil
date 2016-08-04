@@ -3,6 +3,7 @@
 import db = require('../db/models');
 import Sequelize = require('sequelize');
 import * as ni from '../../common/NetworkInterfaces';
+import * as Interfaces from '../../common/Interfaces';
 import express = require("express");
 var Sync = require('sync');
 var await = require('../lib/await');
@@ -13,7 +14,7 @@ export function getInsights(req: express.Request, res: express.Response, next) {
         order: [['created_at', 'DESC']]
     };
     const insights = await( db.models.News.findAll(insightsOpts) );
-    const newsDummy:ni.IInsight[] = insights.map((insight) => {
+    const newsDummy:Interfaces.IInsight[] = insights.map((insight) => {
         return {
             id: insight.id,
             title: insight.title,
