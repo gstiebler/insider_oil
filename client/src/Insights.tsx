@@ -4,6 +4,7 @@ import * as showError from './lib/ShowError';
 import * as ni from '../../common/NetworkInterfaces';
 import { IInsight } from '../../common/Interfaces';
 import { Link } from 'react-router';
+import { dateFormatInsight } from './lib/DateUtils';
 
 interface IAppProps {
 }
@@ -47,7 +48,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
                 <li key={'op' + index}>
                     <a href="#"><img src={item.imgUrl} alt=""/></a>
                     <h3 className="post-title"><a href="#">{item.title}</a></h3>
-                    <span className="date"><a href="#">{item.date}</a></span>
+                    <span className="date"><a href="#">{dateFormatInsight(item.date)}</a></span>
                 </li>
             );
         });
@@ -76,7 +77,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 					</div>
 
 					<div className="post-meta">
-						<span className="date"><a href="#">{item.date}</a></span>
+						<span className="date"><a href="#">{dateFormatInsight(item.date)}</a></span>
 					</div>
 				</div>
 			);
@@ -118,7 +119,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
 				<div className="post-meta">
 					<span className="author"><a href="#">{postData.author}</a></span>
-					<span className="date"><a href="#">{postData.date}</a></span>
+					<span className="date"><a href="#">{dateFormatInsight(postData.date)}</a></span>
 				</div>
 
 				{ otherPosts }
@@ -132,7 +133,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 				<li key={'tab' + index}>
 					<a href="#"><img alt="" src={item.imgUrl}/></a>
 					<h3><a href="#">{item.title}</a></h3>
-					<div className="post-date">{item.date}</div>
+					<div className="post-date">{dateFormatInsight(item.date)}</div>
 				</li>
 			);
 		});
