@@ -5,10 +5,11 @@ import Sequelize = require('sequelize');
 import * as ni from '../../common/NetworkInterfaces';
 import * as Interfaces from '../../common/Interfaces';
 import express = require("express");
+import ControllerUtils = require('../lib/ControllerUtils');
 var Sync = require('sync');
 var await = require('../lib/await');
 
-export function getInsights(req: express.Request, res: express.Response, next) {
+export function getInsights(req: express.Request, res: express.Response, next) {Sync(function(){
     const insightsOpts = {
         limit: 5,
         order: [['created_at', 'DESC']]
@@ -17,7 +18,7 @@ export function getInsights(req: express.Request, res: express.Response, next) {
     const newsDummy:Interfaces.IInsight[] = insights.map((insight) => {
         return {
             id: insight.id,
-            title: insight.title,
+            title: insight.title, 
             content: insight.content,
             author: insight.author_id,
             imgUrl: 'temp.jpg',
@@ -35,4 +36,4 @@ export function getInsights(req: express.Request, res: express.Response, next) {
         flexSlider: newsDummy,
     };
     res.json(insightsRes);
-}
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
