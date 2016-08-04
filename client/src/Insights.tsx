@@ -9,6 +9,7 @@ interface IAppProps {
 }
 
 interface IAppState {
+	insights: ni.Insights.res;
 }
 
 export class Insights extends React.Component<IAppProps, IAppState> {
@@ -17,6 +18,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = {
+			insights: null
         };
     }
 
@@ -35,7 +37,8 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 	}
 
 	private onInsights(res:ni.Insights.res) {
-		console.log(res);
+		this.state.insights = res;
+		this.setState(this.state);
 	}
 
     private getOtherPosts(postsData: IInsight[]): React.ReactElement<any> {
@@ -68,7 +71,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 					<div className="post-container">
 						<h2 className="post-title">{item.title}</h2>
 						<div className="post-content">
-							<p>{item.content}</p>
+							<p dangerouslySetInnerHTML={ {__html: item.content } } />
 						</div>
 					</div>
 
@@ -109,7 +112,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 				<div className="post-container">
 					<h2 className="post-title">{postData.title}</h2>
 					<div className="post-content">
-						<p>{postData.content}</p>
+							<p dangerouslySetInnerHTML={ {__html: postData.content } } />
 					</div>
 				</div>
 
@@ -151,7 +154,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 					<div className="flex-caption">
 						<div className="desc">
 							<h1><a href="#">{item.title}</a></h1>
-							<p>{item.content}</p>
+							<p dangerouslySetInnerHTML={ {__html: item.content } } />
 						</div>
 					</div>
 				</li>
@@ -168,6 +171,11 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 	}
 
     public render(): React.ReactElement<any> {
+		const { insights } = this.state;
+		if(!insights) {
+			return <div></div>;
+		}
+
         /*const tagCloud = (
             <div className="tagcloud">
                 <a href="#" title="3 topics" style="font-size: 22pt;">business</a>
@@ -186,121 +194,16 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
         const tagCloud = null;
 
-		const otherPostsData = [
-            {
-                img: 'http://placehold.it/50x50',
-				title: 'Check Out the New Recommended Resources on Webdesigntuts+',
-				date: '13 Jan 2013'
-            },
-            {
-                img: 'http://placehold.it/50x50',
-				title: '15 Great Last-Minute Gifts for Web Designers',
-				date: '13 Jan 2013'
-            },
-            {
-                img: 'http://placehold.it/50x50',
-				title: 'How to Create an SEO-Friendly URL Structure',
-				date: '13 Jan 2013'
-            },
-        ];
+        const miniCarroussel = this.getMiniCarroussel('Business', insights.carroussel); 
 
-		const miniCarrousselData = [
-            {
-                img: 'http://placehold.it/300x250',
-				title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 3',
-				content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
-				date: '13 Jan 2013'
-            },
-            {
-                img: 'http://placehold.it/300x250',
-				title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 3',
-				content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
-				date: '13 Jan 2013'
-            },
-            {
-                img: 'http://placehold.it/300x250',
-				title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 3',
-				content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
-				date: '13 Jan 2013'
-            },
-            {
-                img: 'http://placehold.it/300x250',
-				title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 3',
-				content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
-				date: '13 Jan 2013'
-            },
-            {
-                img: 'http://placehold.it/300x250',
-				title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 3',
-				content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
-				date: '13 Jan 2013'
-            },
-		];
+		const businessArticle = this.getArticle('Business', insights.section1Articles[0], insights.section1Articles);
+		const technologyArticle = this.getArticle('Technology', insights.section2Articles[0], insights.section2Articles);
 
-		const articleData:IInsight = {
-			imgUrl: 'http://placehold.it/300x220',
-			title: 'Create a Flexible Folded Paper Effect Using CSS3 Features 6',
-			content: 'Venenatis volutpat orci, ut sodales augue tempor nec. Integer tempus ullamcorper felis eget dipiscing. Maecenas orci justo, mollis at tempus ac, gravida non',
-			author: 'nextwpthemes',
-			date: '13 Jan 2013',
-		};
+		const popularTab = this.getTab('popular-tab', insights.popular);
+		const recentTab = this.getTab('recent-tab', insights.recent);
+		const commentsTab = this.getTab('comments-tab', insights.recent);
 
-		const tabData:IInsight[] = [
-			{
-				imgUrl: 'http://placehold.it/60x60',
-				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
-				date: 'March 05, 2012'
-			},
-			{
-				imgUrl: 'http://placehold.it/60x60',
-				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
-				date: 'March 05, 2012'
-			},
-			{
-				imgUrl: 'http://placehold.it/60x60',
-				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
-				date: 'March 05, 2012'
-			},
-			{
-				imgUrl: 'http://placehold.it/60x60',
-				title: 'Dictum ipsum vel laoreet. Sed convallis quam ut elit',
-				date: 'March 05, 2012'
-			},
-		];
-
-		const flexSliderData:IInsight[] = [
-			{
-				imgUrl: 'http://placehold.it/620x350',
-				title: 'Maecenas mattis, tortor ut posuere aliquam.',
-				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
-			},
-			{
-				imgUrl: 'http://placehold.it/620x350',
-				title: 'Maecenas mattis',
-				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
-			},
-			{
-				imgUrl: 'http://placehold.it/620x350',
-				title: 'Maecenas mattis, tortor ut posuere aliquam, tortor ut posuere aliquam, tortor ut posuere aliquam',
-				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
-			},
-			{
-				imgUrl: 'http://placehold.it/620x350',
-				title: 'Maecenas mattis, tortor ut posuere aliquam.',
-				content: "This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor",
-			},
-		];
-
-        const miniCarroussel = this.getMiniCarroussel('Business', miniCarrousselData); 
-
-		const businessArticle = this.getArticle('Business', articleData, otherPostsData);
-		const technologyArticle = this.getArticle('Technology', articleData, otherPostsData);
-
-		const popularTab = this.getTab('popular-tab', tabData);
-		const recentTab = this.getTab('recent-tab', tabData);
-		const commentsTab = this.getTab('comments-tab', tabData);
-
-		const flexSlider = this.getFlexSlider(flexSliderData);
+		const flexSlider = this.getFlexSlider(insights.flexSlider);
 
         const sideBar = (
 			<aside id="sidebar" className="four column pull-right">
