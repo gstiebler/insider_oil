@@ -47,7 +47,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
             return (                
                 <li key={'op' + index}>
                     <a href="#"><img src={item.imgUrl} alt=""/></a>
-                    <h3 className="post-title"><a href="#">{item.title}</a></h3>
+                    <h3 className="post-title"><Link to={"/app/view_new?id=" + item.id}>{item.title}</Link></h3>
                     <span className="date"><a href="#">{dateFormatInsight(item.date)}</a></span>
                 </li>
             );
@@ -70,7 +70,9 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 					<a href="#"><img src={item.imgUrl} alt=""/></a>
 
 					<div className="post-container">
-						<h2 className="post-title">{item.title}</h2>
+						<h2 className="post-title">
+							<Link to={"/app/view_new?id=" + item.id}>{item.title} </Link>
+						</h2>
 						<div className="post-content">
 							<p dangerouslySetInnerHTML={ {__html: item.content } } />
 						</div>
@@ -111,7 +113,9 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 				</div>
 
 				<div className="post-container">
-					<h2 className="post-title">{postData.title}</h2>
+					<h2 className="post-title">
+						<Link to={"/app/view_new?id=" + postData.id}>{postData.title}</Link>
+					</h2>
 					<div className="post-content">
 							<p dangerouslySetInnerHTML={ {__html: postData.content } } />
 					</div>
@@ -132,7 +136,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 			return (				
 				<li key={'tab' + index}>
 					<a href="#"><img alt="" src={item.imgUrl}/></a>
-					<h3><a href="#">{item.title}</a></h3>
+					<h3><Link to={"/app/view_new?id=" + item.id}>{item.title}</Link></h3>
 					<div className="post-date">{dateFormatInsight(item.date)}</div>
 				</li>
 			);
@@ -154,7 +158,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 					<a href="#"><img alt="" src={item.imgUrl}/></a>
 					<div className="flex-caption">
 						<div className="desc">
-							<h1><a href="#">{item.title}</a></h1>
+							<h1><Link to={"/app/view_new?id=" + item.id}>{item.title}</Link></h1>
 							<p dangerouslySetInnerHTML={ {__html: item.content } } />
 						</div>
 					</div>
