@@ -181,7 +181,7 @@ const oilField:ITableQuery = {
             }
         },
         {
-            label: 'Basin',
+            label: 'Bacia',
             ref: {
                 modelField: 'b_model',
                 idField: 'b_id',
