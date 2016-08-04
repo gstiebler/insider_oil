@@ -11,6 +11,7 @@ import express = require("express");
 import * as ni from '../../common/NetworkInterfaces';
 import * as AdminController from '../controllers/AdminController';
 import * as MapsController from '../controllers/MapsController';
+import * as InsightsController from '../controllers/InsightsController';
 
 module.exports = function(app: express.Express) {    
     
@@ -50,6 +51,8 @@ module.exports = function(app: express.Express) {
     app.get('/maps/blocks', session.authorize,     MapsController.getBlocks);
     app.get('/maps/oil_fields', session.authorize, MapsController.getOilFields);
     app.get('/maps/production_units', session.authorize, MapsController.getProductionUnits);
+
+    app.get('/insights', session.authorize, InsightsController.getInsights);
     
     app.get('/search', session.authorize,          searchController.main);
     

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as server from './lib/Server';
+import { getP } from './lib/Server';
 import * as showError from './lib/ShowError';
 import * as ni from '../../common/NetworkInterfaces';
 import { IInsight } from '../../common/Interfaces';
@@ -21,7 +21,22 @@ export class Insights extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
+		this.getInsights();
+    }    
+	
+	private componentWillReceiveProps(nextProps: IAppProps) {
+		this.getInsights();
     }
+
+	private getInsights() {
+		getP('/insights', {})
+			.then(this.onInsights.bind(this))
+			.catch(showError.show);
+	}
+
+	private onInsights(res:ni.Insights.res) {
+		console.log(res);
+	}
 
     private getOtherPosts(postsData: IInsight[]): React.ReactElement<any> {
         const otherPostsItems:React.ReactElement<any>[] = postsData.map((item, index) => {
