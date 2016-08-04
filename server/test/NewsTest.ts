@@ -1,12 +1,14 @@
 "use strict"
 
 import fiberTests = require('./lib/fiberTests');
-const news = require('../lib/News');
-var await = require('../lib/await');
-
 import db = require('../db/models');
-import utils = require('./lib/utils');
 import nodeunit = require('nodeunit');
+import * as InsightsController from '../controllers/InsightsController';
+import * as ni from '../../common/NetworkInterfaces';
+import news = require('../lib/News');
+var utils = require('./lib/utils');
+var Sync = require('sync');
+var await = require('../lib/await');
 
 
 const newsHTML = '<p>um campo: <a href="/app/view_record?source=OilField&amp;id=3" style="background-color: rgb(255, 255, 255);">Abalone</a> ' +
@@ -108,9 +110,27 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 		test.equal(fixtureCount, news.length);
 	    test.done();
 	}
-}
+},
 
 };
 
+var notModDBGroup:nodeunit.ITestGroup = {
 
+insights: (test: nodeunit.Test) => {
+    const res:ni.Insights.res = 
+        utils.getJsonResponse.sync(null, InsightsController.getInsights, {});
+    test.equal(3, res.carroussel.length);
+    test.equal(3, res.section1Articles.length);
+    test.equal(3, res.section2Articles.length);
+    test.equal(3, res.section3Articles.length);
+    test.equal(3, res.section4Articles.length);
+    test.equal(3, res.popular.length);
+    test.equal(3, res.recent.length);
+    test.equal(3, res.flexSlider.length);
+    test.done();
+}
+
+}
+
+exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );
 exports.group = fiberTests.convertTests( group, false );
