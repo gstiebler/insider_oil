@@ -10,6 +10,7 @@ import { AdminGrid } from './Admin/AdminGrid';
 import { AdminEdit } from './Admin/AdminEdit';
 import { NewsEdit } from './Admin/NewsEdit';
 import { AdminCreate } from './Admin/AdminCreate';
+import { Publisher } from './Admin/Publisher';
 import { ViewRecord } from './ViewRecord/ViewRecord';
 import { OilFieldView } from './ViewRecord/OilFieldView';
 import { Flash } from './Flash';
@@ -111,6 +112,7 @@ ReactDOM.render(
       <Route path="paginated_table_view" component={PaginatedTableView}/>
       <Route path="data_list" component={DataList}/>
       <Route path="insights" component={Insights}/>
+      <Route path="insights_publisher" component={Publisher}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,

@@ -58,10 +58,11 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
         return (
             <div>
             <h4>
-                <Link to="/app/model_view?model=News">Notícias</Link>
+                <p><Link to="/app/model_view?model=News">Notícias</Link></p>
+                <p><Link to="/app/insights_publisher">Publicador</Link></p>
             </h4>
-            <hr/>
             <p><Link to="/app/paginated_table_view?source=Production">Produção</Link></p>
+            <hr/>
             { sourcesLinks }
             <hr/>
             Importar Excel de produção
