@@ -25,8 +25,19 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
     private componentDidMount() {
 		this.getInsights();
+		this.initFlexSlider();
     }    
-	
+
+	private componentDidUpdate() {
+		this.initFlexSlider();
+	}
+
+	private initFlexSlider() {
+		var flexSliderElement:any = $('.flexslider');
+        //const flexSliderElement:any = this.refs['flexSliderRef'];
+		flexSliderElement.flexslider({ animation: "fade" });
+	}
+
 	private componentWillReceiveProps(nextProps: IAppProps) {
 		this.getInsights();
     }
