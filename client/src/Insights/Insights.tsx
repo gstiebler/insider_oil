@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { getP } from './lib/Server';
-import * as showError from './lib/ShowError';
-import * as ni from '../../common/NetworkInterfaces';
-import { IInsight } from '../../common/Interfaces';
+import { getP } from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import * as ni from '../../../common/NetworkInterfaces';
+import { IInsight } from '../../../common/Interfaces';
 import { Link } from 'react-router';
-import { dateFormatInsight } from './lib/DateUtils';
+import { dateFormatInsight } from '../lib/DateUtils';
+import { FlexSlider } from './FlexSlider';
+import { Carroussel } from './Carroussel';
 
 interface IAppProps {
 }
@@ -73,46 +75,6 @@ export class Insights extends React.Component<IAppProps, IAppState> {
         );
     }
 
-	private getMiniCarroussel(title: string, postsData: IInsight[]): React.ReactElement<any> {
-
-        const carrousselPostItems:React.ReactElement<any>[] = postsData.map((item, index) => {
-			return (
-				<div className="four column carousel-item" key={'cp' + index}>
-					<a href="#"><img src={item.imgUrl} alt=""/></a>
-
-					<div className="post-container">
-						<h2 className="post-title">
-							<Link to={"/app/view_new?id=" + item.id}>{item.title} </Link>
-						</h2>
-						<div className="post-content">
-							<p dangerouslySetInnerHTML={ {__html: item.content } } />
-						</div>
-					</div>
-
-					<div className="post-meta">
-						<span className="date"><a href="#">{dateFormatInsight(item.date)}</a></span>
-					</div>
-				</div>
-			);
-		});
-
-		return (
-            <div className="clearfix mb10 oh">
-				<h4 className="cat-title">title</h4>
-				<div className="carousel-container">
-					<div className="carousel-navigation">
-						<a className="carousel-prev"></a>
-						<a className="carousel-next"></a>
-					</div>
-					<div className="carousel-item-holder row" data-index="0">
-						{ carrousselPostItems }
-					</div>
-				</div>
-			</div>
-        );
-	}
-
-
 	private getArticle(category: string, postData: IInsight, otherPostsData: IInsight[]): React.ReactElement<any> {
         const otherPosts = this.getOtherPosts(otherPostsData);
 
@@ -162,30 +124,6 @@ export class Insights extends React.Component<IAppProps, IAppState> {
         );
 	}
 
-	private getFlexSlider(flexSliderPostsData: IInsight[]): React.ReactElement<any> {
-		const fsItems = flexSliderPostsData.map((item, index) => {
-			return (
-				<li key={'fs' + index}>
-					<a href="#"><img alt="" src={item.imgUrl}/></a>
-					<div className="flex-caption">
-						<div className="desc">
-							<h1><Link to={"/app/view_new?id=" + item.id}>{item.title}</Link></h1>
-							<p dangerouslySetInnerHTML={ {__html: item.content } } />
-						</div>
-					</div>
-				</li>
-			);
-		});
-
-		return (
-			<div className="flexslider mb25">
-				<ul className="slides no-bullet inline-list m0">
-					{ fsItems }
-				</ul>
-			</div>   
-		);
-	}
-
     public render(): React.ReactElement<any> {
 		const { insights } = this.state;
 		if(!insights) {
@@ -208,9 +146,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
             </div>
         );*/
 
-        const tagCloud = null;
-
-        const miniCarroussel = this.getMiniCarroussel('Business', insights.carroussel); 
+        const tagCloud = null; 
 
 		const businessArticle = this.getArticle('Business', insights.section1Articles[0], insights.section1Articles);
 		const technologyArticle = this.getArticle('Technology', insights.section2Articles[0], insights.section2Articles);
@@ -218,8 +154,6 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 		const popularTab = this.getTab('popular-tab', insights.popular);
 		const recentTab = this.getTab('recent-tab', insights.recent);
 		const commentsTab = this.getTab('comments-tab', insights.recent);
-
-		const flexSlider = this.getFlexSlider(insights.flexSlider);
 
         const sideBar = (
 			<aside id="sidebar" className="four column pull-right">
@@ -247,12 +181,12 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 				<section className="container row clearfix">
 					<section className="inner-container clearfix">
 						<section id="content" className="eight column row pull-left">
-							{ flexSlider }
+							<FlexSlider data={insights.flexSlider} />
 							<section className="row">
 								{ businessArticle }
 								{ technologyArticle }
 							</section>
-							{ miniCarroussel }
+							<Carroussel data={insights.carroussel} />
 							<section className="row">
 								{ businessArticle }
 								{ technologyArticle }

@@ -19,7 +19,7 @@ import { Dashboard } from './Dashboard';
 import { NewsSingle } from './NewsSingle';
 import { PaginatedTableView } from './PaginatedTableView'; 
 import { DataList } from './DataList'; 
-import { Insights } from './Insights'; 
+import { Insights } from './Insights/Insights'; 
 
 interface IAppProps {
     model: string;
