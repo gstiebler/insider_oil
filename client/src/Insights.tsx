@@ -232,23 +232,25 @@ export class Insights extends React.Component<IAppProps, IAppState> {
         );
 
         return (
-			<section className="container row clearfix">
-				<section className="inner-container clearfix">
-					<section id="content" className="eight column row pull-left">
-						{ flexSlider }
-						<section className="row">
-							{ businessArticle }
-							{ technologyArticle }
+			<div className="orbit" >
+				<section className="container row clearfix">
+					<section className="inner-container clearfix">
+						<section id="content" className="eight column row pull-left">
+							{ flexSlider }
+							<section className="row">
+								{ businessArticle }
+								{ technologyArticle }
+							</section>
+							{ miniCarroussel }
+							<section className="row">
+								{ businessArticle }
+								{ technologyArticle }
+							</section>
 						</section>
-						{ miniCarroussel }
-						<section className="row">
-							{ businessArticle }
-							{ technologyArticle }
-						</section>
+						{ sideBar }
 					</section>
-					{ sideBar }
 				</section>
-			</section>
+			</div>
         );
     }
 }
