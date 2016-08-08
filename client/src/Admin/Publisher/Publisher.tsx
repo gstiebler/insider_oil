@@ -55,7 +55,6 @@ export class Publisher extends React.Component<IAppProps, IAppState> {
         removeById(items, insight.id);
         this.state.insights[sourceName] = items;
         this.setState(this.state);
-        console.log(insight);
     }
 
     public render(): React.ReactElement<any> {

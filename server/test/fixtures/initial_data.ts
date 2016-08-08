@@ -33,4 +33,5 @@ export function createFixtures():void {
     await( require('./MaintenanceDates')(db) );
     await( require('./ErrorReport')(db) );
     await( require('./ExcelImportLog')(db) );
+    await( require('./InsightsPublisher')(db) );
 };
