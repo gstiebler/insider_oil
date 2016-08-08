@@ -76,7 +76,7 @@ export class Publisher extends React.Component<IAppProps, IAppState> {
                             onChange={this.onListChange.bind(this)} />
                 </div>
                 <div className="col-md-6">
-                    Grid com notícias
+                    <InsightsGrid />
                 </div>
             </div>
         );
