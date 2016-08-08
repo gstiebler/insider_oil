@@ -111,15 +111,28 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 },
 
 savePublisher: (test: nodeunit.Test) => {
-    const query:ni.SaveInsights.req = {
-		flexSlider: [1, 2],
+    const querySave:ni.SaveInsights.req = {
+		flexSlider: [1, 3, 2],
 		section1Articles: [1, 2],
 		section2Articles: [3, 2, 1],
 		section3Articles: [1, 2],
 		section4Articles: [1, 2],
 	};
-    const res:ni.SaveInsights.res = 
-        utils.getJsonResponse.sync(null, InsightsController.saveInsights, { query });
+    const saveRes:ni.SaveInsights.res = 
+        utils.getJsonResponse.sync(null, InsightsController.saveInsights, { query: querySave });
+
+    const getRes:ni.Insights.res = 
+        utils.getJsonResponse.sync(null, InsightsController.getInsights, {});
+
+	test.equal(3, getRes.flexSlider.length);
+	test.equal(1, getRes.flexSlider[0].id);
+	test.equal(3, getRes.flexSlider[1].id);
+	test.equal(2, getRes.flexSlider[2].id);
+
+	const flexSliderItem = getRes.flexSlider[0];
+	test.equal('Petrobrás compra Statoil', flexSliderItem.title);
+	test.equal('Felipe Grandin', flexSliderItem.author);
+
 	test.done();
 }
 

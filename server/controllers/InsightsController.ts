@@ -10,29 +10,67 @@ var Sync = require('sync');
 var await = require('../lib/await');
 
 export function getInsights(req: express.Request, res: express.Response, next) {Sync(function(){
-    const insightsOpts = {
+    const insightsRecentOpts = {
         limit: 5,
-        order: [['created_at', 'DESC']]
+        order: [['created_at', 'DESC']],
+        include: [{
+            model: db.models.User,
+            as: 'author',
+            attributes: ['name']
+        }]
     };
-    const insights = await( db.models.News.findAll(insightsOpts) );
-    const newsDummy:Interfaces.IInsight[] = insights.map((insight) => {
+    const recentInsights = await( db.models.News.findAll(insightsRecentOpts) );
+    const recentInsightsRes:Interfaces.IInsight[] = recentInsights.map((insight) => {
         return {
             id: insight.id,
             title: insight.title, 
             content: insight.content,
-            author: insight.author_id,
+            author: insight.author.name,
             imgUrl: 'temp.jpg',
             date: insight.created_at
         }
     });
+
+    const flexSliderOpts = {
+        attributes: [],
+        include: [{
+            model: db.models.News, 
+            as: 'insight',
+            attributes: [
+                'id',
+                'title',
+                'content',
+                'created_at'
+            ],
+            include: [{
+                model: db.models.User,
+                as: 'author',
+                attributes: ['name']
+            }]
+        }],
+        order: ['order'],
+        where: { section: 'flexSlider' }
+    };
+    const flexSliderInsights = await( db.models.InsightsPublisher.findAll(flexSliderOpts) );
+    const flInsightsRes:Interfaces.IInsight[] = flexSliderInsights.map((insight) => {
+        return {
+            id: insight.insight.id,
+            title: insight.insight.title, 
+            content: insight.insight.content,
+            author: insight.insight.author.name,
+            imgUrl: 'temp.jpg',
+            date: insight.insight.created_at
+        }
+    });
+
     const insightsRes:ni.Insights.res = {
-        section1Articles: newsDummy,
-        section2Articles: newsDummy,
-        section3Articles: newsDummy,
-        section4Articles: newsDummy,
-        popular: newsDummy,
-        recent: newsDummy,
-        flexSlider: newsDummy,
+        section1Articles: recentInsightsRes,
+        section2Articles: recentInsightsRes,
+        section3Articles: recentInsightsRes,
+        section4Articles: recentInsightsRes,
+        popular: recentInsightsRes,
+        recent: recentInsightsRes,
+        flexSlider: flInsightsRes,
     };
     res.json(insightsRes); 
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
