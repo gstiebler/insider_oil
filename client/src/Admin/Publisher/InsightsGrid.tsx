@@ -10,21 +10,22 @@ interface IAppProps {
 
 interface IAppState {
     insights:ni.GetTableData.res;
+    insightsCount:number;
+    insightsIndex:number;
+    itemsPerPage:number;
 }
 
 export class InsightsGrid extends React.Component<IAppProps, IAppState> {
-
-    private insightsIndex:number;
-    private itemsPerPage:number;
 
     constructor(props: IAppProps) {
         super(props);
 
         this.state = {
-            insights: null
+            insights: null,
+            insightsCount: -1,
+            insightsIndex: 0,
+            itemsPerPage: 10
         };
-        this.insightsIndex = 0;
-        this.itemsPerPage = 10;
     }
 
     private componentDidMount() {
@@ -35,8 +36,8 @@ export class InsightsGrid extends React.Component<IAppProps, IAppState> {
         const req:ni.GetTableData.req = { 
             table: 'News',
             pagination: {
-                first: this.insightsIndex.toString(),
-                itemsPerPage: this.itemsPerPage.toString()
+                first: this.state.insightsIndex.toString(),
+                itemsPerPage: this.state.itemsPerPage.toString()
             },
             order: [{
                 fieldName: 'created_at',
@@ -51,12 +52,21 @@ export class InsightsGrid extends React.Component<IAppProps, IAppState> {
 
 	private onInsights(res:ni.GetTableData.res) {
 		this.state.insights = res;
+        this.state.insightsCount = res.count;
 		this.setState(this.state);
         return null;
 	}
 
     private drag(insight, ev) {
         ev.dataTransfer.setData("text", JSON.stringify(insight));
+    }
+
+    private paginationClicked(increment) {
+        this.state.insightsIndex += increment;
+        if(this.state.insightsIndex < 0) {
+            this.state.insightsIndex = 0;
+        }
+        this.getInsights();
     }
 
     public render(): React.ReactElement<any> {
@@ -90,9 +100,13 @@ export class InsightsGrid extends React.Component<IAppProps, IAppState> {
                     </tbody>
                 </table>
                 <br/>
-                <button className="btn btn-default" >Anterior</button>
-                <span style={{padding: 10}}>1 de 10</span>
-                <button className="btn btn-default" >Próximo</button>
+                <button className="btn btn-default"
+                    onClick={this.paginationClicked.bind(this, -this.state.itemsPerPage)} 
+                            >Anterior</button>
+                <span style={{padding: 10}}>{this.state.insightsIndex + 1} de {this.state.insightsCount}</span>
+                <button className="btn btn-default" 
+                    onClick={this.paginationClicked.bind(this, this.state.itemsPerPage)} 
+                            >Próximo</button>
             </div>
         );
     }
