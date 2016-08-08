@@ -36,6 +36,10 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
         };
     }
     
+    private componentDidMount() {
+        this.state.selectedField = this.props.headerParams.filterFields[0].data;
+    }
+    
     private componentWillReceiveProps(nextProps:IAppProps) {
         this.state.selectedField = nextProps.headerParams.filterFields[0].data;
     }
