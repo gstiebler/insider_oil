@@ -129,6 +129,11 @@ savePublisher: (test: nodeunit.Test) => {
 	test.equal(3, getRes.flexSlider[1].id);
 	test.equal(2, getRes.flexSlider[2].id);
 
+	test.equal(3, getRes.section2Articles.length);
+	test.equal(3, getRes.section2Articles[0].id);
+	test.equal(2, getRes.section2Articles[1].id);
+	test.equal(1, getRes.section2Articles[2].id);
+
 	const flexSliderItem = getRes.flexSlider[0];
 	test.equal('Petrobrás compra Statoil', flexSliderItem.title);
 	test.equal('Felipe Grandin', flexSliderItem.author);
