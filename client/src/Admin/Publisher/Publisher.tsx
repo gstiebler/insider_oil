@@ -5,6 +5,7 @@ import { getP } from '../../lib/Server';
 import * as showError from '../../lib/ShowError';
 import { Link } from 'react-router';
 import { InsightsReorderableList } from './InsightsReorderableList';
+import { InsightsGrid } from './InsightsGrid';
 
 interface IAppProps {
 }
