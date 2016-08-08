@@ -1,6 +1,5 @@
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
-console.log(moment.locale()); // en
 
 /**
  * Formats date string in the format yyyy-mm-dd to dd/mm/yyyy
