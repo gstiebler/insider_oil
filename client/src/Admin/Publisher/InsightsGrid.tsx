@@ -3,6 +3,7 @@ import { IInsight } from '../../../../common/Interfaces';
 import * as ni from '../../../../common/NetworkInterfaces';
 import { getP } from '../../lib/Server';
 import * as showError from '../../lib/ShowError';
+import { dateTimeFormat } from '../../lib/DateUtils';
 
 interface IAppProps {
 }
@@ -13,12 +14,17 @@ interface IAppState {
 
 export class InsightsGrid extends React.Component<IAppProps, IAppState> {
 
+    private insightsIndex:number;
+    private itemsPerPage:number;
+
     constructor(props: IAppProps) {
         super(props);
 
         this.state = {
             insights: null
         };
+        this.insightsIndex = 0;
+        this.itemsPerPage = 10;
     }
 
     private componentDidMount() {
@@ -29,8 +35,8 @@ export class InsightsGrid extends React.Component<IAppProps, IAppState> {
         const req:ni.GetTableData.req = { 
             table: 'News',
             pagination: {
-                first: '0',
-                itemsPerPage: '10'
+                first: this.insightsIndex.toString(),
+                itemsPerPage: this.itemsPerPage.toString()
             },
             order: [{
                 fieldName: 'created_at',
@@ -58,24 +64,30 @@ export class InsightsGrid extends React.Component<IAppProps, IAppState> {
         const insightsHtml = insights.records.map((insight, index) => {
             return (                
                 <tr key={index}>
-                    <td>{insight.title}</td>
-                    <td>{insight.created_at}</td>
+                    <td draggable="true">{insight.title}</td>
+                    <td>{dateTimeFormat(insight.created_at)}</td>
                 </tr>
             );
         });
 
         return (
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { insightsHtml }
-                </tbody>
-            </table>
+            <div>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { insightsHtml }
+                    </tbody>
+                </table>
+                <br/>
+                <button className="btn btn-default" >Anterior</button>
+                <span style={{padding: 10}}>1 de 10</span>
+                <button className="btn btn-default" >Próximo</button>
+            </div>
         );
     }
 
