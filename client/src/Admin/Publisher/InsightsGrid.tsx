@@ -55,6 +55,10 @@ export class InsightsGrid extends React.Component<IAppProps, IAppState> {
         return null;
 	}
 
+    private drag(insight, ev) {
+        ev.dataTransfer.setData("text", JSON.stringify(insight));
+    }
+
     public render(): React.ReactElement<any> {
         const insights = this.state.insights;
         if(!insights) {
@@ -64,7 +68,9 @@ export class InsightsGrid extends React.Component<IAppProps, IAppState> {
         const insightsHtml = insights.records.map((insight, index) => {
             return (                
                 <tr key={index}>
-                    <td draggable="true">{insight.title}</td>
+                    <td draggable="true"
+                       onDragStart={this.drag.bind(this, insight)} 
+                       >{insight.title}</td>
                     <td>{dateTimeFormat(insight.created_at)}</td>
                 </tr>
             );
