@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IInsight } from '../../../common/Interfaces';
+import { IInsight } from '../../../../common/Interfaces';
 
 interface IAppProps {
     data: IInsight[];

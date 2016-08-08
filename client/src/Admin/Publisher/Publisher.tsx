@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { IInsight } from '../../../common/Interfaces';
-import { Insights } from '../../../common/NetworkInterfaces';
-import { getP } from '../lib/Server';
-import * as showError from '../lib/ShowError';
+import { IInsight } from '../../../../common/Interfaces';
+import { Insights } from '../../../../common/NetworkInterfaces';
+import { getP } from '../../lib/Server';
+import * as showError from '../../lib/ShowError';
 import { Link } from 'react-router';
 import { InsightsReorderableList } from './InsightsReorderableList';
 

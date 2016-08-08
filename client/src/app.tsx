@@ -10,7 +10,7 @@ import { AdminGrid } from './Admin/AdminGrid';
 import { AdminEdit } from './Admin/AdminEdit';
 import { NewsEdit } from './Admin/NewsEdit';
 import { AdminCreate } from './Admin/AdminCreate';
-import { Publisher } from './Admin/Publisher';
+import { Publisher } from './Admin/Publisher/Publisher';
 import { ViewRecord } from './ViewRecord/ViewRecord';
 import { OilFieldView } from './ViewRecord/OilFieldView';
 import { Flash } from './Flash';
