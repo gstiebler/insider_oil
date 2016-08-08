@@ -40,7 +40,6 @@ export class Publisher extends React.Component<IAppProps, IAppState> {
 
     public onListChange(listName: string, items: IInsight[]) {
         this.state.insights[listName] = items;
-        this.setState(this.state);
     }
 
     public render(): React.ReactElement<any> {

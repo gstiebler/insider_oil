@@ -1,11 +1,14 @@
 import * as React from 'react';
+import { IInsight } from '../../../common/Interfaces';
 
 interface IAppProps {
-    data: string[];
+    data: IInsight[];
+    listName: string;
     onChange: any;
 }
 
 interface IAppState {
+    data: IInsight[];
 }
 
 export class ReorderableList extends React.Component<IAppProps, IAppState> {
@@ -14,6 +17,7 @@ export class ReorderableList extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = {
+            data: this.props.data
         };
     }
 
@@ -21,32 +25,37 @@ export class ReorderableList extends React.Component<IAppProps, IAppState> {
         ev.preventDefault();
     }
 
-    private drag(data, ev) {
-        ev.dataTransfer.setData("text", data);
-        console.log('drag', data);
+    private drag(insight, ev) {
+        ev.dataTransfer.setData("text", JSON.stringify(insight));
     }
 
-    private drop(i, ev) {
+    private drop(objIndex, ev) {
         ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        const items = this.props.data;
-        const indexToRemove = items.indexOf(data);
+        const insightStr = ev.dataTransfer.getData("text");
+        const insight:IInsight = JSON.parse(insightStr);
+        const items = this.state.data;
         // remove from previous position
-        items.splice(indexToRemove, 1);
+        for(var i = 0; i < items.length; i++) {
+            if(items[i].id == insight.id) {
+                items.splice(i, 1);
+                break;
+            }
+        }
         // add to new position
-        items.splice(i, 0, data);
-        console.log('drop', items);
-        //ev.target.appendChild(document.getElementById(data));
+        items.splice(objIndex, 0, insight);
+        this.props.onChange(this.props.listName, items);
+        this.state.data = items;
+        this.setState(this.state);
     }
 
     public render(): React.ReactElement<any> {
-        const listItems = this.props.data.map((item, i) => {
+        const listItems = this.state.data.map((item, i) => {
             return <li className="list-group-item" 
                        draggable="true"
                        onDragStart={this.drag.bind(this, item)} 
                        onDrop={this.drop.bind(this, i)} 
                        onDragOver={this.allowDrop}
-                       key={i} >{item}</li>
+                       key={i} >{item.id + ' - ' + item.title}</li>
         });	
 
 		return (
