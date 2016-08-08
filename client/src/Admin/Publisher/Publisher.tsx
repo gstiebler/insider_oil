@@ -94,10 +94,6 @@ export class Publisher extends React.Component<IAppProps, IAppState> {
                                     listName="section2Articles" />
                         </div>
                     </div>
-                    Carroussel
-                    <InsightsReorderableList data={insights.carroussel} 
-                            onChange={this.onListChange.bind(this)}
-                            listName="carroussel" />
                     <div className="row">
                         <div className="col-md-6">
                             Section 3

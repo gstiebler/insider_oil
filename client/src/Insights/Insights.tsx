@@ -6,7 +6,6 @@ import { IInsight } from '../../../common/Interfaces';
 import { Link } from 'react-router';
 import { dateFormatInsight } from '../lib/DateUtils';
 import { FlexSlider } from './FlexSlider';
-import { Carroussel } from './Carroussel';
 
 interface IAppProps {
 }
@@ -186,7 +185,6 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 								{ businessArticle }
 								{ technologyArticle }
 							</section>
-							<Carroussel data={insights.carroussel} />
 							<section className="row">
 								{ businessArticle }
 								{ technologyArticle }

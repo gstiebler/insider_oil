@@ -26,7 +26,6 @@ export function getInsights(req: express.Request, res: express.Response, next) {
         }
     });
     const insightsRes:ni.Insights.res = {
-        carroussel: newsDummy,
         section1Articles: newsDummy,
         section2Articles: newsDummy,
         section3Articles: newsDummy,
@@ -35,10 +34,12 @@ export function getInsights(req: express.Request, res: express.Response, next) {
         recent: newsDummy,
         flexSlider: newsDummy,
     };
-    res.json(insightsRes);
+    res.json(insightsRes); 
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 
-
+/**
+ * Save the publisher options
+ */
 export function saveInsights(req: express.Request, res: express.Response, next) {Sync(function(){
     const query:ni.SaveInsights.req = req.query;
     const InsightsPublisher = db.models.InsightsPublisher;

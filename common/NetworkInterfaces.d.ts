@@ -117,7 +117,6 @@ export namespace Insights {
     export interface req {}
 
     export interface res {
-        carroussel: Interfaces.IInsight[];
         section1Articles: Interfaces.IInsight[];
         section2Articles: Interfaces.IInsight[];
         section3Articles: Interfaces.IInsight[];

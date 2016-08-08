@@ -130,7 +130,6 @@ var notModDBGroup:nodeunit.ITestGroup = {
 insights: (test: nodeunit.Test) => {
     const res:ni.Insights.res = 
         utils.getJsonResponse.sync(null, InsightsController.getInsights, {});
-    test.equal(3, res.carroussel.length);
     test.equal(3, res.section1Articles.length);
     test.equal(3, res.section2Articles.length);
     test.equal(3, res.section3Articles.length);
