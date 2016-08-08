@@ -74,7 +74,7 @@ export class InsightsReorderableList extends React.Component<IAppProps, IAppStat
                        onDragStart={this.drag.bind(this, item)} 
                        onDrop={this.dropOnItem.bind(this, i)} 
                        onDragOver={allowDrop}
-                       key={i} >{item.id + ' - ' + item.title}</li>
+                       key={i} >{item.title}</li>
         });	
 
 		return (
