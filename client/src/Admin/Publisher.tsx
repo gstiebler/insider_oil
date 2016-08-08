@@ -4,7 +4,7 @@ import { Insights } from '../../../common/NetworkInterfaces';
 import { getP } from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import { Link } from 'react-router';
-import { ReorderableList } from './ReorderableList';
+import { InsightsReorderableList } from './InsightsReorderableList';
 
 interface IAppProps {
 }
@@ -52,26 +52,26 @@ export class Publisher extends React.Component<IAppProps, IAppState> {
             <div className="row">
                 <div className="col-md-6">
                     FlexSlider
-                    <ReorderableList data={insights.flexSlider} 
+                    <InsightsReorderableList data={insights.flexSlider} 
                             onChange={this.onListChange.bind(this)} />
                     <div className="row">
                         Section 1
-                        <ReorderableList data={insights.section1Articles} 
+                        <InsightsReorderableList data={insights.section1Articles} 
                                 className="col-md-6" 
                                 onChange={this.onListChange.bind(this)} />
                         Section 2
-                        <ReorderableList data={insights.section2Articles} 
+                        <InsightsReorderableList data={insights.section2Articles} 
                                 className="col-md-6" 
                                 onChange={this.onListChange.bind(this)} />
                     </div>
                     Carroussel
-                    <ReorderableList data={insights.carroussel} 
+                    <InsightsReorderableList data={insights.carroussel} 
                             onChange={this.onListChange.bind(this)} />
                     Section 3
-                    <ReorderableList data={insights.section3Articles} 
+                    <InsightsReorderableList data={insights.section3Articles} 
                             onChange={this.onListChange.bind(this)} />
                     Section 4
-                    <ReorderableList data={insights.section4Articles} 
+                    <InsightsReorderableList data={insights.section4Articles} 
                             onChange={this.onListChange.bind(this)} />
                 </div>
                 <div className="col-md-6">

@@ -11,7 +11,7 @@ interface IAppState {
     data: IInsight[];
 }
 
-export class ReorderableList extends React.Component<IAppProps, IAppState> {
+export class InsightsReorderableList extends React.Component<IAppProps, IAppState> {
 
     constructor(props: IAppProps) {
         super(props);
