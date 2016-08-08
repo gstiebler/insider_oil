@@ -79,7 +79,7 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
               <Link to="/app/maps_all">Mapas</Link>
             </li>
             <li className="nav-item">
-              <Link to="/app/paginated_table_view?source=News">Insights</Link>
+              <Link to="/app/insights">Insights</Link>
             </li>
             { this.props.isAdmin ? adminLink : '' }
           </ul>

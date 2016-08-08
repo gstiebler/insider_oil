@@ -1,9 +1,5 @@
 import * as Interfaces from './Interfaces'; 
 
-interface teste {
-    test: string;
-}
-
 export namespace GetViewParams {
 
     export interface req {
@@ -113,5 +109,21 @@ export namespace GetTableQueriesFields {
 
     export interface res {
         [tableQuery: number]: Interfaces.IFieldMap;
+    }
+}
+
+export namespace Insights {
+
+    export interface req {}
+
+    export interface res {
+        carroussel: Interfaces.IInsight[];
+        section1Articles: Interfaces.IInsight[];
+        section2Articles: Interfaces.IInsight[];
+        section3Articles: Interfaces.IInsight[];
+        section4Articles: Interfaces.IInsight[];
+        popular: Interfaces.IInsight[];
+        recent: Interfaces.IInsight[];
+        flexSlider: Interfaces.IInsight[];
     }
 }

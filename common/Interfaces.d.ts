@@ -97,3 +97,12 @@ interface IGeoPoint {
     lat: number;
     lng: number;
 }
+
+export interface IInsight {
+    id?: number;
+    title: string;
+    content?: string;
+    author?: string;
+    imgUrl?: string;
+    date?: string;
+}
