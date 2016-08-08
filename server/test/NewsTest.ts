@@ -82,8 +82,6 @@ editNews: test => {
 	test.done();
 },
 
-
-
 doNotCreateNewsWhenErrorOnModelsReference: test => {
     const fixtureCount = 3;
 	const HTMLcontent = newsHTML + '<a href="/app/view_record?source=Nada&amp;id=80" style="background-color: rgb(255, 255, 255);">Abalone</a>';
@@ -111,6 +109,19 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 	    test.done();
 	}
 },
+
+savePublisher: (test: nodeunit.Test) => {
+    const query:ni.SaveInsights.req = {
+		flexSlider: [1, 2],
+		section1Articles: [1, 2],
+		section2Articles: [3, 2, 1],
+		section3Articles: [1, 2],
+		section4Articles: [1, 2],
+	};
+    const res:ni.SaveInsights.res = 
+        utils.getJsonResponse.sync(null, InsightsController.saveInsights, { query });
+	test.done();
+}
 
 };
 

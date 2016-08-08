@@ -127,3 +127,17 @@ export namespace Insights {
         flexSlider: Interfaces.IInsight[];
     }
 }
+
+
+export namespace SaveInsights {
+
+    export interface req {
+        section1Articles: number[];
+        section2Articles: number[];
+        section3Articles: number[];
+        section4Articles: number[];
+        flexSlider: number[];
+    }
+
+    export interface res {}
+}

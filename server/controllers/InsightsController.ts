@@ -37,3 +37,38 @@ export function getInsights(req: express.Request, res: express.Response, next) {
     };
     res.json(insightsRes);
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+
+
+export function saveInsights(req: express.Request, res: express.Response, next) {Sync(function(){
+    const query:ni.SaveInsights.req = req.query;
+    const InsightsPublisher = db.models.InsightsPublisher;
+
+    const sections = [
+        { items: query.flexSlider, name: 'flexSlider'},
+        { items: query.section1Articles, name: 'section1Articles'},
+        { items: query.section2Articles, name: 'section2Articles'},
+        { items: query.section3Articles, name: 'section3Articles'},
+        { items: query.section4Articles, name: 'section4Articles'},
+    ];
+
+    const recordItems = [];
+    for(var section of sections) {
+        section.items.map((insight_id, index) => {
+            recordItems.push({
+                order: index,
+                section: section.name,
+                insight_id
+            });
+        });
+    }
+
+	db.sequelize.transaction(function(t: Sequelize.Transaction) {
+        // option to destroy all items
+        const destroyOptions = { where: { id: { $gte: 0 } } };
+        return InsightsPublisher.destroy(destroyOptions).then(() => {
+            return InsightsPublisher.bulkCreate(recordItems);
+        }).then(() => {
+            res.json({message: 'OK'});
+        });       
+    });
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
