@@ -57,24 +57,32 @@ export class Publisher extends React.Component<IAppProps, IAppState> {
                     <InsightsReorderableList data={insights.flexSlider} 
                             onChange={this.onListChange.bind(this)} />
                     <div className="row">
-                        Section 1
-                        <InsightsReorderableList data={insights.section1Articles} 
-                                className="col-md-6" 
-                                onChange={this.onListChange.bind(this)} />
-                        Section 2
-                        <InsightsReorderableList data={insights.section2Articles} 
-                                className="col-md-6" 
-                                onChange={this.onListChange.bind(this)} />
+                        <div className="col-md-6">
+                            Section 1
+                            <InsightsReorderableList data={insights.section1Articles} 
+                                    onChange={this.onListChange.bind(this)} />
+                        </div>
+                        <div className="col-md-6">
+                            Section 2
+                            <InsightsReorderableList data={insights.section2Articles} 
+                                    onChange={this.onListChange.bind(this)} />
+                        </div>
                     </div>
                     Carroussel
                     <InsightsReorderableList data={insights.carroussel} 
                             onChange={this.onListChange.bind(this)} />
-                    Section 3
-                    <InsightsReorderableList data={insights.section3Articles} 
-                            onChange={this.onListChange.bind(this)} />
-                    Section 4
-                    <InsightsReorderableList data={insights.section4Articles} 
-                            onChange={this.onListChange.bind(this)} />
+                    <div className="row">
+                        <div className="col-md-6">
+                            Section 3
+                            <InsightsReorderableList data={insights.section3Articles} 
+                                    onChange={this.onListChange.bind(this)} />
+                        </div>
+                        <div className="col-md-6">
+                            Section 4
+                            <InsightsReorderableList data={insights.section4Articles} 
+                                    onChange={this.onListChange.bind(this)} />
+                        </div>
+                    </div>
                 </div>
                 <div className="col-md-6">
                     <InsightsGrid />
