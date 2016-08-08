@@ -1,6 +1,19 @@
 import * as React from 'react';
 import { IInsight } from '../../../../common/Interfaces';
 
+export function removeById(array, id) {
+    for(var i = 0; i < array.length; i++) {
+        if(array[i].id == id) {
+            array.splice(i, 1);
+            break;
+        }
+    }
+}
+
+export function allowDrop(ev) {
+    ev.preventDefault();
+}
+
 interface IAppProps {
     data: IInsight[];
     listName: string;
@@ -21,28 +34,34 @@ export class InsightsReorderableList extends React.Component<IAppProps, IAppStat
         };
     }
 
-    private allowDrop(ev) {
-        ev.preventDefault();
-    }
-
     private drag(insight, ev) {
+        insight.source = this.props.listName;
         ev.dataTransfer.setData("text", JSON.stringify(insight));
     }
 
-    private drop(objIndex, ev) {
+    private dropOnItem(objIndex, ev) {
         ev.preventDefault();
         const insightStr = ev.dataTransfer.getData("text");
         const insight:IInsight = JSON.parse(insightStr);
         const items = this.state.data;
         // remove from previous position
-        for(var i = 0; i < items.length; i++) {
-            if(items[i].id == insight.id) {
-                items.splice(i, 1);
-                break;
-            }
-        }
+        removeById(items, insight.id);
         // add to new position
         items.splice(objIndex, 0, insight);
+        this.props.onChange(this.props.listName, items);
+        this.state.data = items;
+        this.setState(this.state);
+    }
+
+    private dropOnPlus(ev) {
+        ev.preventDefault();
+        const insightStr = ev.dataTransfer.getData("text");
+        const insight:IInsight = JSON.parse(insightStr);
+        const items = this.state.data;
+        // remove from previous position
+        removeById(items, insight.id);
+        // add to new position
+        items.push(insight);
         this.props.onChange(this.props.listName, items);
         this.state.data = items;
         this.setState(this.state);
@@ -53,8 +72,8 @@ export class InsightsReorderableList extends React.Component<IAppProps, IAppStat
             return <li className="list-group-item" 
                        draggable="true"
                        onDragStart={this.drag.bind(this, item)} 
-                       onDrop={this.drop.bind(this, i)} 
-                       onDragOver={this.allowDrop}
+                       onDrop={this.dropOnItem.bind(this, i)} 
+                       onDragOver={allowDrop}
                        key={i} >{item.id + ' - ' + item.title}</li>
         });	
 
@@ -64,7 +83,11 @@ export class InsightsReorderableList extends React.Component<IAppProps, IAppStat
                     <ul className="list-group">
                         { listItems }
                     </ul>
+                    <img src="images/plus.png" alt=""
+                        onDragOver={allowDrop}
+                        onDrop={this.dropOnPlus.bind(this)}/>
                 </div>
+                <br/>
             </div>);
     }
 }
