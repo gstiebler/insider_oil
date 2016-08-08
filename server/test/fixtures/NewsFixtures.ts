@@ -1,4 +1,4 @@
-import utils = require('../lib/utils');
+import * as utils from '../lib/utils';
 var await = require('../../lib/await');
 
 module.exports = function(db) {
@@ -37,5 +37,5 @@ module.exports = function(db) {
         promisesArray.push(db.models.News.create(newsObj));
     }
     
-    return Promise.all(promisesArray);
+    return utils.executePromisesSequentialy(promisesArray);
 }
