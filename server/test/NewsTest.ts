@@ -111,15 +111,21 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 },
 
 savePublisher: (test: nodeunit.Test) => {
-    const querySave:ni.SaveInsights.req = {
+    const bodySave:ni.SaveInsights.req = {
 		flexSlider: [1, 3, 2],
 		section1Articles: [1, 2],
 		section2Articles: [3, 2, 1],
 		section3Articles: [1, 2],
 		section4Articles: [1, 2],
 	};
+
+	const reqSave = {
+		body: {
+			data: JSON.stringify(bodySave)
+		}
+	};
     const saveRes:ni.SaveInsights.res = 
-        utils.getJsonResponse.sync(null, InsightsController.saveInsights, { query: querySave });
+        utils.getJsonResponse.sync(null, InsightsController.saveInsights, reqSave);
 
     const getRes:ni.Insights.res = 
         utils.getJsonResponse.sync(null, InsightsController.getInsights, {});
@@ -148,10 +154,10 @@ var notModDBGroup:nodeunit.ITestGroup = {
 insights: (test: nodeunit.Test) => {
     const res:ni.Insights.res = 
         utils.getJsonResponse.sync(null, InsightsController.getInsights, {});
-    test.equal(3, res.section1Articles.length);
-    test.equal(3, res.section2Articles.length);
-    test.equal(3, res.section3Articles.length);
-    test.equal(3, res.section4Articles.length);
+    test.equal(0, res.section1Articles.length);
+    test.equal(2, res.section2Articles.length);
+    test.equal(0, res.section3Articles.length);
+    test.equal(0, res.section4Articles.length);
     test.equal(3, res.popular.length);
     test.equal(3, res.recent.length);
     test.equal(3, res.flexSlider.length);
