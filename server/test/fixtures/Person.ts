@@ -1,6 +1,6 @@
 'use strict';
 
-import * as utils from '../lib/utils';
+import { executePromisesSequentialy } from '../../lib/PromiseUtils';
 
 module.exports = function(db) {
     const personObjs = [
@@ -41,5 +41,5 @@ module.exports = function(db) {
         promisesArray.push(db.models.Person.create(personObj));
     }
     
-    return utils.executePromisesSequentialy(promisesArray);
+    return executePromisesSequentialy(promisesArray);
 }
