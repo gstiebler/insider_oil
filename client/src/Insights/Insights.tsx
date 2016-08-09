@@ -159,9 +159,8 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 				<ul className="no-bullet">
 					<li className="widget tabs-widget clearfix">
 		        		<ul className="tab-links no-bullet clearfix">
-		        			<li className="active"><a href="#popular-tab">Popular</a></li>
-		        			<li><a href="#recent-tab">Recent</a></li>
-		        			<li><a href="#comments-tab">Comments</a></li>
+		        			<li className="active"><a href="#recent-tab">Recentes</a></li>
+		        			<li><a href="#popular-tab">Populares</a></li>
 		        		</ul>
 		        		{ popularTab }
                         { recentTab }
