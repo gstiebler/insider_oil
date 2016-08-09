@@ -70,7 +70,7 @@ export class Publisher extends React.Component<IAppProps, IAppState> {
         }
 
         const flexSlider: number[] = [];
-        const req:SaveInsights.req = {
+        const data:SaveInsights.req = {
             flexSlider: getIds(this.state.insights.flexSlider),
             section1Articles: getIds(this.state.insights.section1Articles),
             section2Articles: getIds(this.state.insights.section2Articles),
@@ -78,7 +78,7 @@ export class Publisher extends React.Component<IAppProps, IAppState> {
             section4Articles: getIds(this.state.insights.section4Articles),
         };
 
-        postP('/save_insights_publisher', req)
+        postP('/save_insights_publisher', { data: JSON.stringify(data) })
             .then(this.onSave.bind(this))
 			.catch(showError.show);
     }

@@ -91,21 +91,19 @@ export function getInsights(req: express.Request, res: express.Response, next) {
  * Save the publisher options
  */
 export function saveInsights(req: express.Request, res: express.Response, next) {Sync(function(){
-    const body:ni.SaveInsights.req = JSON.parse(req.body);
+    const data:ni.SaveInsights.req = JSON.parse(req.body.data);
     const InsightsPublisher = db.models.InsightsPublisher;
 
     const sections = [
-        { items: body.flexSlider, name: sectionNames.flexSlider},
-        { items: body.section1Articles, name: sectionNames.section1Articles},
-        { items: body.section2Articles, name: sectionNames.section2Articles},
-        { items: body.section3Articles, name: sectionNames.section3Articles},
-        { items: body.section4Articles, name: sectionNames.section4Articles},
+        { items: data.flexSlider, name: sectionNames.flexSlider},
+        { items: data.section1Articles, name: sectionNames.section1Articles},
+        { items: data.section2Articles, name: sectionNames.section2Articles},
+        { items: data.section3Articles, name: sectionNames.section3Articles},
+        { items: data.section4Articles, name: sectionNames.section4Articles},
     ];
 
     const recordItems = [];
     for(var section of sections) {
-        if(!section.items) continue;
-
         section.items.map((insight_id, index) => {
             recordItems.push({
                 order: index,
