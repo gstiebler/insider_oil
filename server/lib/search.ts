@@ -69,13 +69,18 @@ const dataSources:any = [
 ];
 
 // add ids to dataSources
-Sync(function() {
-    for(var i = 0; i < dataSources.length; i++) {
-        const searchOptions = { where: { name: dataSources[i].model } };
-        const modelItem = await( db.models.ModelsList.findOne(searchOptions) );
-        dataSources[i].model_id = modelItem.id;
-    }
-});
+export function initializeSearch():Promise<any> {
+    return new Promise((resolve, reject) => {
+        Sync(() => {
+            for(var i = 0; i < dataSources.length; i++) {
+                const searchOptions = { where: { name: dataSources[i].model } };
+                const modelItem = await( db.models.ModelsList.findOne(searchOptions) );
+                dataSources[i].model_id = modelItem.id;
+            }
+            resolve();
+        }, (err) => {reject(err)});
+    });
+ }
 
 
 export function searchLike(searchValue, numMaxResults) {

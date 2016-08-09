@@ -9,9 +9,11 @@ var routes = require('./routes/index');
 import winston = require('winston');
 var umzug = require('./lib/InitUmzug');
 var app = express();
+import { initializeSearch } from './lib/search';
 
 // Make necessary migrations
 umzug.up();
+initializeSearch();
 
 // Configure Winston log lib
 winston.level = 'error';

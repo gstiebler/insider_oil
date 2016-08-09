@@ -1,5 +1,6 @@
 'use strict';
 
+import * as utils from '../lib/utils';
 import { executePromisesSequentialy } from '../../lib/PromiseUtils';
 
 module.exports = function(db) {
