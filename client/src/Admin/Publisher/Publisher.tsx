@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { IInsight } from '../../../../common/Interfaces';
-import { Insights } from '../../../../common/NetworkInterfaces';
-import { getP } from '../../lib/Server';
+import { Insights, SaveInsights } from '../../../../common/NetworkInterfaces';
+import * as Interfaces from '../../../../common/Interfaces';
+import { getP, postP } from '../../lib/Server';
 import * as showError from '../../lib/ShowError';
 import { Link } from 'react-router';
 import { InsightsReorderableList, removeById, allowDrop } from './InsightsReorderableList';
 import { InsightsGrid } from './InsightsGrid';
+import { browserHistory } from 'react-router';
+import * as Flash from '../../Flash'
 
 interface IAppProps {
 }
@@ -57,6 +60,35 @@ export class Publisher extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
+    private save() {
+        function getIds(insights: Interfaces.IInsight[]):number[] {
+            const ids:number[] = [];
+            for(var item of insights) {
+                ids.push(item.id);
+            }
+            return ids;
+        }
+
+        const flexSlider: number[] = [];
+        const req:SaveInsights.req = {
+            flexSlider: getIds(this.state.insights.flexSlider),
+            section1Articles: getIds(this.state.insights.section1Articles),
+            section2Articles: getIds(this.state.insights.section2Articles),
+            section3Articles: getIds(this.state.insights.section3Articles),
+            section4Articles: getIds(this.state.insights.section4Articles),
+        };
+
+        postP('/save_insights_publisher', req)
+            .then(this.onSave.bind(this))
+			.catch(showError.show);
+    }
+
+    private onSave(res: SaveInsights.res) {
+        Flash.create('success', res.msg);
+        browserHistory.push('/app/admin');
+        return null;
+    }
+
     public render(): React.ReactElement<any> {
         const { insights } = this.state;
         if(!insights) {
@@ -73,11 +105,16 @@ export class Publisher extends React.Component<IAppProps, IAppState> {
                                     onChange={this.onListChange.bind(this)}
                                     listName="flexSlider" />
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <img src="images/trash.jpg" alt=""
                                 onDragOver={allowDrop}
                                 onDrop={this.drop.bind(this)}/>
-                        </div>
+                        </div>       
+                        <div className="col-md-3">         
+                            <button className="btn btn-default"
+                                onClick={this.save.bind(this)} 
+                                >Salvar</button>
+                        </div>       
                     </div>
                     <div className="row">
                         <div className="col-md-6">

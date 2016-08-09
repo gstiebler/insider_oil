@@ -53,6 +53,7 @@ module.exports = function(app: express.Express) {
     app.get('/maps/production_units', session.authorize, MapsController.getProductionUnits);
 
     app.get('/insights', session.authorize, InsightsController.getInsights);
+    app.post('/save_insights_publisher', session.authorize, InsightsController.saveInsights);
     
     app.get('/search', session.authorize,          searchController.main);
     

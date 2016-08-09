@@ -91,19 +91,21 @@ export function getInsights(req: express.Request, res: express.Response, next) {
  * Save the publisher options
  */
 export function saveInsights(req: express.Request, res: express.Response, next) {Sync(function(){
-    const query:ni.SaveInsights.req = req.query;
+    const body:ni.SaveInsights.req = JSON.parse(req.body);
     const InsightsPublisher = db.models.InsightsPublisher;
 
     const sections = [
-        { items: query.flexSlider, name: sectionNames.flexSlider},
-        { items: query.section1Articles, name: sectionNames.section1Articles},
-        { items: query.section2Articles, name: sectionNames.section2Articles},
-        { items: query.section3Articles, name: sectionNames.section3Articles},
-        { items: query.section4Articles, name: sectionNames.section4Articles},
+        { items: body.flexSlider, name: sectionNames.flexSlider},
+        { items: body.section1Articles, name: sectionNames.section1Articles},
+        { items: body.section2Articles, name: sectionNames.section2Articles},
+        { items: body.section3Articles, name: sectionNames.section3Articles},
+        { items: body.section4Articles, name: sectionNames.section4Articles},
     ];
 
     const recordItems = [];
     for(var section of sections) {
+        if(!section.items) continue;
+
         section.items.map((insight_id, index) => {
             recordItems.push({
                 order: index,
@@ -119,7 +121,8 @@ export function saveInsights(req: express.Request, res: express.Response, next) 
         return InsightsPublisher.destroy(destroyOptions).then(() => {
             return InsightsPublisher.bulkCreate(recordItems);
         }).then(() => {
-            res.json({message: 'OK'});
+            const response:ni.SaveInsights.res = { msg: 'OK' };
+            res.json(response);
         });       
     });
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}

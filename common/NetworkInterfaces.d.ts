@@ -138,5 +138,7 @@ export namespace SaveInsights {
         flexSlider: number[];
     }
 
-    export interface res {}
+    export interface res {
+        msg: string
+    }
 }
