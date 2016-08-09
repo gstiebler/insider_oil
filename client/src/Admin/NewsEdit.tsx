@@ -78,6 +78,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
         itemData.title = this.state.title;
         itemData.content = this.state.content;
         itemData.author_id = userData.id;
+        itemData.image = this.state.image;
         if(this.state.id) {
             itemData.id = this.state.id;
             server.saveItem( this.modelName, itemData, this.onSave.bind(this), showError.show );
