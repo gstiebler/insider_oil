@@ -11,7 +11,7 @@ interface IAppState {
     file: string;
 }
 
-export class ImageUpload extends React.Component<IAppProps, IAppState> {
+export class ImageShow extends React.Component<IAppProps, IAppState> {
     constructor(props) {
         super(props);
 

@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { ListOfInputs } from './ListOfInputs';
 import { ListOfProjects } from './ListOfProjects';
 import { ManyToMany } from './ManyToMany';
-import { ImageUpload } from './ImageUpload';
+import { ImageShow } from './ImageShow';
 import { IField } from '../../../common/Interfaces';
 
 interface IARField extends IField {
@@ -161,7 +161,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                                value={this.state.values[field.name]}
                                onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.isPhoto) {
-            return <ImageUpload defaultValue={ this.state.values[field.name]} 
+            return <ImageShow defaultValue={ this.state.values[field.name]} 
                                 onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.isProjectList) {
             return <ListOfProjects value={this.state.values[field.name]} 
