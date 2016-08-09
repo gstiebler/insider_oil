@@ -74,28 +74,29 @@ export class Insights extends React.Component<IAppProps, IAppState> {
         );
     }
 
-	private getArticle(category: string, postData: IInsight, otherPostsData: IInsight[]): React.ReactElement<any> {
-        const otherPosts = this.getOtherPosts(otherPostsData);
+	private getArticle(category: string, posts: IInsight[]): React.ReactElement<any> {
+        const otherPosts = this.getOtherPosts(posts.slice(1, posts.length));
+		const firstPost = posts[0];
 
 		return (
 			<article className="six column">
 				<h4 className="cat-title"><a href="#">{category}</a></h4>
 				<div className="post-image">
-					<a href="#"><img src={postData.imgUrl} alt=""/></a>
+					<a href="#"><img src={firstPost.imgUrl} alt=""/></a>
 				</div>
 
 				<div className="post-container">
 					<h2 className="post-title">
-						<Link to={"/app/view_new?id=" + postData.id}>{postData.title}</Link>
+						<Link to={"/app/view_new?id=" + firstPost.id}>{firstPost.title}</Link>
 					</h2>
 					<div className="post-content">
-							<p dangerouslySetInnerHTML={ {__html: postData.content } } />
+							<p dangerouslySetInnerHTML={ {__html: firstPost.content } } />
 					</div>
 				</div>
 
 				<div className="post-meta">
-					<span className="author"><a href="#">{postData.author}</a></span>
-					<span className="date"><a href="#">{dateFormatInsight(postData.date)}</a></span>
+					<span className="author"><a href="#">{firstPost.author}</a></span>
+					<span className="date"><a href="#">{dateFormatInsight(firstPost.date)}</a></span>
 				</div>
 
 				{ otherPosts }
@@ -147,8 +148,8 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
         const tagCloud = null; 
 
-		const businessArticle = this.getArticle('Business', insights.section1Articles[0], insights.section1Articles);
-		const technologyArticle = this.getArticle('Technology', insights.section2Articles[0], insights.section2Articles);
+		const businessArticle = this.getArticle('Business', insights.section1Articles);
+		const technologyArticle = this.getArticle('Technology', insights.section2Articles);
 
 		const popularTab = this.getTab('popular-tab', insights.popular);
 		const recentTab = this.getTab('recent-tab', insights.recent);
