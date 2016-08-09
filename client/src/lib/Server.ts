@@ -146,11 +146,6 @@ export function getComboValues(modelName, okCallback, onError) {
 }
 
 
-export function getTree(okCallback, onError) {
-    get('/tree/', {}, okCallback, onError);
-}
-
-
 export function getSearchResult(searchValue, okCallback, onError) {
     var params = { searchValue: searchValue };
     get('/search', params, okCallback, onError);
@@ -183,4 +178,8 @@ export function downloadExcelFile(dataSource, onData, onError) {
 export function importFromURL(dataSource, onData, onError) {
     var params = { dataSource };
     put('/import_from_url', params, onData, onError);
+}
+
+export const paths = {
+    baseImg: 'https://s3-sa-east-1.amazonaws.com/insider-oil/images/'
 }

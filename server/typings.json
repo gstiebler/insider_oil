@@ -5,6 +5,7 @@
     "mime": "registry:npm/mime#1.3.0+20160423043021"
   },
   "globalDependencies": {
+    "aws-sdk": "registry:dt/aws-sdk#0.0.0+20160802165139",
     "express": "registry:dt/express#4.0.0+20160317120654",
     "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160701212727",
     "moment": "registry:dt/moment#2.8.0+20160316155526",

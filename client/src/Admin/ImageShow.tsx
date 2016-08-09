@@ -3,6 +3,7 @@ import { arrayBufferToBase64, base64ToArray, removeBase64Header } from '../lib/B
 
 interface IAppProps {
     value: any;
+    imgPath: string;
     onChange: any;
 }
 
@@ -52,6 +53,8 @@ export class ImageShow extends React.Component<IAppProps, IAppState> {
         let imagePreview = null;
         if (imageBase64) {
             imagePreview = (<img src={imageBase64} />);
+        } else {
+            imagePreview = (<img src={this.props.imgPath} />);
         }
 
         return (

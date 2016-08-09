@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router';
 import { ProjectSearch } from '../ProjectSearch'
 import * as Flash from '../Flash'
 import * as ReactQuill from 'react-quill';
+import { ImageShow } from './ImageShow';
 
 interface IAppProps {
     location: any;
@@ -14,11 +15,12 @@ interface IAppState {
     mainTitle: string;
     title: string;
     content: string;
+    id: number;
+    image: any;
 }
 
 export class NewsEdit extends React.Component<IAppProps, IAppState> {
 
-    private id:number;
     private modelName: string;
 
     constructor(props: IAppProps) {
@@ -28,17 +30,18 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
             mainTitle: '',
             title: '',
             content: '',
+            id: props.location.query.id,
+            image: null
         };
 
 	    this.modelName = 'News';
-        this.id = props.location.query.id;
     }
 
     public componentDidMount() {
-        if(this.id) {
+        if(this.state.id) {
             this.state.mainTitle = "Editar notícia"
             
-            server.getModelFieldsAndValues(this.modelName, this.id)
+            server.getModelFieldsAndValues(this.modelName, this.state.id)
                 .then(this.onServerData.bind(this))
                 .catch(showError.show);
         } else {
@@ -75,8 +78,8 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
         itemData.title = this.state.title;
         itemData.content = this.state.content;
         itemData.author_id = userData.id;
-        if(this.id) {
-            itemData.id = this.id;
+        if(this.state.id) {
+            itemData.id = this.state.id;
             server.saveItem( this.modelName, itemData, this.onSave.bind(this), showError.show );
         } else {
             server.createNewItem( this.modelName, itemData, this.onSave.bind(this), showError.show );
@@ -88,7 +91,12 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
 	    browserHistory.push("/app/model_view?model=" + this.modelName);
 	}  
 
+    private onImage(image) {
+        this.state.image = image;
+    }
+
     public render(): React.ReactElement<any> {
+        const imgPath = server.paths.baseImg + 'insights/' + this.state.id + '.jpg';
         return ( <div>
             <h4 className="col-sm-2" >{this.state.mainTitle}</h4>
             <br/><br/><br/><br/>
@@ -128,6 +136,9 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                     </div>
                 </div>
             </div> 
+            Foto de capa
+            <ImageShow onChange={this.onImage.bind(this)} 
+                    imgPath={imgPath} />
         </div>);
     }
 }

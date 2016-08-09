@@ -1,5 +1,7 @@
 "use strict";
+
 import newsLib = require('../../lib/News');
+import * as AWS from '../../lib/AWS';
 
 namespace News {
     
@@ -36,12 +38,16 @@ function setReferences(news, options) {
                 };
                 promiseArray.push(db.NewsModels.create(newsRefObj, { transaction: options.transaction }));
             }
-            return Promise.all(promiseArray);
+            return Promise.all(promiseArray).then(saveImage);
         } catch(e) {
             return db.sequelize.Promise.reject(e.stack)
         }
     }
     
+    function saveImage() {
+        const fileName = 'images/insights/' + news.id + '.jpg';
+        return AWS.saveImage(news.image, fileName);
+    }
 }
 
 
