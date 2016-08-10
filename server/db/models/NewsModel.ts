@@ -10,7 +10,10 @@ var db:any = {};
 function setReferences(news, options) {	
     const referencedObjects = newsLib.getModelReferences(news.content);
     
-    return db.NewsModels.destroy({ where: { news_id: news.id } }).then(createRefs);
+    return db.NewsModels.destroy({ where: { news_id: news.id } })
+        .then(createRefs)
+        .then(onModelIds)
+        .then(saveImage);
     
     function createRefs() {
         const promiseModelIdArray = [];
@@ -21,7 +24,7 @@ function setReferences(news, options) {
             promiseModelIdArray.push(db.ModelsList.findOne(findOptions));
         }
         
-        return Promise.all(promiseModelIdArray).then(onModelIds);     
+        return Promise.all(promiseModelIdArray);     
     }
     
     function onModelIds(modelIds) {
@@ -38,15 +41,18 @@ function setReferences(news, options) {
                 };
                 promiseArray.push(db.NewsModels.create(newsRefObj, { transaction: options.transaction }));
             }
-            return Promise.all(promiseArray).then(saveImage);
+            return Promise.all(promiseArray);
         } catch(e) {
             return db.sequelize.Promise.reject(e.stack)
         }
     }
     
     function saveImage() {
-        const fileName = 'images/insights/' + news.id + '.jpg';
-        return AWS.saveImage(news.image, fileName);
+        if(!news.image) return;
+        
+        const imgBuffer = new Buffer(news.image);
+        const fileName = 'images/insights/img_' + news.id + '.jpg';
+        return AWS.saveImage(imgBuffer, fileName);
     }
 }
 
