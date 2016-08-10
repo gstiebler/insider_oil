@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getP } from '../lib/Server';
+import { getP, paths } from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import * as ni from '../../../common/NetworkInterfaces';
 import { IInsight } from '../../../common/Interfaces';
@@ -56,9 +56,10 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
     private getOtherPosts(postsData: IInsight[]): React.ReactElement<any> {
         const otherPostsItems:React.ReactElement<any>[] = postsData.map((item, index) => {
+			const imgUrl = paths.baseImg + item.imgUrl;
             return (                
                 <li key={'op' + index}>
-                    <a href="#"><img src={item.imgUrl} alt=""/></a>
+                    <a href="#"><img src={imgUrl} alt=""/></a>
                     <h3 className="post-title"><Link to={"/app/view_new?id=" + item.id}>{item.title}</Link></h3>
                     <span className="date"><a href="#">{dateFormatInsight(item.date)}</a></span>
                 </li>
@@ -78,11 +79,12 @@ export class Insights extends React.Component<IAppProps, IAppState> {
         const otherPosts = this.getOtherPosts(posts.slice(1, posts.length));
 		const firstPost = posts[0];
 
+		const imgUrl = paths.baseImg + firstPost.imgUrl;
 		return (
 			<article className="six column">
 				<h4 className="cat-title"><a href="#">{category}</a></h4>
 				<div className="post-image">
-					<a href="#"><img src={firstPost.imgUrl} alt=""/></a>
+					<a href="#"><img src={imgUrl} alt=""/></a>
 				</div>
 
 				<div className="post-container">
@@ -106,9 +108,10 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
 	private getTab(id:string, tabPostsData: IInsight[]): React.ReactElement<any> {
 		const tabItems = tabPostsData.map((item, index) => {
+			const imgUrl = paths.baseImg + item.imgUrl;
 			return (				
 				<li key={'tab' + index}>
-					<a href="#"><img alt="" src={item.imgUrl}/></a>
+					<a href="#"><img alt="" src={imgUrl}/></a>
 					<h3><Link to={"/app/view_new?id=" + item.id}>{item.title}</Link></h3>
 					<div className="post-date">{dateFormatInsight(item.date)}</div>
 				</li>

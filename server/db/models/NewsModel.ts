@@ -1,10 +1,8 @@
 "use strict";
 
-import newsLib = require('../../lib/News');
+import * as newsLib from '../../lib/News';
 import * as AWS from '../../lib/AWS';
 
-namespace News {
-    
 var db:any = {};
 
 function setReferences(news, options) {	
@@ -51,7 +49,7 @@ function setReferences(news, options) {
         if(!news.image) return;
         
         const imgBuffer = new Buffer(news.image);
-        const fileName = 'images/insights/img_' + news.id + '.jpg';
+        const fileName = 'images/' + newsLib.formatImgUrl(news.id);
         return AWS.saveImage(imgBuffer, fileName);
     }
 }
@@ -91,5 +89,3 @@ module.exports = function(sequelize, DataTypes) {
 
 	return News;
 };
-   
-}

@@ -6,6 +6,7 @@ import * as ni from '../../common/NetworkInterfaces';
 import * as Interfaces from '../../common/Interfaces';
 import express = require("express");
 import ControllerUtils = require('../lib/ControllerUtils');
+import { formatImgUrl } from '../lib/News';
 var Sync = require('sync');
 var await = require('../lib/await');
 
@@ -34,7 +35,7 @@ export function getInsights(req: express.Request, res: express.Response, next) {
             title: insight.title, 
             content: insight.content,
             author: insight.author.name,
-            imgUrl: 'temp.jpg',
+            imgUrl: formatImgUrl(insight.id),
             date: insight.created_at
         }
     });
@@ -67,7 +68,7 @@ export function getInsights(req: express.Request, res: express.Response, next) {
                 title: insight.insight.title, 
                 content: insight.insight.content,
                 author: insight.insight.author.name,
-                imgUrl: 'temp.jpg',
+                imgUrl: formatImgUrl(insight.insight.id),
                 date: insight.insight.created_at
             }
         });

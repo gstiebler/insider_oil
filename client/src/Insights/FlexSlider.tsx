@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { IInsight } from '../../../common/Interfaces';
+import { paths } from '../lib/Server';
 import { Link } from 'react-router';
 
 interface IAppProps {
@@ -33,9 +34,10 @@ export class FlexSlider extends React.Component<IAppProps, IAppState> {
 
     public render(): React.ReactElement<any> {		
         const fsItems = this.props.data.map((item, index) => {
+			const imgUrl = paths.baseImg + item.imgUrl;
 			return (
 				<li key={'fs' + index}>
-					<a href="#"><img alt="" src={item.imgUrl}/></a>
+					<a href="#"><img alt="" src={imgUrl}/></a>
 					<div className="flex-caption">
 						<div className="desc">
 							<h1><Link to={"/app/view_new?id=" + item.id}>{item.title}</Link></h1>
