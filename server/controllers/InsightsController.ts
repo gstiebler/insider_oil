@@ -40,7 +40,7 @@ export function getInsights(req: express.Request, res: express.Response, next) {
         }
     });
 
-    function getResInsights(sectionName: string, size: string):Interfaces.IInsight[] {
+    function getResInsights(sectionName: string, size: string, firstSize?: string):Interfaces.IInsight[] {
         const queryOpts = {
             attributes: [],
             include: [{
@@ -73,14 +73,18 @@ export function getInsights(req: express.Request, res: express.Response, next) {
             }
         });
 
+        if(firstSize) {
+            insightsRes[0].imgUrl = formatImgUrl(insightsRes[0].id, firstSize);
+        }
+
         return insightsRes;
     }
 
     const insightsRes:ni.Insights.res = {
-        section1Articles: getResInsights(sectionNames.section1Articles, 'sm'),
-        section2Articles: getResInsights(sectionNames.section2Articles, 'sm'),
-        section3Articles: getResInsights(sectionNames.section3Articles, 'sm'),
-        section4Articles: getResInsights(sectionNames.section4Articles, 'sm'),
+        section1Articles: getResInsights(sectionNames.section1Articles, 'sm', 'md'),
+        section2Articles: getResInsights(sectionNames.section2Articles, 'sm', 'md'),
+        section3Articles: getResInsights(sectionNames.section3Articles, 'sm', 'md'),
+        section4Articles: getResInsights(sectionNames.section4Articles, 'sm', 'md'),
         popular: recentInsightsRes,
         recent: recentInsightsRes,
         flexSlider: getResInsights(sectionNames.flexSlider, 'lg'),
