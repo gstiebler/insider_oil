@@ -159,8 +159,10 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
         const tags = null;
 
-		const businessArticle = this.getArticle('Business', insights.section1Articles);
-		const technologyArticle = this.getArticle('Technology', insights.section2Articles);
+		const explorationArticles = this.getArticle('Exploração', insights.section1Articles);
+		const productionArticles = this.getArticle('Produção', insights.section2Articles);
+		const marketArticles = this.getArticle('Mercado', insights.section3Articles);
+		const strategyArticles = this.getArticle('Estratégia', insights.section4Articles);
 
 		const popularTab = this.getTab('popular-tab', insights.popular);
 		const recentTab = this.getTab('recent-tab', insights.recent);
@@ -190,12 +192,12 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 						<section id="content" className="eight column row pull-left">
 							<FlexSlider data={insights.flexSlider} />
 							<section className="row">
-								{ businessArticle }
-								{ technologyArticle }
+								{ explorationArticles }
+								{ productionArticles }
 							</section>
 							<section className="row">
-								{ businessArticle }
-								{ technologyArticle }
+								{ marketArticles }
+								{ strategyArticles }
 							</section>
 						</section>
 						{ sideBar }
