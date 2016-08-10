@@ -2,6 +2,7 @@
 
 import * as newsLib from '../../lib/News';
 import * as AWS from '../../lib/AWS';
+import { resample }  from '../../lib/ImageProcessing';
 
 var db:any = {};
 
@@ -11,7 +12,7 @@ function setReferences(news, options) {
     return db.NewsModels.destroy({ where: { news_id: news.id } })
         .then(createRefs)
         .then(onModelIds)
-        .then(saveImage);
+        .then(saveImages);
     
     function createRefs() {
         const promiseModelIdArray = [];
@@ -45,12 +46,44 @@ function setReferences(news, options) {
         }
     }
     
-    function saveImage() {
+    function saveImages() {
         if(!news.image) return;
         
-        const imgBuffer = new Buffer(news.image);
-        const fileName = 'images/' + newsLib.formatImgUrl(news.id);
-        return AWS.saveImage(imgBuffer, fileName);
+        const imageParams = [
+            {
+                width: 620,
+                height: 350,
+                size: 'lg'
+            },
+            {
+                width: 300,
+                height: 220,
+                size: 'md'
+            },
+            {
+                width: 60,
+                height: 60,
+                size: 'sm'
+            },
+        ];
+
+        const promises:Promise<any>[] = [];
+        for(let imageParam of imageParams) {
+            var imgBuffer = new Buffer(news.image);
+            console.log(imageParam.size);
+            let resamplePromise = resample(imgBuffer, imageParam.width, imageParam.height)
+                .then(save.bind(this, imageParam));
+            promises.push(resamplePromise);
+        }
+
+        function save(imageParam, resampledBuffer) {
+            console.log(imageParam.size);
+            let fileName = 'images/' + newsLib.formatImgUrl(news.id, imageParam.size);
+            console.log(fileName);
+            return AWS.saveImage(resampledBuffer, fileName);  
+        }
+
+        return Promise.all(promises);
     }
 }
 

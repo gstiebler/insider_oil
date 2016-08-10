@@ -8,6 +8,7 @@
     "aws-sdk": "registry:dt/aws-sdk#0.0.0+20160802165139",
     "express": "registry:dt/express#4.0.0+20160317120654",
     "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160701212727",
+    "lwip": "registry:dt/lwip#0.0.8+20151229195328",
     "moment": "registry:dt/moment#2.8.0+20160316155526",
     "moment-timezone": "registry:dt/moment-timezone#0.2.5+20160329220348",
     "node": "registry:dt/node#6.0.0+20160709114037",

@@ -35,12 +35,12 @@ export function getInsights(req: express.Request, res: express.Response, next) {
             title: insight.title, 
             content: insight.content,
             author: insight.author.name,
-            imgUrl: formatImgUrl(insight.id),
+            imgUrl: formatImgUrl(insight.id, 'sm'),
             date: insight.created_at
         }
     });
 
-    function getResInsights(sectionName: string):Interfaces.IInsight[] {
+    function getResInsights(sectionName: string, size: string):Interfaces.IInsight[] {
         const queryOpts = {
             attributes: [],
             include: [{
@@ -68,7 +68,7 @@ export function getInsights(req: express.Request, res: express.Response, next) {
                 title: insight.insight.title, 
                 content: insight.insight.content,
                 author: insight.insight.author.name,
-                imgUrl: formatImgUrl(insight.insight.id),
+                imgUrl: formatImgUrl(insight.insight.id, size),
                 date: insight.insight.created_at
             }
         });
@@ -77,13 +77,13 @@ export function getInsights(req: express.Request, res: express.Response, next) {
     }
 
     const insightsRes:ni.Insights.res = {
-        section1Articles: getResInsights(sectionNames.section1Articles),
-        section2Articles: getResInsights(sectionNames.section2Articles),
-        section3Articles: getResInsights(sectionNames.section3Articles),
-        section4Articles: getResInsights(sectionNames.section4Articles),
+        section1Articles: getResInsights(sectionNames.section1Articles, 'sm'),
+        section2Articles: getResInsights(sectionNames.section2Articles, 'sm'),
+        section3Articles: getResInsights(sectionNames.section3Articles, 'sm'),
+        section4Articles: getResInsights(sectionNames.section4Articles, 'sm'),
         popular: recentInsightsRes,
         recent: recentInsightsRes,
-        flexSlider: getResInsights(sectionNames.flexSlider),
+        flexSlider: getResInsights(sectionNames.flexSlider, 'lg'),
     };
     res.json(insightsRes); 
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}

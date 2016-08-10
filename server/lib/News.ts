@@ -34,7 +34,6 @@ export function getModelReferences(htmlText: string): any[] {
 	return result;
 }
 
-export function formatImgUrl(id:number):string {
-	console.log('insights/img_' + id + '.jpg');
-    return 'insights/img_' + id + '.jpg';
+export function formatImgUrl(id:number, size:string):string {
+    return 'insights/img_' + id + '-' + size + '.jpg';
 }
