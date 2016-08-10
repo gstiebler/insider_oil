@@ -73,7 +73,7 @@ export function getInsights(req: express.Request, res: express.Response, next) {
             }
         });
 
-        if(firstSize) {
+        if(firstSize && insightsRes.length > 0) {
             insightsRes[0].imgUrl = formatImgUrl(insightsRes[0].id, firstSize);
         }
 
