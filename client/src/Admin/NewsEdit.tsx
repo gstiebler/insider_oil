@@ -97,7 +97,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): React.ReactElement<any> {
-        const imgPath = server.paths.baseImg + 'insights/' + this.state.id + '.jpg';
+        const imgPath = server.paths.baseImg + 'insights/img_' + this.state.id + '.jpg';
         return ( <div>
             <h4 className="col-sm-2" >{this.state.mainTitle}</h4>
             <br/><br/><br/><br/>

@@ -18,11 +18,14 @@ export class ImageShow extends React.Component<IAppProps, IAppState> {
 
         this.state = {
             file: '',
-            imageBase64: ''
+            imageBase64: null
         };
     }
 
     private componentWillReceiveProps(nextProps:IAppProps) {
+        if(!nextProps.value)
+            return;
+            
         var contentType = 'image/JPEG';
         var base64Header = 'data:' + contentType + ';base64,';
         this.state.imageBase64 = base64Header + arrayBufferToBase64(nextProps.value);
