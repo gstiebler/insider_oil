@@ -147,9 +147,17 @@ export class Insights extends React.Component<IAppProps, IAppState> {
                 <a href="#" title="1 topic" style="font-size: 8pt;">video</a>
                 <a href="#" title="1 topic" style="font-size: 8pt;">website</a>
             </div>
-        );*/
+        );
+		
+		const tags = (
+			<li className="widget widget_tag_cloud clearfix">
+				<h3 className="widget-title">Tags</h3>
+				{ tagCloud }
+			</li>
+		);
+		*/
 
-        const tagCloud = null; 
+        const tags = null;
 
 		const businessArticle = this.getArticle('Business', insights.section1Articles);
 		const technologyArticle = this.getArticle('Technology', insights.section2Articles);
@@ -170,10 +178,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
                         { recentTab }
 		        		{ commentsTab }
 					</li>
-					<li className="widget widget_tag_cloud clearfix">
-						<h3 className="widget-title">Tags</h3>
-                        { tagCloud }
-					</li>
+					{ tags }
 				</ul>
 			</aside>
         );
