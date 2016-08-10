@@ -81,6 +81,9 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
             <li className="nav-item">
               <Link to="/app/insights">Insights</Link>
             </li>
+            <li className="nav-item">
+              <Link to="/app/tableau">Observatório</Link>
+            </li>
             { this.props.isAdmin ? adminLink : '' }
           </ul>
         </div>
