@@ -23,6 +23,7 @@ export const getRecordOptions = {
             attributes: [
                 'title',
                 'content',
+                'tableau_url',
                 'created_at'
             ],
             include: [{

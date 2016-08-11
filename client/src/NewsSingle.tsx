@@ -4,6 +4,7 @@ import * as showError from './lib/ShowError';
 import * as moment from 'moment';
 import * as ni from '../../common/NetworkInterfaces';
 import * as DateUtils from './lib/DateUtils';
+import { Tableau } from './Tableau'; 
 
 interface IAppProps {
     location: any;
@@ -52,11 +53,18 @@ export class NewsSingle extends React.Component<IAppProps, IAppState> {
 
     public render(): React.ReactElement<any> {
         const record = this.state.record;
+
+        var tableauHTML = null;
+        if(record.tableau_url) {
+            tableauHTML = <Tableau vizUrl={record.tableau_url}/>
+        }
+
         return (
             <div className="news-single">
                 <h3>{record.title}</h3>
                 <div className="content"
                     dangerouslySetInnerHTML={ {__html: record.content } } ></div>
+                { tableauHTML }
                 <div className="col-md-12 col-no-padding">
                     <div className="col-md-6 col-no-padding">
                         <div className="item-related">
