@@ -11,10 +11,12 @@ interface IAppState {
 
 export class Observatory extends React.Component<IAppProps, IAppState> {
 
+    private sources;
+
     constructor(props: IAppProps) {
         super(props);
 
-        const sources = {
+        this.sources = {
             investments: "https://public.tableau.com/views/InvestimentosdaPetrobras-histrico/InvestimentodaPetrobras",
             wells: "https://public.tableau.com/views/DemandadepoosOffshore/Painel1"
         };
@@ -22,8 +24,14 @@ export class Observatory extends React.Component<IAppProps, IAppState> {
         var { id } = props.location.query;
 
         this.state = {
-            tableauUrl: sources[id]
+            tableauUrl: this.sources[id]
         };
+    }
+
+    public componentWillReceiveProps(nextProps: IAppProps) {
+        var { id } = nextProps.location.query;
+        this.state.tableauUrl = this.sources[id];
+        this.setState(this.state);
     }
 
     public render(): React.ReactElement<any> {		
