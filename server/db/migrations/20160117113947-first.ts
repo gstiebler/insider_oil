@@ -472,6 +472,10 @@ module.exports = {
 					type: Sequelize.TEXT,
 					allowNull: false
 				},
+				tableau_url: {
+					type: Sequelize.TEXT,
+					allowNull: true
+				},
 				author_id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,

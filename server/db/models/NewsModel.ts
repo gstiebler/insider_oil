@@ -105,6 +105,10 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.TEXT,
 			allowNull: false
 		},
+		tableau_url: {
+			type: DataTypes.TEXT,
+			allowNull: true
+		},
 	}, 
 	{
 		underscored: true,
