@@ -15,6 +15,7 @@ interface IAppState {
     mainTitle: string;
     title: string;
     content: string;
+    tableauUrl: string;
     id: number;
     image: any;
 }
@@ -30,6 +31,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
             mainTitle: '',
             title: '',
             content: '',
+            tableauUrl: null,
             id: props.location.query.id,
             image: null
         };
@@ -53,6 +55,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
     private onServerData(data) {
         this.state.title = data.values.title;
         this.state.content = data.values.content;
+        this.state.tableauUrl = data.values.tableau_url;
         this.setState(this.state);
     }
 
@@ -79,6 +82,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
         itemData.content = this.state.content;
         itemData.author_id = userData.id;
         itemData.image = this.state.image;
+        itemData.tableau_url = this.state.tableauUrl;
         if(this.state.id) {
             itemData.id = this.state.id;
             server.saveItem( this.modelName, itemData, this.onSave.bind(this), showError.show );
@@ -128,6 +132,14 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                             <textarea rows="8" cols="100"
                                       value={this.state.content}
                                       onChange={(e) => {this.state.content = e.target.value;this.setState(this.state);}}/>
+                        </div>    
+                    </div>
+                    <div className="form-group">
+                        <label className="control-label col-sm-2" htmlFor="title_box">Tableau URL:</label>
+                        <div className="col-sm-10">
+                            <input type="text" className="form-control" 
+                                   value={this.state.tableauUrl}
+                                   onChange={(e) => {this.state.tableauUrl = e.target.value; this.setState(this.state);}} />
                         </div>    
                     </div>
                     <div className="form-group">
