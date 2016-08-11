@@ -17,10 +17,9 @@ export class Tableau extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
-        const vizURL = "https://public.tableau.com/views/InvestimentosdaPetrobras-histrico/InvestimentodaPetrobras";
         const options = { hideTabs: true };
         const vizDiv = this.refs['countRef'];
-        var viz = new tableau.Viz(vizDiv, vizURL, options); 
+        var viz = new tableau.Viz(vizDiv, this.props.vizUrl, options); 
     }    
 
 	private componentDidUpdate() {

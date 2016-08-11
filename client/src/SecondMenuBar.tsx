@@ -81,8 +81,12 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
             <li className="nav-item">
               <Link to="/app/insights">Insights</Link>
             </li>
-            <li className="nav-item">
-              <Link to="/app/tableau">Observatório</Link>
+            <li className="nav-item dropdown">
+              <a aria-haspopup="true" aria-expanded="false">Observatório<span className="caret"></span></a>
+              <ul className="dropdown-menu">
+                <li><Link to="/app/observatory?id=investments">Investimentos</Link></li>
+                <li><Link to="/app/observatory?id=wells">Poços</Link></li>
+              </ul>
             </li>
             { this.props.isAdmin ? adminLink : '' }
           </ul>
