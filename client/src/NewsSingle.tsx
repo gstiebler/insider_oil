@@ -56,7 +56,12 @@ export class NewsSingle extends React.Component<IAppProps, IAppState> {
 
         var tableauHTML = null;
         if(record.tableau_url) {
-            tableauHTML = <Tableau vizUrl={record.tableau_url}/>
+            tableauHTML = (
+                <div>
+                    <Tableau vizUrl={record.tableau_url}/>
+                    <br/>
+                </div>
+            );
         }
 
         return (
