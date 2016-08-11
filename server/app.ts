@@ -10,10 +10,11 @@ import winston = require('winston');
 var umzug = require('./lib/InitUmzug');
 var app = express();
 import { initializeSearch } from './lib/search';
+import { syncify } from './lib/PromiseUtils';
 
 // Make necessary migrations
 umzug.up();
-initializeSearch();
+syncify( initializeSearch );
 
 // Configure Winston log lib
 winston.level = 'error';

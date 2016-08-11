@@ -1,9 +1,8 @@
 
 'use strict';
 
-var await = require('../lib/await');
-var Sync = require('sync');
 import db = require('../db/models');
+var await = require('../lib/await');
 
 const dataSources:any = [
     {
@@ -69,17 +68,12 @@ const dataSources:any = [
 ];
 
 // add ids to dataSources
-export function initializeSearch():Promise<any> {
-    return new Promise((resolve, reject) => {
-        Sync(() => {
-            for(var i = 0; i < dataSources.length; i++) {
-                const searchOptions = { where: { name: dataSources[i].model } };
-                const modelItem = await( db.models.ModelsList.findOne(searchOptions) );
-                dataSources[i].model_id = modelItem.id;
-            }
-            resolve();
-        }, (err) => {reject(err)});
-    });
+export function initializeSearch() {
+    for(var i = 0; i < dataSources.length; i++) {
+        const searchOptions = { where: { name: dataSources[i].model } };
+        const modelItem = await( db.models.ModelsList.findOne(searchOptions) );
+        dataSources[i].model_id = modelItem.id;
+    }
  }
 
 
