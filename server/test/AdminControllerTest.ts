@@ -10,7 +10,7 @@ var utils = require('./lib/utils');
 
 var group:nodeunit.ITestGroup = {
 
-createWell: function(test) {
+createWell: (test: nodeunit.Test) => {
     const newItemData = {
         name: '',
         operator_id: 4,

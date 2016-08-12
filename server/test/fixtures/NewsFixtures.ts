@@ -33,10 +33,7 @@ module.exports = function(db) {
         }
     ];
     
-	const promisesArray = [];
     for(var newsObj of newsObjs) {
-        promisesArray.push(db.models.News.create(newsObj));
+        await(db.models.News.create(newsObj));
     }
-    
-    return executePromisesSequentialy(promisesArray);
 }

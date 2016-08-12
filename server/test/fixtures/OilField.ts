@@ -1,4 +1,5 @@
 import utils = require('../lib/utils');
+var await = require('../lib/await');
 
 module.exports = function(db) {
     const parameters = [
@@ -103,10 +104,7 @@ module.exports = function(db) {
         },
     ];
 
-    const promisesArray = [];
     for(var oilFieldObj of parameters) {
-        promisesArray.push(db.models.OilField.create(oilFieldObj));
+        await(db.models.OilField.create(oilFieldObj));
     }
-    
-    return Promise.all(promisesArray);
 }
