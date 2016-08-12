@@ -43,8 +43,11 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
       <div className="col-no-padding col-md-9">
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul className="nav navbar-nav navbar-nav-full">
-            <li className="active nav-item">
-              <Link to="/app/dashboard">Dashboard</Link>
+            <li className="nav-item">
+              <Link to="/app/insights">Insights</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/app/dashboard">Visão geral</Link>
             </li>
             <li className="nav-item dropdown">
               <a aria-haspopup="true" aria-expanded="false">Exploração<span className="caret"></span></a>
@@ -77,9 +80,6 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
             </li>
             <li className="nav-item">
               <Link to="/app/maps_all">Mapas</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/app/insights">Insights</Link>
             </li>
             <li className="nav-item dropdown">
               <a aria-haspopup="true" aria-expanded="false">Observatório<span className="caret"></span></a>
