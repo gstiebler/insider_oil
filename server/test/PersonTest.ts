@@ -5,6 +5,7 @@ import db = require('../db/models');
 import dbServerController = require('../controllers/dbServerController');
 import nodeunit = require('nodeunit');
 import * as AdminController from '../controllers/AdminController';
+var await = require('../lib/await');
 
 const utils = require('./lib/utils');
 
@@ -33,8 +34,9 @@ getPerson: test => {
     test.done();
 },
 
-
 createPerson: test => {
+    const blockModelId = utils.idByName('ModelsList', 'Block');
+    const droModelId = utils.idByName('ModelsList', 'DrillingRigOnshore');
     const newItemData = {
         name: 'Michael Jackson',
         company_id: 2,
@@ -46,12 +48,12 @@ createPerson: test => {
         ],
         projects: [
             {
-                model_id: utils.idByName('ModelsList', 'Block'),
+                model_id: blockModelId,
                 id: utils.idByName('Block', 'ES-M-529'),
                 description: 'Diretor'
             },
             {
-                model_id: utils.idByName('ModelsList', 'DrillingRigOnshore'),
+                model_id: droModelId,
                 id: utils.idByName('DrillingRigOnshore', 'BS-04'),
             }
         ]
@@ -72,28 +74,28 @@ createPerson: test => {
             id: 4
         }
     };
+
     const responseGet = utils.getJsonResponse.sync(null, AdminController.recordValues, reqGet);
-    
     const responseValues = responseGet.values;
     test.equal('Michael Jackson', responseValues.name);
     test.equal(JSON.stringify(newItemData.telephones), JSON.stringify(responseValues.telephones));
     // test projects
     test.equal(2, responseValues.projects.length);
     test.equal('Block', responseValues.projects[0].model);
-    test.equal(2, responseValues.projects[0].id);    
     test.equal('ES-M-529', responseValues.projects[0].name);  
     test.equal('Diretor', responseValues.projects[0].description);   
       
     test.equal('DrillingRigOnshore', responseValues.projects[1].model);
-    test.equal(1, responseValues.projects[1].id);
+    test.equal(droModelId, responseValues.projects[1].model_id);
     test.equal('BS-04', responseValues.projects[1].name);  
     test.ok(!responseValues.projects[1].description);  
     
     test.done();
 },
 
-
 editPerson: test => {
+    const blockModelId = utils.idByName('ModelsList', 'Block');
+    const droModelId = utils.idByName('ModelsList', 'DrillingRigOnshore');
     const recordReq = {
         id: 2,
         name: 'Michael Jackson',
@@ -106,11 +108,11 @@ editPerson: test => {
         ],
         projects: [
             {
-                model_id: utils.idByName('ModelsList', 'Block'),
+                model_id: blockModelId,
                 id: utils.idByName('Block', 'ES-M-529'),
             },
             {
-                model_id: utils.idByName('ModelsList', 'DrillingRigOnshore'),
+                model_id: droModelId,
                 id: utils.idByName('DrillingRigOnshore', 'BS-04'),
             }
         ]
@@ -141,10 +143,10 @@ editPerson: test => {
     // test projects
     test.equal(2, responseGet.values.projects.length);
     test.equal('Block', responseGet.values.projects[0].model);
-    test.equal(2, responseGet.values.projects[0].id);    
+    test.equal(blockModelId, responseGet.values.projects[0].model_id);    
     test.equal('ES-M-529',responseGet.values.projects[0].name);    
     test.equal('DrillingRigOnshore', responseGet.values.projects[1].model);
-    test.equal(1, responseGet.values.projects[1].id);
+    test.equal(droModelId, responseGet.values.projects[1].model_id);
     test.equal('BS-04', responseGet.values.projects[1].name);
       
     test.done();
