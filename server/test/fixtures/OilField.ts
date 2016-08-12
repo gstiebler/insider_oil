@@ -1,5 +1,5 @@
 import utils = require('../lib/utils');
-var await = require('../lib/await');
+var await = require('../../lib/await');
 
 module.exports = function(db) {
     const parameters = [
@@ -104,7 +104,7 @@ module.exports = function(db) {
         },
     ];
 
-    for(var oilFieldObj of parameters) {
+    for(var oilFieldObj of parameters) { 
         await(db.models.OilField.create(oilFieldObj));
     }
 }

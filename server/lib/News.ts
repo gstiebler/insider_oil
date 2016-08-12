@@ -2,8 +2,12 @@
 var cheerio = require('cheerio');
 import db = require('../db/models');
 
+interface INewsModelRef {
+	model: string;
+	id: string;
+}
 
-function getLinkParameters(linkStr) {
+function getLinkParameters(linkStr):INewsModelRef {
 	const regex = /\/app\/view_record\?source=([a-zA-Z ]+)\&id=([0-9\.]+)/
 	const results = linkStr.match(regex);
 	if(!results || results.length < 2)
@@ -16,7 +20,7 @@ function getLinkParameters(linkStr) {
 }
 
 
-export function getModelReferences(htmlText: string): any[] {
+export function getModelReferences(htmlText: string): INewsModelRef[] {
 	const parsedHtml = cheerio.load(htmlText);
 
 	const obj = parsedHtml('a');
@@ -24,7 +28,7 @@ export function getModelReferences(htmlText: string): any[] {
 	  return parsedHtml(this).attr('href');
 	}).get();
 	
-	const result = [];
+	const result: INewsModelRef[] = [];
 	for(var i = 0; i < aHrefs.length; i++) {
 		const parameters = getLinkParameters(aHrefs[i]);
 		if(parameters)
