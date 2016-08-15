@@ -77,6 +77,19 @@ module.exports = {
 			}
 		});
 
+		params.push({
+			table: 'persons',
+			columnName: 'company_id',
+			columnDesc: {
+				type: Sequelize.INTEGER,
+				allowNull: true,
+				references: {
+					model: 'companies',
+					key: 'id'
+				}
+			}
+		});
+
 		return promise_bb.each(params, function(item) {
 			return queryInterface.addColumn(item.table, item.columnName, item.columnDesc);
 		});

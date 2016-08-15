@@ -55,6 +55,31 @@ module.exports = {
 		});
 		
 		parameters.push({
+			table: 'persons',
+			fields: {
+				id: {
+					type: Sequelize.INTEGER,
+					primaryKey: true,
+					autoIncrement: true
+				},
+				name: {
+					type: Sequelize.STRING,
+					allowNull: false
+				},
+				info: {
+					type: Sequelize.TEXT,
+					allowNull: true
+				},
+				created_at: {
+					type: Sequelize.DATE
+				},
+				updated_at: {
+					type: Sequelize.DATE
+				},
+			}
+		});
+		
+		parameters.push({
 			table: 'companies',
 			fields: {
 				id: {
@@ -86,6 +111,14 @@ module.exports = {
 				segments_text: {
 					type: Sequelize.TEXT('tiny'),
 					allowNull: true
+				},
+				main_person_id: {
+					type: Sequelize.INTEGER,
+					allowNull: true,
+					references: {
+						model: 'persons',
+						key: 'id'
+					}
 				},
 				created_at: {
 					type: Sequelize.DATE
@@ -530,40 +563,6 @@ module.exports = {
 				},
 			}
 		});
-		
-		parameters.push({
-			table: 'persons',
-			fields: {
-				id: {
-					type: Sequelize.INTEGER,
-					primaryKey: true,
-					autoIncrement: true
-				},
-				name: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
-				info: {
-					type: Sequelize.TEXT,
-					allowNull: true
-				},
-				company_id: {
-					type: Sequelize.INTEGER,
-					allowNull: true,
-					references: {
-						model: 'companies',
-						key: 'id'
-					}
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
-				},
-			}
-		});
-		
         
 		parameters.push({
 			table: 'person_projects',

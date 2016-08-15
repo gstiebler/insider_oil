@@ -16,6 +16,9 @@ const Company: IBaseDataSourceParams = {
             label: "Site",
             isLink: true
         },
+        main_person_id: {
+            label: "Head"
+        },
         telephones: {
             label: 'Telefone',
             isList: true  

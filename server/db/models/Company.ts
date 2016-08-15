@@ -1,8 +1,9 @@
 'use strict';
 
+import Sequelize = require('sequelize');
 import { getListFieldObj } from '../../lib/ModelUtils';
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   var Company = sequelize.define('Company', {
         name: {
           type: DataTypes.STRING,
@@ -23,8 +24,7 @@ module.exports = function(sequelize, DataTypes) {
         // internal field to store values from the telephones field
         telephones_text: {
             type: DataTypes.TEXT,
-            allowNull: true,
-            invisible: true 
+            allowNull: true
         },
         telephones: getListFieldObj('telephones_text'),
 				segments_text: {
@@ -37,7 +37,11 @@ module.exports = function(sequelize, DataTypes) {
     {
         underscored: true,
         tableName: 'companies',
-        unique: true
+        classMethods: {
+            associate: function(models) {
+                Company.belongsTo(models.Person, { as: 'main_person' } );
+            }
+        }
     }
   );
   return Company;
