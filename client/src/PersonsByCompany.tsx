@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Card } from './Card'
 
 interface IAppProps {
 }
@@ -15,8 +16,17 @@ export class PersonsByCompany extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): React.ReactElement<any> {		
+        const cards: React.ReactElement<any>[] = [];
+        for(var i = 0; i < 10; i++) {
+            cards.push(
+                <Card> </Card>
+            );
+        }
+
 		return (
-            <div></div> 
+            <div>
+            { cards }
+            </div>
 		);
     }
 }

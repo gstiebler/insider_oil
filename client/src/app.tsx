@@ -22,6 +22,7 @@ import { PaginatedTableView } from './PaginatedTableView';
 import { DataList } from './DataList'; 
 import { Insights } from './Insights/Insights'; 
 import { Observatory } from './Observatory'; 
+import { PersonsByCompany } from './PersonsByCompany'; 
 
 interface IAppProps {
     model: string;
@@ -115,6 +116,7 @@ ReactDOM.render(
       <Route path="insights" component={Insights}/>
       <Route path="insights_publisher" component={Publisher}/>
       <Route path="observatory" component={Observatory}/>
+      <Route path="persons" component={PersonsByCompany}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,
