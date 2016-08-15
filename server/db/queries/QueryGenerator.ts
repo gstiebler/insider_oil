@@ -1,22 +1,6 @@
 'use strict';
 
-import { IFilter } from '../../../common/Interfaces';
-
-export interface IOrderOpts {
-    fieldName: string;
-    dir: string; // "asc" or "desc"
-}
-
-export interface IQueryParams {
-    order: IOrderOpts[]; 
-    filters: IFilter[];
-    pagination: IPaginationOpts;
-}
-
-export interface IPaginationOpts {
-    first: number;
-    itemsPerPage: number;
-} 
+import { IFilter, IOrderOpts, IPaginationOpts } from '../../../common/Interfaces';
 
 type Field = string | string[];
 

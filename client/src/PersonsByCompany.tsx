@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { Card } from './Card'
+import { getP } from './lib/Server';
+import * as ni from '../../common/NetworkInterfaces';
+import * as showError from './lib/ShowError';
 
 interface IAppProps {
 }
 
 interface IAppState {
+    records: any[];
 }
 
 export class PersonsByCompany extends React.Component<IAppProps, IAppState> {
@@ -12,16 +16,38 @@ export class PersonsByCompany extends React.Component<IAppProps, IAppState> {
     constructor(props: IAppProps) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            records: []
+        };
+    }
+
+    public componentDidMount() {
+        const req: ni.GetTableQueryData.req = {
+            queryName: 'companyCards',
+            queryParams: {
+                order: [], 
+                filters: [],
+                pagination: {
+                    first: 0,
+                    itemsPerPage: 10
+                }
+            }
+        }
+        getP('/get_table_data', req)
+            .then(this.onData.bind(this))
+            .catch(showError.show);
+    }
+
+    public onData(data:ni.GetTableQueryData.res) {
+        this.state.records = data.records;
+        this.setState(this.state);
+        return null;
     }
 
     public render(): React.ReactElement<any> {		
-        const cards: React.ReactElement<any>[] = [];
-        for(var i = 0; i < 10; i++) {
-            cards.push(
-                <Card key={i}> </Card>
-            );
-        }
+        const cards = this.state.records.map((item, index) => {
+            return <Card key={index} data={item}> </Card>
+        });
 
 		return (
             <div className="cards">

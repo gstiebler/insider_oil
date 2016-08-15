@@ -4,9 +4,10 @@ var await = require('../../lib/await');
 import db = require('../models');
 import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
+import { IQueryParams } from '../../../common/Interfaces';
 
 interface IQueryStrFn {
-    (queryParams: QueryGenerator.IQueryParams): string; 
+    (queryParams: IQueryParams): string; 
 }
 
 interface ITableQuery {
@@ -20,7 +21,7 @@ interface ITableQueries {
 }
 
 const productionUnit:ITableQuery = {
-    queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+    queryStrFn: (queryParams: IQueryParams) => {
         const options:QueryGenerator.IQueryOpts = {
             table: {
                 name: 'production_units',
@@ -107,7 +108,7 @@ const productionUnit:ITableQuery = {
 
 
 const terminal:ITableQuery = {
-    queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+    queryStrFn: (queryParams: IQueryParams) => {
         const options:QueryGenerator.IQueryOpts = {
             table: {
                 name: 'terminals',
@@ -140,7 +141,7 @@ const terminal:ITableQuery = {
 
 
 const oilField:ITableQuery = {
-    queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+    queryStrFn: (queryParams: IQueryParams) => {
         const options:QueryGenerator.IQueryOpts = {
             table: {
                 name: 'oil_fields',
@@ -205,7 +206,7 @@ const oilField:ITableQuery = {
 export const queries:ITableQueries = {
     /** Basins */
     Basins: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'basins',
@@ -237,7 +238,7 @@ export const queries:ITableQueries = {
     },
     
      Companies: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'companies',
@@ -286,7 +287,7 @@ export const queries:ITableQueries = {
     
     /** Blocks */
     Blocks: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
             const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'blocks',
@@ -360,7 +361,7 @@ export const queries:ITableQueries = {
       
     /** Persons */
     Persons: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
             const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'persons',
@@ -417,7 +418,7 @@ export const queries:ITableQueries = {
     
     /** DrillingRigs */
     DrillingRigs: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
             const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'drilling_rigs_onshore',
@@ -524,7 +525,7 @@ export const queries:ITableQueries = {
     
     /** Seismics */
     Seismics: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'seismics',
@@ -610,7 +611,7 @@ export const queries:ITableQueries = {
     },
     
     Refineries: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'refineries',
@@ -648,7 +649,7 @@ export const queries:ITableQueries = {
     },
     
     Wells: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {    
+        queryStrFn: (queryParams: IQueryParams) => {    
             const wellOpts:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'wells',
@@ -784,7 +785,7 @@ export const queries:ITableQueries = {
     },
     
     FPSOs: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
             queryParams.filters.push(
                 {
                     field: 'type',
@@ -797,7 +798,7 @@ export const queries:ITableQueries = {
     },
     
     FixedProductionUnits: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
             queryParams.filters.push(
                 {
                     field: 'type',
@@ -810,7 +811,7 @@ export const queries:ITableQueries = {
     },
     
     SemiSubmersibleProductionUnits: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
             queryParams.filters.push(
                 {
                     field: 'type',
@@ -823,7 +824,7 @@ export const queries:ITableQueries = {
     },
     
     Projects: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'production_units',
@@ -872,7 +873,7 @@ export const queries:ITableQueries = {
     },
     
     oilFielsdProduction: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
             queryParams.filters.push(
                 {
                     field: 'stage',
@@ -885,7 +886,7 @@ export const queries:ITableQueries = {
     },
     
     oilFieldsDevelopment: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
             queryParams.filters.push(
                 {
                     field: 'stage',
@@ -898,7 +899,7 @@ export const queries:ITableQueries = {
     },
     
     landTerminal: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
             queryParams.filters.push(
                 {
                     field: 'type',
@@ -911,7 +912,7 @@ export const queries:ITableQueries = {
     },
     
     seaTerminal: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
             queryParams.filters.push(
                 {
                     field: 'type',
@@ -924,7 +925,7 @@ export const queries:ITableQueries = {
     },
     
     Fleet: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'fleet',
@@ -985,7 +986,7 @@ export const queries:ITableQueries = {
     },
     
     Bids: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'bids',
@@ -1055,7 +1056,7 @@ export const queries:ITableQueries = {
     },
     
     Contracts: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'contracts',
@@ -1147,7 +1148,7 @@ export const queries:ITableQueries = {
     },
     
     GasPipelines: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'gas_pipelines',
@@ -1203,7 +1204,7 @@ export const queries:ITableQueries = {
     },
     
     OilPipelines: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'gas_pipelines',
@@ -1247,7 +1248,7 @@ export const queries:ITableQueries = {
     },
 
     News: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'news',
@@ -1285,7 +1286,7 @@ export const queries:ITableQueries = {
     },
 
     Production: {
-        queryStrFn: (queryParams: QueryGenerator.IQueryParams) => {
+        queryStrFn: (queryParams: IQueryParams) => {
              const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'production',
@@ -1349,9 +1350,44 @@ export const queries:ITableQueries = {
             },
         ]
     },
+
+    companyCards: {
+        queryStrFn: (queryParams: IQueryParams) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'companies',
+                    fields: [
+                        ['id', 'company_id'],
+                        ['name', 'company_name'],
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'persons',
+                        fields: [
+                            ['name', 'person_name'],
+                            'position',
+                        ],
+                        joinField: 'companies.main_person_id'
+                    },
+                ],
+                extraFields: [],
+                filters: queryParams.filters,
+                order: [ 
+                    {
+                        fieldName: 'company_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: []
+    },
 };
 
-export function getQueryResult(queryName: string, queryParams: QueryGenerator.IQueryParams): Promise<any> {
+export function getQueryResult(queryName: string, queryParams: IQueryParams): Promise<any> {
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const queryStr = queries[queryName].queryStrFn(queryParams);
     const pagination = QueryGenerator.getPaginationStr(queryParams.pagination);

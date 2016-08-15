@@ -106,3 +106,19 @@ export interface IInsight {
     imgUrl?: string;
     date?: string;
 }
+
+export interface IOrderOpts {
+    fieldName: string;
+    dir: string; // "asc" or "desc"
+}
+
+export interface IPaginationOpts {
+    first: number;
+    itemsPerPage: number;
+} 
+
+export interface IQueryParams {
+    order: IOrderOpts[]; 
+    filters: IFilter[];
+    pagination: IPaginationOpts;
+}

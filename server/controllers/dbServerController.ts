@@ -18,6 +18,7 @@ import { getRecordOptions, IGetRecordOptions } from '../lib/GetRecordOptions';
 import Sequelize = require('sequelize');
 import * as interfaces from '../../common/Interfaces';
 import * as ni from '../../common/NetworkInterfaces';
+import { IQueryParams } from '../../common/Interfaces';
 
 export function sendErrorReport(req: express.Request, res: express.Response, next) {
     const body:ni.SendErrorReport.req = req.body;
@@ -101,9 +102,10 @@ export function getQueryData(req: express.Request, res: express.Response) {Sync(
  * custom user filters
  */
 export function getTableQueryData(req: express.Request, res: express.Response):void {Sync(function(){
-    const queryParams:QueryGenerator.IQueryParams = req.query.queryParams;
+    const reqQuery:ni.GetTableQueryData.req = req.query;
+    const queryParams:IQueryParams = reqQuery.queryParams;
     queryParams.filters = queryParams.filters ? queryParams.filters : [];
-    const queryName:string = req.query.queryName;
+    const queryName:string = reqQuery.queryName;
     const query = TableQueries.queries[queryName];
     const fields = query.fields;
 
@@ -114,7 +116,7 @@ export function getTableQueryData(req: express.Request, res: express.Response):v
                 query.recordProcessor(record);
             }
         }
-        const result:interfaces.TableQueryDataRes = {
+        const result:ni.GetTableQueryData.res = {
             fields,
             records,
             count: results[1][0].count
@@ -137,7 +139,7 @@ export function getTimeSeries(req: express.Request, res: express.Response):void 
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 
 export function getDashboardData(req: express.Request, res: express.Response):void {Sync(function(){
-    const projQueryParams:QueryGenerator.IQueryParams = {
+    const projQueryParams:IQueryParams = {
         order: [],
         filters: [],
         pagination: {

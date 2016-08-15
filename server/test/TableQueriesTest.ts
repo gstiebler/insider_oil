@@ -3,11 +3,12 @@ var utils = require('./lib/utils');
 import QueryGenerator = require('../db/queries/QueryGenerator');
 import nodeunit = require('nodeunit');
 import dbServerController = require('../controllers/dbServerController');
+import { IQueryParams } from '../../common/Interfaces';
 
 var group: nodeunit.ITestGroup = {
 
 basinsLikeFilter:  (test: nodeunit.Test) => {
-    const queryParams:QueryGenerator.IQueryParams = {
+    const queryParams:IQueryParams = {
         order: [
             {
                 fieldName: 'name',
@@ -44,7 +45,7 @@ basinsLikeFilter:  (test: nodeunit.Test) => {
 
 
 basinsPagination:  (test: nodeunit.Test) => {
-    const queryParams:QueryGenerator.IQueryParams = {
+    const queryParams:IQueryParams = {
         order: [
             {
                 fieldName: 'name',
@@ -78,7 +79,7 @@ basinsPagination:  (test: nodeunit.Test) => {
 },
 
 contracts:  (test: nodeunit.Test) => {
-    const queryParams:QueryGenerator.IQueryParams = {
+    const queryParams:IQueryParams = {
         order: [
             {
                 fieldName: 'user_uid',
@@ -111,7 +112,7 @@ contracts:  (test: nodeunit.Test) => {
 },
 
 DrillingRigs:  (test: nodeunit.Test) => {
-    const queryParams:QueryGenerator.IQueryParams = {
+    const queryParams:IQueryParams = {
         order: [
             {
                 fieldName: 'dr_name',
@@ -139,7 +140,7 @@ DrillingRigs:  (test: nodeunit.Test) => {
 },
 
 blocksInFilter:  (test: nodeunit.Test) => {
-    const queryParams:QueryGenerator.IQueryParams = {
+    const queryParams:IQueryParams = {
         order: [
             {
                 fieldName: 'basin_name',
@@ -188,7 +189,7 @@ blocksInFilter:  (test: nodeunit.Test) => {
 },
 
 companies:  (test: nodeunit.Test) => {
-    const queryParams:QueryGenerator.IQueryParams = {
+    const queryParams:IQueryParams = {
         order: [
             {
                 fieldName: 'name',

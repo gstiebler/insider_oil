@@ -41,6 +41,17 @@ export namespace GetTableData {
     }
 }
 
+export namespace GetTableQueryData {
+    
+    export interface req {
+        queryName: string;
+        queryParams: Interfaces.IQueryParams;
+    }
+
+    export interface res extends Interfaces.TableQueryDataRes {
+    }
+}
+
 export namespace GetViewRecord {
 
     export interface req {
@@ -126,7 +137,6 @@ export namespace Insights {
         flexSlider: Interfaces.IInsight[];
     }
 }
-
 
 export namespace SaveInsights {
 

@@ -6,6 +6,7 @@ import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
 import * as TableQueries from './TableQueries';
 import * as su from '../../lib/StringUtils';
+import { IQueryParams } from '../../../common/Interfaces';
 
 /** function that returns the SQL query string */
 interface IQueryStrFn {
@@ -211,7 +212,7 @@ const queries:IQueriesById = {
                 { field: 'model_id', equal: modelListId },
                 { field: 'obj_id', equal:filters.obj_id  },
             ];
-            const queryParams: QueryGenerator.IQueryParams = {
+            const queryParams: IQueryParams = {
                 filters: customFilters,
                 order: [ { fieldName: 'opening_moment', dir: 'desc' } ],
                 pagination: { first: 0, itemsPerPage: 100 }
@@ -248,7 +249,7 @@ const queries:IQueriesById = {
                 }
             ]
 
-            const queryParams: QueryGenerator.IQueryParams = {
+            const queryParams: IQueryParams = {
                 filters: contractFilters,
                 order: [ { fieldName: 'start', dir: 'desc' } ],
                 pagination: { first: 0, itemsPerPage: 100 }
@@ -553,7 +554,7 @@ const queries:IQueriesById = {
     
     personsByCompany: {
         queryStrFn: (filter) => {
-            const queryParams: QueryGenerator.IQueryParams = {
+            const queryParams: IQueryParams = {
                 filters: [ { field: 'company_id', equal: filter.id } ],
                 order: [ { fieldName: 'person_name', dir: 'asc' } ],
                 pagination: { first: 0, itemsPerPage: 100 }
