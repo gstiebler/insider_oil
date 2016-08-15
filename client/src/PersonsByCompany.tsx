@@ -19,13 +19,25 @@ export class PersonsByCompany extends React.Component<IAppProps, IAppState> {
         const cards: React.ReactElement<any>[] = [];
         for(var i = 0; i < 10; i++) {
             cards.push(
-                <Card> </Card>
+                <Card key={i}> </Card>
             );
         }
 
 		return (
-            <div>
-            { cards }
+            <div className="cards">
+                <div id="carousel">
+                    <div className="row">
+                        <div className="carousel slide fade-quote-carousel" data-ride="carousel" data-interval="100000">
+                            <div className="carousel-inner">
+                                <div className="active item">
+                                    <div className="row">
+                                    { cards }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 		);
     }
