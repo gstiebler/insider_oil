@@ -7,24 +7,25 @@ export class QueryDataIncrementalLoading {
 
     private itemsPerPage: number;
     private queryName: string;
-    private lastItem: number;
     private waitingData: boolean;
     private count: number;
     private filters: IFilter[];
+    private records: any[];
 
     constructor(queryName: string, itemsPerPage: number) {
         this.queryName = queryName;
         this.itemsPerPage = itemsPerPage;
 
         this.waitingData = false;
-        this.lastItem = 0;
-        this.count = 9999999;
         this.filters = [];
+
+        this.count = 9999999;
+        this.records = [];
     }
 
-    public getData():Promise<ni.GetTableQueryData.res> {
-        return new Promise<ni.GetTableQueryData.res>((resolve, reject) => {
-            if(this.waitingData || (this.lastItem >= this.count)) {
+    public getData():Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            if(this.waitingData || (this.records.length >= this.count)) {
                 return;
             }
             const req: ni.GetTableQueryData.req = {
@@ -33,7 +34,7 @@ export class QueryDataIncrementalLoading {
                     order: [], 
                     filters: this.filters,
                     pagination: {
-                        first: this.lastItem,
+                        first: this.records.length,
                         itemsPerPage: this.itemsPerPage
                     }
                 }
@@ -45,15 +46,23 @@ export class QueryDataIncrementalLoading {
         });
     }    
 
-    public search(filter: IFilter) {
+    public search(filter: IFilter):Promise<any[]>  {
+        this.count = 9999999;
+        this.records = [];
 
+        if(filter.like == '') {
+            this.filters = [];
+        } else {
+            this.filters = [filter];
+        }
+        return this.getData();
     }
     
     public onData(resolve, data:ni.GetTableQueryData.res) {
         this.count = data.count;
-        this.lastItem += this.itemsPerPage;
+        this.records = this.records.concat(data.records);
         this.waitingData = false;
-        resolve(data);
+        resolve(this.records);
         return null;
     }
 }

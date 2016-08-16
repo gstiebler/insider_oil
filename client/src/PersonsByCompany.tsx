@@ -3,6 +3,7 @@ import { Card } from './Card'
 import { QueryDataIncrementalLoading } from './lib/QueryDataIncrementalLoading';
 import * as ni from '../../common/NetworkInterfaces';
 import * as showError from './lib/ShowError';
+import { IFilter } from '../../common/Interfaces';
 
 interface IAppProps {
 }
@@ -42,13 +43,19 @@ export class PersonsByCompany extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    public onData(data:ni.GetTableQueryData.res) {
-        this.state.records = this.state.records.concat(data.records);
+    public onData(records: any[]) {
+        this.state.records = records;
         this.setState(this.state);
     }
 
     private searchTextChanged(event) {
-        console.log(event.target.value);
+        const filter:IFilter = {
+            field: 'companies.name',
+            like: event.target.value
+        };
+        this.queryDataIncrementalLoading.search(filter)
+                .then(this.onData.bind(this))
+                .catch(showError.show);
     }
 
     public render(): React.ReactElement<any> {	
