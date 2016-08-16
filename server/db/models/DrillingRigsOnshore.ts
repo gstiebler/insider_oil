@@ -3,7 +3,7 @@ import Sequelize = require('sequelize');
 import { saveImage } from '../../lib/ModelUtils';
 
 function savePhoto(drillingRig) {
-    saveImage(drillingRig.photo, 'DrillingRigOnshore', drillingRig.id);
+    saveImage(drillingRig.dataValues.photo, 'DrillingRigOnshore', drillingRig.id);
 }
 
 function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes):Sequelize.Model<any, any> {

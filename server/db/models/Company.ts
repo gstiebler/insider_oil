@@ -4,7 +4,7 @@ import Sequelize = require('sequelize');
 import { getListFieldObj, saveImage } from '../../lib/ModelUtils';
 
 function savePhoto(company) {
-	  saveImage(company.logo, 'Company', company.id);
+	  saveImage(company.dataValues.logo, 'Company', company.id);
 }
 
 module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
