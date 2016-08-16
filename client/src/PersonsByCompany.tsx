@@ -15,6 +15,7 @@ interface IAppState {
 export class PersonsByCompany extends React.Component<IAppProps, IAppState> {
 
     private queryDataIncrementalLoading: QueryDataIncrementalLoading;
+    private timeoutVar;
 
     constructor(props: IAppProps) {
         super(props);
@@ -49,9 +50,14 @@ export class PersonsByCompany extends React.Component<IAppProps, IAppState> {
     }
 
     private searchTextChanged(event) {
+        clearTimeout(this.timeoutVar);
+        this.timeoutVar = setTimeout(this.search.bind(this, event.target.value), 400);
+    }
+
+    private search(searchValue: string) {
         const filter:IFilter = {
             field: 'companies.name',
-            like: event.target.value
+            like: searchValue
         };
         this.queryDataIncrementalLoading.search(filter)
                 .then(this.onData.bind(this))
