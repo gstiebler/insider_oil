@@ -35,9 +35,8 @@ export function authorizeHTML(req, res, next) {
     }
 }
 
-
-export function authorize(req, res, next) {
-    var token = req.query.token;
+function authorize(req, res, next, checkAdmin) {
+   var token = req.query.token;
     if( !token )
         token = req.body.token;
     if( !token )
@@ -50,6 +49,11 @@ export function authorize(req, res, next) {
     
     function callback( user ) {
         if( user ) {
+            if(checkAdmin && !user.admin) {
+                winston.info('invalid admin request');
+                res.status(401).json({ errorMsg: 'Not admin'});
+                return;
+            }
             req.user = user;
         	const logObj:any = {
         		path: req.route.path,
@@ -74,6 +78,14 @@ export function authorize(req, res, next) {
     	winston.info('invalid token');
         res.status(401).json({ errorMsg: 'Invalid token'});
     }
+}
+
+export function authAdmin(req, res, next) {
+    authorize(req, res, next, true);
+}
+
+export function authUser(req, res, next) {
+    authorize(req, res, next, false);
 }
 
 

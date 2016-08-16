@@ -22,45 +22,45 @@ module.exports = function(app: express.Express) {
     app.get('/login/',                             loginController.loginPage );
     app.post('/login/',                            loginController.makeLogin );
     app.post('/login_rest/',                       loginController.makeLoginREST );
-    app.put('/login/logout',    session.authorize, loginController.logout );
+    app.put('/login/logout',    session.authUser, loginController.logout );
     
-    app.get('/table_data', session.authorize, AdminController.getTableData);
-    app.get('/view_params', session.authorize, AdminController.getViewParams);
-    app.get('/model_fields/', session.authorize,   AdminController.modelFields);
-    app.get('/record_values/',  session.authorize, AdminController.recordValues);
-    app.post('/create_item/',  session.authorize,  AdminController.createItem);
-    app.put('/save_item/',   session.authorize,    AdminController.saveItem);
-    app.get('/sources_list/',  session.authorize,  AdminController.sourcesList);
-    app.delete('/delete_item/', session.authorize, AdminController.deleteItem);
-    app.get('/combo_values/', session.authorize,   AdminController.getComboValues);
+    app.get('/table_data', session.authAdmin, AdminController.getTableData);
+    app.get('/view_params', session.authAdmin, AdminController.getViewParams);
+    app.get('/model_fields/', session.authAdmin,   AdminController.modelFields);
+    app.get('/record_values/',  session.authAdmin, AdminController.recordValues);
+    app.post('/create_item/',  session.authAdmin,  AdminController.createItem);
+    app.put('/save_item/',   session.authAdmin,    AdminController.saveItem);
+    app.get('/sources_list/',  session.authAdmin,  AdminController.sourcesList);
+    app.delete('/delete_item/', session.authAdmin, AdminController.deleteItem);
+    app.get('/combo_values/', session.authAdmin,   AdminController.getComboValues);
     app.post('/db_server/upload_kml', AdminController.uploadKml);
     
     app.post('/db_server/upload_file',             ExcelController.uploadFile);
-    app.get('/download_excel', session.authorize,  ExcelController.downloadExcel);
-    app.put('/import_from_url', session.authorize,  ExcelController.importExcelFromURL);
+    app.get('/download_excel', session.authUser,  ExcelController.downloadExcel);
+    app.put('/import_from_url', session.authUser,  ExcelController.importExcelFromURL);
 
-    app.post('/send_error_report', session.authorize, dbServerController.sendErrorReport);
-    app.get('/get_query_data', session.authorize,  dbServerController.getQueryData);
-    app.get('/get_table_data', session.authorize,  dbServerController.getTableQueryData);
-    app.get('/time_series', session.authorize,     dbServerController.getTimeSeries);
-    app.get('/view_record/',   session.authorize,  dbServerController.viewRecord);
-    app.get('/get_record/',   session.authorize,  dbServerController.getRecord);
-    app.get('/dashboard_data/',  session.authorize, dbServerController.getDashboardData);
-    app.get('/queries_fields',  session.authorize, dbServerController.getTableQueriesFields);
+    app.post('/send_error_report', session.authUser, dbServerController.sendErrorReport);
+    app.get('/get_query_data', session.authUser,  dbServerController.getQueryData);
+    app.get('/get_table_data', session.authUser,  dbServerController.getTableQueryData);
+    app.get('/time_series', session.authUser,     dbServerController.getTimeSeries);
+    app.get('/view_record/',   session.authUser,  dbServerController.viewRecord);
+    app.get('/get_record/',   session.authUser,  dbServerController.getRecord);
+    app.get('/dashboard_data/',  session.authUser, dbServerController.getDashboardData);
+    app.get('/queries_fields',  session.authUser, dbServerController.getTableQueriesFields);
 
-    app.get('/maps/blocks', session.authorize,     MapsController.getBlocks);
-    app.get('/maps/oil_fields', session.authorize, MapsController.getOilFields);
-    app.get('/maps/production_units', session.authorize, MapsController.getProductionUnits);
+    app.get('/maps/blocks', session.authUser,     MapsController.getBlocks);
+    app.get('/maps/oil_fields', session.authUser, MapsController.getOilFields);
+    app.get('/maps/production_units', session.authUser, MapsController.getProductionUnits);
 
-    app.get('/insights', session.authorize, InsightsController.getInsights);
-    app.post('/save_insights_publisher', session.authorize, InsightsController.saveInsights);
+    app.get('/insights', session.authUser, InsightsController.getInsights);
+    app.post('/save_insights_publisher', session.authUser, InsightsController.saveInsights);
     
-    app.get('/search', session.authorize,          searchController.main);
+    app.get('/search', session.authUser,          searchController.main);
     
     // Users
-    app.get('/user/',                session.authorize, usersController.main );
-    app.get('/user/details',         session.authorize, usersController.userDetails );
-    app.put('/user/change_password', session.authorize, usersController.changePassword );
+    app.get('/user/',                session.authUser, usersController.main );
+    app.get('/user/details',         session.authUser, usersController.userDetails );
+    app.put('/user/change_password', session.authUser, usersController.changePassword );
     
     // TODO !autorize!
     app.get('/db_image',                                imageController.main );
