@@ -39,6 +39,7 @@ params['IndustrySegment'] = require('./IndustrySegment');
 params['MaintenanceDate'] = require('./MaintenanceDate');
 params['ExcelImportLog'] = require('./ExcelImportLog');
 params['ErrorReport'] = require('./ErrorReport');
+params['User'] = require('./User');
 
 export = params;
 

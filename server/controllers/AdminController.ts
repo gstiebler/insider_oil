@@ -212,6 +212,7 @@ export function getComboValues(req: express.Request, res: express.Response) {
  */
 export function sourcesList(req: express.Request, res: express.Response) {
     var list = {
+        User: 'Usuários',
         Basin: 'Bacias',
         Block: 'Blocos',
         Well: 'Poços',

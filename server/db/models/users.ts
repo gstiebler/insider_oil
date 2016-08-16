@@ -1,5 +1,12 @@
 "use strict"
 
+function beforeValidate(user) {
+    if(!user.admin) {
+        user.admin = false;
+    }
+}
+
+
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
     login: {
@@ -42,7 +49,10 @@ module.exports = function(sequelize, DataTypes) {
                 });
             });
         }
-      }
+      },
+        hooks: {
+           beforeValidate: beforeValidate
+        }
     }
   );
   return User;
