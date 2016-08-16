@@ -8,6 +8,10 @@ var await = require('../../lib/await');
 winston.add(winston.transports.File, { filename: 'log/seeder.log' });
 
 Sync(function() {
+    if(process.env.NODE_ENV == 'production') {
+        console.log('Production environment not allowed!!');
+        return;
+    }
     try {
         await( db.sequelize.getQueryInterface().dropAllTables() );
         await( umzug.up() );
