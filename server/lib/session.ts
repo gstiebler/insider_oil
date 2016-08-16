@@ -2,14 +2,8 @@
 import db = require( '../db/models' );
 import winston = require('winston');
 
-function userFromToken( token, callback ) {
-    if (token == '')
-        callback(null);
-    db.models.User.findOne({ where: { token: token } })
-        .then(callback)
-        .catch((error) => {
-            winston.error(error);
-        });
+function userFromToken( token ):Promise<any> {
+    return db.models.User.findOne({ where: { token: token } });
 }
 
 
@@ -29,7 +23,7 @@ export function login( username, password, loginOk, loginError ) {
 
 
 export function authorizeHTML(req, res, next) {
-    userFromToken( req.query.token, callback );
+    userFromToken( req.query.token ).then(callback);
     
     function callback( user ) {
         if( user ) {
@@ -52,7 +46,7 @@ export function authorize(req, res, next) {
     if( !token )
         invalidToken();
         
-    userFromToken( token, callback );
+    userFromToken( token ).then(callback);
     
     function callback( user ) {
         if( user ) {
