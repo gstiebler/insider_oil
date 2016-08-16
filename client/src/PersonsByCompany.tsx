@@ -29,7 +29,7 @@ export class PersonsByCompany extends React.Component<IAppProps, IAppState> {
                 filters: [],
                 pagination: {
                     first: 0,
-                    itemsPerPage: 10
+                    itemsPerPage: 999
                 }
             }
         }

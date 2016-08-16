@@ -1366,6 +1366,7 @@ export const queries:ITableQueries = {
                         name: 'persons',
                         fields: [
                             ['name', 'person_name'],
+                            ['id', 'person_id'],
                             'position',
                         ],
                         joinField: 'companies.main_person_id'
