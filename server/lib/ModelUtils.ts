@@ -1,5 +1,6 @@
 'use strict';
 import Sequelize = require('sequelize');
+import * as AWS from './AWS';
 const await = require('../lib/await');
 
 export function getListFieldObj(textFieldName:string) {
@@ -30,4 +31,12 @@ export function getObjRefField() {
         model: modelRecord.name,
         name: refObjName
     }];
+}
+
+export function saveImage(imgBytes, modelName: string, id: number) {
+    const imgArray = imgBytes;
+    if(!imgArray) return;
+    const imgBuffer = new Buffer(imgArray);
+    const fileName = 'images/' + modelName + '/img_' + id + '_original.jpg';
+    AWS.saveImage(imgBuffer, fileName);  
 }

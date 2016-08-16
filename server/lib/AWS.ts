@@ -2,7 +2,7 @@
 
 import * as AWS from 'aws-sdk';
 
-export function saveImage(content, fileName:string):Promise<string> {
+export function saveImage(content: Buffer, fileName:string):Promise<string> {
     return new Promise((resolve, reject) => {
         if(process.env.NODE_ENV != 'production') {
             fileName = process.env.NODE_ENV + '/' + fileName;

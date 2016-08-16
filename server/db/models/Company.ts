@@ -1,7 +1,11 @@
 'use strict';
 
 import Sequelize = require('sequelize');
-import { getListFieldObj } from '../../lib/ModelUtils';
+import { getListFieldObj, saveImage } from '../../lib/ModelUtils';
+
+function savePhoto(company) {
+	  saveImage(company.logo, 'Company', company.id);
+}
 
 module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   var Company = sequelize.define('Company', {
@@ -43,6 +47,10 @@ module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.D
             associate: function(models) {
                 Company.belongsTo(models.Person, { as: 'main_person' } );
             }
+        },
+        hooks: {
+            afterCreate: savePhoto,
+            beforeUpdate: savePhoto
         }
     }
   );

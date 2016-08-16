@@ -6,7 +6,6 @@ import dbServerController = require('../controllers/dbServerController');
 import * as usersController from '../controllers/usersController';
 import * as searchController from '../controllers/SearchController';
 import ExcelController = require('../controllers/ExcelController');
-import * as imageController from '../controllers/ImageController';
 import express = require("express");
 import * as ni from '../../common/NetworkInterfaces';
 import * as AdminController from '../controllers/AdminController';
@@ -61,9 +60,6 @@ module.exports = function(app: express.Express) {
     app.get('/user/',                session.authUser, usersController.main );
     app.get('/user/details',         session.authUser, usersController.userDetails );
     app.put('/user/change_password', session.authUser, usersController.changePassword );
-    
-    // TODO !autorize!
-    app.get('/db_image',                                imageController.main );
     
     app.get('/s3/images/*', function (req, res) {
         const parts = req.url.split('/');

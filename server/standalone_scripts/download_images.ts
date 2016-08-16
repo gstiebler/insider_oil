@@ -4,11 +4,12 @@ var Sync = require('sync');
 var await = require('../lib/await');
 
 Sync(function(){
-    const records:any[] = await( db.models.Person.findAll({order: 'name'}) );
+    const records:any[] = await( db.models.DrillingRigOffshore.findAll({order: 'name'}) );
     console.log('num: ', records.length);
-    for(var person of records) {
-        if(!person.photo) continue;
-        lwip.open(person.photo, 'jpg', onPhotoOpen.bind(this, person.id));
+    for(var record of records) {
+        console.log(record.id);
+        if(!record.photo) continue;
+        lwip.open(record.photo, 'jpg', onPhotoOpen.bind(this, record.id));
     }
 }); 
 

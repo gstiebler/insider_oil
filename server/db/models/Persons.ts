@@ -25,7 +25,7 @@ function updatePersonProjects(db, person) {
 
 function updateFieldsFunc(db, person) {
 	updatePersonProjects(db, person);
-	saveImage(person.photo, 'person', person.id);
+	saveImage(person.photo, 'Person', person.id);
 }
 
 function defineHooks(db) {

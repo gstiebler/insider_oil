@@ -161,8 +161,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                                value={this.state.values[field.name]}
                                onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.isPhoto) {
-            return <ImageShow defaultValue={ this.state.values[field.name]} 
-                                onChange={this.onChange.bind(this, field.name)}/>
+            return <ImageShow onChange={this.onChange.bind(this, field.name)}/>
         } else if(field.isProjectList) {
             return <ListOfProjects value={this.state.values[field.name]} 
                                    onChange={this.onChange.bind(this, field.name)}/>

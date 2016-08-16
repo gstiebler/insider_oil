@@ -1,5 +1,10 @@
 'use strict';
 import Sequelize = require('sequelize');  
+import { saveImage } from '../../lib/ModelUtils';
+
+function savePhoto(drillingRig) {
+    saveImage(drillingRig.photo, 'DrillingRigOnshore', drillingRig.id);
+}
 
 function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes):Sequelize.Model<any, any> {
     const DrillingRigOnshore = sequelize.define('DrillingRigOnshore', {
@@ -48,6 +53,10 @@ function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataType
                 };
                 DrillingRigOnshore.belongsTo(models.Company, optsOp);
             }
+        },
+        hooks: {
+            afterCreate: savePhoto,
+            beforeUpdate: savePhoto
         }
     });
     return DrillingRigOnshore;
