@@ -52,7 +52,7 @@ function setReferences(news, options) {
     if(news.image) {
         for(let imageParam of imageParams) {
             const imgBuffer = new Buffer(news.image);
-            const resampledBuffer = resample(imgBuffer, imageParam.width, imageParam.height);
+            const resampledBuffer:Buffer = await( resample(imgBuffer, imageParam.width, imageParam.height) );
 
             const fileName = 'images/' + newsLib.formatImgUrl(news.id, imageParam.size);
             AWS.saveImage(resampledBuffer, fileName);  
