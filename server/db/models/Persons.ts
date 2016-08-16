@@ -1,6 +1,6 @@
 'use strict';
 
-import { getListFieldObj } from '../../lib/ModelUtils';
+import { getListFieldObj, saveImage } from '../../lib/ModelUtils';
 var await = require('../../lib/await');
 
 function updatePersonProjects(db, person) {
@@ -23,19 +23,15 @@ function updatePersonProjects(db, person) {
     });
 }
 
-
-function updateFieldsFunc(db) {
-    return function (person) {
-        updatePersonProjects(db, person);
-    }
+function updateFieldsFunc(db, person) {
+	updatePersonProjects(db, person);
+	saveImage(person.photo, 'person', person.id);
 }
-
 
 function defineHooks(db) {
-	db.Person.hook('afterCreate', updateFieldsFunc(db));
-	db.Person.hook('beforeUpdate', updateFieldsFunc(db));
+	db.Person.hook('afterCreate', updateFieldsFunc.bind(this, db));
+	db.Person.hook('beforeUpdate', updateFieldsFunc.bind(this, db));
 }
-
 
 module.exports = function(sequelize, DataTypes) {
 	var Person = sequelize.define('Person', {
@@ -72,7 +68,9 @@ module.exports = function(sequelize, DataTypes) {
 		address: {
 			type: DataTypes.STRING,
 			allowNull: true
-		},
+		},		
+		// this field do not exists on DB. It's only here to 
+		// facilitate photo upload
 		photo: {
 			type: DataTypes.BLOB,
 			allowNull: true

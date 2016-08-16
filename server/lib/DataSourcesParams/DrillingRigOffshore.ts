@@ -36,6 +36,8 @@ const DrillingRigOffshore: IBaseDataSourceParams = {
             label: "Day rate (US$)",
             isCurrency: true
         },
+		// this field do not exists on DB. It's only here to 
+		// facilitate photo upload
         photo: {
             label: 'Foto',
             isPhoto: true

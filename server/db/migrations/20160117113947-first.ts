@@ -96,10 +96,6 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: true
 				},
-				logo: {
-					type: Sequelize.BLOB('long'),
-					allowNull: true
-				},
 				site: {
 					type: Sequelize.STRING,
 					allowNull: true
@@ -309,10 +305,6 @@ module.exports = {
 					type: Sequelize.DOUBLE,
 					allowNull: true
 				},
-				photo: {
-					type: Sequelize.BLOB('long'),
-					allowNull: true
-				},
 				info: {
 					type: Sequelize.TEXT,
 					allowNull: true
@@ -372,10 +364,6 @@ module.exports = {
 				},
 				day_rate: {
 					type: Sequelize.DOUBLE,
-					allowNull: true
-				},
-				photo: {
-					type: Sequelize.BLOB('long'),
 					allowNull: true
 				},
 				contractor_id: {

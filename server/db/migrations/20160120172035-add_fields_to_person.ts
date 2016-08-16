@@ -70,15 +70,6 @@ module.exports = {
 
 		params.push({
 			table: 'persons',
-			columnName: 'photo',
-			columnDesc: {
-				type: Sequelize.BLOB('long'),
-				allowNull: true
-			}
-		});
-
-		params.push({
-			table: 'persons',
 			columnName: 'company_id',
 			columnDesc: {
 				type: Sequelize.INTEGER,
