@@ -69,11 +69,11 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
 			allowNull: true
 		},		
-		// this field do not exists on DB. It's only here to 
-		// facilitate photo upload
 		photo: {
-			type: DataTypes.BLOB,
-			allowNull: true
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                return 'image';
+            },
 		},
         // internal field to store values from the telephones field
 		telephones_text: {

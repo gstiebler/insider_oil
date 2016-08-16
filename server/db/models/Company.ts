@@ -17,11 +17,11 @@ module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.D
           type: DataTypes.STRING,
           allowNull: true
         },
-        // this field do not exists on DB. It's only here to 
-        // facilitate photo upload
         logo: {
-          type: DataTypes.BLOB,
-          allowNull: true
+            type: Sequelize.VIRTUAL,
+            get: function() {
+                return 'image';
+            },
         },
         site: {
           type: DataTypes.STRING,

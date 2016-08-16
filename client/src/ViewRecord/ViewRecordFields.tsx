@@ -3,6 +3,7 @@ import * as showError from '../lib/ShowError';
 import * as ModelViewService from '../lib/ModelViewUtils';
 import { Link } from 'react-router';
 import { strContains } from '../lib/StringUtils';
+import { paths } from '../lib/Server';
 
 interface IAppProps {
     location: any;
@@ -106,7 +107,7 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
                 });
                 fieldHtml = <div className="col-md-6">{ listItems } </div>;
             } else if (field.isPhoto) {
-                var url = "/db_image?dataSource=" + this.props.source + "&id=" + this.props.objId + "&fieldName=" + field.name;
+                var url = paths.baseImg + this.props.source + '/img_' + this.props.objId + '_original.jpg';
                 fieldHtml = <img className="col-sm-10" src={url} ></img> 
             } else if(field.isConcessionaries) {
                 var listItems = field.value.map((concessionary) => { 

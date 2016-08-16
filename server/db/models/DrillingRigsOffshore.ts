@@ -37,8 +37,10 @@ function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataType
             allowNull: true
         },
 		photo: {
-			type: DataTypes.BLOB,
-			allowNull: true
+            type: Sequelize.VIRTUAL,
+            get: function() {
+                return 'image';
+            },
 		},
         info: {
             type: DataTypes.TEXT,
