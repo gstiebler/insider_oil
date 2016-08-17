@@ -3,7 +3,6 @@ import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import * as ni from '../../common/NetworkInterfaces';
 import { PaginatedTable, ITableParams } from './PaginatedTable';
-import { getFields } from './lib/QueriesFields';
 import { IField } from '../../common/Interfaces';
 
 interface IAppProps {
@@ -42,14 +41,14 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
     private getFields() {
         this.state.show = false;
         this.setState(this.state);
-        getFields(this.source)
+        server.getP('/queries_fields', {})
             .then(this.onFields.bind(this))
             .catch(showError.show);
     }
 
-    private onFields(res: IField[]) {
+    private onFields(res:ni.GetTableQueriesFields.res) {
         this.state.tableParams = {
-            fields: res,
+            fields: res[this.source],
             label: 'Label',
             source: this.source
         };

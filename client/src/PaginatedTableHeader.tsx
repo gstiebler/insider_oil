@@ -87,7 +87,8 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
                 <div className="col-md-8 col-sm-6">
                     <div className="table-options-pages">
                         Filtrar por:
-                        <select onChange={this.selectedFieldChanged.bind(this)}>
+                        <select onChange={this.selectedFieldChanged.bind(this)}
+                            style={{ marginLeft: 15, marginRight: 15 }}>
                             { filterComboOptions }
                         </select>
                         <input className="header-input" type="text" value={this.state.searchText} onChange={ this.searchTextChanged.bind(this) } ></input>
