@@ -29,7 +29,7 @@ export class Card extends React.Component<IAppProps, IAppState> {
         const data = this.props.data;
         var url = paths.baseImg + 'Person/cards/img_' + data.person_id + '.jpg';
 		return (
-            <div data-card="operador" className="col-xs-18 col-sm-6 col-md-4 padding-tb-15">
+            <div data-card="operador" className="col-xs-18 col-sm-4 col-md-3 padding-tb-15">
                 <div className="card-body">
                     <h2>{ data.company_name }</h2>
                     <img src={url}/>
