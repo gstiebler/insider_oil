@@ -1,11 +1,14 @@
 'use strict';
 
-import { getListFieldObj, saveImage } from '../../lib/ModelUtils';
+import { getListFieldObj, saveOriginalImage } from '../../lib/ModelUtils';
+import { resample }  from '../../lib/ImageProcessing';
+import * as AWS from '../../lib/AWS';
+import { syncify } from '../../lib/PromiseUtils';
 var await = require('../../lib/await');
 
 function updatePersonProjects(db, person) {
     const projects = person.dataValues.projects;
-    if(projects == null)
+    if(projects == null)		
         return;
     const options = { where: { person_id: person.id } };
     db.PersonProjects.destroy(options).then(() => {
@@ -23,9 +26,21 @@ function updatePersonProjects(db, person) {
     });
 }
 
+function saveImages(person) {
+	// save resampled image for cards
+	const imgBuffer = new Buffer(person.dataValues.photo);
+	const resampledBuffer:Buffer = await( resample(imgBuffer, 300, 300) );
+	const fileName = AWS.getImagesPath + 'Person/cards/img_' + person.id + '.jpg';
+	AWS.saveImage(resampledBuffer, fileName);  
+
+	// save original image
+	saveOriginalImage(person.dataValues.photo, 'Person', person.id);
+}
+
 function updateFieldsFunc(db, person) {
 	updatePersonProjects(db, person);
-	saveImage(person.dataValues.photo, 'Person', person.id);
+    syncify(saveImages.bind(null, person));
+	return null;
 }
 
 function defineHooks(db) {

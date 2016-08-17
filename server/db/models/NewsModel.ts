@@ -32,8 +32,6 @@ function setReferences(news, options) {
 
     const referencedObjects = newsLib.getModelReferences(news.content);
     // save model references
-    
-    
     for(var i = 0; i < referencedObjects.length; i++) {
         const referencedObj = referencedObjects[i];
         const findOptions = { where: { name: referencedObj.model } };
@@ -54,7 +52,7 @@ function setReferences(news, options) {
             const imgBuffer = new Buffer(news.image);
             const resampledBuffer:Buffer = await( resample(imgBuffer, imageParam.width, imageParam.height) );
 
-            const fileName = 'images/' + newsLib.formatImgUrl(news.id, imageParam.size);
+            const fileName = AWS.getImagesPath() + newsLib.formatImgUrl(news.id, imageParam.size);
             AWS.saveImage(resampledBuffer, fileName);  
         }
     }

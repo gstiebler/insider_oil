@@ -1,9 +1,9 @@
 'use strict';
 import Sequelize = require('sequelize');
-import { saveImage } from '../../lib/ModelUtils';
+import { saveOriginalImage } from '../../lib/ModelUtils';
 
 function savePhoto(drillingRig) {
-    saveImage(drillingRig.dataValues.photo, 'DrillingRigOffshore', drillingRig.id);  
+    saveOriginalImage(drillingRig.dataValues.photo, 'DrillingRigOffshore', drillingRig.id);  
 }
 
 function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes):Sequelize.Model<any, any> {

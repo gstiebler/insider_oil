@@ -33,10 +33,15 @@ export function getObjRefField() {
     }];
 }
 
-export function saveImage(imgBytes, modelName: string, id: number) {
+export function formatImageFileName(modelName: string, id: number):string {
+    const fileName = AWS.getImagesPath() + modelName + '/img_' + id + '_original.jpg';
+    return fileName;
+}
+
+export function saveOriginalImage(imgBytes, modelName: string, id: number) {
     const imgArray = imgBytes;
     if(!imgArray) return;
     const imgBuffer = new Buffer(imgArray);
-    const fileName = 'images/' + modelName + '/img_' + id + '_original.jpg';
+    const fileName = formatImageFileName(modelName, id);
     AWS.saveImage(imgBuffer, fileName);  
 }

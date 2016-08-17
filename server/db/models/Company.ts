@@ -1,10 +1,10 @@
 'use strict';
 
 import Sequelize = require('sequelize');
-import { getListFieldObj, saveImage } from '../../lib/ModelUtils';
+import { getListFieldObj, saveOriginalImage } from '../../lib/ModelUtils';
 
 function savePhoto(company) {
-	  saveImage(company.dataValues.logo, 'Company', company.id);
+	  saveOriginalImage(company.dataValues.logo, 'Company', company.id);
 }
 
 module.exports = function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {

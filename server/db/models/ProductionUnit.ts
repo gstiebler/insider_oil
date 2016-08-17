@@ -1,10 +1,10 @@
 'use strict';
 import * as Sequelize from 'sequelize'; 
 import { coordToString, stringToCoord } from '../../lib/Geo';
-import { saveImage } from '../../lib/ModelUtils';
+import { saveOriginalImage } from '../../lib/ModelUtils';
 
 function savePhoto(productionUnit) {
-	  saveImage(productionUnit.dataValues.photo, 'ProductionUnit', productionUnit.id);
+	  saveOriginalImage(productionUnit.dataValues.photo, 'ProductionUnit', productionUnit.id);
 }
 
 module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes) {
