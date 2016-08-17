@@ -27,7 +27,7 @@ export class Card extends React.Component<IAppProps, IAppState> {
 
     public render(): React.ReactElement<any> {	
         const data = this.props.data;
-        var url = paths.baseImg + 'Person/img_' + data.person_id + '_original.jpg';
+        var url = paths.baseImg + 'Person/cards/img_' + data.person_id + '.jpg';
 		return (
             <div data-card="operador" className="col-xs-18 col-sm-6 col-md-4 padding-tb-15">
                 <div className="card-body">
