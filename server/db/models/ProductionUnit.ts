@@ -1,6 +1,11 @@
 'use strict';
 import * as Sequelize from 'sequelize'; 
 import { coordToString, stringToCoord } from '../../lib/Geo';
+import { saveImage } from '../../lib/ModelUtils';
+
+function savePhoto(productionUnit) {
+	  saveImage(productionUnit.dataValues.photo, 'ProductionUnit', productionUnit.id);
+}
 
 module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataTypes) {
     const ProductionUnit = sequelize.define('ProductionUnit', {
@@ -86,8 +91,10 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
 	          allowNull: true
         },  
 		photo: {
-			type: DataTypes.BLOB,
-			allowNull: true
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                return 'image';
+            },
 		},
     }, 
     {  
@@ -107,6 +114,10 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                 };
                 ProductionUnit.belongsTo(models.Block, blockOpts );
             },
+        },
+        hooks: {
+            afterCreate: savePhoto,
+            beforeUpdate: savePhoto
         }
     }
   );
