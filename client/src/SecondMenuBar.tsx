@@ -46,9 +46,6 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
             <li className="nav-item">
               <Link to="/app/insights">Insights</Link>
             </li>
-            <li className="nav-item">
-              <Link to="/app/dashboard">Visão geral</Link>
-            </li>
             <li className="nav-item dropdown">
               <a aria-haspopup="true" aria-expanded="false">Exploração<span className="caret"></span></a>
               <ul className="dropdown-menu">
@@ -69,7 +66,7 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
               </ul>
             </li>
             <li className="nav-item">
-              <Link to="/app/persons">Pessoas</Link>
+              <Link to="/app/persons">Empresas</Link>
             </li>
             <li className="nav-item dropdown">
               <a aria-haspopup="true" aria-expanded="false">Oportunidades<span className="caret"></span></a>
