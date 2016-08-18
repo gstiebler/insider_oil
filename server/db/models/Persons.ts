@@ -30,7 +30,7 @@ function saveImages(person) {
 	// save resampled image for cards
 	const imgBuffer = new Buffer(person.dataValues.photo);
 	const resampledBuffer:Buffer = await( resample(imgBuffer, 300, 300) );
-	const fileName = AWS.getImagesPath + 'Person/cards/img_' + person.id + '.jpg';
+	const fileName = AWS.getImagesPath() + 'Person/cards/img_' + person.id + '.jpg';
 	AWS.saveImage(resampledBuffer, fileName);  
 
 	// save original image
