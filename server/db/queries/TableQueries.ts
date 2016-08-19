@@ -1353,6 +1353,11 @@ export const queries:ITableQueries = {
 
     companyCards: {
         queryStrFn: (queryParams: IQueryParams) => {
+            const filters = queryParams.filters;
+            filters.push({
+                field: 'companies.main_person_id',
+                isNotNull: true 
+            });
             const options:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'companies',
@@ -1373,7 +1378,7 @@ export const queries:ITableQueries = {
                     },
                 ],
                 extraFields: [],
-                filters: queryParams.filters,
+                filters: filters,
                 order: [ 
                     {
                         fieldName: 'company_name',

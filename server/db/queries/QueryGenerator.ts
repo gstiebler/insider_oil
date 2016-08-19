@@ -54,6 +54,8 @@ export function getWhereStr(filters: IFilter[], aliasMap?): string {
             }
         } else if (filter.equal) {
             filterStrs.push(field + ' = ' + filter.equal);
+        } else if (filter.isNotNull) {
+            filterStrs.push(field + ' is not null ');
         } else {
             throw 'Invalid filter';
         }

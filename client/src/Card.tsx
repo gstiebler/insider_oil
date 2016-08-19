@@ -32,20 +32,20 @@ export class Card extends React.Component<IAppProps, IAppState> {
             <div data-card="operador" className="col-xs-18 col-sm-4 col-md-3 padding-tb-15">
                 <div className="card-body">
                     <h2>{ data.company_name }</h2>
-                    <img src={url}/>
+                    <img src={url} style={{width: 300, height: 300}}/>
                     <ul>
                         <li>
-                            <div className="col-md-6 col-no-padding">
+                            <div className="col-no-padding">
                                 { data.person_name }
                             </div>
                         </li>
                         <li>
-                            <div className="col-md-6 col-no-padding">
+                            <div className="col-no-padding">
                                 { data.position }
                             </div>
                         </li>
                         <li>
-                            <div className="col-md-6 col-no-padding">
+                            <div className="col-no-padding">
                                 <Link to={"/app/view_record?source=Company&id=" + data.company_id}>Todas as pessoas</Link>
                             </div>
                         </li>

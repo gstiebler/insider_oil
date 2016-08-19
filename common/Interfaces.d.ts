@@ -38,6 +38,7 @@ interface IFilter {
     like?: string;
     in?: any[];
     equal?: string;
+    isNotNull?: boolean;
 }
 
 interface IExcelFieldMap {
