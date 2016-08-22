@@ -61,11 +61,11 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
     
     public render(): React.ReactElement<any> {
         const inputProps = {
-            placeholder: 'Digite o nome do projeto',
+            placeholder: 'Buscar...',
             value: this.state.value,
             onChange: this.onUserTypeChar.bind(this)
         };
-
+        
         return (      
             <Autosuggest suggestions={this.state.suggestions}
                    getSuggestionValue={this.getSuggestionValue}
