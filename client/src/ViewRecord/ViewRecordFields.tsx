@@ -42,7 +42,8 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
         for(var i = 0; i < recordData.length; i++) {
             if(!recordData[i].value || 
                     strContains(recordData[i].label, 'ignorar') || 
-                    strContains(recordData[i].label, 'admin')) {
+                    strContains(recordData[i].label, 'admin') ||
+                    recordData[i].isPhoto) {
                 continue;
             }
             if(recordData[i].isMultiFieldText) {
@@ -106,9 +107,6 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
                     ); 
                 });
                 fieldHtml = <div className="col-md-6">{ listItems } </div>;
-            } else if (field.isPhoto) {
-                var url = paths.baseImg + this.props.source + '/img_' + this.props.objId + '_original.jpg';
-                fieldHtml = <img className="col-sm-10" src={url} ></img> 
             } else if(field.isConcessionaries) {
                 var listItems = field.value.map((concessionary) => { 
                     var url = "/app/view_record?source=Company&id=" + concessionary.id;
@@ -130,16 +128,12 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
 
         return (
             <div className="main-boxes">
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="box-wrapper">
-                            <div className="box-head">
-                                Informações
-                            </div>
-                            <div className="box-body">
-                                <ul>{ fields }</ul>
-                            </div>
-                        </div>
+                <div className="box-wrapper">
+                    <div className="box-head">
+                        Informações
+                    </div>
+                    <div className="box-body">
+                        <ul>{ fields }</ul>
                     </div>
                 </div>
             </div>

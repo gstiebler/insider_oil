@@ -122,11 +122,24 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
     }
     
     public render(): React.ReactElement<any> {
+        const imgUrl = server.paths.baseImg + this.state.source + '/' + 
+                            'img_' + this.state.id + '_original.jpg';
         return (
             <div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <ViewRecordFields  
+                            recordData={this.state.recordData} 
+                            source={this.state.source} 
+                            objId={this.state.id}></ViewRecordFields>
+                    </div>
+                    <div className="col-md-6 main-boxes">
+                        <img src={imgUrl}/>
+                    </div>
+                </div>
+                <br/>
                 <ErrorReport objectLabel={this.state.objectLabel}
                              url={this.state.url} />
-                <ViewRecordFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></ViewRecordFields>
                 <hr/>
                 { this.getRefObjectsElements() }
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
