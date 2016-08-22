@@ -81,47 +81,47 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
     
     public render(): React.ReactElement<any> {
         var fields = this.state.record.map((field):React.ReactElement<any> => {
-            var label:React.ReactElement<any> = <div className="col-md-6" key={field.label}> {field.label} </div>;
+            var label:React.ReactElement<any> = <div className="col-md-4" key={field.label}> {field.label} </div>;
 
             var fieldHtml:React.ReactElement<any> = null;
             if(field.ref) {
                 var url = "/app/view_record?source=" + field.model + "&id=" + field.value;
-                fieldHtml = <Link className="col-sm-10" to={url} >{field.name}</Link>
+                fieldHtml = <Link to={url} >{field.name}</Link>
             } else if (field.isLink) {
-                fieldHtml = <a className="col-sm-10" href={field.value} target="_blank">{field.value}</a>;
+                fieldHtml = <a href={field.value} target="_blank">{field.value}</a>;
             } else if (field.isHTML) {
                 fieldHtml = <div dangerouslySetInnerHTML={ {__html: field.value } } ></div>
             } else if (field.isList) {
                 var listItems = field.value.map((item, index) => { 
-                    return <div className="col-sm-10" key={'i'+index}>{item}<br/></div> 
+                    return <div key={'i'+index}>{item}<br/></div> 
                 });
-                fieldHtml = <div className="col-md-6">{ listItems } </div>;
+                fieldHtml = <div>{ listItems } </div>;
             } else if (field.isProjectList) {
                 var listItems = field.value.map((item, index) => { 
                     var url = "/app/view_record?source=" + item.model + "&id=" + item.id;
                     return (
                         <div key={'pl' + index}>
-                            <Link className="col-sm-10" to={url} >{item.name}</Link>
+                            <Link to={url} >{item.name}</Link>
                             { item.description ? <span> - Descrição: {item.description}</span> : null }
                         </div>
                     ); 
                 });
-                fieldHtml = <div className="col-md-6">{ listItems } </div>;
+                fieldHtml = <div>{ listItems } </div>;
             } else if(field.isConcessionaries) {
                 var listItems = field.value.map((concessionary) => { 
                     var url = "/app/view_record?source=Company&id=" + concessionary.id;
                     var labelHtml:string = ": " + concessionary.prop * 100 + "%";
                     return <div key={concessionary.name}><Link to={url}>{concessionary.name}</Link>{labelHtml}</div>; 
                 });
-                fieldHtml = <div className="col-md-6">{ listItems } </div>;
+                fieldHtml = <div>{ listItems } </div>;
             } else {
-                fieldHtml = <span className="col-sm-10"> { this.insertBR(field.value) } </span>
+                fieldHtml = <span> { this.insertBR(field.value) } </span>
             }
 
             return (
                 <li key={field.label}>
                     { label }
-                    <div className="col-md-6">{ fieldHtml }</div>
+                    <div className="col-md-8">{ fieldHtml }</div>
                 </li>
             );
         });

@@ -134,7 +134,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                             objId={this.state.id}></ViewRecordFields>
                     </div>
                     <div className="col-md-6 main-boxes">
-                        <img src={imgUrl}/>
+                        <img src={imgUrl} style={{ width: 600 }} />
                     </div>
                 </div>
                 <br/>

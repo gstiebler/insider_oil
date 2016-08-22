@@ -45,11 +45,24 @@ export class OilFieldView extends ViewRecord.ViewRecord {
     }
     
     public render(): React.ReactElement<any> {
+        const imgUrl = server.paths.baseImg + 'OilField/' + 
+                            'img_' + this.state.id + '_original.jpg';
         return (
             <div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <ViewRecordFields  
+                            recordData={this.state.recordData} 
+                            source={this.state.source} 
+                            objId={this.state.id}></ViewRecordFields>
+                    </div>
+                    <div className="col-md-6 main-boxes">
+                        <img src={imgUrl} style={{ width: 600 }}/>
+                    </div>
+                </div>
+                <br/>
                 <ErrorReport objectLabel={this.state.objectLabel}
                              url={this.state.url} />
-                <ViewRecordFields recordData={this.state.recordData} source={this.state.source} objId={this.state.id}></ViewRecordFields>
                 <hr/>
                 { this.getRefObjectsElements() }
                 <TimeSeriesChart queryName="ProductionByField"
