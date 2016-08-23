@@ -2,7 +2,6 @@
 import express = require("express");
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
@@ -11,16 +10,27 @@ var umzug = require('./lib/InitUmzug');
 var app = express();
 import { initializeSearch } from './lib/search';
 import { syncify } from './lib/PromiseUtils';
+import db = require('./db/models');
 
 // Make necessary migrations
 umzug.up();
 syncify( initializeSearch );
 
 // Configure Winston log lib
-winston.level = 'error';
-if (app.get('env') == 'development') {
-  winston.level = 'debug';
-	winston.add(winston.transports.File, { filename: 'log/development.log' });
+if (app.get('env') == 'production') {
+    winston.remove(winston.transports.Console);
+    winston.level = 'error';	
+    const options = {
+        level: 'error',
+        silent: true
+    };
+    const errorLogger = winston.add(winston.transports.Console, options);
+    errorLogger.on('logging', function (transport, level, msg) {
+        db.models.ErrorLog.create({ error: msg });
+    });
+} else if (app.get('env') == 'development') {
+    winston.level = 'debug';
+	  winston.add(winston.transports.File, { filename: 'log/development.log' });
 }
 
 // view engine setup
@@ -30,9 +40,6 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
-if (app.get('env') != 'test') {
-	app.use(logger('dev'));
-}
 app.use(bodyParser.json({limit: '20mb'}));
 app.use(bodyParser.raw({limit: '20mb'}));
 app.use(bodyParser.urlencoded({ extended: false, limit: '20mb' }));
@@ -79,6 +86,5 @@ app.use(function(err, req: express.Request, res: express.Response) {
 process.on('uncaughtException', function (err) {
     winston.error(err.stack);
 })
-
 
 module.exports = app;
