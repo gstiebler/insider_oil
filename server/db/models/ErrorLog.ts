@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes:Sequelize.DataTypes) {
         }, 
         {
             underscored: true,
-            tableName: 'ErrorLog'
+            tableName: 'error_log'
         }
     );
     
