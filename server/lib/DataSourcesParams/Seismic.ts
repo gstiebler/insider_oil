@@ -27,6 +27,7 @@ const Seismic: IBaseDataSourceParams = {
     labelField: "process",
     gridFields: ["process", "authorized_company", "dou_publi_date", "end_date", "authorized_technologies", "block_name"],
     tableLabel: "Sísmicas",
+    labelSingular: 'Sísmica',
     hasMap: false,
     excelParams: {
         keyField: 'processo',

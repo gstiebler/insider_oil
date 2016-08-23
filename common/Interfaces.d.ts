@@ -66,6 +66,7 @@ export interface IBaseDataSourceParams {
     labelField: string;
     gridFields: string[];
     tableLabel: string;
+    labelSingular: string;
     hasMap?: boolean;
     excelParams?: IExcelParams;
     urlSource?: string;

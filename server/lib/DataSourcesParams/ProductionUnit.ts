@@ -68,6 +68,7 @@ const ProductionUnit: IBaseDataSourceParams = {
     labelField: 'name',
     gridFields: ['name', 'oil_field_name', 'block_name', 'status', 'owner'],
     tableLabel: 'Unidades de produção',
+    labelSingular: 'Unidade de produção',
     hasMap: false,
     excelParams: {
         keyField: "nome",

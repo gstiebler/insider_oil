@@ -62,6 +62,7 @@ const OilField: IBaseDataSourceParams = {
     labelField: "name",
     gridFields: ['name', 'basin_name', 'state', 'shore', 'stage'],
     tableLabel: "Campos",
+    labelSingular: 'Campo',
     hasMap: false,
     referencedObjectsOnView:  [
         {

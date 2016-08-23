@@ -21,6 +21,7 @@ const User: IBaseDataSourceParams = {
     labelField: 'name',
     gridFields: ['name'],
     tableLabel: 'Usuários',
+    labelSingular: 'Usuário',
     hasMap: false,
 }
 

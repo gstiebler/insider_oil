@@ -59,6 +59,7 @@ const Block: IBaseDataSourceParams = {
     labelField: 'name',
     gridFields: ['name', 'operator_name'],
     tableLabel: 'Blocos',
+    labelSingular: 'Bloco',
     hasMap: false,
     urlSource: 'http://www.anp.gov.br/SITE/acao/download/?id=57558',
     excelParams: {

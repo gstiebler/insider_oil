@@ -50,6 +50,7 @@ const DrillingRigOffshore: IBaseDataSourceParams = {
     labelField: "name",
     gridFields: ["name", "contractor_name", "type", "status", "lda", "start", "end"],
     tableLabel: "Sondas offshore",
+    labelSingular: 'Sonda offshore',
     hasMap: false,
     excelParams: {
         keyField: "sonda",

@@ -18,6 +18,7 @@ const ComercialDeclaration: IBaseDataSourceParams = {
     labelField: 'block_name',
     gridFields: ['block_name', 'basin_name', 'oil_field_name', 'date'],
     tableLabel: 'Declarações de comercialidade',
+    labelSingular: 'Declaração de comercialidade',
     hasMap: false
 }
 

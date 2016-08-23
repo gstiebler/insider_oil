@@ -22,6 +22,7 @@ const Refinery: IBaseDataSourceParams = {
     labelField: 'name',
     gridFields: ['name', 'capacity'],
     tableLabel: 'Refinarias',
+    labelSingular: 'Refinaria',
     hasMap: false
 }
 

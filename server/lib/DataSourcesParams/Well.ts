@@ -81,6 +81,7 @@ const Well: IBaseDataSourceParams = {
     labelField: "name",
     gridFields: ["name", "operator_name"],
     tableLabel: "Poços",
+    labelSingular: 'Poço',
     hasMap: true,
     excelParams: {
         keyField: "poco",

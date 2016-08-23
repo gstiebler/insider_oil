@@ -53,6 +53,7 @@ const Company: IBaseDataSourceParams = {
     labelField: "name",
     gridFields: ["name", "address"],
     tableLabel: "Empresas",
+    labelSingular: 'Empresa',
     hasMap: false,
     excelParams: {
         keyField: "nome",

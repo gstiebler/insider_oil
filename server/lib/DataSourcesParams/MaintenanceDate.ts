@@ -15,6 +15,7 @@ const Bid: IBaseDataSourceParams = {
     labelField: "period",
     gridFields: ["period", "production_unit_name"],
     tableLabel: "Datas de manutenção",
+    labelSingular: 'Data de manutenção',
     hasMap: false,
 }
 

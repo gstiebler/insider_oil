@@ -18,6 +18,7 @@ const Reserve: IBaseDataSourceParams = {
     labelField: 'state',
     gridFields: ['state', 'reserve', 'year', 'shore'],
     tableLabel: 'Reservas',
+    labelSingular: 'Reserva',
     hasMap: false
 }
 

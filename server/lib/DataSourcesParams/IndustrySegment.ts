@@ -9,6 +9,7 @@ const IndustrySegment: IBaseDataSourceParams = {
     labelField: 'name',
     gridFields: ['name'],
     tableLabel: 'Segmentos',
+    labelSingular: 'Segmento',
     hasMap: false,
 }
 

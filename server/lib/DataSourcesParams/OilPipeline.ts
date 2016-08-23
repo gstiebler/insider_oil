@@ -51,6 +51,7 @@ const OilPipeline: IBaseDataSourceParams = {
     labelField: "name",
     gridFields: ["name", 'extension', 'diameter', 'products', ],
     tableLabel: "Oleodutos",
+    labelSingular: 'Oleoduto',
     hasMap: false
 }
 
