@@ -4,6 +4,7 @@ import QueryGenerator = require('../db/queries/QueryGenerator');
 import nodeunit = require('nodeunit');
 import dbServerController = require('../controllers/dbServerController');
 import { IQueryParams } from '../../common/Interfaces';
+import { queries } from '../db/queries/TableQueries';
 
 var group: nodeunit.ITestGroup = {
 
@@ -218,6 +219,35 @@ companies:  (test: nodeunit.Test) => {
     test.equal( 46, resQueryValues.count );
     test.equal( 'Gás, Petróleo', resQueryValues.records[0].segments_text );
     
+    test.done();
+},
+
+all: (test: nodeunit.Test) => {
+    for(var queryName in queries) {
+        try {
+            const query = queries[queryName];
+            const queryParams:IQueryParams = {
+                order: [],
+                filters: [],
+                pagination: {
+                    first: 0,
+                    itemsPerPage: 5
+                }
+            }
+            
+            const reqQueryValues = {
+                query: {
+                    queryName,
+                    queryParams
+                }
+            }; 
+            
+            const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
+            test.ok(resQueryValues.records.length >= 2, 'Error on ' + queryName);
+        } catch(err) {
+            console.log(queryName, err);
+        }
+    }
     test.done();
 },
     

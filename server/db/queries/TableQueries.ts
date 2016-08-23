@@ -140,8 +140,8 @@ const terminal:ITableQuery = {
 };
 
 
-const oilField:ITableQuery = {
-    queryStrFn: (queryParams: IQueryParams) => {
+const oilField = {
+    queryStrFn: (queryParams: IQueryParams, where) => {
         const options:QueryGenerator.IQueryOpts = {
             table: {
                 name: 'oil_fields',
@@ -166,7 +166,8 @@ const oilField:ITableQuery = {
                 ['"Basin"', 'b_model'],
                 ['if(shore = "on", "Terra", "Mar")', 'land_sea'],
             ],
-            where: queryParams.filters,
+            having: queryParams.filters,
+            where,
             order: queryParams.order
         };
         
@@ -874,26 +875,22 @@ export const queries:ITableQueries = {
     
     oilFielsdProduction: {
         queryStrFn: (queryParams: IQueryParams) => {
-            queryParams.filters.push(
-                {
-                    field: 'stage',
-                    equal: '"production"'
-                }
-            );
-            return oilField.queryStrFn(queryParams);
+            const where =  {
+                field: 'stage',
+                equal: '"production"'
+            };
+            return oilField.queryStrFn(queryParams, [where]);
         },
         fields: oilField.fields
     },
     
     oilFieldsDevelopment: {
         queryStrFn: (queryParams: IQueryParams) => {
-            queryParams.filters.push(
-                {
-                    field: 'stage',
-                    equal: '"development"'
-                }
-            );
-            return oilField.queryStrFn(queryParams);
+            const where =  {
+                field: 'stage',
+                equal: '"development"'
+            };
+            return oilField.queryStrFn(queryParams, [where]);
         },
         fields: oilField.fields
     },
