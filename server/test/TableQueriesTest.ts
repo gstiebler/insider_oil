@@ -119,7 +119,10 @@ DrillingRigs:  (test: nodeunit.Test) => {
                 dir: 'asc'
             }
         ],
-        filters: [],
+        filters: [{
+            field: 'land_sea',
+            like: 'ma'
+        }],
         pagination: {
             first: 0,
             itemsPerPage: 5
@@ -134,7 +137,7 @@ DrillingRigs:  (test: nodeunit.Test) => {
     }; 
     
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
-    test.equal( 5, resQueryValues.records.length );
+    test.equal( 3, resQueryValues.records.length );
     
     test.done();
 },

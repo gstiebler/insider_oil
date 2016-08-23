@@ -18,7 +18,8 @@ export interface IQueryOpts {
     table: ITableQueryOpts;
     joinTables: IJoinTableQueryOpts[]; 
     extraFields?: any[];
-    where: IFilter[];
+    where?: IFilter[];
+    having?: IFilter[];
     order: IOrderOpts[];
 }
 
@@ -35,7 +36,7 @@ export function getOrderByStr(orderOpts: IOrderOpts[]): string {
     return orderByStr;
 }
 
-export function getWhereStr(filters: IFilter[], aliasMap?): string {
+export function getFilterStr(filters: IFilter[], filterKeyword: string, aliasMap?): string {
     const filterStrs = [];
     for(var filter of filters) {
         let field = filter.field;
@@ -64,7 +65,7 @@ export function getWhereStr(filters: IFilter[], aliasMap?): string {
     if(filterStrs.length == 0) {
         return '';
     } else {
-        return ' where ' + filterStrs.join(' and ') + ' ';
+        return ' ' + filterKeyword + ' ' + filterStrs.join(' and ') + ' ';
     }
 }
 
@@ -140,7 +141,8 @@ export function queryGenerator(queryOpts: IQueryOpts):string {
     const select = genSelectStr(queryOpts, aliasMap);
     const fromStr = ' from ' + queryOpts.table.name;
     const joins = genOuterJoins(queryOpts.joinTables);
-    const where = getWhereStr(queryOpts.where, aliasMap);
+    const where = queryOpts.where ? getFilterStr(queryOpts.where, 'where', aliasMap) : '';
+    const having = queryOpts.having ? getFilterStr(queryOpts.having, 'having', aliasMap) : '';
     const orderBy = getOrderByStr(queryOpts.order);
-    return select + fromStr + joins + where + orderBy;
+    return select + fromStr + joins + where + having + orderBy;
 }

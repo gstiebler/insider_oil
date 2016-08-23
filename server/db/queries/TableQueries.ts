@@ -455,7 +455,7 @@ export const queries:ITableQueries = {
                     ['"Company"', 'contractor_model'],
                     ['"Company"', 'operator_model']
                 ],
-                where: queryParams.filters,
+                having: queryParams.filters,
                 order: []
             };
             const onshoreQryStr = QueryGenerator.queryGenerator(options);
