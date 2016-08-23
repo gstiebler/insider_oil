@@ -37,7 +37,7 @@ function wellsByDrillingRigOffshoreQueryOpts(filter):QueryGenerator.IQueryOpts {
         extraFields: [
             ['"Well"', 'model'],
         ],
-        filters: [
+        where: [
             {
                 field: 'wells.drilling_rig_offshore_id',
                 equal: filter.id
@@ -115,7 +115,7 @@ const queries:IQueriesById = {
                         joinField: 'persons.company_id'
                     },
                 ],
-                filters: [
+                where: [
                     {
                         field: 'person_projects.model_id',
                         equal: modelListId
@@ -309,7 +309,7 @@ const queries:IQueriesById = {
                 },
                 extraFields: [ ['"ComercialDeclaration"', 'model'] ],
                 joinTables: [],
-                filters: [ { field: 'block_id', equal: filter.id } ],
+                where: [ { field: 'block_id', equal: filter.id } ],
                 order: [ { fieldName: 'date', dir: 'asc' } ]
             };
             
@@ -342,7 +342,7 @@ const queries:IQueriesById = {
                 },
                 extraFields: [ ['"Seismic"', 'model'] ],
                 joinTables: [],
-                filters: [ { field: 'block_id', equal: filter.id } ],
+                where: [ { field: 'block_id', equal: filter.id } ],
                 order: [ { fieldName: 'process', dir: 'asc' } ]
             };
             
@@ -397,7 +397,7 @@ const queries:IQueriesById = {
                         joinField: 'hydrocarbon_evidences.well_id'
                     },
                 ],
-                filters: [ { field: 'block_id', equal: filter.id } ],
+                where: [ { field: 'block_id', equal: filter.id } ],
                 order: [ { fieldName: 'notification_date', dir: 'asc' } ]
             };
             
@@ -451,7 +451,7 @@ const queries:IQueriesById = {
                         joinCond: 'oil_fields.block_id = wells.block_id'
                     },
                 ],
-                filters: [ { field: 'oil_field_id', equal: filter.id } ],
+                where: [ { field: 'oil_field_id', equal: filter.id } ],
                 order: [ { fieldName: 'notification_date', dir: 'asc' } ]
             };
             
@@ -510,7 +510,7 @@ const queries:IQueriesById = {
                         joinField: 'wells.drilling_rig_offshore_id'
                     },
                 ],
-                filters: [
+                where: [
                     {
                         field: 'wells.block_id',
                         equal: filter.id
@@ -590,7 +590,7 @@ const queries:IQueriesById = {
                     ['concat(lpad(month(period), 2, "0"), "/",year(period))', 'formatted_period'],
                 ],
                 joinTables: [],
-                filters: [
+                where: [
                     {
                         field: 'maintenance_dates.production_unit_id',
                         equal: filter.id
@@ -632,7 +632,7 @@ const queries:IQueriesById = {
                 extraFields: [
                     ['"ProductionUnit"', 'model'],
                 ],
-                filters: [
+                where: [
                     {
                         field: 'production_units.oil_field_id',
                         equal: filter.id
@@ -686,7 +686,7 @@ const queries:IQueriesById = {
                 extraFields: [
                     ['"ProductionUnit"', 'model'],
                 ],
-                filters: [
+                where: [
                     {
                         field: 'production_units.block_id',
                         equal: filter.id
@@ -729,7 +729,7 @@ const queries:IQueriesById = {
     wellsByDrillingRigOnshore: {
         queryStrFn: (filter) => {
             const options:QueryGenerator.IQueryOpts = wellsByDrillingRigOffshoreQueryOpts(filter);
-            options.filters = [
+            options.where = [
                 {
                     field: 'wells.drilling_rig_onshore_id',
                     equal: filter.id 
@@ -755,7 +755,7 @@ const queries:IQueriesById = {
                 extraFields: [
                     ['"Block"', 'model'],
                 ],
-                filters: [
+                where: [
                     {
                         field: 'blocks.operator_id',
                         equal: filter.id
@@ -803,7 +803,7 @@ const queries:IQueriesById = {
                     ['"OilField"', 'model'],
                     ['if(stage = "production", "Produção", "Desenvolvimento")', 'formatted_stage'],
                 ],
-                filters: [
+                where: [
                     {
                         field: 'oil_fields.operator_id',
                         equal: filter.id
@@ -859,7 +859,7 @@ const queries:IQueriesById = {
                 extraFields: [
                     ['"Block"', 'model'],
                 ],
-                filters: [
+                where: [
                     {
                         field: 'block_concessionaries.company_id',
                         equal: filter.id
@@ -923,7 +923,7 @@ const queries:IQueriesById = {
                     ['"OilField"', 'model'],
                     ['if(stage = "production", "Produção", "Desenvolvimento")', 'formatted_stage'],
                 ],
-                filters: [
+                where: [
                     {
                         field: 'oil_field_concessionaries.company_id',
                         equal: filter.id

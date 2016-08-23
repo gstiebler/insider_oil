@@ -56,7 +56,7 @@ const productionUnit:ITableQuery = {
                 ['"OilField"', 'of_model'],
                 ['"Block"', 'b_model'],
             ],
-            filters: queryParams.filters,
+            where: queryParams.filters,
             order: queryParams.order
         };
         
@@ -121,7 +121,7 @@ const terminal:ITableQuery = {
             extraFields: [
                 ['"Terminal"', 'model'],
             ],
-            filters: queryParams.filters,
+            where: queryParams.filters,
             order: queryParams.order
         };
         
@@ -166,7 +166,7 @@ const oilField:ITableQuery = {
                 ['"Basin"', 'b_model'],
                 ['if(shore = "on", "Terra", "Mar")', 'land_sea'],
             ],
-            filters: queryParams.filters,
+            where: queryParams.filters,
             order: queryParams.order
         };
         
@@ -219,7 +219,7 @@ export const queries:ITableQueries = {
                     ['"Basin"', 'model']
                 ],
                 joinTables: [],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -253,7 +253,7 @@ export const queries:ITableQueries = {
                     ['"Company"', 'model']
                 ],
                 joinTables: [],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -320,7 +320,7 @@ export const queries:ITableQueries = {
                     ['"Basin"', 'basin_model'],
                     ['"Company"', 'operator_model']
                 ],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -385,7 +385,7 @@ export const queries:ITableQueries = {
                     ['"Person"', 'model'],
                     ['"Company"', 'company_model']
                 ],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -455,7 +455,7 @@ export const queries:ITableQueries = {
                     ['"Company"', 'contractor_model'],
                     ['"Company"', 'operator_model']
                 ],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: []
             };
             const onshoreQryStr = QueryGenerator.queryGenerator(options);
@@ -561,7 +561,7 @@ export const queries:ITableQueries = {
                         joinField: 'blocks.basin_id'
                     }
                 ],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -625,7 +625,7 @@ export const queries:ITableQueries = {
                     ['"Refinery"', 'model'],
                 ],
                 joinTables: [],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -702,7 +702,7 @@ export const queries:ITableQueries = {
                         joinField: 'wells.block_id'
                     }
                 ],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             }
             
@@ -838,11 +838,11 @@ export const queries:ITableQueries = {
                     ['"ProductionUnit"', 'model']
                 ],
                 joinTables: [],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
 
-            options.filters.push({
+            options.where.push({
                 field: 'status',
                 in: [
                     '"Em projeto"',
@@ -942,7 +942,7 @@ export const queries:ITableQueries = {
                     ['"Fleet"', 'model']
                 ],
                 joinTables: [],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -1007,7 +1007,7 @@ export const queries:ITableQueries = {
                     ['"Bid"', 'model']
                 ],
                 joinTables: [],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -1086,7 +1086,7 @@ export const queries:ITableQueries = {
                         joinField: 'contracts.bid_id'
                     },
                 ],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -1165,7 +1165,7 @@ export const queries:ITableQueries = {
                     ['"GasPipeline"', 'model']
                 ],
                 joinTables: [],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -1219,7 +1219,7 @@ export const queries:ITableQueries = {
                     ['"OilPipeline"', 'model']
                 ],
                 joinTables: [],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -1262,7 +1262,7 @@ export const queries:ITableQueries = {
                     ['"News"', 'model']
                 ],
                 joinTables: [],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -1315,7 +1315,7 @@ export const queries:ITableQueries = {
                         joinField: 'production.well_id'
                     },
                 ],
-                filters: queryParams.filters,
+                where: queryParams.filters,
                 order: queryParams.order
             };
             
@@ -1378,7 +1378,7 @@ export const queries:ITableQueries = {
                     },
                 ],
                 extraFields: [],
-                filters: filters,
+                where: filters,
                 order: [ 
                     {
                         fieldName: 'company_name',

@@ -18,7 +18,7 @@ export interface IQueryOpts {
     table: ITableQueryOpts;
     joinTables: IJoinTableQueryOpts[]; 
     extraFields?: any[];
-    filters: IFilter[];
+    where: IFilter[];
     order: IOrderOpts[];
 }
 
@@ -140,7 +140,7 @@ export function queryGenerator(queryOpts: IQueryOpts):string {
     const select = genSelectStr(queryOpts, aliasMap);
     const fromStr = ' from ' + queryOpts.table.name;
     const joins = genOuterJoins(queryOpts.joinTables);
-    const where = getWhereStr(queryOpts.filters, aliasMap);
+    const where = getWhereStr(queryOpts.where, aliasMap);
     const orderBy = getOrderByStr(queryOpts.order);
     return select + fromStr + joins + where + orderBy;
 }
