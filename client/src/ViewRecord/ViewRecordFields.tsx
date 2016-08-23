@@ -80,7 +80,13 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
     }
     
     public render(): React.ReactElement<any> {
-        var fields = this.state.record.map((field):React.ReactElement<any> => {
+        if(this.state.record.length == 0) {
+            return <div></div>;
+        }
+        const first = this.state.record[0];
+        const filteredFields = this.state.record.slice(1, this.state.record.length);
+
+        var fields = filteredFields.map((field):React.ReactElement<any> => {
             var label:React.ReactElement<any> = <div className="col-md-4" key={field.label}> {field.label} </div>;
 
             var fieldHtml:React.ReactElement<any> = null;
@@ -130,7 +136,7 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
             <div className="main-boxes">
                 <div className="box-wrapper">
                     <div className="box-head">
-                        Informações
+                        <div><b>{ first.value }</b></div>
                     </div>
                     <div className="box-body">
                         <ul>{ fields }</ul>

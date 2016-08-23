@@ -9,7 +9,7 @@ const Basin: IBaseDataSourceParams = {
     labelField: 'name',
     gridFields: ['name'],
     tableLabel: 'Bacias',
-    labelSingular: '',
+    labelSingular: 'Bacia',
     hasMap: false
 }
 
