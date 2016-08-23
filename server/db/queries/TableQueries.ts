@@ -908,7 +908,7 @@ export const queries:ITableQueries = {
         fields: terminal.fields
     },
     
-    seaTerminal: {
+    /*seaTerminal: {
         queryStrFn: (queryParams: IQueryParams) => {
             queryParams.filters.push(
                 {
@@ -919,7 +919,7 @@ export const queries:ITableQueries = {
             return terminal.queryStrFn(queryParams);
         },
         fields: terminal.fields
-    },
+    },*/
     
     Fleet: {
         queryStrFn: (queryParams: IQueryParams) => {
