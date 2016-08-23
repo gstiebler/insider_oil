@@ -145,7 +145,7 @@ export function getDashboardData(req: express.Request, res: express.Response):vo
         pagination: {
             first: 0,
             itemsPerPage: 1
-        }
+        } 
     }
     const projectsInfo = await( TableQueries.getQueryResult('Projects', projQueryParams) );
 
@@ -155,13 +155,18 @@ export function getDashboardData(req: express.Request, res: express.Response):vo
         numPersons: await( db.models.Person.count() ),
         numProjects: projectsInfo[1][0].count
     }
-    res.json(dashboardData);
+    res.json(dashboardData); 
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 
 export function getTableQueriesFields(req: express.Request, res: express.Response):void {Sync(function(){
-    const result:ni.GetTableQueriesFields.res = {};
-    for(var queryName in TableQueries.queries) {
-        result[queryName] = TableQueries.queries[queryName].fields;
-    }
+    const queryParams:ni.GetTableQueriesFields.req = req.query;
+    const query = TableQueries.queries[queryParams.queryName];
+    const result:ni.GetTableQueriesFields.res = {
+        fields: [],
+        title: query.title
+    };
+    //for(var queryName in TableQueries.queries) {
+        result.fields = query.fields;
+    //}
     res.json(result);
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}

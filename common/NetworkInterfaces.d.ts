@@ -116,10 +116,13 @@ export namespace GetDashboardData {
 
 export namespace GetTableQueriesFields {
 
-    export interface req {}
+    export interface req {
+        queryName: string;
+    }
 
     export interface res {
-        [tableQuery: number]: Interfaces.IFieldMap;
+        fields: Interfaces.IField[];
+        title: string;
     }
 }
 

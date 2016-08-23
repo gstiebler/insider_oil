@@ -41,15 +41,17 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
     private getFields() {
         this.state.show = false;
         this.setState(this.state);
-        server.getP('/queries_fields', {})
+        const req:ni.GetTableQueriesFields.req = { queryName: this.source };
+        server.getP('/queries_fields', req)
             .then(this.onFields.bind(this))
             .catch(showError.show);
     }
 
     private onFields(res:ni.GetTableQueriesFields.res) {
+        const fields = res.fields;
         this.state.tableParams = {
-            fields: res[this.source],
-            label: 'Label',
+            fields: fields,
+            label: res.title,
             source: this.source
         };
         this.setState(this.state);
