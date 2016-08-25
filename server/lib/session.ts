@@ -62,12 +62,18 @@ function authorize(req, res, next, checkAdmin) {
         		user: user.login,
                 method: req.method
         	};
-        	winston.info(JSON.stringify({access: logObj}));
-            logObj.request = JSON.stringify(req.body);
-            logObj.query = JSON.stringify(logObj.query);
-            db.models.RequestLog.create( logObj ).catch((error) => {
-                winston.error(error.stack);
-            });
+        	//winston.info(JSON.stringify({access: logObj}));
+            try {
+                if(req._body) {
+                    logObj.request = JSON.stringify(req.body).substr(0, 250);
+                }
+                logObj.query = JSON.stringify(logObj.query);
+                db.models.RequestLog.create( logObj ).catch((error) => {
+                    winston.error(error.stack);
+                });
+            } catch (err) {
+                winston.error(err);
+            }
             next();
         } else
             invalidToken();
