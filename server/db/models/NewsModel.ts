@@ -12,17 +12,17 @@ const imageParams = [
     {
         width: 620,
         height: 350,
-        size: 'lg'
+        size: 'large'
     },
     {
         width: 300,
         height: 220,
-        size: 'md'
+        size: 'medium'
     },
     {
         width: 60,
         height: 60,
-        size: 'sm'
+        size: 'small'
     },
 ];
 
@@ -48,6 +48,15 @@ function setReferences(news, options) {
     
     // if the record has image, save all images resolutions on AWS
     if(news.image) {
+        // save original image
+        {
+            const imgBuffer = new Buffer(news.image);
+
+            const fileName = AWS.getImagesPath() + newsLib.formatImgUrl(news.id);
+            AWS.saveImage(imgBuffer, fileName);  
+        }
+
+        // save resampled images
         for(let imageParam of imageParams) {
             const imgBuffer = new Buffer(news.image);
             const resampledBuffer:Buffer = await( resample(imgBuffer, imageParam.width, imageParam.height) );

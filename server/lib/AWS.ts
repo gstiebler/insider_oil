@@ -4,7 +4,7 @@ import * as AWS from 'aws-sdk';
 
 export function getImagesPath():string {
     if(process.env.NODE_ENV != 'production') {
-        return 'images/' + process.env.NODE_ENV + '/';
+        return process.env.NODE_ENV + '/images/';
     } else {
         return 'images/';
     }
@@ -30,3 +30,7 @@ export function saveImage(content: Buffer, fileName:string):Promise<string> {
         });
     });
 } 
+
+export function fileNameById(id: number):string {
+    return 'img_' + id + '.jpg'
+}

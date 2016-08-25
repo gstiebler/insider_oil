@@ -35,7 +35,7 @@ export function getInsights(req: express.Request, res: express.Response, next) {
             title: insight.title, 
             content: insight.content,
             author: insight.author.name,
-            imgUrl: formatImgUrl(insight.id, 'sm'),
+            imgUrl: formatImgUrl(insight.id, 'small'),
             date: insight.created_at
         }
     });
@@ -81,13 +81,13 @@ export function getInsights(req: express.Request, res: express.Response, next) {
     }
 
     const insightsRes:ni.Insights.res = {
-        section1Articles: getResInsights(sectionNames.section1Articles, 'sm', 'md'),
-        section2Articles: getResInsights(sectionNames.section2Articles, 'sm', 'md'),
-        section3Articles: getResInsights(sectionNames.section3Articles, 'sm', 'md'),
-        section4Articles: getResInsights(sectionNames.section4Articles, 'sm', 'md'),
+        section1Articles: getResInsights(sectionNames.section1Articles, 'small', 'medium'),
+        section2Articles: getResInsights(sectionNames.section2Articles, 'small', 'medium'),
+        section3Articles: getResInsights(sectionNames.section3Articles, 'small', 'medium'),
+        section4Articles: getResInsights(sectionNames.section4Articles, 'small', 'medium'),
         popular: recentInsightsRes,
         recent: recentInsightsRes,
-        flexSlider: getResInsights(sectionNames.flexSlider, 'lg'),
+        flexSlider: getResInsights(sectionNames.flexSlider, 'large'),
     };
     res.json(insightsRes); 
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}

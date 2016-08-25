@@ -1,6 +1,7 @@
 "use strict";
 var cheerio = require('cheerio');
 import db = require('../db/models');
+import * as AWS from '../lib/AWS';
 
 interface INewsModelRef {
 	model: string;
@@ -38,6 +39,11 @@ export function getModelReferences(htmlText: string): INewsModelRef[] {
 	return result;
 }
 
-export function formatImgUrl(id:number, size:string):string {
-    return 'insights/img_' + id + '-' + size + '.jpg';
+export function formatImgUrl(id:number, size?:string):string {
+	let result = 'insights/';
+	if(size) {
+		result += size + '/';
+	}
+	result += AWS.fileNameById(id);
+    return result;
 }
