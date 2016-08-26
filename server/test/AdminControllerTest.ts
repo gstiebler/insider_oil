@@ -5,8 +5,9 @@ import nodeunit = require('nodeunit');
 import * as AdminController from '../controllers/AdminController';
 import dbServerController = require('../controllers/dbServerController');
 import * as ni from '../../common/NetworkInterfaces';
+import db = require('../db/models');
 var utils = require('./lib/utils');
-
+var await = require('../lib/await');
 
 var group:nodeunit.ITestGroup = {
 
@@ -156,6 +157,37 @@ doNotDelReferencedPersonProject: function(test) {
     const resGetAmazonas = utils.getJsonResponse.sync(null, dbServerController.viewRecord, reqGetAmazonas);
     const record = resGetAmazonas.record;
     test.equal('Amazonas', record[0].value);
+    test.done();
+},
+
+editOilFieldTestUpdates: function(test) {
+    const nordicId = utils.idByName('Fleet', 'Nordic Rio');;
+    const record = {
+        id: nordicId,
+        year: 2004,
+        country: 'Liberland',
+        type: 'Aliviador',
+        weight: 1234
+    }
+    const reqEditItem = {
+        body: { 
+            model: 'Fleet',
+            record: JSON.stringify(record)
+        }
+    };
+        
+    const response = utils.getJsonResponse.sync(null, AdminController.saveItem, reqEditItem);
+    test.equal('Registro salvo com sucesso.', response.msg);
+    
+    const updates = await( db.models.UpdateLog.findAll({order: [['id', 'DESC']] }) );
+    const lastUpdate = updates[0];
+    test.equal('Fleet', lastUpdate.model);
+    test.equal('EDIT', lastUpdate.type);
+    const updatedFields = JSON.parse(lastUpdate.updates);
+    test.equal(2, updatedFields.length);
+    test.equal('country', updatedFields[0]);
+    test.equal('weight', updatedFields[1]);
+
     test.done();
 },
 

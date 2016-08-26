@@ -12,6 +12,7 @@ import DataSourceOperations = require('../lib/DataSourceOperations/index');
 import Sequelize = require('sequelize');
 import ComboQueries = require('../db/queries/ComboQueries');
 import * as ImportKML from '../lib/ImportKml';
+import { saveRecordUpdates } from '../lib/ModelUtils';
 
 function getFieldTypes(fields) {
     const types = {};
@@ -128,6 +129,7 @@ export function saveItem(req: express.Request, res: express.Response, next) { Sy
     var dataSource = dbUtils.getDataSource(dsName);
     const dsOps = DataSourceOperations[dsName];     
     const record = await( dataSource.findById( recordData.id ) );
+    await( saveRecordUpdates(dsName, record, recordData) );
     dsOps.addAttributesToRecord(record, recordData, dataSource);
     record.save()
         .then(ControllerUtils.getOkFunc(res, "Registro salvo com sucesso."))

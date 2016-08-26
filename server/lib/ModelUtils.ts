@@ -1,6 +1,8 @@
 'use strict';
+
 import Sequelize = require('sequelize');
 import * as AWS from './AWS';
+
 const await = require('../lib/await');
 
 export function getListFieldObj(textFieldName:string) {
@@ -44,4 +46,22 @@ export function saveOriginalImage(imgBytes, modelName: string, id: number) {
     const imgBuffer = new Buffer(imgArray);
     const fileName = formatImageFileName(modelName, id);
     AWS.saveImage(imgBuffer, fileName);  
+}
+
+export function saveRecordUpdates(modelName: string, record, newData):Promise<any> {
+    const db = require('../db/models');
+    const modifiedRecords:string[] = [];
+    for(var field in newData) {
+        let newValue = newData[field];
+        if(newValue != record[field]) {
+            modifiedRecords.push(field);
+        }
+    }
+    const update = {
+        model: modelName,
+        obj_id: record.id,
+        type: 'EDIT',
+        updates: JSON.stringify(modifiedRecords)
+    }
+    return db.models.UpdateLog.create(update);
 }
