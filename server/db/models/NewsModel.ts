@@ -47,10 +47,11 @@ function setReferences(news, options) {
     }
     
     // if the record has image, save all images resolutions on AWS
-    if(news.image) {
+    const image = news.dataValues.image; 
+    if(image) {
         // save original image
         {
-            const imgBuffer = new Buffer(news.image);
+            const imgBuffer = new Buffer(image);
 
             const fileName = AWS.getImagesPath() + newsLib.formatImgUrl(news.id);
             AWS.saveImage(imgBuffer, fileName);  
@@ -58,7 +59,7 @@ function setReferences(news, options) {
 
         // save resampled images
         for(let imageParam of imageParams) {
-            const imgBuffer = new Buffer(news.image);
+            const imgBuffer = new Buffer(image);
             const resampledBuffer:Buffer = await( resample(imgBuffer, imageParam.width, imageParam.height) );
 
             const fileName = AWS.getImagesPath() + newsLib.formatImgUrl(news.id, imageParam.size);
@@ -91,6 +92,12 @@ module.exports = function(sequelize, DataTypes) {
 		tableau_url: {
 			type: DataTypes.TEXT,
 			allowNull: true
+		},
+		image: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                return 'image';
+            },
 		},
 	}, 
 	{

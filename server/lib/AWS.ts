@@ -23,8 +23,12 @@ export function saveImage(content: Buffer, fileName:string):Promise<string> {
                     ACL: 'public-read',
                     ContentEncoding: 'image/jpeg',
                 };
-                s3.upload(uploadParams, function() {
-                    resolve('ok');
+                s3.upload(uploadParams, function(err) {
+                    if (err) { 
+                        reject(err); 
+                    } else {
+                        resolve('ok');
+                    }
                 });
             }
         });
