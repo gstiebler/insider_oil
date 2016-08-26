@@ -15,16 +15,20 @@ module.exports = {
             updated_at: {
                 type: Sequelize.DATE
             },
+            model: {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
             type: {
                 type: Sequelize.STRING,
                 comment: 'type of the update. New, edit, etc.',
                 allowNull: false
             },
-            update: {
+            updates: {
                 type: Sequelize.TEXT('medium'),
                 comment: 'the content of the update',
                 allowNull: true
-            }
+            },
         };
 	      return queryInterface.createTable("updates_log", fields);
     },

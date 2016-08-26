@@ -27,6 +27,7 @@ function updatePersonProjects(db, person) {
 }
 
 function saveImages(person) {
+	if(!person.dataValues.photo) return;
 	// save resampled image for cards
 	const imgBuffer = new Buffer(person.dataValues.photo);
 	const resampledBuffer:Buffer = await( resample(imgBuffer, 300, 300) );

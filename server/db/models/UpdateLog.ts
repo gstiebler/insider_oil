@@ -4,12 +4,16 @@ import Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes:Sequelize.DataTypes) {
     var UpdateLog = sequelize.define('UpdateLog', 
         {
+            model: {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
             type: {
                 type: Sequelize.STRING,
                 comment: 'type of the update. New, edit, etc.',
                 allowNull: false
             },
-            update: {
+            updates: {
                 type: DataTypes.TEXT('medium'),
                 allowNull: true
             }
