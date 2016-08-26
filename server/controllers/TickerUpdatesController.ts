@@ -12,14 +12,15 @@ var await = require('../lib/await');
 
 export function getUpdates(req: express.Request, res: express.Response, next) {Sync(function(){
     const searchOpts = {
-        order: [['id', 'DESC']],
+        order: [['created_at', 'DESC']],
         limit: 10
     };
     const items:ni.TickerUpdates.ITickerItem[] = [];
     const updates = await( db.models.UpdateLog.findAll(searchOpts) );
     for(let update of updates) {
         const params = dsParams[update.model];
-        let title = params.tableLabel + ': ';
+        const record = await( db.models[update.model].findById(update.obj_id) );
+        let title = record[params.labelField] + ': ';
         const updatedFields = JSON.parse(update.updates);
         const updatedFieldLabels:string[] = [];
         for(let updatedField of updatedFields) {

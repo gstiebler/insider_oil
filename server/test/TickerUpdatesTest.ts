@@ -17,7 +17,7 @@ get: (test: nodeunit.Test) => {
         utils.getJsonResponse.sync(null, TickerUpdatesController.getUpdates, req);
     test.equal(3, tickerResults.items.length);
     test.equal('Atualização', tickerResults.items[0].category);
-    test.equal('Frota Transpetro: País de origem', tickerResults.items[0].title);
+    test.equal('Ataulfo Alves: Porte Bruto (DWT), Ano de construção', tickerResults.items[0].title);
     test.done();
 }
 
