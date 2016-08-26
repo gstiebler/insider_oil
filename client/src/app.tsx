@@ -23,6 +23,7 @@ import { DataList } from './DataList';
 import { Insights } from './Insights/Insights'; 
 import { Observatory } from './Observatory'; 
 import { PersonsByCompany } from './PersonsByCompany'; 
+import { NewsTicker } from './NewsTicker'; 
 
 interface IAppProps {
     model: string;
@@ -83,6 +84,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
     public render():React.ReactElement<any> {
         return (
           <div>
+            <NewsTicker />
             <div className="container-1450">
               <TopMenu username={this.state.username} ></TopMenu>
               <SecondMenuBar isAdmin={this.state.isAdmin} />
