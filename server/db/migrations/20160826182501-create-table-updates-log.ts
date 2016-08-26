@@ -19,6 +19,10 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false
             },
+            obj_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
             type: {
                 type: Sequelize.STRING,
                 comment: 'type of the update. New, edit, etc.',

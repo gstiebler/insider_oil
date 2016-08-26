@@ -59,6 +59,7 @@ export function saveRecordUpdates(modelName: string, record, newData):Promise<an
     }
     const update = {
         model: modelName,
+        obj_id: record.id,
         type: 'EDIT',
         updates: JSON.stringify(modifiedRecords)
     }

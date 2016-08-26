@@ -16,8 +16,8 @@ get: (test: nodeunit.Test) => {
     const tickerResults:ni.TickerUpdates.res = 
         utils.getJsonResponse.sync(null, TickerUpdatesController.getUpdates, req);
     test.equal(3, tickerResults.items.length);
-    test.equal('E&P', tickerResults.items[0].category);
-    test.equal('Lorem ipsum dolor sit amet, consectetur adipiscing elit...', tickerResults.items[0].title);
+    test.equal('Atualização', tickerResults.items[0].category);
+    test.equal('Frota Transpetro: País de origem', tickerResults.items[0].title);
     test.done();
 }
 

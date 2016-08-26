@@ -34,6 +34,7 @@ export function createFixtures():void {
     await( require('./ErrorReport')(db) );
     await( require('./ExcelImportLog')(db) );
     await( require('./InsightsPublisher')(db) );
+    require('./UpdateLog')(db);
 
     for(var i = 1; i <= 3; i++) {
         const company = await( db.models.Company.findById(i) );
