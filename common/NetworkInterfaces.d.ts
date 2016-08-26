@@ -155,3 +155,18 @@ export namespace SaveInsights {
         msg: string
     }
 }
+
+export namespace TickerUpdates {
+
+    export interface ITickerItem {
+        category: string;
+        title: string;
+        link: string;
+    }
+
+    export interface req {}
+
+    export interface res {
+        items: ITickerItem[];
+    }
+}
