@@ -27,6 +27,7 @@ if (app.get('env') == 'production') {
     const errorLogger = winston.add(winston.transports.Console, options);
     errorLogger.on('logging', function (transport, level, msg) {
         db.models.ErrorLog.create({ error: msg });
+        console.error(msg);
     });
 } else if (app.get('env') == 'development') {
     winston.level = 'debug';

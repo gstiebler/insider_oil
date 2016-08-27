@@ -24,6 +24,9 @@ export function getUpdates(req: express.Request, res: express.Response, next) {S
         const updatedFields = JSON.parse(update.updates);
         const updatedFieldLabels:string[] = [];
         for(let updatedField of updatedFields) {
+            if(!params.fields[updatedField]) {
+                continue;
+            }
             updatedFieldLabels.push(params.fields[updatedField].label);
         }
         title += updatedFieldLabels.join(', ');
