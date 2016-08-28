@@ -160,8 +160,38 @@ doNotDelReferencedPersonProject: function(test) {
     test.done();
 },
 
+editContractTestUpdates: function(test) {
+    const firstId = utils.idByValue('Contract', 'user_uid', '001');
+    const record = {
+        id: firstId,
+        value: 43707266.86,
+        supplier_identifier: '02.805.820/0001-86',            
+        start: '2011-02-15',
+        end: '2019-02-11T02:00:00.000Z',
+    }
+    const reqEditItem = {
+        body: { 
+            model: 'Contract',
+            record: JSON.stringify(record)
+        }
+    };
+        
+    const response = utils.getJsonResponse.sync(null, AdminController.saveItem, reqEditItem);
+    test.equal('Registro salvo com sucesso.', response.msg);
+    
+    const updates = await( db.models.UpdateLog.findAll({order: [['id', 'DESC']] }) );
+    const lastUpdate = updates[0];
+    test.equal('Contract', lastUpdate.model);
+    test.equal('EDIT', lastUpdate.type);
+    const updatedFields = JSON.parse(lastUpdate.updates);
+    test.equal(1, updatedFields.length);
+    test.equal('start', updatedFields[0]);
+
+    test.done();
+},
+
 editOilFieldTestUpdates: function(test) {
-    const nordicId = utils.idByName('Fleet', 'Nordic Rio');;
+    const nordicId = utils.idByName('Fleet', 'Nordic Rio');
     const record = {
         id: nordicId,
         year: 2004,
