@@ -6,7 +6,7 @@ import 'moment/locale/pt-br';
  * @param {String} dateStr 
  * @return {String} Formatted date string
  */
-export function dateFormat(dateStr) {
+export function dateFormat(dateStr):string {
     if(!dateStr)
         return '';
     var result = moment(dateStr).utcOffset(0).format('DD/MM/YYYY');
@@ -19,7 +19,7 @@ export function dateFormat(dateStr) {
  * @param {String} dateTimeStr 
  * @return {String} Formatted date string
  */
-export function dateTimeFormat(dateTimeStr) {
+export function dateTimeFormat(dateTimeStr):string {
     if(!dateTimeStr)
         return '';
     var result = moment(dateTimeStr).format('DD/MM/YYYY HH:mm');
@@ -32,7 +32,7 @@ export function dateTimeFormat(dateTimeStr) {
  * @param {String} dateStr 
  * @return {String} Formatted date string
  */
-export function dateFormatInsight(dateStr) {
+export function dateFormatInsight(dateStr):string {
     var result = moment(dateStr).format('DD MMM YYYY');
     return result;
 }
