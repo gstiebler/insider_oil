@@ -2,6 +2,7 @@
 
 import Sequelize = require('sequelize');
 import * as AWS from './AWS';
+import * as moment from 'moment';
 
 const await = require('../lib/await');
 
@@ -50,10 +51,17 @@ export function saveOriginalImage(imgBytes, modelName: string, id: number) {
 
 export function saveRecordUpdates(modelName: string, record, newData):Promise<any> {
     const db = require('../db/models');
+    const dataSource = db.models[modelName];
     const modifiedRecords:string[] = [];
     for(var field in newData) {
         let newValue = newData[field];
-        if(newValue != record[field]) {
+        let oldValue = record[field];
+        let typeStr = dataSource.attributes[field].type.toString();
+        if(typeStr == 'DATE') {
+            newValue = moment(newValue).utcOffset(0).format('DD/MM/YYYY');
+            oldValue = moment(oldValue).utcOffset(0).format('DD/MM/YYYY');
+        }
+        if(newValue != oldValue) {
             modifiedRecords.push(field);
         }
     }
