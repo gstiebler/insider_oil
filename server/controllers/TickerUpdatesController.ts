@@ -20,7 +20,8 @@ export function getUpdates(req: express.Request, res: express.Response, next) {S
     for(let update of updates) {
         const params = dsParams[update.model];
         const record = await( db.models[update.model].findById(update.obj_id) );
-        let title = record[params.labelField] + ': ';
+        const objLabel = record[params.labelField];
+        let title = params.labelSingular + ' ' + objLabel + ': ';
         const updatedFields = JSON.parse(update.updates);
         const updatedFieldLabels:string[] = [];
         for(let updatedField of updatedFields) {
