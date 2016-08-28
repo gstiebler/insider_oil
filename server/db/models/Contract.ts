@@ -11,7 +11,7 @@ function updateContractProjects(db, contract) {
     if(projects == null)
         return;
     const options = { where: { contract_id: contract.id } };
-    db.ContractProjects.destroy(options).then(() => {
+    return db.ContractProjects.destroy(options).then(() => {
         const newProjectRecords = [];
         for(var project of projects) {
             const projectRecord = { 

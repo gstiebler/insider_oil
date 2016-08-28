@@ -60,8 +60,13 @@ export function saveRecordUpdates(modelName: string, record, newData):Promise<an
         if(typeStr == 'DATE') {
             newValue = moment(newValue).utcOffset(0).format('DD/MM/YYYY');
             oldValue = moment(oldValue).utcOffset(0).format('DD/MM/YYYY');
+        } else if (oldValue.constructor == Array) {
+            newValue = JSON.stringify(newValue);
+            oldValue = JSON.stringify(oldValue);
         }
         if(newValue != oldValue) {
+            console.log('new value:', newValue);
+            console.log('old value:', oldValue);
             modifiedRecords.push(field);
         }
     }
