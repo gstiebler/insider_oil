@@ -54,8 +54,8 @@ export class NewsTicker extends React.Component<IAppProps, IAppState> {
 
     private updateTicker() {
         this.state.offset -= DX_ON_EACH_EVENT;
-        if(this.state.offset < -this.state.tickerWidth) {
-            this.state.offset = 0;
+        if(this.state.offset < -(this.state.tickerWidth - FIRST_OFFSET)) {
+            this.state.offset = FIRST_OFFSET;
         }
         this.setState(this.state);
     }
