@@ -43,3 +43,23 @@ export function getProductionUnits(req: express.Request, res: express.Response):
 
     res.json( { productionUnits } );
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+
+export function getWells(req: express.Request, res: express.Response):void {Sync(function(){
+    const wellsGetAllOptions = {
+        attributes: ['id', 'name', 'lat', 'lng'],
+        where: { lat: { $ne: null } }
+    }
+    const wells:any[] = await( db.models.Well.findAll(wellsGetAllOptions) );
+    const processedWells = wells.map((well) => {
+        return {
+            id: well.id,
+            name: well.name,
+            coordinates: {
+                lat: well.lat,
+                lng: well.lng
+            }
+        };
+    });
+
+    res.json( { wells: processedWells } );
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}

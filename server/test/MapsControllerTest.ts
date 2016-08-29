@@ -27,6 +27,12 @@ getProductionUnits: function(test) {
     test.done();
 },
 
+getWells: function(test) {
+    const res = utils.getJsonResponse.sync(null, MapsController.getWells, {});
+    test.equal(3, res.wells.length, 'Tam. do vetor ' + res.wells.length);
+    test.done();
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );
