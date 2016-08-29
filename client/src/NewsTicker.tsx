@@ -62,9 +62,10 @@ export class NewsTicker extends React.Component<IAppProps, IAppState> {
 
     public render(): React.ReactElement<any> {
         const content = this.state.items.map((item, index) => {
+            const className = item.category == 'Insight' ? 'data' : 'all';
             return (
                 <div className="ti_news" key={index}>
-                    <Link to={item.link} className="all">
+                    <Link to={item.link} className={ className }>
                         <span>{ item.category }</span> { item.title }
                     </Link>
                 </div>
