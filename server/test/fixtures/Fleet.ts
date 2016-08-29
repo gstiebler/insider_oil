@@ -9,7 +9,7 @@ module.exports = function(db): Promise<any[]> {
             year: 2000,
             country: 'Coreia do Sul',
             type: 'Aliviador',
-            weight: 153000
+            weight: 153000,
         },
         {
             name: 'Nordic Rio',

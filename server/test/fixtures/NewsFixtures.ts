@@ -19,17 +19,20 @@ module.exports = function(db) {
         {
             title: 'Petrobrás compra Statoil',
             content: newsHTML,
-            author_id: utils.idByName('User', 'Felipe Grandin')
+            author_id: utils.idByName('User', 'Felipe Grandin'),
+            created_at: '2009-10-17'
         },
         {
             title: 'Petrobrás demite presidente',
             content: contentCamamu,
-            author_id: utils.idByName('User', 'Felipe Maciel')
+            author_id: utils.idByName('User', 'Felipe Maciel'),
+            created_at: '2010-10-19'
         },
         {
             title: 'Petrobrás é privatizada',
             content: 'Ações multiplicam por 4 no dia seguinte',
-            author_id: utils.idByName('User', 'Guilherme Stiebler')
+            author_id: utils.idByName('User', 'Guilherme Stiebler'),
+            created_at: '2010-11-17'
         }
     ];
     
