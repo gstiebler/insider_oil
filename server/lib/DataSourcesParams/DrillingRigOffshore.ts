@@ -45,7 +45,10 @@ const DrillingRigOffshore: IBaseDataSourceParams = {
         info: {
             label: "Informações",
             isMultiFieldText: true
-        }
+        },
+        coords_admin: {
+            label: 'Coordenadas (admin)'
+        },
     },
     labelField: "name",
     gridFields: ["name", "contractor_name", "type", "status", "lda", "start", "end"],

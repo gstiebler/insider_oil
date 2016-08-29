@@ -37,6 +37,9 @@ const DrillingRigOnshore: IBaseDataSourceParams = {
             label: 'Foto',
             isPhoto: true
         },
+        coords_admin: {
+            label: 'Coordenadas (admin)'
+        },
     },
     labelField: "name",
     gridFields: ["name", "contractor_name", "type", "end"],

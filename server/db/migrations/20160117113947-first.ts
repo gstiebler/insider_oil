@@ -325,6 +325,10 @@ module.exports = {
 						key: 'id'
 					}
 				},
+				coordinates: {
+					type: Sequelize.TEXT,
+					allowNull: true
+				},
 				created_at: {
 					type: Sequelize.DATE
 				},
@@ -381,6 +385,10 @@ module.exports = {
 						model: 'companies',
 						key: 'id'
 					}
+				},
+				coordinates: {
+					type: Sequelize.TEXT,
+					allowNull: true
 				},
 				created_at: {
 					type: Sequelize.DATE

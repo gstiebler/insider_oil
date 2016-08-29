@@ -1,6 +1,6 @@
 'use strict';
 import Sequelize = require('sequelize');  
-import { saveOriginalImage } from '../../lib/ModelUtils';
+import { saveOriginalImage, getCoordFieldObj } from '../../lib/ModelUtils';
 
 function savePhoto(drillingRig) {
     saveOriginalImage(drillingRig.dataValues.photo, 'DrillingRigOnshore', drillingRig.id);
@@ -38,6 +38,11 @@ function defineModel(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.DataType
                 return 'image';
             },
 		},
+        coordinates: {
+            type: DataTypes.TEXT,
+            allowNull: true
+        },
+        coords_admin: getCoordFieldObj('coordinates'),
     }, {
         underscored: true,
         tableName: 'drilling_rigs_onshore',

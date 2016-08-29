@@ -3,6 +3,7 @@
 import Sequelize = require('sequelize');
 import * as AWS from './AWS';
 import * as moment from 'moment';
+import { coordToString, stringToCoord } from './Geo';
 
 const await = require('../lib/await');
 
@@ -16,6 +17,23 @@ export function getListFieldObj(textFieldName:string) {
         },
         set: function(newValue) {
             this[textFieldName] = JSON.stringify(newValue);
+        }
+    }
+}
+
+export function getCoordFieldObj(textFieldName:string) {
+return {
+        type: Sequelize.VIRTUAL,
+        get: function() {
+            const coordsValue = this[textFieldName];
+            if(!coordsValue || coordsValue.length == 0) {
+                return null;
+            }
+            return coordToString(JSON.parse(coordsValue));
+        },
+        set: function(coordsStr) {
+            const coords = stringToCoord(coordsStr);
+            this[textFieldName] = JSON.stringify(coords);
         }
     }
 }

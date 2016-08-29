@@ -1,7 +1,6 @@
 'use strict';
 import * as Sequelize from 'sequelize'; 
-import { coordToString, stringToCoord } from '../../lib/Geo';
-import { saveOriginalImage } from '../../lib/ModelUtils';
+import { saveOriginalImage, getCoordFieldObj } from '../../lib/ModelUtils';
 
 function savePhoto(productionUnit) {
 	  saveOriginalImage(productionUnit.dataValues.photo, 'ProductionUnit', productionUnit.id);
@@ -33,19 +32,7 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
             type: DataTypes.TEXT,
             allowNull: true
         },
-        coords_admin: {
-            type: DataTypes.VIRTUAL,
-            get: function() {
-                if(!this.coordinates || this.coordinates.length == 0) {
-                    return null;
-                }
-                return coordToString(JSON.parse(this.coordinates));
-            },
-            set: function(coordsStr) {
-                const coords = stringToCoord(coordsStr);
-                this.coordinates = JSON.stringify(coords);
-            }
-        },
+        coords_admin: getCoordFieldObj('coordinates'),
         general_info: {
             type: DataTypes.TEXT,
             allowNull: true
