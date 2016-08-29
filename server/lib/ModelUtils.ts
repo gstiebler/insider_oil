@@ -50,6 +50,8 @@ export function saveOriginalImage(imgBytes, modelName: string, id: number) {
 }
 
 export function saveRecordUpdates(modelName: string, record, newData):Promise<any> {
+    // do not save News updates
+    if(modelName == 'News') return Promise.resolve();
     const db = require('../db/models');
     const dataSource = db.models[modelName];
     const modifiedRecords:string[] = [];
@@ -62,7 +64,7 @@ export function saveRecordUpdates(modelName: string, record, newData):Promise<an
         if(typeStr == 'DATE') {
             newValue = moment(newValue).utcOffset(0).format('DD/MM/YYYY');
             oldValue = moment(oldValue).utcOffset(0).format('DD/MM/YYYY');
-        } else if (oldValue.constructor == Array) {
+        } else if (oldValue && oldValue.constructor == Array) {
             newValue = JSON.stringify(newValue);
             oldValue = JSON.stringify(oldValue);
         }
