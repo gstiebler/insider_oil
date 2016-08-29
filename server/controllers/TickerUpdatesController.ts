@@ -25,10 +25,12 @@ export function getUpdates(req: express.Request, res: express.Response, next) {S
         const updatedFields = JSON.parse(update.updates);
         const updatedFieldLabels:string[] = [];
         for(let updatedField of updatedFields) {
-            if(!params.fields[updatedField]) {
-                continue;
-            }
-            updatedFieldLabels.push(params.fields[updatedField].label);
+            // continue if the field is not found on data source params
+            if(!params.fields[updatedField]) continue;
+            let label = params.fields[updatedField].label;
+            // do not include admin fields
+            if(label.indexOf('admin') > -1) continue;
+            updatedFieldLabels.push();
         }
         title += updatedFieldLabels.join(', ');
         const link = '/app/view_record?source=' + update.model + '&id=' + update.obj_id;
