@@ -58,6 +58,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     private gasPipeLayer: KmlLayer;
     private gasPipelinesVisible: boolean;
 
+    private wellHeatMap: HeatMap;
+    private wellHeatMapVisible: boolean;
+
     constructor(props: IAppProps) {
         super(props);
 
@@ -79,6 +82,8 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         this.productionUnitsVisible = true;
 
         this.gasPipelinesVisible = false;
+
+        this.wellHeatMapVisible = false;
     }
 
     private componentDidMount() {
@@ -168,8 +173,8 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     }
 
     private addWellsToMap(res) {
-        var wellsHeatMap = new HeatMap(this.mapObj, res.wells);
-        wellsHeatMap.setVisibility(true);
+        this.wellHeatMap = new HeatMap(this.mapObj, res.wells);
+        this.wellHeatMap.setVisibility(false);
     }
 
     private changeMapsItemsVisibility(mObjects: BaseMapItem[], visibilityFieldName: string, event) {
@@ -179,11 +184,11 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    private changeKmlLayerVisibility(kmlLayerKeyName, visibilityKeyName: string, event) {
+    private changeMapsItemVisibility(itemName, visibilityKeyName: string, event) {
         // it's getting by keyname because the member is not initialized when render is called
-        const kmlLayer: KmlLayer = this[kmlLayerKeyName];
+        const mapItem: BaseMapItem = this[itemName];
         this[visibilityKeyName] = !this[visibilityKeyName];
-        kmlLayer.setVisibility(this[visibilityKeyName]);
+        mapItem.setVisibility(this[visibilityKeyName]);
     }
 
     public render(): React.ReactElement<any> {
@@ -206,8 +211,11 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                     onChange={this.changeMapsItemsVisibility.bind(this, this.productionUnitMMarkers, 'productionUnitsVisible')}/> 
                     Exibir unidades de produção<br/>
                 <input type="checkbox" defaultChecked={false}
-                    onChange={this.changeKmlLayerVisibility.bind(this, 'gasPipeLayer', 'gasPipelinesVisible')}/> 
+                    onChange={this.changeMapsItemVisibility.bind(this, 'gasPipeLayer', 'gasPipelinesVisible')}/> 
                     Exibir gasodutos<br/>
+                <input type="checkbox" defaultChecked={false}
+                    onChange={this.changeMapsItemVisibility.bind(this, 'wellHeatMap', 'wellHeatMapVisible')}/> 
+                    Exibir mapa de calor de poços<br/>
             </div>
         );
     }

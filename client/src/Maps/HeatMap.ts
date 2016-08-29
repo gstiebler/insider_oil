@@ -13,9 +13,12 @@ export class HeatMap extends BaseMapItem {
 
         const gHeatMap =  new googleRef.maps.visualization.HeatmapLayer({
             data: points,
-            map: this.mapObj.gMap
+            map: this.mapObj.gMap,
+            maxIntensity: 50,
+            //radius: 30
         });
 
+        //gHeatMap.set('radius', 30);
         this.setGMapItem(gHeatMap);
     }
 
