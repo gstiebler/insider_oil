@@ -53,10 +53,12 @@ export function saveRecordUpdates(modelName: string, record, newData):Promise<an
     const db = require('../db/models');
     const dataSource = db.models[modelName];
     const modifiedRecords:string[] = [];
-    for(var field in newData) {
-        let newValue = newData[field];
-        let oldValue = record[field];
-        let typeStr = dataSource.attributes[field].type.toString();
+    for(var fieldName in newData) {
+        let newValue = newData[fieldName];
+        let oldValue = record[fieldName];
+        let field = dataSource.attributes[fieldName];
+        if(!field) continue;
+        let typeStr = field.type.toString();
         if(typeStr == 'DATE') {
             newValue = moment(newValue).utcOffset(0).format('DD/MM/YYYY');
             oldValue = moment(oldValue).utcOffset(0).format('DD/MM/YYYY');
@@ -65,9 +67,7 @@ export function saveRecordUpdates(modelName: string, record, newData):Promise<an
             oldValue = JSON.stringify(oldValue);
         }
         if(newValue != oldValue) {
-            console.log('new value:', newValue);
-            console.log('old value:', oldValue);
-            modifiedRecords.push(field);
+            modifiedRecords.push(fieldName);
         }
     }
     const update = {
