@@ -30,7 +30,7 @@ export function getUpdates(req: express.Request, res: express.Response, next) {S
             let label = params.fields[updatedField].label;
             // do not include admin fields
             if(label.indexOf('admin') > -1) continue;
-            updatedFieldLabels.push();
+            updatedFieldLabels.push(label);
         }
         title += updatedFieldLabels.join(', ');
         const link = '/app/view_record?source=' + update.model + '&id=' + update.obj_id;
