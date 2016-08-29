@@ -93,6 +93,10 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             .then(res => { this.addProductionUnitsToMap(res.productionUnits) })
             .catch(showError.show);
 
+        server.getP('/maps/wells', {})
+            .then(this.addWellsToMap.bind(this))
+            .catch(showError.show);
+
         this.gasPipeLayer = new KmlLayer(this.mapObj, 'http://app.insideroil.com/maps/Gasodutos.kml');
         this.gasPipeLayer.setVisibility(false);
     }
@@ -160,6 +164,10 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             mMarker.setBillboardFn(showBillboard.bind(this, productionUnit, 'ProductionUnit', productionUnitBillboard));
             this.productionUnitMMarkers.push(mMarker);
         });
+    }
+
+    private addWellsToMap(res) {
+        console.log(res.wells);
     }
 
     private changeMapsItemsVisibility(mObjects: BaseMapItem[], visibilityFieldName: string, event) {
