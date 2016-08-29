@@ -6,6 +6,7 @@ import { IGeoPoint } from '../../common/Interfaces';
 import { BaseMapItem } from './Maps/BaseMapItem';
 import { Polygon } from './Maps/Polygon';
 import { Marker } from './Maps/Marker';
+import { HeatMap } from './Maps/HeatMap';
 import { KmlLayer } from './Maps/KmlLayer';
 import * as Promise from 'bluebird';
 
@@ -167,7 +168,8 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     }
 
     private addWellsToMap(res) {
-        console.log(res.wells);
+        var wellsHeatMap = new HeatMap(this.mapObj, res.wells);
+        wellsHeatMap.setVisibility(true);
     }
 
     private changeMapsItemsVisibility(mObjects: BaseMapItem[], visibilityFieldName: string, event) {
