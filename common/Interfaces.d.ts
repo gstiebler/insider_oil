@@ -70,6 +70,7 @@ export interface IBaseDataSourceParams {
     hasMap?: boolean;
     excelParams?: IExcelParams;
     urlSource?: string;
+    tableauUrl?: string;
     referencedObjectsOnView?: IRefObjectsOnView[];
 }
 

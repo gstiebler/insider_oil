@@ -82,7 +82,7 @@ const Well: IBaseDataSourceParams = {
     gridFields: ["name", "operator_name"],
     tableLabel: "Poços",
     labelSingular: 'Poço',
-    hasMap: true,
+    tableauUrl: 'https://public.tableau.com/views/PoosPerfurados/Planilha3?:embed=y&:display_count=yes',
     excelParams: {
         keyField: "poco",
         fields: {
