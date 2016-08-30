@@ -77,8 +77,13 @@ export function saveRecordUpdates(modelName: string, record, newData):Promise<an
         let newValue = newData[fieldName];
         let oldValue = record[fieldName];
         let field = dataSource.attributes[fieldName];
-        if(!field) continue;
-        let typeStr = field.type.toString();
+        if(!field) continue;            
+        let typeStr = 'VARCHAR';
+        try { // this try is due to an apparent bug in the toString in sequelize for ENUM fields
+            typeStr = field.type.toString();
+        } catch(e) {
+            //console.log(e.stack);
+        }
         if(typeStr == 'DATE') {
             newValue = moment(newValue).utcOffset(0).format('DD/MM/YYYY');
             oldValue = moment(oldValue).utcOffset(0).format('DD/MM/YYYY');
