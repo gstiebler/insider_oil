@@ -3,6 +3,7 @@ import * as jquery from 'jquery';
 import * as remoteServer from '../../../common/Interfaces';
 import * as Promise from 'bluebird';
 import * as ni from '../../../common/NetworkInterfaces';
+import { browserHistory } from 'react-router';
 
 function ajax(url: string, data: any, type:string, onSuccess?, onError?) {
     data.token = session.getToken();
@@ -26,9 +27,19 @@ function get(url: string, data: any, onSuccess?, onError?) {
 }
 
 export function getP(url: string, data: any):Promise<any> {
+
+    function onError(reject, error) {
+        reject(error);
+        // if the user was not authorized
+        if(error.status == 401) {
+            window.location.replace('/login');
+            console.log('não autorizado');
+        }
+    }
+
     return new Promise<any>( function(resolve, reject) {
         ajax(url, data, 'GET', (result) => { resolve(result) }, 
-                (error) => { reject(error) });
+               onError.bind(this, reject));
     });
 }
 

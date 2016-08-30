@@ -66,7 +66,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
             });
         }.bind(this), function(result) {
             if(result.status == 401) {
-                browserHistory.push('/');
+                window.location.replace('/login');
             }
         });
 
