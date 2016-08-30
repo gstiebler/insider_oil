@@ -12,7 +12,8 @@ import { IField } from '../../common/Interfaces';
 export interface ITableParams {
     label: string;
     fields: IField[];
-    source: string;  
+    source: string;
+    tableauUrl: string;  
 }
 
 interface IAppProps {

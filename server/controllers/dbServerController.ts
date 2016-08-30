@@ -145,7 +145,7 @@ export function getDashboardData(req: express.Request, res: express.Response):vo
         pagination: {
             first: 0,
             itemsPerPage: 1
-        } 
+        }
     }
     const projectsInfo = await( TableQueries.getQueryResult('Projects', projQueryParams) );
 
@@ -163,7 +163,8 @@ export function getTableQueriesFields(req: express.Request, res: express.Respons
     const query = TableQueries.queries[queryParams.queryName];
     const result:ni.GetTableQueriesFields.res = {
         fields: [],
-        title: query.title
+        title: query.title,
+        tableauUrl: query.tableauUrl
     };
     //for(var queryName in TableQueries.queries) {
         result.fields = query.fields;

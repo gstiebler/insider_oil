@@ -123,6 +123,7 @@ export namespace GetTableQueriesFields {
     export interface res {
         fields: Interfaces.IField[];
         title: string;
+        tableauUrl: string;
     }
 }
 

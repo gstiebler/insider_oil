@@ -15,6 +15,7 @@ interface ITableQuery {
     fields: BaseQuery.IField[];
     title: string;
     recordProcessor?: any;
+    tableauUrl?: string;
 }
 
 interface ITableQueries {
@@ -794,7 +795,8 @@ export const queries:ITableQueries = {
                 fieldName: 'conclusion',
                 type: 'DATE'
             },
-        ]
+        ],
+        tableauUrl: 'https://public.tableau.com/views/PoosPerfurados/Planilha3?:embed=y&:display_count=yes',
     },
     
     FPSOs: {
@@ -808,7 +810,8 @@ export const queries:ITableQueries = {
             );
             return productionUnit.queryStrFn(queryParams);
         },
-        fields: productionUnit.fields
+        fields: productionUnit.fields,
+        tableauUrl: 'https://public.tableau.com/views/FPSO/Painel1?:embed=y&:display_count=yes&:toolbar=no',
     },
     
     FixedProductionUnits: {
@@ -822,7 +825,8 @@ export const queries:ITableQueries = {
             );
             return productionUnit.queryStrFn(queryParams);
         },
-        fields: productionUnit.fields
+        fields: productionUnit.fields,
+        tableauUrl: 'https://public.tableau.com/views/Fixas/Painel1?:embed=y&:display_count=yes&:toolbar=no'
     },
     
     SemiSubmersibleProductionUnits: {
@@ -836,7 +840,8 @@ export const queries:ITableQueries = {
             );
             return productionUnit.queryStrFn(queryParams);
         },
-        fields: productionUnit.fields
+        fields: productionUnit.fields,
+        tableauUrl: 'https://public.tableau.com/views/Semi/Painel1?:embed=y&:display_count=yes&:toolbar=no',
     },
     
     Projects: {
@@ -1417,7 +1422,7 @@ export const queries:ITableQueries = {
     },
 };
 
-export function getQueryResult(queryName: string, queryParams: IQueryParams): Promise<any> {
+export function getQueryResult(queryName: string, queryParams: IQueryParams): Promise<any[]> {
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const queryStr = queries[queryName].queryStrFn(queryParams);
     const pagination = QueryGenerator.getPaginationStr(queryParams.pagination);

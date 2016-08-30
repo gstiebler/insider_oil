@@ -4,6 +4,7 @@ import * as showError from './lib/ShowError';
 import * as ni from '../../common/NetworkInterfaces';
 import { PaginatedTable, ITableParams } from './PaginatedTable';
 import { IField } from '../../common/Interfaces';
+import { Tableau } from './Tableau'; 
 
 interface IAppProps {
     location: any;
@@ -50,7 +51,8 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
     private onFields(res:ni.GetTableQueriesFields.res) {
         const fields = res.fields;
         this.state.tableParams = {
-            fields: fields,
+            fields,
+            tableauUrl: res.tableauUrl,
             label: res.title,
             source: this.source
         };
@@ -63,8 +65,18 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
             this.state.show = true;
             return <div></div>;
         }
+        var tableau = null;
+        if(this.state.tableParams.tableauUrl) {
+            tableau = (
+                <div>
+                    <Tableau vizUrl={this.state.tableParams.tableauUrl}/>
+                    <br/>
+                </div>
+            );
+        }
         return (
             <div>
+                { tableau }
                 { this.state.tableParams ? <PaginatedTable tableParams={ this.state.tableParams } /> : null }
             </div>
         );

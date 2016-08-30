@@ -69,7 +69,6 @@ export interface IBaseDataSourceParams {
     labelSingular: string;
     excelParams?: IExcelParams;
     urlSource?: string;
-    tableauUrl?: string;
     referencedObjectsOnView?: IRefObjectsOnView[];
 }
 
