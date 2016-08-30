@@ -2,7 +2,10 @@
 import db = require( '../db/models' );
 import winston = require('winston');
 
-function userFromToken( token ):Promise<any> {
+export function userFromToken( token ):Promise<any> {
+    if(!token || token == '') {
+        return Promise.resolve(null);
+    }
     return db.models.User.findOne({ where: { token: token } });
 }
 
@@ -37,13 +40,15 @@ export function authorizeHTML(req, res, next) {
 
 function authorize(req, res, next, checkAdmin) {
    var token = req.query.token;
-    if( !token )
+    if(!token)
         token = req.body.token;
-    if( !token )
+    if(!token && req.body.params)
         token = req.body.params.token;
         
-    if( !token )
+    if( !token ) {
         invalidToken();
+        return;
+    }
         
     userFromToken( token ).then(callback);
     
@@ -81,7 +86,6 @@ function authorize(req, res, next, checkAdmin) {
     }
     
     function invalidToken() {
-    	winston.info('invalid token');
         res.status(401).json({ errorMsg: 'Invalid token'});
     }
 }

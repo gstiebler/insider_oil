@@ -9,7 +9,8 @@ export function login(token) {
 }
     
 export function logout() {
-    var token = cookie.get('token');
+    var token = cookie.get('token');    
+    cookie.set( 'token', '' );
     // TODO change to /session/logout
     jquery.ajax({
         url: '/login/logout',
@@ -19,8 +20,7 @@ export function logout() {
         error: logoutError
     });
     
-    function logoutOk(response) {        
-        cookie.set( 'token', '' );
+    function logoutOk(response) {    
         browserHistory.push('/');
     }
     
