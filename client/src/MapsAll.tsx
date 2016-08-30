@@ -55,6 +55,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     private productionUnitMMarkers: Marker[];
     private productionUnitsVisible: boolean;
 
+    private drillingRigMMarkers: Marker[];
+    private drillingRigVisible: boolean;
+
     private gasPipeLayer: KmlLayer;
     private gasPipelinesVisible: boolean;
 
@@ -80,6 +83,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         
         this.productionUnitMMarkers = [];
         this.productionUnitsVisible = true;
+        
+        this.drillingRigMMarkers = [];
+        this.drillingRigVisible = true;
 
         this.gasPipelinesVisible = false;
 
@@ -97,6 +103,10 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
 
         server.getP('/maps/production_units', {})
             .then(res => { this.addProductionUnitsToMap(res.productionUnits) })
+            .catch(showError.show);
+
+        server.getP('/maps/drilling_rigs', {})
+            .then(this.addDrillingRigsToMap.bind(this))
             .catch(showError.show);
 
         server.getP('/maps/wells', {})
@@ -172,6 +182,31 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         });
     }
 
+    private addDrillingRigsToMap(res) {
+
+        function getModel(drillingRig) {
+            return drillingRig.type == 'offshore' ? 'DrillingRigOffshore' : 'DrillingRigOnshore';
+        }
+
+        function drillingRigBillboard(drillingRig):string {
+            const url = '/app/view_record?source=' + getModel(drillingRig) + '&id=' + drillingRig.id;
+            return '<b>Sonda: </b><a href="' + url + '">' + drillingRig.name + '</a>'
+        }
+
+        this.drillingRigMMarkers.length = 0;
+        const platformImage = 'images/drilling_rig.png';
+        res.drillingRigs.map(drillingRig => {
+            var coordinates:IGeoPoint = JSON.parse(drillingRig.coordinates);
+            if(!coordinates) {
+                return;
+            }
+            const title = 'Sonda: ' + drillingRig.name;
+            var mMarker = new Marker(this.mapObj, coordinates, platformImage, title);
+            mMarker.setBillboardFn(showBillboard.bind(this, drillingRig, getModel(drillingRig), drillingRigBillboard));
+            this.drillingRigMMarkers.push(mMarker);
+        });
+    }
+
     private addWellsToMap(res) {
         this.wellHeatMap = new HeatMap(this.mapObj, res.wells);
         this.wellHeatMap.setVisibility(false);
@@ -210,6 +245,9 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
                 <input type="checkbox" defaultChecked={true}
                     onChange={this.changeMapsItemsVisibility.bind(this, this.productionUnitMMarkers, 'productionUnitsVisible')}/> 
                     Exibir unidades de produção<br/>
+                <input type="checkbox" defaultChecked={true}
+                    onChange={this.changeMapsItemsVisibility.bind(this, this.drillingRigMMarkers, 'drillingRigVisible')}/> 
+                    Exibir sondas<br/>
                 <input type="checkbox" defaultChecked={false}
                     onChange={this.changeMapsItemVisibility.bind(this, 'gasPipeLayer', 'gasPipelinesVisible')}/> 
                     Exibir gasodutos<br/>
