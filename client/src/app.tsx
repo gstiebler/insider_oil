@@ -82,6 +82,25 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
     }
 
     public render():React.ReactElement<any> {
+        const footer = (
+            <footer id="footer">
+                <div className="container-1450">
+                    <div className="row">
+                        <div className=" col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                            <img src="images/logo_footer.png" className="img-responsive"/>
+                        </div>
+                        <div className=" col-lg-10 col-md-10 col-sm-9 col-xs-12">
+                            <ul>
+                                <li>&copy;2016. E&P Brasil - Serviços de Informação</li>
+                                <li><a href="javascript:void(0);">Política de Privacidade</a></li>
+                                <li><a href="javascript:void(0);">Termos e Condições</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        );
+
         return (
           <div>
             <NewsTicker />
@@ -93,6 +112,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
               <Flash timeout={5000}/>
               {this.props.children}
             </div>
+            { footer }
           </div>
         );
     }
