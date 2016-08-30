@@ -79,6 +79,9 @@ function getUpdateTickerItem(update: ITickerRecord):ni.TickerUpdates.ITickerItem
         if(label.indexOf('admin') > -1) continue;
         updatedFieldLabels.push(label);
     }
+    if(updatedFieldLabels.length == 0) {
+        return null;
+    }
     title += updatedFieldLabels.join(', ');
     const link = '/app/view_record?source=' + update.model + '&id=' + update.obj_id;
     return {
@@ -106,7 +109,9 @@ export function getUpdates(req: express.Request, res: express.Response, next) {S
     for(let update of updates) {
         if(update.type == 'UPDATE') {
             const item = getUpdateTickerItem(update);
-            items.push(item);
+            if(item) {
+                items.push(item);
+            }
         } else if(update.type == 'INSIGHT') {
             const item = getInsightTickerItem(update);
             items.push(item);
