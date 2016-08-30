@@ -65,6 +65,7 @@ const DrillingRigOffshore: IBaseDataSourceParams = {
             lda: 'lda',
             início: 'start',
             fim: 'end',
+            'day rate': 'day_rate',
         }
     },
     referencedObjectsOnView:  [
