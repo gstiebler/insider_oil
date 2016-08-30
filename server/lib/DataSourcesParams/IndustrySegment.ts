@@ -10,7 +10,6 @@ const IndustrySegment: IBaseDataSourceParams = {
     gridFields: ['name'],
     tableLabel: 'Segmentos',
     labelSingular: 'Segmento',
-    hasMap: false,
 }
 
 export = IndustrySegment;

@@ -22,7 +22,6 @@ const User: IBaseDataSourceParams = {
     gridFields: ['name'],
     tableLabel: 'Usuários',
     labelSingular: 'Usuário',
-    hasMap: false,
 }
 
 export = User;

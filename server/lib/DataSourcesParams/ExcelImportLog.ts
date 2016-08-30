@@ -25,7 +25,6 @@ const Fleet: IBaseDataSourceParams = {
     gridFields: ['created_at', 'user', 'model', 'status'],
     tableLabel: 'Log importação Excel',
     labelSingular: 'Log importação Excel',
-    hasMap: false
 }
 
 export = Fleet;

@@ -63,7 +63,6 @@ const OilField: IBaseDataSourceParams = {
     gridFields: ['name', 'basin_name', 'state', 'shore', 'stage'],
     tableLabel: "Campos",
     labelSingular: 'Campo',
-    hasMap: false,
     referencedObjectsOnView:  [
         {
             queryName: 'hydrocarbonEvidencesByOilField',

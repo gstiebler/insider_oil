@@ -56,7 +56,6 @@ const Bid: IBaseDataSourceParams = {
     gridFields: ["process_number", "modality", 'contract_object'],
     tableLabel: "Licitações",
     labelSingular: 'Licitação',
-    hasMap: false,
     excelParams: {
         keyField: 'processo',
         fields: {

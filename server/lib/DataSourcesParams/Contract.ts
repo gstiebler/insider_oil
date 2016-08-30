@@ -63,7 +63,6 @@ const Contract: IBaseDataSourceParams = {
     gridFields: ['user_uid', "contract_object", "supplier", 'value', 'start', 'end', 'situation'],
     tableLabel: "Contratos",
     labelSingular: 'Contrato',
-    hasMap: false,
     excelParams: {
         keyField: 'identificador',
         fields: {

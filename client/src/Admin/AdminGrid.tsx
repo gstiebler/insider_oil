@@ -176,7 +176,6 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
                     <table id="mainTable" className="table table-striped table-bordered" width="100%"></table>
                 </div>
                 <button className="btn btn-large btn-success" onClick={ this.state.modelOperations.createItem } >Adicionar {this.state.viewParams.tableLabel}</button><br/><br/>
-                { this.state.viewParams.hasMap ? (<button className="btn btn-large btn-success" onClick={ this.showMap } >Mapa</button>) : <div/> }
                 <br/><br/><br/>
                 <ExcelUploadButton modelName={this.state.modelName} /><br/>
                 <button onClick={ this.getExcelFile.bind(this) } >Baixar arquivo Excel</button>

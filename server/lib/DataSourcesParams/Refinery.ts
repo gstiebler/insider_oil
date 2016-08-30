@@ -23,7 +23,6 @@ const Refinery: IBaseDataSourceParams = {
     gridFields: ['name', 'capacity'],
     tableLabel: 'Refinarias',
     labelSingular: 'Refinaria',
-    hasMap: false
 }
 
 export = Refinery;

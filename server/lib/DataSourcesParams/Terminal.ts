@@ -19,7 +19,6 @@ const Terminal:IBaseDataSourceParams = {
     gridFields: ['name', 'type'],
     tableLabel: 'Terminais',
     labelSingular: 'Terminal',
-    hasMap: false
 }
 
 export = Terminal;

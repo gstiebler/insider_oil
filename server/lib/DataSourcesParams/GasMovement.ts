@@ -25,7 +25,6 @@ const GasMovement: IBaseDataSourceParams = {
     gridFields: ['gas_pipeline_name', "product", "period_year", 'period_month', 'value'],
     tableLabel: "Movimentação de gasoduto",
     labelSingular: 'Movimentação de gasoduto',
-    hasMap: false
 }
 
 export = GasMovement;

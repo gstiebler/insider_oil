@@ -36,7 +36,6 @@ const AmbientalLicense: IBaseDataSourceParams = {
     gridFields: ['license', 'start', 'end', 'enterprise', 'entrepreneur', 'process', 'tipology', 'pac'],
     tableLabel: 'Licenças ambientais',
     labelSingular: 'Licença ambiental',
-    hasMap: false,
     excelParams: {
         keyField: 'nº da licença',
         fields: {

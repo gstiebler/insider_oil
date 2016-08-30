@@ -10,7 +10,6 @@ const Basin: IBaseDataSourceParams = {
     gridFields: ['name'],
     tableLabel: 'Bacias',
     labelSingular: 'Bacia',
-    hasMap: false
 }
 
 export = Basin;

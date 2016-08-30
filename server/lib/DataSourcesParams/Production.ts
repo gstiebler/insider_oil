@@ -43,7 +43,6 @@ const Production: IBaseDataSourceParams = {
     gridFields: ['period_year', 'period_month', 'oil_production', 'well_name'],
     tableLabel: 'Produção',
     labelSingular: 'Produção',
-    hasMap: false,
     excelParams: {
         keyField: "bloco",
         fields: {

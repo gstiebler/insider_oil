@@ -22,7 +22,6 @@ const HydrocarbonEvidence: IBaseDataSourceParams = {
     gridFields: ['well_name', 'notification_date', 'fluids', 'depth'],
     tableLabel: 'Indicíos de hidrocarbonetos constatados',
     labelSingular: 'Indício de hidrocarboneto',
-    hasMap: false
 }
 
 export = HydrocarbonEvidence;

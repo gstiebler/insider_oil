@@ -63,7 +63,6 @@ const GasPipeline: IBaseDataSourceParams = {
     gridFields: ["name", "state", 'classification', 'extension'],
     tableLabel: "Gasodutos",
     labelSingular: 'Gasoduto',
-    hasMap: false
 }
 
 export = GasPipeline;

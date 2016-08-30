@@ -22,7 +22,6 @@ const Fleet: IBaseDataSourceParams = {
     gridFields: ['name', 'year', 'country', 'type', 'weight'],
     tableLabel: 'Frota Transpetro',
     labelSingular: 'Navio Transpetro',
-    hasMap: false
 }
 
 export = Fleet;

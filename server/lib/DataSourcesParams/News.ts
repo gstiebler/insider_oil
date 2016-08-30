@@ -23,7 +23,6 @@ const News: IBaseDataSourceParams = {
     gridFields: ['title', 'author_name', 'created_at'],
     tableLabel: 'Notícias',
     labelSingular: 'Matéria',
-    hasMap: false
 }
 
 export = News;
