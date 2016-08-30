@@ -33,6 +33,12 @@ getWells: function(test) {
     test.done();
 },
 
+getDrillingRigs: function(test) {
+    const res = utils.getJsonResponse.sync(null, MapsController.getDrillingRigs, {});
+    test.equal(6, res.drillingRigs.length, 'Tam. do vetor ' + res.drillingRigs.length);
+    test.done();
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );

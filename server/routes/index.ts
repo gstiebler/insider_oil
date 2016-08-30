@@ -52,6 +52,7 @@ module.exports = function(app: express.Express) {
     app.get('/maps/oil_fields', session.authUser, MapsController.getOilFields);
     app.get('/maps/production_units', session.authUser, MapsController.getProductionUnits);
     app.get('/maps/wells', session.authUser, MapsController.getWells);
+    app.get('/maps/drilling_rigs', session.authUser, MapsController.getDrillingRigs);
 
     app.get('/insights', session.authUser, InsightsController.getInsights);
     app.post('/save_insights_publisher', session.authUser, InsightsController.saveInsights);

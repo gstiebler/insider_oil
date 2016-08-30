@@ -63,3 +63,38 @@ export function getWells(req: express.Request, res: express.Response):void {Sync
 
     res.json( { wells: processedWells } );
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+
+export function getDrillingRigs(req: express.Request, res: express.Response):void {Sync(function(){
+    const drillingRigsOnshoreGetAllOptions = {
+        attributes: ['id', 'name', 'coordinates'],
+        where: { coordinates: { $ne: null } }
+    }    
+    
+    const drillingRigsOffshoreGetAllOptions = {
+        attributes: ['id', 'name', 'coordinates'],
+        where: { coordinates: { $ne: null } }
+    }
+
+    const drillingRigsOnshore:any[] = await( db.models.DrillingRigOnshore.findAll(drillingRigsOnshoreGetAllOptions) );
+    const drillingRigsOffshore:any[] = await( db.models.DrillingRigOffshore.findAll(drillingRigsOffshoreGetAllOptions) );
+
+    const allDrillingRigs = [];
+    for(var dr of drillingRigsOnshore) {
+        allDrillingRigs.push({
+            type: 'onshore',
+            id: dr.id,
+            name: dr.name,
+            coordinates: dr.coordinates
+        });
+    }
+    for(var dr of drillingRigsOffshore) {
+        allDrillingRigs.push({
+            type: 'offshore',
+            id: dr.id,
+            name: dr.name,
+            coordinates: dr.coordinates
+        });
+    }
+
+    res.json( { drillingRigs: allDrillingRigs } );
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
