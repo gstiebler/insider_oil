@@ -37,43 +37,42 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
         var y = d3.scale.linear()
             .range([height, 0]);
 
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom");
+        var xAxis = d3.svg.axis();
+        xAxis.scale(x);
+        xAxis.orient("bottom");
 
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            .ticks(10, "%");
+        var yAxis = d3.svg.axis();
+        yAxis.scale(y);
+        yAxis.orient("left");
 
         var svg = d3.select("#d3Container").append("svg")
             .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            .attr("height", height + margin.top + margin.bottom);
+        const g = svg.append("g");
+        g.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         x.domain(data.map(d => { return d.label; }));
         y.domain([0, d3.max(data, (d) => { return d.count_value; })]);
 
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
+        const x_axis = svg.append("g");
+        x_axis.attr("class", "x axis")
+        x_axis.attr("transform", "translate(0," + height + ")")
+        x_axis.call(xAxis);
 
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("Frequency");
+        const y_axis = svg.append("g");
+        y_axis.attr("class", "y axis")
+        y_axis.call(yAxis)
+        const yText = y_axis.append("text");
+        yText.attr("transform", "rotate(-90)")
+        yText.attr("y", 6)
+        yText.attr("dy", ".71em")
+        yText.style("text-anchor", "end")
+        yText.text("Frequency");
 
-        svg.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", "bar")
+        const allBars = svg.selectAll(".bar");
+        const barData = allBars.data(data);
+        const rect = barData.enter().append("rect");
+        rect.attr("class", "bar")
             .attr("x", (d) => { return x(d.label); })
             .attr("width", x.rangeBand())
             .attr("y", (d) => { return y(d.count_value); })
