@@ -24,9 +24,9 @@ modelReferences: test => {
 	const references = news.getModelReferences(newsHTML);
 	test.equal(2, references.length);
 	test.equal('OilField', references[0].model);
-	test.equal(abaloneId, references[0].id);
+	test.equal(abaloneId, references[0].id, 'Abalone id');
 	test.equal('Person', references[1].model);
-	test.equal(guilhermeId, references[1].id);
+	test.equal(guilhermeId, references[1].id, 'Person id');
 	test.done();
 },
 

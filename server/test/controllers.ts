@@ -7,6 +7,7 @@ import QueryGenerator = require('../db/queries/QueryGenerator');
 import nodeunit = require('nodeunit');
 var loginController = require('../controllers/loginController');
 import SearchController = require('../controllers/SearchController');
+import * as search from '../lib/search';
 var Sync = require('sync');
 var utils = require('./lib/utils');
 import * as ni from '../../common/NetworkInterfaces';
@@ -108,6 +109,7 @@ getRecordViewWell: function(test) {
 },
 
 search: test => {
+    search.initializeSearch();
 	const req = {
 		query: { searchValue: 'guilherme' }
 	}
@@ -152,11 +154,15 @@ getRecord: test => {
     test.done();
 },
 
-getTableQueriesFields: (test: nodeunit.Test) => { 
+getTableQueriesFields: (test: nodeunit.Test) => {
+    const req:ni.GetTableQueriesFields.req = {
+        queryName: 'Blocks'
+    }; 
     const res:ni.GetTableQueriesFields.res = 
-        utils.getJsonResponse.sync(null, dbServerController.getTableQueriesFields, {});
+        utils.getJsonResponse.sync(null, dbServerController.getTableQueriesFields, 
+        { query: req });
     
-    test.equal('Nome', res['Blocks'][0].label);
+    test.equal('Blocos', res.title);
     test.done();
 },
 
