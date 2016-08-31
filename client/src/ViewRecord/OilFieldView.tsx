@@ -6,7 +6,7 @@ import { Link, browserHistory } from 'react-router';
 import { ViewRecordFields } from './ViewRecordFields';
 import { ShowQueryData } from '../ShowQueryData';
 import { ObjectNews } from '../ObjectNews';
-import { TimeSeriesChart } from '../TimeSeriesChart';
+import { TimeSeriesChart } from '../Charts/TimeSeriesChart';
 import { ErrorReport } from '../ErrorReport';
 import * as ViewRecord from './ViewRecord';
 

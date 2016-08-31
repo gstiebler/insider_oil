@@ -22,7 +22,8 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         this.state = {
             sources: [],
             selectedSource: null,
-            groupField: null
+            groupField: null,
+            countData: []
         };
     }
 

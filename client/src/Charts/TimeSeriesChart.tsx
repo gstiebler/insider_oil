@@ -1,6 +1,6 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
 import * as d3 from 'd3';
 
 interface IAppProps {
