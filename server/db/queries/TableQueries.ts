@@ -916,7 +916,8 @@ export const queries:ITableQueries = {
             };
             return oilField.queryStrFn(queryParams, [where]);
         },
-        fields: oilField.fields
+        fields: oilField.fields,
+        tableauUrl: 'https://public.tableau.com/views/Camposemdesenvolvimento/Painel1?:embed=y&:display_count=yes&:toolbar=no'
     },
     
     landTerminal: {
