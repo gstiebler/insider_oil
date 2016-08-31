@@ -24,6 +24,7 @@ import { Insights } from './Insights/Insights';
 import { Observatory } from './Observatory'; 
 import { PersonsByCompany } from './PersonsByCompany'; 
 import { NewsTicker } from './NewsTicker'; 
+import { Analytics } from './Analytics'; 
 
 interface IAppProps {
     model: string;
@@ -139,6 +140,7 @@ ReactDOM.render(
       <Route path="insights_publisher" component={Publisher}/>
       <Route path="observatory" component={Observatory}/>
       <Route path="persons" component={PersonsByCompany}/>
+      <Route path="analytics" component={Analytics}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,
