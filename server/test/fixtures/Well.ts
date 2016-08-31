@@ -35,12 +35,14 @@ module.exports = function(db) {
         {
             name: '7C 0137 BA',
             name_operator: '7C 0137 BA',
+            operator_id: utils.idByName('Company', 'Petrobrás'),
             oil_field_id: utils.idByName('OilField', 'Jiribatuba2'),
             production_unit_id: utils.idByName('ProductionUnit', 'Capixaba'),
         },
         {
             name: '7CB 0009D SES',
             name_operator: '7CB 0009D SES',
+            operator_id: utils.idByName('Company', 'Petrobrás'),
             oil_field_id: utils.idByName('OilField', 'Jiribatuba2'),
             production_unit_id: utils.idByName('ProductionUnit', 'Capixaba'),
         },
@@ -60,6 +62,7 @@ module.exports = function(db) {
             name: '7MRL-0054-RJS',
             name_operator: '7MRL 0054 RJS',
             oil_field_id: utils.idByName('OilField', 'Marlim'),
+            operator_id: utils.idByName('Company', 'Recôncavo E&P'),
             production_unit_id: utils.idByName('ProductionUnit', 'Pioneer'),
         },
         {
