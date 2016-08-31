@@ -25,6 +25,10 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
       <Link to="/app/admin"><b>Admin</b></Link>
     </li>;
 
+    var analyticsLink = <li className="nav-item" >
+      <Link to="/app/analytics"><b>Analytics</b></Link>
+    </li>;
+
     var logo = (
       <div className="col-md-3">
         <div className="navbar-header navbar-brand-container">
@@ -86,6 +90,7 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
               </ul>
             </li>
             { this.props.isAdmin ? adminLink : '' }
+            { this.props.isAdmin ? analyticsLink : '' }
           </ul>
         </div>
       </div>

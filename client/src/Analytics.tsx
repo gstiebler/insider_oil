@@ -21,7 +21,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
     public render(): React.ReactElement<any> {		
 		return (
-            <div></div> 
+            <div>Analytics</div> 
 		);
     }
 }
