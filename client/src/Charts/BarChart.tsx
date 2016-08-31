@@ -31,11 +31,11 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
             width = 600 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
-        var x = d3.scale.ordinal()
-            .rangeRoundBands([0, width], .1);
+        var x = d3.scale.linear()
+            .range([width, 0]);
 
-        var y = d3.scale.linear()
-            .range([height, 0]);
+        var y = d3.scale.ordinal()
+            .rangeRoundBands([0, height], .1);
 
         var xAxis = d3.svg.axis();
         xAxis.scale(x);
@@ -45,14 +45,14 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
         yAxis.scale(y);
         yAxis.orient("left");
 
-        var svg = d3.select("#d3Container").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom);
+        var svg = d3.select("#d3Container").append("svg");
+        svg.attr("width", width + margin.left + margin.right)
+        svg.attr("height", height + margin.top + margin.bottom);
         const g = svg.append("g");
         g.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        x.domain(data.map(d => { return d.label; }));
-        y.domain([0, d3.max(data, (d) => { return d.count_value; })]);
+        x.domain([0, d3.max(data, (d) => { return d.count_value; })]);
+        y.domain(data.map(d => { return d.label; }));
 
         const x_axis = svg.append("g");
         x_axis.attr("class", "x axis")
@@ -73,10 +73,10 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
         const barData = allBars.data(data);
         const rect = barData.enter().append("rect");
         rect.attr("class", "bar")
-            .attr("x", (d) => { return x(d.label); })
-            .attr("width", x.rangeBand())
-            .attr("y", (d) => { return y(d.count_value); })
-            .attr("height", (d) => { return height - y(d.count_value); });
+            .attr("x", (d) => { return 0; })
+            .attr("width", (d) => { return width - x(d.count_value); })
+            .attr("y", (d) => { return y(d.label); })
+            .attr("height", y.rangeBand());
     }
 
     public render(): React.ReactElement<any> {
