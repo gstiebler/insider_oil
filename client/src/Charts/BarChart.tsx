@@ -22,6 +22,7 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
     }
 
     private componentWillReceiveProps(nextProps:IAppProps) {
+        d3.selectAll('svg').remove();
         this.showChart(nextProps.countData);
     }
 
