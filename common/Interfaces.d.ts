@@ -123,3 +123,15 @@ export interface IQueryParams {
     filters: IFilter[];
     pagination: IPaginationOpts;
 }
+
+
+export interface IAnalyticsGroup {
+    fieldName: string;
+    label: string;
+}
+
+export interface IAnalyticsSource {
+    sourceName: string;
+    title: string;
+    possibleGroups: IAnalyticsGroup[];
+}

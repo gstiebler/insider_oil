@@ -2,6 +2,58 @@
 
 import db = require('../db/models');
 import dsParams = require('../lib/DataSourcesParams');
+import * as Interfaces from '../../common/Interfaces';
+
+const sources:Interfaces.IAnalyticsSource[] = [
+    {
+        sourceName: 'Well',
+        title: 'Poços',
+        possibleGroups: [
+            {
+                fieldName: 'operator_id',
+                label: 'Operador'
+            },
+            {
+                fieldName: 'block_id',
+                label: 'Bloco'
+            },
+            {
+                fieldName: 'oil_field_id',
+                label: 'Campo'
+            },
+            {
+                fieldName: 'production_unit_id',
+                label: 'Unidade de produção'
+            },
+            {
+                fieldName: 'drilling_rig_offshore_id',
+                label: 'Sonda offshore'
+            },
+            {
+                fieldName: 'drilling_rig_onshore_id',
+                label: 'Sonda onshore'
+            },
+        ]
+    },
+    {
+        sourceName: 'DrillingRigOffshore',
+        title: 'Sondas offshore',
+        possibleGroups: [
+            {
+                fieldName: 'operator_id',
+                label: 'Operador'
+            },
+            {
+                fieldName: 'contractor_id',
+                label: 'Contratante'
+            },
+        ]
+    }
+];
+
+export function getSources():Interfaces.IAnalyticsSource[] {
+    return sources;
+}
 
 function getAssociationByField(associations, fieldName: string):any {
     for(let key in associations) {

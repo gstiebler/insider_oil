@@ -12,6 +12,7 @@ import * as AdminController from '../controllers/AdminController';
 import * as MapsController from '../controllers/MapsController';
 import * as InsightsController from '../controllers/InsightsController';
 import * as TickerUpdatesController from '../controllers/TickerUpdatesController';
+import * as AnalyticsController from '../controllers/AnalyticsController';
 
 module.exports = function(app: express.Express) {    
     
@@ -60,6 +61,8 @@ module.exports = function(app: express.Express) {
     app.get('/search', session.authUser,          searchController.main);
 
     app.get('/ticker_updates', session.authUser, TickerUpdatesController.getUpdates);
+
+    app.get('/analytics/sources', session.authUser, AnalyticsController.getSources);
     
     // Users
     app.get('/user/',                session.authUser, usersController.main );

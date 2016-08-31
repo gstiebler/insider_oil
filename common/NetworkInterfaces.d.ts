@@ -171,3 +171,11 @@ export namespace TickerUpdates {
         items: ITickerItem[];
     }
 }
+
+export namespace AnalyticsSources {
+    export interface req {}
+
+    export interface res {
+        sources: Interfaces.IAnalyticsSource[];
+    }
+}
