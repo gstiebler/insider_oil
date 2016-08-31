@@ -903,7 +903,8 @@ export const queries:ITableQueries = {
             };
             return oilField.queryStrFn(queryParams, [where]);
         },
-        fields: oilField.fields
+        fields: oilField.fields,
+        tableauUrl: 'https://public.tableau.com/profile/insider.oil#!/vizhome/Camposemproduo/Painel1'
     },
     
     oilFieldsDevelopment: {
