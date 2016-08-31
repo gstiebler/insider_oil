@@ -10,6 +10,8 @@ interface IAppProps {
 interface IAppState {
     sources: Interfaces.IAnalyticsSource[];
     selectedSource: string;
+    groupField: string;
+    countData: Interfaces.IAnalyticsCount[];
 }
 
 export class Analytics extends React.Component<IAppProps, IAppState> {
@@ -19,18 +21,19 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
         this.state = {
             sources: [],
-            selectedSource: null
+            selectedSource: null,
+            groupField: null
         };
     }
 
     private componentDidMount() {
         const req:ni.AnalyticsSources.req = {};
         server.getP('/analytics/sources', req)
-            .then(this.onData.bind(this))
+            .then(this.onSources.bind(this))
             .catch(showError.show);
     }    
 
-    private onData(res: ni.AnalyticsSources.res) {
+    private onSources(res: ni.AnalyticsSources.res) {
         this.state.sources = res.sources;
         this.state.selectedSource = this.state.sources[0].sourceName;
         this.setState(this.state);
@@ -42,9 +45,25 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         console.log(event.target.value);
     }
 
-    private groupFieldChanged(val) {
+    private groupFieldChanged(event) {
+        this.state.groupField = event.target.value;
+        this.getCountData();
+    }
+
+    private getCountData() {
+        const req:ni.AnalyticsCount.req = {
+            source: this.state.selectedSource,
+            field: this.state.groupField
+        };
+        server.getP('/analytics/count_values', req)
+            .then(this.onCountData.bind(this))
+            .catch(showError.show);
+    } 
+
+    private onCountData(res: ni.AnalyticsCount.res) {
+        this.state.countData = res.countResult;
+        console.log(res.countResult);
         this.setState(this.state);
-        console.log(val);
     }
 
     private getSourcesCombo(): React.ReactElement<any> {
@@ -78,7 +97,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         return (
             <select className="form-control"
                     onChange={this.groupFieldChanged.bind(this)}
-                    value={this.state.selectedSource}>
+                    defaultValue={this.state.selectedSource}>
                 { groupsOptions }
             </select>
         );
@@ -89,6 +108,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             <div className="row">
                 <div className="col-lg-3">
                     Fonte: { this.getSourcesCombo() }
+                    <br/>
                     Agrupar por: { this.getGroupFieldCombo() }
                 </div>
             </div> 

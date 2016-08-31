@@ -179,3 +179,14 @@ export namespace AnalyticsSources {
         sources: Interfaces.IAnalyticsSource[];
     }
 }
+
+export namespace AnalyticsCount {
+    export interface req {
+        source: string;
+        field: string;
+    }
+
+    export interface res {
+        countResult: Interfaces.IAnalyticsCount[];
+    }
+}

@@ -65,7 +65,7 @@ function getAssociationByField(associations, fieldName: string):any {
     return null;
 }
 
-export function getCount(sourceName: string, fieldName: string):Promise<any[]> {
+export function getCount(sourceName: string, fieldName: string):Promise<Interfaces.IAnalyticsCount[]> {
     const model = db.models[sourceName];
     const params = dsParams[sourceName];
     const table = model.tableName;
@@ -74,13 +74,13 @@ export function getCount(sourceName: string, fieldName: string):Promise<any[]> {
     const targetModel = association.target;
     const associationTable = targetModel.tableName;
 
-    const select = 'SELECT COUNT('+ table +'.id) AS contador, '+ associationTable +'.name ';
+    const select = 'SELECT COUNT('+ table +'.id) AS count_value, '+ associationTable +'.name as label ';
     const fromStr = ' from ' + table;
     const join = ' left outer join ' + associationTable + ' on ' + 
             table + '.' + fieldName + ' = ' + associationTable + '.id ';
     const where = ' where ' + fieldName + ' IS NOT NULL ';
     const group = ' group by ' + fieldName;
-    const order = ' order by contador desc ';
+    const order = ' order by count_value desc ';
     const limit = ' limit 10 ';    
     const query = select + fromStr + join + where + group + order + limit;
     

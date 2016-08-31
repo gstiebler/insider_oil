@@ -135,3 +135,8 @@ export interface IAnalyticsSource {
     title: string;
     possibleGroups: IAnalyticsGroup[];
 }
+
+export interface IAnalyticsCount {
+    label: string;
+    count_value: string;
+}

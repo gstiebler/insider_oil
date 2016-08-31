@@ -63,6 +63,7 @@ module.exports = function(app: express.Express) {
     app.get('/ticker_updates', session.authUser, TickerUpdatesController.getUpdates);
 
     app.get('/analytics/sources', session.authUser, AnalyticsController.getSources);
+    app.get('/analytics/count_values', session.authUser, AnalyticsController.getCountValues);
     
     // Users
     app.get('/user/',                session.authUser, usersController.main );
