@@ -78,7 +78,7 @@ export class NewsTicker extends React.Component<IAppProps, IAppState> {
         };
         return (
             <div className="hotnews">
-                <span className="blockname">Hotnews</span>
+                <span className="blockname">Novo</span>
                 <div className="TickerNews default_theme" id="T2">
                     <div className="ti_wrapper">
                         <div className="ti_slide">
