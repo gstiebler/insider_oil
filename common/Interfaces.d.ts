@@ -138,5 +138,5 @@ export interface IAnalyticsSource {
 
 export interface IAnalyticsCount {
     label: string;
-    count_value: string;
+    count_value: number;
 }

@@ -3,6 +3,7 @@ import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import * as ni from '../../common/NetworkInterfaces';
 import * as Interfaces from '../../common/Interfaces';
+import { BarChart } from './Charts/BarChart';
 
 interface IAppProps {
 }
@@ -107,10 +108,13 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<any> {
 		return (
             <div className="row">
-                <div className="col-lg-3">
+                <div className="col-lg-3 col-md-3">
                     Fonte: { this.getSourcesCombo() }
                     <br/>
                     Agrupar por: { this.getGroupFieldCombo() }
+                </div>
+                <div className="col-lg-9 col-md-9">
+                    <BarChart countData={this.state.countData}/>
                 </div>
             </div> 
 		);
