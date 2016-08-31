@@ -58,7 +58,7 @@ export function getSources():Interfaces.IAnalyticsSource[] {
 function getAssociationByField(associations, fieldName: string):any {
     for(let key in associations) {
         let association = associations[key];
-        if(association.identifierField = fieldName) {
+        if(association.identifierField == fieldName) {
             return association;
         }
     }
