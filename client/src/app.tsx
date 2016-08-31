@@ -113,6 +113,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
               <Flash timeout={5000}/>
               {this.props.children}
             </div>
+            <br/>
             { footer }
           </div>
         );
