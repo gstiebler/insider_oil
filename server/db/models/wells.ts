@@ -22,14 +22,6 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
           type: DataTypes.DECIMAL(10, 6),
           allowNull: true
         },
-        drilling_rig_onshore_id: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        drilling_rig_offshore_id: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
         drilling_rig: {
             type: DataTypes.VIRTUAL,
             get: function() {
@@ -161,6 +153,18 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                     foreignKey: {  allowNull: true }
                 };
                 Well.belongsTo(models.ProductionUnit, productionUnitAssociationOpts );
+                
+                const droffshoreOpts:Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'drilling_rig_offshore', 
+                    foreignKey: {  allowNull: true }
+                };
+                Well.belongsTo(models.DrillingRigOffshore, droffshoreOpts );
+                
+                const dronshoreOpts:Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'drilling_rig_onshore', 
+                    foreignKey: {  allowNull: true }
+                };
+                Well.belongsTo(models.DrillingRigOnshore, dronshoreOpts );
             }
         }
     }
