@@ -60,14 +60,14 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
         x_axis.call(xAxis);
 
         const y_axis = svg.append("g");
-        y_axis.attr("class", "y axis")
-        y_axis.call(yAxis)
-        const yText = y_axis.append("text");
-        yText.attr("transform", "rotate(-90)")
-        yText.attr("y", 6)
-        yText.attr("dy", ".71em")
-        yText.style("text-anchor", "end")
-        yText.text("Frequency");
+        y_axis.attr("class", "y axis");
+        y_axis.call(yAxis);
+        const xText = x_axis.append("text");
+        xText.attr("x", 80);
+        xText.attr("y", 30);
+        xText.attr("dx", ".71em");
+        xText.style("text-anchor", "end");
+        xText.text("Frequency");
 
         const allBars = svg.selectAll(".bar");
         const barData = allBars.data(data);
