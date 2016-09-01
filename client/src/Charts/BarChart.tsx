@@ -4,6 +4,7 @@ import * as Interfaces from '../../../common/Interfaces';
 
 interface IAppProps {
     countData: Interfaces.IAnalyticsCount[];
+    axisName: string;
 }
 
 interface IAppState {
@@ -28,13 +29,13 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
 
     private onGoogleLoad() {
         this.chartsLoaded = true;
+        this.initChart();
         this.showChart(this.props.countData);
     }
 
     private initChart() {
       this.chart = new google.visualization.BarChart(document.getElementById('chart_div'));
     }
-
 
     private componentWillReceiveProps(nextProps:IAppProps) {
         if(!this.chartsLoaded)
@@ -46,17 +47,21 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
         const arrayData = data.map(item => {
             return [item.label, item.count_value];
         });
+        if(arrayData.length == 0) {
+            arrayData.push(['vazio', 0]);
+        }
+        arrayData.splice(0, 0, ['Item', 'quantidade']);
         var data = google.visualization.arrayToDataTable(arrayData);
 
       var options = {
-        title: 'Population of Largest U.S. Cities',
         chartArea: {width: '50%'},
+        height: 500,
         hAxis: {
-          title: 'Total Population',
+          title: 'Quantidade',
           minValue: 0
         },
         vAxis: {
-          title: 'City'
+          title: this.props.axisName
         }
       };
 
