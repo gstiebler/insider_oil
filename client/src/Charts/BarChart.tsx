@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as d3 from 'd3';
 import * as Interfaces from '../../../common/Interfaces';
 
+const googleRef = google;
+
 interface IAppProps {
     countData: Interfaces.IAnalyticsCount[];
     axisName: string;
@@ -23,8 +25,8 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
-        google.charts.load('current', {packages: ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(this.onGoogleLoad.bind(this));
+        googleRef.charts.load('current', {packages: ['corechart', 'bar']});
+        googleRef.charts.setOnLoadCallback(this.onGoogleLoad.bind(this));
     }
 
     private onGoogleLoad() {
@@ -34,7 +36,7 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
     }
 
     private initChart() {
-      this.chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+      this.chart = new googleRef.visualization.BarChart(document.getElementById('chart_div'));
     }
 
     private componentWillReceiveProps(nextProps:IAppProps) {
@@ -51,7 +53,7 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
             arrayData.push(['vazio', 0]);
         }
         arrayData.splice(0, 0, ['Item', 'quantidade']);
-        var data = google.visualization.arrayToDataTable(arrayData);
+        var data = googleRef.visualization.arrayToDataTable(arrayData);
 
       var options = {
         chartArea: {width: '50%'},

@@ -13,7 +13,6 @@ interface IAppState {
     sources: Interfaces.IAnalyticsSource[];
     selectedSourceName: string;
     groupField: string;
-    groupFieldLabel: string;
     countData: Interfaces.IAnalyticsCount[];
 }
 
@@ -26,7 +25,6 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             sources: [],
             selectedSourceName: null,
             groupField: null,
-            groupFieldLabel: null,
             countData: []
         };
     }
@@ -46,9 +44,12 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
     private sourceChange(event) {
         this.state.selectedSourceName = event.target.value;
-
-        this.setState(this.state);
-        console.log(event.target.value);
+        let selectedSource = this.getSelectedSource(); 
+        if(!selectedSource) {
+            return null;
+        }
+        this.state.groupField = selectedSource.possibleGroups[0].fieldName;
+        this.getCountData();
     }
 
     private groupFieldChanged(event) {
@@ -68,7 +69,6 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
     private onCountData(res: ni.AnalyticsCount.res) {
         this.state.countData = res.countResult;
-        console.log(res.countResult);
         this.setState(this.state);
     }
 
@@ -85,11 +85,14 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         );
     }
 
-    private getGroupFieldCombo(): React.ReactElement<any> {
-        let selectedSource = ArrayUtils.find(this.state.sources, val => {
+    private getSelectedSource():Interfaces.IAnalyticsSource {
+       return ArrayUtils.find(this.state.sources, val => {
             return val.sourceName == this.state.selectedSourceName;
         });
+    }
 
+    private getGroupFieldCombo():React.ReactElement<any> {
+        let selectedSource = this.getSelectedSource(); 
         if(!selectedSource) {
             return null;
         }
