@@ -45,29 +45,34 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
         this.showChart(nextProps.countData);
     }
 
-    private showChart(data: Interfaces.IAnalyticsCount[]) {
-        const arrayData = data.map(item => {
+    private showChart(analyticsCount: Interfaces.IAnalyticsCount[]) {
+        var dataTable = new googleRef.visualization.DataTable();
+
+        // Declare columns
+        dataTable.addColumn('string', 'Item');
+        dataTable.addColumn('number', 'quantidade');
+
+        const arrayData = analyticsCount.map(item => {
             return [item.label, item.count_value];
         });
         if(arrayData.length == 0) {
             arrayData.push(['vazio', 0]);
         }
-        arrayData.splice(0, 0, ['Item', 'quantidade']);
-        var data = googleRef.visualization.arrayToDataTable(arrayData);
+        dataTable.addRows(arrayData);
 
-      var options = {
-        chartArea: {width: '50%'},
-        height: 500,
-        hAxis: {
-          title: 'Quantidade',
-          minValue: 0
-        },
-        vAxis: {
-          title: this.props.axisName
-        }
-      };
+        var options = {
+            chartArea: {width: '50%'},
+            height: 500,
+            hAxis: {
+                title: 'Quantidade',
+                minValue: 0
+            },
+            vAxis: {
+                title: this.props.axisName
+            }
+        };
 
-      this.chart.draw(data, options);
+        this.chart.draw(dataTable, options);
     }
 
     public render(): React.ReactElement<any> {
