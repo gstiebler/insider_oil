@@ -3,6 +3,7 @@ import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import * as ni from '../../common/NetworkInterfaces';
 import * as Interfaces from '../../common/Interfaces';
+import * as ArrayUtils from './lib/ArrayUtils';
 import { BarChart } from './Charts/BarChart';
 
 interface IAppProps {
@@ -10,8 +11,9 @@ interface IAppProps {
 
 interface IAppState {
     sources: Interfaces.IAnalyticsSource[];
-    selectedSource: string;
+    selectedSourceName: string;
     groupField: string;
+    groupFieldLabel: string;
     countData: Interfaces.IAnalyticsCount[];
 }
 
@@ -22,8 +24,9 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
         this.state = {
             sources: [],
-            selectedSource: null,
+            selectedSourceName: null,
             groupField: null,
+            groupFieldLabel: null,
             countData: []
         };
     }
@@ -37,12 +40,13 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
     private onSources(res: ni.AnalyticsSources.res) {
         this.state.sources = res.sources;
-        this.state.selectedSource = this.state.sources[0].sourceName;
+        this.state.selectedSourceName = this.state.sources[0].sourceName;
         this.setState(this.state);
     }
 
     private sourceChange(event) {
-        this.state.selectedSource = event.target.value;
+        this.state.selectedSourceName = event.target.value;
+
         this.setState(this.state);
         console.log(event.target.value);
     }
@@ -54,7 +58,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
     private getCountData() {
         const req:ni.AnalyticsCount.req = {
-            source: this.state.selectedSource,
+            source: this.state.selectedSourceName,
             field: this.state.groupField
         };
         server.getP('/analytics/count_values', req)
@@ -82,13 +86,10 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
     }
 
     private getGroupFieldCombo(): React.ReactElement<any> {
-        let selectedSource:Interfaces.IAnalyticsSource = null;
-        for(let source of this.state.sources) {
-            if(source.sourceName == this.state.selectedSource) {
-                selectedSource = source;
-                break;
-            }
-        }
+        let selectedSource = ArrayUtils.find(this.state.sources, val => {
+            return val.sourceName == this.state.selectedSourceName;
+        });
+
         if(!selectedSource) {
             return null;
         }
@@ -99,7 +100,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         return (
             <select className="form-control"
                     onChange={this.groupFieldChanged.bind(this)}
-                    defaultValue={this.state.selectedSource}>
+                    defaultValue={this.state.selectedSourceName}>
                 { groupsOptions }
             </select>
         );
