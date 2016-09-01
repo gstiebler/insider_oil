@@ -11,75 +11,59 @@ interface IAppState {
 
 export class BarChart extends React.Component<IAppProps, IAppState> {
 
+    private chartsLoaded:boolean;
+    private chart;
+
     constructor(props: IAppProps) {
         super(props);
 
         this.state = {};
+        this.chartsLoaded = false;
     }
 
     private componentDidMount() {
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(this.onGoogleLoad.bind(this));
+    }
+
+    private onGoogleLoad() {
+        this.chartsLoaded = true;
         this.showChart(this.props.countData);
     }
 
+    private initChart() {
+      this.chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+    }
+
+
     private componentWillReceiveProps(nextProps:IAppProps) {
-        d3.selectAll('svg').remove();
+        if(!this.chartsLoaded)
+            return;
         this.showChart(nextProps.countData);
     }
 
     private showChart(data: Interfaces.IAnalyticsCount[]) {
-        var margin = {top: 20, right: 20, bottom: 30, left: 40},
-            width = 600 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
+        const arrayData = data.map(item => {
+            return [item.label, item.count_value];
+        });
+        var data = google.visualization.arrayToDataTable(arrayData);
 
-        var x = d3.scale.linear()
-            .range([width, 0]);
+      var options = {
+        title: 'Population of Largest U.S. Cities',
+        chartArea: {width: '50%'},
+        hAxis: {
+          title: 'Total Population',
+          minValue: 0
+        },
+        vAxis: {
+          title: 'City'
+        }
+      };
 
-        var y = d3.scale.ordinal()
-            .rangeRoundBands([0, height], .1);
-
-        var xAxis = d3.svg.axis();
-        xAxis.scale(x);
-        xAxis.orient("bottom");
-
-        var yAxis = d3.svg.axis();
-        yAxis.scale(y);
-        yAxis.orient("left");
-
-        var svg = d3.select("#d3Container").append("svg");
-        svg.attr("width", width + margin.left + margin.right)
-        svg.attr("height", height + margin.top + margin.bottom);
-        const g = svg.append("g");
-        g.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        x.domain([0, d3.max(data, (d) => { return d.count_value; })]);
-        y.domain(data.map(d => { return d.label; }));
-
-        const x_axis = svg.append("g");
-        x_axis.attr("class", "x axis")
-        x_axis.attr("transform", "translate(0," + height + ")")
-        x_axis.call(xAxis);
-
-        const y_axis = svg.append("g");
-        y_axis.attr("class", "y axis");
-        y_axis.call(yAxis);
-        const xText = x_axis.append("text");
-        xText.attr("x", 80);
-        xText.attr("y", 30);
-        xText.attr("dx", ".71em");
-        xText.style("text-anchor", "end");
-        xText.text("Frequency");
-
-        const allBars = svg.selectAll(".bar");
-        const barData = allBars.data(data);
-        const rect = barData.enter().append("rect");
-        rect.attr("class", "bar")
-            .attr("x", (d) => { return 0; })
-            .attr("width", (d) => { return width - x(d.count_value); })
-            .attr("y", (d) => { return y(d.label); })
-            .attr("height", y.rangeBand());
+      this.chart.draw(data, options);
     }
 
     public render(): React.ReactElement<any> {
-        return <div id="d3Container" />;
+        return <div id="chart_div"></div>;
     }
 }
