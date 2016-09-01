@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as showError from '../lib/ShowError';
-
-export var googleRef = google;
+import { googleRef } from '../lib/Google';
 
 export interface IMapObj {
     gMap:any;

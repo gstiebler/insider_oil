@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as d3 from 'd3';
 import * as Interfaces from '../../../common/Interfaces';
-
-const googleRef = google;
+import { googleRef, loadBarChart } from '../lib/Google';
 
 interface IAppProps {
     countData: Interfaces.IAnalyticsCount[];
@@ -25,8 +24,7 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
-        googleRef.charts.load('current', {packages: ['corechart', 'bar']});
-        googleRef.charts.setOnLoadCallback(this.onGoogleLoad.bind(this));
+        loadBarChart().then(this.onGoogleLoad.bind(this));
     }
 
     private onGoogleLoad() {
@@ -36,7 +34,7 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
     }
 
     private initChart() {
-      this.chart = new googleRef.visualization.BarChart(document.getElementById('chart_div'));
+        this.chart = new googleRef.visualization.BarChart(document.getElementById('chart_div'));
     }
 
     private componentWillReceiveProps(nextProps:IAppProps) {

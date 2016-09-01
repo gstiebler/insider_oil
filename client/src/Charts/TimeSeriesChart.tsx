@@ -2,11 +2,23 @@ import * as React from 'react';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import * as d3 from 'd3';
+import { googleRef, loadLineChart } from '../lib/Google';
+
+interface IyAxis {
+    fieldName: string;
+    label: string;
+}
+
+export interface IChartParams {
+    yLabel: string;
+    seriesList: IyAxis[];
+    xAxis: string;
+}
 
 interface IAppProps {
     queryName: string;
     qParams: any;
-    chartParams: any;
+    chartParams: IChartParams;
 }
 
 interface IAppState {
@@ -14,19 +26,32 @@ interface IAppState {
 
 export class TimeSeriesChart extends React.Component<IAppProps, IAppState> {
 
+    private chart;
+    private chartsLoaded: boolean;
+
     constructor(props: IAppProps) {
         super(props);
 
-        this.state = {
-        };
+        this.state = {};
+        this.chartsLoaded = false;
     }
 
     private componentDidMount() {
+        loadLineChart().then(this.onGoogleLoad.bind(this));
+    }
+
+    private onGoogleLoad() {
+        this.chartsLoaded = true;
+        this.initChart();
         this.getChartData(this.props);
     }
 
-    private getChartData(props:IAppProps) {
-        var query = { 
+    private initChart() {
+        this.chart = new googleRef.visualization.LineChart(document.getElementById('ts_chart_div'));
+    }
+
+    private getChartData(props: IAppProps) {
+        var query = {
             queryName: props.queryName,
             queryParams: props.qParams
         }
@@ -36,74 +61,44 @@ export class TimeSeriesChart extends React.Component<IAppProps, IAppState> {
     }
 
     private showChart(records) {
-        if(!records)
+        if (!records)
             return;
-        var data = records.records;
-        if(data.length == 0)
+        var rawData:any[] = records.records;
+        if (rawData.length == 0)
             return;
-        
-        var chartParams = this.props.chartParams;
-        var margin = {top: 20, right: 20, bottom: 30, left: 40},
-            width = 960 - margin.left - margin.right,
-            height = 250 - margin.top - margin.bottom;
-            
-        var parseDate = d3.time.format("%m/%Y").parse;
 
-        var x = d3.time.scale()
-            .range([0, width]);
+        const data = rawData.map(item => {
+            let dateStr = item[this.props.chartParams.xAxis];
+            let dateParts = dateStr.split('/');
+            let date = new Date(dateParts[1], dateParts[0]);
+            let result = [date];
 
-        var y = d3.scale.linear()
-            .range([height, 0]);
-
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            .ticks(d3.time.year);
-
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            .ticks(10);
-
-        var svg = d3.select("#d3Container").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        data.forEach(function(d) {
-            d.date = parseDate(d[chartParams.xAxis]);
+            for(let serie of this.props.chartParams.seriesList) {
+                result.push(item[serie.fieldName]);
+            }
+            return result;
         });
 
-        x.domain(d3.extent(data, function(d:any) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d[chartParams.yAxis]; })]);
+        console.log(records);
 
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
+        var dataTable = new googleRef.visualization.DataTable();
+        dataTable.addColumn('date', 'Datas');
+        for(let serie of this.props.chartParams.seriesList) {
+            dataTable.addColumn('number', serie.label);
+        }
 
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-        .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text(chartParams.yLabel);
+        dataTable.addRows(data);
 
-        svg.selectAll(".bar")
-            .data(data)
-        .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function(d:any) { return x(d.date); })
-            .attr("width", 5)
-            .attr("y", function(d) { return y(d[chartParams.yAxis]); })
-            .attr("height", function(d) { return height - y(d[chartParams.yAxis]); });
+        var options = {
+            vAxis: {
+                title: this.props.chartParams.yLabel
+            },
+        };
+
+        this.chart.draw(dataTable, options);
     }
 
     public render(): React.ReactElement<any> {
-        return <div id="d3Container" />;
+        return <div id="ts_chart_div"></div>;
     }
 }

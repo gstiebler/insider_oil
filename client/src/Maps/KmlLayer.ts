@@ -1,5 +1,6 @@
-import { IMapObj, googleRef } from './Map';
+import { IMapObj } from './Map';
 import { BaseMapItem } from './BaseMapItem';
+import { googleRef } from '../lib/Google';
 
 export class KmlLayer extends BaseMapItem {
 

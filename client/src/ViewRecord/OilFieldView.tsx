@@ -6,7 +6,7 @@ import { Link, browserHistory } from 'react-router';
 import { ViewRecordFields } from './ViewRecordFields';
 import { ShowQueryData } from '../ShowQueryData';
 import { ObjectNews } from '../ObjectNews';
-import { TimeSeriesChart } from '../Charts/TimeSeriesChart';
+import { TimeSeriesChart, IChartParams } from '../Charts/TimeSeriesChart';
 import { ErrorReport } from '../ErrorReport';
 import * as ViewRecord from './ViewRecord';
 
@@ -16,7 +16,7 @@ interface IAppProps {
 
 interface IAppState extends ViewRecord.IAppState {
     prodQueryParams: any;
-    productionChartParams: any;
+    productionChartParams: IChartParams;
 }
 
 export class OilFieldView extends ViewRecord.ViewRecord {
@@ -38,7 +38,20 @@ export class OilFieldView extends ViewRecord.ViewRecord {
             prodQueryParams: { oilField: id },
             productionChartParams: {
                 yLabel: 'Produção (bbl/dia)',
-                yAxis: 'oil_production',
+                seriesList: [
+                   {
+                       fieldName: 'oil_production',
+                       label: 'Óleo'
+                   },
+                   {
+                       fieldName: 'water_production',
+                       label: 'Água'
+                   },
+                   /*{
+                       fieldName: 'gas_associated_production',
+                       label: 'Gás'
+                   },*/
+                ],
                 xAxis: 'date_prod'
             }
         };

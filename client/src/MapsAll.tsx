@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
-import { Map, IMapObj, googleRef } from './Maps/Map';
+import { Map, IMapObj } from './Maps/Map';
+import { googleRef } from './lib/Google';
 import { IGeoPoint } from '../../common/Interfaces';
 import { BaseMapItem } from './Maps/BaseMapItem';
 import { Polygon } from './Maps/Polygon';

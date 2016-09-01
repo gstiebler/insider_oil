@@ -8,6 +8,7 @@ const queries = {
             'sum(oil_condensed_production) as oil_condensed_production, ' +
             'sum(gas_associated_production) as gas_associated_production, ' +
             'sum(gas_non_associated_production) as gas_non_associated_production, ' +
+            'sum(water_production) as water_production, ' +
             'concat(lpad(period_month, 2, "0"), "/", period_year) as date_prod ';
         const from = 'from production p ';
 	    const pwJoin = 'left outer join wells pw on p.well_id = pw.id ';

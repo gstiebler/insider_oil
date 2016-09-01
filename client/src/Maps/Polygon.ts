@@ -1,6 +1,7 @@
-import { IMapObj, googleRef } from './Map';
+import { IMapObj } from './Map';
 import { IGeoPoint } from '../../../common/Interfaces';
 import { BaseMapItem } from './BaseMapItem';
+import { googleRef } from '../lib/Google';
 
 export class Polygon extends BaseMapItem {
 
