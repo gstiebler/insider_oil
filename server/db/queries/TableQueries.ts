@@ -531,7 +531,8 @@ export const queries:ITableQueries = {
                 fieldName: 'day_rate',
                 type: 'CURRENCY',
             }
-        ]
+        ],
+        tableauUrl: 'https://public.tableau.com/views/SondasOffshore/Painel1?:embed=y&:display_count=yes&:toolbar=no'
     },
     
     /** Seismics */
