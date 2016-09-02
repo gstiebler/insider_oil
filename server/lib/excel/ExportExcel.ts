@@ -1,6 +1,7 @@
 "use strict";
 var await = require('../await');
 var XLSX = require('xlsx');
+import { fieldTypeStr } from '../ModelUtils';
 import dbUtils = require('../dbUtils');
 import dsParams = require('./../DataSourcesParams');
 import winston = require('winston');
@@ -71,10 +72,7 @@ function exportExcel(records: any[], dataSource: dbUtils.ioDataSource, dataSourc
     	const line = [];
     	for(var field of fieldsArray) {      
     		var recordValue = record[field];
-			var typeStr = 'VARCHAR';
-            try { // this try is due to an apparent bug with sequelize for ENUM fields
-                typeStr = dataSource.attributes[field].type.toString();
-            } catch(e) { }
+			var typeStr = fieldTypeStr(dataSource.attributes[field]);
 			if(typeStr == 'DATETIME') {
 				// Convert all the datetimes to Sao Paulo time zone
 				const offsetInMinutes = saoPauloZone.offset(recordValue);

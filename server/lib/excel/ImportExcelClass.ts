@@ -1,5 +1,6 @@
  "use strict";
  
+import { fieldTypeStr } from '../ModelUtils';
 import db = require( '../../db/models' );
 import dsParams = require('./../DataSourcesParams');
 import winston = require('winston');
@@ -134,10 +135,7 @@ export class ImportExcel {
             var headerField = header[col];
             var fieldName = fields[ headerField ];
             if(!fieldName) continue;
-            var typeStr = 'VARCHAR';
-            try { // this try is due to an apparent bug with sequelize for ENUM fields
-                typeStr = model.attributes[fieldName].type.toString();
-            } catch(e) { }
+            var typeStr = fieldTypeStr(model.attributes[fieldName]);
             const value = rowValues[col];
             if(!value || value == '')
                 continue;

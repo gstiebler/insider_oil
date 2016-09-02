@@ -67,6 +67,16 @@ export function saveOriginalImage(imgBytes, modelName: string, id: number) {
     AWS.saveImage(imgBuffer, fileName);  
 }
 
+export function fieldTypeStr(field): string {
+    let typeStr = 'VARCHAR';
+    try { // this try is due to an apparent bug in the toString in sequelize for ENUM fields
+        typeStr = field.type.toString();
+    } catch(e) {
+        typeStr = 'ENUM';
+    }
+    return typeStr;
+}
+
 export function saveRecordUpdates(modelName: string, record, newData):Promise<any> {
     // do not save News updates
     if(modelName == 'News') return Promise.resolve();
@@ -78,12 +88,7 @@ export function saveRecordUpdates(modelName: string, record, newData):Promise<an
         let oldValue = record[fieldName];
         let field = dataSource.attributes[fieldName];
         if(!field) continue;            
-        let typeStr = 'VARCHAR';
-        try { // this try is due to an apparent bug in the toString in sequelize for ENUM fields
-            typeStr = field.type.toString();
-        } catch(e) {
-            //console.log(e.stack);
-        }
+        let typeStr = fieldTypeStr(field);
         if(typeStr == 'DATE') {
             newValue = moment(newValue).utcOffset(0).format('DD/MM/YYYY');
             oldValue = moment(oldValue).utcOffset(0).format('DD/MM/YYYY');
