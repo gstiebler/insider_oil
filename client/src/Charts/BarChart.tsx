@@ -60,6 +60,10 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
         var options = {
             chartArea: {width: '50%'},
             height: 500,
+            animation:{
+                duration: 500,
+                easing: 'inAndOut',
+            },
             hAxis: {
                 title: 'Quantidade',
                 minValue: 0
