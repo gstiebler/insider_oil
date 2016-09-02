@@ -3,7 +3,7 @@
 import { ImportExcel } from './ImportExcelClass';
 import search = require('../search');
 import { IFrontEndProject } from '../../../common/Interfaces';
-const await = require('../await');
+import { await } from '../../lib/await';
 
 export class ProductionUnit extends ImportExcel {
     

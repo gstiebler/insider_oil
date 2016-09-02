@@ -1,10 +1,11 @@
 import utils = require('../lib/utils');
+import { await } from '../../lib/await';
 
 const idOnshore = utils.idByName('DrillingRigOnshore', 'NIC-01');
 const idOffshore = utils.idByName('DrillingRigOffshore', 'Aban Abraham');
 
 module.exports = function(db) {
-    return db.models.Well.bulkCreate([
+    const parameters = [
         {
             name: "1A 0001 BA",
             operator_id: utils.idByName('Company', 'Petrobrás'),
@@ -77,5 +78,9 @@ module.exports = function(db) {
             oil_field_id: utils.idByName('OilField', 'Albacora'),
             production_unit_id: utils.idByName('ProductionUnit', 'Pioneer'),
         },
-    ]);
+    ];
+
+    for(var obj of parameters) { 
+        await(db.models.Well.create(obj));
+    }
 }

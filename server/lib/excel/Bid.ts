@@ -2,7 +2,7 @@
 
 import { ImportExcel } from './ImportExcelClass';
 import search = require('../search');
-const await = require('../await');
+import { await } from '../../lib/await';
 
 export class Bid extends ImportExcel {
 

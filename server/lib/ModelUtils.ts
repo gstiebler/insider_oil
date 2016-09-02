@@ -4,8 +4,7 @@ import Sequelize = require('sequelize');
 import * as AWS from './AWS';
 import * as moment from 'moment';
 import { coordToString, stringToCoord } from './Geo';
-
-const await = require('../lib/await');
+import { await } from '../lib/await';
 
 export function getListFieldObj(textFieldName:string) {
     return {

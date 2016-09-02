@@ -20,7 +20,7 @@ export function createFixtures():void {
     require('./NewsFixtures')(db);
     await( require('./ComercialDeclarationFixture')(db) );
     await( require('./ProductionUnit')(db) );
-    await( require('./Well')(db) );
+    require('./Well')(db);
     await( require('./HydrocarbonEvidence')(db) );
     await( require('./GasPipeline')(db) );
     await( require('./OilPipeline')(db) ); 

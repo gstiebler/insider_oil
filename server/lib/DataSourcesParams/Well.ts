@@ -45,7 +45,10 @@ const Well: IBaseDataSourceParams = {
             label: "Sonda"
         },
         drilling_rig_onshore_id: {
-            label: "Sonda"
+            label: "Sonda (admin)"
+        },
+        drilling_rig_offshore_id: {
+            label: "sonda (admin)"
         },
         drilling_rig_uniname: {
             label: "Sonda"
@@ -76,7 +79,7 @@ const Well: IBaseDataSourceParams = {
         },
         depth: {
             label: "Profundidade"
-        }
+        },
     },
     labelField: "name",
     gridFields: ["name", "operator_name"],
