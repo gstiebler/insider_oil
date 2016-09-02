@@ -101,7 +101,7 @@ function getCountAssociationField(sourceName: string, fieldName: string):Promise
     const select = 'SELECT COUNT('+ table +'.id) AS count_value, '+ associationTable +'.name as label ';
     const fromStr = ' from ' + table;
     const join = ' left outer join ' + associationTable + ' on ' + 
-            table + '.' + fieldName + ' = ' + associationTable + '.id ';
+            table + '.' + fieldName + ' = ' + associationTable + '.id '; 
     const where = ' where ' + fieldName + ' IS NOT NULL ';
     const group = ' group by ' + fieldName;
     const order = ' order by count_value desc ';
@@ -119,7 +119,8 @@ function getCountTextField(sourceName: string, fieldName: string):Promise<Interf
 
     const select = 'SELECT COUNT(id) AS count_value, '+ fieldName +' as label ';
     const fromStr = ' from ' + table;
-    const where = ' where ' + fieldName + ' IS NOT NULL ';
+    const where = ' where ' + fieldName + ' IS NOT NULL ' +
+                  ' and ' + fieldName + ' != "" ';
     const group = ' group by ' + fieldName;
     const order = ' order by count_value desc ';
     const limit = ' limit 10 ';    
