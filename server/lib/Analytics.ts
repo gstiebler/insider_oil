@@ -72,6 +72,10 @@ const sources:Interfaces.IAnalyticsSource[] = [
                 fieldName: 'status',
                 label: 'Status'
             },
+            {
+                fieldName: 'operator_id',
+                label: 'Operador'
+            },
         ]
     },
     {
@@ -97,6 +101,32 @@ const sources:Interfaces.IAnalyticsSource[] = [
             {
                 fieldName: 'block_id',
                 label: 'Bloco'
+            },
+            {
+                fieldName: 'type',
+                label: 'Tipo'
+            },
+        ]
+    },
+    {
+        sourceName: 'OilField',
+        title: 'Campos',
+        possibleGroups: [
+            {
+                fieldName: 'state',
+                label: 'Estado'
+            },
+            {
+                fieldName: 'stage',
+                label: 'Estágio'
+            },
+            {
+                fieldName: 'basin_id',
+                label: 'Bacia'
+            },
+            {
+                fieldName: 'operator_id',
+                label: 'Operador'
             },
         ]
     },

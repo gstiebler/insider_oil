@@ -100,10 +100,7 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                     as: 'operator', 
                     foreignKey: {  allowNull: true }
                 };
-                OilField.belongsTo(models.Company, {
-                    as: 'operator', 
-                    foreignKey: {  allowNull: true }
-                });
+                OilField.belongsTo(models.Company, operatorOpts);
 
                 OilField.belongsTo(models.Block, { as: 'block', foreignKey: { allowNull: true } } );
             },
