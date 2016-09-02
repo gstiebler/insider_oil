@@ -5,7 +5,7 @@ import db = require('../db/models');
 import * as nodeunit from 'nodeunit';
 import * as TickerUpdatesController from  '../controllers/TickerUpdatesController';
 import * as ni from '../../common/NetworkInterfaces';
-var await = require('../lib/await');
+import { await } from '../lib/await';
 var utils = require('./lib/utils');
 
 

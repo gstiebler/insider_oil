@@ -1,5 +1,5 @@
 import utils = require('../lib/utils');
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 
 module.exports = function(db) {
     const data = [

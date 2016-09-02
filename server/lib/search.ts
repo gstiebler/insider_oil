@@ -2,7 +2,7 @@
 'use strict';
 
 import db = require('../db/models');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 const dataSources:any = [
     {

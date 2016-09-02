@@ -1,8 +1,8 @@
 'use strict';
 
+import { await } from '../../lib/await';
+
 namespace AmbientalLicense {
-    
-var await = require('../../lib/await');
     
 function updateBlocks(db, ambientalLicense) {
     const blocks = ambientalLicense.dataValues.blocks;

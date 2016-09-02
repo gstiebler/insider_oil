@@ -1,7 +1,7 @@
 'use strict';
 
 import Sequelize = require('sequelize');  
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 import { polygonsToStr, strToPolygons } from '../../lib/Geo';
 import * as consLib from '../../lib/ConcessionariesUtils';
 

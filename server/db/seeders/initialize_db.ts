@@ -3,7 +3,7 @@ var umzug = require('../../lib/InitUmzug');
 var Sync = require('sync');
 import winston = require('winston');
 import createFixtures = require('../../test/fixtures/initial_data');
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 
 winston.add(winston.transports.File, { filename: 'log/seeder.log' });
 

@@ -2,7 +2,7 @@
 
 import fiberTests = require('./lib/fiberTests');
 import db = require('../db/models');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 var utils = require('./lib/utils');
 import nodeunit = require('nodeunit');
 import ComboQueries = require('../db/queries/ComboQueries');

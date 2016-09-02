@@ -1,5 +1,6 @@
 "use strict";
-var await = require('../await');
+
+import { await } from '../../lib/await';
 var XLSX = require('xlsx');
 import { fieldTypeStr } from '../ModelUtils';
 import dbUtils = require('../dbUtils');

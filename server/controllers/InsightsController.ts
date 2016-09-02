@@ -8,7 +8,7 @@ import express = require("express");
 import ControllerUtils = require('../lib/ControllerUtils');
 import { formatImgUrl } from '../lib/News';
 var Sync = require('sync');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 const sectionNames = {
     flexSlider: 'flexSlider',

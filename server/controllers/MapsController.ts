@@ -4,7 +4,7 @@ import express = require("express");
 import * as ControllerUtils from '../lib/ControllerUtils';
 import * as ni from '../../common/NetworkInterfaces';
 var Sync = require('sync');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 /**
  * Get blocks map data

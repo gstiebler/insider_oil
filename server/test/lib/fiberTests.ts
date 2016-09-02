@@ -7,7 +7,7 @@ import createFixtures = require('../fixtures/initial_data');
 import nodeunit = require('nodeunit');
 
 var Sync = require('sync');
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 var umzug = require('../../lib/InitUmzug');
 
 var lastFunctionModfiesDB = true;

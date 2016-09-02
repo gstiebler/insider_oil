@@ -1,6 +1,6 @@
 'use strict';
 
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 import db = require('../models');
 import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');

@@ -1,7 +1,7 @@
 import db = require('../db/models');
 import * as lwip from 'lwip';
 var Sync = require('sync');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 Sync(function(){
     const records:any[] = await( db.models.DrillingRigOffshore.findAll({order: 'name'}) );

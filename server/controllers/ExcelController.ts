@@ -1,7 +1,7 @@
 "use strict";
 import db = require('../db/models');
 var Sync = require('sync');	
-var await = require('../lib/await');
+import { await } from '../lib/await';
 var request = require('request');
 import ControllerUtils = require('../lib/ControllerUtils');
 import dbUtils = require('../lib/dbUtils');

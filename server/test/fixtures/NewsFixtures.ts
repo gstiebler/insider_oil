@@ -1,6 +1,6 @@
 import * as utils from '../lib/utils';
 import { executePromisesSequentialy } from '../../lib/PromiseUtils';
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 
 module.exports = function(db) {
     const abaloneId = utils.idByName('OilField', 'Abalone');

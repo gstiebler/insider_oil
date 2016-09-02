@@ -7,7 +7,7 @@ import winston = require('winston');
 import Sequelize = require('sequelize');  
 var XLSX = require('xlsx');
 var Sync = require('sync');
-var await = require('../await');
+import { await } from '../../lib/await';
 import moment = require('moment-timezone');
 
 const saoPauloZone = moment.tz.zone('America/Sao_Paulo');

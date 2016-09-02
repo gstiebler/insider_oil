@@ -1,7 +1,7 @@
 'use strict';
 
 import * as Sequelize from 'sequelize';  
-var await = require('./await');
+import { await } from '../lib/await';
 
 export function updateConcessionaries(db, modelName: string, id_field: string, object) {
     const where = {};

@@ -4,7 +4,7 @@ import { getListFieldObj, saveOriginalImage } from '../../lib/ModelUtils';
 import { resample }  from '../../lib/ImageProcessing';
 import * as AWS from '../../lib/AWS';
 import { syncify } from '../../lib/PromiseUtils';
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 
 function updatePersonProjects(db, person) {
     const projects = person.dataValues.projects;

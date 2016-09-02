@@ -1,6 +1,6 @@
 'use strict';
 
-var await = require('../lib/await');
+import { await } from '../lib/await';
 var Sync = require('sync');
 
 export function executePromisesSequentialy(promises: Promise<any>[]):Promise<any> {

@@ -4,8 +4,7 @@ import * as newsLib from '../../lib/News';
 import * as AWS from '../../lib/AWS';
 import { resample }  from '../../lib/ImageProcessing';
 import { syncify } from '../../lib/PromiseUtils';
-var await = require('../../lib/await');
-
+import { await } from '../../lib/await';
 var db:any = {};
 
 const imageParams = [

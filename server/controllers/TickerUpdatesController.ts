@@ -8,7 +8,7 @@ import * as ControllerUtils from '../lib/ControllerUtils';
 import dsParams = require('../lib/DataSourcesParams');
 import QueryGenerator = require('../db/queries/QueryGenerator');
 var Sync = require('sync');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 interface ITickerRecord {
     model: string;

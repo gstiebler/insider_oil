@@ -4,7 +4,7 @@ import fiberTests = require('./lib/fiberTests');
 import nodeunit = require('nodeunit');
 import * as Analytics from '../lib/Analytics';
 import * as Interfaces from '../../common/Interfaces';
-var await = require('../lib/await');
+import { await } from '../lib/await';
 var utils = require('./lib/utils');
 
 

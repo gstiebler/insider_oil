@@ -7,7 +7,7 @@ import dbServerController = require('../controllers/dbServerController');
 import * as ni from '../../common/NetworkInterfaces';
 import db = require('../db/models');
 var utils = require('./lib/utils');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 var group:nodeunit.ITestGroup = {
 

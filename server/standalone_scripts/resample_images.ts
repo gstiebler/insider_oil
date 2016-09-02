@@ -2,7 +2,7 @@ import * as lwip from 'lwip';
 import fs = require('fs');
 import { resampleImage } from '../lib/ImageProcessing';
 var Sync = require('sync');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 Sync(function(){const files = fs.readdirSync(__dirname);
     for(var fileName of files) {

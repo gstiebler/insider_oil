@@ -1,6 +1,6 @@
 'use strict';
 
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 import Sequelize = require('sequelize');
 
 module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {

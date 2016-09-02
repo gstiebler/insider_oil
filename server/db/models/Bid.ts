@@ -1,6 +1,6 @@
 'use strict';
 import Sequelize = require('sequelize');
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 import ModelUtils = require('../../lib/ModelUtils');
 
 function updateBid(bid) {

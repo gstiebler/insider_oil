@@ -1,6 +1,6 @@
 'use strict';
 import Sequelize = require('sequelize');
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 
 module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
     const MaintenanceDate = sequelize.define('MaintenanceDate', {

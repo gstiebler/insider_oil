@@ -2,7 +2,7 @@
 
 import db = require('../db/models');
 var Sync = require('sync');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 import ControllerUtils = require('../lib/ControllerUtils');
 import winston = require('winston');
 import dbUtils = require("../lib/dbUtils");

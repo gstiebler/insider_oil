@@ -1,6 +1,5 @@
 import db = require('../../db/models');
-
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 
 export function createFixtures():void {
     await( require('../../db/seeders/ModelsListInitializer')(db) );

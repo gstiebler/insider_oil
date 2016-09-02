@@ -1,6 +1,6 @@
 'use strict';
 import Sequelize = require('sequelize');
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 
 function updateGasPipeRef(gasPipeline, prefix: string) {
     const modelField = prefix + '_model_id';

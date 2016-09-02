@@ -4,7 +4,7 @@ import { parseString } from 'xml2js';
 import db = require('../db/models');
 import * as winston from 'winston';
 var Sync = require('sync');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 var removerAcentos = require('remover-acentos');
 
 export interface IImportFunc {

@@ -1,7 +1,5 @@
 var Sync = require('sync');
 
-namespace Await {
-    
 function transPro( promise, callback ) {
     var promiseResponse = promise.then( function(result) {
         callback( null, result );
@@ -23,11 +21,7 @@ function transPro( promise, callback ) {
     return promiseResponse;
 };
 
-function await( promise ) {
+export function await<T>( promise:Promise<T> ) {
     const transProTemp:any = transPro;
     return transProTemp.sync( null, promise );
-}
-
-module.exports = await;
-
 }

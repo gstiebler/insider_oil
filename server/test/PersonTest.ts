@@ -5,7 +5,7 @@ import db = require('../db/models');
 import dbServerController = require('../controllers/dbServerController');
 import nodeunit = require('nodeunit');
 import * as AdminController from '../controllers/AdminController';
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 const utils = require('./lib/utils');
 

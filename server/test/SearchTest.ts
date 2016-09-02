@@ -5,7 +5,7 @@ import nodeunit = require('nodeunit');
 import search = require('../lib/search');
 import { initializeSearch } from '../lib/search';
 import { syncify } from '../lib/PromiseUtils';
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 var group: nodeunit.ITestGroup = {
 

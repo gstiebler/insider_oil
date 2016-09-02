@@ -2,7 +2,7 @@
 import Sequelize = require('sequelize');
 import ModelUtils = require('../../lib/ModelUtils');
 import { IFrontEndProject } from '../../../common/Interfaces';
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 
 const milisecondsInADay = 1000 * 60 * 60 * 24;
 

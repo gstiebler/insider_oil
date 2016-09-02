@@ -8,7 +8,7 @@ import * as ni from '../../common/NetworkInterfaces';
 import news = require('../lib/News');
 var utils = require('./lib/utils');
 var Sync = require('sync');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 
 const newsHTML = '<p>um campo: <a href="/app/view_record?source=OilField&amp;id=3" style="background-color: rgb(255, 255, 255);">Abalone</a> ' +
@@ -43,7 +43,7 @@ createNewsOnDB: test => {
 	}
 
 	await( db.models.News.create(newsToBeCreated) );
-	const newNews = await( db.models.News.findAll() );
+	const newNews:any = await( db.models.News.findAll() );
 
     test.equal( fixtureCount + 1, newNews.length );
     const justCreatedNew = newNews[fixtureCount];
@@ -53,7 +53,7 @@ createNewsOnDB: test => {
         where: { news_id: justCreatedNewId },
         order: 'id'
     };
-	const referencedModelsOnNew = await( db.models.NewsModels.findAll(options) );
+	const referencedModelsOnNew:any = await( db.models.NewsModels.findAll(options) );
 	test.equal(2, referencedModelsOnNew.length);
 	test.equal('OilField', await( db.models.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
 	test.equal(abaloneId, referencedModelsOnNew[0].model_ref_id);

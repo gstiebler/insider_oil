@@ -6,7 +6,7 @@ import db = require( '../../db/models' );
 import winston = require('winston');
 import dsParams = require('./../DataSourcesParams');
 var Sync = require('sync');
-var await = require('../await');
+import { await } from '../../lib/await';
 
 export class Production extends ImportExcel {
     

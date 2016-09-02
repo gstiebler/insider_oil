@@ -1,4 +1,4 @@
-var await = require('../../lib/await');
+import { await } from '../../lib/await';
 import db = require('../../db/models');
 import winston = require('winston');
 

@@ -8,7 +8,7 @@ import * as express from "express";
 import * as ControllerUtils from '../lib/ControllerUtils';
 import * as Analytics from '../lib/Analytics';
 var Sync = require('sync');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 
 export function getSources(req: express.Request, res: express.Response, next) {Sync(function(){
     const resObj:ni.AnalyticsSources.res = { sources: Analytics.getSources() };

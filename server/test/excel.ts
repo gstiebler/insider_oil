@@ -7,7 +7,7 @@ import importExcel = require('../lib/excel/importExcel');
 import ExportExcel = require('../lib/excel/ExportExcel');
 var XLSX = require('xlsx');
 import dbUtils = require('../lib/dbUtils');
-var await = require('../lib/await');
+import { await } from '../lib/await';
 import nodeunit = require('nodeunit');
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 const moment = require('moment-timezone');
