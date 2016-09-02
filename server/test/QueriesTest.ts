@@ -485,6 +485,40 @@ oilFieldConcessionaryByCompany: (test: nodeunit.Test) => {
     test.done(); 
 },
 
+drillingRigsByContractor: (test: nodeunit.Test) => {
+    const petroId = utils.idByName('Company', 'Petrobras');
+    const filters = {
+        id: petroId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'drillingRigsByContractor',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(4, resQueryValues.records.length);
+
+    test.done(); 
+},
+
+drillingRigsByOperator: (test: nodeunit.Test) => {
+    const petroId = utils.idByName('Company', 'Petrobras');
+    const filters = {
+        id: petroId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'drillingRigsByOperator',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(4, resQueryValues.records.length);
+
+    test.done(); 
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );

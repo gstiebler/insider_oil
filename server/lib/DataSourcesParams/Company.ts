@@ -49,6 +49,14 @@ const Company: IBaseDataSourceParams = {
             queryName: 'oilFieldConcessionaryByCompany',
             title: 'Participação em campos'
         },
+        {
+            queryName: 'drillingRigsByContractor',
+            title: 'Sondas contratadas'
+        },
+        {
+            queryName: 'drillingRigsByOperator',
+            title: 'Sondas operadas'
+        },
     ],
     labelField: "name",
     gridFields: ["name", "address"],

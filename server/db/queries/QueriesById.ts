@@ -577,6 +577,114 @@ const queries:IQueriesById = {
         ]
     },
     
+    drillingRigsByContractor: {
+        queryStrFn: (filter) => {
+            const queryParams: IQueryParams = {
+                filters: [ { field: 'contractor_id', equal: filter.id } ],
+                order: [ { fieldName: 'dr_name', dir: 'asc' } ],
+                pagination: { first: 0, itemsPerPage: 100 }
+            };
+            return TableQueries.queries['DrillingRigs'].queryStrFn(queryParams);
+        },
+        fields: [
+            {
+                label: 'Sonda',
+                ref: {
+                    modelField: 'model',
+                    idField: 'dr_id',
+                    valueField: 'dr_name'
+                }
+            },
+            {
+                label: 'Operator',
+                ref: {
+                    modelField: 'operator_model',
+                    idField: 'operator_id',
+                    valueField: 'operator_name'
+                }
+            },
+            {
+                label: 'Terra/Mar',
+                fieldName: 'land_sea',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Início contrato',
+                fieldName: 'start',
+                type: 'DATE'
+            },
+            {
+                label: 'Fim contrato',
+                fieldName: 'end',
+                type: 'DATE'
+            },
+            {
+                label: 'Status',
+                fieldName: 'status',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Day rate (US$)',
+                fieldName: 'day_rate',
+                type: 'CURRENCY',
+            }
+        ]
+    },
+
+    drillingRigsByOperator: {
+        queryStrFn: (filter) => {
+            const queryParams: IQueryParams = {
+                filters: [ { field: 'operator_id', equal: filter.id } ],
+                order: [ { fieldName: 'dr_name', dir: 'asc' } ],
+                pagination: { first: 0, itemsPerPage: 100 }
+            };
+            return TableQueries.queries['DrillingRigs'].queryStrFn(queryParams);
+        },
+        fields: [
+            {
+                label: 'Sonda',
+                ref: {
+                    modelField: 'model',
+                    idField: 'dr_id',
+                    valueField: 'dr_name'
+                }
+            },
+            {
+                label: 'Contratante',
+                ref: {
+                    modelField: 'contractor_model',
+                    idField: 'contractor_id',
+                    valueField: 'contractor_name'
+                }
+            },
+            {
+                label: 'Terra/Mar',
+                fieldName: 'land_sea',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Início contrato',
+                fieldName: 'start',
+                type: 'DATE'
+            },
+            {
+                label: 'Fim contrato',
+                fieldName: 'end',
+                type: 'DATE'
+            },
+            {
+                label: 'Status',
+                fieldName: 'status',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Day rate (US$)',
+                fieldName: 'day_rate',
+                type: 'CURRENCY',
+            }
+        ]
+    },
+    
     maintenanceDatesByProductionUnit: {
         queryStrFn: (filter) => {        
             const maintenanceOpts:QueryGenerator.IQueryOpts = {
