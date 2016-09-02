@@ -136,7 +136,7 @@ dashboard: test => {
 	test.equal(3, dashboardData.numBids);
 	test.equal(3, dashboardData.numContracts);
 	test.equal(3, dashboardData.numPersons);
-	test.equal(2, dashboardData.numProjects);
+	test.equal(4, dashboardData.numProjects);
     
     test.done();
 },
