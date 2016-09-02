@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as d3 from 'd3';
 import * as Interfaces from '../../../common/Interfaces';
 import { googleRef, loadBarChart } from '../lib/Google';
 
