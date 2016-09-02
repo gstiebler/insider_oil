@@ -3,6 +3,7 @@
 import db = require('../db/models');
 import dsParams = require('../lib/DataSourcesParams');
 import * as Interfaces from '../../common/Interfaces';
+import { fieldTypeStr } from './ModelUtils';
 
 const sources:Interfaces.IAnalyticsSource[] = [
     {
@@ -48,7 +49,31 @@ const sources:Interfaces.IAnalyticsSource[] = [
                 label: 'Contratante'
             },
         ]
-    }
+    },
+    {
+        sourceName: 'DrillingRigOnshore',
+        title: 'Sondas onshore',
+        possibleGroups: [
+            {
+                fieldName: 'operator_id',
+                label: 'Operador'
+            },
+            {
+                fieldName: 'contractor_id',
+                label: 'Contratante'
+            },
+        ]
+    },
+    {
+        sourceName: 'Block',
+        title: 'Blocos',
+        possibleGroups: [
+            {
+                fieldName: 'status',
+                label: 'Status'
+            },
+        ]
+    },
 ];
 
 export function getSources():Interfaces.IAnalyticsSource[] {
@@ -65,11 +90,10 @@ function getAssociationByField(associations, fieldName: string):any {
     return null;
 }
 
-export function getCount(sourceName: string, fieldName: string):Promise<Interfaces.IAnalyticsCount[]> {
+function getCountAssociationField(sourceName: string, fieldName: string):Promise<Interfaces.IAnalyticsCount[]> {
     const model = db.models[sourceName];
     const params = dsParams[sourceName];
     const table = model.tableName;
-    const field = model.attributes[fieldName];
     const association = getAssociationByField(model.associations, fieldName);
     const targetModel = association.target;
     const associationTable = targetModel.tableName;
@@ -86,4 +110,34 @@ export function getCount(sourceName: string, fieldName: string):Promise<Interfac
     
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     return db.sequelize.query(query, simpleQueryType);
+}
+
+function getCountTextField(sourceName: string, fieldName: string):Promise<Interfaces.IAnalyticsCount[]> {
+    const model = db.models[sourceName];
+    const params = dsParams[sourceName];
+    const table = model.tableName;
+
+    const select = 'SELECT COUNT(id) AS count_value, '+ fieldName +' as label ';
+    const fromStr = ' from ' + table;
+    const where = ' where ' + fieldName + ' IS NOT NULL ';
+    const group = ' group by ' + fieldName;
+    const order = ' order by count_value desc ';
+    const limit = ' limit 10 ';    
+    const query = select + fromStr + where + group + order + limit;
+    
+    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
+    return db.sequelize.query(query, simpleQueryType);
+}
+
+export function getCount(sourceName: string, fieldName: string):Promise<Interfaces.IAnalyticsCount[]> {
+    const model = db.models[sourceName];
+    const field = model.attributes[fieldName];
+    const typeStr = fieldTypeStr(field);
+    if(typeStr.includes('VARCHAR')) {
+        return getCountTextField(sourceName, fieldName);
+    }
+    const association = getAssociationByField(model.associations, fieldName);
+    if(association) {
+        return getCountAssociationField(sourceName, fieldName);
+    }
 }

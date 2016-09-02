@@ -41,7 +41,7 @@ module.exports = function(db) {
             end_2: '2014-03-12',
             end_3 : null,
             end_last: '2016-06-25',
-            status: ''
+            status: 'SUSPENSO'
         }
     ];
 
