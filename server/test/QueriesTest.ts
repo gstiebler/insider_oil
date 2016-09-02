@@ -6,9 +6,9 @@ import * as nodeunit from 'nodeunit';
 import dbServerController = require('../controllers/dbServerController');
 import * as AdminController from '../controllers/AdminController';
 
+
 var group: nodeunit.ITestGroup = {
-
-
+    
 newsFromObject:  (test: nodeunit.Test) => {
     const abaloneId = utils.idByName('OilField', 'Abalone');
     const filters = {
@@ -53,6 +53,9 @@ newsFromObject:  (test: nodeunit.Test) => {
     test.done();
 },
 
+}
+
+var notModDBGroup: nodeunit.ITestGroup = {
 
 getPersonsByProject:  (test: nodeunit.Test) => {
     const amazonasId = utils.idByName('Basin', 'Amazonas') ;
@@ -484,4 +487,5 @@ oilFieldConcessionaryByCompany: (test: nodeunit.Test) => {
 
 }
 
-exports.group = fiberTests.convertTests( group, true );
+exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );
+exports.group = fiberTests.convertTests( group, false );
