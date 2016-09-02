@@ -1,7 +1,7 @@
 'use strict';
 
 import * as utils from '../lib/utils';
-import { executePromisesSequentialy } from '../../lib/PromiseUtils';
+import { await } from '../../lib/await';
 
 module.exports = function(db) {
     const personObjs = [
@@ -36,11 +36,8 @@ module.exports = function(db) {
             ]
         }
     ];
-    
-    const promisesArray = [];
-    for(var personObj of personObjs) {
-        promisesArray.push(db.models.Person.create(personObj));
+
+    for(var obj of personObjs) { 
+        await(db.models.Person.create(obj));
     }
-    
-    return executePromisesSequentialy(promisesArray);
 }

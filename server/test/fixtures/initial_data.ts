@@ -12,7 +12,7 @@ export function createFixtures():void {
     await( require('./Block')(db) );
     await( require('./DrillingRigOffshore')(db) );
     await( require('./DrillingRigOnshore')(db) );
-    await( require('./Person')(db) );
+    require('./Person')(db);
     require('./OilField')(db);
     await( require('./Seismic')(db) );
     await( require('./AmbientalLicense')(db) );
