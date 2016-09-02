@@ -47,11 +47,13 @@ module.exports = function(db): Promise<any[]> {
             name: 'Petrobras 37',
             block_id: utils.idByName('Block', 'BM-BAR-1'),
             type: 'FPSO',
+            status: 'Em projeto'
         },
         {
             name: 'Petrobras 52',
             block_id: utils.idByName('Block', 'BM-BAR-1'),
             type: 'FPSO',
+            status: 'Em projeto'
         },
     ];
     

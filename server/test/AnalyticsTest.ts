@@ -21,7 +21,7 @@ getCount: (test) => {
     test.done();
 },
 
-getCountEnumField: (test) => {
+getCountTextField: (test) => {
     const result:Interfaces.IAnalyticsCount[] = 
             await( Analytics.getCount('Block', 'status') ); 
     test.equal(2, result.length);
@@ -30,7 +30,18 @@ getCountEnumField: (test) => {
     test.equal('PAD EM ANÁLISE', result[1].label);
     test.equal(1, result[1].count_value);
     test.done();
-}
+},
+
+getCountEnumField: (test) => {
+    const result:Interfaces.IAnalyticsCount[] = 
+            await( Analytics.getCount('ProductionUnit', 'status') ); 
+    test.equal(2, result.length);
+    test.equal('Em projeto', result[0].label);
+    test.equal(3, result[0].count_value);
+    test.equal('Em construção', result[1].label);
+    test.equal(1, result[1].count_value);
+    test.done();
+},
 
 }
 

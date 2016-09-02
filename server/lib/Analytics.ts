@@ -74,6 +74,32 @@ const sources:Interfaces.IAnalyticsSource[] = [
             },
         ]
     },
+    {
+        sourceName: 'ProductionUnit',
+        title: 'Unidades de produção',
+        possibleGroups: [
+            {
+                fieldName: 'status',
+                label: 'Status'
+            },
+            {
+                fieldName: 'owner',
+                label: 'Proprietário'
+            },
+            {
+                fieldName: 'situation',
+                label: 'Situação'
+            },
+            {
+                fieldName: 'oil_field_id',
+                label: 'Campo'
+            },
+            {
+                fieldName: 'block_id',
+                label: 'Bloco'
+            },
+        ]
+    },
 ];
 
 export function getSources():Interfaces.IAnalyticsSource[] {
@@ -136,9 +162,12 @@ export function getCount(sourceName: string, fieldName: string):Promise<Interfac
     const typeStr = fieldTypeStr(field);
     if(typeStr.includes('VARCHAR')) {
         return getCountTextField(sourceName, fieldName);
+    } else if (typeStr == 'ENUM') {
+        return getCountTextField(sourceName, fieldName);
     }
     const association = getAssociationByField(model.associations, fieldName);
     if(association) {
         return getCountAssociationField(sourceName, fieldName);
     }
+    throw 'Tipo da análise não definido: ' + typeStr;
 }
