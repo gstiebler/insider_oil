@@ -78,8 +78,6 @@ export class TimeSeriesChart extends React.Component<IAppProps, IAppState> {
             return result;
         });
 
-        console.log(records);
-
         var dataTable = new googleRef.visualization.DataTable();
         dataTable.addColumn('date', 'Datas');
         for(let serie of this.props.chartParams.seriesList) {

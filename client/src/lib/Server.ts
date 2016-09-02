@@ -33,7 +33,6 @@ export function getP(url: string, data: any):Promise<any> {
         // if the user was not authorized
         if(error.status == 401) {
             window.location.replace('/login');
-            console.log('não autorizado');
         }
     }
 
