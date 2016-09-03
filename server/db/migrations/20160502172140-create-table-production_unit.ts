@@ -30,6 +30,22 @@ module.exports = {
           key: 'id'
         }
       },
+      owner_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'companies',
+          key: 'id'
+        }
+      },
+      operator_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'companies',
+          key: 'id'
+        }
+      },
       type: {
         type: Sequelize.ENUM('FPSO', 'FIXED', 'SEMI'),
         allowNull: false
@@ -52,10 +68,6 @@ module.exports = {
       },
       general_info: {
         type: Sequelize.TEXT,
-        allowNull: true
-      },
-      owner: {
-        type: Sequelize.STRING,
         allowNull: true
       },
       situation: {

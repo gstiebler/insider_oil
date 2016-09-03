@@ -29,8 +29,17 @@ const ProductionUnit: IBaseDataSourceParams = {
         general_info: {
             label: 'Informações'
         },
-        owner: {
+        owner_id: {
             label: 'Empresa proprietária'
+        },
+        owner_name: {
+            label: 'Empresa proprietária'
+        },
+        operator_id: {
+            label: 'Empresa operadora'
+        },
+        operator_name: {
+            label: 'Empresa operadora'
         },
         situation: {
             label: 'Situação'

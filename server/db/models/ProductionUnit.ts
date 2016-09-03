@@ -37,10 +37,6 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
             type: DataTypes.TEXT,
             allowNull: true
         },
-        owner: {
-          type: DataTypes.STRING,
-          allowNull: true
-        },
         situation: {
           type: DataTypes.STRING,
           allowNull: true
@@ -100,6 +96,18 @@ module.exports = function(sequelize:Sequelize.Sequelize, DataTypes:Sequelize.Dat
                     foreignKey: {  allowNull: true }
                 };
                 ProductionUnit.belongsTo(models.Block, blockOpts );
+
+                const ownerOpts:Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'owner', 
+                    foreignKey: {  allowNull: true }
+                };
+                ProductionUnit.belongsTo(models.Company, ownerOpts );
+
+                const operatorOpts:Sequelize.AssociationOptionsBelongsTo = {
+                    as: 'operator', 
+                    foreignKey: {  allowNull: true }
+                };
+                ProductionUnit.belongsTo(models.Company, operatorOpts );
             },
         },
         hooks: {
