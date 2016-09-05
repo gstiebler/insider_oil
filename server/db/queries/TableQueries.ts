@@ -1171,7 +1171,8 @@ export const queries:ITableQueries = {
                     valueField: 'bid_process_number'
                 }
             },
-        ]
+        ],
+        tableauUrl: 'https://public.tableau.com/views/Contratos_2/Painel1?:embed=y&:display_count=yes&:toolbar=no'
     },
     
     GasPipelines: {
