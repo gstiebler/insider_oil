@@ -32,7 +32,6 @@ const productionUnit:ITableQuery = {
                     ['id', 'pu_id'],
                     ['name', 'pu_name'],
                     'status',
-                    'owner',
                     'situation'
                 ]
             },
@@ -52,6 +51,22 @@ const productionUnit:ITableQuery = {
                         ['name', 'b_name'],
                     ],
                     joinField: 'production_units.block_id'
+                },
+                {
+                    name: ['companies', 'owner'],
+                    fields: [
+                        ['id', 'ow_id'],
+                        ['name', 'ow_name'],
+                    ],
+                    joinField: 'production_units.owner_id'
+                },
+                {
+                    name: ['companies', 'operator'],
+                    fields: [
+                        ['id', 'op_id'],
+                        ['name', 'op_name'],
+                    ],
+                    joinField: 'production_units.operator_id'
                 },
             ],
             extraFields: [
@@ -97,8 +112,19 @@ const productionUnit:ITableQuery = {
         },
         {
             label: 'Empresa proprietária',
-            fieldName: 'owner',
-            type: 'VARCHAR'
+            ref: {
+                modelField: 'ow_model',
+                idField: 'ow_id',
+                valueField: 'ow_name'
+            }
+        },
+        {
+            label: 'Operador',
+            ref: {
+                modelField: 'op_model',
+                idField: 'op_id',
+                valueField: 'op_name'
+            }
         },
         {
             label: 'Situação',

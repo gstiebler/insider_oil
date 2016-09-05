@@ -245,7 +245,7 @@ all: (test: nodeunit.Test) => {
             const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
             test.ok(resQueryValues.records.length >= 2, 'Error on ' + queryName);
         } catch(err) {
-            console.log(queryName, err);
+            test.ok(false, queryName + ': ' + err);
         }
     }
     test.done();
