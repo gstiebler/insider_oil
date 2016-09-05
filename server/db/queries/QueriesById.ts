@@ -732,11 +732,28 @@ const queries:IQueriesById = {
                     fields: [
                         ['id', 'pu_id'],
                         ['name', 'pu_name'],
-                        'owner',
+                        //'owner',
                         'situation'
                     ]
                 },
-                joinTables: [],
+                joinTables: [
+                    {
+                        name: ['companies', 'owner'],
+                        fields: [
+                            ['id', 'ow_id'],
+                            ['name', 'ow_name'],
+                        ],
+                        joinField: 'production_units.owner_id'
+                    },
+                    {
+                        name: ['companies', 'operator'],
+                        fields: [
+                            ['id', 'op_id'],
+                            ['name', 'op_name'],
+                        ],
+                        joinField: 'production_units.operator_id'
+                    },
+                ],
                 extraFields: [
                     ['"ProductionUnit"', 'model'],
                 ],
@@ -767,8 +784,19 @@ const queries:IQueriesById = {
             },
             {
                 label: 'Empresa proprietária',
-                fieldName: 'owner',
-                type: 'VARCHAR'
+                ref: {
+                    modelField: 'ow_model',
+                    idField: 'ow_id',
+                    valueField: 'ow_name'
+                }
+            },
+            {
+                label: 'Operador',
+                ref: {
+                    modelField: 'op_model',
+                    idField: 'op_id',
+                    valueField: 'op_name'
+                }
             },
             {
                 label: 'Situação',
@@ -786,11 +814,28 @@ const queries:IQueriesById = {
                     fields: [
                         ['id', 'pu_id'],
                         ['name', 'pu_name'],
-                        'owner',
+                        //'owner',
                         'situation'
                     ]
                 },
-                joinTables: [],
+                joinTables: [
+                    {
+                        name: ['companies', 'owner'],
+                        fields: [
+                            ['id', 'ow_id'],
+                            ['name', 'ow_name'],
+                        ],
+                        joinField: 'production_units.owner_id'
+                    },
+                    {
+                        name: ['companies', 'operator'],
+                        fields: [
+                            ['id', 'op_id'],
+                            ['name', 'op_name'],
+                        ],
+                        joinField: 'production_units.operator_id'
+                    },
+                ],
                 extraFields: [
                     ['"ProductionUnit"', 'model'],
                 ],
@@ -821,8 +866,151 @@ const queries:IQueriesById = {
             },
             {
                 label: 'Empresa proprietária',
-                fieldName: 'owner',
+                ref: {
+                    modelField: 'ow_model',
+                    idField: 'ow_id',
+                    valueField: 'ow_name'
+                }
+            },
+            {
+                label: 'Operador',
+                ref: {
+                    modelField: 'op_model',
+                    idField: 'op_id',
+                    valueField: 'op_name'
+                }
+            },
+            {
+                label: 'Situação',
+                fieldName: 'situation',
                 type: 'VARCHAR'
+            },
+        ]
+    },
+    
+    productionUnitsByOperator: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'production_units',
+                    fields: [
+                        ['id', 'pu_id'],
+                        ['name', 'pu_name'],
+                        'situation'
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'companies',
+                        fields: [
+                            ['id', 'ow_id'],
+                            ['name', 'ow_name'],
+                        ],
+                        joinField: 'production_units.owner_id'
+                    },
+                ],
+                extraFields: [
+                    ['"ProductionUnit"', 'model'],
+                    ['"Company"', 'ow_model'],
+                ],
+                where: [
+                    {
+                        field: 'production_units.operator_id',
+                        equal: filter.id
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'pu_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'pu_id',
+                    valueField: 'pu_name'
+                }
+            },
+            {
+                label: 'Empresa proprietária',
+                ref: {
+                    modelField: 'ow_model',
+                    idField: 'ow_id',
+                    valueField: 'ow_name'
+                }
+            },
+            {
+                label: 'Situação',
+                fieldName: 'situation',
+                type: 'VARCHAR'
+            },
+        ]
+    },
+    
+    productionUnitsByOwner: {
+        queryStrFn: (filter) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'production_units',
+                    fields: [
+                        ['id', 'pu_id'],
+                        ['name', 'pu_name'],
+                        'situation'
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'companies',
+                        fields: [
+                            ['id', 'op_id'],
+                            ['name', 'op_name'],
+                        ],
+                        joinField: 'production_units.operator_id'
+                    },
+                ],
+                extraFields: [
+                    ['"ProductionUnit"', 'model'],
+                    ['"Company"', 'op_model'],
+                ],
+                where: [
+                    {
+                        field: 'production_units.owner_id',
+                        equal: filter.id
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'pu_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'pu_id',
+                    valueField: 'pu_name'
+                }
+            },
+            {
+                label: 'Operador',
+                ref: {
+                    modelField: 'op_model',
+                    idField: 'op_id',
+                    valueField: 'op_name'
+                }
             },
             {
                 label: 'Situação',

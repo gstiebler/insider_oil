@@ -519,6 +519,40 @@ drillingRigsByOperator: (test: nodeunit.Test) => {
     test.done(); 
 },
 
+productionUnitsByOperator: (test: nodeunit.Test) => {
+    const petroId = utils.idByName('Company', 'Petrobras');
+    const filters = {
+        id: petroId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'productionUnitsByOperator',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(6, resQueryValues.records.length);
+
+    test.done(); 
+},
+
+productionUnitsByOwner: (test: nodeunit.Test) => {
+    const petroId = utils.idByName('Company', 'Petrobras');
+    const filters = {
+        id: petroId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'productionUnitsByOwner',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(8, resQueryValues.records.length);
+
+    test.done(); 
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );

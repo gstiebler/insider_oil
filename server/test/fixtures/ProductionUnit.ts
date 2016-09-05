@@ -47,7 +47,7 @@ module.exports = function(db): Promise<any[]> {
             name: 'Pioneiro de Libra',
             oil_field_id: utils.idByName('OilField', 'Baleia Anã'),
             type: 'SEMI',
-            operator_id: utils.idByName('Company', 'Petrobras'),
+            operator_id: utils.idByName('Company', 'Paragon'),
             owner_id: utils.idByName('Company', 'Eni Oil'),
         },
         {
