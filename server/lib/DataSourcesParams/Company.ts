@@ -57,6 +57,14 @@ const Company: IBaseDataSourceParams = {
             queryName: 'drillingRigsByOperator',
             title: 'Sondas operadas'
         },
+        {
+            queryName: 'productionUnitsByOperator',
+            title: 'Unidades de produção operadas'
+        },
+        {
+            queryName: 'productionUnitsByOwner',
+            title: 'Unidades de produção próprias'
+        },
     ],
     labelField: "name",
     gridFields: ["name", "address"],
