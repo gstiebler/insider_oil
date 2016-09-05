@@ -87,7 +87,7 @@ const sources:Interfaces.IAnalyticsSource[] = [
                 label: 'Status'
             },
             {
-                fieldName: 'owner',
+                fieldName: 'owner_id',
                 label: 'Proprietário'
             },
             {
