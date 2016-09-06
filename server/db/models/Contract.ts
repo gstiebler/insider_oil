@@ -106,6 +106,20 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                 const projects = await( projectsPromise );
                 return projects;
             }
+        },
+        supplier_formatted: {
+            type: Sequelize.VIRTUAL,
+            get: function() {
+                if(this.supplier) {
+                    return this.supplier;
+                } else if (this.supplier_obj_id) {
+                    const companyModel = sequelize.models.Company;
+                    const supplierObj = await( companyModel.findById(this.supplier_obj_id) );
+                    return supplierObj.name;
+                } else {
+                    return null;
+                }
+            }
         }
     },
         {

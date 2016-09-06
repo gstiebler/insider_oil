@@ -197,9 +197,11 @@ Contract: (test) => {
     const fixtureContract99 = await( db.models.Contract.findOne({ where: {user_uid: '99'} }) );
     test.equal(22, fixtureContract99.duration);
     test.equal(797913.170909091, fixtureContract99.day_rate);
+    test.equal('G&E MANUTENCAO E SERVICOS LTDA', fixtureContract99.supplier_formatted);
 
     const fixtureContract300 = await( db.models.Contract.findOne({ where: {user_uid: '300'} }) );
     test.equal(null, fixtureContract300.day_rate);
+    test.equal('Queiroz Galvão', fixtureContract300.supplier_formatted);
 
     test.done();
 }
