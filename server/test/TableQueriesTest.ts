@@ -83,8 +83,8 @@ contracts:  (test: nodeunit.Test) => {
     const queryParams:IQueryParams = {
         order: [
             {
-                fieldName: 'user_uid',
-                dir: 'asc'
+                fieldName: 'start',
+                dir: 'desc'
             }
         ],
         filters: [],
@@ -104,10 +104,14 @@ contracts:  (test: nodeunit.Test) => {
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
     test.equal( 3, resQueryValues.records.length );
     test.equal( 3, resQueryValues.count );
-    test.equal( 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM', resQueryValues.records[2].c_contract_object );
-    test.equal( 22, resQueryValues.records[2].duration );
-    test.equal( 797913.170909091, resQueryValues.records[2].day_rate );
-    test.equal( null, resQueryValues.records[0].day_rate );
+    {
+        const record = resQueryValues.records[0];
+        test.equal( 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM', record.c_contract_object );
+        test.equal( 22, record.duration );
+        test.equal( 797913.170909091, record.day_rate );
+    }
+
+    test.equal( null, resQueryValues.records[1].day_rate );
     
     test.done();
 },
