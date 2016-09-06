@@ -118,6 +118,13 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                         foreignKey: { allowNull: true }
                     };
                     Contract.belongsTo(models.Bid, bidOpts);
+
+                    // it's named _obj because there was already a field named supplier
+                    const supplierOpts: Sequelize.AssociationOptionsBelongsTo = {
+                        as: 'supplier_obj',
+                        foreignKey: { allowNull: true }
+                    };
+                    Contract.belongsTo(models.Company, bidOpts);
                     
                     Contract.belongsTo(models.Company, { as: 'contractor', foreignKey: { allowNull: true } } );
                     Contract.belongsTo(models.IndustrySegment, { as: 'segment', foreignKey: { allowNull: true } } );

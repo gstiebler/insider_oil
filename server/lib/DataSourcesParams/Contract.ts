@@ -6,10 +6,13 @@ const Contract: IBaseDataSourceParams = {
             label: 'Id interno (admin)'
         },
         supplier: {
-            label: "Fornecedor"
+            label: "Fornecedor texto (admin)"
         },
         supplier_identifier: {
             label: "CNPJ/CPF"
+        },
+        supplier_obj_id: {
+            label: "Fornecedor referência (admin)"
         },
         contract_object: {
             label: "Objeto da contratação"

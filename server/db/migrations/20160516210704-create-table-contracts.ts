@@ -23,6 +23,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      // it's named _obj because there was already a field named supplier
+      supplier_obj_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'companies',
+          key: 'id'
+        }
+      },
       contract_object: {
         type: Sequelize.STRING,
         allowNull: true

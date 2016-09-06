@@ -25,8 +25,7 @@ module.exports = function(db): Promise<any[]> {
         },
         {
             user_uid: '300',
-            supplier: 'ORTENG EQUIPAMENTOS E SISTEMAS LTDA',
-            supplier_identifier: '19.884.626/0001-36',
+            supplier_id: utils.idByName('Company', 'Queiroz Galvão'),
             contract_object: 'SERVIÇOS DE CONSTRUÇÃO E MONTAGEM INDUSTRIAL ELÉTRICA',
             start: '2013-07-15',
             end: '2016-07-13',
