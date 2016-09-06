@@ -313,6 +313,24 @@ contractsByObject: (test: nodeunit.Test) => {
     test.done();
 },
 
+contractsBySupplier: (test: nodeunit.Test) => {
+    const qgId = utils.idByName('Company', 'Queiroz Galvão') ;
+    const filters = {
+        id: qgId
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'contractsBySupplier',
+            filters: filters,
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('SERVIÇOS DE CONSTRUÇÃO E MONTAGEM INDUSTRIAL ELÉTRICA', resQueryValues.records[0].c_contract_object);
+
+    test.done();
+},
+
 hydrocarbonEvidencesByOilField: (test: nodeunit.Test) => {
     const jiritubaId = utils.idByName('OilField', 'Jiribatuba2') ;
     const filters = {

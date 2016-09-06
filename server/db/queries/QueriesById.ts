@@ -577,6 +577,65 @@ const queries:IQueriesById = {
         ]
     },
     
+    contractsBySupplier: {
+        queryStrFn: (filter) => {
+            const queryParams: IQueryParams = {
+                filters: [ { field: 'supplier_obj_id', equal: filter.id } ],
+                order: [ { fieldName: 'start', dir: 'desc' } ],
+                pagination: { first: 0, itemsPerPage: 100 }
+            };
+            return TableQueries.queries['Contracts'].queryStrFn(queryParams);
+        },
+        fields: [
+            {
+                label: 'Objeto da contratação',
+                ref: {
+                    modelField: 'model',
+                    idField: 'c_id',
+                    valueField: 'c_contract_object'
+                }
+            },
+            {
+                label: 'Início da vigência',
+                fieldName: 'start',
+                type: 'DATE'
+            },
+            {
+                label: 'Fim da vigência',
+                fieldName: 'end',
+                type: 'DATE'
+            },
+            {
+                label: 'Duração (dias)',
+                fieldName: 'duration',
+                type: 'INTEGER'
+            },
+            {
+                label: 'Day rate',
+                fieldName: 'day_rate',
+                type: 'CURRENCY'
+            },
+            {
+                label: 'Valor',
+                fieldName: 'value',
+                type: 'CURRENCY'
+            },
+            {
+                label: 'Situação',
+                fieldName: 'situation',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Licitação',
+                ref: {
+                    modelField: 'bid_model',
+                    idField: 'bid_id',
+                    valueField: 'bid_process_number'
+                }
+            },
+        ]
+    },
+    
     drillingRigsByContractor: {
         queryStrFn: (filter) => {
             const queryParams: IQueryParams = {
