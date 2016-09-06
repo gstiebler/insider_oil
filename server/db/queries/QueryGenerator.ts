@@ -24,16 +24,14 @@ export interface IQueryOpts {
 }
 
 export function getOrderByStr(orderOpts: IOrderOpts[]): string {
-    let orderByStr = '';
     if( orderOpts.length > 0 ) {
-        orderByStr += ' order by ';  
+        const orderItems = []; 
         for( let orderOpt of orderOpts ) {
-            orderByStr += orderOpt.fieldName + ' ' + orderOpt.dir + ', ';
+            orderItems.push(orderOpt.fieldName + ' ' + orderOpt.dir);
         }
-        orderByStr = orderByStr.substr(0, orderByStr.length - 2);
-        orderByStr += ' ';
+        return ' order by ' + orderItems.join(', ');
     }   
-    return orderByStr;
+    return '';
 }
 
 export function getFilterStr(filters: IFilter[], filterKeyword: string, aliasMap?): string {
