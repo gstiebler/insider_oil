@@ -1,8 +1,9 @@
 'use strict';
 import Sequelize = require('sequelize');  
 import utils = require('../lib/utils');
+import { await } from '../../lib/await';
 
-module.exports = function(db): Promise<any[]> {
+module.exports = function(db) {
     const Contract:Sequelize.Model<any, any> = db.models.Contract;
     const newRecordsData = [
         {
@@ -25,10 +26,10 @@ module.exports = function(db): Promise<any[]> {
         },
         {
             user_uid: '300',
-            supplier_id: utils.idByName('Company', 'Queiroz Galvão'),
+            supplier_obj_id: utils.idByName('Company', 'Queiroz Galvão'),
             contract_object: 'SERVIÇOS DE CONSTRUÇÃO E MONTAGEM INDUSTRIAL ELÉTRICA',
             start: '2013-07-15',
-            end: '2016-07-13',
+            end: '2020-07-13',
             value: 51734951.30,
             situation: 'Ativo',
             additives_ids: '801-800-004-003-002-001',
@@ -58,10 +59,7 @@ module.exports = function(db): Promise<any[]> {
         },
     ];
     
-    const promisesArray = [];
-    for(var contractObj of newRecordsData) {
-        promisesArray.push(Contract.create(contractObj));
+    for(var obj of newRecordsData) { 
+        await(db.models.Contract.create(obj));
     }
-    
-    return Promise.all(promisesArray);
 }

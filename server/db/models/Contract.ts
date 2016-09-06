@@ -124,7 +124,7 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
                         as: 'supplier_obj',
                         foreignKey: { allowNull: true }
                     };
-                    Contract.belongsTo(models.Company, bidOpts);
+                    Contract.belongsTo(models.Company, supplierOpts);
                     
                     Contract.belongsTo(models.Company, { as: 'contractor', foreignKey: { allowNull: true } } );
                     Contract.belongsTo(models.IndustrySegment, { as: 'segment', foreignKey: { allowNull: true } } );

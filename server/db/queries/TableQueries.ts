@@ -1110,12 +1110,69 @@ export const queries:ITableQueries = {
     Contracts: {
         title: 'Contratos',
         queryStrFn: (queryParams: IQueryParams) => {
-             const options:QueryGenerator.IQueryOpts = {
+            const extraFields = [
+                ['"Contract"', 'model'],
+                ['"Bid"', 'bid_model'],
+                ['datediff(contracts.end, contracts.start) + 1', 'duration'],
+                ['if(show_day_rate, value / (datediff(contracts.end, contracts.start) + 1), NULL)', 'day_rate']
+            ];
+
+            const joinTables = [
+                {
+                    name: 'bids',
+                    fields: [
+                        ['id', 'bid_id'],
+                        ['process_number', 'bid_process_number'],
+                    ],
+                    joinField: 'contracts.bid_id'
+                },
+            ];
+
+            const filters = queryParams.filters;
+            filters.push({
+                field: 'supplier',
+                isNotNull: true
+            });
+
+            const optionsSupplierText:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'contracts',
                     fields: [
                         ['id', 'c_id'],
+                        ['contract_object', 'c_contract_object'],
+                        'start',
+                        'end',
+                        'value',
+                        'situation',
                         'supplier',
+                    ]
+                },
+                joinTables: joinTables,
+                extraFields: extraFields,
+                where: filters,
+                order: []
+            };
+            const contractsSupplierTextQuery = QueryGenerator.queryGenerator(optionsSupplierText);
+
+            // must be the first to match 'supplier' field order in select
+            // of the previous query
+            joinTables.splice(0, 0, {
+                name: 'companies',
+                fields: [
+                    ['name', 'supplier'],
+                ],
+                joinField: 'contracts.supplier_obj_id'                
+            });
+
+            filters[0] = {
+                field: 'supplier_obj_id',
+                isNotNull: true
+            };
+            const optionsSupplierObj:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'contracts',
+                    fields: [
+                        ['id', 'c_id'],
                         ['contract_object', 'c_contract_object'],
                         'start',
                         'end',
@@ -1123,27 +1180,19 @@ export const queries:ITableQueries = {
                         'situation',
                     ]
                 },
-                extraFields: [
-                    ['"Contract"', 'model'],
-                    ['"Bid"', 'bid_model'],
-                    ['datediff(contracts.end, contracts.start) + 1', 'duration'],
-                    ['if(show_day_rate, value / (datediff(contracts.end, contracts.start) + 1), NULL)', 'day_rate']
-                ],
-                joinTables: [
-                    {
-                        name: 'bids',
-                        fields: [
-                            ['id', 'bid_id'],
-                            ['process_number', 'bid_process_number'],
-                        ],
-                        joinField: 'contracts.bid_id'
-                    },
-                ],
-                where: queryParams.filters,
-                order: queryParams.order
+                joinTables: joinTables,
+                extraFields: extraFields,
+                where: filters,
+                order: []
             };
+            const contractsSupplierObjQuery = QueryGenerator.queryGenerator(optionsSupplierObj);
             
-            return QueryGenerator.queryGenerator(options);
+            const queryWithoutOrder = contractsSupplierTextQuery + 
+                          ' union ' + contractsSupplierObjQuery; 
+
+            const orderStr = QueryGenerator.getOrderByStr(queryParams.order);
+
+            return queryWithoutOrder + ' ' + orderStr;
         },
         fields: [
             {

@@ -294,15 +294,20 @@ contractsByObject: (test: nodeunit.Test) => {
     const reqQueryValues = {
         query: { 
             queryName: 'contractsByObject',
-            filters: filters
+            filters: filters,
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(2, resQueryValues.records.length);
+    test.equal(2, resQueryValues.records.length, 'size');
     {
         const record = resQueryValues.records[0];
-        test.equal('ORTENG EQUIPAMENTOS E SISTEMAS LTDA', record.supplier);
-        test.equal('SERVIÇOS DE CONSTRUÇÃO E MONTAGEM INDUSTRIAL ELÉTRICA', record.c_contract_object);   
+        test.equal('Queiroz Galvão', record.supplier, 'supplier');
+        test.equal('SERVIÇOS DE CONSTRUÇÃO E MONTAGEM INDUSTRIAL ELÉTRICA', record.c_contract_object, 'object');   
+    }    
+    {
+        const record = resQueryValues.records[1];
+        test.equal('EXTERRAN SERVICOS DE OLEO E GAS', record.supplier, 'supplier');
+        test.equal('SERVIÇOS DE CONSTRUÇÃO E MONTAGEM, SERVIÇOS DE COMPRESSÃO DE', record.c_contract_object, 'object');   
     }
 
     test.done();

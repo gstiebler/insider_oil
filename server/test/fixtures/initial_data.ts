@@ -28,7 +28,7 @@ export function createFixtures():void {
     await( require('./Production')(db) ); 
     await( require('./IndustrySegment')(db) );
     await( require('./Bid')(db) );
-    await( require('./Contract')(db) );
+    require('./Contract')(db);
     await( require('./MaintenanceDates')(db) );
     await( require('./ErrorReport')(db) );
     await( require('./ExcelImportLog')(db) );
