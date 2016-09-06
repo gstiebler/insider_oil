@@ -1164,7 +1164,7 @@ export const queries:ITableQueries = {
                 joinField: 'contracts.supplier_obj_id'                
             });
 
-            filters[0] = {
+            filters[filters.length - 1] = {
                 field: 'supplier_obj_id',
                 isNotNull: true
             };
