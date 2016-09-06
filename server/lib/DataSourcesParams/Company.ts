@@ -65,6 +65,10 @@ const Company: IBaseDataSourceParams = {
             queryName: 'productionUnitsByOwner',
             title: 'Unidades de produção próprias'
         },
+        {
+            queryName: 'contractsBySupplier',
+            title: 'Contratos fornecidos'
+        },
     ],
     labelField: "name",
     gridFields: ["name", "address"],
