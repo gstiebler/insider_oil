@@ -647,7 +647,8 @@ export const queries:ITableQueries = {
                     valueField: 'basin_name'
                 }
             }
-        ]
+        ],
+        tableauUrl: 'https://public.tableau.com/views/Ssmica/Painel1?:embed=y&:display_count=yes&:toolbar=no'
     },
     
     Refineries: {
