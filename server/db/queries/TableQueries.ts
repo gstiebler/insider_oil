@@ -391,7 +391,8 @@ export const queries:ITableQueries = {
                 fieldName: 'status',
                 type: 'VARCHAR'
             }
-        ]
+        ],
+        tableauUrl: 'https://public.tableau.com/views/Blocos/Painel1?:embed=y&:display_count=yes&:toolbar=no'
     },
       
     /** Persons */
