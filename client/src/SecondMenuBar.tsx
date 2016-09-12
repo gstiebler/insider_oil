@@ -78,6 +78,7 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
                 <li><Link to="/app/paginated_table_view?source=Contracts">Contratos</Link></li>
                 <li><Link to="/app/paginated_table_view?source=Bids">Licitações</Link></li>
                 <li><Link to="/app/paginated_table_view?source=MaintenanceContracts">Manutenção, Construção e Montagem Offshore</Link></li>
+                <li><Link to="/app/paginated_table_view?source=Shipyards">Estaleiros</Link></li>
               </ul>
             </li>
             <li className="nav-item">

@@ -457,6 +457,60 @@ export const queries:ITableQueries = {
             record.segments_text = segments ? segments.join(', ') : '';
         }
     },
+
+    Shipyards: {
+        title: 'Estaleiros',
+        queryStrFn: (queryParams: IQueryParams) => {
+            queryParams.filters.push({
+                field: 'segments_text',
+                like: '%Estaleiro%'
+            });
+
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'companies',
+                    fields: [
+                        'id',
+                        'name',
+                        'address',
+                        'segments_text'
+                    ]
+                },
+                extraFields: [
+                    ['"Company"', 'model']
+                ],
+                joinTables: [],
+                where: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'model',
+                    idField: 'id',
+                    valueField: 'name'
+                }
+            },
+            {
+                label: 'Endereço',
+                fieldName: 'address',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Segmentos',
+                fieldName: 'segments_text',
+                type: 'VARCHAR'
+            },
+        ],
+        recordProcessor: record => {
+            const segments = JSON.parse(record.segments_text);
+            record.segments_text = segments ? segments.join(', ') : '';
+        }
+    },
     
     /** Blocks */
     Blocks: {
