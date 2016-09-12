@@ -19,7 +19,7 @@
   },
   "production": {    
     "port": 3306,
-    "username": "root",
+    "username": "master",
     "database": "production",
     "protocol": "mysql",
     "dialect": "mysql"
