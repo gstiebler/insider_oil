@@ -56,7 +56,7 @@ export class Dashboard extends React.Component<IAppProps, IAppState> {
                 <img src="images/icon_dashboard_2.png" alt=""/>
                 <h3>
                     <DashboardCounter count={this.state.dashboardData.numBids} />
-                    <span>OPORTUNIDADES</span>
+                    <span>SERVIÇOS</span>
                 </h3>
                 <h4>Licitações</h4>
                 <Link className="button" to="/app/paginated_table_view?source=Bids">Explore</Link>
