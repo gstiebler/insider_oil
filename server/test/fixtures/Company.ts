@@ -108,13 +108,15 @@ module.exports = function(db) {
             name: 'SHB'
         },
         {
-            name: 'Oil M&S'
+            name: 'Oil M&S',
+            segments: ['Estaleiro']
         },
         {
             name: 'Gran Tierra'
         },
         {
-            name: 'Karoon'
+            name: 'Karoon',
+            segments: ['Gás', 'Estaleiro']
         },
         {
             name: 'Rosneft'
