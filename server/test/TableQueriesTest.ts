@@ -102,8 +102,8 @@ contracts:  (test: nodeunit.Test) => {
     }; 
     
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
-    test.equal( 3, resQueryValues.records.length );
-    test.equal( 3, resQueryValues.count );
+    test.equal( 5, resQueryValues.records.length );
+    test.equal( 5, resQueryValues.count );
     {
         const record = resQueryValues.records[0];
         test.equal( 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM', record.c_contract_object );
@@ -247,7 +247,8 @@ all: (test: nodeunit.Test) => {
             }; 
             
             const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, reqQueryValues);
-            test.ok(resQueryValues.records.length >= 2, 'Error on ' + queryName);
+            const resCount = resQueryValues.records.length;
+            test.ok(resCount >= 2, 'Error on ' + queryName + ' count = ' + resCount);
         } catch(err) {
             test.ok(false, queryName + ': ' + err);
         }

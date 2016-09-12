@@ -26,7 +26,7 @@ export function createFixtures():void {
     await( require('./OilPipeline')(db) ); 
     await( require('./GasMovement')(db) );
     await( require('./Production')(db) ); 
-    await( require('./IndustrySegment')(db) );
+    require('./IndustrySegment')(db);
     await( require('./Bid')(db) );
     require('./Contract')(db);
     await( require('./MaintenanceDates')(db) );

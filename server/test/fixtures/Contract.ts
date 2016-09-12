@@ -57,6 +57,42 @@ module.exports = function(db) {
                 id: utils.idByName('Basin', 'Alagoas'),
             }]
         },
+        {
+            user_uid: '42',
+            supplier: 'Fonecedor',
+            supplier_identifier: '01.104.740/0001-30',
+            contract_object: 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM',
+            start: '2007-07-20',
+            end: '2007-08-10',
+            value: 17554089.76,
+            situation: 'Ativo',
+            additives_ids: '001',
+            bid_id: null,
+            show_day_rate: true,
+            segment_id: utils.idByName('IndustrySegment', 'Manutenção'),
+            projects: [{
+                model_id: utils.idByName('ModelsList', 'Basin'),
+                id: utils.idByName('Basin', 'Alagoas'),
+            }]
+        },
+        {
+            user_uid: '665',
+            supplier: 'Fonecedor',
+            supplier_identifier: '01.104.740/0001-30',
+            contract_object: 'SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM',
+            start: '2006-07-20',
+            end: '2006-08-10',
+            value: 17554089.76,
+            situation: 'Ativo',
+            additives_ids: '001',
+            bid_id: null,
+            show_day_rate: true,
+            segment_id: utils.idByName('IndustrySegment', 'Manutenção'),
+            projects: [{
+                model_id: utils.idByName('ModelsList', 'Basin'),
+                id: utils.idByName('Basin', 'Alagoas'),
+            }]
+        },
     ];
     
     for(var obj of newRecordsData) { 
