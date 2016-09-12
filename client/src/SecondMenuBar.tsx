@@ -73,10 +73,11 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
               <Link to="/app/persons">Empresas</Link>
             </li>
             <li className="nav-item dropdown">
-              <a aria-haspopup="true" aria-expanded="false">Oportunidades<span className="caret"></span></a>
+              <a aria-haspopup="true" aria-expanded="false">Serviços<span className="caret"></span></a>
               <ul className="dropdown-menu">
                 <li><Link to="/app/paginated_table_view?source=Contracts">Contratos</Link></li>
                 <li><Link to="/app/paginated_table_view?source=Bids">Licitações</Link></li>
+                <li><Link to="/app/paginated_table_view?source=MaintenanceContracts">Manutenção, Construção e Montagem Offshore</Link></li>
               </ul>
             </li>
             <li className="nav-item">
