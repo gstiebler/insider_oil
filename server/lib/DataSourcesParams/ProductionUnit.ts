@@ -75,7 +75,7 @@ const ProductionUnit: IBaseDataSourceParams = {
         },
     },
     labelField: 'name',
-    gridFields: ['name', 'oil_field_name', 'block_name', 'status', 'owner'],
+    gridFields: ['name', 'oil_field_name', 'block_name', 'status'],
     tableLabel: 'Unidades de produção',
     labelSingular: 'Unidade de produção',
     excelParams: {
