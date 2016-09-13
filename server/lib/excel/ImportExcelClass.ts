@@ -136,7 +136,7 @@ export class ImportExcel {
             var fieldName = fields[ headerField ];
             if(!fieldName) continue;
             var typeStr = fieldTypeStr(model.attributes[fieldName]);
-            const value = rowValues[col];
+            let value = rowValues[col];
             if(!value || value == '')
                 continue;
             const association = model.associations[fieldName];
@@ -146,6 +146,12 @@ export class ImportExcel {
                 record[fieldName] = this.getDateValue(value);
             } else if(typeStr.includes('VARCHAR')) {
                 record[fieldName] = this.cleanString(value);
+            } else if(typeStr.includes('INTEGER')) {
+                // check if it's a valid number
+                if(isNaN(value)) {
+                    value = null;
+                }
+                record[fieldName] = value;
             } else {
                 record[fieldName] = value;
             }
