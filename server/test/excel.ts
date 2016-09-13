@@ -365,7 +365,27 @@ seismics: test => {
     test.done();
 },
 
+boats: (test: nodeunit.Test) => {
+    var excelBuf = fs.readFileSync('./test/data/boats.xlsx');
+    const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Boat'));
+    
+    var rows = await( db.models.Boat.findAll({ order: ['name'] }));
+    //console.log(rows);
+    test.equal( 12, rows.length );  
+    var expectedStatus = "Registros criados: 10";
+    expectedStatus += "\nRegistros atualizados: 0";
+    expectedStatus += "\nRegistros inválidos: 0";
+    test.equal( expectedStatus, result.status );
+    {
+        const record = rows[2];
+        const jsonObj = JSON.parse(record.info_json);
+        test.equal('0', jsonObj['Capacidade de passageiros']);
+        test.equal('1988', jsonObj['Ano de construção']);
+        test.equal('53,38', jsonObj['Comprimento']);
+    }
 
+    test.done();
+},
 
 };
 

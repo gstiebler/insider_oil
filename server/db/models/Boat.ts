@@ -33,8 +33,9 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                     };
                     Boat.belongsTo(models.Company, ownerOpts);
                 },
-            }
+            },
         }
     );
+
     return Boat;
 };

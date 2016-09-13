@@ -34,6 +34,14 @@ export interface IExcelUploadResponse {
     invalidRecordsStatus: string[];  
 }
 
+function toLowerCaseFields(fields) {
+    let result = {};
+    for(let key in fields) {
+        result[key.toLowerCase()] = fields[key];
+    }
+    return result;
+}
+
 export class ImportExcel {
 
     getRowValues(worksheet, row) {
@@ -129,11 +137,12 @@ export class ImportExcel {
         }
     }
 
-    setRecord(record, header:string[], fields, rowValues, model) {
+    protected setRecord(record, header:string[], fields, rowValues, model) {
         const _dsParams = dsParams[model.name];
+        const lowercaseFields = toLowerCaseFields(fields);
         for( var col = 0; col < header.length; col++ ) {
             var headerField = header[col];
-            var fieldName = fields[ headerField ];
+            var fieldName = lowercaseFields[ headerField ];
             if(!fieldName) continue;
             var typeStr = fieldTypeStr(model.attributes[fieldName]);
             let value = rowValues[col];
