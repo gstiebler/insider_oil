@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import * as request from 'request';
+var XLSX = require('xlsx');
 
 const names = [
     ['lblNome', 'Nome'],
@@ -42,8 +43,31 @@ function requestSync(url):Promise<any> {
     });
 }
 
+function Workbook():void {
+	if(!(this instanceof Workbook)) return new Workbook();
+	this.SheetNames = [];
+	this.Sheets = {};
+}
+
+function writeCell(r: number, c: number, value: any, ws) {
+    const cell:any = { 
+        v: value,
+        t: 's' 
+    };
+    const cell_ref = XLSX.utils.encode_cell({ c, r });
+    ws[cell_ref] = cell;
+}
+
 async function process() {
-    for(var i = 0; i < 10; i++) {
+    const wb = new Workbook();
+    const ws = {};
+
+    for(let j = 0; j < names.length; j++) {
+        writeCell(0, j, names[j][1], ws);
+    }   
+
+    let validRows = 0;
+    for(let i = 0; i < 10; i++) {
         const url = 'http://www.antaq.gov.br/Portal/Frota/ExibirEmbarcacao.aspx?id=' + i;
         let parsedHtml = await requestSync(url);
 
@@ -52,12 +76,36 @@ async function process() {
             continue;
         }
 
+        validRows++;
         console.log('Índice:', i);
-        for(let spanName of names) {
-            console.log(spanName[1]);
-            console.log(parsedHtml('#' + spanName[0]).text());
+        for(let j = 0; j < names.length; j++) {
+            const text = parsedHtml('#' + names[j][1]).text();
+            writeCell(validRows, j, text, ws);
         }
     }
+
+    
+
+	const range = {
+        s: {
+            c: 0, 
+            r: 0
+        }, 
+        e: {
+            c: names.length, 
+            r: validRows + 1 
+        }
+    };
+    ws['!ref'] = XLSX.utils.encode_range(range)
+
+    var ws_name = 'Pasta principal';
+
+    /* add worksheet to workbook */
+    wb.SheetNames.push(ws_name);
+    wb.Sheets[ws_name] = ws;
+
+    var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
+    XLSX.writeFile(wb, 'test.xlsx');
 }
 
 process();
