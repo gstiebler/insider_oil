@@ -4,7 +4,13 @@
 import db = require('../db/models');
 import { await } from '../lib/await';
 
-const dataSources:any = [
+interface IDataSource {
+    model: string;
+    fields: string[];
+    model_id?: number;
+}
+
+const dataSources:IDataSource[] = [
     {
         model: 'Block',
         fields: ['name', 'name_contract']
