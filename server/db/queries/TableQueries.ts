@@ -1301,6 +1301,79 @@ export const queries:ITableQueries = {
             },
         ]
     },
+
+    Boats: {
+        title: 'Barcos de apoio',
+        queryStrFn: (queryParams: IQueryParams) => {
+             const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'boats',
+                    fields: [
+                        ['id', 'b_id'],
+                        ['name', 'b_name'],
+                        'type',
+                    ]
+                },
+                extraFields: [
+                    ['"Boat"', 'b_model'],
+                    ['"Company"', 'c_model'],
+                ],
+                joinTables: [                    
+                    {
+                        name: ['companies', 'owner'],
+                        fields: [
+                            ['id', 'ow_id'],
+                            ['name', 'ow_name'],
+                        ],
+                        joinField: 'boats.owner_id'
+                    },                
+                    {
+                        name: ['companies', 'operator'],
+                        fields: [
+                            ['id', 'op_id'],
+                            ['name', 'op_name'],
+                        ],
+                        joinField: 'boats.operator_id'
+                    },
+                ],
+                where: queryParams.filters,
+                order: queryParams.order
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'b_model',
+                    idField: 'b_id',
+                    valueField: 'b_name'
+                }
+            },
+            {
+                label: 'Tipo',
+                fieldName: 'type',
+                type: 'VARCHAR'
+            },
+            {
+                label: 'Empresa proprietária',
+                ref: {
+                    modelField: 'c_model',
+                    idField: 'ow_id',
+                    valueField: 'ow_name'
+                }
+            },
+            {
+                label: 'Operador',
+                ref: {
+                    modelField: 'c_model',
+                    idField: 'op_id',
+                    valueField: 'op_name'
+                }
+            },
+        ]
+    },
     
     Contracts: contracts,
 
