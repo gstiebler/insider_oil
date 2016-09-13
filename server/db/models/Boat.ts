@@ -18,7 +18,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
     },
         {
             underscored: true,
-            tableName: 'error_reports',
+            tableName: 'boats',
             classMethods: {
                 associate: function (models) {
                     const ownerOpts: Sequelize.AssociationOptionsBelongsTo = {

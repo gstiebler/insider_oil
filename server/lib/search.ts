@@ -65,6 +65,10 @@ const dataSources:any = [
         model: 'OilPipeline',
         fields: ['name']
     },
+    {
+        model: 'Boat',
+        fields: ['name']
+    },
 ];
 
 // add ids to dataSources

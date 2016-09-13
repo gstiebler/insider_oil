@@ -215,6 +215,7 @@ export function getComboValues(req: express.Request, res: express.Response) {
 export function sourcesList(req: express.Request, res: express.Response) {
     var list = {
         Basin: 'Bacias',
+        Boat: 'Barcos de apoio',
         Block: 'Blocos',
         OilField: 'Campos',
         Contract: 'Contratos',

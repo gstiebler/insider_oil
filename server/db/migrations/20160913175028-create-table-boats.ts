@@ -21,7 +21,11 @@ module.exports = {
             },
             type: {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
+            },
+            info_json: {
+                type: Sequelize.JSON,
+                allowNull: true
             },
             owner_id: {
                 type: Sequelize.INTEGER,

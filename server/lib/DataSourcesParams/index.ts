@@ -40,6 +40,7 @@ params['MaintenanceDate'] = require('./MaintenanceDate');
 params['ExcelImportLog'] = require('./ExcelImportLog');
 params['ErrorReport'] = require('./ErrorReport');
 params['User'] = require('./User');
+params['Boat'] = require('./Boat');
 
 export = params;
 

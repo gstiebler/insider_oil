@@ -42,6 +42,7 @@ const operations: IOperations = {
     ExcelImportLog: BaseDataSourceOperations,
     ErrorReport: BaseDataSourceOperations,
     User: BaseDataSourceOperations,
+    Boat: BaseDataSourceOperations,
 };
 
 export = operations;

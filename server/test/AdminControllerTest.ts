@@ -357,6 +357,7 @@ allTablesMain: test => {
 	    'IndustrySegment',
 	    'MaintenanceDate',
 	    'ErrorReport',
+        'Boat',
 	];
 	
 	for(var model of models) {
