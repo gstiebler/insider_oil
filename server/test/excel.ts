@@ -287,7 +287,7 @@ contracts: test => {
     const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Contract'));
     
     var rows = await( dbUtils.findAllCustom(db.models.Contract, { order: ['user_uid'] }));
-    test.equal( 4, rows.length );  
+    test.equal( 6, rows.length );  
     var expectedStatus = "Registros criados: 1";
     expectedStatus += "\nRegistros atualizados: 3";
     expectedStatus += "\nRegistros inválidos: 0";
