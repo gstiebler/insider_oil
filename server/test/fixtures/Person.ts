@@ -17,7 +17,11 @@ module.exports = function(db) {
             emails: [
                 'gstiebler@gmail.com',
                 'guilhermemst@gmail.com'
-            ]
+            ],
+            info: {
+                cargo: "gerente", 
+                "teste 2": "valor"
+            }
         },
         {
             name: "Felipe",

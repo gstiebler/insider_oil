@@ -45,7 +45,7 @@ const Person: IBaseDataSourceParams = {
             label: 'Foto',
             isPhoto: true
         },
-        info: {
+        info_str: {
             label: "Informações",
             isMultiFieldText: true
         },

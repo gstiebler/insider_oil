@@ -67,7 +67,7 @@ module.exports = {
 					allowNull: false
 				},
 				info: {
-					type: Sequelize.TEXT,
+					type: Sequelize.JSON,
 					allowNull: true
 				},
 				created_at: {

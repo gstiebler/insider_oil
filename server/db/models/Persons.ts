@@ -68,8 +68,19 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true
 		},
 		info: {
-			type: DataTypes.TEXT,
+			type: DataTypes.JSON,
 			allowNull: true
+		},
+		info_str: {
+			type: DataTypes.VIRTUAL,
+			get: function() {
+				return this.info;
+			},
+			set: function(value) {
+				if(value) {
+					this.info = JSON.parse(value);
+				}  
+			}
 		},
 		email_text: {
 			type: DataTypes.TEXT,

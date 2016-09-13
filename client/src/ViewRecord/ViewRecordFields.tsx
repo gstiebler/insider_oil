@@ -47,12 +47,12 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
                 continue;
             }
             if(recordData[i].isMultiFieldText) {
-                var items = recordData[i].value.split('\n');
-                for(var j = 0; j < items.length; j++) {
-                    var newFieldInfo:any = { type: items[j].type };
-                    var parts = items[j].split(':');
-                    newFieldInfo.label = parts[0];
-                    newFieldInfo.value = parts[1];
+                let obj = JSON.parse(recordData[i].value);
+                for(let key in obj) {
+                    let item = obj[key];
+                    var newFieldInfo:any = { type: 'VARCHAR' };
+                    newFieldInfo.label = key;
+                    newFieldInfo.value = item;
 
                     if(!newFieldInfo.value || 
                             strContains(newFieldInfo.label, 'ignorar') ||

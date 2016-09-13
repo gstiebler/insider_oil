@@ -99,6 +99,26 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         this.onChange(fieldName, value);
         this.setState(this.state);
     }
+    
+    private onMultiFieldChange(fieldName: string, event) {
+        const lines = event.target.value.split('\n');
+        const result = {};
+        for(let line of lines) {
+            const parts = line.split(':');
+            result[parts[0]] = parts[1];
+        }
+        this.onChange(fieldName, JSON.stringify(result));
+        this.setState(this.state);
+    }
+
+    private getMultiFieldValue(fieldName: string):string {
+        const obj = JSON.parse(this.state.values[fieldName]);
+        const lines = [];
+        for(let key in obj) {
+            lines.push(key + ': ' + obj[key]);
+        }
+        return lines.join('\n');
+    }
 
     private fieldHTML(field:IARField): React.ReactElement<any> {
 
@@ -143,8 +163,8 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                           onChange={onCheckboxChange.bind(this)}/>
         } else if(field.isMultiFieldText || (field.type.indexOf('TEXT') > -1 ||field.isTextArea )) {
             return <textarea type="text" className="form-control" 
-                             defaultValue={this.state.values[field.name]}
-                             onChange={this.onChange.bind(this, field.name)}/>
+                             defaultValue={this.getMultiFieldValue(field.name)}
+                             onChange={this.onMultiFieldChange.bind(this, field.name)}/>
         } else if(field.enumValues) {
             var options = field.enumValues.map((enumValue, index) => {
                 return <option value={enumValue} key={'enum' + index}>{enumValue}</option>
