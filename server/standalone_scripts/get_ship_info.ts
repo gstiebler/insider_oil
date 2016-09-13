@@ -67,7 +67,7 @@ async function process() {
     }   
 
     let validRows = 0;
-    for(let i = 0; i < 10; i++) {
+    for(let i = 1; i < 8000; i++) {
         const url = 'http://www.antaq.gov.br/Portal/Frota/ExibirEmbarcacao.aspx?id=' + i;
         let parsedHtml = await requestSync(url);
 
@@ -79,12 +79,10 @@ async function process() {
         validRows++;
         console.log('Índice:', i);
         for(let j = 0; j < names.length; j++) {
-            const text = parsedHtml('#' + names[j][1]).text();
+            const text = parsedHtml('#' + names[j][0]).text();
             writeCell(validRows, j, text, ws);
         }
     }
-
-    
 
 	const range = {
         s: {
