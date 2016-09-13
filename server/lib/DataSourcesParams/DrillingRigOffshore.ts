@@ -43,8 +43,7 @@ const DrillingRigOffshore: IBaseDataSourceParams = {
             isPhoto: true
         },
         info: {
-            label: "Informações",
-            isMultiFieldText: true
+            label: "Informações"
         },
         coords_admin: {
             label: 'Coordenadas (admin)'
