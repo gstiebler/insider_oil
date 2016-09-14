@@ -20,6 +20,10 @@ const Boat: IBaseDataSourceParams = {
         operator_name: {
             label: 'Operador'
         },
+        info_json: {
+            label: 'Informações',
+            isMultiFieldText: true
+        },
     },
     labelField: 'name',
     gridFields: ['name', 'type', 'owner_name', 'operator_name'],
