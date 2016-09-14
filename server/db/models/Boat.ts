@@ -31,7 +31,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                         as: 'operator',
                         foreignKey: { allowNull: true }
                     };
-                    Boat.belongsTo(models.Company, ownerOpts);
+                    Boat.belongsTo(models.Company, operatorOpts);
                 },
             },
         }

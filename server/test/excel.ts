@@ -377,11 +377,13 @@ boats: (test: nodeunit.Test) => {
     expectedStatus += "\nRegistros inválidos: 0";
     test.equal( expectedStatus, result.status );
     {
-        const record = rows[2];
+        const record = rows[3];
+        test.equal('BELNAVE VII', record.name);
+        test.equal(utils.idByName('Company', 'Vipetro'), record.owner_id);
+        test.equal(utils.idByName('Company', 'Petrobras'), record.operator_id);
         const jsonObj = JSON.parse(record.info_json);
-        test.equal('0', jsonObj['Capacidade de passageiros']);
-        test.equal('1988', jsonObj['Ano de construção']);
-        test.equal('53,38', jsonObj['Comprimento']);
+        test.equal('1976', jsonObj['Ano de construção']);
+        test.equal('40,00', jsonObj['Comprimento']);
     }
 
     test.done();
