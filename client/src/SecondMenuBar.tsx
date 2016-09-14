@@ -77,7 +77,7 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
               <ul className="dropdown-menu">
                 <li><Link to="/app/paginated_table_view?source=Contracts">Contratos</Link></li>
                 <li><Link to="/app/paginated_table_view?source=Bids">Licitações</Link></li>
-                <li><Link to="/app/paginated_table_view?source=MaintenanceContracts">Manutenção, Construção e Montagem Offshore</Link></li>
+                <li><Link to="/app/paginated_table_view?source=MaintenanceContracts">Manutenção Offshore</Link></li>
                 <li><Link to="/app/paginated_table_view?source=Shipyards">Estaleiros</Link></li>
                 <li><Link to="/app/paginated_table_view?source=Boats">Barcos de apoio</Link></li>
               </ul>
