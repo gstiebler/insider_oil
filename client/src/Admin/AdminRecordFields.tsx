@@ -112,6 +112,9 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
     }
 
     private getMultiFieldValue(fieldName: string):string {
+        if(!this.state.values[fieldName])
+            return '';
+            
         const obj = JSON.parse(this.state.values[fieldName]);
         const lines = [];
         for(let key in obj) {
