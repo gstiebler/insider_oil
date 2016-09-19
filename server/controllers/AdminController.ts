@@ -232,6 +232,7 @@ export function sourcesList(req: express.Request, res: express.Response) {
         Person: 'Pessoas',
         Well: 'Poços',
         Production: 'Produção de poços',
+        Project: 'Projetos',
         ErrorReport: 'Reports de erros ',
         Refinery: 'Refinarias',
         IndustrySegment: 'Segmentos',

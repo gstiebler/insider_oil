@@ -66,5 +66,8 @@ module.exports = function(queryInterface) {
         {
             name: 'Boat'
         },
+        {
+            name: 'Project'
+        },
     ]);
 }

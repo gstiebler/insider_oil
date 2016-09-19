@@ -43,6 +43,7 @@ const operations: IOperations = {
     ErrorReport: BaseDataSourceOperations,
     User: BaseDataSourceOperations,
     Boat: BaseDataSourceOperations,
+    Project: BaseDataSourceOperations,
 };
 
 export = operations;

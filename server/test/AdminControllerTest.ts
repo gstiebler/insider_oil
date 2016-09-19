@@ -358,6 +358,7 @@ allTablesMain: test => {
 	    'MaintenanceDate',
 	    'ErrorReport',
         'Boat',
+        'Project',
 	];
 	
 	for(var model of models) {

@@ -41,6 +41,7 @@ params['ExcelImportLog'] = require('./ExcelImportLog');
 params['ErrorReport'] = require('./ErrorReport');
 params['User'] = require('./User');
 params['Boat'] = require('./Boat');
+params['Project'] = require('./Project');
 
 export = params;
 

@@ -75,6 +75,10 @@ const dataSources:IDataSource[] = [
         model: 'Boat',
         fields: ['name']
     },
+    {
+        model: 'Project',
+        fields: ['name']
+    },
 ];
 
 // add ids to dataSources
