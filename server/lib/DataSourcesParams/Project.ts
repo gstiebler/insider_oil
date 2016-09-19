@@ -52,11 +52,11 @@ const Project: IBaseDataSourceParams = {
     referencedObjectsOnView:  [
         {
             queryName: 'personsFromProjectContracted1',
-            title: 'Pessoas da 1a contratada: Enaval (contrato global)'
+            title: 'Enaval (contrato global)'
         },
         {
             queryName: 'personsFromProjectContracted2',
-            title: 'Pessoas da 2a contratada: Radix (engenharia)'
+            title: 'Radix (engenharia)'
         },
     ]
 }
