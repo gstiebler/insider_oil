@@ -21,7 +21,7 @@ function getProjectsFromPerson(sequelize: Sequelize.Sequelize, personId) {
             modelValsQueryStr += 'id, ';
             modelValsQueryStr += labelField +' ';
             modelValsQueryStr += 'from ' + tableName;
-            modelValsQueryStr += ' where id = ' + modelRefRecord.id + '\n';
+            modelValsQueryStr += ' where id = ' + modelRefRecord.model_ref_id + '\n';
             queryStrings.push(modelValsQueryStr);
             queryStrings.push('\n union \n');
         }

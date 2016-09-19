@@ -80,8 +80,8 @@ createPerson: test => {
     // test projects
     test.equal(2, responseValues.projects.length);
     test.equal('Block', responseValues.projects[0].model);
-    test.equal('ES-M-529', responseValues.projects[0].name);  
-    test.equal('Diretor', responseValues.projects[0].description);   
+    test.equal('ES-M-529', responseValues.projects[0].name);
+    test.equal('Diretor', responseValues.projects[0].description);
       
     test.equal('DrillingRigOnshore', responseValues.projects[1].model);
     test.equal('BS-04', responseValues.projects[1].name);  
