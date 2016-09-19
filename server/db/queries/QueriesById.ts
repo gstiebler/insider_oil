@@ -1475,7 +1475,7 @@ const queries:IQueriesById = {
                 where: {
                     type: 'ProjectObjects',
                     dest_model: filter.model,
-                    dest_id: filter.id
+                    dest_id: filter.obj_id
                 }
             }
             const associations:any[] = await( Associations.findAll(qryOpt) );

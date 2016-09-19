@@ -80,6 +80,14 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                     dataSource: source
                 }
             },  
+            {
+                queryName: 'projectsOfObject',
+                title: 'Oportunidades',
+                filters: {
+                    obj_id: id,
+                    model: source
+                }
+            },  
         ]
     }
 

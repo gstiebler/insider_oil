@@ -596,7 +596,7 @@ personsFromProjectContracted1: (test: nodeunit.Test) => {
 projectsOfObject: (test: nodeunit.Test) => {
     const pioneerId = utils.idByName('ProductionUnit', 'Pioneer');
     const filters = {
-        id: pioneerId,
+        obj_id: pioneerId,
         model: 'ProductionUnit'
     };
     const reqQueryValues = {
