@@ -112,7 +112,7 @@ const queries:IQueriesById = {
                 where: [
                     {
                         field: 'person_projects.model_name',
-                        equal: filters.dataSource
+                        equal: '"' + filters.dataSource + '"'
                     },
                     {
                         field: 'person_projects.model_ref_id',
