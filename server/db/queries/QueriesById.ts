@@ -79,15 +79,6 @@ const wellsByDrillingRigOffshore = {
 const queries:IQueriesById = {
     PersonsByProject: {
         queryStrFn: (filters) => {
-            const modelsListFilter = {
-                name: filters.dataSource
-            }
-            let modelListId = -1;
-            const modelInList = await( db.models.ModelsList.find({ where: modelsListFilter }) );
-            if(modelInList) {
-                modelListId = modelInList.id;
-            }
-            
             const personOpts:QueryGenerator.IQueryOpts = {
                 table: {
                     name: 'person_projects',
@@ -120,8 +111,8 @@ const queries:IQueriesById = {
                 ],
                 where: [
                     {
-                        field: 'person_projects.model_id',
-                        equal: modelListId
+                        field: 'person_projects.model_name',
+                        equal: filters.dataSource
                     },
                     {
                         field: 'person_projects.model_ref_id',
@@ -173,9 +164,8 @@ const queries:IQueriesById = {
         queryStrFn: (filters) => {
             const modelName = filters.modelName;
             const id = filters.id;
-            const modelIdQuery = 'select m.id from models_list m where m.name = "' + modelName + '" group by m.id';
             const newsIdQuery = 'SELECT nm.news_id FROM news_models nm ' +
-                ' where nm.model_id = (' + modelIdQuery + ')' +
+                ' where nm.model_name = "' + modelName + '" ' +
                 ' and nm.model_ref_id = ' + id;
             const newsQuery = 'select n.id, n.title, n.created_at, "News" as model, u.name as author_name' +
                 ' from news n' +
