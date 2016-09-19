@@ -132,16 +132,6 @@ module.exports = {
 
 		params.push({
 			table: 'persons',
-			columnName: 'project1_model_id'
-		});
-
-		params.push({
-			table: 'persons',
-			columnName: 'project1_ref_id'
-		});
-
-		params.push({
-			table: 'persons',
 			columnName: 'photo'
 		});
 

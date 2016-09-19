@@ -5,7 +5,6 @@ import db = require('../db/models');
 import fs = require('fs');
 import importExcel = require('../lib/excel/importExcel');
 import ExportExcel = require('../lib/excel/ExportExcel');
-import { initializeSearch } from '../lib/search';
 var XLSX = require('xlsx');
 import dbUtils = require('../lib/dbUtils');
 import { await } from '../lib/await';
@@ -251,7 +250,6 @@ productionUnits: test => {
 },
 
 bids: test => {
-    await( syncify( initializeSearch ) );
     var excelBuf = fs.readFileSync('./test/data/bids.xlsx');
     const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Bid'));
     
@@ -275,7 +273,6 @@ bids: test => {
 },
 
 contracts: test => {
-    await( syncify( initializeSearch ) );
     var excelBuf = fs.readFileSync('./test/data/contracts.xlsx');
     const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Contract'));
     
@@ -293,7 +290,7 @@ contracts: test => {
         test.equal('Teste fornecedor', record.supplier);
         test.equal(utils.idByName('Company', 'Petrobras'), record.contractor_id);
         test.equal( utils.idByName('ProductionUnit', 'Cidade de Magaratiba'), projects[0].id );
-        test.equal( utils.idByName('ModelsList', 'ProductionUnit'), projects[0].model_id );
+        test.equal( utils.idByName('ModelsList', 'ProductionUnit'), projects[0].model );
         test.equal( 'Euro', record.currency );
     }
     

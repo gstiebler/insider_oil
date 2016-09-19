@@ -22,7 +22,6 @@ export function main(req, res) {
 				modelLabel: modelParams.tableLabel,
 				name: result.name,
 				id: result.id,
-                model_id: result.model_id
 			});
 		}
         res.json(results);

@@ -78,7 +78,6 @@ export interface IFrontEndProject {
     description?: string;
     name?: string;
     id: number;
-    model_id: number;
 }
 
 interface ITreeChild {

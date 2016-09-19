@@ -2,14 +2,13 @@
 
 import fiberTests = require('./lib/fiberTests');
 import nodeunit = require('nodeunit');
-import { initializeSearch, searchLike, searchEqual } from '../lib/search';
+import { searchLike, searchEqual } from '../lib/search';
 import { syncify } from '../lib/PromiseUtils';
 import { await } from '../lib/await';
 
 var group: nodeunit.ITestGroup = {
 
 searchLike:  (test: nodeunit.Test) => {
-    await( syncify( initializeSearch ) );
     const result:any[] = await( searchLike('Guilherme', 5) );
     test.equal(1, result.length);
     test.equal('Guilherme Stiebler', result[0].name);
@@ -17,7 +16,6 @@ searchLike:  (test: nodeunit.Test) => {
 },
     
 searchEqual:  (test: nodeunit.Test) => {
-    await( syncify( initializeSearch ) );
     const resultAbalone:any[] = await( searchEqual('Abalone', 1) );
     test.equal(1, resultAbalone.length);
     test.equal('Abalone', resultAbalone[0].name);

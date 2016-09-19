@@ -153,8 +153,8 @@ export function deleteItem(req: express.Request, res: express.Response) { Sync(f
         return newsRefs || personRefs;
     }
     
-    var id = req.body.id;
-    var modelName = req.body.model;
+    let id = req.body.id;
+    let modelName = req.body.model;
     var model = dbUtils.getDataSource(modelName);
     const errorFunc = ControllerUtils.getErrorFunc(res, 404, "Não foi possível apagar o registro.");
     

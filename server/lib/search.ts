@@ -7,7 +7,6 @@ import { await } from '../lib/await';
 interface IDataSource {
     model: string;
     fields: string[];
-    model_id?: number;
 }
 
 const dataSources:IDataSource[] = [
@@ -81,16 +80,6 @@ const dataSources:IDataSource[] = [
     },
 ];
 
-// add ids to dataSources
-export function initializeSearch() {
-    for(var i = 0; i < dataSources.length; i++) {
-        const searchOptions = { where: { name: dataSources[i].model } };
-        const modelItem = await( db.models.ModelsList.findOne(searchOptions) );
-        dataSources[i].model_id = modelItem.id;
-    }
- }
-
-
 export function searchLike(searchValue, numMaxResults) {
     const searchStr = '%' + searchValue + '%';
     var queryStrings = [];
@@ -99,7 +88,7 @@ export function searchLike(searchValue, numMaxResults) {
     	for( var j = 0; j < dataSource.fields.length; j++ ) {
     		const model = db.models[dataSource.model];
     		const fieldName = dataSource.fields[j];
-    		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model, ' + dataSource.model_id + ' as model_id, id ';
+    		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model ';
             currQuery += ' from ' + model.getTableName();
     		currQuery += ' where ' + fieldName + ' like "' + searchStr + '"';
     		queryStrings.push(currQuery);
@@ -120,7 +109,7 @@ export function searchEqual(searchValue, numMaxResults) {
     	for( var j = 0; j < dataSource.fields.length; j++ ) {
     		const model = db.models[dataSource.model];
     		const fieldName = dataSource.fields[j];
-    		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model, ' + dataSource.model_id + ' as model_id, id ';
+    		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model, id ';
             currQuery += ' from ' + model.getTableName();
     		currQuery += ' where ' + fieldName + ' = "' + searchValue + '"';
     		queryStrings.push(currQuery);

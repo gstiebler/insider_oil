@@ -6,6 +6,8 @@ import * as moment from 'moment';
 import { coordToString, stringToCoord } from './Geo';
 import { await } from '../lib/await';
 
+export const simpleQueryType = { type: Sequelize.QueryTypes.SELECT };
+
 export function getListFieldObj(textFieldName:string) {
     return {
         type: Sequelize.VIRTUAL,

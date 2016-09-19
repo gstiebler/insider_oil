@@ -16,7 +16,7 @@ function updateContractProjects(db, contract) {
         for(var project of projects) {
             const projectRecord = { 
                 contract_id: contract.id,
-                model_id: project.model_id,
+                model_name: project.model,
                 obj_id: project.id,
                 description: project.description
             };

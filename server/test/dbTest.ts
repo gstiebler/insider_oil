@@ -171,12 +171,12 @@ Contract: (test) => {
     const basinId = utils.idByName('ModelsList', 'Basin');
     const projectsToCreate:IFrontEndProject[] =[
         {
-            model_id:basinId ,
+            model: 'Basin',
             id: amazonId,
             description: 'project 1'
         },
         {
-            model_id: utils.idByName('ModelsList', 'Block'),
+            model: 'Block',
             id: utils.idByName('Block', 'BM-BAR-1'),
         },
     ] 
@@ -192,7 +192,7 @@ Contract: (test) => {
     test.equal(2, projects.length);
     test.equal('project 1', projects[0].description);
     test.equal(amazonId, projects[0].id);
-    test.equal(basinId, projects[0].model_id);
+    test.equal('Basin', projects[0].model);
        
     const fixtureContract99 = await( db.models.Contract.findOne({ where: {user_uid: '99'} }) );
     test.equal(22, fixtureContract99.duration);

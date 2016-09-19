@@ -1,21 +1,18 @@
 "use strict";
+import * as Sequelize from 'sequelize';
+import { simpleQueryType } from '../../lib/ModelUtils';
 
-function getProjectsFromPerson(sequelize, personId) {
-    var modelRefsQueryStr = 'select m.id as model_id, p.model_ref_id as id, m.name as model, p.description ';
-    modelRefsQueryStr += 'from person_projects p, models_list m ';
-    modelRefsQueryStr += 'where p.model_id = m.id ';
-    modelRefsQueryStr += 'and person_id = ' + personId;
-    const simpleQueryType = { type: sequelize.QueryTypes.SELECT};
-    return sequelize.query(modelRefsQueryStr, simpleQueryType).then( (modelRefs) => {
+function getProjectsFromPerson(sequelize: Sequelize.Sequelize, personId) {
+    const PersonProjects:any = sequelize.models['PersonProjects'];
+    const ppOpts = { where: { person_id: personId } };
+    return PersonProjects.findAll(ppOpts).then( (modelRefs) => {
         const queryStrings = []
-        for(var i = 0; i < modelRefs.length; i++) {
-            const modelRefRecord = modelRefs[i];
-            const modelName = modelRefRecord.model;
-            const model = sequelize.models[modelName];
-            const tableName = model.tableName;
+        for(let modelRefRecord of modelRefs) {
+            const model = sequelize.models[modelRefRecord.model_name];
+            const tableName = model.getTableName();
             // TODO get the correct label field
             const labelField = 'name';
-            var modelValsQueryStr = 'select ' + modelRefRecord.model_id + ' as model_id, ';
+            var modelValsQueryStr = 'select ';
             modelValsQueryStr += '"' + modelRefRecord.model + '" as model, ';
             if(modelRefRecord.description && modelRefRecord.description != 'null')
                 modelValsQueryStr += '"' + modelRefRecord.description + '" as description, ';
@@ -37,18 +34,18 @@ function getProjectsFromPerson(sequelize, personId) {
     });
 }
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize: Sequelize.Sequelize, DataTypes) {
 	var PersonProjects = sequelize.define('PersonProjects', {
-		model_ref_id : {
+		model_ref_id: {
 			type : DataTypes.INTEGER,
 			allowNull : false
 		},
-		person_id : {
+		person_id: {
 			type : DataTypes.INTEGER,
 			allowNull : false
 		},
-		model_id : {
-			type : DataTypes.INTEGER,
+		model_name: {
+			type : DataTypes.STRING,
 			allowNull : false
 		},
         description: {
@@ -62,7 +59,6 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods: {
 			associate: function(models) {
 				PersonProjects.belongsTo(models.Person, { as : 'person' });
-				PersonProjects.belongsTo(models.ModelsList, { as : 'model' });
 			},
             getProjects: getProjectsFromPerson
 		}

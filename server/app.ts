@@ -8,13 +8,11 @@ var routes = require('./routes/index');
 import winston = require('winston');
 var umzug = require('./lib/InitUmzug');
 var app = express();
-import { initializeSearch } from './lib/search';
 import { syncify } from './lib/PromiseUtils';
 import db = require('./db/models');
 
 // Make necessary migrations
 umzug.up();
-syncify( initializeSearch );
 
 // Configure Winston log lib
 if (app.get('env') == 'production') {

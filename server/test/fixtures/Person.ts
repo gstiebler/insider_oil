@@ -10,7 +10,7 @@ module.exports = function(db) {
             company_id: utils.idByName('Company', 'Petrobras'),
             telephones: ['+55 21 99401-1944'],
             projects: [{
-                model_id: utils.idByName('ModelsList', 'Basin'),
+                model_name: 'Basin',
                 id: utils.idByName('Basin', 'Amazonas'),
                 description: 'diretor'
             }],

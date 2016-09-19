@@ -109,7 +109,6 @@ getRecordViewWell: function(test) {
 },
 
 search: test => {
-    search.initializeSearch();
 	const req = {
 		query: { searchValue: 'guilherme' }
 	}
