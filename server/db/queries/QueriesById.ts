@@ -7,6 +7,9 @@ import QueryGenerator = require('./QueryGenerator');
 import * as TableQueries from './TableQueries';
 import * as su from '../../lib/StringUtils';
 import { IQueryParams } from '../../../common/Interfaces';
+import Sequelize = require('sequelize');
+
+const models:Sequelize.ModelsHashInterface = db.models; 
 
 /** function that returns the SQL query string */
 interface IQueryStrFn {
@@ -1316,6 +1319,150 @@ const queries:IQueriesById = {
                 fieldName: 'formatted_prop',
                 type: 'FLOAT'
             },
+        ]
+    },
+
+    personsFromProjectContracted1: {
+        queryStrFn: (filter) => {
+            const Project = db.models['Project'];
+            const project = await( Project.findById(filter.id) );
+            const nullQuery = 'select * from persons where id < 0';
+            if(!project.json_field) return nullQuery;
+            const jsonField = JSON.parse(project.json_field);
+            if(jsonField.contractors.length < 1) return nullQuery;
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'persons',
+                    fields: [
+                        ['name', 'p_name'],
+                        ['id', 'p_id'],
+                        'position'
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'companies',
+                        fields: [
+                            ['name', 'c_name'],
+                            ['id', 'c_id'],
+                        ],
+                        joinField: 'persons.company_id'
+                    },
+                ],
+                extraFields: [
+                    ['"Person"', 'p_model'],
+                    ['"Company"', 'c_model'],
+                ],
+                where: [
+                    {
+                        field: 'persons.id',
+                        in: jsonField.contractors[0].persons_id
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'p_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'p_model',
+                    idField: 'p_id',
+                    valueField: 'p_name'
+                }
+            },
+            {
+                label: 'Empresa',
+                ref: {
+                    modelField: 'c_model',
+                    idField: 'c_id',
+                    valueField: 'c_name'
+                }
+            },
+            {
+                label: 'Cargo',
+                fieldName: 'position',
+                type: 'VARCHAR'
+            }
+        ]
+    },
+
+    personsFromProjectContracted2: {
+        queryStrFn: (filter) => {
+            const Project = db.models['Project'];
+            const project = await( Project.findById(filter.id) );
+            const nullQuery = 'select * from persons where id < 0';
+            if(!project.json_field) return nullQuery;
+            const jsonField = JSON.parse(project.json_field);
+            if(jsonField.contractors.length < 2) return nullQuery;
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'persons',
+                    fields: [
+                        ['name', 'p_name'],
+                        ['id', 'p_id'],
+                        'position'
+                    ]
+                },
+                joinTables: [
+                    {
+                        name: 'companies',
+                        fields: [
+                            ['name', 'c_name'],
+                            ['id', 'c_id'],
+                        ],
+                        joinField: 'persons.company_id'
+                    },
+                ],
+                extraFields: [
+                    ['"Person"', 'p_model'],
+                    ['"Company"', 'c_model'],
+                ],
+                where: [
+                    {
+                        field: 'persons.id',
+                        in: jsonField.contractors[1].persons_id
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'p_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'p_model',
+                    idField: 'p_id',
+                    valueField: 'p_name'
+                }
+            },
+            {
+                label: 'Empresa',
+                ref: {
+                    modelField: 'c_model',
+                    idField: 'c_id',
+                    valueField: 'c_name'
+                }
+            },
+            {
+                label: 'Cargo',
+                fieldName: 'position',
+                type: 'VARCHAR'
+            }
         ]
     },
 };

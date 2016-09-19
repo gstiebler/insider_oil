@@ -576,6 +576,23 @@ productionUnitsByOwner: (test: nodeunit.Test) => {
     test.done(); 
 },
 
+personsFromProjectContracted1: (test: nodeunit.Test) => {
+    const revampId = utils.idByName('Project', 'Revamp de Mexilhão');
+    const filters = {
+        id: revampId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'personsFromProjectContracted1',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(3, resQueryValues.records.length);
+
+    test.done(); 
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );
