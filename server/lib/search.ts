@@ -88,7 +88,7 @@ export function searchLike(searchValue, numMaxResults) {
     	for( var j = 0; j < dataSource.fields.length; j++ ) {
     		const model = db.models[dataSource.model];
     		const fieldName = dataSource.fields[j];
-    		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model ';
+    		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model, id ';
             currQuery += ' from ' + model.getTableName();
     		currQuery += ' where ' + fieldName + ' like "' + searchStr + '"';
     		queryStrings.push(currQuery);

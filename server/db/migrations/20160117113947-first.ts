@@ -719,7 +719,6 @@ module.exports = {
 		    'production',
 		    'news_models',
 		    'news',
-		    'models_list',
 		    'oil_fields',
 		    'drilling_rigs_onshore',
 		    'drilling_rigs_offshore',     

@@ -12,6 +12,7 @@ searchLike:  (test: nodeunit.Test) => {
     const result:any[] = await( searchLike('Guilherme', 5) );
     test.equal(1, result.length);
     test.equal('Guilherme Stiebler', result[0].name);
+    test.equal(1, result[0].id);
     test.done();
 },
     
