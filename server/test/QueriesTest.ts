@@ -606,8 +606,8 @@ projectsOfObject: (test: nodeunit.Test) => {
         }
     };
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    console.log(resQueryValues.records);
-    test.equal(3, resQueryValues.records.length);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('Revamp de Mexilhão', resQueryValues.records[0].p_name);
 
     test.done(); 
 },
