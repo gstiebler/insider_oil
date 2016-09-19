@@ -593,6 +593,25 @@ personsFromProjectContracted1: (test: nodeunit.Test) => {
     test.done(); 
 },
 
+projectsOfObject: (test: nodeunit.Test) => {
+    const pioneerId = utils.idByName('ProductionUnit', 'Pioneer');
+    const filters = {
+        id: pioneerId,
+        model: 'ProductionUnit'
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'projectsOfObject',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    console.log(resQueryValues.records);
+    test.equal(3, resQueryValues.records.length);
+
+    test.done(); 
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );

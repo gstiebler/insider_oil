@@ -1467,6 +1467,66 @@ const queries:IQueriesById = {
             }
         ]
     },
+
+    projectsOfObject: {
+        queryStrFn: (filter) => {
+            const Associations = db.models['Associations'];
+            const qryOpt = {
+                where: {
+                    type: 'ProjectObjects',
+                    dest_model: filter.model,
+                    dest_id: filter.id
+                }
+            }
+            const associations:any[] = await( Associations.findAll(qryOpt) );
+            const projectsIds = associations.map(a => {
+                return a.src_id
+            });
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'projects',
+                    fields: [
+                        ['name', 'p_name'],
+                        ['id', 'p_id'],
+                        'value'
+                    ]
+                },
+                joinTables: [],
+                extraFields: [
+                    ['"Project"', 'p_model'],
+                ],
+                where: [
+                    {
+                        field: 'projects.id',
+                        in: projectsIds
+                    }
+                ],
+                order: [ 
+                    {
+                        fieldName: 'p_name',
+                        dir: 'asc'
+                    }
+                ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: [
+            {
+                label: 'Nome',
+                ref: {
+                    modelField: 'p_model',
+                    idField: 'p_id',
+                    valueField: 'p_name'
+                }
+            },
+            {
+                label: 'Valor',
+                fieldName: 'value',
+                type: 'CURRENCY'
+            }
+        ]
+    },
 };
 
 export = queries;
