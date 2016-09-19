@@ -192,17 +192,8 @@ const queries:IQueriesById = {
     
     BidsByObject: {
         queryStrFn: (filters) => {
-            const modelsListFilter = {
-                name: filters.dataSource
-            }
-            let modelListId = -1;
-            const modelInList = await( db.models.ModelsList.find({ where: modelsListFilter }) );
-            if(modelInList) {
-                modelListId = modelInList.id;
-            }
-            
             const customFilters = [
-                { field: 'model_id', equal: modelListId },
+                { field: 'model_name', equal: '"' + filters.dataSource + '"'},
                 { field: 'obj_id', equal:filters.obj_id  },
             ];
             const queryParams: IQueryParams = {
@@ -217,17 +208,8 @@ const queries:IQueriesById = {
     
     contractsByObject: {
         queryStrFn: (filters) => {
-            const modelsListFilter = {
-                name: filters.dataSource
-            }
-            let modelListId = -1;
-            const modelInList = await( db.models.ModelsList.find({ where: modelsListFilter }) );
-            if(modelInList) {
-                modelListId = modelInList.id;
-            }
-            
             const contractProjectsFilters = {
-                model_id: modelListId,
+                model_name: filters.dataSource,
                 obj_id: filters.obj_id
             };
             const contractProjects = 

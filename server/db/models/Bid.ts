@@ -6,12 +6,12 @@ import ModelUtils = require('../../lib/ModelUtils');
 function updateBid(bid) {
     const object:any[] = bid.dataValues.object;
     if(object == null || object.length != 1) {
-        bid.model_id = null;
+        bid.model_name = null;
         bid.obj_id = null;
         return;   
     }
     
-    bid.model_id = object[0].model_id;
+    bid.model_name = object[0].model_name;
     bid.obj_id = object[0].id;
 }
 
