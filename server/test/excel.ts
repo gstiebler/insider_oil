@@ -14,20 +14,13 @@ import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 const moment = require('moment-timezone');
 import { IFrontEndProject } from '../../common/Interfaces';
 import { syncify } from '../lib/PromiseUtils';
-var utils = require('./lib/utils');
+import utils = require('./lib/utils');
 
 const saoPauloZone = moment.tz('America/Sao_Paulo');
 
 function onError(error) {
     console.error(error.stack);
 }
-
-function compareArray(test, array1, array2) {
-    test.equal(array1.length, array2.length);
-    for(var i = 0; i < array1.length; i++)
-        test.equal( array1[i], array2[i] );
-}
-
 
 var group: nodeunit.ITestGroup = {
 
@@ -90,7 +83,7 @@ importBlocks: test => {
         'Registro 293: Valor \'Cemes\' do campo \'operador\' não encontrado.',
         'Registro 294: Valor \'Cemes\' do campo \'operador\' não encontrado.' 
     ];
-    compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
+    utils.compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
     
     {
         const record = rows[0];
@@ -144,7 +137,7 @@ importPersons: test => {
     var expectedInvalidStatus = [
         'Registro 5: Valor \'BR Distribuidora\' do campo \'empresa\' não encontrado.',
     ];
-    compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
+    utils.compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
     {
         const record = rows[0];
         test.equal('Carlos Alberto B.Tessarollo', record.name);

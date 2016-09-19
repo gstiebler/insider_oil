@@ -3,7 +3,7 @@
 import fiberTests = require('./lib/fiberTests');
 import db = require('../db/models');
 import { await } from '../lib/await';
-var utils = require('./lib/utils');
+import utils = require('./lib/utils');
 import nodeunit = require('nodeunit');
 import ComboQueries = require('../db/queries/ComboQueries');
 import { IFrontEndProject } from '../../common/Interfaces';
@@ -204,6 +204,14 @@ Contract: (test) => {
     test.equal('Queiroz Galvão', fixtureContract300.supplier_formatted);
 
     test.done();
+},
+
+Project: (test) => {
+    const projects = await( db.models.Project.findAll() );
+    const mexilhao = projects[0];
+    utils.compareArray(test, [39, 17], mexilhao.contractors);
+    utils.compareArray(test, ['contrato global', 'engenharia'], mexilhao.contractors_scope);
+    test.done();
 }
 
 }
@@ -211,7 +219,7 @@ Contract: (test) => {
 var notModGroup: nodeunit.ITestGroup = {
 
 BlockCoords: (test) => {
-const coordsStrs = [
+    const coordsStrs = [
         '-20,    -40',
         '-22.0001000, -41.0003   ',
         '  -20.0,  -44   ',

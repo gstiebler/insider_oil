@@ -45,3 +45,9 @@ export function getJsonResponse(func, req, callback) {
         return result;
     }
 }
+
+export function compareArray(test, array1, array2) {
+    test.equal(array1.length, array2.length);
+    for(var i = 0; i < array1.length; i++)
+        test.equal( array1[i], array2[i] );
+}
