@@ -35,15 +35,15 @@ function loadRefObj(sequelize, gasPipeline, prefix: string) {
         //return gasPipeline[textField];
     }
         
-    const modelField = prefix + '_model_id';
+    const modelField = prefix + '_model_name';
     const objField = prefix + '_obj_id';
-    const modelRecord = await(sequelize.models.ModelsList.findById(gasPipeline[modelField]));
-    const referencedModel = sequelize.models[modelRecord.name];
+    const modelName = gasPipeline[modelField];
+    const referencedModel = sequelize.models[modelName];
     const referencedObj = await(referencedModel.findById(gasPipeline[objField]));
     return [{
         id: gasPipeline[objField],
         model_id: gasPipeline[modelField],
-        model: modelRecord.name,
+        model: modelName,
         name: referencedObj.name
     }];
 }
@@ -108,6 +108,23 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
             type: Sequelize.INTEGER,
             allowNull: true
         },
+
+        src_instalation_model_name: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
+        src_concession_model_name: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
+        dst_instalation_model_name: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
+        dst_concession_model_name: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
         
         // virtual fields 
         src_instalation: {
@@ -131,31 +148,6 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
             underscored: true,
             tableName: 'gas_pipelines',
             classMethods: {
-                associate: function (models) {
-                    const siOpts: Sequelize.AssociationOptionsBelongsTo = {
-                        as: 'src_instalation_model',
-                        foreignKey: { allowNull: true }
-                    };
-                    GasPipeline.belongsTo(models.ModelsList, siOpts);
-                    
-                    const scOpts: Sequelize.AssociationOptionsBelongsTo = {
-                        as: 'src_concession_model',
-                        foreignKey: { allowNull: true }
-                    };
-                    GasPipeline.belongsTo(models.ModelsList, scOpts);
-                    
-                    const diOpts: Sequelize.AssociationOptionsBelongsTo = {
-                        as: 'dst_instalation_model',
-                        foreignKey: { allowNull: true }
-                    };
-                    GasPipeline.belongsTo(models.ModelsList, diOpts);
-                    
-                    const dcOpts: Sequelize.AssociationOptionsBelongsTo = {
-                        as: 'dst_concession_model',
-                        foreignKey: { allowNull: true }
-                    };
-                    GasPipeline.belongsTo(models.ModelsList, dcOpts);
-                },
                 defineHooks: defineHooks
             }
         }

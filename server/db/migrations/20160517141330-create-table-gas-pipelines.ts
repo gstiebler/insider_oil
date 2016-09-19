@@ -50,25 +50,17 @@ module.exports = {
       },
       
       // source reference fields
-      src_instalation_model_id: {
-        type: Sequelize.INTEGER,
+      src_instalation_model_name: {
+        type: Sequelize.STRING,
         allowNull: true,
-        references: {
-          model: 'models_list',
-          key: 'id'
-        }
       },
       src_instalation_obj_id: {
         type: Sequelize.INTEGER,
         allowNull: true
       },
-      src_concession_model_id: {
-        type: Sequelize.INTEGER,
+      src_concession_model_name: {
+        type: Sequelize.STRING,
         allowNull: true,
-        references: {
-          model: 'models_list',
-          key: 'id'
-        }
       },
       src_concession_obj_id: {
         type: Sequelize.INTEGER,
@@ -76,25 +68,17 @@ module.exports = {
       },
       
       // destiny reference fields
-      dst_instalation_model_id: {
-        type: Sequelize.INTEGER,
+      dst_instalation_model_name: {
+        type: Sequelize.STRING,
         allowNull: true,
-        references: {
-          model: 'models_list',
-          key: 'id'
-        }
       },
       dst_instalation_obj_id: {
         type: Sequelize.INTEGER,
         allowNull: true
       },
-      dst_concession_model_id: {
-        type: Sequelize.INTEGER,
+      dst_concession_model_name: {
+        type: Sequelize.STRING,
         allowNull: true,
-        references: {
-          model: 'models_list',
-          key: 'id'
-        }
       },
       dst_concession_obj_id: {
         type: Sequelize.INTEGER,

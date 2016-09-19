@@ -30,7 +30,7 @@ module.exports = function(db) {
                 { id: 3 }
             ],
             objects: [{
-                model_id: utils.idByName('ModelsList', 'ProductionUnit'),
+                model: 'ProductionUnit',
                 id: utils.idByName('ProductionUnit', 'Pioneer'),
             }],
         },

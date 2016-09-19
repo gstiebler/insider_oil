@@ -25,11 +25,11 @@ module.exports = function(db): Promise<any[]> {
             src_instalation_text: 'Plataforma de Produção de Ubarana 2',
             src_concession_text: 'Campo de Produção de Ubarana',
             dst_instalation: [{
-                model_id: utils.idByName('ModelsList', 'ProductionUnit'),
+                model_name: 'ProductionUnit',
                 id: utils.idByName('ProductionUnit', 'Capixaba'),
             }],
             dst_concession: [{
-                model_id: utils.idByName('ModelsList', 'OilField'),
+                model_name: 'OilField',
                 id: utils.idByName('OilField', 'Jiribatuba2'),
             }],
         },
@@ -40,19 +40,19 @@ module.exports = function(db): Promise<any[]> {
             extension: 16.765,
             classification: 'Transferência',
             src_instalation: [{
-                model_id: utils.idByName('ModelsList', 'Terminal'),
+                model_name: 'Terminal',
                 id: utils.idByName('Terminal', 'Barueri'),
             }],
             src_concession: [{
-                model_id: utils.idByName('ModelsList', 'OilField'),
+                model_name: 'OilField',
                 id: utils.idByName('OilField', 'Congro'),
             }],
             dst_instalation: [{
-                model_id: utils.idByName('ModelsList', 'ProductionUnit'),
+                model_name: 'ProductionUnit',
                 id: utils.idByName('ProductionUnit', 'Capixaba'),
             }],
             dst_concession: [{
-                model_id: utils.idByName('ModelsList', 'OilField'),
+                model_name: 'OilField',
                 id: utils.idByName('OilField', 'Jiribatuba2'),
             }],
         },

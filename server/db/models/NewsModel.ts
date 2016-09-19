@@ -31,15 +31,11 @@ function setReferences(news, options) {
 
     const referencedObjects = newsLib.getModelReferences(news.content);
     // save model references
-    for(var i = 0; i < referencedObjects.length; i++) {
-        const referencedObj = referencedObjects[i];
-        const findOptions = { where: { name: referencedObj.model } };
-        const modelId = await( db.ModelsList.findOne(findOptions) ).id;
-        
+    for(let referencedObj of referencedObjects) {
         const newsRefObj = {
             news_id: news.id,
             model_ref_id: referencedObj.id,
-            model_id: modelId
+            model_name: referencedObj.model
         };
         
         await( db.NewsModels.create(newsRefObj, { transaction: options.transaction }) );

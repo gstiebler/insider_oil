@@ -8,10 +8,10 @@ module.exports = function(sequelize, DataTypes) {
 			type : DataTypes.INTEGER,
 			allowNull : false
 		},
-		model_id : {
-			type : DataTypes.INTEGER,
-			allowNull : false
-		}
+		model_name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
 	}, 
 	{
 		underscored : true,
@@ -19,7 +19,6 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods : {
 			associate : function(models) {
 				NewsModels.belongsTo(models.News, { as : 'news' });
-				NewsModels.belongsTo(models.ModelsList, { as : 'model' });
 			}
 		}
 	});
