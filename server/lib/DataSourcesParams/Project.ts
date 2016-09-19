@@ -9,7 +9,8 @@ const Project: IBaseDataSourceParams = {
             label: "Escopo"
         },
         value: {
-            label: "Valor global"
+            label: "Valor global",
+            isCurrency: true
         },
         contractors: {
             label: "Contratadas (admin)",
@@ -26,7 +27,7 @@ const Project: IBaseDataSourceParams = {
             comboSource: 'Person'
         },
         contractor2Persons: {
-            label: "Pessoas da contratada 1  (admin)",
+            label: "Pessoas da contratada 2  (admin)",
             isManyToMany: true,
             comboSource: 'Person'
         },

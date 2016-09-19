@@ -209,7 +209,12 @@ Contract: (test) => {
 Project: (test) => {
     const projects = await( db.models.Project.findAll() );
     const mexilhao = projects[0];
-    utils.compareArray(test, [39, 17], mexilhao.contractors);
+    test.equal(2, mexilhao.contractors.length);
+    test.equal(39, mexilhao.contractors[0].id);
+    test.equal('Rosneft', mexilhao.contractors[0].name);
+    test.equal(3, mexilhao.contractor1Persons.length);
+    test.equal(1, mexilhao.contractor1Persons[0].id);
+    test.equal('Guilherme Stiebler', mexilhao.contractor1Persons[0].name);
     utils.compareArray(test, ['contrato global', 'engenharia'], mexilhao.contractors_scope);
     test.done();
 }

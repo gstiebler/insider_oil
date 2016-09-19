@@ -13,15 +13,22 @@ module.exports = function(db) {
             production_unit_id: utils.idByName('ProductionUnit', 'Cidade de São Paulo'),
             oil_field_id: utils.idByName('OilField', 'Marlim'),
             contractors: [
-                utils.idByName('Company', 'Rosneft'),
-                utils.idByName('Company', 'BP Energy'),
+                { id: utils.idByName('Company', 'Rosneft') },
+                { id: utils.idByName('Company', 'BP Energy') },
             ],
             contractors_scope: [
                 'contrato global',
                 'engenharia',
             ],
-            contractor1Persons: [1, 2, 3],
-            contractor2Persons: [4, 5]
+            contractor1Persons: [
+                { id: 1 }, 
+                { id: 2 }, 
+                { id: 3 }
+            ],
+            contractor2Persons: [
+                { id: 2 }, 
+                { id: 3 }
+            ]
         },
         {
             name: "Libra",
