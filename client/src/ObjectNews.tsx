@@ -23,23 +23,30 @@ export class ObjectNews extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = { newsData: [] };
-        
+        this.getNews(this.props);
+    }    
+
+    private getNews(props: IAppProps) {
         var relateNewsQuery = {
             queryName: 'NewsByObject',
             title: 'Notícias',
             filters: {
-                modelName: this.props.modelName,
-                id: this.props.objId
+                modelName: props.modelName,
+                id: props.objId
             }
         }
         server.getQueryData(relateNewsQuery)
             .then(this.onNews.bind(this))
             .catch(showError.show);
-    }    
+    }
     
     private onNews(newsData) {
         this.state.newsData = newsData.records;
         this.setState(this.state);
+    }
+
+    private componentWillReceiveProps(props: IAppProps) {
+        this.getNews(props);
     }
  
     public render(): React.ReactElement<any> {
