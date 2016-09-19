@@ -1,8 +1,11 @@
 'use strict';
 import * as Sequelize from 'sequelize';
 import { await } from '../../lib/await';
+import { syncify } from '../../lib/PromiseUtils';
 
-function beforeSave(project) {
+export const PROJECT_OBJS_TYPE = 'ProjectObjects';
+
+function beforeSave(models, project):Promise<any> {
     project.json_field = {};
     const contractors:any[] = project.dataValues.contractors;
     const contractors_scope:string[] = project.dataValues.contractors_scope;
@@ -32,6 +35,46 @@ function beforeSave(project) {
             });
         }
     }
+    return null;
+}
+
+function updateObjects(models, project) {
+    const Association:any = models['Association'];
+    const delOpts = {
+        where: {
+            type: PROJECT_OBJS_TYPE,
+            src_id: project.id 
+        }
+    };
+    await( Association.destroy(delOpts) );
+    const objects:any[] = project.dataValues.objects;
+    if(!objects) return;
+    for(let object of objects) {
+        let dest_model = await( models.ModelsList.findById(object.model_id) ).name;
+        let association = {
+            type: PROJECT_OBJS_TYPE,
+            src_model: 'Project',
+            src_id: project.id,
+            dest_model,
+            dest_id: object.id
+        }
+        await( Association.create(association) );
+    }
+}
+
+function updateObjectsSync(models, project) {
+    return syncify(updateObjects.bind(this, models, project));
+}
+
+function saveAll(models, project) {
+    beforeSave(models, project);
+    updateObjectsSync(models, project);
+}
+
+function defineHooks(models) {
+	models.Project.hook('beforeCreate', beforeSave.bind(this, models));
+	models.Project.hook('afterCreate', updateObjectsSync.bind(this, models));
+	models.Project.hook('beforeUpdate', saveAll.bind(this, models));
 }
 
 module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
@@ -114,6 +157,31 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                 }
             },
 		},
+		objects: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                const Association:any = sequelize.models['Association'];
+                const ModelsList:any = sequelize.models['ModelsList'];
+                const queryOpts = {
+                    where: {
+                        type: PROJECT_OBJS_TYPE,
+                        src_id: this.id
+                    }
+                };
+                const associations:any[] = await( Association.findAll(queryOpts) );
+                return associations.map(association => {
+                    const modOpt = {  where: { name: association.dest_model } };
+                    const model = await( ModelsList.findOne(modOpt) );
+                    const obj = await( sequelize.models[association.dest_model].findById(association.dest_id) );
+                    return {
+                        id: association.dest_id,
+                        model: association.dest_model,
+                        model_id: model.id,
+                        name: obj.name
+                    };
+                });
+            },
+		},
     },
         {
             underscored: true,
@@ -144,11 +212,12 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                         Project.belongsTo(models.OilField, opts);
                     }
                 },
+			    defineHooks: defineHooks
             },    
-            hooks: {
-                beforeCreate: beforeSave,
-                beforeUpdate: beforeSave
-            }
+            /*hooks: {
+                beforeCreate: beforeSave.bind(this, sequelize),
+                beforeUpdate: beforeSave.bind(this, sequelize)
+            }*/
         }
     );
 

@@ -40,6 +40,10 @@ const Project: IBaseDataSourceParams = {
         production_unit_id: {
             label: 'Plataforma'
         },
+        objects: {
+            label: 'Objetos (admin)',
+            isProjectList: true
+        }
     },
     labelField: "name",
     gridFields: ["name", "scope", "value"],

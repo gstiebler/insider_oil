@@ -28,7 +28,11 @@ module.exports = function(db) {
             contractor2Persons: [
                 { id: 2 }, 
                 { id: 3 }
-            ]
+            ],
+            objects: [{
+                model_id: utils.idByName('ModelsList', 'ProductionUnit'),
+                id: utils.idByName('ProductionUnit', 'Pioneer'),
+            }],
         },
         {
             name: "Libra",
