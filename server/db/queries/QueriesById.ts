@@ -1327,6 +1327,7 @@ const queries:IQueriesById = {
             const Project = db.models['Project'];
             const project = await( Project.findById(filter.id) );
             const nullQuery = 'select * from persons where id < 0';
+            if(!project) return nullQuery;
             if(!project.json_field) return nullQuery;
             const jsonField = JSON.parse(project.json_field);
             if(jsonField.contractors.length < 1) return nullQuery;
@@ -1399,6 +1400,7 @@ const queries:IQueriesById = {
             const Project = db.models['Project'];
             const project = await( Project.findById(filter.id) );
             const nullQuery = 'select * from persons where id < 0';
+            if(!project) return nullQuery;
             if(!project.json_field) return nullQuery;
             const jsonField = JSON.parse(project.json_field);
             if(jsonField.contractors.length < 2) return nullQuery;
