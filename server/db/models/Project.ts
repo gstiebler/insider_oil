@@ -57,6 +57,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
             get: function() {
                 if(!this.dataValues.json_field) return null;
                 const jsonField = JSON.parse(this.dataValues.json_field);
+                if(!jsonField.contractors) return [];
                 const company = sequelize.models['Company'];
                 return jsonField.contractors.map(c => {
                     return {
@@ -71,6 +72,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
             get: function() {
                 if(!this.dataValues.json_field) return null;
                 const jsonField = JSON.parse(this.dataValues.json_field);
+                if(!jsonField.contractors) return [];
                 return jsonField.contractors.map(c => {
                     return c.scope;
                 });
@@ -81,6 +83,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
             get: function() {
                 if(!this.dataValues.json_field) return null;
                 const jsonField = JSON.parse(this.dataValues.json_field);
+                if(!jsonField.contractors) return [];
                 const Person = sequelize.models['Person'];
                 if(jsonField.contractors.length >= 1) {
                     return jsonField.contractors[0].persons_id.map(person_id => {
@@ -98,6 +101,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
             get: function() {
                 if(!this.dataValues.json_field) return null;
                 const jsonField = JSON.parse(this.dataValues.json_field);
+                if(!jsonField.contractors) return [];
                 const Person = sequelize.models['Person'];
                 if(jsonField.contractors.length >= 2) {
                     return jsonField.contractors[1].persons_id.map(person_id => {
