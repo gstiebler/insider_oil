@@ -1470,7 +1470,7 @@ const queries:IQueriesById = {
 
     projectsOfObject: {
         queryStrFn: (filter) => {
-            const Associations = db.models['Associations'];
+            const Association = db.models['Association'];
             const qryOpt = {
                 where: {
                     type: 'ProjectObjects',
@@ -1478,7 +1478,7 @@ const queries:IQueriesById = {
                     dest_id: filter.obj_id
                 }
             }
-            const associations:any[] = await( Associations.findAll(qryOpt) );
+            const associations:any[] = await( Association.findAll(qryOpt) );
             const projectsIds = associations.map(a => {
                 return a.src_id
             });
