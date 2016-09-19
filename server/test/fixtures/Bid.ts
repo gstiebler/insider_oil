@@ -16,7 +16,7 @@ module.exports = function(db): Promise<any[]> {
             opening_state: null,
             situation: 'Homologada',
             object: [{
-                model_id: utils.idByName('ModelsList', 'Basin'),
+                model_name: 'Basin',
                 id: utils.idByName('Basin', 'Amazonas'),
             }]
         },
@@ -32,7 +32,7 @@ module.exports = function(db): Promise<any[]> {
             segment_id: utils.idByName('IndustrySegment', 'Petróleo'),
             situation: 'Aberta',
             object: [{
-                model_id: utils.idByName('ModelsList', 'Block'),
+                model_name: 'Block',
                 id: utils.idByName('Block', 'BM-BAR-1'),
             }]
         },

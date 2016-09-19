@@ -465,27 +465,6 @@ module.exports = {
 		});
 		
 		parameters.push({
-			table: 'models_list',
-			fields: {
-				id: {
-					type: Sequelize.INTEGER,
-					primaryKey: true,
-					autoIncrement: true
-				},
-				name: {
-					type: Sequelize.STRING,
-					allowNull: false
-				},
-				created_at: {
-					type: Sequelize.DATE
-				},
-				updated_at: {
-					type: Sequelize.DATE
-				},
-			}
-		});
-		
-		parameters.push({
 			table: 'news',
 			fields: {
 				id: {

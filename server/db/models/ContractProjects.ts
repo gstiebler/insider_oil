@@ -1,22 +1,20 @@
 "use strict";
 
 function getProjectsFromContract(sequelize, contractId) {
-    var modelRefsQueryStr = 'select m.id as model_id, cp.obj_id as id, m.name as model, cp.description ';
-    modelRefsQueryStr += 'from contract_projects cp, models_list m ';
-    modelRefsQueryStr += 'where cp.model_id = m.id ';
-    modelRefsQueryStr += 'and contract_id = ' + contractId;
+    var modelRefsQueryStr = 'select cp.obj_id as id, cp.model_name as model, cp.description ';
+    modelRefsQueryStr += 'from contract_projects cp ';
+    modelRefsQueryStr += 'where contract_id = ' + contractId;
     const simpleQueryType = { type: sequelize.QueryTypes.SELECT};
     return sequelize.query(modelRefsQueryStr, simpleQueryType).then( (modelRefs) => {
         const queryStrings = []
-        for(var i = 0; i < modelRefs.length; i++) {
-            const modelRefRecord = modelRefs[i];
+        for(let modelRefRecord of modelRefs) {
             const modelName = modelRefRecord.model;
             const model = sequelize.models[modelName];
             const tableName = model.tableName;
             // TODO get the correct label field
             const labelField = 'name';
-            var modelValsQueryStr = 'select ' + modelRefRecord.model_id + ' as model_id, ';
-            modelValsQueryStr += '"' + modelRefRecord.model + '" as model, ';
+            var modelValsQueryStr = 'select ';
+            modelValsQueryStr += '"' + modelRefRecord.model_name + '" as model, ';
             if(modelRefRecord.description && modelRefRecord.description != 'null')
                 modelValsQueryStr += '"' + modelRefRecord.description + '" as description, ';
             else
@@ -31,7 +29,7 @@ function getProjectsFromContract(sequelize, contractId) {
         if(modelRefs.length) {
             queryStrings.pop();
             var queryStr = queryStrings.join('');
-            queryStr += ' order by model_id, id';
+            queryStr += ' order by model_name, id';
             return sequelize.query(queryStr, simpleQueryType);
         }
         return null;
@@ -48,10 +46,10 @@ module.exports = function(sequelize, DataTypes) {
 			type : DataTypes.INTEGER,
 			allowNull : false
 		},
-		model_id : {
-			type : DataTypes.INTEGER,
-			allowNull : false
-		},
+        model_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         description: {
             type: DataTypes.STRING,
             allowNull: true
@@ -63,7 +61,6 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods: {
 			associate: function(models) {
 				ContractProjects.belongsTo(models.Contract, { as : 'contract' });
-				ContractProjects.belongsTo(models.ModelsList, { as : 'model' });
 			},
             getProjects: getProjectsFromContract
 		}

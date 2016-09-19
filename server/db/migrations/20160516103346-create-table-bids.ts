@@ -62,13 +62,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      model_id: {
-        type: Sequelize.INTEGER,
+      model_name: {
+        type: Sequelize.STRING,
         allowNull: true,
-        references: {
-          model: 'models_list',
-          key: 'id'
-        }
       },
       obj_id: {
         type: Sequelize.INTEGER,

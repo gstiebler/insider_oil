@@ -13,7 +13,7 @@ function getProjectsFromPerson(sequelize: Sequelize.Sequelize, personId) {
             // TODO get the correct label field
             const labelField = 'name';
             var modelValsQueryStr = 'select ';
-            modelValsQueryStr += '"' + modelRefRecord.model + '" as model, ';
+            modelValsQueryStr += '"' + modelRefRecord.model_name + '" as model, ';
             if(modelRefRecord.description && modelRefRecord.description != 'null')
                 modelValsQueryStr += '"' + modelRefRecord.description + '" as description, ';
             else

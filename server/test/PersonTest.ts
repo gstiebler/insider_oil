@@ -35,8 +35,6 @@ getPerson: test => {
 },
 
 createPerson: test => {
-    const blockModelId = utils.idByName('ModelsList', 'Block');
-    const droModelId = utils.idByName('ModelsList', 'DrillingRigOnshore');
     const newItemData = {
         name: 'Michael Jackson',
         company_id: 2,
@@ -48,12 +46,12 @@ createPerson: test => {
         ],
         projects: [
             {
-                model_id: blockModelId,
+                model: 'Block',
                 id: utils.idByName('Block', 'ES-M-529'),
                 description: 'Diretor'
             },
             {
-                model_id: droModelId,
+                model: 'DrillingRigOnshore',
                 id: utils.idByName('DrillingRigOnshore', 'BS-04'),
             }
         ]
@@ -86,7 +84,6 @@ createPerson: test => {
     test.equal('Diretor', responseValues.projects[0].description);   
       
     test.equal('DrillingRigOnshore', responseValues.projects[1].model);
-    test.equal(droModelId, responseValues.projects[1].model_id);
     test.equal('BS-04', responseValues.projects[1].name);  
     test.ok(!responseValues.projects[1].description);  
     
@@ -94,8 +91,6 @@ createPerson: test => {
 },
 
 editPerson: test => {
-    const blockModelId = utils.idByName('ModelsList', 'Block');
-    const droModelId = utils.idByName('ModelsList', 'DrillingRigOnshore');
     const recordReq = {
         id: 2,
         name: 'Michael Jackson',
@@ -108,11 +103,11 @@ editPerson: test => {
         ],
         projects: [
             {
-                model_id: blockModelId,
+                model: 'Block',
                 id: utils.idByName('Block', 'ES-M-529'),
             },
             {
-                model_id: droModelId,
+                model: 'DrillingRigOnshore',
                 id: utils.idByName('DrillingRigOnshore', 'BS-04'),
             }
         ]
@@ -142,11 +137,9 @@ editPerson: test => {
     
     // test projects
     test.equal(2, responseGet.values.projects.length);
-    test.equal('Block', responseGet.values.projects[0].model);
-    test.equal(blockModelId, responseGet.values.projects[0].model_id);    
+    test.equal('Block', responseGet.values.projects[0].model); 
     test.equal('ES-M-529',responseGet.values.projects[0].name);    
     test.equal('DrillingRigOnshore', responseGet.values.projects[1].model);
-    test.equal(droModelId, responseGet.values.projects[1].model_id);
     test.equal('BS-04', responseGet.values.projects[1].name);
       
     test.done();

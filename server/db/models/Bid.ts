@@ -58,6 +58,10 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
             type: Sequelize.STRING,
             allowNull: true
         },
+        model_name: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
         obj_id: {
             type: Sequelize.INTEGER,
             allowNull: true
@@ -72,11 +76,6 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
             tableName: 'bids',
             classMethods: {
                 associate: function (models) {
-                    const opts: Sequelize.AssociationOptionsBelongsTo = {
-                        as: 'model',
-                        foreignKey: { allowNull: true }
-                    };
-                    Bid.belongsTo(models.ModelsList, opts);
                     Bid.belongsTo(models.Company, { as: 'contractor', foreignKey: { allowNull: true } } );
                     Bid.belongsTo(models.IndustrySegment, { as: 'segment', foreignKey: { allowNull: true } } );
                 },

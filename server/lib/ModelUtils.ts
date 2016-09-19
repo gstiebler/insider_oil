@@ -41,16 +41,15 @@ return {
 
 export function getObjRefField() {
     const db = require('../db/models');
-    if(!this.model_id)
+    if(!this.model_name)
         return [];
-    const modelRecord = await( db.models.ModelsList.findById(this.model_id));
-    const referencedModel = db.models[modelRecord.name];
+    const referencedModel = db.models[this.model_name];
     const referencedObj = await(referencedModel.findById(this.obj_id));
     const refObjName = referencedObj ? referencedObj.name : null;
     return [{
         id: this.obj_id,
         model_id: this.model_id,
-        model: modelRecord.name,
+        model: this.model_name,
         name: refObjName
     }];
 }

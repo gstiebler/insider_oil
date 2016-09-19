@@ -20,7 +20,7 @@ module.exports = function(db) {
             show_day_rate: false,
             segment_id: utils.idByName('IndustrySegment', 'Petróleo'),
             projects: [{
-                model_id: utils.idByName('ModelsList', 'Basin'),
+                model: 'Basin',
                 id: utils.idByName('Basin', 'Amazonas'),
             }]
         },
@@ -36,7 +36,7 @@ module.exports = function(db) {
             bid_id: 2,
             show_day_rate: false,
             projects: [{
-                model_id: utils.idByName('ModelsList', 'Basin'),
+                model: 'Basin',
                 id: utils.idByName('Basin', 'Amazonas'),
             }]
         },
@@ -53,7 +53,7 @@ module.exports = function(db) {
             bid_id: null,
             show_day_rate: true,
             projects: [{
-                model_id: utils.idByName('ModelsList', 'Basin'),
+                model: 'Basin',
                 id: utils.idByName('Basin', 'Alagoas'),
             }]
         },
@@ -71,7 +71,7 @@ module.exports = function(db) {
             show_day_rate: true,
             segment_id: utils.idByName('IndustrySegment', 'Manutenção'),
             projects: [{
-                model_id: utils.idByName('ModelsList', 'Basin'),
+                model: 'Basin',
                 id: utils.idByName('Basin', 'Alagoas'),
             }]
         },
@@ -89,7 +89,7 @@ module.exports = function(db) {
             show_day_rate: true,
             segment_id: utils.idByName('IndustrySegment', 'Manutenção'),
             projects: [{
-                model_id: utils.idByName('ModelsList', 'Basin'),
+                model: 'Basin',
                 id: utils.idByName('Basin', 'Alagoas'),
             }]
         },

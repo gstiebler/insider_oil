@@ -22,13 +22,9 @@ module.exports = {
 					},
 					onDelete: 'CASCADE'
 				},
-				model_id: {
-					type: Sequelize.INTEGER,
+				model_name: {
+					type: Sequelize.STRING,
 					allowNull: false,
-					references: {
-						model: 'models_list',
-						key: 'id'
-					}
 				},
 				description: {
 					type: Sequelize.STRING,
