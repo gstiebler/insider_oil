@@ -38,14 +38,19 @@ createWell: (test: nodeunit.Test) => {
     req.body.newItemData = JSON.stringify(newItemData);
     utils.getJsonResponse.sync(null, AdminController.createItem, req);
     
-    const req2 = {
-        query: { table: 'Well' }
-    };
+    const query: ni.GetTableData.req = { 
+        table: 'Well',
+        order: [{
+            fieldName: 'name',
+            dir: 'asc'
+        }] 
+    }; 
+    const req2 = { query };
     const response:ni.GetTableData.res = 
         utils.getJsonResponse.sync(null, AdminController.getTableData, req2);
     test.equal(11, response.records.length);
-    test.equal('Novo poço', response.records[3].name);
-    test.equal('Statoil', response.records[3].operator_name);
+    test.equal('Novo poço', response.records[10].name);
+    test.equal('Statoil', response.records[10].operator_name);
     test.done();
 },
 
@@ -243,8 +248,12 @@ listWells: function(test) {
     test.equal( "Modelo não encontrado", errorResponse.error.errorMsg );
     test.equal( 0, errorResponse.error.errors.length );
     
-    const query2:ni.GetTableData.req = { 
-        table: 'Well'
+    const query2: ni.GetTableData.req = { 
+        table: 'Well',
+        order: [{
+            fieldName: 'name',
+            dir: 'asc'
+        }] 
     }; 
     const req2 = { query: query2 };
     const res2:ni.GetTableData.res = utils.getJsonResponse.sync(null, AdminController.getTableData, req2);
