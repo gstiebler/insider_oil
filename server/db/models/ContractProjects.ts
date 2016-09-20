@@ -14,7 +14,7 @@ function getProjectsFromContract(sequelize, contractId) {
             // TODO get the correct label field
             const labelField = 'name';
             var modelValsQueryStr = 'select ';
-            modelValsQueryStr += '"' + modelRefRecord.model_name + '" as model, ';
+            modelValsQueryStr += '"' + modelRefRecord.model + '" as model, ';
             if(modelRefRecord.description && modelRefRecord.description != 'null')
                 modelValsQueryStr += '"' + modelRefRecord.description + '" as description, ';
             else
