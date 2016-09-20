@@ -3,7 +3,7 @@ import Sequelize = require('sequelize');
 import { await } from '../../lib/await';
 
 function updateGasPipeRef(gasPipeline, prefix: string) {
-    const modelField = prefix + '_model_id';
+    const modelField = prefix + '_model_name';
     const objField = prefix + '_obj_id';
     const object: any[] = gasPipeline.dataValues[prefix];
     if (object == null || object.length != 1) {
@@ -12,7 +12,7 @@ function updateGasPipeRef(gasPipeline, prefix: string) {
         return;
     }
 
-    gasPipeline[modelField] = object[0].model_id;
+    gasPipeline[modelField] = object[0].model_name;
     gasPipeline[objField] = object[0].id;
 }
 
