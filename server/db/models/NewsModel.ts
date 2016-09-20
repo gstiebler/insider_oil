@@ -32,6 +32,8 @@ function setReferences(news, options) {
     const referencedObjects = newsLib.getModelReferences(news.content);
     // save model references
     for(let referencedObj of referencedObjects) {
+        if(!db[referencedObj.model])
+            throw 'Modelo ' + referencedObj.model + ' não encontrado.';
         const newsRefObj = {
             news_id: news.id,
             model_ref_id: referencedObj.id,

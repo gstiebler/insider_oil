@@ -55,9 +55,9 @@ createNewsOnDB: test => {
     };
 	const referencedModelsOnNew:any = await( db.models.NewsModels.findAll(options) );
 	test.equal(2, referencedModelsOnNew.length);
-	test.equal('OilField', await( db.models.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
+	test.equal('OilField', referencedModelsOnNew[0].model_name);
 	test.equal(abaloneId, referencedModelsOnNew[0].model_ref_id);
-	test.equal('Person', await( db.models.ModelsList.findById(referencedModelsOnNew[1].model_id) ).name);
+	test.equal('Person', referencedModelsOnNew[1].model_name);
 	test.equal(guilhermeId, referencedModelsOnNew[1].model_ref_id);
 	
 	await(justCreatedNew.destroy());
@@ -77,7 +77,7 @@ editNews: test => {
 	await( record.save() );
 	const referencedModelsOnNew = await( db.models.NewsModels.findAll({ where: { news_id: newsId } }) );
     test.equal(1, referencedModelsOnNew.length);
-	test.equal('Basin', await( db.models.ModelsList.findById(referencedModelsOnNew[0].model_id) ).name);
+	test.equal('Basin', referencedModelsOnNew[0].model_name);
 	test.equal(camposId, referencedModelsOnNew[0].model_ref_id);
 	test.done();
 },
@@ -102,6 +102,7 @@ doNotCreateNewsWhenErrorOnModelsReference: test => {
 	
 	function finalizeTest(news) {
 		test.ok(false);
+	    test.done();
 	}
 	
 	function countNews(news) {
