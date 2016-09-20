@@ -137,14 +137,11 @@ export function saveItem(req: express.Request, res: express.Response, next) { Sy
 }, ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."))}
 
 export function deleteItem(req: express.Request, res: express.Response) { Sync(function() {
-    function hasReferencedObj() {
-        // check if a news deference the object
-        const modelInList = await(db.models.ModelsList.find({ where: { name: modelName } }));
-        if(!modelInList)
-            return false;
+
+    function hasReferencedObj(modelName: string) {
         const modelRefsOptions = {
             where: {
-                model_id: modelInList.id,
+                model_name: modelName,
                 model_ref_id: id
             }
         }
@@ -159,7 +156,7 @@ export function deleteItem(req: express.Request, res: express.Response) { Sync(f
     const errorFunc = ControllerUtils.getErrorFunc(res, 404, "Não foi possível apagar o registro.");
     
     try {
-        if(hasReferencedObj()) {
+        if(hasReferencedObj(modelName)) {
             errorFunc(`Existe uma referência a este objeto, portanto não pode ser deletado.`);
             return;
         }
