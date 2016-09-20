@@ -1,2 +1,3 @@
 /client/dist/app.min.js
 *.map
+*.DB*
