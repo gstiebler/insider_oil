@@ -29,7 +29,7 @@ function getProjectsFromContract(sequelize, contractId) {
         if(modelRefs.length) {
             queryStrings.pop();
             var queryStr = queryStrings.join('');
-            queryStr += ' order by model_name, id';
+            queryStr += ' order by model, id';
             return sequelize.query(queryStr, simpleQueryType);
         }
         return null;
