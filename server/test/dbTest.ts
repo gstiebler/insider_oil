@@ -168,7 +168,6 @@ GasPipeline: (test) => {
 
 Contract: (test) => {
     const amazonId = utils.idByName('Basin', 'Amazonas'); 
-    const basinId = utils.idByName('ModelsList', 'Basin');
     const projectsToCreate:IFrontEndProject[] =[
         {
             model: 'Basin',

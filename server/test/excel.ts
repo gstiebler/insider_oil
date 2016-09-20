@@ -266,7 +266,7 @@ bids: test => {
         test.equal('23/01/1981-20:23', moment.tz(record.opening_moment, 'America/Sao_Paulo').format('DD/MM/YYYY-HH:mm'));
         test.equal('objeto teste', record.contract_object);
         test.equal( utils.idByName('OilField', 'Abalone'), record.obj_id );
-        test.equal( utils.idByName('ModelsList', 'OilField'), record.model_id );
+        test.equal( 'OilField', record.model_name );
     }
     
     test.done();
@@ -290,7 +290,7 @@ contracts: test => {
         test.equal('Teste fornecedor', record.supplier);
         test.equal(utils.idByName('Company', 'Petrobras'), record.contractor_id);
         test.equal( utils.idByName('ProductionUnit', 'Cidade de Magaratiba'), projects[0].id );
-        test.equal( utils.idByName('ModelsList', 'ProductionUnit'), projects[0].model );
+        test.equal( 'ProductionUnit', projects[0].model);
         test.equal( 'Euro', record.currency );
     }
     
