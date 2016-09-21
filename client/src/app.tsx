@@ -25,6 +25,9 @@ import { Observatory } from './Observatory';
 import { PersonsByCompany } from './PersonsByCompany'; 
 import { NewsTicker } from './NewsTicker'; 
 import { Analytics } from './Analytics'; 
+import ReactGA = require('react-ga');
+
+ReactGA.initialize('UA-80990869-2');
 
 interface IAppProps {
     model: string;
@@ -65,6 +68,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
                 username: response.login,
                 isAdmin: response.admin
             });
+            ReactGA.set({ userId: response.id });
         }.bind(this), function(result) {
             if(result.status == 401) {
                 window.location.replace('/login');
@@ -120,8 +124,14 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
     }
 }
 
+function logPageView() {
+    const completeURL = window.location.pathname + window.location.search; 
+    ReactGA.set({ page: completeURL });
+    ReactGA.pageview(completeURL);
+}
+
 ReactDOM.render(
-  <Router history={browserHistory}>
+  <Router history={browserHistory} onUpdate={logPageView}>
     <Route path="/" component={InsiderOilApp}/>
     <Route path="/app" component={InsiderOilApp}>
       <Route path="dashboard" component={Dashboard}/>
