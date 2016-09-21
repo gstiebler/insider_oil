@@ -145,6 +145,18 @@ editPerson: test => {
     test.done();
 },
 
+removeProjects: test => {
+    const qryOpts = { where: {name: 'Guilherme Stiebler'} };
+    const guilherme = await( db.models.Person.findOne(qryOpts) );
+    test.equal(1, guilherme.projects.length);
+    guilherme.projects = null;
+    guilherme.save();
+
+    const guilherme2 = await( db.models.Person.findOne(qryOpts) );
+    test.ok(!guilherme2.projects);
+
+    test.done();
+},
 // TODO
 /*deletePerson: test => {
     

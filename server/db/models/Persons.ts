@@ -8,10 +8,10 @@ import { await } from '../../lib/await';
 
 function updatePersonProjects(db, person) {
     const projects = person.dataValues.projects;
-    if(projects == null)		
-        return;
     const options = { where: { person_id: person.id } };
     db.PersonProjects.destroy(options).then(() => {
+		if(projects == null)		
+			return;
         const newProjectRecords = [];
         for(let project of projects) {
             var projectRecord = { 
