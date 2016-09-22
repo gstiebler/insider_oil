@@ -60,6 +60,9 @@ const Contract: IBaseDataSourceParams = {
         duration: {
             label: 'Duração (dias)'
         },
+        type: {
+            label: 'Tipo'
+        },
         projects: {
             label: 'Objeto',
             isProjectList: true
@@ -85,6 +88,7 @@ const Contract: IBaseDataSourceParams = {
             'situação': 'situation',
             'número dos aditivos': 'additives_ids',
             'licitação': 'bid',
+            'Tipo': 'type',
         }
     },
 }

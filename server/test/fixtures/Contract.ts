@@ -19,6 +19,7 @@ module.exports = function(db) {
             bid_id: null,
             show_day_rate: false,
             segment_id: utils.idByName('IndustrySegment', 'Petróleo'),
+            type: 'CAPEX',
             projects: [{
                 model: 'Basin',
                 id: utils.idByName('Basin', 'Amazonas'),
@@ -35,6 +36,7 @@ module.exports = function(db) {
             additives_ids: '801-800-004-003-002-001',
             bid_id: 2,
             show_day_rate: false,
+            type: 'não',
             projects: [{
                 model: 'Basin',
                 id: utils.idByName('Basin', 'Amazonas'),
@@ -52,6 +54,7 @@ module.exports = function(db) {
             additives_ids: '001',
             bid_id: null,
             show_day_rate: true,
+            type: 'OPEX',
             projects: [{
                 model: 'Basin',
                 id: utils.idByName('Basin', 'Alagoas'),
@@ -69,6 +72,7 @@ module.exports = function(db) {
             additives_ids: '001',
             bid_id: null,
             show_day_rate: true,
+            type: 'OPEX',
             segment_id: utils.idByName('IndustrySegment', 'Manutenção'),
             projects: [{
                 model: 'Basin',

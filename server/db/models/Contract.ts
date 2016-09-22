@@ -79,6 +79,10 @@ module.exports = function (sequelize, DataTypes: Sequelize.DataTypes) {
             allowNull: true,
             invisible: true
         },
+      type: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
         duration: {
             type: Sequelize.VIRTUAL,
             get: function() {

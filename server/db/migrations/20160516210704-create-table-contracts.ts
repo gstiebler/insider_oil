@@ -80,6 +80,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+      type: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       bid_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
