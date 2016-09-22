@@ -18,7 +18,8 @@ export class Observatory extends React.Component<IAppProps, IAppState> {
 
         this.sources = {
             investments: "https://public.tableau.com/views/InvestimentosdaPetrobras-histrico_0/InvestimentodaPetrobras?:embed=y&:display_count=yes&:toolbar=no",
-            wells: "https://public.tableau.com/views/DemandadepoosOffshore/Painel1"
+            wells: "https://public.tableau.com/views/DemandadepoosOffshore/Painel1",
+            presalt: 'https://public.tableau.com/shared/C5YCPWWMN?:toolbar=no&:display_count=yes'
         };
 
         var { id } = props.location.query;

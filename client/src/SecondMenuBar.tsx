@@ -90,6 +90,7 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
               <ul className="dropdown-menu">
                 <li><Link to="/app/observatory?id=investments">Investimentos</Link></li>
                 <li><Link to="/app/observatory?id=wells">Poços</Link></li>
+                <li><Link to="/app/observatory?id=presalt">Pré-sal</Link></li>
               </ul>
             </li>
             { this.props.isAdmin ? adminLink : '' }
