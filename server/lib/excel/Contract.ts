@@ -12,8 +12,9 @@ export class Contract extends ImportExcel {
         this.setObject(record, header, rowValues);
     }
 
-    setObject(record, header, rowValues) {
+    private setObject(record, header, rowValues) {
         const objectStr:string = this.valueFromHeaderName(rowValues, header, 'objeto');
+        if(!objectStr) return;
         const objects = objectStr.split(',');
         record.projects = []; 
         objects.map((projectStr) => {
@@ -24,7 +25,7 @@ export class Contract extends ImportExcel {
         });
     }
 
-    valueFromHeaderName(rowValues, header:string[], columnTitle:string):any {
+    private valueFromHeaderName(rowValues, header:string[], columnTitle:string):any {
         const columnIndex = header.indexOf(columnTitle);
         return rowValues[columnIndex];
     }
