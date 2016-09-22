@@ -13,7 +13,7 @@ import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 const moment = require('moment-timezone');
 import { IFrontEndProject } from '../../common/Interfaces';
 import { syncify } from '../lib/PromiseUtils';
-import utils = require('./lib/utils');
+import * as utils from './lib/utils';
 
 const saoPauloZone = moment.tz('America/Sao_Paulo');
 
@@ -292,6 +292,7 @@ contracts: test => {
         test.equal( utils.idByName('ProductionUnit', 'Cidade de Magaratiba'), projects[0].id );
         test.equal( 'ProductionUnit', projects[0].model);
         test.equal( 'Euro', record.currency );
+        test.equal('opex', record.type);
     }
     
     test.done();
