@@ -268,7 +268,8 @@ const contracts:ITableQuery = {
                     'end',
                     'value',
                     'situation',
-                    'supplier'
+                    'supplier',
+                    'type'
                 ]
             },
             joinTables: joinTables,
@@ -301,7 +302,8 @@ const contracts:ITableQuery = {
                     'start',
                     'end',
                     'value',
-                    'situation'
+                    'situation',
+                    'type'
                 ]
             },
             joinTables: joinTables,
@@ -360,6 +362,11 @@ const contracts:ITableQuery = {
         {
             label: 'Situação',
             fieldName: 'situation',
+            type: 'VARCHAR'
+        },
+        {
+            label: 'Tipo',
+            fieldName: 'type',
             type: 'VARCHAR'
         },
         {
