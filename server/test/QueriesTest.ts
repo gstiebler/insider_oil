@@ -612,6 +612,24 @@ projectsOfObject: (test: nodeunit.Test) => {
     test.done(); 
 },
 
+boatsByOwner: (test: nodeunit.Test) => {
+    const petroId = utils.idByName('Company', 'Petrobras');
+    const filters = {
+        id: petroId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'boatsByOwner',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('ILHA DO ARAMAÇA', resQueryValues.records[0].b_name);
+
+    test.done(); 
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );

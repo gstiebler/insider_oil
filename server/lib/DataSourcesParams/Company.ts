@@ -69,6 +69,10 @@ const Company: IBaseDataSourceParams = {
             queryName: 'contractsBySupplier',
             title: 'Contratos fornecidos'
         },
+        {
+            queryName: 'boatsByOwner',
+            title: 'Barcos de apoio'
+        },
     ],
     labelField: "name",
     gridFields: ["name", "address"],

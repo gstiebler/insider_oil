@@ -1499,6 +1499,21 @@ const queries:IQueriesById = {
             }
         ]
     },
+
+    boatsByOwner: {
+        queryStrFn: (filters) => {
+            const customFilters = [
+                { field: 'owner_id', equal: filters.id},
+            ];
+            const queryParams: IQueryParams = {
+                filters: customFilters,
+                order: [ { fieldName: 'boats.name', dir: 'asc' } ],
+                pagination: { first: 0, itemsPerPage: 100 }
+            };
+            return TableQueries.queries['Boats'].queryStrFn(queryParams);
+        },
+        fields: TableQueries.queries['Boats'].fields
+    },
 };
 
 export = queries;
