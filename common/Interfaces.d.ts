@@ -11,6 +11,13 @@ interface IRef {
     valueField: string;
 }
 
+export interface IBaseQueryField {
+    label: string;
+    fieldName?: string;
+    type?: string;
+    ref?: IRef;
+}
+
 export interface IField {
     label: string;
     isManyToMany?: boolean;

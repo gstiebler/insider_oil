@@ -2,9 +2,8 @@
 
 import { await } from '../../lib/await';
 import db = require('../models');
-import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
-import { IQueryParams } from '../../../common/Interfaces';
+import { IQueryParams, IBaseQueryField } from '../../../common/Interfaces';
 
 interface IQueryStrFn {
     (queryParams: IQueryParams): string; 
@@ -12,7 +11,7 @@ interface IQueryStrFn {
 
 interface ITableQuery {
     queryStrFn: IQueryStrFn;
-    fields: BaseQuery.IField[];
+    fields: IBaseQueryField[];
     title: string;
     recordProcessor?: any;
     tableauUrl?: string;
@@ -1640,6 +1639,29 @@ export const queries:ITableQueries = {
                         dir: 'asc'
                     }
                 ],
+            };
+            
+            return QueryGenerator.queryGenerator(options);
+        },
+        fields: []
+    },
+
+    requests: {
+        title: 'Requisições',
+        queryStrFn: (queryParams: IQueryParams) => {
+            const options:QueryGenerator.IQueryOpts = {
+                table: {
+                    name: 'request_log',
+                    fields: [
+                        'user',
+                        'created_at',
+                        'path'
+                    ]
+                },
+                joinTables: [],
+                extraFields: [],
+                where: queryParams.filters,
+                order: queryParams.order,
             };
             
             return QueryGenerator.queryGenerator(options);

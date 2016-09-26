@@ -2,11 +2,10 @@
 
 import { await } from '../../lib/await';
 import db = require('../models');
-import BaseQuery = require('./BaseQuery');
 import QueryGenerator = require('./QueryGenerator');
 import * as TableQueries from './TableQueries';
 import * as su from '../../lib/StringUtils';
-import { IQueryParams } from '../../../common/Interfaces';
+import { IQueryParams, IBaseQueryField } from '../../../common/Interfaces';
 import Sequelize = require('sequelize');
 
 const models:Sequelize.ModelsHashInterface = db.models; 
@@ -18,7 +17,7 @@ interface IQueryStrFn {
 
 interface IQueryById {
     queryStrFn: IQueryStrFn;
-    fields: BaseQuery.IField[];
+    fields: IBaseQueryField[];
     recordProcessor?: any;
 }
 

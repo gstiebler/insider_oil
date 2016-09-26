@@ -11,6 +11,7 @@ import { AdminEdit } from './Admin/AdminEdit';
 import { NewsEdit } from './Admin/NewsEdit';
 import { AdminCreate } from './Admin/AdminCreate';
 import { Publisher } from './Admin/Publisher/Publisher';
+import { RequestsViewer } from './Admin/RequestsViewer';
 import { ViewRecord } from './ViewRecord/ViewRecord';
 import { OilFieldView } from './ViewRecord/OilFieldView';
 import { Flash } from './Flash';
@@ -24,7 +25,8 @@ import { Insights } from './Insights/Insights';
 import { Observatory } from './Observatory'; 
 import { PersonsByCompany } from './PersonsByCompany'; 
 import { NewsTicker } from './NewsTicker'; 
-import { Analytics } from './Analytics'; 
+import { Analytics } from './Analytics';  
+
 import ReactGA = require('react-ga');
 
 ReactGA.initialize('UA-80990869-2');
@@ -152,6 +154,7 @@ ReactDOM.render(
       <Route path="observatory" component={Observatory}/>
       <Route path="persons" component={PersonsByCompany}/>
       <Route path="analytics" component={Analytics}/>
+      <Route path="requests_viewer" component={RequestsViewer}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,

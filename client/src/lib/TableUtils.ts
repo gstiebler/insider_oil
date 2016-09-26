@@ -1,12 +1,13 @@
 import * as ModelViewService from './ModelViewUtils';
 import { FilterField } from '../PaginatedTableHeader';
+import { IBaseQueryField } from '../../../common/Interfaces';
 import * as StringUtils from './StringUtils'; 
 
 export function genColumns(tableParams) {
     var columns:FilterField[] = [];
-    var currencyColumnsIndexes = [];
+    var currencyColumnsIndexes:number[] = [];
     for(var i = 0; i < tableParams.fields.length; i++) {
-        var field = tableParams.fields[i];
+        var field:IBaseQueryField = tableParams.fields[i];
         var columnObj:FilterField = {
                 title: field.label,
                 data: '',
