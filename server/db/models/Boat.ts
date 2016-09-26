@@ -1,5 +1,10 @@
 'use strict';
 import * as Sequelize from 'sequelize';
+import { saveOriginalImage } from '../../lib/ModelUtils';
+
+function savePhoto(boat) {
+	  saveOriginalImage(boat.dataValues.photo, 'Boat', boat.id);
+}
 
 module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
     const Boat = sequelize.define('Boat', {
@@ -14,7 +19,13 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
         info_json: {
             type: Sequelize.JSON,
             allowNull: true
-        },
+        }, 
+		photo: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                return 'image';
+            },
+		},
     },
         {
             underscored: true,
@@ -34,6 +45,10 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                     Boat.belongsTo(models.Company, operatorOpts);
                 },
             },
+            hooks: {
+                afterCreate: savePhoto,
+                beforeUpdate: savePhoto
+            }
         }
     );
 

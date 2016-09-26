@@ -20,6 +20,10 @@ const Boat: IBaseDataSourceParams = {
         operator_name: {
             label: 'Operador'
         },
+        photo: {
+            label: 'Foto',
+            isPhoto: true
+        },
         info_json: {
             label: 'Informações',
             isMultiFieldText: true
