@@ -1668,6 +1668,22 @@ export const queries:ITableQueries = {
         },
         fields: []
     },
+
+    requestsByUser: {
+        title: 'Requisições',
+        queryStrFn: (queryParams: IQueryParams) => {
+            const select = " select name, count(request_log.id) qty";
+            const fromStr = " from request_log "
+            const join = " left outer join users "
+            const joinOn = " on request_log.user = users.login "
+            const groupBy = " group by request_log.user "
+            const order = " ORDER BY qty desc ";
+            const query = select + fromStr + join + joinOn + groupBy + order;
+
+            return query;
+        },
+        fields: []
+    },
 };
 
 export function getQueryResult(queryName: string, queryParams: IQueryParams): Promise<any[]> {

@@ -14,6 +14,8 @@ interface IAppProps {
 interface IAppState {
     dataTable: any;
     users: any[];
+    accessQtyUser: any[];
+    type: string;
 }
 
 const dateFormat = "DD/MM/YYYY";
@@ -29,7 +31,9 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
 
         this.state = { 
             dataTable: null,
-            users: []
+            type: "INDIVIDUAL_ACCESS",
+            users: [],
+            accessQtyUser: []        
         };
         window['paginatedTableRef'] = this;
     }
@@ -133,12 +137,46 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
     private onChangeDate(varName, value) {
         var formattedValue = moment(value, dateFormat).format("YYYY-MM-DD");
         this[varName] = formattedValue;
-        this.state.dataTable.draw();
+        this.update();
     }
 
     private onUserChange(e) {
         this.usernameFilter = e.target.value;
-        this.state.dataTable.draw();
+        this.update();
+    }
+
+    private onTypeChange(e) {
+        this.state.type = e.target.value;
+        if(this.state.type == "INDIVIDUAL_ACCESS") {
+            this.initTable(this.props);
+        }    
+        this.update();
+    }
+
+    private update() {
+        if(this.state.type == "INDIVIDUAL_ACCESS") {
+            this.state.dataTable.draw();
+        } else { 
+             var options:ni.GetTableQueryData.req = {
+                queryName: 'requestsByUser',
+                queryParams: {
+                    pagination: {
+                        first: 0,
+                        itemsPerPage: 200
+                    },
+                    order: [],
+                    filters: []
+                }
+            };
+            server.getTableData(options)
+                .then(this.onUsersQtyData.bind(this))
+                .catch(showError.show);
+        }
+    }
+
+    private onUsersQtyData(serverResult:ni.GetTableQueryData.res) {
+        this.state.users = serverResult.records;
+        this.setState(this.state);
     }
 
     private onTableData(callback, serverResult:ni.GetTableQueryData.res) {
@@ -158,12 +196,56 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
         const startDate = moment(minusWeek).format(dateFormat);
         const endDate = moment(today).format(dateFormat);
 
-        const usersComboSource = this.state.users;
-        usersComboSource.splice(0, 0, { label: 'Todos' });
+        let bottomHTML = null;
+        if(this.state.type == "INDIVIDUAL_ACCESS") {
+            const usersComboSource = this.state.users;
+            usersComboSource.splice(0, 0, { label: 'Todos' });
 
-        const usersHTMLOptions = usersComboSource.map((user, i) => {
-            return <option value={user.id} key={i}>{user.label}</option>;
-        });
+            const usersHTMLOptions = usersComboSource.map((user, i) => {
+                return <option value={user.id} key={i}>{user.label}</option>;
+            });
+            bottomHTML = (
+                <div>
+                    <div className="row">
+                        <div className="col-md-2">
+                            Filtrar usuário:
+                        </div>
+                        <div className="col-md-3">
+                        <select className="form-control" 
+                            onChange={this.onUserChange.bind(this)}>
+                            { usersHTMLOptions }
+                        </select>
+                        </div>
+                    </div>
+                    <br/>
+                    <div className="main-table table-responsive bootstrap-table">
+                        <table id="mainTable" className="table" cellSpacing="0" width="100%"></table>
+                    </div>
+                </div>
+            );
+        } else {
+            const rowsHTML = this.state.users.map(u => {
+                return (
+                    <tr>
+                        <td>{u.name}</td>
+                        <td style={{align: "right"}} >{u.qty}</td>
+                    </tr>
+                );
+            });
+            bottomHTML = (
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Usuário</th>
+                            <th>Nro acessos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { rowsHTML }
+                    </tbody>
+                </table>
+            );
+        }
 
         return (
             <div>
@@ -196,22 +278,21 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                                 className="form-control input-group"/>
                     </div>
                 </div>
-                <br/>
+                <br/>                
                 <div className="row">
                     <div className="col-md-2">
-                        Filtrar usuário:
+                        Mostrar:
                     </div>
                     <div className="col-md-3">
                     <select className="form-control" 
-                        onChange={this.onUserChange.bind(this)}>
-                        { usersHTMLOptions }
+                            onChange={this.onTypeChange.bind(this)}>
+                        <option value="INDIVIDUAL_ACCESS" key="ALL">Acessos individuais</option>
+                        <option value="PER_USER" key="PER_USER">Quantidade por usuário</option>
                     </select>
                     </div>
                 </div>
-                <br/>
-                <div className="main-table table-responsive bootstrap-table">
-                    <table id="mainTable" className="table" cellSpacing="0" width="100%"></table>
-                </div>
+                <br/> 
+                { bottomHTML }
             </div>
         );
     }
