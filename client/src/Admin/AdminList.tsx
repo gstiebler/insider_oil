@@ -56,24 +56,28 @@ export class AdminList extends React.Component<IAppProps, IAppState> {
         }
 
         return (
-            <div>
-            <h4>
-                <p><Link to="/app/model_view?model=News">Notícias</Link></p>
-                <p><Link to="/app/insights_publisher">Publicador</Link></p>
-            </h4>
-            <p><Link to="/app/paginated_table_view?source=Production">Produção</Link></p>
-            <hr/>
-            { sourcesLinks }
-            <hr/>
-            Importar Excel de produção
-            <ExcelUploadButton modelName="Production" /><br/>
-            <hr/>
-            Importar arquivo KML de Blocos
-            <ButtonUploadFile onFileLoad={this.onKmlLoad.bind(this, 'Block')} />
-            <hr/>
-            Importar arquivo KML de Campos
-            <ButtonUploadFile onFileLoad={this.onKmlLoad.bind(this, 'OilField')} />
-            <hr/>
+            <div className="row">
+                <div className="col-md-5">
+                    <h4>
+                        <p><Link to="/app/model_view?model=News">Notícias</Link></p>
+                        <p><Link to="/app/insights_publisher">Publicador</Link></p>
+                    </h4>
+                    <p><Link to="/app/paginated_table_view?source=Production">Produção</Link></p>
+                    <p><Link to="/app/requests_viewer">Visualizador de acessos</Link></p>
+                    <hr/>
+                    Importar Excel de produção
+                    <ExcelUploadButton modelName="Production" /><br/>
+                    <hr/>
+                    Importar arquivo KML de Blocos
+                    <ButtonUploadFile onFileLoad={this.onKmlLoad.bind(this, 'Block')} />
+                    <hr/>
+                    Importar arquivo KML de Campos
+                    <ButtonUploadFile onFileLoad={this.onKmlLoad.bind(this, 'OilField')} />
+                    <hr/>
+                </div>
+                <div className="col-md-5">
+                    { sourcesLinks }
+                </div>
             </div>
         );
     }
