@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import * as ModelViewService from '../lib/ModelViewUtils';
-import { IBaseQueryField } from '../../../common/Interfaces';
+import { IBaseQueryField, IFilter } from '../../../common/Interfaces';
 import { genColumns } from '../lib/TableUtils';
 import * as ni from '../../../common/NetworkInterfaces';
 import * as moment from 'moment';
@@ -85,6 +85,23 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
         this.state.dataTable.draw();
     }
 
+    private getDateFilters():IFilter[] {
+        const filters:IFilter[] = [];
+        if(this.startDate) {
+            filters.push({
+                field: 'request_log.created_at',
+                gte: '"' + this.startDate + '"'
+            });
+        }
+        if(this.endDate) {
+            filters.push({
+                field: 'request_log.created_at',
+                lte: '"' + this.endDate + '"'
+            });
+        }
+        return filters;
+    }
+
     /**
      * DataTables callback to refresh the data. It's called when the order column change,
      * and when a page on pagination is clicked
@@ -111,24 +128,14 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                 filters: []
             }
         };
-        if(this.startDate) {
-            options.queryParams.filters.push({
-                field: 'created_at',
-                gte: '"' + this.startDate + '"'
-            });
-        }
-        if(this.endDate) {
-            options.queryParams.filters.push({
-                field: 'created_at',
-                lte: '"' + this.endDate + '"'
-            });
-        }
         if(this.usernameFilter) {
             options.queryParams.filters.push({
                 field: 'user',
                 equal: '"' + this.usernameFilter + '"'
             });
         }
+        const dateFilters = this.getDateFilters();
+        options.queryParams.filters = options.queryParams.filters.concat(dateFilters);
         server.getTableData(options)
             .then(this.onTableData.bind(this, callback))
             .catch(showError.show);
@@ -168,6 +175,8 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                     filters: []
                 }
             };
+            const dateFilters = this.getDateFilters();
+            options.queryParams.filters = options.queryParams.filters.concat(dateFilters);
             server.getTableData(options)
                 .then(this.onUsersQtyData.bind(this))
                 .catch(showError.show);
@@ -224,9 +233,9 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                 </div>
             );
         } else {
-            const rowsHTML = this.state.users.map(u => {
+            const rowsHTML = this.state.users.map((u, i) => {
                 return (
-                    <tr>
+                    <tr key={i}>
                         <td>{u.name}</td>
                         <td style={{align: "right"}} >{u.qty}</td>
                     </tr>

@@ -1678,8 +1678,8 @@ export const queries:ITableQueries = {
             const joinOn = " on request_log.user = users.login "
             const groupBy = " group by request_log.user "
             const order = " ORDER BY qty desc ";
-            const query = select + fromStr + join + joinOn + groupBy + order;
-
+            const where = QueryGenerator.getFilterStr(queryParams.filters, 'where');
+            const query = select + fromStr + join + joinOn + where + groupBy + order;
             return query;
         },
         fields: []
