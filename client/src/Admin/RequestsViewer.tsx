@@ -237,7 +237,7 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                 return (
                     <tr key={i}>
                         <td>{u.name}</td>
-                        <td style={{align: "right"}} >{u.qty}</td>
+                        <td style={{textAlign: "right"}} >{u.qty}</td>
                     </tr>
                 );
             });
