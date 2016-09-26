@@ -88,14 +88,9 @@ export function getQueryData(params: ni.GetQueryData.req):Promise<ni.GetQueryDat
 
 /**
  * Return multiple records from a table data source
- * @param {} options Options (queryName and queryParams)
- *   queryParams:
- *     order: string[]
- *     filters: {field, like}
- *     pagination: {first, itemsPerPage}
  */
-export function getTableData( options ):Promise<remoteServer.TableQueryDataRes> {
-    return getP('/get_table_data', options);
+export function getTableData(req: ni.GetTableQueryData.req):Promise<ni.GetTableQueryData.res> {
+    return getP('/get_table_data', req);
 }
 
 export function getTimeSeries(options):Promise<any> {

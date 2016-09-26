@@ -2,9 +2,11 @@ import * as React from 'react';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import * as ModelViewService from '../lib/ModelViewUtils';
-import { TableQueryDataRes } from '../../../common/Interfaces';
 import { IBaseQueryField } from '../../../common/Interfaces';
 import { genColumns } from '../lib/TableUtils';
+import * as ni from '../../../common/NetworkInterfaces';
+import * as moment from 'moment';
+import * as DateTimeField from 'react-bootstrap-datetimepicker';
 
 interface IAppProps {
 }
@@ -13,7 +15,12 @@ interface IAppState {
     dataTable: any;
 }
 
+const dateFormat = "DD/MM/YYYY";
+
 export class RequestsViewer extends React.Component<IAppProps, IAppState> {
+
+    private startDate;
+    private endDate;
 
     constructor(props: IAppProps) {
         super(props);
@@ -78,7 +85,7 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
             orderColumns.push( orderObj );
         }
         
-        var options = {
+        var options:ni.GetTableQueryData.req = {
             queryName: 'requests',
             queryParams: {
                 pagination: {
@@ -89,12 +96,30 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                 filters: []
             }
         };
+        if(this.startDate) {
+            options.queryParams.filters.push({
+                field: 'created_at',
+                gte: '"' + this.startDate + '"'
+            });
+        }
+        if(this.endDate) {
+            options.queryParams.filters.push({
+                field: 'created_at',
+                lte: '"' + this.endDate + '"'
+            });
+        }
         server.getTableData(options)
             .then(this.onTableData.bind(this, callback))
             .catch(showError.show);
     }
 
-    private onTableData(callback, serverResult:TableQueryDataRes) {
+    private onChangeDate(varName, value) {
+        var formattedValue = moment(value, dateFormat).format("YYYY-MM-DD");
+        this[varName] = formattedValue;
+        this.state.dataTable.draw();
+    }
+
+    private onTableData(callback, serverResult:ni.GetTableQueryData.res) {
         var result = { 
             aaData: serverResult.records,
             recordsTotal: serverResult.count,
@@ -105,9 +130,47 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): React.ReactElement<any> {
+        const today = new Date();
+        const minusWeek = new Date();
+        minusWeek.setDate(minusWeek.getDate() - 7);
+        const startDate = moment(minusWeek).format(dateFormat);
+        const endDate = moment(today).format(dateFormat);
+
         return (
-            <div className="main-table table-responsive bootstrap-table">
-                <table id="mainTable" className="table" cellSpacing="0" width="100%"></table>
+            <div>
+                <div className="row">
+                    <div className="col-md-2">
+                        Data de início
+                    </div>
+                    <div className="col-md-3">
+                        <DateTimeField 
+                                mode={'date'}
+                                inputFormat={dateFormat}
+                                dateTime={startDate}
+                                format={dateFormat}
+                                onChange={this.onChangeDate.bind(this, 'startDate')}
+                                className="form-control input-group"/>
+                    </div>
+                </div>
+                <br/>
+                <div className="row">
+                    <div className="col-md-2">
+                        Data de fim
+                    </div>
+                    <div className="col-md-3">
+                        <DateTimeField 
+                                mode={'date'}
+                                inputFormat={dateFormat}
+                                dateTime={endDate}
+                                format={dateFormat}
+                                onChange={this.onChangeDate.bind(this, 'endDate')}
+                                className="form-control input-group"/>
+                    </div>
+                </div>
+                <br/>
+                <div className="main-table table-responsive bootstrap-table">
+                    <table id="mainTable" className="table" cellSpacing="0" width="100%"></table>
+                </div>
             </div>
         );
     }

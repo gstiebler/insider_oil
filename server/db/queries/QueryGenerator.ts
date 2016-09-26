@@ -53,6 +53,14 @@ export function getFilterStr(filters: IFilter[], filterKeyword: string, aliasMap
             }
         } else if (filter.equal) {
             filterStrs.push(field + ' = ' + filter.equal);
+        } else if (filter.gt) {
+            filterStrs.push(field + ' > ' + filter.gt);
+        } else if (filter.lt) {
+            filterStrs.push(field + ' < ' + filter.lt);
+        } else if (filter.gte) {
+            filterStrs.push(field + ' >= ' + filter.gte);
+        } else if (filter.lte) {
+            filterStrs.push(field + ' <= ' + filter.lte);
         } else if (filter.isNotNull) {
             filterStrs.push(field + ' is not null ');
         } else {

@@ -45,6 +45,10 @@ interface IFilter {
     like?: string;
     in?: any[];
     equal?: string;
+    gt?: string;
+    lt?: string;
+    gte?: string;
+    lte?: string;
     isNotNull?: boolean;
 }
 
