@@ -13,6 +13,7 @@ interface IAppProps {
 
 interface IAppState {
     dataTable: any;
+    users: any[];
 }
 
 const dateFormat = "DD/MM/YYYY";
@@ -21,18 +22,28 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
 
     private startDate;
     private endDate;
+    private usernameFilter;
 
     constructor(props: IAppProps) {
         super(props);
 
         this.state = { 
             dataTable: null,
+            users: []
         };
         window['paginatedTableRef'] = this;
     }
 
     private componentDidMount() {
-        this.initTable(this.props);
+        this.initTable(this.props);        
+        server.getP('/combo_values', { model: 'UsersUsername' })
+            .then(this.onUsers.bind(this))
+            .catch(showError.show);
+    }
+
+    private onUsers(users:any[]) {
+        this.state.users = users;
+        this.setState(this.state);
     }
 
     private initTable(props: IAppProps) {
@@ -108,6 +119,12 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                 lte: '"' + this.endDate + '"'
             });
         }
+        if(this.usernameFilter) {
+            options.queryParams.filters.push({
+                field: 'user',
+                equal: '"' + this.usernameFilter + '"'
+            });
+        }
         server.getTableData(options)
             .then(this.onTableData.bind(this, callback))
             .catch(showError.show);
@@ -116,6 +133,11 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
     private onChangeDate(varName, value) {
         var formattedValue = moment(value, dateFormat).format("YYYY-MM-DD");
         this[varName] = formattedValue;
+        this.state.dataTable.draw();
+    }
+
+    private onUserChange(e) {
+        this.usernameFilter = e.target.value;
         this.state.dataTable.draw();
     }
 
@@ -136,11 +158,18 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
         const startDate = moment(minusWeek).format(dateFormat);
         const endDate = moment(today).format(dateFormat);
 
+        const usersComboSource = this.state.users;
+        usersComboSource.splice(0, 0, { label: 'Todos' });
+
+        const usersHTMLOptions = usersComboSource.map((user, i) => {
+            return <option value={user.id} key={i}>{user.label}</option>;
+        });
+
         return (
             <div>
                 <div className="row">
                     <div className="col-md-2">
-                        Data de início
+                        Data de início:
                     </div>
                     <div className="col-md-3">
                         <DateTimeField 
@@ -155,7 +184,7 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                 <br/>
                 <div className="row">
                     <div className="col-md-2">
-                        Data de fim
+                        Data de fim:
                     </div>
                     <div className="col-md-3">
                         <DateTimeField 
@@ -165,6 +194,18 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                                 format={dateFormat}
                                 onChange={this.onChangeDate.bind(this, 'endDate')}
                                 className="form-control input-group"/>
+                    </div>
+                </div>
+                <br/>
+                <div className="row">
+                    <div className="col-md-2">
+                        Filtrar usuário:
+                    </div>
+                    <div className="col-md-3">
+                    <select className="form-control" 
+                        onChange={this.onUserChange.bind(this)}>
+                        { usersHTMLOptions }
+                    </select>
                     </div>
                 </div>
                 <br/>

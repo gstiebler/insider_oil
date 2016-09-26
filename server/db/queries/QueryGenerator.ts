@@ -80,7 +80,6 @@ export function getPaginationStr(pagiOpts: IPaginationOpts): string {
         return ' limit ' + pagiOpts.first + ', ' + pagiOpts.itemsPerPage;
     else
         return '';
-        
 }
 
 export function genTableSelectStr(tableQryOpts: ITableQueryOpts, aliasMap):string {

@@ -156,7 +156,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                         value={this.state.author_id}
                         onChange={this.onUserChange.bind(this)}>
                         { usersHTMLOptions }
-                </select>
+                    </select>
                 </div>    
             </div>
         );
