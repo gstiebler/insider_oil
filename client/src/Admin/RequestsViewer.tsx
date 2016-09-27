@@ -64,6 +64,11 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                 type: 'VARCHAR'
             },
             {
+                label: 'Texto',
+                fieldName: 'translation',
+                type: 'VARCHAR'
+            },
+            {
                 label: 'Momento',
                 fieldName: 'created_at',
                 type: 'DATETIME'
