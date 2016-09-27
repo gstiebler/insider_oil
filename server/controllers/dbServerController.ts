@@ -109,21 +109,19 @@ export function getTableQueryData(req: express.Request, res: express.Response):v
     const query = TableQueries.queries[queryName];
     const fields = query.fields;
 
-    TableQueries.getQueryResult(queryName, queryParams).then( (results) => {
-        const records = results[0];
-        if(query.recordProcessor) {
-            for(var record of records) {
-                query.recordProcessor(record);
-            }
+    const results = await( TableQueries.getQueryResult(queryName, queryParams) );
+    const records = results[0];
+    if(query.recordProcessor) {
+        for(var record of records) {
+            query.recordProcessor(record);
         }
-        const result:ni.GetTableQueryData.res = {
-            fields,
-            records,
-            count: results[1][0].count
-        };
-        res.json(result);
-    }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
-
+    }
+    const result:ni.GetTableQueryData.res = {
+        fields,
+        records,
+        count: results[1][0].count
+    };
+    res.json(result);
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os registros."))}
  
 export function getTimeSeries(req: express.Request, res: express.Response):void {Sync(function(){

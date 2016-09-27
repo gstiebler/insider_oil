@@ -4,6 +4,8 @@ import { await } from '../../lib/await';
 import db = require('../models');
 import QueryGenerator = require('./QueryGenerator');
 import { IQueryParams, IBaseQueryField } from '../../../common/Interfaces';
+import * as RequestLogTranslator from '../../lib/RequestLogTranslator';
+import { syncifyES7 } from '../../lib/PromiseUtils';
 
 interface IQueryStrFn {
     (queryParams: IQueryParams): string; 
@@ -13,7 +15,7 @@ interface ITableQuery {
     queryStrFn: IQueryStrFn;
     fields: IBaseQueryField[];
     title: string;
-    recordProcessor?: any;
+    recordProcessor?: (any) => any;
     tableauUrl?: string;
 }
 
@@ -1655,7 +1657,8 @@ export const queries:ITableQueries = {
                     fields: [
                         'user',
                         'created_at',
-                        'path'
+                        'path',
+                        'query'
                     ]
                 },
                 joinTables: [],
@@ -1666,7 +1669,10 @@ export const queries:ITableQueries = {
             
             return QueryGenerator.queryGenerator(options);
         },
-        fields: []
+        fields: [],
+        recordProcessor: record => {
+            record.translation = await(syncifyES7(RequestLogTranslator.translate.bind(this, record)));
+        }
     },
 
     requestsByUser: {

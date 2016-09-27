@@ -19,3 +19,18 @@ export function syncify(func):Promise<any> {
         }, (err) => {reject(err)});
     });
 }
+
+export function syncifyES7(func):Promise<any> {
+    return new Promise((resolve, reject) => {
+        async function f() {
+            try {
+                const result = func();
+                resolve(result);
+            } catch(err) {
+                reject(err);
+            }
+        }
+
+        f();
+    });
+}

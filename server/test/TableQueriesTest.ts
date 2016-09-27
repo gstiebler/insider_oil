@@ -5,6 +5,7 @@ import nodeunit = require('nodeunit');
 import dbServerController = require('../controllers/dbServerController');
 import { IQueryParams } from '../../common/Interfaces';
 import { queries } from '../db/queries/TableQueries';
+import * as ni from '../../common/NetworkInterfaces';
 
 var group: nodeunit.ITestGroup = {
 
@@ -222,6 +223,32 @@ companies:  (test: nodeunit.Test) => {
     test.equal( 5, resQueryValues.records.length );
     test.equal( 46, resQueryValues.count );
     test.equal( 'Gás, Petróleo', resQueryValues.records[0].segments_text );
+    
+    test.done();
+},
+
+requestLog:  (test: nodeunit.Test) => {
+    const queryParams:IQueryParams = {
+        order: [],
+        filters: [{
+            field: 'created_at',
+            gte: '2008-01-01'
+        }],
+        pagination: {
+            first: 0,
+            itemsPerPage: 100
+        }
+    }
+
+    const query: ni.GetTableQueryData.req = {
+        queryName: 'requests',
+        queryParams: queryParams
+    }
+    
+    const resQueryValues:ni.GetTableQueryData.res = 
+            utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, { query });
+    test.equal('Lista: FPSOs', resQueryValues.records[0].translation);
+    test.equal('Unidade de produção: Cidade de São Paulo', resQueryValues.records[1].translation);
     
     test.done();
 },

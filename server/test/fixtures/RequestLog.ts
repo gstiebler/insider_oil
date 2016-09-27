@@ -8,13 +8,19 @@ module.exports = function(db) {
             user: "gstiebler",
             agent: 'agent',
             path: "/get_table_data",
-            query: '{"queryName":"FPSOs","queryParams":{"pagination":{"first":"0","itemsPerPage":"10"},"order":[{"fieldName":"pu_name","dir":"asc"}]}}'
+            query: {"queryName":"FPSOs","queryParams":{"pagination":{"first":"0","itemsPerPage":"10"},"order":[{"fieldName":"pu_name","dir":"asc"}]}}
         },
         {
             user: "gstiebler",
             agent: 'agent',
             path: "/view_record/",
-            query: '{"dataSource":"ProductionUnit","id":"161"}'
+            query: {"dataSource":"ProductionUnit","id":"3"}
+        },
+        {
+            user: "maciel",
+            agent: 'agent',
+            path: "/get_table_data",
+            query: {"queryName":"FPSOs","queryParams":{"pagination":{"first":"0","itemsPerPage":"10"},"order":[{"fieldName":"pu_name","dir":"asc"}]}}
         },
     ];
 
