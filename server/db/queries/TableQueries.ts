@@ -269,8 +269,8 @@ const contracts:ITableQuery = {
                     'end',
                     'value',
                     'situation',
+                    'type',
                     'supplier',
-                    'type'
                 ]
             },
             joinTables: joinTables,
