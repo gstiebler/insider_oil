@@ -23,8 +23,14 @@ export async function translate(requestLogItem):Promise<string> {
             const params = dsParams[typedQueryObj.dataSource];
             const record = await model.findById(typedQueryObj.id);
             return Promise.resolve(params.labelSingular + ': ' +  record[params.labelField]);
-        }else if (path == '/search') {
+        } else if (path == '/search') {
             return Promise.resolve('Busca: ' + queryObj.searchValue);
+        } else if (path == '/get_record/') {
+            if(queryObj.optionsName != 'SingleNews') {
+                return Promise.resolve(requestLogItem.query);
+            }
+            const insight = await db.models.News.findById(queryObj.id);
+            return Promise.resolve('Insight: ' + insight.title);
         }
     } catch(err) {
         winston.error(err);

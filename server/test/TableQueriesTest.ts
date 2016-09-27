@@ -249,7 +249,7 @@ requestLog:  (test: nodeunit.Test) => {
             utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, { query });
     test.equal('Lista: FPSOs', resQueryValues.records[0].translation);
     test.equal('Unidade de produção: Cidade de São Paulo', resQueryValues.records[1].translation);
-    
+    test.equal('Insight: Petrobrás demite presidente', resQueryValues.records[2].translation);
     test.done();
 },
 

@@ -19,9 +19,9 @@ module.exports = function(db) {
         {
             user: "maciel",
             agent: 'agent',
-            path: "/get_table_data",
-            query: {"queryName":"FPSOs","queryParams":{"pagination":{"first":"0","itemsPerPage":"10"},"order":[{"fieldName":"pu_name","dir":"asc"}]}}
-        },
+            path: "/get_record/",
+            query: {"id": "2", "optionsName": "SingleNews"}
+        },  
     ];
 
     for(var obj of objs) { 
