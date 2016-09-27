@@ -35,6 +35,7 @@ export function createFixtures():void {
     require('./UpdateLog')(db);
     require('./Boat')(db);
     require('./Project')(db);
+    require('./RequestLog')(db);
 
     for(var i = 1; i <= 3; i++) {
         const company = await( db.models.Company.findById(i) );

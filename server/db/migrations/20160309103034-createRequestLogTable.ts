@@ -27,7 +27,7 @@ module.exports = {
                 allowNull: true
             },
             query: {
-                type: Sequelize.STRING,
+                type: Sequelize.JSON,
                 allowNull: false
             },
             agent: {
