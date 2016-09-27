@@ -39,8 +39,14 @@ export class Tableau extends React.Component<IAppProps, IAppState> {
     } 
 
     public render(): React.ReactElement<any> {		
+        const style = {
+            height: '100%',
+            width: '100%', 
+            overflow: 'scroll',
+            align: 'center' 
+        };
 		return (
-            <div id="vizContainer" ref="countRef" style={{width:800, height:700}}></div> 
+            <div id="vizContainer" ref="countRef" style={style}></div> 
 		);
     }
 }
