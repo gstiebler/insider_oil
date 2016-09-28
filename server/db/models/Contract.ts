@@ -8,10 +8,10 @@ const milisecondsInADay = 1000 * 60 * 60 * 24;
 
 function updateContractProjects(db, contract) {
     const projects:IFrontEndProject[] = contract.dataValues.projects;
-    if(projects == null)
-        return;
     const options = { where: { contract_id: contract.id } };
     return db.ContractProjects.destroy(options).then(() => {
+        if(projects == null)
+            return;
         const newProjectRecords = [];
         for(var project of projects) {
             const projectRecord = { 
