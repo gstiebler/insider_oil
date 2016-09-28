@@ -9,7 +9,7 @@ import dbUtils = require("../lib/dbUtils");
 import dsParams = require('../lib/DataSourcesParams');
 import express = require("express");
 import DataSourceOperations = require('../lib/DataSourceOperations/index');
-import QueriesById = require('../db/queries/QueriesById');
+import * as QueriesById from '../db/queries/QueriesById';
 import TableQueries = require('../db/queries/TableQueries');
 import QueryGenerator = require('../db/queries/QueryGenerator');
 import TimeSeriesQueries = require('../db/queries/TimeSeriesQueries');
@@ -80,7 +80,7 @@ export function getQueryData(req: express.Request, res: express.Response) {Sync(
     const query: ni.GetQueryData.req = req.query;
     const queryName = query.queryName;
     const filters = query.filters;
-    const queryById = QueriesById[queryName];
+    const queryById = QueriesById.queries[queryName];
     const queryStr = queryById.queryStrFn(filters);
     const simpleQueryType = { type: db.Sequelize.QueryTypes.SELECT};
     db.sequelize.query(queryStr, simpleQueryType).then( (records) => {

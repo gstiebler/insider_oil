@@ -79,7 +79,6 @@ function exportExcel(records: any[], dataSource: dbUtils.ioDataSource, dataSourc
 				const offsetInMinutes = saoPauloZone.offset(recordValue);
 				const offsetInMiliseconds = offsetInMinutes * 60 * 1000;
 				recordValue = new Date(recordValue.getTime() - offsetInMiliseconds);
-				console.log(recordValue);
 			}
     		if(dataSource.associations[field] && record[field]) {
     			recordValue = record[field].name; //TODO get the label field, not always the 'name' field
