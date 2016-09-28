@@ -133,7 +133,7 @@ dashboard: test => {
     var dashboardData:ni.GetDashboardData.res = 
         utils.getJsonResponse.sync(null, dbServerController.getDashboardData, {});
 	test.equal(3, dashboardData.numBids);
-	test.equal(3, dashboardData.numContracts);
+	test.equal(5, dashboardData.numContracts);
 	test.equal(3, dashboardData.numPersons);
 	test.equal(4, dashboardData.numProjects);
     
