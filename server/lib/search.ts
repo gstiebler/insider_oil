@@ -102,7 +102,14 @@ export function searchLike(searchValue, numMaxResults) {
     return db.sequelize.query(queryStr, simpleQueryType);
 }
 
-export function searchEqual(searchValue, numMaxResults) {
+export interface ISearchResult
+{
+    name: string;
+    model: string;
+    id: number;
+}
+
+export function searchEqual(searchValue, numMaxResults):Promise<ISearchResult[]> {
     var queryStrings = [];
     for( var i = 0; i < dataSources.length; i++) {
     	const dataSource = dataSources[i];

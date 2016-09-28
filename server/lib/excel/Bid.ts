@@ -1,7 +1,7 @@
 "use strict";
 
 import { ImportExcel } from './ImportExcelClass';
-import search = require('../search');
+import { searchEqual, ISearchResult } from '../search';
 import { await } from '../../lib/await';
 
 export class Bid extends ImportExcel {
@@ -25,11 +25,14 @@ export class Bid extends ImportExcel {
 
     setObject(record, header, rowValues) {
         const objectStr = this.valueFromHeaderName(rowValues, header, 'objeto');
-        const searchResult:any[] = await( search.searchEqual(objectStr, 1) );
+        const searchResult:ISearchResult[] = await( searchEqual(objectStr, 1) );
         if(searchResult.length == 0) {
             record.object = [];
         } else {
-            record.object = searchResult;
+            record.object = [{
+                id: searchResult[0].id,
+                model_name: searchResult[0].model
+            }];
         }
     }
 
