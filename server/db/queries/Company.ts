@@ -3,6 +3,7 @@ import { IQueryParams } from '../../../common/Interfaces';
 import * as TableQueries from './TableQueries';
 import QueryGenerator = require('./QueryGenerator');
 import * as su from '../../lib/StringUtils';
+import * as ContractQueries from './Contract';
 
 export const personsByCompany:IQueryById = {
     queryStrFn: (filter) => {
@@ -359,5 +360,74 @@ export const drillingRigsByOperator:IQueryById = {
             fieldName: 'day_rate',
             type: 'CURRENCY',
         }
+    ]
+};
+
+export const contractsByContractor:IQueryById = {
+    queryStrFn: (filter) => {
+        const queryParams: IQueryParams = {
+            filters: [ { field: 'contracts.contractor_id', equal: filter.id } ],
+            order: [ { fieldName: 'start', dir: 'desc' } ],
+            pagination: { first: 0, itemsPerPage: 100 }
+        };
+        return ContractQueries.contracts.queryStrFn(queryParams);
+    },
+    fields: [
+        {
+            label: 'Objeto da contratação',
+            ref: {
+                modelField: 'model',
+                idField: 'c_id',
+                valueField: 'c_contract_object'
+            }
+        },
+        {
+            label: 'Fornecedor',
+            fieldName: 'supplier',
+            type: 'VARCHAR'
+        },
+        {
+            label: 'Início da vigência',
+            fieldName: 'start',
+            type: 'DATE'
+        },
+        {
+            label: 'Fim da vigência',
+            fieldName: 'end',
+            type: 'DATE'
+        },
+        {
+            label: 'Duração (dias)',
+            fieldName: 'duration',
+            type: 'INTEGER'
+        },
+        {
+            label: 'Day rate',
+            fieldName: 'day_rate',
+            type: 'CURRENCY'
+        },
+        {
+            label: 'Valor',
+            fieldName: 'value',
+            type: 'CURRENCY'
+        },
+        {
+            label: 'Situação',
+            fieldName: 'situation',
+            type: 'VARCHAR'
+        },
+        {
+            label: 'Tipo',
+            fieldName: 'type',
+            type: 'VARCHAR'
+        },
+        {
+            label: 'Licitação',
+            ref: {
+                modelField: 'bid_model',
+                idField: 'bid_id',
+                valueField: 'bid_process_number'
+            }
+        },
     ]
 };

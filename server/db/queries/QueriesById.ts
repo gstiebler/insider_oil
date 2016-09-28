@@ -944,6 +944,7 @@ export const queries:IQueriesById = {
     oilFieldConcessionaryByCompany: CompanyQueries.oilFieldConcessionaryByCompany,
     drillingRigsByContractor: CompanyQueries.drillingRigsByContractor,
     drillingRigsByOperator: CompanyQueries.drillingRigsByOperator,
+    contractsByContractor: CompanyQueries.contractsByContractor,
 
     personsFromProjectContracted1: {
         queryStrFn: (filter) => {
