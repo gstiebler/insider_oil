@@ -9,22 +9,24 @@ interface IPolygonDimensions {
     center: IGeoPoint; 
 }
 
+export interface IOptions {
+    paths: IGeoPoint[];
+    strokeColor: string;
+    strokeOpacity: number;
+    strokeWeight: number;
+    fillColor: string;
+    fillOpacity: number;
+}
+
 export class Polygon extends BaseMapItem {
 
     private polygon: IGeoPoint[];
 
-    constructor(mapObj: IMapObj, polygon: IGeoPoint[], title: string, color: string) {
+    constructor(mapObj: IMapObj, title: string, options: IOptions) {
         super(mapObj);
 
-        this.polygon = polygon;
-        const gPolygon = new googleRef.maps.Polygon({
-            paths: polygon,
-            strokeColor: color,
-            strokeOpacity: 0.8,
-            strokeWeight: 3,
-            fillColor: color,
-            fillOpacity: 0.35
-        });
+        this.polygon = options.paths;
+        const gPolygon = new googleRef.maps.Polygon(options);
         gPolygon.setMap(this.mapObj.gMap);
        
         this.setGMapItem(gPolygon);

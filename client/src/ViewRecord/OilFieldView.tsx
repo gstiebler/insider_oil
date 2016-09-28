@@ -14,7 +14,7 @@ import { showBillboard, rioDeJaneiroCoords } from '../lib/MapUtils';
 import { googleRef } from '../lib/Google';
 import * as ni from '../../../common/NetworkInterfaces';
 import { IGeoPoint } from '../../../common/Interfaces';
-import { Polygon } from '../Maps/Polygon';
+import * as Polygon from '../Maps/Polygon';
 import { find } from '../lib/ArrayUtils';
 
 interface IAppProps {
@@ -31,7 +31,7 @@ export class OilFieldView extends ViewRecord.ViewRecord {
 
     public state: IAppState;
     private mapObj: IMapObj;
-    private oilFieldMPolygons: Polygon[];
+    private oilFieldMPolygons: Polygon.Polygon[];
     private title: string;
 
     constructor(props: IAppProps) {
@@ -95,9 +95,26 @@ export class OilFieldView extends ViewRecord.ViewRecord {
                 return;
             }
             polygons.map((polygon) => {
-                const title = 'Campo: ' + oilField.name;
-                let color = oilField.id == this.state.id ? '#FF2020' : '#FFFFA0';
-                let mPolygon = new Polygon(this.mapObj, polygon, title, color);
+                const title = 'Campo: ' + oilField.name;                
+                let options:Polygon.IOptions = {
+                    paths: polygon,
+                    strokeColor: '#FFFF00',
+                    strokeOpacity: 0.3,
+                    strokeWeight: 2,
+                    fillColor: '#FFFF00',
+                    fillOpacity: 0.1,
+                };
+                if(oilField.id == this.state.id) {                    
+                    options = {
+                        paths: polygon,
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 3,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.45,
+                    };
+                }
+                let mPolygon = new Polygon.Polygon(this.mapObj, title, options);
                 if(oilField.id == this.state.id) {
                     const polygonDims = mPolygon.getDimensions();
                     let gCenterPoint = new googleRef.maps.LatLng(polygonDims.center.lat, polygonDims.center.lng);

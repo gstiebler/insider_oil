@@ -6,7 +6,7 @@ import { showBillboard, rioDeJaneiroCoords } from './lib/MapUtils';
 import { googleRef } from './lib/Google';
 import { IGeoPoint } from '../../common/Interfaces';
 import { BaseMapItem } from './Maps/BaseMapItem';
-import { Polygon } from './Maps/Polygon';
+import * as Polygon from './Maps/Polygon';
 import { Marker } from './Maps/Marker';
 import { HeatMap } from './Maps/HeatMap';
 import { KmlLayer } from './Maps/KmlLayer';
@@ -23,10 +23,10 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
 
     private mapObj: IMapObj;
 
-    private blockMPolygons: Polygon[];
+    private blockMPolygons: Polygon.Polygon[];
     private blocksVisible: boolean;
 
-    private oilFieldMPolygons: Polygon[];
+    private oilFieldMPolygons: Polygon.Polygon[];
     private oilFieldsVisible: boolean;
 
     private productionUnitMMarkers: Marker[];
@@ -108,7 +108,16 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             }
             polygons.map((polygon) => {
                 const title = 'Bloco: ' + block.name;
-                var mPolygon = new Polygon(this.mapObj, polygon, title, '#FF0000');
+                
+                let options:Polygon.IOptions = {
+                    paths: polygon,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                };
+                var mPolygon = new Polygon.Polygon(this.mapObj, title, options);
                 mPolygon.setBillboardFn(showBillboard.bind(this, block, 'Block', blockBillboard));
                 this.blockMPolygons.push(mPolygon);
             });
@@ -130,7 +139,15 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
             }
             polygons.map((polygon) => {
                 const title = 'Campo: ' + oilField.name;
-                var mPolygon = new Polygon(this.mapObj, polygon, title, '#FFFF00');
+                let options:Polygon.IOptions = {
+                    paths: polygon,
+                    strokeColor: '#FFFF00',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: '#FFFF00',
+                    fillOpacity: 0.35,
+                };
+                var mPolygon = new Polygon.Polygon(this.mapObj, title, options);
                 mPolygon.setBillboardFn(showBillboard.bind(this, oilField, 'OilField', oilFieldBillboard));
                 this.oilFieldMPolygons.push(mPolygon);
             });
