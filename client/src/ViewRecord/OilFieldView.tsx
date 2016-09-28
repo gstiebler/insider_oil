@@ -11,6 +11,9 @@ import { ErrorReport } from '../ErrorReport';
 import * as ViewRecord from './ViewRecord';
 import { Map, IMapObj, rioDeJaneiroCoords } from '../Maps/Map';
 import { googleRef } from '../lib/Google';
+import * as ni from '../../../common/NetworkInterfaces';
+import { IGeoPoint } from '../../../common/Interfaces';
+import { Polygon } from '../Maps/Polygon';
 
 interface IAppProps {
     location: any;
@@ -26,6 +29,9 @@ export class OilFieldView extends ViewRecord.ViewRecord {
 
     public state: IAppState;
     private mapObj: IMapObj;
+    private polygonMapItem: Polygon;
+    private polygonPoints: IGeoPoint[];
+    private title: string;
 
     constructor(props: IAppProps) {
         super(props);
@@ -65,7 +71,29 @@ export class OilFieldView extends ViewRecord.ViewRecord {
             }
         };
     }
-    
+
+    public showValues(viewData:ni.GetViewRecord.res) {
+        super.showValues(viewData);
+        try {
+            this.polygonPoints = JSON.parse(viewData.record[4].value)[0];
+        } catch(err) {
+            console.log(err);
+            this.polygonPoints = [];
+        }
+        if(this.polygonPoints.length < 3) return null;
+        this.title = viewData.record[0].title;
+        this.addOilFieldToMap();
+        const polygonDims = this.polygonMapItem.getDimensions();
+        let gCenterPoint = new googleRef.maps.LatLng(polygonDims.center.lat, polygonDims.center.lng);
+        // using global variable:
+        this.mapObj.gMap.panTo(gCenterPoint);
+        return null;
+    }
+
+    private addOilFieldToMap() {
+        this.polygonMapItem = new Polygon(this.mapObj, this.polygonPoints, this.title, '#FFFF00');
+    }
+
     public render(): React.ReactElement<any> {
         const mapStyle = {
             width: '100%',

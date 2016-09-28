@@ -65,7 +65,13 @@ module.exports = function(db) {
             basin_id: utils.idByName('Basin', 'Campos'),
             state: 'Rio de Janeiro',
             shore: 'off',
-            stage: 'production'
+            stage: 'production',
+            polygons: [
+                {"lat":-22.00310827299999,"lng":-39.93788553099995},
+                {"lat":-22.10310827299999,"lng":-39.93788553099995},
+                {"lat":-22.10310827299999,"lng":-39.83788553099995},
+                {"lat":-22.00310827299999,"lng":-39.83788553099995},
+            ]
         },
         {
             name: 'Congro',
