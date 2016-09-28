@@ -9,6 +9,8 @@ import { ObjectNews } from '../ObjectNews';
 import { TimeSeriesChart, IChartParams } from '../Charts/TimeSeriesChart';
 import { ErrorReport } from '../ErrorReport';
 import * as ViewRecord from './ViewRecord';
+import { Map, IMapObj, rioDeJaneiroCoords } from '../Maps/Map';
+import { googleRef } from '../lib/Google';
 
 interface IAppProps {
     location: any;
@@ -17,11 +19,13 @@ interface IAppProps {
 interface IAppState extends ViewRecord.IAppState {
     prodQueryParams: any;
     productionChartParams: IChartParams;
+    initialMapState: any;
 }
 
 export class OilFieldView extends ViewRecord.ViewRecord {
 
     public state: IAppState;
+    private mapObj: IMapObj;
 
     constructor(props: IAppProps) {
         super(props);
@@ -53,13 +57,21 @@ export class OilFieldView extends ViewRecord.ViewRecord {
                    },*/
                 ],
                 xAxis: 'date_prod'
+            },
+            initialMapState: {
+                zoom: 7,
+                center: rioDeJaneiroCoords,
+                mapTypeId: googleRef.maps.MapTypeId.HYBRID
             }
         };
     }
     
     public render(): React.ReactElement<any> {
-        const imgUrl = server.paths.baseImg + 'OilField/' + 
-                            'img_' + this.state.id + '_original.jpg';
+        const mapStyle = {
+            width: '100%',
+            height: '100%'
+        }
+
         return (
             <div>
                 <div className="row">
@@ -69,8 +81,10 @@ export class OilFieldView extends ViewRecord.ViewRecord {
                             source={this.state.source} 
                             objId={this.state.id}></ViewRecordFields>
                     </div>
-                    <div className="col-md-6 main-boxes">
-                        <img src={imgUrl} style={{ width: 600 }}/>
+                    <div className="col-md-6 main-boxes">                
+                        <Map initialState={this.state.initialMapState}
+                                receiveMapObj={(mo) => this.mapObj = mo}
+                                style={mapStyle} />
                     </div>
                 </div>
                 <br/>

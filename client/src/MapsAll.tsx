@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
-import { Map, IMapObj } from './Maps/Map';
+import { Map, IMapObj, rioDeJaneiroCoords } from './Maps/Map';
 import { googleRef } from './lib/Google';
 import { IGeoPoint } from '../../common/Interfaces';
 import { BaseMapItem } from './Maps/BaseMapItem';
@@ -68,7 +68,6 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
     constructor(props: IAppProps) {
         super(props);
 
-        const rioDeJaneiroCoords = {lat: -23.0, lng: -43.0};
         this.state = {
             initialState: {
                 zoom: 7,

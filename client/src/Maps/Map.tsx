@@ -7,6 +7,8 @@ export interface IMapObj {
     infoWindow:any;
 }
 
+export const rioDeJaneiroCoords = {lat: -23.0, lng: -43.0};
+
 interface IAppProps {
     initialState: any;
     receiveMapObj: any;
