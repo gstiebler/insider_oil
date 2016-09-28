@@ -14,6 +14,7 @@ import { googleRef } from '../lib/Google';
 import * as ni from '../../../common/NetworkInterfaces';
 import { IGeoPoint } from '../../../common/Interfaces';
 import { Polygon } from '../Maps/Polygon';
+import { find } from '../lib/ArrayUtils';
 
 interface IAppProps {
     location: any;
@@ -74,8 +75,9 @@ export class OilFieldView extends ViewRecord.ViewRecord {
 
     public showValues(viewData:ni.GetViewRecord.res) {
         super.showValues(viewData);
+        const polygonField = find(viewData.record, r => { return r.name == 'polygons'; });
         try {
-            this.polygonPoints = JSON.parse(viewData.record[4].value)[0];
+            this.polygonPoints = JSON.parse(polygonField.value)[0];
         } catch(err) {
             console.log(err);
             this.polygonPoints = [];
