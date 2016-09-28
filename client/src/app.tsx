@@ -14,6 +14,7 @@ import { Publisher } from './Admin/Publisher/Publisher';
 import { RequestsViewer } from './Admin/RequestsViewer';
 import { ViewRecord } from './ViewRecord/ViewRecord';
 import { OilFieldView } from './ViewRecord/OilFieldView';
+import { BlockView } from './ViewRecord/BlockView';
 import { Flash } from './Flash';
 import { ChangePassword } from './ChangePassword';
 import { MapsAll } from './MapsAll';
@@ -144,6 +145,7 @@ ReactDOM.render(
       <Route path="create_item" component={AdminCreate}/>
       <Route path="view_record" component={ViewRecord}/>
       <Route path="oil_field" component={OilFieldView}/>
+      <Route path="block" component={BlockView}/>
       <Route path="maps_all" component={MapsAll}/>
       <Route path="change_password" component={ChangePassword}/>
       <Route path="view_new" component={NewsSingle}/>

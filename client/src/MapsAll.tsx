@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
-import { Map, IMapObj, rioDeJaneiroCoords } from './Maps/Map';
+import { Map, IMapObj } from './Maps/Map';
+import { showBillboard, rioDeJaneiroCoords } from './lib/MapUtils';
 import { googleRef } from './lib/Google';
 import { IGeoPoint } from '../../common/Interfaces';
 import { BaseMapItem } from './Maps/BaseMapItem';
@@ -10,31 +11,6 @@ import { Marker } from './Maps/Marker';
 import { HeatMap } from './Maps/HeatMap';
 import { KmlLayer } from './Maps/KmlLayer';
 import * as Promise from 'bluebird';
-
-
-function showBillboard(object, modelName: string, billboardHTMLfn): Promise<string> {
-    return new Promise<string>(function(resolve, reject) {
-        const req = {
-            queryName: 'NewsByObject',
-            filters: {
-                modelName,
-                id: object.id
-            }
-        };
-        server.getQueryData(req)
-        .then(res => {
-            var result = billboardHTMLfn(object);
-            if(res.records.length > 0) {
-                result += '<hr/><b>Notícias:</b>';
-            }
-            for(var newsRecord of res.records) {
-                const newsUrl = '/app/view_record?source=News&id=' + newsRecord.id;
-                result += '<br/><a href="' + newsUrl + '">' + newsRecord.title + '</a>';
-            }
-            resolve(result);
-        }).catch(reject);
-    });
-}
 
 interface IAppProps {
 }

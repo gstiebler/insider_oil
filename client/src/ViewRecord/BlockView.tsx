@@ -6,7 +6,6 @@ import { Link, browserHistory } from 'react-router';
 import { ViewRecordFields } from './ViewRecordFields';
 import { ShowQueryData } from '../ShowQueryData';
 import { ObjectNews } from '../ObjectNews';
-import { TimeSeriesChart, IChartParams } from '../Charts/TimeSeriesChart';
 import { ErrorReport } from '../ErrorReport';
 import * as ViewRecord from './ViewRecord';
 import { Map, IMapObj } from '../Maps/Map';
@@ -22,24 +21,22 @@ interface IAppProps {
 }
 
 interface IAppState extends ViewRecord.IAppState {
-    prodQueryParams: any;
-    productionChartParams: IChartParams;
     initialMapState: any;
 }
 
-export class OilFieldView extends ViewRecord.ViewRecord {
+export class BlockView extends ViewRecord.ViewRecord {
 
     public state: IAppState;
     private mapObj: IMapObj;
-    private oilFieldMPolygons: Polygon[];
+    private blockMPolygons: Polygon[];
     private title: string;
 
     constructor(props: IAppProps) {
         super(props);
 
         var { id } = props.location.query;
-        var source = 'OilField';
-        this.oilFieldMPolygons = [];
+        var source = 'Block';
+        this.blockMPolygons = [];
         this.state = {
             id: id,
             source: source,     
@@ -47,27 +44,8 @@ export class OilFieldView extends ViewRecord.ViewRecord {
             allReferencedObjects: [],
             objectLabel: '',
             url: props.location.basename + props.location.pathname + props.location.search,
-            prodQueryParams: { oilField: id },
-            productionChartParams: {
-                yLabel: 'Produção (bbl/dia)',
-                seriesList: [
-                   {
-                       fieldName: 'oil_production',
-                       label: 'Óleo'
-                   },
-                   {
-                       fieldName: 'water_production',
-                       label: 'Água'
-                   },
-                   /*{
-                       fieldName: 'gas_associated_production',
-                       label: 'Gás'
-                   },*/
-                ],
-                xAxis: 'date_prod'
-            },
             initialMapState: {
-                zoom: 8,
+                zoom: 9,
                 center: rioDeJaneiroCoords,
                 mapTypeId: googleRef.maps.MapTypeId.HYBRID
             }
@@ -76,35 +54,35 @@ export class OilFieldView extends ViewRecord.ViewRecord {
     
     public componentDidMount() {
         super.componentDidMount();
-        server.getP('/maps/oil_fields', {})
-            .then(res => { this.addOilFieldsToMap(res.oilFields) })
+        server.getP('/maps/blocks', {})
+            .then(res => { this.addBlocksToMap(res.blocks) })
             .catch(showError.show);
     }
 
-    private addOilFieldsToMap(oilFields:any[]) {
+    private addBlocksToMap(blocks) {
 
-        function oilFieldBillboard(oilField):string {
-            const url = '/app/view_record?source=OilField&id=' + oilField.id;
-            return '<b>Campo: </b><a href="' + url + '">' + oilField.name + '</a>';
+        function blockBillboard(block):string {
+            const url = '/app/view_record?source=Block&id=' + block.id;
+            return '<b>Bloco: </b><a href="' + url + '">' + block.name + '</a>';
         }
 
-        this.oilFieldMPolygons.length = 0;
-        oilFields.map(oilField => {
-            var polygons:IGeoPoint[][] = JSON.parse(oilField.polygons);
+        this.blockMPolygons.length = 0;
+        blocks.map(block => {
+            var polygons:IGeoPoint[][] = JSON.parse(block.polygons);
             if(!polygons) {
                 return;
             }
             polygons.map((polygon) => {
-                const title = 'Campo: ' + oilField.name;
-                let color = oilField.id == this.state.id ? '#FF2020' : '#FFFFA0';
+                const title = 'Bloco: ' + block.name;
+                let color = block.id == this.state.id ? '#FF2020' : '#FFFFA0';
                 let mPolygon = new Polygon(this.mapObj, polygon, title, color);
-                if(oilField.id == this.state.id) {
+                if(block.id == this.state.id) {
                     const polygonDims = mPolygon.getDimensions();
                     let gCenterPoint = new googleRef.maps.LatLng(polygonDims.center.lat, polygonDims.center.lng);
                     this.mapObj.gMap.panTo(gCenterPoint);
                 }
-                mPolygon.setBillboardFn(showBillboard.bind(this, oilField, 'OilField', oilFieldBillboard));
-                this.oilFieldMPolygons.push(mPolygon);
+                mPolygon.setBillboardFn(showBillboard.bind(this, block, 'Block', blockBillboard));
+                this.blockMPolygons.push(mPolygon);
             });
         });
     }
@@ -135,9 +113,6 @@ export class OilFieldView extends ViewRecord.ViewRecord {
                              url={this.state.url} />
                 <hr/>
                 { this.getRefObjectsElements() }
-                <TimeSeriesChart queryName="ProductionByField"
-                                 qParams={this.state.prodQueryParams}
-                                 chartParams={this.state.productionChartParams}/>
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>
         );

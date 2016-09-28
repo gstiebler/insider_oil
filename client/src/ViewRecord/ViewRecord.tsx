@@ -44,6 +44,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
 
         var customSources = {
             'OilField': "/app/oil_field",
+            'Block': "/app/block",
             'GasPipeline': "/app/gas_pipeline",
             'News': "/app/view_new",
         };
