@@ -136,7 +136,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
     
     private onDelete(status) {
         Flash.create('success', status.msg );
-        this.state.dataTableElement.draw(); 
+        this.state.dataTable.draw(); 
     }
     
     private showMap() {
@@ -146,7 +146,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         
     private onFileUploaded(status) {
         Flash.create('success', status );
-        this.state.dataTableElement.draw(); 
+        this.state.dataTable.draw(); 
     }
     
     private getExcelFile() {
