@@ -109,8 +109,9 @@ export function recordValues(req: express.Request, res: express.Response, next) 
 }, ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));}
 
 export function createItem(req: express.Request, res: express.Response, next) { Sync(function() {
-    var newItemData = JSON.parse(req.body.newItemData);
-    var modelName = req.body.model;
+    const body:ni.CreateItem.req = req.body;
+    var newItemData = JSON.parse(body.newItemData);
+    var modelName = body.model;
     var model = dbUtils.getDataSource(modelName);
 
 	db.sequelize.transaction(function(t: Sequelize.Transaction) {
@@ -124,16 +125,17 @@ export function createItem(req: express.Request, res: express.Response, next) { 
 }, ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."))}
 
 export function saveItem(req: express.Request, res: express.Response, next) { Sync(function() {
-    var dsName = req.body.model;
-    var recordData = JSON.parse(req.body.record);
+    const body:ni.SaveItem.req = req.body;
+    var dsName = body.model;
+    var recordData = JSON.parse(body.record);
     var dataSource = dbUtils.getDataSource(dsName);
     const dsOps = DataSourceOperations[dsName];     
     const record = await( dataSource.findById( recordData.id ) );
     await( saveRecordUpdates(dsName, record, recordData) );
     dsOps.addAttributesToRecord(record, recordData, dataSource);
-    record.save()
-        .then(ControllerUtils.getOkFunc(res, "Registro salvo com sucesso."))
-        .catch(ControllerUtils.getErrorFunc(res, 400, "Não foi possível salvar o registro."));
+    await(record.save());
+    await( dbUtils.saveExtraData(dsName, recordData.id, body.extraRecordData) );
+    ControllerUtils.getOkFunc(res, "Registro salvo com sucesso.")();
 }, ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."))}
 
 export function deleteItem(req: express.Request, res: express.Response) { Sync(function() {

@@ -105,7 +105,7 @@ export function getModelFields(model):Promise<any> {
 
 
 export function createNewItem( modelName, newItemData, onSave, onError ) {
-    var params = {
+    const params:ni.CreateItem.req = {
         model: modelName,
         newItemData: JSON.stringify(newItemData),
     };
@@ -134,7 +134,7 @@ export function getModelFieldsAndValues( modelName, id ):Promise<any> {
 
 
 export function saveItem( modelName, record, onSave, onError ) {
-    var params = {
+    const params:ni.SaveItem.req = {
         model: modelName,
         record: JSON.stringify(record),
     };

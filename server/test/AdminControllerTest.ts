@@ -195,6 +195,40 @@ editContractTestUpdates: function(test) {
     test.done();
 },
 
+editProductionUnitWithTableau: function(test: nodeunit.Test) {
+    const pioneerId = utils.idByName('ProductionUnit', 'Pioneer');
+    const record = {
+        id: pioneerId,
+        oil_field_id: utils.idByName('OilField', 'Baleia Anã'),
+        type: 'SEMI',
+        status: 'Em projeto',
+        operator_id: utils.idByName('Company', 'Statoil'),
+        owner_id: utils.idByName('Company', 'Petrobras'),
+    }
+    
+    const body:ni.SaveItem.req = { 
+        model: 'ProductionUnit',
+        record: JSON.stringify(record),
+        extraRecordData: {
+            tableauUrls: ['http://example.com']
+        }
+    };
+        
+    const response = utils.getJsonResponse.sync(null, AdminController.saveItem, { body });
+    test.equal('Registro salvo com sucesso.', response.msg);
+    
+    const query:ni.GetViewRecord.req = { 
+        dataSource: 'ProductionUnit',
+        id: pioneerId
+    } 
+    const res2:ni.GetViewRecord.res = 
+            utils.getJsonResponse.sync(null, dbServerController.viewRecord, { query });
+    test.equal(1, res2.extraRecordData.tableauUrls.length);
+    test.equal('http://example.com', res2.extraRecordData.tableauUrls[0]);
+
+    test.done();
+},
+
 editOilFieldTestUpdates: function(test) {
     const nordicId = utils.idByName('Fleet', 'Nordic Rio');
     const record = {

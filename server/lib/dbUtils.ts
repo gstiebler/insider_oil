@@ -1,6 +1,8 @@
 import db = require('../db/models');
 var DataSources = require('./DataSources');
 import dsParams = require('./DataSourcesParams');
+import * as ni from '../../common/NetworkInterfaces';
+import Sequelize = require('sequelize');
 
 export interface ioDataSource {
     name: string;
@@ -110,4 +112,17 @@ export function filterShowFields(records: any[], gridFields: string[]): any[] {
         resultArray.push(resultRecord);
     }
     return resultArray;
+}
+
+export async function saveExtraData(modelName: string, id: number, 
+                                    extraData: ni.IExtraRecordData) {
+    const model = db.models[modelName];
+    await model.destroy(id);
+    let modelValue = {
+        model_name: modelName,
+        obj_id: id,
+        desc: 'TableauUrl',
+        value: extraData.tableauUrls
+    }
+    await db.models.ModelValueAssocation.create(modelValue);
 }

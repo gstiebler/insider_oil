@@ -52,6 +52,10 @@ export namespace GetTableQueryData {
     }
 }
 
+export interface IExtraRecordData {
+    tableauUrls: string[];
+} 
+
 export namespace GetViewRecord {
 
     export interface req {
@@ -62,6 +66,7 @@ export namespace GetViewRecord {
     export interface res {
         record: any[];
         referencedObjects: Interfaces.IRefObjectsOnView[];
+        extraRecordData?: IExtraRecordData
     }
 }
 
@@ -188,5 +193,29 @@ export namespace AnalyticsCount {
 
     export interface res {
         countResult: Interfaces.IAnalyticsCount[];
+    }
+}
+
+export namespace CreateItem {
+    export interface req {
+        model: string;
+        newItemData: any;
+        extraRecordData?: IExtraRecordData
+    }
+
+    export interface res {
+        msg: string;
+    }
+}
+
+export namespace SaveItem {
+    export interface req {
+        model: string;
+        record: any;
+        extraRecordData?: IExtraRecordData
+    }
+    
+    export interface res {
+        msg: string;
     }
 }

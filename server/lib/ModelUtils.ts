@@ -4,7 +4,7 @@ import Sequelize = require('sequelize');
 import * as AWS from './AWS';
 import * as moment from 'moment';
 import { coordToString, stringToCoord } from './Geo';
-import { await } from '../lib/await';
+import * as awaitLib from '../lib/await';
 
 export const simpleQueryType = { type: Sequelize.QueryTypes.SELECT };
 
@@ -44,7 +44,7 @@ export function getObjRefField() {
     if(!this.model_name)
         return [];
     const referencedModel = db.models[this.model_name];
-    const referencedObj = await(referencedModel.findById(this.obj_id));
+    const referencedObj = awaitLib.await(referencedModel.findById(this.obj_id));
     const refObjName = referencedObj ? referencedObj.name : null;
     return [{
         id: this.obj_id,
