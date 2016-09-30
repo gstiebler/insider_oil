@@ -64,12 +64,11 @@ editWell: function(test) {
         lat: 333,
         lng: 444
     }
-    const req = {
-        body: { 
-            model: 'Well',
-            record: JSON.stringify(record)
-        }
-    };
+    const data:ni.SaveItem.req = { 
+        model: 'Well',
+        record: record
+    }
+    const req = { body: { data: JSON.stringify(data)} };
         
     const errorResponse = utils.getJsonResponse.sync(null, AdminController.saveItem, req);
     test.equal( 400, errorResponse.code ); // test HTTP error code
@@ -78,17 +77,18 @@ editWell: function(test) {
     test.equal( "Nome não pode ser nulo", errorResponse.error.errors[0].message );
     
     record.name = 'Novo poço';
-    req.body.record = JSON.stringify(record);
-    const response = utils.getJsonResponse.sync(null, AdminController.saveItem, req);
+    data.record = record;
+    const req2 = { body: { data: JSON.stringify(data)} };
+    const response = utils.getJsonResponse.sync(null, AdminController.saveItem, req2);
     test.equal('Registro salvo com sucesso.', response.msg);
     
-    const req2 = {
+    const req3 = {
         query: { 
             model: 'Well',
             id: 2
         }
     };
-    const response2 = utils.getJsonResponse.sync(null, AdminController.recordValues, req2);
+    const response2 = utils.getJsonResponse.sync(null, AdminController.recordValues, req3);
     test.equal('Novo poço', response2.values.name);
     test.equal(4, response2.values.operator_id);
     test.equal(444, response2.values.lng);
@@ -174,13 +174,13 @@ editContractTestUpdates: function(test) {
         start: '2011-02-15',
         end: '2019-02-11T02:00:00.000Z',
     }
-    const reqEditItem = {
-        body: { 
-            model: 'Contract',
-            record: JSON.stringify(record)
-        }
-    };
-        
+
+    const data:ni.SaveItem.req = { 
+        model: 'Contract',
+        record: record
+    }
+    const reqEditItem = { body: { data: JSON.stringify(data)} };
+
     const response = utils.getJsonResponse.sync(null, AdminController.saveItem, reqEditItem);
     test.equal('Registro salvo com sucesso.', response.msg);
     
@@ -214,8 +214,17 @@ editProductionUnitWithTableau: function(test: nodeunit.Test) {
         }
     };
         
+    const data:ni.SaveItem.req = { 
+        model: 'ProductionUnit',
+        record: record,
+        extraRecordData: {
+            tableauUrls: ['http://example.com']
+        }
+    }
+    const reqSave = { body: { data: JSON.stringify(data)} };
+
     const response:ni.SaveItem.res = 
-            utils.getJsonResponse.sync(null, AdminController.saveItem, { body });
+            utils.getJsonResponse.sync(null, AdminController.saveItem, reqSave);
     test.equal('Registro salvo com sucesso.', response.msg);
     
     const query:ni.GetViewRecord.req = { 
@@ -275,13 +284,12 @@ editOilFieldTestUpdates: function(test) {
         type: 'Aliviador',
         weight: 1234
     }
-    const reqEditItem = {
-        body: { 
+
+    const data:ni.SaveItem.req = { 
             model: 'Fleet',
-            record: JSON.stringify(record)
-        }
-    };
-        
+            record: record
+    }
+    const reqEditItem = { body: { data: JSON.stringify(data)} };
     const response = utils.getJsonResponse.sync(null, AdminController.saveItem, reqEditItem);
     test.equal('Registro salvo com sucesso.', response.msg);
     

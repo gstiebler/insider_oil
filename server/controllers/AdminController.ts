@@ -94,18 +94,19 @@ export function modelFields(req: express.Request, res: express.Response, next) {
 }
 
 export function recordValues(req: express.Request, res: express.Response, next) { Sync(function(){
-    var dsName = req.query.model;
-    var id = req.query.id;
+    const query:ni.RecordValues.req = req.query;
+    var dsName = query.model;
     const dataSource = dbUtils.getDataSource(dsName);
     const dsOps = DataSourceOperations[dsName];
-    const record = await( dataSource.findById(id) );
+    const record = await( dataSource.findById(query.id) );
     const dsOperations = DataSourceOperations[dsName];
     var fields = dsOperations.getModelFields(dsName);
-    
-    res.json({ 
+    const response:ni.RecordValues.res = { 
         values: record,
-        fields: fields
-    });
+        fields: fields,
+        extraRecordData: await( dbUtils.loadExtraData(dsName, query.id) )
+    } 
+    res.json(response);
 }, ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));}
 
 export function createItem(req: express.Request, res: express.Response, next) { Sync(function() {
@@ -130,9 +131,9 @@ export function createItem(req: express.Request, res: express.Response, next) { 
 }, ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."))}
 
 export function saveItem(req: express.Request, res: express.Response, next) { Sync(function() {
-    const body:ni.SaveItem.req = req.body;
+    const body:ni.SaveItem.req = JSON.parse(req.body.data);
     var dsName = body.model;
-    var recordData = JSON.parse(body.record);
+    var recordData = body.record;
     var dataSource = dbUtils.getDataSource(dsName);
     const dsOps = DataSourceOperations[dsName];     
     const record = await( dataSource.findById( recordData.id ) );
@@ -141,7 +142,7 @@ export function saveItem(req: express.Request, res: express.Response, next) { Sy
     await(record.save());
     await( dbUtils.saveExtraData(dsName, recordData.id, body.extraRecordData) );
     ControllerUtils.getOkFunc(res, "Registro salvo com sucesso.")();
-}, ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."))}
+}, ControllerUtils.getErrorFunc(res, 400, "Não foi possível salvar o registro."))}
 
 export function deleteItem(req: express.Request, res: express.Response) { Sync(function() {
 

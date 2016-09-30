@@ -5,6 +5,7 @@ import db = require('../db/models');
 import dbServerController = require('../controllers/dbServerController');
 import nodeunit = require('nodeunit');
 import * as AdminController from '../controllers/AdminController';
+import * as ni from '../../common/NetworkInterfaces';
 import { await } from '../lib/await';
 
 const utils = require('./lib/utils');
@@ -112,12 +113,13 @@ editPerson: test => {
             }
         ]
     };
-    const reqSave = {
-        body: { 
+
+    const data:ni.SaveItem.req = { 
             model: 'Person',
-            record: JSON.stringify(recordReq)
-        }
-    };
+            record: recordReq
+    }
+    const reqSave = { body: { data: JSON.stringify(data)} };
+
         
     const response = utils.getJsonResponse.sync(null, AdminController.saveItem, reqSave);
     test.equal('Registro salvo com sucesso.', response.msg);

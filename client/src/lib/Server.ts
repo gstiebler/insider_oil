@@ -42,7 +42,7 @@ export function getP(url: string, data: any):Promise<any> {
     });
 }
 
-function putP(url: string, data: any):Promise<any> {
+export function putP(url: string, data: any):Promise<any> {
     return new Promise<any>( function(resolve, reject) {
         ajax(url, data, 'PUT', (result) => { resolve(result) }, 
                 (error) => { reject(error) });
@@ -123,33 +123,12 @@ export function deleteItem( modelName, id, onDelete, onError ) {
     deleteHTTP('/delete_item/', params, onDelete, onError);
 }
 
-
-export function getModelFieldsAndValues( modelName, id ):Promise<any> {
-    var params = { 
-        model: modelName,
-        id: id,
-    };
-    return getP('/record_values/', params );
-}
-
-
-export function saveItem( modelName, record, onSave, onError ) {
-    const params:ni.SaveItem.req = {
-        model: modelName,
-        record: JSON.stringify(record),
-    };
-    
-    put('/save_item/', params, onSave, onError);
-}
-
-
 export function getComboValues(modelName, okCallback, onError) {
     var params = { 
         model: modelName,
     };
     get('/combo_values/', params, okCallback, onError);
 }
-
 
 export function getSearchResult(searchValue, okCallback, onError) {
     var params = { searchValue: searchValue };

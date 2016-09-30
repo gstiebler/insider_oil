@@ -66,7 +66,7 @@ export namespace GetViewRecord {
     export interface res {
         record: any[];
         referencedObjects: Interfaces.IRefObjectsOnView[];
-        extraRecordData?: IExtraRecordData
+        extraRecordData: IExtraRecordData
     }
 }
 
@@ -217,5 +217,18 @@ export namespace SaveItem {
     
     export interface res {
         msg: string;
+    }
+}
+
+export namespace RecordValues {
+    export interface req {
+        model: string;
+        id: number;
+    }
+    
+    export interface res {
+        values: any;
+        fields: Interfaces.IField[];
+        extraRecordData: IExtraRecordData
     }
 }

@@ -118,7 +118,12 @@ export async function saveExtraData(modelName: string, id: number,
                                     extraData: ni.IExtraRecordData) {
     if(!extraData) return;
     const model = db.models.ModelValueAssocation;
-    await model.destroy({ where: { id } });
+    const destroyOpts = {
+        model_name: modelName,
+        obj_id: id,
+        desc: 'TableauUrl',
+    }
+    await model.destroy({ where: destroyOpts });
     let modelValue = {
         model_name: modelName,
         obj_id: id,

@@ -6,6 +6,7 @@ import { ProjectSearch } from '../ProjectSearch'
 import * as Flash from '../Flash'
 import * as ReactQuill from 'react-quill';
 import { ImageShow } from './ImageShow';
+import * as ni from '../../../common/NetworkInterfaces';
 
 interface IAppProps {
     location: any;
@@ -47,7 +48,11 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
         if(this.state.id) {
             this.state.mainTitle = "Editar notícia"
             
-            server.getModelFieldsAndValues(this.modelName, this.state.id)
+            const req:ni.RecordValues.req = {
+                model: this.modelName,
+                id: this.state.id
+            };
+            server.getP('/record_values/', req)
                 .then(this.onServerData.bind(this))
                 .catch(showError.show);
         } else {
@@ -60,7 +65,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
             .catch(showError.show);
     }
 
-    private onServerData(data) {
+    private onServerData(data:ni.RecordValues.res) {
         this.state.title = data.values.title;
         this.state.content = data.values.content;
         this.state.author_id = data.values.author_id;
@@ -94,9 +99,19 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
         itemData.author_id = this.state.author_id;
         itemData.image = this.state.image;
         itemData.tableau_url = this.state.tableauUrl;
-        if(this.state.id) {
+        if(this.state.id) {            
             itemData.id = this.state.id;
-            server.saveItem( this.modelName, itemData, this.onSave.bind(this), showError.show );
+            const params:ni.SaveItem.req = {
+                model: this.modelName,
+                record: itemData,
+                extraRecordData: { 
+                    tableauUrls: [] // Use this for Tableaus 
+                }
+            };
+
+            server.putP('/save_item/', {data: JSON.stringify(params)})
+                .then(this.onSave.bind(this))
+                .catch(showError.show);
         } else {
             server.createNewItem( this.modelName, itemData, this.onSave.bind(this), showError.show );
         }
