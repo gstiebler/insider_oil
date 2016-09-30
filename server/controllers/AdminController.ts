@@ -116,12 +116,17 @@ export function createItem(req: express.Request, res: express.Response, next) { 
 
 	db.sequelize.transaction(function(t: Sequelize.Transaction) {
 	    return model.create(newItemData)
-	            .then(ControllerUtils.getOkFunc(res, "Registro criado com sucesso."))
+	            .then(onCreate)
 	           .catch(function(err) {
                    t.rollback();
                    ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro.")(err);
                });
     });
+
+    async function onCreate(newRecord) {
+        await dbUtils.saveExtraData(modelName, newRecord.id, body.extraRecordData);
+        ControllerUtils.getOkFunc(res, "Registro criado com sucesso.")();
+    }
 }, ControllerUtils.getErrorFunc(res, 400, "Não foi possível criar o registro."))}
 
 export function saveItem(req: express.Request, res: express.Response, next) { Sync(function() {

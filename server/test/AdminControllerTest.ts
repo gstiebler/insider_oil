@@ -230,6 +230,42 @@ editProductionUnitWithTableau: function(test: nodeunit.Test) {
     test.done();
 },
 
+createProductionUnitWithTableau: function(test: nodeunit.Test) {
+    const record = {
+        name: 'Teste',
+        oil_field_id: utils.idByName('OilField', 'Baleia Anã'),
+        type: 'SEMI',
+        status: 'Em projeto',
+        operator_id: utils.idByName('Company', 'Statoil'),
+        owner_id: utils.idByName('Company', 'Petrobras'),
+    }
+    
+    const body:ni.CreateItem.req = { 
+        model: 'ProductionUnit',
+        newItemData: JSON.stringify(record),
+        extraRecordData: {
+            tableauUrls: ['http://example.com']
+        }
+    };
+        
+    const response:ni.CreateItem.res = 
+            utils.getJsonResponse.sync(null, AdminController.createItem, { body });
+    test.equal('Registro criado com sucesso.', response.msg);
+    
+    const findOpts = { where: { name: 'Teste' } };
+    const toGetId = await( db.models.ProductionUnit.findOne(findOpts) );
+    const query:ni.GetViewRecord.req = { 
+        dataSource: 'ProductionUnit',
+        id: toGetId.id
+    } 
+    const res2:ni.GetViewRecord.res = 
+            utils.getJsonResponse.sync(null, dbServerController.viewRecord, { query });
+    test.equal(1, res2.extraRecordData.tableauUrls.length);
+    test.equal('http://example.com', res2.extraRecordData.tableauUrls[0]);
+
+    test.done();
+},
+
 editOilFieldTestUpdates: function(test) {
     const nordicId = utils.idByName('Fleet', 'Nordic Rio');
     const record = {

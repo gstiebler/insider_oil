@@ -116,6 +116,7 @@ export function filterShowFields(records: any[], gridFields: string[]): any[] {
 
 export async function saveExtraData(modelName: string, id: number, 
                                     extraData: ni.IExtraRecordData) {
+    if(!extraData) return;
     const model = db.models.ModelValueAssocation;
     await model.destroy({ where: { id } });
     let modelValue = {
