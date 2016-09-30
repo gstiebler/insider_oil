@@ -105,7 +105,8 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                 model: this.modelName,
                 record: itemData,
                 extraRecordData: { 
-                    tableauUrls: [] // Use this for Tableaus 
+                    tableauUrls: [], // TODO Use this for Tableaus 
+                    embedStrs: []
                 }
             };
 

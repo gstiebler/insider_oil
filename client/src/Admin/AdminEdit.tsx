@@ -35,7 +35,8 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
                 values: {},
                 fields: [],
                 extraRecordData: {
-                    tableauUrls: []
+                    tableauUrls: [],
+                    embedStrs: []
                 }
             },
         };
@@ -69,9 +70,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
         const params:ni.SaveItem.req = {
             model: this.state.modelName,
             record: itemData,
-            extraRecordData: { 
-                tableauUrls: this.state.recordValues.extraRecordData.tableauUrls 
-            }
+            extraRecordData: this.state.recordValues.extraRecordData
         };
 
         server.putP('/save_item/', {data: JSON.stringify(params)})
@@ -84,8 +83,8 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
         browserHistory.push('/app/model_view?model=' + this.state.modelName);
     }
 
-    private onTableuUrlsChange(event) {
-        this.state.recordValues.extraRecordData.tableauUrls =
+    private onExtraRecordDataChange(erdFieldName, event) {
+        this.state.recordValues.extraRecordData[erdFieldName] =
                 event.target.value.split('\n');
         this.setState(this.state);
     }
@@ -98,7 +97,19 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
                 <div className="col-sm-10">
                     <textarea type="text" className="form-control" 
                             value={tableauHTMLcontent}
-                             onChange={this.onTableuUrlsChange.bind(this)}/>
+                             onChange={this.onExtraRecordDataChange.bind(this, 'tableauUrls')}/>
+                </div>
+            </div>
+        );
+
+        const embedHTMLcontent = arrayToLines(this.state.recordValues.extraRecordData.embedStrs);
+        const embedHTML = (
+            <div className="form-group">
+                <label className="control-label col-sm-2">Embeds:</label>
+                <div className="col-sm-10">
+                    <textarea type="text" className="form-control" 
+                            value={embedHTMLcontent}
+                            onChange={this.onExtraRecordDataChange.bind(this, 'embedStrs')}/>
                 </div>
             </div>
         );
@@ -110,6 +121,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
                            values={ this.state.recordValues.values } 
                            onChange={(v) => {this.state.recordValues.values = v}} />
                     { tableauHTML }
+                    { embedHTML }
                     <div className="form-group" >
                         <div className="col-sm-offset-2 col-sm-10">
                             <button className="btn btn-default" onClick={ this.saveItem.bind(this) } >Salvar</button>
