@@ -116,13 +116,29 @@ export function filterShowFields(records: any[], gridFields: string[]): any[] {
 
 export async function saveExtraData(modelName: string, id: number, 
                                     extraData: ni.IExtraRecordData) {
-    const model = db.models[modelName];
-    await model.destroy(id);
+    const model = db.models.ModelValueAssocation;
+    await model.destroy({ where: { id } });
     let modelValue = {
         model_name: modelName,
         obj_id: id,
         desc: 'TableauUrl',
         value: extraData.tableauUrls
     }
-    await db.models.ModelValueAssocation.create(modelValue);
+    await model.create(modelValue);
+}
+
+export async function loadExtraData(modelName: string, id: number):Promise<ni.IExtraRecordData> {
+    const findOpt = {
+        desc: 'TableauUrl',
+        obj_id: id,
+        model_name: modelName
+    };
+    const record = await db.models.ModelValueAssocation.findOne({ where: findOpt });
+    if(!record) {
+        return { tableauUrls: [] };
+    } 
+    const result:ni.IExtraRecordData = {
+        tableauUrls: JSON.parse(record.value)
+    };
+    return result;
 }

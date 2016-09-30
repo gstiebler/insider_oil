@@ -214,7 +214,8 @@ editProductionUnitWithTableau: function(test: nodeunit.Test) {
         }
     };
         
-    const response = utils.getJsonResponse.sync(null, AdminController.saveItem, { body });
+    const response:ni.SaveItem.res = 
+            utils.getJsonResponse.sync(null, AdminController.saveItem, { body });
     test.equal('Registro salvo com sucesso.', response.msg);
     
     const query:ni.GetViewRecord.req = { 

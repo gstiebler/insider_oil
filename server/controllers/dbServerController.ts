@@ -2,7 +2,7 @@
 
 import db = require('../db/models');
 var Sync = require('sync');
-import { await } from '../lib/await';
+import * as libAwait from '../lib/await';
 import ControllerUtils = require('../lib/ControllerUtils');
 import winston = require('winston');
 import dbUtils = require("../lib/dbUtils");
@@ -34,40 +34,29 @@ export function sendErrorReport(req: express.Request, res: express.Response, nex
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }
 
-export function viewRecord(req: express.Request, res: express.Response, next) {
+export async function viewRecord(req: express.Request, res: express.Response, next) { try {
     const query:ni.GetViewRecord.req = req.query;
     const dataSourceName = query.dataSource;
     const id = query.id;
     const dataSource = dbUtils.getDataSource(dataSourceName);
     const options: any = {};
     options.include = [{all: true}];
-    dataSource.findById(id, options)
-        .then(onRecord)
-        .catch(ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));
-    
-    function onRecord(record) { Sync(function() {  
-        try {         
-            const dsOperations = DataSourceOperations[dataSourceName];
-            const recordValues = dsOperations.recordToViewValues(dataSourceName, record);
-            const viewParams = dsParams[dataSource.name];
-            const result:ni.GetViewRecord.res = {
-                record: recordValues,
-                referencedObjects: viewParams.referencedObjectsOnView
-            };
-            res.json(result);   
-        } catch(err) {
-            ControllerUtils.getErrorFunc(res, 500, "Erro")(err);
-        }
-        return null;
-    })
-    return null;
+    const record = await dataSource.findById(id, options);
+    const dsOperations = DataSourceOperations[dataSourceName];
+    const recordValues = dsOperations.recordToViewValues(dataSourceName, record);
+    const viewParams = dsParams[dataSource.name];
+    const result:ni.GetViewRecord.res = {
+        record: recordValues,
+        referencedObjects: viewParams.referencedObjectsOnView,
+        extraRecordData: await dbUtils.loadExtraData(dataSourceName, id)
     };
-}
+    res.json(result);  
+} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Erro")(err) } }
 
 export function getRecord(req: express.Request, res: express.Response, next) {Sync(function(){
     const query:ni.GetRecord.req = req.query;
     const recordOptions:IGetRecordOptions = getRecordOptions[query.optionsName];
-    const record = await( recordOptions.model.findById(query.id, recordOptions.seqOptions) );
+    const record = libAwait.await( recordOptions.model.findById(query.id, recordOptions.seqOptions) );
     const result:ni.GetRecord.res = { record };
     res.json(result);
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar o registro."))}
@@ -109,7 +98,7 @@ export function getTableQueryData(req: express.Request, res: express.Response):v
     const query = TableQueries.queries[queryName];
     const fields = query.fields;
 
-    const results = await( TableQueries.getQueryResult(queryName, queryParams) );
+    const results = libAwait.await( TableQueries.getQueryResult(queryName, queryParams) );
     const records = results[0];
     if(query.recordProcessor) {
         for(var record of records) {
@@ -145,12 +134,12 @@ export function getDashboardData(req: express.Request, res: express.Response):vo
             itemsPerPage: 1
         }
     }
-    const projectsInfo = await( TableQueries.getQueryResult('Projects', projQueryParams) );
+    const projectsInfo = libAwait.await( TableQueries.getQueryResult('Projects', projQueryParams) );
 
     const dashboardData:ni.GetDashboardData.res = {
-        numBids: await( db.models.Bid.count() ),
-        numContracts: await( db.models.Contract.count() ),
-        numPersons: await( db.models.Person.count() ),
+        numBids: libAwait.await( db.models.Bid.count() ),
+        numContracts: libAwait.await( db.models.Contract.count() ),
+        numPersons: libAwait.await( db.models.Person.count() ),
         numProjects: projectsInfo[1][0].count
     }
     res.json(dashboardData); 
