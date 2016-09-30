@@ -132,6 +132,7 @@ export class BlockView extends ViewRecord.ViewRecord {
                              url={this.state.url} />
                 <hr/>
                 { this.getTableausHTML() }
+                { this.getEmbedsHTML() }
                 { this.getRefObjectsElements() }
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>

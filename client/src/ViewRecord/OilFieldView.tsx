@@ -154,6 +154,7 @@ export class OilFieldView extends ViewRecord.ViewRecord {
                              url={this.state.url} />
                 <hr/>
                 { this.getTableausHTML() }
+                { this.getEmbedsHTML() }
                 { this.getRefObjectsElements() }
                 <TimeSeriesChart queryName="ProductionByField"
                                  qParams={this.state.prodQueryParams}
