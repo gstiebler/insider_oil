@@ -205,20 +205,13 @@ editProductionUnitWithTableau: function(test: nodeunit.Test) {
         operator_id: utils.idByName('Company', 'Statoil'),
         owner_id: utils.idByName('Company', 'Petrobras'),
     }
-    
-    const body:ni.SaveItem.req = { 
-        model: 'ProductionUnit',
-        record: JSON.stringify(record),
-        extraRecordData: {
-            tableauUrls: ['http://example.com']
-        }
-    };
         
     const data:ni.SaveItem.req = { 
         model: 'ProductionUnit',
         record: record,
         extraRecordData: {
-            tableauUrls: ['http://example.com']
+            tableauUrls: ['http://example.com'],
+            embedStrs: ['<html>', '<p></p>']
         }
     }
     const reqSave = { body: { data: JSON.stringify(data)} };
@@ -235,6 +228,8 @@ editProductionUnitWithTableau: function(test: nodeunit.Test) {
             utils.getJsonResponse.sync(null, dbServerController.viewRecord, { query });
     test.equal(1, res2.extraRecordData.tableauUrls.length);
     test.equal('http://example.com', res2.extraRecordData.tableauUrls[0]);
+    test.equal(2, res2.extraRecordData.embedStrs.length);
+    test.equal('<html>', res2.extraRecordData.embedStrs[0]);
 
     test.done();
 },
@@ -253,7 +248,8 @@ createProductionUnitWithTableau: function(test: nodeunit.Test) {
         model: 'ProductionUnit',
         newItemData: JSON.stringify(record),
         extraRecordData: {
-            tableauUrls: ['http://example.com']
+            tableauUrls: ['http://example.com'],
+            embedStrs: ['<html>', '<p></p>']
         }
     };
         
@@ -271,6 +267,8 @@ createProductionUnitWithTableau: function(test: nodeunit.Test) {
             utils.getJsonResponse.sync(null, dbServerController.viewRecord, { query });
     test.equal(1, res2.extraRecordData.tableauUrls.length);
     test.equal('http://example.com', res2.extraRecordData.tableauUrls[0]);
+    test.equal(2, res2.extraRecordData.embedStrs.length);
+    test.equal('<html>', res2.extraRecordData.embedStrs[0]);
 
     test.done();
 },

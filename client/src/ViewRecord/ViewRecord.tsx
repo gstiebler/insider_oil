@@ -148,6 +148,8 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<any> {
         const imgUrl = server.paths.baseImg + this.state.source + '/' + 
                             'img_' + this.state.id + '_original.jpg';
+                    
+        const embedStr = "<iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1xBhJ_qdhLO_OQ11OhsuL0wqObfBTQLwfeWaGGM6-n3w&font=Default&lang=en&initial_zoom=2&height=650' width='100%' height='650' frameborder='0'></iframe>";
         return (
             <div>
                 <div className="row">
@@ -166,6 +168,8 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                              url={this.state.url} />
                 <hr/>
                 { this.getTableausHTML() }
+
+				<p dangerouslySetInnerHTML={ {__html: embedStr } } />
                 { this.getRefObjectsElements() }
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>

@@ -33,14 +33,14 @@ getPerson: test => {
     test.equal(JSON.stringify(telephones), JSON.stringify(response.values.telephones));
     
     test.done();
-},
+}, 
 
 createPerson: test => {
     const newItemData = {
         name: 'Michael Jackson',
         company_id: 2,
         email: 'name.example.com',
-        telephones: [
+        telephones: [ 
             '333',
             '444',
             '555'

@@ -114,37 +114,48 @@ export function filterShowFields(records: any[], gridFields: string[]): any[] {
     return resultArray;
 }
 
+const extraDataParams = [
+    { key: 'TableauUrl', fieldName: 'tableauUrls' },
+    { key: 'EmbedStrs', fieldName: 'embedStrs' },
+];
+
 export async function saveExtraData(modelName: string, id: number, 
                                     extraData: ni.IExtraRecordData) {
     if(!extraData) return;
     const model = db.models.ModelValueAssocation;
-    const destroyOpts = {
-        model_name: modelName,
-        obj_id: id,
-        desc: 'TableauUrl',
+    for(let extraDataParam of extraDataParams) { 
+        const destroyOpts = {
+            model_name: modelName,
+            obj_id: id,
+            desc: extraDataParam.key,
+        }
+        await model.destroy({ where: destroyOpts });
+        let modelValue = {
+            model_name: modelName,
+            obj_id: id,
+            desc: extraDataParam.key,
+            value: extraData[extraDataParam.fieldName]
+        }
+        await model.create(modelValue);
     }
-    await model.destroy({ where: destroyOpts });
-    let modelValue = {
-        model_name: modelName,
-        obj_id: id,
-        desc: 'TableauUrl',
-        value: extraData.tableauUrls
-    }
-    await model.create(modelValue);
 }
 
 export async function loadExtraData(modelName: string, id: number):Promise<ni.IExtraRecordData> {
-    const findOpt = {
-        desc: 'TableauUrl',
-        obj_id: id,
-        model_name: modelName
-    };
-    const record = await db.models.ModelValueAssocation.findOne({ where: findOpt });
-    if(!record) {
-        return { tableauUrls: [] };
-    } 
-    const result:ni.IExtraRecordData = {
-        tableauUrls: JSON.parse(record.value)
-    };
+    const result:ni.IExtraRecordData = { 
+        tableauUrls: [],
+        embedStrs: [] 
+    }
+
+    for(let extraDataParam of extraDataParams) { 
+        const findOpt = {
+            desc: extraDataParam.key,
+            obj_id: id,
+            model_name: modelName
+        };
+        const record = await db.models.ModelValueAssocation.findOne({ where: findOpt });
+        if(record) {
+            result[extraDataParam.fieldName] = JSON.parse(record.value);
+        }
+    }
     return result;
 }

@@ -54,6 +54,7 @@ export namespace GetTableQueryData {
 
 export interface IExtraRecordData {
     tableauUrls: string[];
+    embedStrs: string[];
 } 
 
 export namespace GetViewRecord {
