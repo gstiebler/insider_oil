@@ -22,7 +22,7 @@ export interface IAppState {
     allReferencedObjects: IRefObjectsOnView[];
     objectLabel: string;
     url:string;
-    tableuUrls: string[];
+    extraRecordData: ni.IExtraRecordData;
 }
 
 export class ViewRecord extends React.Component<IAppProps, IAppState> {
@@ -42,7 +42,10 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
             allReferencedObjects: [],
             objectLabel: '',
             url: props.location.basename + props.location.pathname + props.location.search,
-            tableuUrls: []
+            extraRecordData: {
+                tableauUrls: [],
+                embedStrs: []
+            }
         };
 
         var customSources = {
@@ -115,7 +118,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
     public showValues(viewData:ni.GetViewRecord.res) {
         this.state.recordData = viewData.record;
         this.state.objectLabel = viewData.record[0].value;
-        this.state.tableuUrls = viewData.extraRecordData.tableauUrls;
+        this.state.extraRecordData = viewData.extraRecordData;
         const customReferencedObjs = viewData.referencedObjects ? viewData.referencedObjects : [];
         const fixedRefObjects = this.getFixedRefObjects(this.state.source, this.state.id);
         this.state.allReferencedObjects = [];
@@ -135,10 +138,21 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
     }
 
     protected getTableausHTML() {
-        return this.state.tableuUrls.map((turl, i) => {
+        return this.state.extraRecordData.tableauUrls.map((turl, i) => {
             return (
                 <div>
                     <Tableau vizUrl={turl}/>
+                    <br/>
+                </div>
+            );
+        });
+    }
+
+    protected getEmbedsHTML() {
+        return this.state.extraRecordData.embedStrs.map((eurl, i) => {
+            return (
+                <div>
+				    <p dangerouslySetInnerHTML={ {__html: eurl } } />
                     <br/>
                 </div>
             );
@@ -168,8 +182,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                              url={this.state.url} />
                 <hr/>
                 { this.getTableausHTML() }
-
-				<p dangerouslySetInnerHTML={ {__html: embedStr } } />
+                { this.getEmbedsHTML() }
                 { this.getRefObjectsElements() }
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>

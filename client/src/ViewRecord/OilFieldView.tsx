@@ -72,7 +72,10 @@ export class OilFieldView extends ViewRecord.ViewRecord {
                 center: rioDeJaneiroCoords,
                 mapTypeId: googleRef.maps.MapTypeId.HYBRID
             },
-            tableuUrls: []
+            extraRecordData: {
+                tableauUrls: [],
+                embedStrs: []
+            }
         };
     }    
     
@@ -154,6 +157,7 @@ export class OilFieldView extends ViewRecord.ViewRecord {
                              url={this.state.url} />
                 <hr/>
                 { this.getTableausHTML() }
+                { this.getEmbedsHTML() }
                 { this.getRefObjectsElements() }
                 <TimeSeriesChart queryName="ProductionByField"
                                  qParams={this.state.prodQueryParams}
