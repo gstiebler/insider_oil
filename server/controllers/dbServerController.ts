@@ -34,24 +34,24 @@ export function sendErrorReport(req: express.Request, res: express.Response, nex
     }).catch(ControllerUtils.getErrorFunc(res, 500, "Erro"));
 }
 
-export async function viewRecord(req: express.Request, res: express.Response, next) { try {
+export function viewRecord(req: express.Request, res: express.Response, next) {Sync(function(){
     const query:ni.GetViewRecord.req = req.query;
     const dataSourceName = query.dataSource;
     const id = query.id;
     const dataSource = dbUtils.getDataSource(dataSourceName);
     const options: any = {};
     options.include = [{all: true}];
-    const record = await dataSource.findById(id, options);
+    const record = libAwait.await( dataSource.findById(id, options) );
     const dsOperations = DataSourceOperations[dataSourceName];
     const recordValues = dsOperations.recordToViewValues(dataSourceName, record);
     const viewParams = dsParams[dataSource.name];
     const result:ni.GetViewRecord.res = {
         record: recordValues,
         referencedObjects: viewParams.referencedObjectsOnView,
-        extraRecordData: await dbUtils.loadExtraData(dataSourceName, id)
+        extraRecordData: libAwait.await( dbUtils.loadExtraData(dataSourceName, id) )
     };
     res.json(result);  
-} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Erro")(err) } }
+}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar o registro."))}
 
 export function getRecord(req: express.Request, res: express.Response, next) {Sync(function(){
     const query:ni.GetRecord.req = req.query;
