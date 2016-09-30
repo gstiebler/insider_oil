@@ -15,6 +15,7 @@ import * as ni from '../../../common/NetworkInterfaces';
 import { IGeoPoint } from '../../../common/Interfaces';
 import * as Polygon from '../Maps/Polygon';
 import { find } from '../lib/ArrayUtils';
+import { Tableau } from '../Tableau'; 
 
 interface IAppProps {
     location: any;
@@ -48,7 +49,8 @@ export class BlockView extends ViewRecord.ViewRecord {
                 zoom: 9,
                 center: rioDeJaneiroCoords,
                 mapTypeId: googleRef.maps.MapTypeId.HYBRID
-            }
+            },
+            tableuUrls: []
         };
     }    
     
@@ -129,6 +131,7 @@ export class BlockView extends ViewRecord.ViewRecord {
                 <ErrorReport objectLabel={this.state.objectLabel}
                              url={this.state.url} />
                 <hr/>
+                { this.getTableausHTML() }
                 { this.getRefObjectsElements() }
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>

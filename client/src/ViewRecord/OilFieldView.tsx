@@ -16,6 +16,7 @@ import * as ni from '../../../common/NetworkInterfaces';
 import { IGeoPoint } from '../../../common/Interfaces';
 import * as Polygon from '../Maps/Polygon';
 import { find } from '../lib/ArrayUtils';
+import { Tableau } from '../Tableau'; 
 
 interface IAppProps {
     location: any;
@@ -70,7 +71,8 @@ export class OilFieldView extends ViewRecord.ViewRecord {
                 zoom: 8,
                 center: rioDeJaneiroCoords,
                 mapTypeId: googleRef.maps.MapTypeId.HYBRID
-            }
+            },
+            tableuUrls: []
         };
     }    
     
@@ -151,6 +153,7 @@ export class OilFieldView extends ViewRecord.ViewRecord {
                 <ErrorReport objectLabel={this.state.objectLabel}
                              url={this.state.url} />
                 <hr/>
+                { this.getTableausHTML() }
                 { this.getRefObjectsElements() }
                 <TimeSeriesChart queryName="ProductionByField"
                                  qParams={this.state.prodQueryParams}
