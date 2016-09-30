@@ -17,7 +17,7 @@ getBlocks: function(test) {
 
 getOilFields: function(test) {
     const res = utils.getJsonResponse.sync(null, MapsController.getOilFields, {});
-    test.equal(0, res.oilFields.length, 'Tam. do vetor ' + res.oilFields.length);
+    test.equal(1, res.oilFields.length, 'Tam. do vetor ' + res.oilFields.length);
     test.done();
 },
 
