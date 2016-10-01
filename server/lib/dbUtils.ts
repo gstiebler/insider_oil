@@ -130,11 +130,15 @@ export async function saveExtraData(modelName: string, id: number,
             desc: extraDataParam.key,
         }
         await model.destroy({ where: destroyOpts });
+        const rawValues:string[] = extraData[extraDataParam.fieldName];
+        const selectedValues = rawValues.filter(v => { return v != '' }); 
+        if(selectedValues.length == 0) continue;
+        // filter empty values
         let modelValue = {
             model_name: modelName,
             obj_id: id,
             desc: extraDataParam.key,
-            value: extraData[extraDataParam.fieldName]
+            value: selectedValues
         }
         await model.create(modelValue);
     }
