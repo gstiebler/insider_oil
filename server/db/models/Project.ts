@@ -23,25 +23,27 @@ function beforeSave(models, project):Promise<any> {
         if(contractors.length != contractors_scope.length) {
             throw 'Número de contratadas diferente do número de escopos de contratadas';
         }
-        project.json_field.contractors = [];
+        const jsonField:IJsonField = { contractors: [] };
         for(let i = 0; i < contractors_scope.length; i++) {
-            project.json_field.contractors.push({
+            jsonField.contractors.push({
                 contractor_id: contractors[i].id,
-                scope: contractors_scope[i]
+                scope: contractors_scope[i],
+                persons_id: []
             });
         }
 
-        if(contractor1Persons && project.json_field.contractors.length >= 1) {
-            project.json_field.contractors[0].persons_id = contractor1Persons.map(p => {
+        if(contractor1Persons && jsonField.contractors.length >= 1) {
+            jsonField.contractors[0].persons_id = contractor1Persons.map(p => {
                 return p.id;
             });
         }
         
-        if(contractor2Persons && project.json_field.contractors.length >= 2) {
-            project.json_field.contractors[1].persons_id = contractor2Persons.map(p => {
+        if(contractor2Persons && jsonField.contractors.length >= 2) {
+            jsonField.contractors[1].persons_id = contractor2Persons.map(p => {
                 return p.id;
             });
         }
+        project.json_field = jsonField;
     }
     return null;
 }
