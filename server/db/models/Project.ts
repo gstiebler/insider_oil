@@ -5,6 +5,14 @@ import { syncify } from '../../lib/PromiseUtils';
 
 export const PROJECT_OBJS_TYPE = 'ProjectObjects';
 
+interface IJsonField {
+    contractors: {
+        contractor_id: number;
+        persons_id: number[];
+        scope: string;
+    }[];
+}
+
 function beforeSave(models, project):Promise<any> {
     project.json_field = {};
     const contractors:any[] = project.dataValues.contractors;
@@ -98,7 +106,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
             type: DataTypes.VIRTUAL,
             get: function() {
                 if(!this.dataValues.json_field) return null;
-                const jsonField = JSON.parse(this.dataValues.json_field);
+                const jsonField:IJsonField = JSON.parse(this.dataValues.json_field);
                 if(!jsonField.contractors) return [];
                 const company = sequelize.models['Company'];
                 return jsonField.contractors.map(c => {
@@ -113,7 +121,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
             type: DataTypes.VIRTUAL,
             get: function() {
                 if(!this.dataValues.json_field) return null;
-                const jsonField = JSON.parse(this.dataValues.json_field);
+                const jsonField:IJsonField = JSON.parse(this.dataValues.json_field);
                 if(!jsonField.contractors) return [];
                 return jsonField.contractors.map(c => {
                     return c.scope;
@@ -124,7 +132,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
             type: DataTypes.VIRTUAL,
             get: function() {
                 if(!this.dataValues.json_field) return null;
-                const jsonField = JSON.parse(this.dataValues.json_field);
+                const jsonField:IJsonField = JSON.parse(this.dataValues.json_field);
                 if(!jsonField.contractors) return [];
                 const Person = sequelize.models['Person'];
                 if(jsonField.contractors.length >= 1) {
@@ -142,7 +150,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
             type: DataTypes.VIRTUAL,
             get: function() {
                 if(!this.dataValues.json_field) return null;
-                const jsonField = JSON.parse(this.dataValues.json_field);
+                const jsonField:IJsonField = JSON.parse(this.dataValues.json_field);
                 if(!jsonField.contractors) return [];
                 const Person = sequelize.models['Person'];
                 if(jsonField.contractors.length >= 2) {
