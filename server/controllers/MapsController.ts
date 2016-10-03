@@ -11,11 +11,11 @@ import { simpleQuery } from '../lib/dbUtils';
 /**
  * Get blocks map data
  */
-export function getBlocks(req: express.Request, res: express.Response):void {Sync(function(){
+export async function getBlocks(req: express.Request, res: express.Response) { try {
     const fields = ['id', 'name',  'polygons'];
-    const blocks = awaitLib.await( simpleQuery('blocks', fields) );
+    const blocks = await simpleQuery('blocks', fields);
     res.json( { blocks } );
-}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err) }}
 
 /**
  * Get oil fields map data
