@@ -4,7 +4,7 @@ import express = require("express");
 import * as ControllerUtils from '../lib/ControllerUtils';
 import * as ni from '../../common/NetworkInterfaces';
 var Sync = require('sync');
-import { await } from '../lib/await';
+import * as awaitLib from '../lib/await';
 
 /**
  * Get blocks map data
@@ -13,7 +13,7 @@ export function getBlocks(req: express.Request, res: express.Response):void {Syn
     const blockGetAllOptions = {
         attributes: ['id', 'name', 'polygons']
     }
-    const blocks = await( db.models.Block.findAll(blockGetAllOptions) );
+    const blocks = awaitLib.await( db.models.Block.findAll(blockGetAllOptions) );
 
     res.json( { blocks } );
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
@@ -26,7 +26,7 @@ export function getOilFields(req: express.Request, res: express.Response):void {
         attributes: ['id', 'name', 'polygons'],
         where: { polygons: { $ne: null } }
     }
-    const oilFields = await( db.models.OilField.findAll(oilFieldGetAllOptions) );
+    const oilFields = awaitLib.await( db.models.OilField.findAll(oilFieldGetAllOptions) );
 
     res.json( { oilFields } );
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
@@ -39,7 +39,7 @@ export function getProductionUnits(req: express.Request, res: express.Response):
         attributes: ['id', 'name', 'coordinates'],
         where: { coordinates: { $ne: null } }
     }
-    const productionUnits = await( db.models.ProductionUnit.findAll(productionUnitsGetAllOptions) );
+    const productionUnits = awaitLib.await( db.models.ProductionUnit.findAll(productionUnitsGetAllOptions) );
 
     res.json( { productionUnits } );
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
@@ -49,7 +49,7 @@ export function getWells(req: express.Request, res: express.Response):void {Sync
         attributes: ['id', 'name', 'lat', 'lng'],
         where: { lat: { $ne: null } }
     }
-    const wells:any[] = await( db.models.Well.findAll(wellsGetAllOptions) );
+    const wells:any[] = awaitLib.await( db.models.Well.findAll(wellsGetAllOptions) );
     const processedWells = wells.map((well) => {
         return {
             id: well.id,
@@ -75,8 +75,8 @@ export function getDrillingRigs(req: express.Request, res: express.Response):voi
         where: { coordinates: { $ne: null } }
     }
 
-    const drillingRigsOnshore:any[] = await( db.models.DrillingRigOnshore.findAll(drillingRigsOnshoreGetAllOptions) );
-    const drillingRigsOffshore:any[] = await( db.models.DrillingRigOffshore.findAll(drillingRigsOffshoreGetAllOptions) );
+    const drillingRigsOnshore:any[] = awaitLib.await( db.models.DrillingRigOnshore.findAll(drillingRigsOnshoreGetAllOptions) );
+    const drillingRigsOffshore:any[] = awaitLib.await( db.models.DrillingRigOffshore.findAll(drillingRigsOffshoreGetAllOptions) );
 
     const allDrillingRigs = [];
     for(var dr of drillingRigsOnshore) {
