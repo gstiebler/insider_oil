@@ -3,18 +3,17 @@ import db = require('../db/models');
 import express = require("express");
 import * as ControllerUtils from '../lib/ControllerUtils';
 import * as ni from '../../common/NetworkInterfaces';
+import QueryGenerator = require('../db/queries/QueryGenerator');
 var Sync = require('sync');
 import * as awaitLib from '../lib/await';
+import { simpleQuery } from '../lib/dbUtils';
 
 /**
  * Get blocks map data
  */
 export function getBlocks(req: express.Request, res: express.Response):void {Sync(function(){
-    const blockGetAllOptions = {
-        attributes: ['id', 'name', 'polygons']
-    }
-    const blocks = awaitLib.await( db.models.Block.findAll(blockGetAllOptions) );
-
+    const fields = ['id', 'name',  'polygons'];
+    const blocks = awaitLib.await( simpleQuery('blocks', fields) );
     res.json( { blocks } );
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 

@@ -3,6 +3,7 @@ var DataSources = require('./DataSources');
 import dsParams = require('./DataSourcesParams');
 import * as ni from '../../common/NetworkInterfaces';
 import Sequelize = require('sequelize');
+import QueryGenerator = require('../db/queries/QueryGenerator');
 
 export interface ioDataSource {
     name: string;
@@ -162,4 +163,24 @@ export async function loadExtraData(modelName: string, id: number):Promise<ni.IE
         }
     }
     return result;
+}
+
+/**
+ * Used to replace findAll 
+ * when we don't want the virtual fields to be calculated
+ */
+export function simpleQuery(table: string, fieldNames: string[]):Promise<any[]> {
+    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
+    const options:QueryGenerator.IQueryOpts = {
+        table: {
+            name: table,
+            fields: fieldNames
+        },
+        extraFields: [],
+        joinTables: [],
+        where: [],
+        order: []
+    };
+    const queryStr = QueryGenerator.queryGenerator(options);
+    return db.sequelize.query(queryStr, simpleQueryType);
 }
