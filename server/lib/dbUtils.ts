@@ -165,12 +165,17 @@ export async function loadExtraData(modelName: string, id: number):Promise<ni.IE
     return result;
 }
 
+export function execQuery(options:QueryGenerator.IQueryOpts):Promise<any[]> {
+    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
+    const queryStr = QueryGenerator.queryGenerator(options);
+    return db.sequelize.query(queryStr, simpleQueryType);
+}
+
 /**
  * Used to replace findAll 
  * when we don't want the virtual fields to be calculated
  */
 export function simpleQuery(table: string, fieldNames: string[]):Promise<any[]> {
-    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const options:QueryGenerator.IQueryOpts = {
         table: {
             name: table,
@@ -181,6 +186,5 @@ export function simpleQuery(table: string, fieldNames: string[]):Promise<any[]> 
         where: [],
         order: []
     };
-    const queryStr = QueryGenerator.queryGenerator(options);
-    return db.sequelize.query(queryStr, simpleQueryType);
+    return execQuery(options);
 }

@@ -4,9 +4,7 @@ import express = require("express");
 import * as ControllerUtils from '../lib/ControllerUtils';
 import * as ni from '../../common/NetworkInterfaces';
 import QueryGenerator = require('../db/queries/QueryGenerator');
-var Sync = require('sync');
-import * as awaitLib from '../lib/await';
-import { simpleQuery } from '../lib/dbUtils';
+import { execQuery, simpleQuery } from '../lib/dbUtils';
 
 /**
  * Get blocks map data
@@ -20,35 +18,62 @@ export async function getBlocks(req: express.Request, res: express.Response) { t
 /**
  * Get oil fields map data
  */
-export function getOilFields(req: express.Request, res: express.Response):void {Sync(function(){
-    const oilFieldGetAllOptions = {
-        attributes: ['id', 'name', 'polygons'],
-        where: { polygons: { $ne: null } }
-    }
-    const oilFields = awaitLib.await( db.models.OilField.findAll(oilFieldGetAllOptions) );
+export async function getOilFields(req: express.Request, res: express.Response) { try {
+    const options:QueryGenerator.IQueryOpts = {
+        table: {
+            name: 'oil_fields',
+            fields: ['id', 'name', 'polygons']
+        },
+        extraFields: [],
+        joinTables: [],
+        where: [{
+            field: 'polygons',
+            isNotNull: true
+        }],
+        order: []
+    };
+    const oilFields = await execQuery(options);
 
     res.json( { oilFields } );
-}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err) }}
 
 /**
  * Get production units map data
  */
-export function getProductionUnits(req: express.Request, res: express.Response):void {Sync(function(){
-    const productionUnitsGetAllOptions = {
-        attributes: ['id', 'name', 'coordinates'],
-        where: { coordinates: { $ne: null } }
-    }
-    const productionUnits = awaitLib.await( db.models.ProductionUnit.findAll(productionUnitsGetAllOptions) );
+export async function getProductionUnits(req: express.Request, res: express.Response) { try {
+    const options:QueryGenerator.IQueryOpts = {
+        table: {
+            name: 'production_units',
+            fields: ['id', 'name', 'coordinates']
+        },
+        extraFields: [],
+        joinTables: [],
+        where: [{
+            field: 'coordinates',
+            isNotNull: true
+        }],
+        order: []
+    };
+    const productionUnits = await execQuery(options);
 
     res.json( { productionUnits } );
-}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err) }}
 
-export function getWells(req: express.Request, res: express.Response):void {Sync(function(){
-    const wellsGetAllOptions = {
-        attributes: ['id', 'name', 'lat', 'lng'],
-        where: { lat: { $ne: null } }
-    }
-    const wells:any[] = awaitLib.await( db.models.Well.findAll(wellsGetAllOptions) );
+export async function getWells(req: express.Request, res: express.Response) { try {
+    const options:QueryGenerator.IQueryOpts = {
+        table: {
+            name: 'wells',
+            fields: ['id', 'name', 'lat', 'lng']
+        },
+        extraFields: [],
+        joinTables: [],
+        where: [{
+            field: 'lat',
+            isNotNull: true
+        }],
+        order: []
+    };
+    const wells = await execQuery(options);
     const processedWells = wells.map((well) => {
         return {
             id: well.id,
@@ -61,21 +86,38 @@ export function getWells(req: express.Request, res: express.Response):void {Sync
     });
 
     res.json( { wells: processedWells } );
-}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err) }}
 
-export function getDrillingRigs(req: express.Request, res: express.Response):void {Sync(function(){
-    const drillingRigsOnshoreGetAllOptions = {
-        attributes: ['id', 'name', 'coordinates'],
-        where: { coordinates: { $ne: null } }
-    }    
-    
-    const drillingRigsOffshoreGetAllOptions = {
-        attributes: ['id', 'name', 'coordinates'],
-        where: { coordinates: { $ne: null } }
-    }
+export async function getDrillingRigs(req: express.Request, res: express.Response) { try {
+    const optsDron:QueryGenerator.IQueryOpts = {
+        table: {
+            name: 'drilling_rigs_onshore',
+            fields: ['id', 'name', 'coordinates']
+        },
+        extraFields: [],
+        joinTables: [],
+        where: [{
+            field: 'coordinates',
+            isNotNull: true
+        }],
+        order: []
+    };
+    const drillingRigsOnshore = await execQuery(optsDron);   
 
-    const drillingRigsOnshore:any[] = awaitLib.await( db.models.DrillingRigOnshore.findAll(drillingRigsOnshoreGetAllOptions) );
-    const drillingRigsOffshore:any[] = awaitLib.await( db.models.DrillingRigOffshore.findAll(drillingRigsOffshoreGetAllOptions) );
+    const optsDroff:QueryGenerator.IQueryOpts = {
+        table: {
+            name: 'drilling_rigs_onshore',
+            fields: ['id', 'name', 'coordinates']
+        },
+        extraFields: [],
+        joinTables: [],
+        where: [{
+            field: 'coordinates',
+            isNotNull: true
+        }],
+        order: []
+    };
+    const drillingRigsOffshore = await execQuery(optsDroff);  
 
     const allDrillingRigs = [];
     for(var dr of drillingRigsOnshore) {
@@ -96,4 +138,4 @@ export function getDrillingRigs(req: express.Request, res: express.Response):voi
     }
 
     res.json( { drillingRigs: allDrillingRigs } );
-}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err) }}
