@@ -33,6 +33,7 @@ module.exports = function(db) {
                 model: 'ProductionUnit',
                 id: utils.idByName('ProductionUnit', 'Pioneer'),
             }],
+            stage: 'OPEX'
         },
         {
             name: "Libra",
@@ -41,6 +42,7 @@ module.exports = function(db) {
             owner_id: utils.idByName('Company', 'Statoil'),
             production_unit_id: utils.idByName('ProductionUnit', 'Petrobras 52'),
             oil_field_id: utils.idByName('OilField', 'Roncador'),
+            stage: 'CAPEX'
         },
     ];
 

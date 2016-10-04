@@ -229,14 +229,6 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                         };
                         Project.belongsTo(models.OilField, opts);
                     }
-
-                    {
-                        const opts: Sequelize.AssociationOptionsBelongsTo = {
-                            as: 'block',
-                            foreignKey: { allowNull: true }
-                        };
-                        Project.belongsTo(models.Block, opts);
-                    }
                 },
 			    defineHooks: defineHooks
             },    
