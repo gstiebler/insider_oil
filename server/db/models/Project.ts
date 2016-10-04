@@ -1,7 +1,8 @@
 'use strict';
 import * as Sequelize from 'sequelize';
-import { await } from '../../lib/await';
+import * as libAwait from '../../lib/await';
 import { syncify } from '../../lib/PromiseUtils';
+import { saveOriginalImage } from '../../lib/ModelUtils';
 
 export const PROJECT_OBJS_TYPE = 'ProjectObjects';
 
@@ -13,7 +14,11 @@ interface IJsonField {
     }[];
 }
 
-function beforeSave(models, project):Promise<any> {
+async function savePhoto(project) {
+	await saveOriginalImage(project.dataValues.photo, 'Project', project.id);
+}
+
+function beforeSave(models, project) {
     project.json_field = {};
     const contractors:any[] = project.dataValues.contractors;
     const contractors_scope:string[] = project.dataValues.contractors_scope;
@@ -45,10 +50,9 @@ function beforeSave(models, project):Promise<any> {
         }
         project.json_field = jsonField;
     }
-    return null;
 }
 
-function updateObjects(models, project) {
+async function updateObjects(models, project) {
     const Association:any = models['Association'];
     const delOpts = {
         where: {
@@ -56,7 +60,7 @@ function updateObjects(models, project) {
             src_id: project.id 
         }
     };
-    await( Association.destroy(delOpts) );
+    await Association.destroy(delOpts);
     const objects:any[] = project.dataValues.objects;
     if(!objects) return;
     for(let object of objects) {
@@ -67,22 +71,18 @@ function updateObjects(models, project) {
             dest_model: object.model,
             dest_id: object.id
         }
-        await( Association.create(association) );
+        await Association.create(association);
     }
 }
 
-function updateObjectsSync(models, project) {
-    return syncify(updateObjects.bind(this, models, project));
-}
-
-function saveAll(models, project) {
+async function saveAll(models, project) {
     beforeSave(models, project);
-    updateObjectsSync(models, project);
+    await updateObjects(models, project);
 }
 
 function defineHooks(models) {
 	models.Project.hook('beforeCreate', beforeSave.bind(this, models));
-	models.Project.hook('afterCreate', updateObjectsSync.bind(this, models));
+	models.Project.hook('afterCreate', updateObjects.bind(this, models));
 	models.Project.hook('beforeUpdate', saveAll.bind(this, models));
 }
 
@@ -126,7 +126,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                 return jsonField.contractors.map(c => {
                     return {
                         id: c.contractor_id,
-                        name: await( company.findById( c.contractor_id ) ).name
+                        name: libAwait.await( company.findById( c.contractor_id ) ).name
                     };
                 });
             },
@@ -151,7 +151,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                 const Person = sequelize.models['Person'];
                 if(jsonField.contractors.length >= 1) {
                     return jsonField.contractors[0].persons_id.map(person_id => {
-                        let name = await( Person.findById(person_id) ).name;
+                        let name = libAwait.await( Person.findById(person_id) ).name;
                         return {
                             id: person_id,
                             name
@@ -169,7 +169,7 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                 const Person = sequelize.models['Person'];
                 if(jsonField.contractors.length >= 2) {
                     return jsonField.contractors[1].persons_id.map(person_id => {
-                        let name = await( Person.findById(person_id) ).name;
+                        let name = libAwait.await( Person.findById(person_id) ).name;
                         return {
                             id: person_id,
                             name
@@ -188,16 +188,22 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                         src_id: this.id
                     }
                 };
-                const associations:any[] = await( Association.findAll(queryOpts) );
+                const associations:any[] = libAwait.await( Association.findAll(queryOpts) );
                 return associations.map(association => {
                     const modOpt = {  where: { name: association.dest_model } };
-                    const obj = await( sequelize.models[association.dest_model].findById(association.dest_id) );
+                    const obj = libAwait.await( sequelize.models[association.dest_model].findById(association.dest_id) );
                     return {
                         id: association.dest_id,
                         model: association.dest_model,
                         name: obj.name
                     };
                 });
+            },
+		},
+		photo: {
+            type: DataTypes.VIRTUAL,
+            get: function() {
+                return 'image';
             },
 		},
     },

@@ -59,12 +59,12 @@ export function formatImageFileName(modelName: string, id: number):string {
     return fileName;
 }
 
-export function saveOriginalImage(imgBytes, modelName: string, id: number) {
+export async function saveOriginalImage(imgBytes, modelName: string, id: number):Promise<string> {
     const imgArray = imgBytes;
     if(!imgArray) return;
     const imgBuffer = new Buffer(imgArray);
     const fileName = formatImageFileName(modelName, id);
-    AWS.saveImage(imgBuffer, fileName);  
+    return AWS.saveImage(imgBuffer, fileName);  
 }
 
 export function fieldTypeStr(field): string {

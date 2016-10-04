@@ -216,6 +216,43 @@ Project: (test) => {
     test.equal('Guilherme Stiebler', mexilhao.contractor1Persons[0].name);
     utils.compareArray(test, ['contrato global', 'engenharia'], mexilhao.contractors_scope);
     test.done();
+},
+
+ProjectEdit: (test: nodeunit.Test) => {
+    {
+        const projects = await( db.models.Project.findAll() );
+        const mexilhao = projects[0];
+        mexilhao.contractors = [
+            { id: utils.idByName('Company', 'Rosneft') },
+            { id: utils.idByName('Company', 'BP Energy') },
+        ];
+        mexilhao.contractors_scope = [
+            'contrato global',
+            'engenharia',
+        ];
+        mexilhao.contractor1Persons = [
+            { id: 1 }, 
+            { id: 2 }, 
+            { id: 3 }
+        ];
+        mexilhao.contractor2Persons = [
+            { id: 2 }, 
+            { id: 3 }
+        ];
+        await(mexilhao.save());
+    }
+
+    const projects = await( db.models.Project.findAll() );
+    const mexilhao = projects[0];
+
+    test.equal(2, mexilhao.contractors.length);
+    test.equal(39, mexilhao.contractors[0].id);
+    test.equal('Rosneft', mexilhao.contractors[0].name);
+    test.equal(3, mexilhao.contractor1Persons.length);
+    test.equal(1, mexilhao.contractor1Persons[0].id);
+    test.equal('Guilherme Stiebler', mexilhao.contractor1Persons[0].name);
+    utils.compareArray(test, ['contrato global', 'engenharia'], mexilhao.contractors_scope);
+    test.done();
 }
 
 }

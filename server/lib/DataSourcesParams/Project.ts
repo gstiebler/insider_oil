@@ -52,7 +52,11 @@ const Project: IBaseDataSourceParams = {
         objects: {
             label: 'Objetos (admin)',
             isProjectList: true
-        }
+        },
+        photo: {
+            label: 'Foto',
+            isPhoto: true
+        },
     },
     labelField: "name",
     gridFields: ["name", "scope", "value"],
