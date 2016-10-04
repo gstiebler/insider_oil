@@ -38,10 +38,24 @@ class NewsOperations extends BaseModelOperations {
 
 }
 
+class ProjectOperations extends BaseModelOperations {
+
+    public editRecord(id) {
+        var queryStr = "/app/create_project?id=" + id;
+        browserHistory.push(queryStr);
+    }
+
+    public createItem() {
+        browserHistory.push("/app/create_project");
+    }
+
+}
+
 
 export function getModelOperations(modelName) {
     let customModels = {
-        'News': NewsOperations
+        'News': NewsOperations,
+        'Project': ProjectOperations,
     }
     
     let moClass = customModels[modelName];

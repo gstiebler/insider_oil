@@ -17,7 +17,7 @@ interface IAppProps {
     location: any;
 }
 
-interface IAppState {
+export interface IAppState {
     id: number;
     modelName: string;
     recordValues: ni.RecordValues.res;
