@@ -57,6 +57,9 @@ const Project: IBaseDataSourceParams = {
             label: 'Foto',
             isPhoto: true
         },
+        json_field: {
+            label: 'json_field (admin)',
+        },
     },
     labelField: "name",
     gridFields: ["name", "scope", "value"],

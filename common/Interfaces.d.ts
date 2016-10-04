@@ -150,3 +150,12 @@ export interface IAnalyticsCount {
     label: string;
     count_value: number;
 }
+
+export interface IProjectJsonField {
+    contractors: {
+        contractor_id: string;
+        persons_id: string[];
+        scope: string;
+    }[];
+    owner_persons_id: string[];
+}

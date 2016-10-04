@@ -58,7 +58,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    private valuesArrived(data:ni.RecordValues.res) {
+    protected valuesArrived(data:ni.RecordValues.res) {
         this.state.recordValues = data;
         this.setState(this.state);
         return null;
@@ -115,6 +115,10 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
+    protected getSpecialFields(): React.ReactElement<any> {
+        return null;
+    }
+
     public render(): React.ReactElement<any> {
         const tableauHTMLcontent = arrayToLines(this.state.recordValues.extraRecordData.tableauUrls);
         const tableauHTML = (
@@ -148,6 +152,7 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
                            onChange={(v) => {this.state.recordValues.values = v}} />
                     { tableauHTML }
                     { embedHTML }
+                    { this.getSpecialFields() }
                     <div className="form-group" >
                         <div className="col-sm-offset-2 col-sm-10">
                             <button className="btn btn-default" onClick={ this.saveItem.bind(this) } >Salvar</button>
