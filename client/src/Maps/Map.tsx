@@ -10,6 +10,7 @@ export interface IMapObj {
 interface IAppProps {
     initialState: any;
     receiveMapObj: any;
+    style?: any;
 }
 
 interface IAppState {

@@ -141,7 +141,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                 <div className="col-sm-10">
                     <input type="text" className="form-control" 
                             value={this.state.title}
-                            onChange={(e) => {this.state.title = e.target.value; this.setState(this.state);}} />
+                            onChange={(e:any) => {this.state.title = e.target.value; this.setState(this.state);}} />
                 </div>    
             </div>
         );
@@ -190,7 +190,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                         <div className="col-sm-offset-2 col-sm-10">
                             <textarea rows="8" cols="100"
                                       value={this.state.content}
-                                      onChange={(e) => {this.state.content = e.target.value;this.setState(this.state);}}/>
+                                      onChange={(e:any) => {this.state.content = e.target.value;this.setState(this.state);}}/>
                         </div>    
                     </div>
                     <div className="form-group">
@@ -198,7 +198,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                         <div className="col-sm-10">
                             <textarea rows="4" className="form-control" 
                                    value={this.state.tableauUrl}
-                                   onChange={(e) => {this.state.tableauUrl = e.target.value; this.setState(this.state);}} />
+                                   onChange={(e:any) => {this.state.tableauUrl = e.target.value; this.setState(this.state);}} />
                         </div>    
                     </div>
                     <div className="form-group">

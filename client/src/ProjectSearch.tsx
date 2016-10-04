@@ -5,8 +5,8 @@ import * as Autosuggest from 'react-autosuggest';
 import { IFrontEndProject } from '../../common/Interfaces';
 
 interface IAppProps {
-    value: any[];
     onItemSelected: any;
+    value?: any[];
 }
 
 interface IAppState {

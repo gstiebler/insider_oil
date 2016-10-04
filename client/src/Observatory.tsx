@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Tableau } from './Tableau'; 
 
 interface IAppProps {
-    location: any;
+    location?: any;
+    style?: any;
 }
 
 interface IAppState {

@@ -74,7 +74,7 @@ export class ListOfProjects extends React.Component<IAppProps, IAppState> {
                                     </tr>
                                     <tr>
                                         <td>Descrição: <input type="text" defaultValue={this.state.description} 
-                                                                          onChange={ (e) => {this.state.description = e.target.value;} } /></td>
+                                                                          onChange={ (e:any) => {this.state.description = e.target.value;} } /></td>
                                     </tr>
                                 </tbody>
                             </table>

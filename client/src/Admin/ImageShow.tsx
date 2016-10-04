@@ -2,9 +2,9 @@ import * as React from 'react';
 import { arrayBufferToBase64, base64ToArray, removeBase64Header } from '../lib/BytesUtils';
 
 interface IAppProps {
-    value: any;
-    imgPath: string;
     onChange: any;
+    value?: any;
+    imgPath?: string;
 }
 
 interface IAppState {

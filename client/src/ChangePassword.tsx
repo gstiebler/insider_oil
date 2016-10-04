@@ -54,19 +54,19 @@ export class ChangePassword extends React.Component<IAppProps, IAppState> {
                         <label className="control-label col-sm-2" for="current_password">Senha atual:</label>
                         <input className="col-sm-10 form-control" type="password" 
                             value={this.state.currentPassword}
-                            onChange={(e) => {this.state.currentPassword = e.target.value; this.setState(this.state)}} />
+                            onChange={(e:any) => {this.state.currentPassword = e.target.value; this.setState(this.state)}} />
                     </div>
                     
                     <div className="form-group">
                         <label className="control-label col-sm-2" for="new_password1">Nova senha:</label>
                         <input className="col-sm-10 form-control" type="password" value={this.state.newPassword1}
-                            onChange={(e) => {this.state.newPassword1 = e.target.value; this.setState(this.state)}}/>
+                            onChange={(e:any) => {this.state.newPassword1 = e.target.value; this.setState(this.state)}}/>
                     </div>
                         
                     <div className="form-group">
                         <label className="control-label col-sm-2" for="new_password2">Repita a nova senha:</label>
                         <input className="col-sm-10 form-control" type="password" value={this.state.newPassword2}
-                            onChange={(e) => {this.state.newPassword2 = e.target.value; this.setState(this.state)}} />
+                            onChange={(e:any) => {this.state.newPassword2 = e. target.value; this.setState(this.state)}} />
                     </div>
                     <div className="form-group">
                         <div className="col-sm-offset-2 col-sm-10">

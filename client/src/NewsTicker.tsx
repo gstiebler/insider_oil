@@ -9,7 +9,6 @@ const TIME_INTERVAL = 40;
 const DX_ON_EACH_EVENT = 2;
 
 interface IAppProps {
-    username: string;
 }
 
 interface IAppState {

@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import * as DateUtils from './lib/DateUtils';
 
 interface IAppProps {
-    location: any;
+    location?: any;
     modelName: string;
     objId: number;
 }

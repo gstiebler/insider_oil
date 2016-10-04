@@ -7,7 +7,7 @@ import { SendErrorReport } from '../../common/NetworkInterfaces'
 
 interface IAppProps {
     objectLabel: string;
-    location: any;
+    location?: any;
     url: string;
 }
 
@@ -76,7 +76,7 @@ export class ErrorReport extends React.Component<IAppProps, IAppState> {
                             <h4>Objeto: <b>{this.props.objectLabel}</b></h4><hr/>
                             Descrição:
                             <textarea type="text" rows={8} className="form-control"
-                                      onChange={e => { this.state.description = e.target.value; }} /> 
+                                      onChange={(e:any) => { this.state.description = e.target.value; }} /> 
                         </div>
                         <div className="modal-footer">
                             <button type="button" 

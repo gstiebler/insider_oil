@@ -6,7 +6,6 @@ import { strContains } from '../lib/StringUtils';
 import { paths } from '../lib/Server';
 
 interface IAppProps {
-    location: any;
     recordData: any;
     source: string;
     objId: number;

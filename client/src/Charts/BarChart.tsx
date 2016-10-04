@@ -4,7 +4,7 @@ import { googleRef, loadBarChart } from '../lib/Google';
 
 interface IAppProps {
     countData: Interfaces.IAnalyticsCount[];
-    axisName: string;
+    axisName?: string;
 }
 
 interface IAppState {

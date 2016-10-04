@@ -86,7 +86,7 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
                         </td>
                         <td>
                             <button className="btn btn-default" onClick={this.add.bind(this)}>Adicionar</button><br/>
-                            <select onChange={(e) => {this.selectedId = e.target.value}}>
+                            <select onChange={(e:any) => {this.selectedId = e.target.value}}>
                                 {comboItems}
                             </select>  
                         </td>
