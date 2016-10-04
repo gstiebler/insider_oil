@@ -5,6 +5,7 @@ var utils = require('./lib/utils');
 import * as nodeunit from 'nodeunit';
 import dbServerController = require('../controllers/dbServerController');
 import * as AdminController from '../controllers/AdminController';
+import * as ni from '../../common/NetworkInterfaces';
 
 
 var group: nodeunit.ITestGroup = {
@@ -32,12 +33,13 @@ newsFromObject:  (test: nodeunit.Test) => {
         content: '<p>outra notícia: <a href="/app/view_record?source=OilField&amp;id=' + abaloneId + '" style="background-color: rgb(255, 255, 255);">Abalone</a> ',
         author_id: 1
     };
-    const reqNewNews = {
-        body: { 
-            model: 'News',
-            newItemData: JSON.stringify(newNews)
-        }
+
+    const data:ni.CreateItem.req = { 
+        model: 'News',
+        newItemData: newNews
     };
+    const reqNewNews = { body: { data: JSON.stringify(data) } };
+
     utils.getJsonResponse.sync(null, AdminController.createItem, reqNewNews);
 
 	// should have 2 news from this oil field now

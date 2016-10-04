@@ -57,12 +57,13 @@ createPerson: test => {
             }
         ]
     };
-    const newItemReq = {
-        body: { 
-            model: 'Person',
-            newItemData: JSON.stringify(newItemData)
-        }
+
+
+    const data:ni.CreateItem.req = { 
+        model: 'Person',
+        newItemData: newItemData
     };
+    const newItemReq = { body: { data: JSON.stringify(data) } };
     
     const res = utils.getJsonResponse.sync(null, AdminController.createItem, newItemReq);
     test.equal(res.msg, 'Registro criado com sucesso.');

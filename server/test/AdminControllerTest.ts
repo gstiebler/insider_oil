@@ -21,21 +21,23 @@ createWell: (test: nodeunit.Test) => {
         lng: 444,
         block_id: 2
     }
-    const req = {
-        body: { 
-            model: 'Well',
-            newItemData: JSON.stringify(newItemData)
-        }
-    };
+
+    const data:ni.CreateItem.req = {
+        model: 'Well',
+        newItemData: newItemData
+    }
+
+    let req = { body: { data: JSON.stringify(data) } };
     
-    const errorResponse = utils.getJsonResponse.sync(null, AdminController.createItem, req);
+    const errorResponse = utils.getJsonResponse.sync(null, AdminController.createItem, req );
     test.equal( 400, errorResponse.code ); // test HTTP error code
     test.equal( "Não foi possível criar o registro. Validation error: Nome não pode ser nulo", errorResponse.error.errorMsg );
     test.equal( 1, errorResponse.error.errors.length );
     test.equal( "Nome não pode ser nulo", errorResponse.error.errors[0].message );
     
     newItemData.name = 'Novo poço';
-    req.body.newItemData = JSON.stringify(newItemData);
+    data.newItemData = newItemData;
+    req = { body: { data: JSON.stringify(data) } };
     utils.getJsonResponse.sync(null, AdminController.createItem, req);
     
     const query: ni.GetTableData.req = { 
@@ -244,17 +246,17 @@ createProductionUnitWithTableau: function(test: nodeunit.Test) {
         owner_id: utils.idByName('Company', 'Petrobras'),
     }
     
-    const body:ni.CreateItem.req = { 
+    const data:ni.CreateItem.req = { 
         model: 'ProductionUnit',
-        newItemData: JSON.stringify(record),
+        newItemData: record,
         extraRecordData: {
             tableauUrls: ['http://example.com'],
             embedStrs: ['<html>', '<p></p>']
         }
     };
-        
+    const req = { body: { data: JSON.stringify(data) } };
     const response:ni.CreateItem.res = 
-            utils.getJsonResponse.sync(null, AdminController.createItem, { body });
+            utils.getJsonResponse.sync(null, AdminController.createItem, req);
     test.equal('Registro criado com sucesso.', response.msg);
     
     const findOpts = { where: { name: 'Teste' } };
