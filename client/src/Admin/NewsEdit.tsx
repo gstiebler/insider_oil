@@ -114,7 +114,14 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                 .then(this.onSave.bind(this))
                 .catch(showError.show);
         } else {
-            server.createNewItem( this.modelName, itemData, this.onSave.bind(this), showError.show );
+            const params:ni.CreateItem.req = {
+                model: this.modelName,
+                newItemData: itemData,
+            };
+
+            server.postP('/create_item/', { data: JSON.stringify(params) })
+                .then(this.onSave.bind(this))
+                .catch(showError.show);
         }
 	}
 	

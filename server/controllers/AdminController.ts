@@ -110,8 +110,8 @@ export function recordValues(req: express.Request, res: express.Response, next) 
 }, ControllerUtils.getErrorFunc(res, 404, "Registro não encontrado"));}
 
 export function createItem(req: express.Request, res: express.Response, next) { Sync(function() {
-    const body:ni.CreateItem.req = req.body;
-    var newItemData = JSON.parse(body.newItemData);
+    const body:ni.CreateItem.req = JSON.parse(req.body.data);
+    var newItemData = body.newItemData;
     var modelName = body.model;
     var model = dbUtils.getDataSource(modelName);
 

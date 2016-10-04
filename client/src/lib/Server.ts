@@ -103,17 +103,6 @@ export function getModelFields(model):Promise<any> {
     return getP('/model_fields/', params );
 }
 
-
-export function createNewItem( modelName, newItemData, onSave, onError ) {
-    const params:ni.CreateItem.req = {
-        model: modelName,
-        newItemData: JSON.stringify(newItemData),
-    };
-    
-    post('/create_item/', params, onSave, onError);
-}
-
-
 export function deleteItem( modelName, id, onDelete, onError ) {
     var params = {
         model: modelName,

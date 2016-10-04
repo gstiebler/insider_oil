@@ -43,39 +43,65 @@ export class AdminEdit extends React.Component<IAppProps, IAppState> {
     }
 
     public componentDidMount() {
-        const req:ni.RecordValues.req = {
-            model: this.state.modelName,
-            id: this.state.id
-        };
-        server.getP('/record_values/', req)
-                .then(this.valuesArrived.bind(this))
-                .catch(showError.show);
+        if(this.state.id) {
+            const req:ni.RecordValues.req = {
+                model: this.state.modelName,
+                id: this.state.id
+            };
+            server.getP('/record_values/', req)
+                    .then(this.valuesArrived.bind(this))
+                    .catch(showError.show);
+        } else {
+            server.getModelFields(this.state.modelName)
+                    .then(this.fieldsArrived.bind(this))
+                    .catch(showError.show);
+        }
     }
 
     private valuesArrived(data:ni.RecordValues.res) {
         this.state.recordValues = data;
         this.setState(this.state);
+        return null;
+    }
+
+    private fieldsArrived(data) {
+        this.state.recordValues.fields = data.fields;
+        this.setState(this.state);
+        return null;
     }
     
     private saveItem() {
-        var itemData:any = {};
-        for(var prop in this.state.recordValues.values)  {
-            var value = this.state.recordValues.values[prop];
+        let itemData:any = {};
+        for(let prop in this.state.recordValues.values)  {
+            let value = this.state.recordValues.values[prop];
             if(value == undefined)
                 value = null;
             itemData[prop] = value;
         }
-        itemData.id = this.state.id;   
 
-        const params:ni.SaveItem.req = {
-            model: this.state.modelName,
-            record: itemData,
-            extraRecordData: this.state.recordValues.extraRecordData
-        };
+        if(this.state.id) {
+            itemData.id = this.state.id;   
 
-        server.putP('/save_item/', {data: JSON.stringify(params)})
-            .then(this.onSave.bind(this))
-            .catch(showError.show);
+            const params:ni.SaveItem.req = {
+                model: this.state.modelName,
+                record: itemData,
+                extraRecordData: this.state.recordValues.extraRecordData
+            };
+
+            server.putP('/save_item/', {data: JSON.stringify(params)})
+                .then(this.onSave.bind(this))
+                .catch(showError.show);
+        } else {
+            const params:ni.CreateItem.req = {
+                model: this.state.modelName,
+                newItemData: itemData,
+                extraRecordData: this.state.recordValues.extraRecordData
+            };
+
+            server.postP('/create_item/', { data: JSON.stringify(params) })
+                .then(this.onSave.bind(this))
+                .catch(showError.show);
+        }
     }
     
     private onSave(status:ni.SaveItem.res) {

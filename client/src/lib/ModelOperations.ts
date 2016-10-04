@@ -15,7 +15,7 @@ class BaseModelOperations {
     }
 
     public createItem() {
-        var queryStr = "/app/create_item?modelName=" + this.modelName;
+        var queryStr = "/app/edit_item?modelName=" + this.modelName;
         browserHistory.push(queryStr);
     }
 

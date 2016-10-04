@@ -168,6 +168,10 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
         }
     }
 
+    private createItem() {
+        this.state.modelOperations.createItem();
+    }
+
     public render(): React.ReactElement<any> {
         return (
             <div>
@@ -175,7 +179,7 @@ export class AdminGrid extends React.Component<IAppProps, IAppState> {
                 <div className="table-responsive">
                     <table id="mainTable" className="table table-striped table-bordered" width="100%"></table>
                 </div>
-                <button className="btn btn-large btn-success" onClick={ this.state.modelOperations.createItem } >Adicionar {this.state.viewParams.tableLabel}</button><br/><br/>
+                <button className="btn btn-large btn-success" onClick={ this.createItem.bind(this) } >Adicionar {this.state.viewParams.tableLabel}</button><br/><br/>
                 <br/><br/><br/>
                 <ExcelUploadButton modelName={this.state.modelName} /><br/>
                 <button onClick={ this.getExcelFile.bind(this) } >Baixar arquivo Excel</button>

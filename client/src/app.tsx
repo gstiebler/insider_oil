@@ -9,7 +9,6 @@ import { AdminList } from './Admin/AdminList';
 import { AdminGrid } from './Admin/AdminGrid';
 import { AdminEdit } from './Admin/AdminEdit';
 import { NewsEdit } from './Admin/NewsEdit';
-import { AdminCreate } from './Admin/AdminCreate';
 import { Publisher } from './Admin/Publisher/Publisher';
 import { RequestsViewer } from './Admin/RequestsViewer';
 import { ViewRecord } from './ViewRecord/ViewRecord';
@@ -142,7 +141,6 @@ ReactDOM.render(
       <Route path="model_view" component={AdminGrid}/>
       <Route path="edit_item" component={AdminEdit}/>
       <Route path="create_news" component={NewsEdit}/>
-      <Route path="create_item" component={AdminCreate}/>
       <Route path="view_record" component={ViewRecord}/>
       <Route path="oil_field" component={OilFieldView}/>
       <Route path="block" component={BlockView}/>
