@@ -75,15 +75,21 @@ async function updateObjects(models, project) {
     }
 }
 
-async function saveAll(models, project) {
+async function beforeUpdate(models, project) {
     beforeSave(models, project);
     await updateObjects(models, project);
+    await savePhoto(project);
+}
+
+async function afterCreate(models, project) {
+    await updateObjects(models, project);
+    await savePhoto(project);
 }
 
 function defineHooks(models) {
 	models.Project.hook('beforeCreate', beforeSave.bind(this, models));
-	models.Project.hook('afterCreate', updateObjects.bind(this, models));
-	models.Project.hook('beforeUpdate', saveAll.bind(this, models));
+	models.Project.hook('afterCreate', afterCreate.bind(this, models));
+	models.Project.hook('beforeUpdate', beforeUpdate.bind(this, models));
 }
 
 module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
