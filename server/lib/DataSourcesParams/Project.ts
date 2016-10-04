@@ -37,6 +37,15 @@ const Project: IBaseDataSourceParams = {
         oil_field_id: {
             label: 'Campo'
         },
+        updates: {
+            label: 'Atualizações'
+        },
+        segment_type: {
+            label: 'Segmento'
+        },
+        stage: {
+            label: 'Fase'
+        },
         production_unit_id: {
             label: 'Plataforma'
         },

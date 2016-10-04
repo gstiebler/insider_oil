@@ -58,6 +58,18 @@ module.exports = {
                 },
                 onDelete: 'CASCADE'
             },
+            updates: {
+                type: Sequelize.TEXT,
+                allowNull: true
+            },
+            segment_type: {
+                type: Sequelize.STRING,
+                allowNull: true
+            },
+            stage: {
+                type: Sequelize.ENUM('CAPEX', 'OPEX'),
+                allowNull: false
+            },
         };
 	      return queryInterface.createTable("projects", fields);
     },
