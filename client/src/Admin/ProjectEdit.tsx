@@ -36,9 +36,14 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
         return null;
     }
 
-    private onJsonFieldChange(e, fieldName: string) {
-        this.state.recordValues.values.json_field[fieldName] = e.target.value;
+    private onMMFieldChange(e, fieldName: string) {
+        const ids = e.target.value.map(obj => { return obj.id });
+        this.state.recordValues.values.json_field[fieldName] = ids;
         this.setState(this.state);
+    }
+
+    private idsToObj(ids: string[]):any[] {
+        return ids.map(id => { return { id }; });
     }
 
     protected getSpecialFields(): React.ReactElement<any> {
@@ -46,8 +51,8 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
         if(!jsonField || !jsonField.owner_persons_id) return null;
         
         return <ManyToMany comboSource='Person'
-                            value={this.state.recordValues.values.json_field.owner_persons_id}
-                            onChange={this.onJsonFieldChange.bind(this, 'owner_persons_id')}/>
+                            value={this.idsToObj(this.state.recordValues.values.json_field.owner_persons_id)}
+                            onChange={this.onMMFieldChange.bind(this, 'owner_persons_id')}/>
     }
 
 }
