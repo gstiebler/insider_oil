@@ -3,6 +3,7 @@
 import { ImportExcel } from './ImportExcelClass';
 import { searchEqual, ISearchResult } from '../search';
 import { await } from '../../lib/await';
+import { IFrontEndProject } from '../../../common/Interfaces';
 
 export class Bid extends ImportExcel {
 
@@ -29,10 +30,11 @@ export class Bid extends ImportExcel {
         if(searchResult.length == 0) {
             record.object = [];
         } else {
-            record.object = [{
+            let object:IFrontEndProject = {
                 id: searchResult[0].id,
                 model: searchResult[0].model
-            }];
+            };
+            record.object = [object];
         }
     }
 
