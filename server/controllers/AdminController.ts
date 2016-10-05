@@ -179,7 +179,8 @@ export function deleteItem(req: express.Request, res: express.Response) { Sync(f
 }, ControllerUtils.getErrorFunc(res, 404, "Não foi possível apagar o registro."))}
 
 export function getComboValues(req: express.Request, res: express.Response) {
-    const modelName:string = req.query.model;
+    const query:ni.ComboValues.req = req.query; 
+    const modelName:string = query.model;
     const model = dbUtils.getDataSource(modelName);
     const viewParams = dsParams[modelName];
     var labelField = 'name';
@@ -203,14 +204,17 @@ export function getComboValues(req: express.Request, res: express.Response) {
             .catch(ControllerUtils.getErrorFunc(res, 500, "Não foi possí­vel carregar os registros."));
     } 
     function onValues(values) {
-        var valuesArray = [];
+        var valuesArray:ni.ComboValues.IValue[] = [];
         for(var value of values) {
             valuesArray.push( {
                 id: value.id, 
                 label: value[labelField]
             });
         };
-        res.json(valuesArray);
+        const result:ni.ComboValues.res = {
+            values: valuesArray
+        };
+        res.json(result);
     }
 }
 

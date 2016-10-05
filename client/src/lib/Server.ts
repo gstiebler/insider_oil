@@ -112,13 +112,6 @@ export function deleteItem( modelName, id, onDelete, onError ) {
     deleteHTTP('/delete_item/', params, onDelete, onError);
 }
 
-export function getComboValues(modelName, okCallback, onError) {
-    var params = { 
-        model: modelName,
-    };
-    get('/combo_values/', params, okCallback, onError);
-}
-
 export function getSearchResult(searchValue, okCallback, onError) {
     var params = { searchValue: searchValue };
     get('/search', params, okCallback, onError);

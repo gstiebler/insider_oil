@@ -233,3 +233,19 @@ export namespace RecordValues {
         extraRecordData: IExtraRecordData
     }
 }
+
+export namespace ComboValues {
+
+    interface IValue {
+        id: number;
+        label: string;
+    }
+
+    export interface req {
+        model: string;
+    }
+    
+    export interface res {
+        values: IValue[];
+    }
+}

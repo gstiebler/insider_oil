@@ -383,22 +383,22 @@ modelFields: function(test) {
 },
 
 getComboValues: function(test) {
-    const req = {
-        query: { model: 'Company' }
-    };
+    const query:ni.ComboValues.req = { model: 'Company' };
+    const req = { query };
 
-    const response = utils.getJsonResponse.sync(null, AdminController.getComboValues, req);
-    test.equal(46, response.length);
+    const response:ni.ComboValues.res = 
+        utils.getJsonResponse.sync(null, AdminController.getComboValues, req);
+    test.equal(46, response.values.length);
     
-    test.equal( utils.idByName('Company', 'Alvopetro'), response[0].id );
-    test.equal( utils.idByName('Company', 'Anadarko'), response[1].id );
-    test.equal( utils.idByName('Company', 'UTC EP'), response[44].id );
-    test.equal( utils.idByName('Company', 'Vipetro'), response[45].id );
+    test.equal( utils.idByName('Company', 'Alvopetro'), response.values[0].id );
+    test.equal( utils.idByName('Company', 'Anadarko'), response.values[1].id );
+    test.equal( utils.idByName('Company', 'UTC EP'), response.values[44].id );
+    test.equal( utils.idByName('Company', 'Vipetro'), response.values[45].id );
     
-    test.equal( 'Alvopetro', response[0].label );
-    test.equal( 'Anadarko', response[1].label );
-    test.equal( 'UTC EP', response[44].label );
-    test.equal( 'Vipetro', response[45].label );
+    test.equal( 'Alvopetro', response.values[0].label );
+    test.equal( 'Anadarko', response.values[1].label );
+    test.equal( 'UTC EP', response.values[44].label );
+    test.equal( 'Vipetro', response.values[45].label );
     test.done();
 },
 
@@ -487,16 +487,16 @@ getAmbientalLicensesRecordValues: function(test) {
 },
 
 customComboQuery: (test) => {
-    const req = {
-        query: { model: 'AllDrillingRigs' }
-    };
+    const query:ni.ComboValues.req = { model: 'AllDrillingRigs' };
+    const req = { query };
 
-    const response = utils.getJsonResponse.sync(null, AdminController.getComboValues, req);
-    test.equal(6, response.length);    
-    test.equal('1:offshore', response[0].id);
-    test.equal('Aban Abraham', response[0].label);
-    test.equal('1:onshore', response[1].id);
-    test.equal('BS-04', response[1].label);
+    const response:ni.ComboValues.res =
+        utils.getJsonResponse.sync(null, AdminController.getComboValues, req);
+    test.equal(6, response.values.length);    
+    test.equal('1:offshore', response.values[0].id);
+    test.equal('Aban Abraham', response.values[0].label);
+    test.equal('1:onshore', response.values[1].id);
+    test.equal('BS-04', response.values[1].label);
     test.done();
 },
 

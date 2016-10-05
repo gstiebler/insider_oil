@@ -5,11 +5,10 @@ import * as moment from 'moment';
 import { ListOfInputs } from './ListOfInputs';
 import { ListOfProjects } from './ListOfProjects';
 import { ManyToMany } from './ManyToMany';
+import { DataCombo } from './DataCombo'; 
 import { ImageShow } from './ImageShow';
 import { IField } from '../../../common/Interfaces';
 const DateTime = require('react-datetime');
-
-
 
 export function editLineHTML(value: React.ReactElement<any>, label: string, index: number): React.ReactElement<any> {
     return (
@@ -38,7 +37,6 @@ interface IAppProps {
 
 interface IAppState {
     values: any;
-    comboValues: any;
 }
 
 export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
@@ -48,7 +46,6 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
 
         this.state = {
             values: {},
-            comboValues: {}
         };
     }
 
@@ -64,9 +61,9 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             field.isDateTime = field.type == 'DATETIME';
             field.isBool = field.type == 'TINYINT(1)';
             if( field.hasRef ) {
-                if(props.values[field.name])
+                if(props.values[field.name]) {
                     this.state.values[field.name] = props.values[field.name].toString();
-                server.getComboValues( field.model, this.onComboValues.bind(this, field.name), showError.show );
+                }
             } else if(field.isDate) {
                 var dateStr = props.values[field.name];
                 if(dateStr) {
@@ -84,12 +81,6 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                 this.state.values[field.name] = props.values[field.name];
             }
         }
-    }
-
-    private onComboValues(fieldName, values:any[]) {
-        values.unshift({id: null, label: ''});
-        this.state.comboValues[fieldName] = values;
-        this.setState(this.state);
     }
 
     private onChange(fieldName, event) {
@@ -138,21 +129,12 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
 
     private fieldHTML(field:IARField): React.ReactElement<any> {
 
-        function optionsInCombo(values: any[]): React.ReactElement<any>[] {
-            if(!values)
-                return [];
-            return values.map((value, index) => {
-                return <option value={value.id} key={'c' + index}>{value.label}</option>;
-            });
-        }
-
         if(field.type == 'ref') {
             return (
-                <select className="form-control" 
-                        value={ this.state.values[field.name] }
-                        onChange={this.onComboChange.bind(this, field.name)}>
-                    { optionsInCombo(this.state.comboValues[field.name]) }
-                </select>
+                <DataCombo
+                    value={ this.state.values[field.name] }
+                    modelName={ field.model }
+                    onChange={ this.onComboChange.bind(this, field.name) } />
             ); 
         } else if (field.type == 'DATE' || field.type == 'DATETIME') {
             let dateFormat = "DD/MM/YYYY";

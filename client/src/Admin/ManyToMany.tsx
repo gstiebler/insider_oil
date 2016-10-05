@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as showError from '../lib/ShowError';
 import * as server from '../lib/Server';
+import * as ni from '../../../common/NetworkInterfaces';
 
 interface IAppProps {
     comboSource: string;
@@ -32,10 +33,14 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
-        server.getComboValues(this.props.comboSource, this.onComboValues.bind(this), showError.show);
+        const req:ni.ComboValues.req = { model: this.props.comboSource };
+        server.getP('/combo_values/', req)
+            .then(this.onComboValues.bind(this))
+            .catch(showError.show);
     }
 
-    private onComboValues(values) {
+    private onComboValues(res:ni.ComboValues.res) {
+        const values = res.values;
         this.state.comboValues = values;
 
         this.state.comboValuesMap = {};
