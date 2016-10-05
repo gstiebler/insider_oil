@@ -10,20 +10,24 @@ interface IAppProps {
 
 interface IAppState {
     comboValues: any[];
-    modelValues: any[];
+    modelValues: {
+        id: number,
+        name: string
+    }[];
+    comboValuesMap: any;
 }
 
 export class ManyToMany extends React.Component<IAppProps, IAppState> {
 
     private selectedId: number;
-    private comboValuesMap: any;
 
     constructor(props: IAppProps) {
         super(props);
 
         this.state = {
             comboValues: [],
-            modelValues: props.value ? props.value : []
+            modelValues: props.value ? props.value : [],
+            comboValuesMap: {}
         };
     }
 
@@ -33,13 +37,13 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
 
     private onComboValues(values) {
         this.state.comboValues = values;
-        this.setState(this.state);
 
-        this.comboValuesMap = {};
+        this.state.comboValuesMap = {};
         for(var i = 0; i < values.length; i++) {
-            this.comboValuesMap[values[i].id] = values[i].label;
+            this.state.comboValuesMap[values[i].id] = values[i].label;
         }
         this.selectedId = values[0].id;
+        this.setState(this.state);
     }
 
     private remove(index) {
@@ -52,7 +56,7 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
         var selectedId = this.selectedId;
         var newItem = {
             id: selectedId,
-            name: this.comboValuesMap[selectedId]
+            name: this.state.comboValuesMap[selectedId]
         };
         this.state.modelValues.push(newItem);
         this.setState(this.state);
@@ -61,9 +65,10 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
     
     public render(): React.ReactElement<any> {
         var items = this.state.modelValues.map((modelValue, index) => {
+            const label = this.state.comboValuesMap[modelValue.id];
             return (
                 <tr key={'item' + index}>
-                    <td>{modelValue.name}</td>
+                    <td>{label}</td>
                     <td><button className="btn btn-default" onClick={this.remove.bind(this, index)}>Remover</button></td>
                 </tr>
             );
