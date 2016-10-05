@@ -1,5 +1,6 @@
 import * as Promise from 'bluebird';
 
+declare var google: any;
 export var googleRef = google;
 
 let isBarChartLoaded = false;

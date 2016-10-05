@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as showError from './lib/ShowError';
 import * as server from './lib/Server';
-import * as Autosuggest from 'react-autosuggest';
 import { IFrontEndProject } from '../../common/Interfaces';
+const Autosuggest = require('react-autosuggest');
 
 interface IAppProps {
     onItemSelected: any;

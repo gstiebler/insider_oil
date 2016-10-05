@@ -2,10 +2,13 @@ import * as React from 'react';
 
 interface IAppProps {
     vizUrl: string;
+    style?: any;
 }
 
 interface IAppState {
 }
+
+declare var tableau: any;
 
 export class Tableau extends React.Component<IAppProps, IAppState> {
 

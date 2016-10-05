@@ -28,8 +28,7 @@ import { PersonsByCompany } from './PersonsByCompany';
 import { NewsTicker } from './NewsTicker'; 
 import { Analytics } from './Analytics';  
 
-import ReactGA = require('react-ga');
-
+const ReactGA = require('react-ga');
 ReactGA.initialize('UA-80990869-2');
 
 interface IAppProps {
