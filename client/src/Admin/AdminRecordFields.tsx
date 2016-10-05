@@ -9,6 +9,19 @@ import { ImageShow } from './ImageShow';
 import { IField } from '../../../common/Interfaces';
 const DateTime = require('react-datetime');
 
+
+
+export function editLineHTML(value: React.ReactElement<any>, label: string, index: number): React.ReactElement<any> {
+    return (
+        <div className="form-group" key={ 'fh' + index }>
+            <label className="control-label col-sm-2">{label}:</label>
+            <div className="col-sm-10">
+                { value }
+            </div>
+        </div>
+    );
+}
+
 interface IARField extends IField {
     hasRef?: boolean;
     isDate?: boolean;
@@ -205,12 +218,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
     
     public render(): React.ReactElement<any> {
         var fieldsHTML = this.props.fields.map((field, index) => {
-            return <div className="form-group" key={ 'fh' + index }>
-                    <label className="control-label col-sm-2">{field.label}:</label>
-                    <div className="col-sm-10">
-                        { this.fieldHTML(field) }
-                    </div>
-                </div>
+            return editLineHTML(this.fieldHTML(field), field.label, index);
         });
 
         return (
