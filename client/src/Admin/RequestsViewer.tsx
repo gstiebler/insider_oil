@@ -6,7 +6,7 @@ import { IBaseQueryField, IFilter } from '../../../common/Interfaces';
 import { genColumns } from '../lib/TableUtils';
 import * as ni from '../../../common/NetworkInterfaces';
 import * as moment from 'moment';
-import * as DateTimeField from 'react-bootstrap-datetimepicker';
+const DateTimeField = require('react-bootstrap-datetimepicker');
 
 interface IAppProps {
 }

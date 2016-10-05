@@ -4,9 +4,9 @@ import * as showError from '../lib/ShowError';
 import { browserHistory } from 'react-router';
 import { ProjectSearch } from '../ProjectSearch'
 import * as Flash from '../Flash'
-import * as ReactQuill from 'react-quill';
 import { ImageShow } from './ImageShow';
 import * as ni from '../../../common/NetworkInterfaces';
+const ReactQuill = require('react-quill');
 
 interface IAppProps {
     location: any;

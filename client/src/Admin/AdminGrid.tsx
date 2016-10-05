@@ -7,7 +7,7 @@ import { browserHistory } from 'react-router';
 import * as Flash from '../Flash'
 import { ExcelUploadButton } from './ExcelUploadButton'
 import { StrToByteArray } from '../lib/BytesUtils';
-import * as FileSaver from 'file-saver'; 
+const FileSaver = require('file-saver'); 
 import { GetViewParams, GetTableData } from '../../../common/NetworkInterfaces';
 
 interface IAppProps {
