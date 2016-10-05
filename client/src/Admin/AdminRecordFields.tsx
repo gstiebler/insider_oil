@@ -7,7 +7,7 @@ import { ListOfProjects } from './ListOfProjects';
 import { ManyToMany } from './ManyToMany';
 import { ImageShow } from './ImageShow';
 import { IField } from '../../../common/Interfaces';
-const DateTimeField = require('react-bootstrap-datetimepicker');
+const DateTime = require('react-datetime');
 
 interface IARField extends IField {
     hasRef?: boolean;
@@ -88,8 +88,8 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         this.props.onChange( this.state.values );
     }
 
-    private onChangeDate(fieldName, format, value) {
-        var formattedValue = moment(value, format).toDate();
+    private onChangeDate(fieldName, value) {
+        var formattedValue = value.toDate();
         this.state.values[fieldName] = formattedValue;
         this.props.onChange( this.state.values ); 
         this.setState(this.state);
@@ -142,14 +142,18 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
                 </select>
             ); 
         } else if (field.type == 'DATE' || field.type == 'DATETIME') {
-            var format = field.isDate ? "DD/MM/YYYY" : "DD/MM/YYY HH:mm";
-            var dateStr = moment(this.state.values[field.name]).format(format);
-            return  <DateTimeField 
-                       mode={'date'}
-                       inputFormat={format}
-                       dateTime={dateStr}
-                       format={format}
-                       onChange={this.onChangeDate.bind(this, field.name, format)}
+            let dateFormat = "DD/MM/YYYY";
+            let timeFormat = field.isDate ? false : "HH:mm";
+            let fieldValue = null;
+            if(this.state.values[field.name]) {
+                fieldValue = new Date(this.state.values[field.name]);
+            }
+            return  <DateTime 
+                       value={fieldValue}
+                       input={true}
+                       dateFormat={dateFormat}
+                       timeFormat={timeFormat}
+                       onChange={this.onChangeDate.bind(this, field.name)}
                        className="form-control input-group"/>;
         } else if(field.isList) {
             return <ListOfInputs value={this.state.values[field.name]} 
