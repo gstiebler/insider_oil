@@ -2,16 +2,17 @@
 import Sequelize = require('sequelize');
 import { await } from '../../lib/await';
 import ModelUtils = require('../../lib/ModelUtils');
+import { IFrontEndProject } from '../../../common/Interfaces';
 
 function updateBid(bid) {
-    const object:any[] = bid.dataValues.object;
+    const object:IFrontEndProject[] = bid.dataValues.object;
     if(object == null || object.length != 1) {
         bid.model_name = null;
         bid.obj_id = null;
         return;   
     }
     
-    bid.model_name = object[0].model_name;
+    bid.model_name = object[0].model;
     bid.obj_id = object[0].id;
 }
 

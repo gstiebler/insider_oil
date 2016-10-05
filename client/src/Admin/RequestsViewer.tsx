@@ -6,7 +6,7 @@ import { IBaseQueryField, IFilter } from '../../../common/Interfaces';
 import { genColumns } from '../lib/TableUtils';
 import * as ni from '../../../common/NetworkInterfaces';
 import * as moment from 'moment';
-const DateTimeField = require('react-bootstrap-datetimepicker');
+const DateTime = require('react-datetime');
 
 interface IAppProps {
 }
@@ -268,13 +268,13 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                         Data de início:
                     </div>
                     <div className="col-md-3">
-                        <DateTimeField 
-                                mode={'date'}
-                                inputFormat={dateFormat}
-                                dateTime={startDate}
-                                format={dateFormat}
-                                onChange={this.onChangeDate.bind(this, 'startDate')}
-                                className="form-control input-group"/>
+                        <DateTime 
+                            value={startDate}
+                            input={true}
+                            dateFormat={dateFormat}
+                            timeFormat={false}
+                            onChange={this.onChangeDate.bind(this, 'startDate')}
+                            className="form-control input-group"/>;
                     </div>
                 </div>
                 <br/>
@@ -283,13 +283,13 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                         Data de fim:
                     </div>
                     <div className="col-md-3">
-                        <DateTimeField 
-                                mode={'date'}
-                                inputFormat={dateFormat}
-                                dateTime={endDate}
-                                format={dateFormat}
-                                onChange={this.onChangeDate.bind(this, 'endDate')}
-                                className="form-control input-group"/>
+                        <DateTime 
+                            value={endDate}
+                            input={true}
+                            dateFormat={dateFormat}
+                            timeFormat={false}
+                            onChange={this.onChangeDate.bind(this, 'endDate')}
+                            className="form-control input-group"/>;
                     </div>
                 </div>
                 <br/>                

@@ -29,7 +29,7 @@
     "react": "^15.1.0",
     "react-autosuggest": "^3.7.4",
     "react-bootstrap": "^0.29.5",
-    "react-bootstrap-datetimepicker": "0.0.22",
+    "react-datetime": "^2.6.0",
     "react-dom": "^15.1.0",
     "react-ga": "^2.1.2",
     "react-modal": "^1.4.0",
