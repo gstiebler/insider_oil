@@ -31,7 +31,7 @@ export class Bid extends ImportExcel {
         } else {
             record.object = [{
                 id: searchResult[0].id,
-                model_name: searchResult[0].model
+                model: searchResult[0].model
             }];
         }
     }

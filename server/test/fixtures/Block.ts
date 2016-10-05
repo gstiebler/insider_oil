@@ -1,4 +1,5 @@
 import utils = require('../lib/utils');
+import * as libAwait from '../../lib/await';
 
 module.exports = function(db) {
     const blockObjs = [
@@ -45,10 +46,7 @@ module.exports = function(db) {
         }
     ];
 
-    const promisesArray = [];
-    for(var blockObj of blockObjs) {
-        promisesArray.push(db.models.Block.create(blockObj));
+    for(let obj of blockObjs) { 
+        libAwait.await(db.models.Block.create(obj));
     }
-    
-    return Promise.all(promisesArray);
 }
