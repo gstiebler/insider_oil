@@ -15,9 +15,6 @@ const Project: IBaseDataSourceParams = {
         owner_id: {
             label: 'Proprietária'
         },
-        oil_field_id: {
-            label: 'Campo'
-        },
         updates: {
             label: 'Atualizações'
         },
@@ -26,9 +23,6 @@ const Project: IBaseDataSourceParams = {
         },
         stage: {
             label: 'Fase'
-        },
-        production_unit_id: {
-            label: 'Plataforma'
         },
         objects: {
             label: 'Objetos (admin)',

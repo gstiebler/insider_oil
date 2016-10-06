@@ -40,24 +40,6 @@ module.exports = {
                 },
                 onDelete: 'CASCADE'
             },
-            production_unit_id: {
-                type: Sequelize.INTEGER,
-                allowNull: true,
-                references: {
-                    model: 'production_units',
-                    key: 'id',
-                },
-                onDelete: 'CASCADE'
-            },
-            oil_field_id: {
-                type: Sequelize.INTEGER,
-                allowNull: true,
-                references: {
-                    model: 'oil_fields',
-                    key: 'id',
-                },
-                onDelete: 'CASCADE'
-            },
             updates: {
                 type: Sequelize.TEXT,
                 allowNull: true
