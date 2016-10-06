@@ -95,8 +95,8 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
         this.setState(this.state);
     }
 
-    private onPersonOwnerChange(e) {
-        const ids = e.target.value.map(obj => { return obj.id });
+    private onPersonOwnerChange(persons_ids:any[]) {
+        const ids = persons_ids.map(obj => { return obj.id });
         this.state.recordValues.values.json_field.owner_persons_id = ids;
         this.setState(this.state);
     }
