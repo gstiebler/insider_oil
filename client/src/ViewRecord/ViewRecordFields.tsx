@@ -9,10 +9,31 @@ interface IAppProps {
     recordData: any;
     source: string;
     objId: number;
+    additionalFields?: React.ReactElement<any>[];
 }
 
 interface IAppState {
     record: any[];
+}
+
+export function completeHTML(label: string, innerHTML:React.ReactElement<any>):React.ReactElement<any> {
+    const labelHTML:React.ReactElement<any> = (
+        <div className="col-md-4" key={label}> 
+            {label} 
+        </div>
+    );
+
+    return (
+        <li key={label}>
+            { labelHTML }
+            <div className="col-md-8">{ innerHTML }</div>
+        </li>
+    );
+}
+
+export function objLinkHTML(modelName: string, id: string, value: string):React.ReactElement<any> {
+    var url = "/app/view_record?source=" + modelName + "&id=" + id;
+    return <Link to={url} >{value}</Link>;
 }
 
 export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
@@ -86,12 +107,10 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
         const filteredFields = this.state.record.slice(1, this.state.record.length);
 
         var fields = filteredFields.map((field):React.ReactElement<any> => {
-            var label:React.ReactElement<any> = <div className="col-md-4" key={field.label}> {field.label} </div>;
 
             var fieldHtml:React.ReactElement<any> = null;
             if(field.ref) {
-                var url = "/app/view_record?source=" + field.model + "&id=" + field.value;
-                fieldHtml = <Link to={url} >{field.name}</Link>
+                fieldHtml = objLinkHTML(field.model, field.value, field.name);
             } else if (field.isLink) {
                 fieldHtml = <a href={field.value} target="_blank">{field.value}</a>;
             } else if (field.isHTML) {
@@ -123,12 +142,7 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
                 fieldHtml = <span> { this.insertBR(field.value) } </span>
             }
 
-            return (
-                <li key={field.label}>
-                    { label }
-                    <div className="col-md-8">{ fieldHtml }</div>
-                </li>
-            );
+            return completeHTML(field.label, fieldHtml);
         });
 
         return (
