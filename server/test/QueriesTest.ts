@@ -578,23 +578,6 @@ productionUnitsByOwner: (test: nodeunit.Test) => {
     test.done(); 
 },
 
-personsFromProjectContracted1: (test: nodeunit.Test) => {
-    const revampId = utils.idByName('Project', 'Revamp de Mexilhão');
-    const filters = {
-        id: revampId,
-    };
-    const reqQueryValues = {
-        query: { 
-            queryName: 'personsFromProjectContracted1',
-            filters: filters
-        }
-    };
-    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(3, resQueryValues.records.length);
-
-    test.done(); 
-},
-
 projectsOfObject: (test: nodeunit.Test) => {
     const pioneerId = utils.idByName('ProductionUnit', 'Pioneer');
     const filters = {
@@ -632,25 +615,6 @@ boatsByOwner: (test: nodeunit.Test) => {
     test.done(); 
 },
 
-contractsOfContractedInProject: (test: nodeunit.Test) => {
-    const revampId = utils.idByName('Project', 'Revamp de Mexilhão');
-    const filters = {
-        id: revampId,
-        index: 0
-    };
-    const query:ni.GetQueryData.req = {
-        queryName: 'contractsOfContractedInProject',
-        filters: filters
-    }
-
-    const reqQueryValues = { query };
-    const resQueryValues:ni.GetQueryData.res = 
-        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(2, resQueryValues.records.length);
-    test.equal('SERVIÇOS DE PROJETO, CONSTRUÇÃO E MONTAGEM DO SISTEMA DE COM', resQueryValues.records[0].c_contract_object);
-    test.done(); 
-},
-
 personsOfContractedInProject: (test: nodeunit.Test) => {
     const revampId = utils.idByName('Project', 'Revamp de Mexilhão');
     const filters = {
@@ -666,7 +630,28 @@ personsOfContractedInProject: (test: nodeunit.Test) => {
     const resQueryValues:ni.GetQueryData.res = 
         utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
     test.equal(2, resQueryValues.records.length);
+    test.equal('Felipe', resQueryValues.records[0].person_name);
     test.equal('Marcelo', resQueryValues.records[1].person_name);
+    test.done(); 
+},
+
+personsOfOwnerInProject: (test: nodeunit.Test) => {
+    const revampId = utils.idByName('Project', 'Revamp de Mexilhão');
+    const filters = {
+        id: revampId,
+        index: 1
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'personsOfOwnerInProject',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+    test.equal('Felipe', resQueryValues.records[0].person_name);
+    test.equal('Guilherme Stiebler', resQueryValues.records[1].person_name);
     test.done(); 
 },
 

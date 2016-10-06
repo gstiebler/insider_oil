@@ -84,64 +84,7 @@ export const contractsOfContractedInProject:IQueryById = {
         };
         return ContractQueries.contracts.queryStrFn(queryParams);
     },
-    fields: [
-        {
-            label: 'Objeto da contratação',
-            ref: {
-                modelField: 'model',
-                idField: 'c_id',
-                valueField: 'c_contract_object'
-            }
-        },
-        {
-            label: 'Fornecedor',
-            fieldName: 'supplier',
-            type: 'VARCHAR'
-        },
-        {
-            label: 'Início da vigência',
-            fieldName: 'start',
-            type: 'DATE'
-        },
-        {
-            label: 'Fim da vigência',
-            fieldName: 'end',
-            type: 'DATE'
-        },
-        {
-            label: 'Duração (dias)',
-            fieldName: 'duration',
-            type: 'INTEGER'
-        },
-        {
-            label: 'Day rate',
-            fieldName: 'day_rate',
-            type: 'CURRENCY'
-        },
-        {
-            label: 'Valor',
-            fieldName: 'value',
-            type: 'CURRENCY'
-        },
-        {
-            label: 'Situação',
-            fieldName: 'situation',
-            type: 'VARCHAR'
-        },
-        {
-            label: 'Tipo',
-            fieldName: 'type',
-            type: 'VARCHAR'
-        },
-        {
-            label: 'Licitação',
-            ref: {
-                modelField: 'bid_model',
-                idField: 'bid_id',
-                valueField: 'bid_process_number'
-            }
-        },
-    ]
+    fields: ContractQueries.contracts.fields
 }
 
 export const personsOfContractedInProject:IQueryById = {
@@ -161,27 +104,28 @@ export const personsOfContractedInProject:IQueryById = {
         };
         return TableQueries.queries['Persons'].queryStrFn(queryParams);
     },
-    fields: [
-        {
-            label: 'Nome',
-            ref: {
-                modelField: 'model',
-                idField: 'person_id',
-                valueField: 'person_name'
-            }
-        },
-        {
-            label: 'Empresa',
-            ref: {
-                modelField: 'company_model',
-                idField: 'company_id',
-                valueField: 'company_name'
-            }
-        },
-        {
-            label: 'Cargo',
-            fieldName: 'position',
-            type: 'VARCHAR'
-        }
-    ]
+    fields: TableQueries.queries['Persons'].fields
+}
+
+export const personsOfOwnerInProject:IQueryById = {
+    queryStrFn: (filter) => {
+        const Project = db.models.Project;
+        const project = await( Project.findById(filter.id) );
+        const jsonField:IProjectJsonField = JSON.parse(project.json_field);
+        const owner_persons_id = jsonField.owner_persons_id;
+
+        const queryParams: IQueryParams = {
+            filters: [ {
+                 field: 'persons.id', 
+                 in: owner_persons_id
+            } ],
+            order: [{
+                fieldName: 'persons.name',
+                dir: 'asc'
+            }],
+            pagination: { first: 0, itemsPerPage: 100 }
+        };
+        return TableQueries.queries['Persons'].queryStrFn(queryParams);
+    },
+    fields: TableQueries.queries['Persons'].fields
 }
