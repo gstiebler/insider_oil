@@ -42,12 +42,8 @@ const Project: IBaseDataSourceParams = {
     labelSingular: 'Projeto',
     referencedObjectsOnView:  [
         {
-            queryName: 'personsFromProjectContracted1',
-            title: 'Enaval (contrato global)'
-        },
-        {
-            queryName: 'personsFromProjectContracted2',
-            title: 'Radix (engenharia)'
+            queryName: 'personsOfOwnerInProject',
+            title: 'Pessoas da contratante'
         },
     ]
 }

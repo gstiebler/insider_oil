@@ -9,7 +9,10 @@ import { ObjectNews } from '../ObjectNews';
 import { ErrorReport } from '../ErrorReport';
 import * as ViewRecord from './ViewRecord';
 import * as ni from '../../../common/NetworkInterfaces';
-import { IFrontEndProject } from '../../../common/Interfaces';
+import { IFrontEndProject,
+         IProjectJsonField, 
+         IRefObjectsOnView 
+} from '../../../common/Interfaces';
 import { find } from '../lib/ArrayUtils';
 
 interface IAppProps {
@@ -35,6 +38,20 @@ export class ProjectView extends ViewRecord.ViewRecord {
                 const platHTML = ViewRecordFields.objLinkHTML(o.model, o.id.toString(), o.name);
                 return ViewRecordFields.completeHTML(o.description, platHTML);
             });
+        }
+        const jsonField = find(this.state.recordData, r => { return r.name == 'json_field' });
+        if(jsonField) {
+            const jsonValues:IProjectJsonField = JSON.parse(jsonField.value);
+            for(let i = 0; i < jsonValues.contractors.length; i++) {
+                const queries:IRefObjectsOnView[] = [{
+                    queryName: 'contractsOfContractedInProject',
+                    title: 'Pessoas da contratada',
+                    filters: {
+                        index: i,
+                    },
+                }];
+                console.log(i);
+            }
         }
 
         return (
