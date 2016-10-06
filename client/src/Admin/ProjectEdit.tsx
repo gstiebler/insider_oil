@@ -25,6 +25,13 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
         super(props);
 
         this.state.modelName = 'Project';
+        if(!this.state.id) {
+            const newJsonField:IProjectJsonField = {    
+                contractors: [],
+                owner_persons_id: []
+            }
+            this.state.recordValues.values = { json_field: newJsonField };
+        }
     }
     
     protected valuesArrived(data:ni.RecordValues.res) {
@@ -117,6 +124,7 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
         const emptyContracted = {
             contractor_id: "",
             persons_id: [],
+            contracts_id: [],
             scope: ""
         };
         this.state.recordValues.values.json_field.contractors.push(emptyContracted);
@@ -125,8 +133,8 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
 
     protected getSpecialFields(): React.ReactElement<any> {
         const jsonField:IProjectJsonField = this.state.recordValues.values.json_field;
-        if(!jsonField || !jsonField.owner_persons_id) return null;
-        
+        if(!jsonField || !jsonField.contractors) return null;
+
         const manyToManyHTML =(
             <ManyToMany comboSource='Person'
                 value={this.idsToObj(this.state.recordValues.values.json_field.owner_persons_id)}
