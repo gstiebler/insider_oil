@@ -145,6 +145,8 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
             return completeHTML(field.label, fieldHtml);
         });
 
+        fields = fields.concat(this.props.additionalFields);
+
         return (
             <div className="main-boxes">
                 <div className="box-wrapper">

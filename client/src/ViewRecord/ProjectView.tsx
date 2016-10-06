@@ -3,12 +3,14 @@ import * as ReactDOM from 'react-dom';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import { Link, browserHistory } from 'react-router';
-import { ViewRecordFields } from './ViewRecordFields';
+import * as ViewRecordFields from './ViewRecordFields';
 import { ShowQueryData } from '../ShowQueryData';
 import { ObjectNews } from '../ObjectNews';
 import { ErrorReport } from '../ErrorReport';
 import * as ViewRecord from './ViewRecord';
 import * as ni from '../../../common/NetworkInterfaces';
+import { IFrontEndProject } from '../../../common/Interfaces';
+import { find } from '../lib/ArrayUtils';
 
 interface IAppProps {
     location: any;
@@ -25,14 +27,25 @@ export class ProjectView extends ViewRecord.ViewRecord {
     }
 
     public render(): React.ReactElement<any> {
+        const objsField = find(this.state.recordData, r => { return r.name == 'objects' });
+        let objFieldsHTML = null;
+        if(objsField) {
+            const objValues:IFrontEndProject[] = objsField.value;
+            objFieldsHTML = objValues.map(o => {
+                const platHTML = ViewRecordFields.objLinkHTML(o.model, o.id.toString(), o.name);
+                return ViewRecordFields.completeHTML(o.description, platHTML);
+            });
+        }
+
         return (
             <div>
                 <div className="row">
                     <div className="col-md-6">
-                        <ViewRecordFields  
+                        <ViewRecordFields.ViewRecordFields  
                             recordData={this.state.recordData} 
                             source={this.state.source} 
-                            objId={this.state.id}></ViewRecordFields>
+                            additionalFields={objFieldsHTML}
+                            objId={this.state.id}></ViewRecordFields.ViewRecordFields>
                     </div>
                     <div className="col-md-6 main-boxes">
                         <img src={this.getImgUrl()} style={{ width: 600 }} />
