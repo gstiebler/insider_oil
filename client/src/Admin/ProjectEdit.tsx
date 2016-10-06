@@ -57,7 +57,7 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
         const personsHTML = (
             <ManyToMany comboSource='Person'
                 value={this.idsToObj(persons_id)}
-                onChange={this.onContractorFieldChanged.bind(this, index, 'persons_id')}/>
+                onChange={this.onContractorPersonsChanged.bind(this, index)}/>
         );
 
         return (
@@ -89,6 +89,12 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
         this.setState(this.state);
     }
 
+    private onContractorPersonsChanged(index, persons_ids:any[]) {
+        const ids = persons_ids.map(obj => { return obj.id });
+        this.state.recordValues.values.json_field.contractors[index].persons_id = ids;
+        this.setState(this.state);
+    }
+
     private onPersonOwnerChange(e) {
         const ids = e.target.value.map(obj => { return obj.id });
         this.state.recordValues.values.json_field.owner_persons_id = ids;
@@ -112,8 +118,6 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
     protected getSpecialFields(): React.ReactElement<any> {
         const jsonField:IProjectJsonField = this.state.recordValues.values.json_field;
         if(!jsonField || !jsonField.owner_persons_id) return null;
-
-        console.log(jsonField);
         
         const manyToManyHTML =(
             <ManyToMany comboSource='Person'

@@ -39,6 +39,11 @@ export class ManyToMany extends React.Component<IAppProps, IAppState> {
             .catch(showError.show);
     }
 
+    private componentWillReceiveProps(nextProps: IAppProps) {
+        this.state.modelValues = nextProps.value ? nextProps.value : [];
+        this.setState(this.state);
+    }
+
     private onComboValues(res:ni.ComboValues.res) {
         const values = res.values;
         this.state.comboValues = values;

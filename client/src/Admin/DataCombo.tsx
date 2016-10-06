@@ -41,6 +41,11 @@ export class DataCombo extends React.Component<IAppProps, IAppState> {
             .catch(showError.show);
     }
 
+    private componentWillReceiveProps(nextProps: IAppProps) {
+        this.state.value = nextProps.value;
+        this.setState(this.state);
+    }
+
     private onComboValues(res:ni.ComboValues.res) {
         res.values.unshift({id: null, label: ''});
         this.state.comboValues = res.values;
