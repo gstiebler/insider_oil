@@ -23,6 +23,10 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
             type: Sequelize.INTEGER,
             allowNull: false
         },
+        json_field: {
+            type: Sequelize.JSON,
+            allowNull: true
+        }, 
     },
     {
         underscored: true,

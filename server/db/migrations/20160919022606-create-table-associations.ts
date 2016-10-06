@@ -35,6 +35,10 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
+            json_field: {
+                type: Sequelize.JSON,
+                allowNull: true
+            }, 
         };
 
 	      return queryInterface.createTable("associations", fields);
