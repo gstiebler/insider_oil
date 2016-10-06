@@ -10,6 +10,7 @@ import * as Flash from '../Flash'
 import * as ni from '../../../common/NetworkInterfaces';
 import * as AdminEdit from './AdminEdit';
 import { ManyToMany } from './ManyToMany';
+import { DataCombo } from './DataCombo'; 
 
 interface IAppProps {
     location: any;
@@ -36,26 +37,104 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
         return null;
     }
 
-    private onMMFieldChange(e, fieldName: string) {
-        const ids = e.target.value.map(obj => { return obj.id });
-        this.state.recordValues.values.json_field[fieldName] = ids;
+    private contractorInterface(index: number):React.ReactElement<any> {
+        const contractor_id = this.state.recordValues.values.json_field.contractors[index].contractor_id;
+        const contractedHTML = (
+            <DataCombo
+                value={ contractor_id }
+                modelName="Company"
+                onChange={ this.onContractorFieldChanged.bind(this, index, 'contractor_id') } />
+        );
+
+        const scope = this.state.recordValues.values.json_field.contractors[index].scope;
+        const scopeHTML = (
+            <input type="text" className="form-control" 
+                value={ scope } 
+                onChange={this.onContractorFieldChanged.bind(this, index, 'scope')}/>
+        );
+
+        const persons_id = this.state.recordValues.values.json_field.contractors[index].persons_id;
+        const personsHTML = (
+            <ManyToMany comboSource='Person'
+                value={this.idsToObj(persons_id)}
+                onChange={this.onContractorFieldChanged.bind(this, index, 'persons_id')}/>
+        );
+
+        return (
+            <div key={'contracted' + index}>
+                <hr/>
+                <h3>Contratada {index + 1}</h3>
+                <br/>
+                { editLineHTML(contractedHTML, 'Contratada', 'c' + index) }
+                { editLineHTML(scopeHTML, 'Escopo', 'e' + index) }
+                { editLineHTML(personsHTML, 'Pessoas', 'p' + index) }
+                <button
+                    onClick={ this.onRemoveContractedButtonClick.bind(this, index) }
+                    >Remover</button>
+                <hr/>
+            </div>
+        );
+    }
+
+    private onRemoveContractedButtonClick(index) {
+        this.state.recordValues.values.json_field.contractors.splice(index, 1);
         this.setState(this.state);
     }
 
-    private idsToObj(ids: string[]):any[] {
+    private onContractorFieldChanged(index:number, fieldName:string, evt) {
+        var value = evt;
+        if(evt.target)
+            value = evt.target.value;
+        this.state.recordValues.values.json_field.contractors[index][fieldName] = value;
+        this.setState(this.state);
+    }
+
+    private onPersonOwnerChange(e) {
+        const ids = e.target.value.map(obj => { return obj.id });
+        this.state.recordValues.values.json_field.owner_persons_id = ids;
+        this.setState(this.state);
+    }
+
+    private idsToObj(ids: string[]):{id}[] {
         return ids.map(id => { return { id }; });
+    }
+
+    private addContracted() {
+        const emptyContracted = {
+            contractor_id: "",
+            persons_id: [],
+            scope: ""
+        };
+        this.state.recordValues.values.json_field.contractors.push(emptyContracted);
+        this.setState(this.state);
     }
 
     protected getSpecialFields(): React.ReactElement<any> {
         const jsonField:IProjectJsonField = this.state.recordValues.values.json_field;
         if(!jsonField || !jsonField.owner_persons_id) return null;
+
+        console.log(jsonField);
         
         const manyToManyHTML =(
             <ManyToMany comboSource='Person'
                 value={this.idsToObj(this.state.recordValues.values.json_field.owner_persons_id)}
-                onChange={this.onMMFieldChange.bind(this, 'owner_persons_id')}/>
+                onChange={this.onPersonOwnerChange.bind(this)}/>
         );
-        return editLineHTML(manyToManyHTML, 'Pessoas da contratante', 0);
+
+        const contractorsHTML:React.ReactElement<any>[] = [];
+        for(let i = 0; i < jsonField.contractors.length; i++) {
+            contractorsHTML.push(this.contractorInterface(i));
+        }
+
+        return (
+            <div>
+                { editLineHTML(manyToManyHTML, 'Pessoas da contratante', 'pc') }
+                { contractorsHTML }
+                <button
+                    onClick={ this.addContracted.bind(this) }
+                    >Adicionar contratada</button>
+            </div>
+        );
     }
 
 }

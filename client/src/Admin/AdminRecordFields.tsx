@@ -10,9 +10,9 @@ import { ImageShow } from './ImageShow';
 import { IField } from '../../../common/Interfaces';
 const DateTime = require('react-datetime');
 
-export function editLineHTML(value: React.ReactElement<any>, label: string, index: number): React.ReactElement<any> {
+export function editLineHTML(value: React.ReactElement<any>, label: string, key: string): React.ReactElement<any> {
     return (
-        <div className="form-group" key={ 'fh' + index }>
+        <div className="form-group" key={ key }>
             <label className="control-label col-sm-2">{label}:</label>
             <div className="col-sm-10">
                 { value }
@@ -200,7 +200,7 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
     
     public render(): React.ReactElement<any> {
         var fieldsHTML = this.props.fields.map((field, index) => {
-            return editLineHTML(this.fieldHTML(field), field.label, index);
+            return editLineHTML(this.fieldHTML(field), field.label, 'r' + index);
         });
 
         return (

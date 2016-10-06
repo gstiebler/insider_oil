@@ -79,68 +79,6 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
             type: Sequelize.ENUM('CAPEX', 'OPEX'),
             allowNull: false
         },
-		contractors: {
-            type: DataTypes.VIRTUAL,
-            get: function() {
-                if(!this.dataValues.json_field) return null;
-                const jsonField:IProjectJsonField = JSON.parse(this.dataValues.json_field);
-                if(!jsonField.contractors) return [];
-                const company = sequelize.models['Company'];
-                return jsonField.contractors.map(c => {
-                    return {
-                        id: c.contractor_id,
-                        name: libAwait.await( company.findById( c.contractor_id ) ).name
-                    };
-                });
-            },
-		},
-		contractors_scope: {
-            type: DataTypes.VIRTUAL,
-            get: function() {
-                if(!this.dataValues.json_field) return null;
-                const jsonField:IProjectJsonField = JSON.parse(this.dataValues.json_field);
-                if(!jsonField.contractors) return [];
-                return jsonField.contractors.map(c => {
-                    return c.scope;
-                });
-            },
-		},
-		contractor1Persons: {
-            type: DataTypes.VIRTUAL,
-            get: function() {
-                if(!this.dataValues.json_field) return null;
-                const jsonField:IProjectJsonField = JSON.parse(this.dataValues.json_field);
-                if(!jsonField.contractors) return [];
-                const Person = sequelize.models['Person'];
-                if(jsonField.contractors.length >= 1) {
-                    return jsonField.contractors[0].persons_id.map(person_id => {
-                        let name = libAwait.await( Person.findById(person_id) ).name;
-                        return {
-                            id: person_id,
-                            name
-                        };
-                    });
-                }
-            },
-		},
-		contractor2Persons: {
-            type: DataTypes.VIRTUAL,
-            get: function() {
-                if(!this.dataValues.json_field) return null;
-                const jsonField:IProjectJsonField = JSON.parse(this.dataValues.json_field);
-                if(!jsonField.contractors) return [];
-                const Person = sequelize.models['Person'];
-                if(jsonField.contractors.length >= 2) {
-                    return jsonField.contractors[1].persons_id.map(person_id => {
-                        let name = libAwait.await( Person.findById(person_id) ).name;
-                        return {
-                            id: person_id,
-                            name
-                        };
-                    });
-                }
-            },
-		},
 		objects: {
             type: DataTypes.VIRTUAL,
             get: function() {
