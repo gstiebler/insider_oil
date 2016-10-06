@@ -3,7 +3,7 @@ import * as Sequelize from 'sequelize';
 import * as libAwait from '../../lib/await';
 import { syncify } from '../../lib/PromiseUtils';
 import { saveOriginalImage } from '../../lib/ModelUtils';
-import { IProjectJsonField } from '../../../common/Interfaces';
+import { IProjectJsonField, IFrontEndProject } from '../../../common/Interfaces';
 
 export const PROJECT_OBJS_TYPE = 'ProjectObjects';
 
@@ -20,7 +20,7 @@ async function updateObjects(models, project) {
         }
     };
     await Association.destroy(delOpts);
-    const objects:any[] = project.dataValues.objects;
+    const objects:IFrontEndProject[] = project.dataValues.objects;
     if(!objects) return;
     for(let object of objects) {
         let association = {
@@ -28,7 +28,8 @@ async function updateObjects(models, project) {
             src_model: 'Project',
             src_id: project.id,
             dest_model: object.model,
-            dest_id: object.id
+            dest_id: object.id,
+            json_field: object.description
         }
         await Association.create(association);
     }
@@ -93,11 +94,13 @@ module.exports = function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.
                 return associations.map(association => {
                     const modOpt = {  where: { name: association.dest_model } };
                     const obj = libAwait.await( sequelize.models[association.dest_model].findById(association.dest_id) );
-                    return {
+                    const fepObj:IFrontEndProject = {
                         id: association.dest_id,
                         model: association.dest_model,
-                        name: obj.name
-                    };
+                        name: obj.name,
+                        description: JSON.parse(association.json_field)
+                    }
+                    return fepObj;
                 });
             },
 		},

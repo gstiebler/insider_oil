@@ -2,7 +2,7 @@
 
 import * as utils from '../lib/utils';
 import { await } from '../../lib/await';
-import { IProjectJsonField } from '../../../common/Interfaces';
+import { IProjectJsonField, IFrontEndProject } from '../../../common/Interfaces';
 
 module.exports = function(db) {
     const jsonField1:IProjectJsonField = {
@@ -22,16 +22,20 @@ module.exports = function(db) {
         ],
         owner_persons_id: ["2", "1"]
     };
+
+    const mexilhaoObjs:IFrontEndProject[] = [{
+        model: 'ProductionUnit',
+        id: utils.idByName('ProductionUnit', 'Pioneer'),
+        description: 'Plataforma'
+    }];
+
     const objs = [
         {
             name: "Revamp de Mexilhão",
             scope: "Escopo do Revamp",
             value: 15000000,
             owner_id: utils.idByName('Company', 'Petrobras'),
-            objects: [{
-                model: 'ProductionUnit',
-                id: utils.idByName('ProductionUnit', 'Pioneer'),
-            }],
+            objects: mexilhaoObjs,
             json_field: jsonField1,
             stage: 'OPEX'
         },

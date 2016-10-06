@@ -208,6 +208,9 @@ Contract: (test) => {
 Project: (test) => {
     const projects = await( db.models.Project.findAll() );
     const mexilhao = projects[0];
+    const objs:IFrontEndProject[] = mexilhao.objects;
+    test.equal('Plataforma', objs[0].description);
+
     const jsonField:IProjectJsonField = JSON.parse(mexilhao.json_field);
     test.equal(2, jsonField.contractors.length);
     test.equal("39", jsonField.contractors[0].contractor_id);
