@@ -155,6 +155,7 @@ export interface IProjectJsonField {
     contractors: {
         contractor_id: string;
         persons_id: string[];
+        contracts_id: string[];
         scope: string;
     }[];
     owner_persons_id: string[];

@@ -57,7 +57,14 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
         const personsHTML = (
             <ManyToMany comboSource='Person'
                 value={this.idsToObj(persons_id)}
-                onChange={this.onContractorPersonsChanged.bind(this, index)}/>
+                onChange={this.onContractorMTMChanged.bind(this, index, 'persons_id')}/>
+        );
+
+        const contracts_id = this.state.recordValues.values.json_field.contractors[index].contracts_id;
+        const contractsHTML = (
+            <ManyToMany comboSource='Contract'
+                value={this.idsToObj(contracts_id)}
+                onChange={this.onContractorMTMChanged.bind(this, index, 'contracts_id')}/>
         );
 
         return (
@@ -68,6 +75,7 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
                 { editLineHTML(contractedHTML, 'Contratada', 'c' + index) }
                 { editLineHTML(scopeHTML, 'Escopo', 'e' + index) }
                 { editLineHTML(personsHTML, 'Pessoas', 'p' + index) }
+                { editLineHTML(contractsHTML, 'Contratos', 'ctr' + index) }
                 <button
                     onClick={ this.onRemoveContractedButtonClick.bind(this, index) }
                     >Remover</button>
@@ -89,9 +97,9 @@ export class ProjectEdit extends AdminEdit.AdminEdit {
         this.setState(this.state);
     }
 
-    private onContractorPersonsChanged(index, persons_ids:any[]) {
-        const ids = persons_ids.map(obj => { return obj.id });
-        this.state.recordValues.values.json_field.contractors[index].persons_id = ids;
+    private onContractorMTMChanged(index, fieldName:string, ids_objs:any[]) {
+        const ids = ids_objs.map(obj => { return obj.id });
+        this.state.recordValues.values.json_field.contractors[index][fieldName] = ids;
         this.setState(this.state);
     }
 

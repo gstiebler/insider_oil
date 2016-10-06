@@ -227,12 +227,14 @@ ProjectEdit: (test: nodeunit.Test) => {
                 {
                     "scope": "contrato global", 
                     "persons_id": ["1", "2", "3"],
-                    "contractor_id": "39"
+                    "contractor_id": "39",
+                contracts_id: ["2", "3"]
                 },
                 {
                     "scope": "engenharia",
                     "persons_id": ["2", "3"],
-                    "contractor_id": "17"
+                    "contractor_id": "17",
+                contracts_id: ["2", "1"]
                 }
             ],
             owner_persons_id: ["2", "1"]
