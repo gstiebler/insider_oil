@@ -53,6 +53,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
             'Block': "/app/block",
             'GasPipeline': "/app/gas_pipeline",
             'News': "/app/view_new",
+            'Project': "/app/view_project",
         };
 
         var customSource = customSources[source];
@@ -158,12 +159,13 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
             );
         });
     }
+
+    protected getImgUrl():string {
+        return server.paths.baseImg + this.state.source + '/' + 
+                            'img_' + this.state.id + '_original.jpg';
+    }
     
     public render(): React.ReactElement<any> {
-        const imgUrl = server.paths.baseImg + this.state.source + '/' + 
-                            'img_' + this.state.id + '_original.jpg';
-                    
-        const embedStr = "<iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1xBhJ_qdhLO_OQ11OhsuL0wqObfBTQLwfeWaGGM6-n3w&font=Default&lang=en&initial_zoom=2&height=650' width='100%' height='650' frameborder='0'></iframe>";
         return (
             <div>
                 <div className="row">
@@ -174,7 +176,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                             objId={this.state.id}></ViewRecordFields>
                     </div>
                     <div className="col-md-6 main-boxes">
-                        <img src={imgUrl} style={{ width: 600 }} />
+                        <img src={this.getImgUrl()} style={{ width: 600 }} />
                     </div>
                 </div>
                 <br/>
