@@ -129,11 +129,14 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         return null;
     }
 
-    public getRefObjectsElements(): React.ReactElement<any>[] {
-        var referencedObjects = this.state.allReferencedObjects.map((referencedObject) => {
-            return <div key={referencedObject.queryName}>
-                <ShowQueryData model={referencedObject} objId={this.state.id}></ShowQueryData>
-            </div>
+    public getRefObjectsElements(objects:IRefObjectsOnView[]): React.ReactElement<any>[] {
+        var referencedObjects = objects.map((referencedObject) => {
+            return(
+                <ShowQueryData key={referencedObject.queryName} 
+                            model={referencedObject} 
+                            objId={this.state.id}>
+                </ShowQueryData>
+            );
         });
         return referencedObjects;
     }
@@ -185,7 +188,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                 <hr/>
                 { this.getTableausHTML() }
                 { this.getEmbedsHTML() }
-                { this.getRefObjectsElements() }
+                { this.getRefObjectsElements(this.state.allReferencedObjects) }
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>
         );
