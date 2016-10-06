@@ -143,3 +143,45 @@ export const contractsOfContractedInProject:IQueryById = {
         },
     ]
 }
+
+export const personsOfContractedInProject:IQueryById = {
+    queryStrFn: (filter) => {
+        const Project = db.models.Project;
+        const project = await( Project.findById(filter.id) );
+        const jsonField:IProjectJsonField = JSON.parse(project.json_field);
+        const persons_id = jsonField.contractors[filter.index].persons_id;
+
+        const queryParams: IQueryParams = {
+            filters: [ {
+                 field: 'persons.id', 
+                 in: persons_id
+            } ],
+            order: [],
+            pagination: { first: 0, itemsPerPage: 100 }
+        };
+        return TableQueries.queries['Persons'].queryStrFn(queryParams);
+    },
+    fields: [
+        {
+            label: 'Nome',
+            ref: {
+                modelField: 'model',
+                idField: 'person_id',
+                valueField: 'person_name'
+            }
+        },
+        {
+            label: 'Empresa',
+            ref: {
+                modelField: 'company_model',
+                idField: 'company_id',
+                valueField: 'company_name'
+            }
+        },
+        {
+            label: 'Cargo',
+            fieldName: 'position',
+            type: 'VARCHAR'
+        }
+    ]
+}

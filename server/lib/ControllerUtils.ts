@@ -18,8 +18,8 @@ export function getErrorFunc(res: express.Response, errorCode: number, msg: stri
         if(error.message) {
             errObj.errorMsg += ' ' + error.message;
         }
-        res.status(errorCode).json(errObj)
         winston.error(error.stack);
+        res.status(errorCode).json(errObj)
     };
 }
 
