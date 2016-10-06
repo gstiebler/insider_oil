@@ -6,7 +6,7 @@ import { await } from '../lib/await';
 import utils = require('./lib/utils');
 import nodeunit = require('nodeunit');
 import ComboQueries = require('../db/queries/ComboQueries');
-import { IFrontEndProject } from '../../common/Interfaces';
+import { IFrontEndProject, IProjectJsonField } from '../../common/Interfaces';
 
 function jsonfy(obj) {
     return JSON.parse(JSON.stringify(obj));
@@ -208,13 +208,13 @@ Contract: (test) => {
 Project: (test) => {
     const projects = await( db.models.Project.findAll() );
     const mexilhao = projects[0];
-    test.equal(2, mexilhao.contractors.length);
-    test.equal(39, mexilhao.contractors[0].id);
-    test.equal('Rosneft', mexilhao.contractors[0].name);
-    test.equal(3, mexilhao.contractor1Persons.length);
-    test.equal(1, mexilhao.contractor1Persons[0].id);
-    test.equal('Guilherme Stiebler', mexilhao.contractor1Persons[0].name);
-    utils.compareArray(test, ['contrato global', 'engenharia'], mexilhao.contractors_scope);
+    const jsonField:IProjectJsonField = JSON.parse(mexilhao.json_field);
+    test.equal(2, jsonField.contractors.length);
+    test.equal("39", jsonField.contractors[0].contractor_id);
+    test.equal(3, jsonField.contractors[0].persons_id.length);
+    test.equal(1, jsonField.contractors[0].persons_id[0]);
+    test.equal('contrato global', jsonField.contractors[0].scope);
+    test.equal('engenharia', jsonField.contractors[1].scope);
     test.done();
 },
 
@@ -222,36 +222,34 @@ ProjectEdit: (test: nodeunit.Test) => {
     {
         const projects = await( db.models.Project.findAll() );
         const mexilhao = projects[0];
-        mexilhao.contractors = [
-            { id: utils.idByName('Company', 'Rosneft') },
-            { id: utils.idByName('Company', 'BP Energy') },
-        ];
-        mexilhao.contractors_scope = [
-            'contrato global',
-            'engenharia',
-        ];
-        mexilhao.contractor1Persons = [
-            { id: 1 }, 
-            { id: 2 }, 
-            { id: 3 }
-        ];
-        mexilhao.contractor2Persons = [
-            { id: 2 }, 
-            { id: 3 }
-        ];
+        const jsonField1:IProjectJsonField = {
+            "contractors": [
+                {
+                    "scope": "contrato global", 
+                    "persons_id": ["1", "2", "3"],
+                    "contractor_id": "39"
+                },
+                {
+                    "scope": "engenharia",
+                    "persons_id": ["2", "3"],
+                    "contractor_id": "17"
+                }
+            ],
+            owner_persons_id: ["2", "1"]
+        };
+        mexilhao.json_field = jsonField1;
         await(mexilhao.save());
     }
 
     const projects = await( db.models.Project.findAll() );
     const mexilhao = projects[0];
-
-    test.equal(2, mexilhao.contractors.length);
-    test.equal(39, mexilhao.contractors[0].id);
-    test.equal('Rosneft', mexilhao.contractors[0].name);
-    test.equal(3, mexilhao.contractor1Persons.length);
-    test.equal(1, mexilhao.contractor1Persons[0].id);
-    test.equal('Guilherme Stiebler', mexilhao.contractor1Persons[0].name);
-    utils.compareArray(test, ['contrato global', 'engenharia'], mexilhao.contractors_scope);
+    const jsonField:IProjectJsonField = JSON.parse(mexilhao.json_field);
+    test.equal(2, jsonField.contractors.length);
+    test.equal("39", jsonField.contractors[0].contractor_id);
+    test.equal(3, jsonField.contractors[0].persons_id.length);
+    test.equal(1, jsonField.contractors[0].persons_id[0]);
+    test.equal('contrato global', jsonField.contractors[0].scope);
+    test.equal('engenharia', jsonField.contractors[1].scope);
     test.done();
 }
 

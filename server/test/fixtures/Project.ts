@@ -10,7 +10,7 @@ module.exports = function(db) {
             {
                 "scope": "contrato global", 
                 "persons_id": ["1", "2", "3"],
-                    "contractor_id": "39"
+                "contractor_id": "39"
             },
             {
                 "scope": "engenharia",
