@@ -72,6 +72,24 @@ projectsTargetSales: (test: nodeunit.Test) => {
     test.done(); 
 },
 
+projectTypesByFase: (test: nodeunit.Test) => {
+    const filters = {
+        fase: 'CAPEX',
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'projectTypesByFase',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(3, resQueryValues.records.length);
+    test.equal('Petróleo', resQueryValues.records[1].segment_type);
+    test.equal('CAPEX', resQueryValues.records[1].stage);
+    test.done();
+},
+
 Project: (test) => {
     const projects = await( db.models.Project.findAll() );
     const mexilhao = projects[0];

@@ -195,3 +195,14 @@ export const projectsTargetSales:IQueryById = {
         },
     ]
 }
+
+export const projectTypesByFase:IQueryById = {
+    queryStrFn: (filter) => {
+        const select = 'select segment_type, stage ';
+        const fromStr = ' from projects ';
+        const group = ' group by segment_type, stage ';
+        const query = select + fromStr + group;
+        return query;
+    },
+    fields: []
+}
