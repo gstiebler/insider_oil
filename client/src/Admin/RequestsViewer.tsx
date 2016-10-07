@@ -39,14 +39,15 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
+        const req:ni.ComboValues.req = { model: 'UsersUsername' };
         this.initTable(this.props);        
-        server.getP('/combo_values', { model: 'UsersUsername' })
+        server.getP('/combo_values', req)
             .then(this.onUsers.bind(this))
             .catch(showError.show);
     }
 
-    private onUsers(users:any[]) {
-        this.state.users = users;
+    private onUsers(res:ni.ComboValues.res) {
+        this.state.users = res.values;
         this.setState(this.state);
     }
 
@@ -207,8 +208,8 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
         const today = new Date();
         const minusWeek = new Date();
         minusWeek.setDate(minusWeek.getDate() - 7);
-        const startDate = moment(minusWeek).format(dateFormat);
-        const endDate = moment(today).format(dateFormat);
+        const startDate = minusWeek;
+        const endDate = today;
 
         let bottomHTML = null;
         if(this.state.type == "INDIVIDUAL_ACCESS") {
@@ -269,12 +270,12 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                     </div>
                     <div className="col-md-3">
                         <DateTime 
-                            value={startDate}
+                            defaultValue={startDate}
                             input={true}
                             dateFormat={dateFormat}
                             timeFormat={false}
                             onChange={this.onChangeDate.bind(this, 'startDate')}
-                            className="form-control input-group"/>;
+                            className="form-control input-group"/>
                     </div>
                 </div>
                 <br/>
@@ -284,12 +285,12 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
                     </div>
                     <div className="col-md-3">
                         <DateTime 
-                            value={endDate}
+                            defaultValue={endDate}
                             input={true}
                             dateFormat={dateFormat}
                             timeFormat={false}
                             onChange={this.onChangeDate.bind(this, 'endDate')}
-                            className="form-control input-group"/>;
+                            className="form-control input-group"/>
                     </div>
                 </div>
                 <br/>                
