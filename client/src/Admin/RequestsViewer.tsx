@@ -39,8 +39,9 @@ export class RequestsViewer extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
-        const req:ni.ComboValues.req = { model: 'UsersUsername' };
-        this.initTable(this.props);        
+        this.initTable(this.props);
+        
+        const req:ni.ComboValues.req = { model: 'UsersUsername' };        
         server.getP('/combo_values', req)
             .then(this.onUsers.bind(this))
             .catch(showError.show);

@@ -20,13 +20,31 @@ interface IAppProps {
 }
 
 interface IAppState extends ViewRecord.IAppState {
+    companies: any[];
 }
 
 export class ProjectView extends ViewRecord.ViewRecord {
 
+    public state: IAppState;
+
     constructor(props: IAppProps) {
         super(props);
         this.state.source = 'Project';
+        this.state.companies = [];
+    }
+
+    public componentDidMount() {
+        super.componentDidMount();   
+
+        const req:ni.ComboValues.req = { model: 'Company' };
+        server.getP('/combo_values', req)
+            .then(this.onCompanies.bind(this))
+            .catch(showError.show);
+    }
+
+    private onCompanies(res:ni.ComboValues.res) {
+        this.state.companies = res.values;
+        this.setState(this.state);
     }
 
     public render(): React.ReactElement<any> {
@@ -62,9 +80,11 @@ export class ProjectView extends ViewRecord.ViewRecord {
                         },
                     },
                 ];
-                console.log(queries);
+                const contractor_id = jsonValues.contractors[i].contractor_id;
+                const contractorName = this.state.companies[contractor_id].label; 
                 const contractedHTML = (
-                    <div>
+                    <div key={ 'index' + i } >
+                        <h3>{ contractorName + ' - ' + jsonValues.contractors[i].scope }</h3>
                         { this.getRefObjectsElements(queries) }
                     </div>
                 );
