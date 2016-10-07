@@ -758,7 +758,7 @@ export const queries:IQueriesById = {
             return QueryGenerator.queryGenerator(options);
         },
         fields: [
-        {
+            {
                 label: 'Nome',
                 ref: {
                     modelField: 'model',
@@ -951,6 +951,7 @@ export const queries:IQueriesById = {
     contractsOfContractedInProject: ProjectQueries.contractsOfContractedInProject,
     personsOfContractedInProject: ProjectQueries.personsOfContractedInProject,
     personsOfOwnerInProject: ProjectQueries.personsOfOwnerInProject,
+    projectsTargetSales: ProjectQueries.projectsTargetSales,
 
     boatsByOwner: {
         queryStrFn: (filters) => {

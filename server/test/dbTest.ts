@@ -6,7 +6,7 @@ import { await } from '../lib/await';
 import utils = require('./lib/utils');
 import nodeunit = require('nodeunit');
 import ComboQueries = require('../db/queries/ComboQueries');
-import { IFrontEndProject, IProjectJsonField } from '../../common/Interfaces';
+import { IFrontEndProject } from '../../common/Interfaces';
 
 function jsonfy(obj) {
     return JSON.parse(JSON.stringify(obj));
@@ -204,59 +204,6 @@ Contract: (test) => {
 
     test.done();
 },
-
-Project: (test) => {
-    const projects = await( db.models.Project.findAll() );
-    const mexilhao = projects[0];
-    const objs:IFrontEndProject[] = mexilhao.objects;
-    test.equal('Plataforma', objs[0].description);
-
-    const jsonField:IProjectJsonField = JSON.parse(mexilhao.json_field);
-    test.equal(2, jsonField.contractors.length);
-    test.equal("39", jsonField.contractors[0].contractor_id);
-    test.equal(3, jsonField.contractors[0].persons_id.length);
-    test.equal(1, jsonField.contractors[0].persons_id[0]);
-    test.equal('contrato global', jsonField.contractors[0].scope);
-    test.equal('engenharia', jsonField.contractors[1].scope);
-    test.done();
-},
-
-ProjectEdit: (test: nodeunit.Test) => {
-    {
-        const projects = await( db.models.Project.findAll() );
-        const mexilhao = projects[0];
-        const jsonField1:IProjectJsonField = {
-            "contractors": [
-                {
-                    "scope": "contrato global", 
-                    "persons_id": ["1", "2", "3"],
-                    "contractor_id": "39",
-                contracts_id: ["2", "3"]
-                },
-                {
-                    "scope": "engenharia",
-                    "persons_id": ["2", "3"],
-                    "contractor_id": "17",
-                contracts_id: ["2", "1"]
-                }
-            ],
-            owner_persons_id: ["2", "1"]
-        };
-        mexilhao.json_field = jsonField1;
-        await(mexilhao.save());
-    }
-
-    const projects = await( db.models.Project.findAll() );
-    const mexilhao = projects[0];
-    const jsonField:IProjectJsonField = JSON.parse(mexilhao.json_field);
-    test.equal(2, jsonField.contractors.length);
-    test.equal("39", jsonField.contractors[0].contractor_id);
-    test.equal(3, jsonField.contractors[0].persons_id.length);
-    test.equal(1, jsonField.contractors[0].persons_id[0]);
-    test.equal('contrato global', jsonField.contractors[0].scope);
-    test.equal('engenharia', jsonField.contractors[1].scope);
-    test.done();
-}
 
 }
 

@@ -615,46 +615,6 @@ boatsByOwner: (test: nodeunit.Test) => {
     test.done(); 
 },
 
-personsOfContractedInProject: (test: nodeunit.Test) => {
-    const revampId = utils.idByName('Project', 'Revamp de Mexilhão');
-    const filters = {
-        id: revampId,
-        index: 1
-    };
-    const query:ni.GetQueryData.req = {
-        queryName: 'personsOfContractedInProject',
-        filters: filters
-    }
-
-    const reqQueryValues = { query };
-    const resQueryValues:ni.GetQueryData.res = 
-        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(2, resQueryValues.records.length);
-    test.equal('Felipe', resQueryValues.records[0].person_name);
-    test.equal('Marcelo', resQueryValues.records[1].person_name);
-    test.done(); 
-},
-
-personsOfOwnerInProject: (test: nodeunit.Test) => {
-    const revampId = utils.idByName('Project', 'Revamp de Mexilhão');
-    const filters = {
-        id: revampId,
-        index: 1
-    };
-    const query:ni.GetQueryData.req = {
-        queryName: 'personsOfOwnerInProject',
-        filters: filters
-    }
-
-    const reqQueryValues = { query };
-    const resQueryValues:ni.GetQueryData.res = 
-        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(2, resQueryValues.records.length);
-    test.equal('Felipe', resQueryValues.records[0].person_name);
-    test.equal('Guilherme Stiebler', resQueryValues.records[1].person_name);
-    test.done(); 
-},
-
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );

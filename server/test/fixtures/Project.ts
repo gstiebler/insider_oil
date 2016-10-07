@@ -37,13 +37,21 @@ module.exports = function(db) {
             owner_id: utils.idByName('Company', 'Petrobras'),
             objects: mexilhaoObjs,
             json_field: jsonField1,
+            segment_type: 'Petróleo',
             stage: 'OPEX'
         },
         {
             name: "Libra",
             scope: "Escopo de Libra",
             value: 123000,
-            oil_field_id: utils.idByName('OilField', 'Roncador'),
+            segment_type: 'Petróleo',
+            stage: 'CAPEX'
+        },
+        {
+            name: "Áries",
+            scope: "Escopo de Áries",
+            segment_type: 'Gás',
+            value: 1234,
             stage: 'CAPEX'
         },
     ];

@@ -925,56 +925,6 @@ export const queries:ITableQueries = {
         tableauUrl: 'https://public.tableau.com/views/Semi/Painel1?:embed=y&:display_count=yes&:toolbar=no',
     },
     
-    Projects: {
-        title: 'Projetos',
-        queryStrFn: (queryParams: IQueryParams) => {
-             const options:QueryGenerator.IQueryOpts = {
-                table: {
-                    name: 'production_units',
-                    fields: [
-                        'id',
-                        'name',
-                        'status',
-                    ]
-                },
-                extraFields: [
-                    ['"ProductionUnit"', 'model']
-                ],
-                joinTables: [],
-                where: queryParams.filters,
-                order: queryParams.order
-            };
-
-            options.where.push({
-                field: 'status',
-                in: [
-                    '"Em projeto"',
-                    '"Em construção"',
-                    '"Em licitação"',
-                    '"Parada"',
-                    '"Em desativação"',
-                ]
-            });
-            
-            return QueryGenerator.queryGenerator(options);
-        },
-        fields: [
-            {
-                label: 'Nome',
-                ref: {
-                    modelField: 'model',
-                    idField: 'id',
-                    valueField: 'name'
-                }
-            },
-            {
-                label: 'Status',
-                fieldName: 'status',
-                type: 'VARCHAR'
-            },
-        ]
-    },
-    
     oilFielsdProduction: {
         title: 'Campos em produção',
         queryStrFn: (queryParams: IQueryParams) => {
