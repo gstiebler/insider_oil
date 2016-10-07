@@ -39,18 +39,36 @@ export class ProjectView extends ViewRecord.ViewRecord {
                 return ViewRecordFields.completeHTML(o.description, platHTML);
             });
         }
+        let contracteds: React.ReactElement<any>[] = [];
         const jsonField = find(this.state.recordData, r => { return r.name == 'json_field' });
         if(jsonField) {
             const jsonValues:IProjectJsonField = JSON.parse(jsonField.value);
             for(let i = 0; i < jsonValues.contractors.length; i++) {
-                const queries:IRefObjectsOnView[] = [{
-                    queryName: 'contractsOfContractedInProject',
-                    title: 'Pessoas da contratada',
-                    filters: {
-                        index: i,
+                const queries:IRefObjectsOnView[] = [
+                    {
+                        queryName: 'contractsOfContractedInProject',
+                        title: 'Contratos da contratada no projeto',
+                        filters: {
+                            index: i,
+                            id: this.state.id
+                        },
                     },
-                }];
-                console.log(i);
+                    {
+                        queryName: 'personsOfContractedInProject',
+                        title: 'Pessoas da contratada',
+                        filters: {
+                            index: i,
+                            id: this.state.id
+                        },
+                    },
+                ];
+                console.log(queries);
+                const contractedHTML = (
+                    <div>
+                        { this.getRefObjectsElements(queries) }
+                    </div>
+                );
+                contracteds.push(contractedHTML);
             }
         }
 
@@ -75,6 +93,7 @@ export class ProjectView extends ViewRecord.ViewRecord {
                 { this.getTableausHTML() }
                 { this.getEmbedsHTML() }
                 { this.getRefObjectsElements(this.state.allReferencedObjects) }
+                { contracteds }
                 <ObjectNews modelName={this.state.source} objId={this.state.id} ></ObjectNews>
             </div>
         );
