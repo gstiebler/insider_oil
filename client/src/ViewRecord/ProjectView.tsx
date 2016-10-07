@@ -81,7 +81,8 @@ export class ProjectView extends ViewRecord.ViewRecord {
                     },
                 ];
                 const contractor_id = jsonValues.contractors[i].contractor_id;
-                const contractorName = this.state.companies[contractor_id].label; 
+                const company = find(this.state.companies, c => { return c.id == contractor_id});
+                const contractorName = company ? company.label : 'Empresa'; 
                 const contractedHTML = (
                     <div key={ 'index' + i } >
                         <h3>{ contractorName + ' - ' + jsonValues.contractors[i].scope }</h3>
