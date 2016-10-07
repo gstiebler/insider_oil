@@ -129,3 +129,69 @@ export const personsOfOwnerInProject:IQueryById = {
     },
     fields: TableQueries.queries['Persons'].fields
 }
+
+export const projectsTargetSales:IQueryById = {
+    queryStrFn: (filter) => {
+        const opts:QueryGenerator.IQueryOpts = {
+            table: {
+                name: 'projects',
+                fields: [
+                    ['id', 'p_id'],
+                    ['name', 'p_name'],
+                    'value'
+                ]
+            },
+            extraFields: [
+                ['"Project"', 'p_model'],
+                ['"Company"', 'c_model'],
+            ],
+            joinTables: [                    
+                {
+                    name: 'companies',
+                    fields: [
+                        ['id', 'c_id'],
+                        ['name', 'c_name'],
+                    ],
+                    joinField: 'projects.owner_id'
+                },
+            ],
+            where: [
+                {
+                    field: 'projects.stage',
+                    equal: '"' + filter.fase + '"'
+                },
+                {
+                    field: 'projects.segment_type',
+                    equal: '"' + filter.type + '"'
+                },
+            ],
+            order: []
+        };
+        
+        var query = QueryGenerator.queryGenerator(opts);
+        return query;
+    },
+    fields: [
+        {
+            label: 'Nome',
+            ref: {
+                modelField: 'p_model',
+                idField: 'p_id',
+                valueField: 'p_name'
+            }
+        },
+        {
+            label: 'Contratante',
+            ref: {
+                modelField: 'c_model',
+                idField: 'c_id',
+                valueField: 'c_name'
+            }
+        },
+        {
+            label: 'Valor',
+            fieldName: 'value',
+            type: 'CURRENCY'
+        },
+    ]
+}

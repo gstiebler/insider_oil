@@ -52,6 +52,26 @@ personsOfOwnerInProject: (test: nodeunit.Test) => {
     test.done(); 
 },
 
+projectsTargetSales: (test: nodeunit.Test) => {
+    const revampId = utils.idByName('Project', 'Revamp de Mexilhão');
+    const filters = {
+        fase: 'CAPEX',
+        type: 'Petróleo'
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'projectsTargetSales',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('Libra', resQueryValues.records[0].p_name);
+    test.equal('Ouro Preto', resQueryValues.records[0].c_name);
+    test.done(); 
+},
+
 Project: (test) => {
     const projects = await( db.models.Project.findAll() );
     const mexilhao = projects[0];

@@ -42,6 +42,7 @@ module.exports = function(db) {
         },
         {
             name: "Libra",
+            owner_id: 15,
             scope: "Escopo de Libra",
             value: 123000,
             segment_type: 'Petróleo',
