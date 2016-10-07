@@ -28,6 +28,7 @@ import { Observatory } from './Observatory';
 import { PersonsByCompany } from './PersonsByCompany'; 
 import { NewsTicker } from './NewsTicker'; 
 import { Analytics } from './Analytics';  
+import { TargetSales } from './TargetSales';  
 
 const ReactGA = require('react-ga');
 ReactGA.initialize('UA-80990869-2');
@@ -157,6 +158,7 @@ ReactDOM.render(
       <Route path="observatory" component={Observatory}/>
       <Route path="persons" component={PersonsByCompany}/>
       <Route path="analytics" component={Analytics}/>
+      <Route path="target_sales" component={TargetSales}/>
       <Route path="requests_viewer" component={RequestsViewer}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
