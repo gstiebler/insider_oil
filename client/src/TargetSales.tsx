@@ -63,11 +63,11 @@ export class TargetSales extends React.Component<IAppProps, IAppState> {
 		return (
             <div className="row">
                 <div className="col-md-5">
-                    <h3>Projetos CAPEX</h3>
+                    <h3>CAPEX</h3>
                     { this.getStageHTML('CAPEX') }
                 </div>
                 <div className="col-md-5">
-                    <h3>Projetos OPEX</h3>
+                    <h3>OPEX</h3>
                     { this.getStageHTML('OPEX') }
                 </div>
             </div> 
