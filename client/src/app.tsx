@@ -21,7 +21,7 @@ import { ChangePassword } from './ChangePassword';
 import { MapsAll } from './MapsAll';
 import { Dashboard } from './Dashboard';
 import { NewsSingle } from './NewsSingle';
-import { PaginatedTableView } from './PaginatedTableView'; 
+import { PaginatedTableView } from './PaginatedTable/PaginatedTableView'; 
 import { DataList } from './DataList'; 
 import { Insights } from './Insights/Insights'; 
 import { Observatory } from './Observatory'; 

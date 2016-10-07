@@ -1,13 +1,13 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
-import * as ModelViewService from './lib/ModelViewUtils';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import * as ModelViewService from '../lib/ModelViewUtils';
 import { Link, browserHistory } from 'react-router';
 import { PaginatedTableHeader, HeaderParams, FilterField } from './PaginatedTableHeader';
-import { TableQueryDataRes } from '../../common/Interfaces';
-import * as StringUtils from './lib/StringUtils'; 
-import { genColumns } from './lib/TableUtils';
-import { IField } from '../../common/Interfaces';
+import { TableQueryDataRes } from '../../../common/Interfaces';
+import * as StringUtils from '../lib/StringUtils'; 
+import { genColumns } from '../lib/TableUtils';
+import { IField } from '../../../common/Interfaces';
 
 export interface ITableParams {
     label: string;

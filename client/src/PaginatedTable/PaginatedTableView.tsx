@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
-import * as ni from '../../common/NetworkInterfaces';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import * as ni from '../../../common/NetworkInterfaces';
 import { PaginatedTable, ITableParams } from './PaginatedTable';
-import { IField } from '../../common/Interfaces';
-import { Tableau } from './Tableau'; 
+import { IField } from '../../../common/Interfaces';
+import { Tableau } from '../Tableau'; 
 
 interface IAppProps {
     location: any;

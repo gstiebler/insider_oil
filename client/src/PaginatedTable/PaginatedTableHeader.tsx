@@ -1,6 +1,6 @@
 import * as React from 'react';
-import * as showError from './lib/ShowError';
-import { IFilter } from '../../common/Interfaces';
+import * as showError from '../lib/ShowError';
+import { IFilter } from '../../../common/Interfaces';
 
 export interface FilterField {
     data: string;

@@ -1,5 +1,5 @@
 import * as ModelViewService from './ModelViewUtils';
-import { FilterField } from '../PaginatedTableHeader';
+import { FilterField } from '../PaginatedTable/PaginatedTableHeader';
 import { IBaseQueryField } from '../../../common/Interfaces';
 import * as StringUtils from './StringUtils'; 
 
