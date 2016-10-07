@@ -134,13 +134,12 @@ export function getDashboardData(req: express.Request, res: express.Response):vo
             itemsPerPage: 1
         }
     }
-    const projectsInfo = libAwait.await( TableQueries.getQueryResult('Projects', projQueryParams) );
 
     const dashboardData:ni.GetDashboardData.res = {
         numBids: libAwait.await( db.models.Bid.count() ),
         numContracts: libAwait.await( db.models.Contract.count() ),
         numPersons: libAwait.await( db.models.Person.count() ),
-        numProjects: projectsInfo[1][0].count
+        numProjects: 0
     }
     res.json(dashboardData); 
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
