@@ -196,7 +196,7 @@ export const projectsTargetSales:IQueryById = {
     ]
 }
 
-export const projectTypesByFase:IQueryById = {
+export const projectTypesAndStages:IQueryById = {
     queryStrFn: (filter) => {
         const select = 'select segment_type, stage ';
         const fromStr = ' from projects ';

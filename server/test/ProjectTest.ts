@@ -72,12 +72,12 @@ projectsTargetSales: (test: nodeunit.Test) => {
     test.done(); 
 },
 
-projectTypesByFase: (test: nodeunit.Test) => {
+projectTypesAndStages: (test: nodeunit.Test) => {
     const filters = {
         fase: 'CAPEX',
     };
     const query:ni.GetQueryData.req = {
-        queryName: 'projectTypesByFase',
+        queryName: 'projectTypesAndStages',
         filters: filters
     }
 
