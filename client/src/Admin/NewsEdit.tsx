@@ -74,8 +74,8 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
-    private onUsers(users:any[]) {
-        this.state.users = users;
+    private onUsers(res:ni.ComboValues.res) {
+        this.state.users = res.values;
         this.setState(this.state);
     }
 
