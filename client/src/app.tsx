@@ -80,7 +80,7 @@ class InsiderOilApp extends React.Component<IAppProps, IAppState> {
         });
 
         if(props.location.pathname == 'app/' || props.location.pathname == 'app/index.html') {
-            browserHistory.replace('/app/insights');
+            browserHistory.replace('/app/target_sales');
         }
     }
 
