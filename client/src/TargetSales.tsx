@@ -61,17 +61,21 @@ export class TargetSales extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<any> {
         if(!this.state.typesAndStages) return null;
 		return (
-            <div className="row">
-                <div className="col-md-5">
-                    <h3>CAPEX</h3>
-                    <br/>
-                    { this.getStageHTML('CAPEX') }
+            <div>
+                <div className="row">
+                    <div className="col-md-5">
+                        <h3>CAPEX</h3>
+                        <br/>
+                        { this.getStageHTML('CAPEX') }
+                    </div>
+                    <div className="col-md-5">
+                        <h3>OPEX</h3>
+                        <br/>
+                        { this.getStageHTML('OPEX') }
+                    </div>
                 </div>
-                <div className="col-md-5">
-                    <h3>OPEX</h3>
-                    <br/>
-                    { this.getStageHTML('OPEX') }
-                </div>
+                <br/>
+                Os projetos são acompanhados da sua licitação até a entrada em operação
             </div> 
 		);
     }
