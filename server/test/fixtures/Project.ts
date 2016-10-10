@@ -23,6 +23,18 @@ module.exports = function(db) {
         owner_persons_id: ["2", "1"]
     };
 
+    const jsonField2:IProjectJsonField = {
+        "contractors": [
+            {
+                "scope": "engenharia",
+                "persons_id": ["2"],
+                "contractor_id": "17",
+                contracts_id: ["2"]
+            }
+        ],
+        owner_persons_id: ["1"]
+    };
+
     const mexilhaoObjs:IFrontEndProject[] = [{
         model: 'ProductionUnit',
         id: utils.idByName('ProductionUnit', 'Pioneer'),
@@ -46,6 +58,7 @@ module.exports = function(db) {
             scope: "Escopo de Libra",
             value: 123000,
             segment_type: 'Petróleo',
+            json_field: jsonField2,
             stage: 'CAPEX'
         },
         {
@@ -53,6 +66,7 @@ module.exports = function(db) {
             scope: "Escopo de Áries",
             segment_type: 'Gás',
             value: 1234,
+            json_field: jsonField2,
             stage: 'CAPEX'
         },
     ];
