@@ -96,13 +96,7 @@ export class ProjectView extends ViewRecord.ViewRecord {
         return (
             <div>
                 <div className="row">
-                    <div className="col-md-6">
-                        <ViewRecordFields.ViewRecordFields  
-                            recordData={this.state.recordData} 
-                            source={this.state.source} 
-                            additionalFields={objFieldsHTML}
-                            objId={this.state.id}></ViewRecordFields.ViewRecordFields>
-                    </div>
+                    { this.getInfoBox() }
                     <div className="col-md-6 main-boxes">
                         <img src={this.getImgUrl()} style={{ width: 600 }} />
                     </div>

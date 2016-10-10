@@ -171,18 +171,24 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
         return server.paths.baseImg + this.state.source + '/' + 
                             'img_' + this.state.id + '_original.jpg';
     }
+
+    public getInfoBox(): React.ReactElement<any> {
+        return (
+            <div className="col-md-6">
+                <ViewRecordFields  
+                    recordData={this.state.recordData} 
+                    source={this.state.source} 
+                    objId={this.state.id}></ViewRecordFields>
+                Atualizado em { moment(this.state.updatedAt).format("DD/MM/YYYY") }
+            </div>
+        );
+    }
     
     public render(): React.ReactElement<any> {
         return (
             <div>
                 <div className="row">
-                    <div className="col-md-6">
-                        <ViewRecordFields  
-                            recordData={this.state.recordData} 
-                            source={this.state.source} 
-                            objId={this.state.id}></ViewRecordFields>
-                        Atualizado em { moment(this.state.updatedAt).format("DD/MM/YYYY") }
-                    </div>
+                    { this.getInfoBox() }
                     <div className="col-md-6 main-boxes">
                         <img src={this.getImgUrl()} style={{ width: 600 }} />
                     </div>
