@@ -3,5 +3,6 @@
     "workbench.editor.enablePreview": false,
 
     // Controls if opened editors from quick open show as preview. Preview editors are reused until they are kept (e.g. via double click or editing).
-    "workbench.editor.enablePreviewFromQuickOpen": false
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "typescript.check.workspaceVersion": false
 }
