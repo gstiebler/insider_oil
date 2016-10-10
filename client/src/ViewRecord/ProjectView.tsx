@@ -59,7 +59,7 @@ export class ProjectView extends ViewRecord.ViewRecord {
         }
         let contracteds: React.ReactElement<any>[] = [];
         const jsonField = find(this.state.recordData, r => { return r.name == 'json_field' });
-        if(jsonField && jsonField.value) {
+        if(jsonField) {
             const jsonValues:IProjectJsonField = JSON.parse(jsonField.value);
             for(let i = 0; i < jsonValues.contractors.length; i++) {
                 const queries:IRefObjectsOnView[] = [
