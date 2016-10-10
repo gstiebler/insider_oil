@@ -10,6 +10,7 @@ import { ErrorReport } from '../ErrorReport';
 import * as ni from '../../../common/NetworkInterfaces';
 import { IRefObjectsOnView } from '../../../common/Interfaces';
 import { Tableau } from '../Tableau'; 
+import * as moment from 'moment';
 
 interface IAppProps {
     location: any;
@@ -23,6 +24,7 @@ export interface IAppState {
     objectLabel: string;
     url:string;
     extraRecordData: ni.IExtraRecordData;
+    updatedAt: any;
 }
 
 export class ViewRecord extends React.Component<IAppProps, IAppState> {
@@ -45,7 +47,8 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
             extraRecordData: {
                 tableauUrls: [],
                 embedStrs: []
-            }
+            },
+            updatedAt: ''
         };
 
         var customSources = {
@@ -118,6 +121,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
     // show record values
     public showValues(viewData:ni.GetViewRecord.res) {
         this.state.recordData = viewData.record;
+        this.state.updatedAt = viewData.updatedAt;
         this.state.objectLabel = viewData.record[0].value;
         this.state.extraRecordData = viewData.extraRecordData;
         const customReferencedObjs = viewData.referencedObjects ? viewData.referencedObjects : [];
@@ -177,6 +181,7 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                             recordData={this.state.recordData} 
                             source={this.state.source} 
                             objId={this.state.id}></ViewRecordFields>
+                        Atualizado em { moment(this.state.updatedAt).format("DD/MM/YYYY") }
                     </div>
                     <div className="col-md-6 main-boxes">
                         <img src={this.getImgUrl()} style={{ width: 600 }} />

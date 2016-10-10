@@ -67,7 +67,8 @@ export namespace GetViewRecord {
     export interface res {
         record: any[];
         referencedObjects: Interfaces.IRefObjectsOnView[];
-        extraRecordData: IExtraRecordData
+        extraRecordData: IExtraRecordData;
+        updatedAt: any;
     }
 }
 
