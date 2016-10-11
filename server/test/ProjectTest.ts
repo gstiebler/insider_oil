@@ -106,6 +106,23 @@ Project: (test) => {
     test.done();
 },
 
+personRelatedProjectsContractor: (test) => {
+    const filters = {
+        personId: '4',
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'personRelatedProjects',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    console.log(resQueryValues.records);
+    test.done();
+},
+
 }
 
 const group: nodeunit.ITestGroup = {

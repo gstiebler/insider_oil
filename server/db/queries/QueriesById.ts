@@ -953,6 +953,7 @@ export const queries:IQueriesById = {
     personsOfOwnerInProject: ProjectQueries.personsOfOwnerInProject,
     projectsTargetSales: ProjectQueries.projectsTargetSales,
     projectTypesAndStages: ProjectQueries.projectTypesAndStages,
+    personRelatedProjects: ProjectQueries.personRelatedProjects,
 
     boatsByOwner: {
         queryStrFn: (filters) => {

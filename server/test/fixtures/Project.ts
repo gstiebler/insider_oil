@@ -15,7 +15,7 @@ module.exports = function(db) {
             },
             {
                 "scope": "engenharia",
-                "persons_id": ["2", "3"],
+                "persons_id": ["2", "3", "4"],
                 "contractor_id": "17",
                 contracts_id: ["2", "1"]
             }
@@ -32,7 +32,7 @@ module.exports = function(db) {
                 contracts_id: ["2"]
             }
         ],
-        owner_persons_id: ["1"]
+        owner_persons_id: ["1", "5"]
     };
 
     const mexilhaoObjs:IFrontEndProject[] = [{

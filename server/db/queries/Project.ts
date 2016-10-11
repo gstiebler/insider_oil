@@ -4,8 +4,59 @@ import * as TableQueries from './TableQueries';
 import QueryGenerator = require('./QueryGenerator');
 import * as ContractQueries from './Contract';
 import { await } from '../../lib/await';
-import { IProjectJsonField } from '../../../common/Interfaces';
+import { IProjectJsonField, IBaseQueryField } from '../../../common/Interfaces';
 import db = require('../models');
+
+const baseProjectOpts:QueryGenerator.IQueryOpts = {
+    table: {
+        name: 'projects',
+        fields: [
+            ['id', 'p_id'],
+            ['name', 'p_name'],
+            'value'
+        ]
+    },
+    extraFields: [
+        ['"Project"', 'p_model'],
+        ['"Company"', 'c_model'],
+    ],
+    joinTables: [                    
+        {
+            name: 'companies',
+            fields: [
+                ['id', 'c_id'],
+                ['name', 'c_name'],
+            ],
+            joinField: 'projects.owner_id'
+        },
+    ],
+    where: [],
+    order: []
+};
+
+const baseFields:IBaseQueryField[] = [
+    {
+        label: 'Nome',
+        ref: {
+            modelField: 'p_model',
+            idField: 'p_id',
+            valueField: 'p_name'
+        }
+    },
+    {
+        label: 'Contratante',
+        ref: {
+            modelField: 'c_model',
+            idField: 'c_id',
+            valueField: 'c_name'
+        }
+    },
+    {
+        label: 'Valor',
+        fieldName: 'value',
+        type: 'CURRENCY'
+    },
+];
 
 export const projectsOfObject:IQueryById = {
     queryStrFn: (filter) => {
@@ -132,71 +183,34 @@ export const personsOfOwnerInProject:IQueryById = {
 
 export const projectsTargetSales:IQueryById = {
     queryStrFn: (filter) => {
-        const opts:QueryGenerator.IQueryOpts = {
-            table: {
-                name: 'projects',
-                fields: [
-                    ['id', 'p_id'],
-                    ['name', 'p_name'],
-                    'value'
-                ]
-            },
-            extraFields: [
-                ['"Project"', 'p_model'],
-                ['"Company"', 'c_model'],
-            ],
-            joinTables: [                    
-                {
-                    name: 'companies',
-                    fields: [
-                        ['id', 'c_id'],
-                        ['name', 'c_name'],
-                    ],
-                    joinField: 'projects.owner_id'
-                },
-            ],
-            where: [
-                {
-                    field: 'projects.stage',
-                    equal: '"' + filter.fase + '"'
-                },
-                {
-                    field: 'projects.segment_type',
-                    equal: '"' + filter.type + '"'
-                },
-            ],
-            order: []
-        };
+        const opts = baseProjectOpts;
+        opts.where.push({
+            field: 'projects.stage',
+            equal: '"' + filter.fase + '"'
+        });
+        opts.where.push({
+            field: 'projects.segment_type',
+            equal: '"' + filter.type + '"'
+        });
         
         var query = QueryGenerator.queryGenerator(opts);
         return query;
     },
-    fields: [
-        {
-            label: 'Nome',
-            ref: {
-                modelField: 'p_model',
-                idField: 'p_id',
-                valueField: 'p_name'
-            }
-        },
-        {
-            label: 'Contratante',
-            ref: {
-                modelField: 'c_model',
-                idField: 'c_id',
-                valueField: 'c_name'
-            }
-        },
-        {
-            label: 'Valor',
-            fieldName: 'value',
-            type: 'CURRENCY'
-        },
-    ]
+    fields: baseFields
 }
 
 export const projectTypesAndStages:IQueryById = {
+    queryStrFn: (filter) => {
+        const select = 'select segment_type, stage ';
+        const fromStr = ' from projects ';
+        const group = ' group by segment_type, stage ';
+        const query = select + fromStr + group;
+        return query;
+    },
+    fields: []
+}
+
+export const personRelatedProjects:IQueryById = {
     queryStrFn: (filter) => {
         const select = 'select segment_type, stage ';
         const fromStr = ' from projects ';
