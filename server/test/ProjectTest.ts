@@ -141,6 +141,23 @@ personRelatedProjectsContracteds: (test) => {
     test.done();
 },
 
+contractRelatedProjects: (test) => {
+    const filters = {
+        id: '3',
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'contractRelatedProjects',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('Revamp de Mexilhão', resQueryValues.records[0].p_name);
+    test.done();
+},
+
 }
 
 const group: nodeunit.ITestGroup = {

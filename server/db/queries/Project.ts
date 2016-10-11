@@ -229,3 +229,18 @@ export const personRelatedProjects:IQueryById = {
     },
     fields: baseFields
 }
+
+export const contractRelatedProjects:IQueryById = {
+    queryStrFn: (filter) => {
+        const opts = baseProjectOpts;
+        const queryGenerator = new QueryGenerator.QueryGenerator();
+        queryGenerator.getFilterStr = (filters: IFilter[], filterKeyword: string, aliasMap?):string => {
+            const contractedsFilter = ' JSON_contains(JSON_EXTRACT(json_field, "$.contractors[*].contracts_id"), \'"' + filter.id + '"\') > 0';
+            return ' where ' + contractedsFilter;
+        };
+        
+        var query = QueryGenerator.generate(opts, queryGenerator);
+        return query;
+    },
+    fields: baseFields
+}
