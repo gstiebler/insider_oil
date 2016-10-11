@@ -4,7 +4,11 @@ import * as TableQueries from './TableQueries';
 import QueryGenerator = require('./QueryGenerator');
 import * as ContractQueries from './Contract';
 import { await } from '../../lib/await';
-import { IProjectJsonField, IBaseQueryField } from '../../../common/Interfaces';
+import { 
+    IProjectJsonField, 
+    IBaseQueryField, 
+    IFilter 
+} from '../../../common/Interfaces';
 import db = require('../models');
 
 const baseProjectOpts:QueryGenerator.IQueryOpts = {
@@ -213,16 +217,14 @@ export const projectTypesAndStages:IQueryById = {
 export const personRelatedProjects:IQueryById = {
     queryStrFn: (filter) => {
         const opts = baseProjectOpts;
-        opts.where.push({
-            field: 'projects.stage',
-            equal: '"' + filter.fase + '"'
-        });
-        opts.where.push({
-            field: 'projects.segment_type',
-            equal: '"' + filter.type + '"'
-        });
+        const queryGenerator = new QueryGenerator.QueryGenerator();
+        queryGenerator.getFilterStr = (filters: IFilter[], filterKeyword: string, aliasMap?):string => {
+            const ownerFilter = ' JSON_contains(json_field, \'"' + filter.personId + '"\', "$.owner_persons_id") > 0 ';
+            const contractedsFilter = ' JSON_contains(JSON_EXTRACT(json_field, "$.contractors[*].persons_id"), \'"' + filter.personId + '"\') > 0';
+            return ' where ' + ownerFilter + ' or ' + contractedsFilter;
+        };
         
-        var query = QueryGenerator.generate(opts);
+        var query = QueryGenerator.generate(opts, queryGenerator);
         return query;
     },
     fields: baseFields

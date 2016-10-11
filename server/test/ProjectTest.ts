@@ -26,7 +26,7 @@ personsOfContractedInProject: (test: nodeunit.Test) => {
     const reqQueryValues = { query };
     const resQueryValues:ni.GetQueryData.res = 
         utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(2, resQueryValues.records.length);
+    test.equal(3, resQueryValues.records.length);
     test.equal('Felipe', resQueryValues.records[0].person_name);
     test.equal('Marcelo', resQueryValues.records[1].person_name);
     test.done(); 
@@ -119,7 +119,25 @@ personRelatedProjectsContractor: (test) => {
     const resQueryValues:ni.GetQueryData.res = 
         utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
     test.equal(1, resQueryValues.records.length);
-    console.log(resQueryValues.records);
+    test.equal('Revamp de Mexilhão', resQueryValues.records[0].p_name);
+    test.done();
+},
+
+personRelatedProjectsContracteds: (test) => {
+    const filters = {
+        personId: '5',
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'personRelatedProjects',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+    test.equal('Libra', resQueryValues.records[0].p_name);
+    test.equal('Áries', resQueryValues.records[1].p_name);
     test.done();
 },
 
