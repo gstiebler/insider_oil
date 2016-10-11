@@ -578,25 +578,6 @@ productionUnitsByOwner: (test: nodeunit.Test) => {
     test.done(); 
 },
 
-projectsOfObject: (test: nodeunit.Test) => {
-    const pioneerId = utils.idByName('ProductionUnit', 'Pioneer');
-    const filters = {
-        obj_id: pioneerId,
-        model: 'ProductionUnit'
-    };
-    const reqQueryValues = {
-        query: { 
-            queryName: 'projectsOfObject',
-            filters: filters
-        }
-    };
-    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(1, resQueryValues.records.length);
-    test.equal('Revamp de Mexilhão', resQueryValues.records[0].p_name);
-
-    test.done(); 
-},
-
 boatsByOwner: (test: nodeunit.Test) => {
     const petroId = utils.idByName('Company', 'Petrobras');
     const filters = {

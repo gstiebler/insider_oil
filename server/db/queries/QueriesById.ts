@@ -947,7 +947,6 @@ export const queries:IQueriesById = {
     drillingRigsByOperator: CompanyQueries.drillingRigsByOperator,
     contractsByContractor: CompanyQueries.contractsByContractor,
 
-    projectsOfObject: ProjectQueries.projectsOfObject,
     contractsOfContractedInProject: ProjectQueries.contractsOfContractedInProject,
     personsOfContractedInProject: ProjectQueries.personsOfContractedInProject,
     personsOfOwnerInProject: ProjectQueries.personsOfOwnerInProject,
@@ -955,6 +954,7 @@ export const queries:IQueriesById = {
     projectTypesAndStages: ProjectQueries.projectTypesAndStages,
     personRelatedProjects: ProjectQueries.personRelatedProjects,
     contractRelatedProjects: ProjectQueries.contractRelatedProjects,
+    objectRelatedProjects: ProjectQueries.objectRelatedProjects,
 
     boatsByOwner: {
         queryStrFn: (filters) => {

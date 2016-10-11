@@ -158,6 +158,24 @@ contractRelatedProjects: (test) => {
     test.done();
 },
 
+objectRelatedProjects: (test: nodeunit.Test) => {
+    const filters = {
+        id: utils.idByName('ProductionUnit', 'Pioneer'),
+        modelName: 'ProductionUnit'
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'objectRelatedProjects',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('Revamp de Mexilhão', resQueryValues.records[0].p_name);
+    test.done();
+},
+
 }
 
 const group: nodeunit.ITestGroup = {

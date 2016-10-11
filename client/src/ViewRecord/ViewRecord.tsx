@@ -92,13 +92,13 @@ export class ViewRecord extends React.Component<IAppProps, IAppState> {
                 }
             },  
             {
-                queryName: 'projectsOfObject',
+                queryName: 'objectRelatedProjects',
                 title: 'Oportunidades',
                 filters: {
-                    obj_id: id,
-                    model: source
+                    id,
+                    modelName: source
                 }
-            },  
+            }, 
         ]
     }
 
