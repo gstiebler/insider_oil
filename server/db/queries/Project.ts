@@ -99,7 +99,7 @@ export const projectsOfObject:IQueryById = {
             ],
         };
         
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     fields: [
         {
@@ -193,7 +193,7 @@ export const projectsTargetSales:IQueryById = {
             equal: '"' + filter.type + '"'
         });
         
-        var query = QueryGenerator.queryGenerator(opts);
+        var query = QueryGenerator.generate(opts);
         return query;
     },
     fields: baseFields
@@ -212,11 +212,18 @@ export const projectTypesAndStages:IQueryById = {
 
 export const personRelatedProjects:IQueryById = {
     queryStrFn: (filter) => {
-        const select = 'select segment_type, stage ';
-        const fromStr = ' from projects ';
-        const group = ' group by segment_type, stage ';
-        const query = select + fromStr + group;
+        const opts = baseProjectOpts;
+        opts.where.push({
+            field: 'projects.stage',
+            equal: '"' + filter.fase + '"'
+        });
+        opts.where.push({
+            field: 'projects.segment_type',
+            equal: '"' + filter.type + '"'
+        });
+        
+        var query = QueryGenerator.generate(opts);
         return query;
     },
-    fields: []
+    fields: baseFields
 }

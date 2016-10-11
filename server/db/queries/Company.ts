@@ -59,7 +59,7 @@ export const blocksOperatedByCompany:IQueryById = {
             ],
         };
         
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     fields: [
     {
@@ -107,7 +107,7 @@ export const oilFieldsOperatedByCompany:IQueryById = {
             ],
         };
         
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     fields: [
     {
@@ -163,7 +163,7 @@ export const blocksConcessionaryByCompany:IQueryById = {
             ],
         };
         
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     recordProcessor: record => {
         record.formatted_prop = su.formatPercentage(record.prop);
@@ -228,7 +228,7 @@ export const oilFieldConcessionaryByCompany:IQueryById = {
             ],
         };
         
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     recordProcessor: record => {
         record.formatted_prop = su.formatPercentage(record.prop);

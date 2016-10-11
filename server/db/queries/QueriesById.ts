@@ -58,7 +58,7 @@ function wellsByDrillingRigOffshoreQueryOpts(filter):QueryGenerator.IQueryOpts {
 const wellsByDrillingRigOffshore = {
     queryStrFn: (filter) => {
         const options:QueryGenerator.IQueryOpts = wellsByDrillingRigOffshoreQueryOpts(filter);
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     fields: [
     {
@@ -128,7 +128,7 @@ export const queries:IQueriesById = {
                 ]
             }
             
-            var query = QueryGenerator.queryGenerator(personOpts);
+            var query = QueryGenerator.generate(personOpts);
             return query;
         },
         fields: [
@@ -289,7 +289,7 @@ export const queries:IQueriesById = {
                 order: [ { fieldName: 'date', dir: 'asc' } ]
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -322,7 +322,7 @@ export const queries:IQueriesById = {
                 order: [ { fieldName: 'process', dir: 'asc' } ]
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -377,7 +377,7 @@ export const queries:IQueriesById = {
                 order: [ { fieldName: 'notification_date', dir: 'asc' } ]
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -431,7 +431,7 @@ export const queries:IQueriesById = {
                 order: [ { fieldName: 'notification_date', dir: 'asc' } ]
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -500,7 +500,7 @@ export const queries:IQueriesById = {
                 ]
             }
             
-            var query = QueryGenerator.queryGenerator(wellOpts);
+            var query = QueryGenerator.generate(wellOpts);
             return query;
         },
         fields: [
@@ -614,7 +614,7 @@ export const queries:IQueriesById = {
                 ]
             }
             
-            var query = QueryGenerator.queryGenerator(maintenanceOpts);
+            var query = QueryGenerator.generate(maintenanceOpts);
             return query;
         },
         fields: [
@@ -673,7 +673,7 @@ export const queries:IQueriesById = {
                 ],
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
         {
@@ -755,7 +755,7 @@ export const queries:IQueriesById = {
                 ],
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -829,7 +829,7 @@ export const queries:IQueriesById = {
                 ],
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -895,7 +895,7 @@ export const queries:IQueriesById = {
                 ],
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -933,7 +933,7 @@ export const queries:IQueriesById = {
                     equal: filter.id 
                 }
             ]
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: wellsByDrillingRigOffshore.fields
     },

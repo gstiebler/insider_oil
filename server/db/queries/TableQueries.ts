@@ -8,6 +8,8 @@ import * as RequestLogTranslator from '../../lib/RequestLogTranslator';
 import { syncifyES7 } from '../../lib/PromiseUtils';
 import * as ContractQueries from './Contract';
 
+const queryGenerator = new QueryGenerator.QueryGenerator();
+
 interface IQueryStrFn {
     (queryParams: IQueryParams): string; 
 }
@@ -80,7 +82,7 @@ const productionUnit:ITableQuery = {
             order: queryParams.order
         };
         
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     fields: [
         {
@@ -155,7 +157,7 @@ const terminal:ITableQuery = {
             order: queryParams.order
         };
         
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     fields: [
         {
@@ -201,7 +203,7 @@ const oilField = {
             order: queryParams.order
         };
         
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     fields: [
         {
@@ -254,7 +256,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -289,7 +291,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -343,7 +345,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -411,7 +413,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -478,7 +480,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -548,16 +550,16 @@ export const queries:ITableQueries = {
                 having: queryParams.filters,
                 order: []
             };
-            const onshoreQryStr = QueryGenerator.queryGenerator(options);
+            const onshoreQryStr = QueryGenerator.generate(options);
             
             options.table.name = 'drilling_rigs_offshore';
             options.joinTables[0].joinField = 'drilling_rigs_offshore.contractor_id';
             options.joinTables[1].joinField = 'drilling_rigs_offshore.operator_id';
             options.extraFields[0] = ['"DrillingRigOffshore"', 'model'];
             options.extraFields[1] = ['"Mar"', 'land_sea'];
-            const offshoreQryStr = QueryGenerator.queryGenerator(options);
+            const offshoreQryStr = QueryGenerator.generate(options);
             
-            const orderQry = QueryGenerator.getOrderByStr(queryParams.order);
+            const orderQry = queryGenerator.getOrderByStr(queryParams.order);
             return onshoreQryStr + ' union ' + offshoreQryStr + orderQry;
         },
         fields: [
@@ -657,7 +659,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -723,7 +725,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -801,7 +803,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             }
             
-            return QueryGenerator.queryGenerator(wellOpts);
+            return QueryGenerator.generate(wellOpts);
         },
         fields: [
             {
@@ -1001,7 +1003,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1067,7 +1069,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1149,7 +1151,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1222,7 +1224,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1277,7 +1279,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1321,7 +1323,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1375,7 +1377,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1444,7 +1446,7 @@ export const queries:ITableQueries = {
                 ],
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: []
     },
@@ -1468,7 +1470,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order,
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [],
         recordProcessor: record => {
@@ -1485,7 +1487,7 @@ export const queries:ITableQueries = {
             const joinOn = " on request_log.user = users.login "
             const groupBy = " group by request_log.user "
             const order = " ORDER BY qty desc ";
-            const where = QueryGenerator.getFilterStr(queryParams.filters, 'where');
+            const where = queryGenerator.getFilterStr(queryParams.filters, 'where');
             const query = select + fromStr + join + joinOn + where + groupBy + order;
             return query;
         },

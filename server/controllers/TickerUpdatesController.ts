@@ -56,8 +56,8 @@ function getUpdateRecords():any[] {
 
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT };
 
-    const updatesQueryStr = QueryGenerator.queryGenerator(updatesOpts);
-    const insightsQueryStr = QueryGenerator.queryGenerator(insightsOpts);
+    const updatesQueryStr = QueryGenerator.generate(updatesOpts);
+    const insightsQueryStr = QueryGenerator.generate(insightsOpts);
     const orderStr = ' order by created_at desc ';
     const limitStr = ' limit 10 ';
     const queryStr = updatesQueryStr + ' union ' + insightsQueryStr + orderStr + limitStr;
