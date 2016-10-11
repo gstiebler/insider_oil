@@ -108,7 +108,7 @@ Project: (test) => {
 
 personRelatedProjectsContractor: (test) => {
     const filters = {
-        personId: '4',
+        id: '4',
     };
     const query:ni.GetQueryData.req = {
         queryName: 'personRelatedProjects',
@@ -125,7 +125,7 @@ personRelatedProjectsContractor: (test) => {
 
 personRelatedProjectsContracteds: (test) => {
     const filters = {
-        personId: '5',
+        id: '5',
     };
     const query:ni.GetQueryData.req = {
         queryName: 'personRelatedProjects',

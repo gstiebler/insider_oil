@@ -219,8 +219,8 @@ export const personRelatedProjects:IQueryById = {
         const opts = baseProjectOpts;
         const queryGenerator = new QueryGenerator.QueryGenerator();
         queryGenerator.getFilterStr = (filters: IFilter[], filterKeyword: string, aliasMap?):string => {
-            const ownerFilter = ' JSON_contains(json_field, \'"' + filter.personId + '"\', "$.owner_persons_id") > 0 ';
-            const contractedsFilter = ' JSON_contains(JSON_EXTRACT(json_field, "$.contractors[*].persons_id"), \'"' + filter.personId + '"\') > 0';
+            const ownerFilter = ' JSON_contains(json_field, \'"' + filter.id + '"\', "$.owner_persons_id") > 0 ';
+            const contractedsFilter = ' JSON_contains(JSON_EXTRACT(json_field, "$.contractors[*].persons_id"), \'"' + filter.id + '"\') > 0';
             return ' where ' + ownerFilter + ' or ' + contractedsFilter;
         };
         
