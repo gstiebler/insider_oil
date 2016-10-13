@@ -17,6 +17,7 @@ const oilField:TableQueries.ITableQuery = {
                     ['id', 'of_id'],
                     ['name', 'of_name'],
                     'state',
+                    'stage',
                     'basin_id'
                 ]
             },
