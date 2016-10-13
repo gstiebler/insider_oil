@@ -9,6 +9,7 @@ import { IQueryParams, IBaseQueryField } from '../../../common/Interfaces';
 import Sequelize = require('sequelize');
 import * as CompanyQueries from './Company';
 import * as ProjectQueries from './Project';
+import * as OilField from './OilField';
 
 const models:Sequelize.ModelsHashInterface = db.models; 
 
@@ -707,6 +708,8 @@ export const queries:IQueriesById = {
             },
         ]
     },
+
+    oilFieldsByBasin: OilField.oilFieldsByBasin,
     
     productionUnitByBlock: {
         queryStrFn: (filter) => {

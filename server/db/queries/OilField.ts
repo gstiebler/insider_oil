@@ -1,3 +1,4 @@
+import { IQueryById } from './QueriesById'
 import { 
     IBaseDataSourceParams, 
     IBaseQueryField, 
@@ -6,9 +7,9 @@ import {
 import * as TableQueries from './TableQueries';
 import * as QueryGenerator from './QueryGenerator';
 
-const oilField = {
+const oilField:TableQueries.ITableQuery = {
     title: 'Campos',
-    queryStrFn: (queryParams: IQueryParams, where) => {
+    queryStrFn: (queryParams: IQueryParams) => {
         const options:QueryGenerator.IQueryOpts = {
             table: {
                 name: 'oil_fields',
@@ -16,6 +17,7 @@ const oilField = {
                     ['id', 'of_id'],
                     ['name', 'of_name'],
                     'state',
+                    'basin_id'
                 ]
             },
             joinTables: [
@@ -34,7 +36,6 @@ const oilField = {
                 ['if(shore = "on", "Terra", "Mar")', 'land_sea'],
             ],
             having: queryParams.filters,
-            where,
             order: queryParams.order
         };
         
@@ -73,11 +74,11 @@ const oilField = {
 export const oilFielsdProduction:TableQueries.ITableQuery = {
     title: 'Campos em produção',
     queryStrFn: (queryParams: IQueryParams) => {
-        const where =  {
+        queryParams.filters.push({
             field: 'stage',
             equal: '"production"'
-        };
-        return oilField.queryStrFn(queryParams, [where]);
+        });
+        return oilField.queryStrFn(queryParams);
     },
     fields: oilField.fields,
     tableauUrl: 'https://public.tableau.com/profile/insider.oil#!/vizhome/Camposemproduo/Painel1'
@@ -86,12 +87,28 @@ export const oilFielsdProduction:TableQueries.ITableQuery = {
 export const oilFieldsDevelopment:TableQueries.ITableQuery = {
     title: 'Campos em desenvolvimento',
     queryStrFn: (queryParams: IQueryParams) => {
-        const where =  {
+        queryParams.filters.push({
             field: 'stage',
             equal: '"development"'
-        };
-        return oilField.queryStrFn(queryParams, [where]);
+        });
+        return oilField.queryStrFn(queryParams);
     },
     fields: oilField.fields,
     tableauUrl: 'https://public.tableau.com/views/Camposemdesenvolvimento/Painel1?:embed=y&:display_count=yes&:toolbar=no'
+};
+
+export const oilFieldsByBasin:IQueryById = {
+    queryStrFn: (filter) => {
+        const queryParams: IQueryParams = {
+            filters: [{
+                 field: 'basin_id', 
+                 equal: filter.id 
+            }],
+            order: [ { fieldName: 'of_name', dir: 'asc' } ],
+            pagination: { first: 0, itemsPerPage: 100 }
+        }
+        return oilField.queryStrFn(queryParams);
+    },
+    
+    fields: oilField.fields,
 };

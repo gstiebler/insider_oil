@@ -596,6 +596,25 @@ boatsByOwner: (test: nodeunit.Test) => {
     test.done(); 
 },
 
+oilFieldsByBasin: (test: nodeunit.Test) => {
+    const potiguarId = utils.idByName('Basin', 'Potiguar');
+    const filters = {
+        id: potiguarId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'oilFieldsByBasin',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+    test.equal('Anambé', resQueryValues.records[0].of_name);
+    test.equal('Azulão', resQueryValues.records[1].of_name);
+
+    test.done(); 
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );
