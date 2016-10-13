@@ -615,6 +615,24 @@ oilFieldsByBasin: (test: nodeunit.Test) => {
     test.done(); 
 },
 
+blocksByBasin: (test: nodeunit.Test) => {
+    const potiguarId = utils.idByName('Basin', 'Potiguar');
+    const filters = {
+        id: potiguarId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'blocksByBasin',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('ES-M-529', resQueryValues.records[0].block_name);
+
+    test.done(); 
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );

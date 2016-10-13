@@ -81,3 +81,19 @@ export const Blocks:TableQueries.ITableQuery = {
     ],
     tableauUrl: 'https://public.tableau.com/views/Blocos/Painel1?:embed=y&:display_count=yes&:toolbar=no'
 };
+
+export const blocksByBasin:IQueryById = {
+    queryStrFn: (filter) => {
+        const queryParams: IQueryParams = {
+            filters: [{
+                 field: 'basin_id', 
+                 equal: filter.id 
+            }],
+            order: [ { fieldName: 'block_name', dir: 'asc' } ],
+            pagination: { first: 0, itemsPerPage: 100 }
+        }
+        return Blocks.queryStrFn(queryParams);
+    },
+    
+    fields: Blocks.fields,
+};

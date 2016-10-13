@@ -10,6 +10,7 @@ import Sequelize = require('sequelize');
 import * as CompanyQueries from './Company';
 import * as ProjectQueries from './Project';
 import * as OilField from './OilField';
+import * as Block from './Block';
 
 const models:Sequelize.ModelsHashInterface = db.models; 
 
@@ -940,6 +941,8 @@ export const queries:IQueriesById = {
         },
         fields: wellsByDrillingRigOffshore.fields
     },
+    
+    blocksByBasin: Block.blocksByBasin,
 
     personsByCompany: CompanyQueries.personsByCompany,
     blocksOperatedByCompany: CompanyQueries.blocksOperatedByCompany,
