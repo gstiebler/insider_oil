@@ -18,7 +18,7 @@ interface IAppState {
     content: string;
     tableauUrl: string;
     id: number;
-    author_id: number;
+    author_id: string;
     image: any;
     users: any[];
 }
@@ -195,7 +195,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
 
                     <div className="form-group">
                         <div className="col-sm-offset-2 col-sm-10">
-                            <textarea rows="8" cols="100"
+                            <textarea rows={8} cols={100}
                                       value={this.state.content}
                                       onChange={(e:any) => {this.state.content = e.target.value;this.setState(this.state);}}/>
                         </div>    
@@ -203,7 +203,7 @@ export class NewsEdit extends React.Component<IAppProps, IAppState> {
                     <div className="form-group">
                         <label className="control-label col-sm-2" htmlFor="title_box">Tableau URLs:</label>
                         <div className="col-sm-10">
-                            <textarea rows="4" className="form-control" 
+                            <textarea rows={4} className="form-control" 
                                    value={this.state.tableauUrl}
                                    onChange={(e:any) => {this.state.tableauUrl = e.target.value; this.setState(this.state);}} />
                         </div>    

@@ -126,6 +126,12 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
         }
         return lines.join('\n');
     }
+            
+    private onCheckboxChange(field, event) {
+        var value = !this.state.values[field.name];
+        this.onChange(field.name, value);
+        this.setState(this.state);
+    }
 
     private fieldHTML(field:IARField): React.ReactElement<any> {
 
@@ -154,15 +160,10 @@ export class AdminRecordFields extends React.Component<IAppProps, IAppState> {
             return <ListOfInputs value={this.state.values[field.name]} 
                                  onChange={this.onChange.bind(this, field.name) }/>
         } else if(field.isBool) {
-            function onCheckboxChange(event) {
-                var value = !this.state.values[field.name];
-                this.onChange(field.name, value);
-                this.setState(this.state);
-            }
 
             return <input type="checkbox" 
                           checked={ this.state.values[field.name] } 
-                          onChange={onCheckboxChange.bind(this)}/>
+                          onChange={this.onCheckboxChange.bind(this, field)}/>
         } else if(field.isMultiFieldText) {
             return <textarea type="text" className="form-control" 
                              defaultValue={this.getMultiFieldValue(field.name)}

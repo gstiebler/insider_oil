@@ -70,7 +70,7 @@ export class InsightsReorderableList extends React.Component<IAppProps, IAppStat
     public render(): React.ReactElement<any> {
         const listItems = this.state.data.map((item, i) => {
             return <li className="list-group-item" 
-                       draggable="true"
+                       draggable={true}
                        onDragStart={this.drag.bind(this, item)} 
                        onDrop={this.dropOnItem.bind(this, i)} 
                        onDragOver={allowDrop}

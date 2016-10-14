@@ -78,7 +78,7 @@ export class InsightsGrid extends React.Component<IAppProps, IAppState> {
         const insightsHtml = insights.records.map((insight, index) => {
             return (                
                 <tr key={index}>
-                    <td draggable="true"
+                    <td draggable={true}
                        onDragStart={this.drag.bind(this, insight)} 
                        >{insight.title}</td>
                     <td>{dateTimeFormat(insight.created_at)}</td>
