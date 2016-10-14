@@ -58,7 +58,6 @@ createPerson: test => {
         ]
     };
 
-
     const data:ni.CreateItem.req = { 
         model: 'Person',
         newItemData: newItemData
@@ -71,7 +70,7 @@ createPerson: test => {
     const reqGet = {
         query: { 
             model: 'Person',
-            id: 4
+            id: 6
         }
     };
 

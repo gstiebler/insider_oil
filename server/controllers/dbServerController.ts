@@ -48,7 +48,8 @@ export function viewRecord(req: express.Request, res: express.Response, next) {S
     const result:ni.GetViewRecord.res = {
         record: recordValues,
         referencedObjects: viewParams.referencedObjectsOnView,
-        extraRecordData: libAwait.await( dbUtils.loadExtraData(dataSourceName, id) )
+        extraRecordData: libAwait.await( dbUtils.loadExtraData(dataSourceName, id) ),
+        updatedAt: record.updated_at
     };
     res.json(result);  
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar o registro."))}

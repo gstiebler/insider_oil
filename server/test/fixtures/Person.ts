@@ -38,6 +38,20 @@ module.exports = function(db) {
             emails: [
                 'maciel.felipe@gmail.com',
             ]
+        },
+        {
+            name: "Julio",
+            company_id: utils.idByName('Company', 'Statoil'),
+            telephones: [],
+            emails: []
+        },
+        {
+            name: "Artur",
+            company_id: utils.idByName('Company', 'Rosneft'),
+            telephones: [],
+            emails: [
+                'artur@gmail.com',
+            ]
         }
     ];
 

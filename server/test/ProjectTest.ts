@@ -26,7 +26,7 @@ personsOfContractedInProject: (test: nodeunit.Test) => {
     const reqQueryValues = { query };
     const resQueryValues:ni.GetQueryData.res = 
         utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(2, resQueryValues.records.length);
+    test.equal(3, resQueryValues.records.length);
     test.equal('Felipe', resQueryValues.records[0].person_name);
     test.equal('Marcelo', resQueryValues.records[1].person_name);
     test.done(); 
@@ -103,6 +103,76 @@ Project: (test) => {
     test.equal(1, jsonField.contractors[0].persons_id[0]);
     test.equal('contrato global', jsonField.contractors[0].scope);
     test.equal('engenharia', jsonField.contractors[1].scope);
+    test.done();
+},
+
+personRelatedProjectsContractor: (test) => {
+    const filters = {
+        id: '4',
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'personRelatedProjects',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('Revamp de Mexilhão', resQueryValues.records[0].p_name);
+    test.done();
+},
+
+personRelatedProjectsContracteds: (test) => {
+    const filters = {
+        id: '5',
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'personRelatedProjects',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+    test.equal('Libra', resQueryValues.records[0].p_name);
+    test.equal('Áries', resQueryValues.records[1].p_name);
+    test.done();
+},
+
+contractRelatedProjects: (test) => {
+    const filters = {
+        id: '3',
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'contractRelatedProjects',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('Revamp de Mexilhão', resQueryValues.records[0].p_name);
+    test.done();
+},
+
+objectRelatedProjects: (test: nodeunit.Test) => {
+    const filters = {
+        id: utils.idByName('ProductionUnit', 'Pioneer'),
+        modelName: 'ProductionUnit'
+    };
+    const query:ni.GetQueryData.req = {
+        queryName: 'objectRelatedProjects',
+        filters: filters
+    }
+
+    const reqQueryValues = { query };
+    const resQueryValues:ni.GetQueryData.res = 
+        utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('Revamp de Mexilhão', resQueryValues.records[0].p_name);
     test.done();
 },
 

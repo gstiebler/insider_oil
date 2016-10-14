@@ -167,7 +167,7 @@ export async function loadExtraData(modelName: string, id: number):Promise<ni.IE
 
 export function execQuery(options:QueryGenerator.IQueryOpts):Promise<any[]> {
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
-    const queryStr = QueryGenerator.queryGenerator(options);
+    const queryStr = QueryGenerator.generate(options);
     return db.sequelize.query(queryStr, simpleQueryType);
 }
 

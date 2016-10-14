@@ -54,6 +54,12 @@ const Person: IBaseDataSourceParams = {
             isProjectList: true
         }
     },
+    referencedObjectsOnView:  [
+        {
+            queryName: 'personRelatedProjects',
+            title: 'Projetos'
+        },
+    ],
     labelField: "name",
     gridFields: ["name", "company_name"],
     tableLabel: "Pessoas",

@@ -578,25 +578,6 @@ productionUnitsByOwner: (test: nodeunit.Test) => {
     test.done(); 
 },
 
-projectsOfObject: (test: nodeunit.Test) => {
-    const pioneerId = utils.idByName('ProductionUnit', 'Pioneer');
-    const filters = {
-        obj_id: pioneerId,
-        model: 'ProductionUnit'
-    };
-    const reqQueryValues = {
-        query: { 
-            queryName: 'projectsOfObject',
-            filters: filters
-        }
-    };
-    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
-    test.equal(1, resQueryValues.records.length);
-    test.equal('Revamp de Mexilhão', resQueryValues.records[0].p_name);
-
-    test.done(); 
-},
-
 boatsByOwner: (test: nodeunit.Test) => {
     const petroId = utils.idByName('Company', 'Petrobras');
     const filters = {
@@ -611,6 +592,43 @@ boatsByOwner: (test: nodeunit.Test) => {
     const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
     test.equal(1, resQueryValues.records.length);
     test.equal('ILHA DO ARAMAÇA', resQueryValues.records[0].b_name);
+
+    test.done(); 
+},
+
+oilFieldsByBasin: (test: nodeunit.Test) => {
+    const potiguarId = utils.idByName('Basin', 'Potiguar');
+    const filters = {
+        id: potiguarId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'oilFieldsByBasin',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(2, resQueryValues.records.length);
+    test.equal('Anambé', resQueryValues.records[0].of_name);
+    test.equal('Azulão', resQueryValues.records[1].of_name);
+
+    test.done(); 
+},
+
+blocksByBasin: (test: nodeunit.Test) => {
+    const potiguarId = utils.idByName('Basin', 'Potiguar');
+    const filters = {
+        id: potiguarId,
+    };
+    const reqQueryValues = {
+        query: { 
+            queryName: 'blocksByBasin',
+            filters: filters
+        }
+    };
+    const resQueryValues = utils.getJsonResponse.sync(null, dbServerController.getQueryData, reqQueryValues);
+    test.equal(1, resQueryValues.records.length);
+    test.equal('ES-M-529', resQueryValues.records[0].block_name);
 
     test.done(); 
 },

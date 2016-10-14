@@ -7,6 +7,11 @@ import { IQueryParams, IBaseQueryField } from '../../../common/Interfaces';
 import * as RequestLogTranslator from '../../lib/RequestLogTranslator';
 import { syncifyES7 } from '../../lib/PromiseUtils';
 import * as ContractQueries from './Contract';
+import * as ProductionUnit from './ProductionUnit';
+import * as OilField from './OilField';
+import * as Block from './Block';
+
+const queryGenerator = new QueryGenerator.QueryGenerator();
 
 interface IQueryStrFn {
     (queryParams: IQueryParams): string; 
@@ -23,118 +28,6 @@ export interface ITableQuery {
 interface ITableQueries {
     [name: string]: ITableQuery;
 }
-
-const productionUnit:ITableQuery = {
-    title: 'Unidades de produção',
-    queryStrFn: (queryParams: IQueryParams) => {
-        const options:QueryGenerator.IQueryOpts = {
-            table: {
-                name: 'production_units',
-                fields: [
-                    ['id', 'pu_id'],
-                    ['name', 'pu_name'],
-                    'status',
-                    'situation'
-                ]
-            },
-            joinTables: [
-                {
-                    name: 'oil_fields',
-                    fields: [
-                        ['id', 'of_id'],
-                        ['name', 'of_name'],
-                    ],
-                    joinField: 'production_units.oil_field_id'
-                },
-                {
-                    name: 'blocks',
-                    fields: [
-                        ['id', 'b_id'],
-                        ['name', 'b_name'],
-                    ],
-                    joinField: 'production_units.block_id'
-                },
-                {
-                    name: ['companies', 'owner'],
-                    fields: [
-                        ['id', 'ow_id'],
-                        ['name', 'ow_name'],
-                    ],
-                    joinField: 'production_units.owner_id'
-                },
-                {
-                    name: ['companies', 'operator'],
-                    fields: [
-                        ['id', 'op_id'],
-                        ['name', 'op_name'],
-                    ],
-                    joinField: 'production_units.operator_id'
-                },
-            ],
-            extraFields: [
-                ['"ProductionUnit"', 'model'],
-                ['"OilField"', 'of_model'],
-                ['"Block"', 'b_model'],
-            ],
-            where: queryParams.filters,
-            order: queryParams.order
-        };
-        
-        return QueryGenerator.queryGenerator(options);
-    },
-    fields: [
-        {
-            label: 'Nome',
-            ref: {
-                modelField: 'model',
-                idField: 'pu_id',
-                valueField: 'pu_name'
-            }
-        },
-        {
-            label: 'Campo',
-            ref: {
-                modelField: 'of_model',
-                idField: 'of_id',
-                valueField: 'of_name'
-            }
-        },
-        {
-            label: 'Bloco',
-            ref: {
-                modelField: 'b_model',
-                idField: 'b_id',
-                valueField: 'b_name'
-            }
-        },
-        {
-            label: 'Status',
-            fieldName: 'status',
-            type: 'VARCHAR'
-        },
-        {
-            label: 'Empresa proprietária',
-            ref: {
-                modelField: 'ow_model',
-                idField: 'ow_id',
-                valueField: 'ow_name'
-            }
-        },
-        {
-            label: 'Operador',
-            ref: {
-                modelField: 'op_model',
-                idField: 'op_id',
-                valueField: 'op_name'
-            }
-        },
-        {
-            label: 'Situação',
-            fieldName: 'situation',
-            type: 'VARCHAR'
-        },
-    ]
-};
 
 const terminal:ITableQuery = {
     title: 'Terminais',
@@ -155,7 +48,7 @@ const terminal:ITableQuery = {
             order: queryParams.order
         };
         
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     fields: [
         {
@@ -165,70 +58,6 @@ const terminal:ITableQuery = {
                 idField: 'id',
                 valueField: 'name'
             }
-        },
-    ]
-};
-
-const oilField = {
-    title: 'Campos',
-    queryStrFn: (queryParams: IQueryParams, where) => {
-        const options:QueryGenerator.IQueryOpts = {
-            table: {
-                name: 'oil_fields',
-                fields: [
-                    ['id', 'of_id'],
-                    ['name', 'of_name'],
-                    'state',
-                ]
-            },
-            joinTables: [
-                {
-                    name: 'basins',
-                    fields: [
-                        ['id', 'b_id'],
-                        ['name', 'b_name'],
-                    ],
-                    joinField: 'oil_fields.basin_id'
-                },
-            ],
-            extraFields: [
-                ['"OilField"', 'model'],
-                ['"Basin"', 'b_model'],
-                ['if(shore = "on", "Terra", "Mar")', 'land_sea'],
-            ],
-            having: queryParams.filters,
-            where,
-            order: queryParams.order
-        };
-        
-        return QueryGenerator.queryGenerator(options);
-    },
-    fields: [
-        {
-            label: 'Nome',
-            ref: {
-                modelField: 'model',
-                idField: 'of_id',
-                valueField: 'of_name'
-            }
-        },
-        {
-            label: 'Bacia',
-            ref: {
-                modelField: 'b_model',
-                idField: 'b_id',
-                valueField: 'b_name'
-            }
-        },
-        {
-            label: 'Estado',
-            fieldName: 'state',
-            type: 'VARCHAR'
-        },
-        {
-            label: 'Terra/Mar',
-            fieldName: 'land_sea',
-            type: 'VARCHAR'
         },
     ]
 };
@@ -254,7 +83,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -289,7 +118,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -343,7 +172,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -371,81 +200,7 @@ export const queries:ITableQueries = {
         }
     },
     
-    /** Blocks */
-    Blocks: {
-        title: 'Blocos',
-        queryStrFn: (queryParams: IQueryParams) => {
-            const options:QueryGenerator.IQueryOpts = {
-                table: {
-                    name: 'blocks',
-                    fields: [
-                        'id',
-                        ['name', 'block_name'],
-                        'status'
-                    ]
-                },
-                joinTables: [
-                    {
-                        name: 'companies',
-                        fields: [
-                            ['id', 'operator_id'],
-                            ['name', 'operator_name'],
-                        ],
-                        joinField: 'blocks.operator_id'
-                    },
-                    {
-                        name: 'basins',
-                        fields: [
-                            ['id', 'basin_id'],
-                            ['name', 'basin_name'],
-                        ],
-                        joinField: 'blocks.basin_id'
-                    }
-                ],
-                extraFields: [
-                    ['"Block"', 'model'],
-                    ['"Basin"', 'basin_model'],
-                    ['"Company"', 'operator_model']
-                ],
-                where: queryParams.filters,
-                order: queryParams.order
-            };
-            
-            return QueryGenerator.queryGenerator(options);
-        },
-        fields: [
-            {
-                label: 'Nome',
-                ref: {
-                    modelField: 'model',
-                    idField: 'id',
-                    valueField: 'block_name'
-                }
-            },
-            {
-                label: 'Bacia',
-                ref: {
-                    modelField: 'basin_model',
-                    idField: 'basin_id',
-                    valueField: 'basin_name'
-                }
-            },
-            {
-                label: 'Operador',
-                ref: {
-                    modelField: 'operator_model',
-                    idField: 'operator_id',
-                    valueField: 'operator_name'
-                }
-            },
-            {
-                label: 'Status',
-                fieldName: 'status',
-                type: 'VARCHAR'
-            }
-        ],
-        tableauUrl: 'https://public.tableau.com/views/Blocos/Painel1?:embed=y&:display_count=yes&:toolbar=no'
-    },
+    Blocks: Block.Blocks,
       
     /** Persons */
     Persons: {
@@ -478,7 +233,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -548,16 +303,16 @@ export const queries:ITableQueries = {
                 having: queryParams.filters,
                 order: []
             };
-            const onshoreQryStr = QueryGenerator.queryGenerator(options);
+            const onshoreQryStr = QueryGenerator.generate(options);
             
             options.table.name = 'drilling_rigs_offshore';
             options.joinTables[0].joinField = 'drilling_rigs_offshore.contractor_id';
             options.joinTables[1].joinField = 'drilling_rigs_offshore.operator_id';
             options.extraFields[0] = ['"DrillingRigOffshore"', 'model'];
             options.extraFields[1] = ['"Mar"', 'land_sea'];
-            const offshoreQryStr = QueryGenerator.queryGenerator(options);
+            const offshoreQryStr = QueryGenerator.generate(options);
             
-            const orderQry = QueryGenerator.getOrderByStr(queryParams.order);
+            const orderQry = queryGenerator.getOrderByStr(queryParams.order);
             return onshoreQryStr + ' union ' + offshoreQryStr + orderQry;
         },
         fields: [
@@ -657,7 +412,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -723,7 +478,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -801,7 +556,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             }
             
-            return QueryGenerator.queryGenerator(wellOpts);
+            return QueryGenerator.generate(wellOpts);
         },
         fields: [
             {
@@ -879,77 +634,13 @@ export const queries:ITableQueries = {
         ],
         tableauUrl: 'https://public.tableau.com/views/PoosPerfurados/Planilha3?:embed=y&:display_count=yes',
     },
+
+    FPSOs: ProductionUnit.FPSOs,
+    FixedProductionUnits: ProductionUnit.FixedProductionUnits,
+    SemiSubmersibleProductionUnits: ProductionUnit.SemiSubmersibleProductionUnits,
     
-    FPSOs: {
-        title: 'FPSOs',
-        queryStrFn: (queryParams: IQueryParams) => {
-            queryParams.filters.push(
-                {
-                    field: 'type',
-                    equal: '"FPSO"'
-                }
-            );
-            return productionUnit.queryStrFn(queryParams);
-        },
-        fields: productionUnit.fields,
-        tableauUrl: 'https://public.tableau.com/views/FPSO/Painel1?:embed=y&:display_count=yes&:toolbar=no',
-    },
-    
-    FixedProductionUnits: {
-        title: 'Plataformas fixas',
-        queryStrFn: (queryParams: IQueryParams) => {
-            queryParams.filters.push(
-                {
-                    field: 'type',
-                    equal: '"FIXED"'
-                }
-            );
-            return productionUnit.queryStrFn(queryParams);
-        },
-        fields: productionUnit.fields,
-        tableauUrl: 'https://public.tableau.com/views/Fixas/Painel1?:embed=y&:display_count=yes&:toolbar=no'
-    },
-    
-    SemiSubmersibleProductionUnits: {
-        title: 'Semi-subversíveis',
-        queryStrFn: (queryParams: IQueryParams) => {
-            queryParams.filters.push(
-                {
-                    field: 'type',
-                    equal: '"SEMI"'
-                }
-            );
-            return productionUnit.queryStrFn(queryParams);
-        },
-        fields: productionUnit.fields,
-        tableauUrl: 'https://public.tableau.com/views/Semi/Painel1?:embed=y&:display_count=yes&:toolbar=no',
-    },
-    
-    oilFielsdProduction: {
-        title: 'Campos em produção',
-        queryStrFn: (queryParams: IQueryParams) => {
-            const where =  {
-                field: 'stage',
-                equal: '"production"'
-            };
-            return oilField.queryStrFn(queryParams, [where]);
-        },
-        fields: oilField.fields,
-        tableauUrl: 'https://public.tableau.com/profile/insider.oil#!/vizhome/Camposemproduo/Painel1'
-    },
-    
-    oilFieldsDevelopment: {
-        title: 'Campos em desenvolvimento',
-        queryStrFn: (queryParams: IQueryParams) => {
-            const where =  {
-                field: 'stage',
-                equal: '"development"'
-            };
-            return oilField.queryStrFn(queryParams, [where]);
-        },
-        fields: oilField.fields,
-        tableauUrl: 'https://public.tableau.com/views/Camposemdesenvolvimento/Painel1?:embed=y&:display_count=yes&:toolbar=no'
-    },
+    oilFielsdProduction: OilField.oilFielsdProduction,
+    oilFieldsDevelopment: OilField.oilFieldsDevelopment,
     
     landTerminal: {
         title: 'Terminais terrestres',
@@ -1001,7 +692,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1067,7 +758,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1149,7 +840,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1222,7 +913,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1277,7 +968,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1321,7 +1012,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1375,7 +1066,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -1444,7 +1135,7 @@ export const queries:ITableQueries = {
                 ],
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: []
     },
@@ -1468,7 +1159,7 @@ export const queries:ITableQueries = {
                 order: queryParams.order,
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [],
         recordProcessor: record => {
@@ -1485,7 +1176,7 @@ export const queries:ITableQueries = {
             const joinOn = " on request_log.user = users.login "
             const groupBy = " group by request_log.user "
             const order = " ORDER BY qty desc ";
-            const where = QueryGenerator.getFilterStr(queryParams.filters, 'where');
+            const where = queryGenerator.getFilterStr(queryParams.filters, 'where');
             const query = select + fromStr + join + joinOn + where + groupBy + order;
             return query;
         },

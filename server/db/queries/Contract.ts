@@ -1,8 +1,10 @@
 import { IQueryById } from './QueriesById'
 import { IQueryParams } from '../../../common/Interfaces';
 import * as TableQueries from './TableQueries';
-import QueryGenerator = require('./QueryGenerator');
+import * as QueryGenerator from './QueryGenerator';
 import * as su from '../../lib/StringUtils';
+
+const queryGenerator = new QueryGenerator.QueryGenerator();
 
 export const contracts:TableQueries.ITableQuery = {
     title: 'Contratos',
@@ -51,7 +53,7 @@ export const contracts:TableQueries.ITableQuery = {
             where: filters,
             order: []
         };
-        const contractsSupplierTextQuery = QueryGenerator.queryGenerator(optionsSupplierText);
+        const contractsSupplierTextQuery = QueryGenerator.generate(optionsSupplierText);
 
         // must be the first to match 'supplier' field order in select
         // of the previous query
@@ -86,12 +88,12 @@ export const contracts:TableQueries.ITableQuery = {
             where: filters,
             order: []
         };
-        const contractsSupplierObjQuery = QueryGenerator.queryGenerator(optionsSupplierObj);
+        const contractsSupplierObjQuery = QueryGenerator.generate(optionsSupplierObj);
         
         const queryWithoutOrder = contractsSupplierTextQuery + 
                         ' union ' + contractsSupplierObjQuery; 
 
-        const orderStr = QueryGenerator.getOrderByStr(queryParams.order);
+        const orderStr = queryGenerator.getOrderByStr(queryParams.order);
 
         return queryWithoutOrder + ' ' + orderStr;
     },

@@ -75,7 +75,8 @@ export class OilFieldView extends ViewRecord.ViewRecord {
             extraRecordData: {
                 tableauUrls: [],
                 embedStrs: []
-            }
+            },
+            updatedAt: ''
         };
     }    
     
@@ -140,12 +141,7 @@ export class OilFieldView extends ViewRecord.ViewRecord {
         return (
             <div>
                 <div className="row">
-                    <div className="col-md-6">
-                        <ViewRecordFields  
-                            recordData={this.state.recordData} 
-                            source={this.state.source} 
-                            objId={this.state.id}></ViewRecordFields>
-                    </div>
+                    { this.getInfoBox() }
                     <div className="col-md-6 main-boxes">                
                         <Map initialState={this.state.initialMapState}
                                 receiveMapObj={(mo) => this.mapObj = mo}

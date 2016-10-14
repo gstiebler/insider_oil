@@ -68,6 +68,12 @@ const Contract: IBaseDataSourceParams = {
             isProjectList: true
         },
     },
+    referencedObjectsOnView:  [
+        {
+            queryName: 'contractRelatedProjects',
+            title: 'Projetos'
+        },
+    ],
     labelField: "user_uid",
     gridFields: ['user_uid', "contract_object", "supplier", 'value', 'start', 'end', 'situation'],
     tableLabel: "Contratos",

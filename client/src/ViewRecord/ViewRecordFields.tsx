@@ -132,10 +132,14 @@ export class ViewRecordFields extends React.Component<IAppProps, IAppState> {
                 });
                 fieldHtml = <div>{ listItems } </div>;
             } else if(field.isConcessionaries) {
-                var listItems = field.value.map((concessionary) => { 
+                var listItems = field.value.map((concessionary, i) => { 
                     var url = "/app/view_record?source=Company&id=" + concessionary.id;
                     var labelHtml:string = ": " + concessionary.prop * 100 + "%";
-                    return <div key={concessionary.name}><Link to={url}>{concessionary.name}</Link>{labelHtml}</div>; 
+                    return (
+                        <div key={i + concessionary.name}>
+                            <Link to={url}>{concessionary.name}</Link>{labelHtml}
+                        </div> 
+                    ); 
                 });
                 fieldHtml = <div>{ listItems } </div>;
             } else {

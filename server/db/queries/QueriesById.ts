@@ -9,6 +9,8 @@ import { IQueryParams, IBaseQueryField } from '../../../common/Interfaces';
 import Sequelize = require('sequelize');
 import * as CompanyQueries from './Company';
 import * as ProjectQueries from './Project';
+import * as OilField from './OilField';
+import * as Block from './Block';
 
 const models:Sequelize.ModelsHashInterface = db.models; 
 
@@ -58,7 +60,7 @@ function wellsByDrillingRigOffshoreQueryOpts(filter):QueryGenerator.IQueryOpts {
 const wellsByDrillingRigOffshore = {
     queryStrFn: (filter) => {
         const options:QueryGenerator.IQueryOpts = wellsByDrillingRigOffshoreQueryOpts(filter);
-        return QueryGenerator.queryGenerator(options);
+        return QueryGenerator.generate(options);
     },
     fields: [
     {
@@ -128,7 +130,7 @@ export const queries:IQueriesById = {
                 ]
             }
             
-            var query = QueryGenerator.queryGenerator(personOpts);
+            var query = QueryGenerator.generate(personOpts);
             return query;
         },
         fields: [
@@ -289,7 +291,7 @@ export const queries:IQueriesById = {
                 order: [ { fieldName: 'date', dir: 'asc' } ]
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -322,7 +324,7 @@ export const queries:IQueriesById = {
                 order: [ { fieldName: 'process', dir: 'asc' } ]
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -377,7 +379,7 @@ export const queries:IQueriesById = {
                 order: [ { fieldName: 'notification_date', dir: 'asc' } ]
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -431,7 +433,7 @@ export const queries:IQueriesById = {
                 order: [ { fieldName: 'notification_date', dir: 'asc' } ]
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -500,7 +502,7 @@ export const queries:IQueriesById = {
                 ]
             }
             
-            var query = QueryGenerator.queryGenerator(wellOpts);
+            var query = QueryGenerator.generate(wellOpts);
             return query;
         },
         fields: [
@@ -614,7 +616,7 @@ export const queries:IQueriesById = {
                 ]
             }
             
-            var query = QueryGenerator.queryGenerator(maintenanceOpts);
+            var query = QueryGenerator.generate(maintenanceOpts);
             return query;
         },
         fields: [
@@ -673,7 +675,7 @@ export const queries:IQueriesById = {
                 ],
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
         {
@@ -707,6 +709,8 @@ export const queries:IQueriesById = {
             },
         ]
     },
+
+    oilFieldsByBasin: OilField.oilFieldsByBasin,
     
     productionUnitByBlock: {
         queryStrFn: (filter) => {
@@ -755,7 +759,7 @@ export const queries:IQueriesById = {
                 ],
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -829,7 +833,7 @@ export const queries:IQueriesById = {
                 ],
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -895,7 +899,7 @@ export const queries:IQueriesById = {
                 ],
             };
             
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: [
             {
@@ -933,10 +937,12 @@ export const queries:IQueriesById = {
                     equal: filter.id 
                 }
             ]
-            return QueryGenerator.queryGenerator(options);
+            return QueryGenerator.generate(options);
         },
         fields: wellsByDrillingRigOffshore.fields
     },
+    
+    blocksByBasin: Block.blocksByBasin,
 
     personsByCompany: CompanyQueries.personsByCompany,
     blocksOperatedByCompany: CompanyQueries.blocksOperatedByCompany,
@@ -947,12 +953,14 @@ export const queries:IQueriesById = {
     drillingRigsByOperator: CompanyQueries.drillingRigsByOperator,
     contractsByContractor: CompanyQueries.contractsByContractor,
 
-    projectsOfObject: ProjectQueries.projectsOfObject,
     contractsOfContractedInProject: ProjectQueries.contractsOfContractedInProject,
     personsOfContractedInProject: ProjectQueries.personsOfContractedInProject,
     personsOfOwnerInProject: ProjectQueries.personsOfOwnerInProject,
     projectsTargetSales: ProjectQueries.projectsTargetSales,
     projectTypesAndStages: ProjectQueries.projectTypesAndStages,
+    personRelatedProjects: ProjectQueries.personRelatedProjects,
+    contractRelatedProjects: ProjectQueries.contractRelatedProjects,
+    objectRelatedProjects: ProjectQueries.objectRelatedProjects,
 
     boatsByOwner: {
         queryStrFn: (filters) => {

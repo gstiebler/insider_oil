@@ -4,68 +4,65 @@ import * as TableQueries from './TableQueries';
 import QueryGenerator = require('./QueryGenerator');
 import * as ContractQueries from './Contract';
 import { await } from '../../lib/await';
-import { IProjectJsonField } from '../../../common/Interfaces';
+import { 
+    IProjectJsonField, 
+    IBaseQueryField, 
+    IFilter 
+} from '../../../common/Interfaces';
 import db = require('../models');
 
-export const projectsOfObject:IQueryById = {
-    queryStrFn: (filter) => {
-        const Association = db.models['Association'];
-        const qryOpt = {
-            where: {
-                type: 'ProjectObjects',
-                dest_model: filter.model,
-                dest_id: filter.obj_id
-            }
-        }
-        const associations:any[] = await( Association.findAll(qryOpt) );
-        const projectsIds = associations.map(a => {
-            return a.src_id
-        });
-        const options:QueryGenerator.IQueryOpts = {
-            table: {
-                name: 'projects',
-                fields: [
-                    ['name', 'p_name'],
-                    ['id', 'p_id'],
-                    'value'
-                ]
-            },
-            joinTables: [],
-            extraFields: [
-                ['"Project"', 'p_model'],
-            ],
-            where: [
-                {
-                    field: 'projects.id',
-                    in: projectsIds
-                }
-            ],
-            order: [ 
-                {
-                    fieldName: 'p_name',
-                    dir: 'asc'
-                }
-            ],
-        };
-        
-        return QueryGenerator.queryGenerator(options);
-    },
-    fields: [
-        {
-            label: 'Nome',
-            ref: {
-                modelField: 'p_model',
-                idField: 'p_id',
-                valueField: 'p_name'
-            }
+function baseProjectOpts():QueryGenerator.IQueryOpts {
+    return {
+        table: {
+            name: 'projects',
+            fields: [
+                ['id', 'p_id'],
+                ['name', 'p_name'],
+                'value'
+            ]
         },
-        {
-            label: 'Valor',
-            fieldName: 'value',
-            type: 'CURRENCY'
+        extraFields: [
+            ['"Project"', 'p_model'],
+            ['"Company"', 'c_model'],
+        ],
+        joinTables: [                    
+            {
+                name: 'companies',
+                fields: [
+                    ['id', 'c_id'],
+                    ['name', 'c_name'],
+                ],
+                joinField: 'projects.owner_id'
+            },
+        ],
+        where: [],
+        order: []
+    }
+}
+
+const baseFields:IBaseQueryField[] = [
+    {
+        label: 'Nome',
+        ref: {
+            modelField: 'p_model',
+            idField: 'p_id',
+            valueField: 'p_name'
         }
-    ]
-};
+    },
+    {
+        label: 'Contratante',
+        ref: {
+            modelField: 'c_model',
+            idField: 'c_id',
+            valueField: 'c_name'
+        }
+    },
+    {
+        label: 'Valor',
+        fieldName: 'value',
+        type: 'CURRENCY'
+    },
+];
 
 export const contractsOfContractedInProject:IQueryById = {
     queryStrFn: (filter) => {
@@ -132,68 +129,20 @@ export const personsOfOwnerInProject:IQueryById = {
 
 export const projectsTargetSales:IQueryById = {
     queryStrFn: (filter) => {
-        const opts:QueryGenerator.IQueryOpts = {
-            table: {
-                name: 'projects',
-                fields: [
-                    ['id', 'p_id'],
-                    ['name', 'p_name'],
-                    'value'
-                ]
-            },
-            extraFields: [
-                ['"Project"', 'p_model'],
-                ['"Company"', 'c_model'],
-            ],
-            joinTables: [                    
-                {
-                    name: 'companies',
-                    fields: [
-                        ['id', 'c_id'],
-                        ['name', 'c_name'],
-                    ],
-                    joinField: 'projects.owner_id'
-                },
-            ],
-            where: [
-                {
-                    field: 'projects.stage',
-                    equal: '"' + filter.fase + '"'
-                },
-                {
-                    field: 'projects.segment_type',
-                    equal: '"' + filter.type + '"'
-                },
-            ],
-            order: []
-        };
+        const opts = baseProjectOpts();
+        opts.where.push({
+            field: 'projects.stage',
+            equal: '"' + filter.fase + '"'
+        });
+        opts.where.push({
+            field: 'projects.segment_type',
+            equal: '"' + filter.type + '"'
+        });
         
-        var query = QueryGenerator.queryGenerator(opts);
+        var query = QueryGenerator.generate(opts);
         return query;
     },
-    fields: [
-        {
-            label: 'Nome',
-            ref: {
-                modelField: 'p_model',
-                idField: 'p_id',
-                valueField: 'p_name'
-            }
-        },
-        {
-            label: 'Contratante',
-            ref: {
-                modelField: 'c_model',
-                idField: 'c_id',
-                valueField: 'c_name'
-            }
-        },
-        {
-            label: 'Valor',
-            fieldName: 'value',
-            type: 'CURRENCY'
-        },
-    ]
+    fields: baseFields
 }
 
 export const projectTypesAndStages:IQueryById = {
@@ -205,4 +154,57 @@ export const projectTypesAndStages:IQueryById = {
         return query;
     },
     fields: []
+}
+
+export const personRelatedProjects:IQueryById = {
+    queryStrFn: (filter) => {
+        const opts = baseProjectOpts();
+        const queryGenerator = new QueryGenerator.QueryGenerator();
+        queryGenerator.getFilterStr = (filters: IFilter[], filterKeyword: string, aliasMap?):string => {
+            const ownerFilter = ' JSON_contains(json_field, \'"' + filter.id + '"\', "$.owner_persons_id") > 0 ';
+            const contractedsFilter = ' JSON_contains(JSON_EXTRACT(json_field, "$.contractors[*].persons_id"), \'"' + filter.id + '"\') > 0';
+            return ' where ' + ownerFilter + ' or ' + contractedsFilter;
+        };
+        
+        var query = QueryGenerator.generate(opts, queryGenerator);
+        return query;
+    },
+    fields: baseFields
+}
+
+export const contractRelatedProjects:IQueryById = {
+    queryStrFn: (filter) => {
+        const opts = baseProjectOpts();
+        const queryGenerator = new QueryGenerator.QueryGenerator();
+        queryGenerator.getFilterStr = (filters: IFilter[], filterKeyword: string, aliasMap?):string => {
+            const contractedsFilter = ' JSON_contains(JSON_EXTRACT(json_field, "$.contractors[*].contracts_id"), \'"' + filter.id + '"\') > 0';
+            return ' where ' + contractedsFilter;
+        };
+        
+        var query = QueryGenerator.generate(opts, queryGenerator);
+        return query;
+    },
+    fields: baseFields
+}
+
+export const objectRelatedProjects:IQueryById = {
+    queryStrFn: (filter) => {
+        const whereOpts = {
+            type: 'ProjectObjects',
+            dest_model: filter.modelName,
+            dest_id: filter.id
+        };
+        const projectAssocs:any[] = await( db.models.Association.findAll( { where: whereOpts } ) );
+        const projectIds:number[] = projectAssocs.map( p => { return p.src_id } );
+
+        const opts = baseProjectOpts();
+        opts.where.push({
+            field: 'projects.id',
+            in: projectIds
+        });
+        
+        var query = QueryGenerator.generate(opts);
+        return query;
+    },
+    fields: baseFields
 }
