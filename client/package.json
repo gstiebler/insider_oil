@@ -37,7 +37,7 @@
     "react-router": "^2.5.2",
     "run-sequence": "^1.1.5",
     "tslint": "^3.3.0",
-    "typescript": "^1.8.10",
+    "typescript": "^2.0.3",
     "underscore": "^1.8.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"

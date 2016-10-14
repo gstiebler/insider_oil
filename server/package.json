@@ -25,7 +25,7 @@
     "sequelize": "^3.23.2",
     "serve-favicon": "~2.3.0",
     "sync": "^0.2.5",
-    "typescript": "^1.8.9",
+    "typescript": "^2.0.3",
     "typings": "^1.0.4",
     "umzug": "^1.11.0",
     "winston": "^2.1.1",
