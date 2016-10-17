@@ -3,6 +3,7 @@ import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 
 interface IAppProps {
+    location: any;
 }
 
 interface IAppState {
@@ -16,6 +17,8 @@ export class SearchResults extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = {};
+        let { search } = props.location.query;
+        console.log(search);
     }    
 
     private componentWillReceiveProps(props: IAppProps) {

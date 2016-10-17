@@ -27,7 +27,7 @@
     "js-cookie": "^2.1.2",
     "moment": "^2.13.0",
     "react": "^15.1.0",
-    "react-autosuggest": "^3.7.4",
+    "react-autosuggest": "^6.1.0",
     "react-bootstrap": "^0.29.5",
     "react-datetime": "^2.6.0",
     "react-dom": "^15.1.0",

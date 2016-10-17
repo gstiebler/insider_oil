@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as showError from './lib/ShowError';
 import * as server from './lib/Server';
 import { IFrontEndProject } from '../../common/Interfaces';
-const Autosuggest = require('react-autosuggest');
+import Autosuggest = require('react-autosuggest');
 
 interface IAppProps {
     onItemSelected: any;
@@ -24,8 +24,8 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
             suggestions: []
         };
     }
-    
-    private onSuggestionsUpdateRequested({ value }) {
+
+    private onSuggestionsFetchRequested({ value }) {
         server.getSearchResult(value, this.onServerSearchResult.bind(this), showError.show);
     }
 
@@ -34,12 +34,14 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
-    private onUserTypeChar(event, { newValue }) {
+    private onUserTypeChar(event, { newValue, method }) {
+        console.log(method);
         this.state.value = newValue;
         this.setState(this.state);
     }
 
     private onSuggestionSelected(event, { suggestion, suggestionValue, sectionIndex, method }) {
+        console.log(method);
         this.props.onItemSelected(suggestion);
         this.state.value = '';
         this.setState(this.state);
@@ -71,7 +73,8 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
                    getSuggestionValue={this.getSuggestionValue}
                    renderSuggestion={this.renderSuggestion}
                    onSuggestionSelected={this.onSuggestionSelected.bind(this)}
-                   onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested.bind(this)}
+                   onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
+                   alwaysRenderSuggestions={true}
                    inputProps={inputProps} />
         );
     }
