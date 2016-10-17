@@ -29,6 +29,7 @@ import { PersonsByCompany } from './PersonsByCompany';
 import { NewsTicker } from './NewsTicker'; 
 import { Analytics } from './Analytics';  
 import { TargetSales } from './TargetSales';  
+import { SearchResults } from './SearchResults';  
 
 const ReactGA = require('react-ga');
 ReactGA.initialize('UA-80990869-2');
@@ -159,7 +160,8 @@ ReactDOM.render(
       <Route path="persons" component={PersonsByCompany}/>
       <Route path="analytics" component={Analytics}/>
       <Route path="target_sales" component={TargetSales}/>
-      <Route path="requests_viewer" component={RequestsViewer}/>
+      <Route path="target_sales" component={TargetSales}/>
+      <Route path="search_results" component={SearchResults}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
   </Router>,
