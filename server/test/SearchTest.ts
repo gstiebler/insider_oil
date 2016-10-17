@@ -10,9 +10,17 @@ var group: nodeunit.ITestGroup = {
 
 searchLike:  (test: nodeunit.Test) => {
     const result:any[] = await( searchLike('Guilherme', 5) );
-    test.equal(1, result.length);
+    test.equal(2, result.length);
     test.equal('Guilherme Stiebler', result[0].name);
     test.equal(1, result[0].id);
+    test.equal('Petrobrás compra Statoil', result[1].name);
+    test.done();
+},
+
+searchInsight:  (test: nodeunit.Test) => {
+    const result:any[] = await( searchLike('verdade', 5) );
+    test.equal(1, result.length);
+    test.equal('Petrobrás compra Statoil', result[0].name);
     test.done();
 },
     

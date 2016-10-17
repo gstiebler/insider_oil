@@ -3,6 +3,7 @@
 
 import db = require('../db/models');
 import { await } from '../lib/await';
+import dsParams = require('../lib/DataSourcesParams');
 
 interface IDataSource {
     model: string;
@@ -78,6 +79,10 @@ const dataSources:IDataSource[] = [
         model: 'Project',
         fields: ['name']
     },
+    {
+        model: 'News',
+        fields: ['title', 'content']
+    },
 ];
 
 export function searchLike(searchValue, numMaxResults) {
@@ -88,7 +93,9 @@ export function searchLike(searchValue, numMaxResults) {
     	for( var j = 0; j < dataSource.fields.length; j++ ) {
     		const model = db.models[dataSource.model];
     		const fieldName = dataSource.fields[j];
-    		var currQuery = 'select ' + fieldName + ' as name, "' + dataSource.model + '" as model, id ';
+            const params = dsParams[dataSource.model];
+            const labelField = params.labelField;
+    		let currQuery = 'select ' + labelField + ' as name, "' + dataSource.model + '" as model, id ';
             currQuery += ' from ' + model.getTableName();
     		currQuery += ' where ' + fieldName + ' like "' + searchStr + '"';
     		queryStrings.push(currQuery);
