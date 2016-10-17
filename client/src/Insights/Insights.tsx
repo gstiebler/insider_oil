@@ -188,6 +188,7 @@ export class Insights extends React.Component<IAppProps, IAppState> {
         return (
 			<div className="orbit" >
 				<section className="container row clearfix">
+                	<h2><b>Insights</b></h2>
 					<section className="inner-container clearfix">
 						<section id="content" className="eight column row pull-left">
 							<FlexSlider data={insights.flexSlider} />

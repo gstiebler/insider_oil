@@ -62,6 +62,7 @@ export class TargetSales extends React.Component<IAppProps, IAppState> {
         if(!this.state.typesAndStages) return null;
 		return (
             <div>
+                <h2><b>Target Sales</b></h2>
                 <div className="row">
                     <div className="col-md-6">
                         <h3>CAPEX</h3>

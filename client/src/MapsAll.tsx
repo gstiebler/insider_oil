@@ -226,6 +226,7 @@ export class MapsAll extends React.Component<IAppProps, IAppState> {
         }
         return (
             <div>
+                <h2><b>Mapas</b></h2>
                 <Map initialState={this.state.initialState}
                     receiveMapObj={(mo) => this.mapObj = mo}
                     style={style} />
