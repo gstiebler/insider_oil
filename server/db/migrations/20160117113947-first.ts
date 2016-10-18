@@ -37,17 +37,17 @@ module.exports = {
 				},
 				admin: {
 					type: Sequelize.BOOLEAN,
-					allowNull: false,
+					allowNull: true,
 					defaultValue: false
 				},
 				active: {
 					type: Sequelize.BOOLEAN,
-					allowNull: false,
+					allowNull: true,
 					defaultValue: true
 				},
 				paying: {
 					type: Sequelize.BOOLEAN,
-					allowNull: false,
+					allowNull: true,
 					defaultValue: false
 				},
 				token: {

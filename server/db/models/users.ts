@@ -1,11 +1,10 @@
 "use strict"
 
-function beforeValidate(user) {
-    if(!user.admin) {
-        user.admin = false;
+function beforeUpdate(user) {
+    if(!user.dataValues.active) {
+        user.token = '';
     }
 }
-
 
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
@@ -28,16 +27,16 @@ module.exports = function(sequelize, DataTypes) {
     },
     admin: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
       defaultValue: false
     },
     active: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
     paying: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
     token: {
       type: DataTypes.STRING,
@@ -58,9 +57,11 @@ module.exports = function(sequelize, DataTypes) {
             });
         }
       },
-        hooks: {
-           beforeValidate: beforeValidate
+		classMethods: {
+			  defineHooks: function(db) {
+	        db.User.hook('beforeUpdate', beforeUpdate);
         }
+    }
     }
   );
   return User;
