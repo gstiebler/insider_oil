@@ -59,12 +59,12 @@ export function getExtraFieldsStr(extraFields:any[]) {
     return resultQry;
 }
 
-function getInFilter(filter: IFilter, filterArray: string[]):string {
+function getInFilter(filter: IFilter, field: string, filterArray: string[]):string {
     if(filterArray.length < 1) {
-        return filter.field + ' in (-1)';
+        return field + ' in (-1)';
     } else {
         const idsStr = filterArray.join(', ');
-        return filter.field + ' in (' + idsStr + ')';
+        return field + ' in (' + idsStr + ')';
     }    
 }
 
@@ -111,10 +111,10 @@ export class QueryGenerator {
             if(filter.like) {
                 filterStrs.push(field + ' like "%' + filter.like + '%"');
             } else if (filter.in) {
-                const inFilterStr = getInFilter(filter, filter.in);
+                const inFilterStr = getInFilter(filter, field, filter.in);
                 filterStrs.push(inFilterStr);
             } else if (filter.notIn) {
-                const inFilterStr = getInFilter(filter, filter.notIn);
+                const inFilterStr = getInFilter(filter, field, filter.notIn);
                 filterStrs.push(' not ' + inFilterStr);
             } else if (filter.equal) {
                 filterStrs.push(field + ' = ' + filter.equal);
