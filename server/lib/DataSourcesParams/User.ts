@@ -17,6 +17,12 @@ const User: IBaseDataSourceParams = {
         admin: {
             label: 'Administrador',
         },
+        active: {
+            label: 'Ativo',
+        },
+        paying: {
+            label: 'Pagante',
+        },
     },
     labelField: 'name',
     gridFields: ['name'],

@@ -31,6 +31,14 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: false
     },
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    paying: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     token: {
       type: DataTypes.STRING,
       allowNull: true,

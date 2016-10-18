@@ -40,6 +40,16 @@ module.exports = {
 					allowNull: false,
 					defaultValue: false
 				},
+				active: {
+					type: Sequelize.BOOLEAN,
+					allowNull: false,
+					defaultValue: true
+				},
+				paying: {
+					type: Sequelize.BOOLEAN,
+					allowNull: false,
+					defaultValue: false
+				},
 				token: {
 					type: Sequelize.STRING,
 					allowNull: true,
