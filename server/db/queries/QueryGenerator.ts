@@ -59,6 +59,15 @@ export function getExtraFieldsStr(extraFields:any[]) {
     return resultQry;
 }
 
+function getInFilter(filter: IFilter, filterArray: string[]):string {
+    if(filterArray.length < 1) {
+        return filter.field + ' in (-1)';
+    } else {
+        const idsStr = filterArray.join(', ');
+        return filter.field + ' in (' + idsStr + ')';
+    }    
+}
+
 export class QueryGenerator {
 
     public genSelectStr(queryOpts: IQueryOpts, aliasMap):string {
@@ -102,12 +111,11 @@ export class QueryGenerator {
             if(filter.like) {
                 filterStrs.push(field + ' like "%' + filter.like + '%"');
             } else if (filter.in) {
-                if(filter.in.length < 1) {
-                    filterStrs.push(field + ' in (-1)');
-                } else {
-                    const idsStr = filter.in.join(', ');
-                    filterStrs.push(field + ' in (' + idsStr + ')');
-                }
+                const inFilterStr = getInFilter(filter, filter.in);
+                filterStrs.push(inFilterStr);
+            } else if (filter.notIn) {
+                const inFilterStr = getInFilter(filter, filter.notIn);
+                filterStrs.push(' not ' + inFilterStr);
             } else if (filter.equal) {
                 filterStrs.push(field + ' = ' + filter.equal);
             } else if (filter.gt) {

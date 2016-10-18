@@ -24,6 +24,13 @@ module.exports = function(db) {
             updates: '["country"]',
             created_at: '2010-10-20'
         },
+        {
+            model: 'User',
+            obj_id: 2,
+            type: 'EDIT',
+            updates: '["password"]',
+            created_at: '2010-10-20'
+        },
     ];
     await( db.models.UpdateLog.bulkCreate(data) );
 }

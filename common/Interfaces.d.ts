@@ -44,6 +44,7 @@ interface IFilter {
     field: string;
     like?: string;
     in?: any[];
+    notIn?: any[];
     equal?: string;
     gt?: string;
     lt?: string;

@@ -32,7 +32,18 @@ function getUpdateRecords():any[] {
         extraFields: [
             ['"UPDATE"', 'type']
         ],
-        where: [],
+        where: [{
+            field: 'model',
+            notIn: [
+                '"User"',
+                '"Association"',
+                '"ErrorLog"',
+                '"ErrorReport"',
+                '"ExcelImportLog"',
+                '"RequestLogModel"',
+                '"UpdateLog"',
+            ]
+        }],
         order: [],
     };
 
