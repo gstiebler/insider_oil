@@ -14,7 +14,7 @@ export function login( username, password, loginOk, loginError ) {
     db.models.User.findOne({ where: { 
                         login: username} 
     }).then( function(user) {
-        if( user )  {  
+        if( user && user.active )  {  
             if( user.password == password )
                 user.generateToken( loginOk );
             else
