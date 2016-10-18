@@ -37,6 +37,21 @@ export function sendErrorReport(req: express.Request, res: express.Response, nex
 export function viewRecord(req: express.Request, res: express.Response, next) {Sync(function(){
     const query:ni.GetViewRecord.req = req.query;
     const dataSourceName = query.dataSource;
+    if(!req.user.admin) {
+        const forbidden = {
+            "User": true,
+            "Association": true,
+            "ErrorLog": true,
+            "ErrorReport": true,
+            "ExcelImportLog": true,
+            "RequestLogModel": true,
+            "UpdateLog": true,
+        };
+        if(forbidden[dataSourceName]) {
+            ControllerUtils.getErrorFunc(res, 401, "Sem permissão")("Sem permissão");
+            return;
+        }
+    }
     const id = query.id;
     const dataSource = dbUtils.getDataSource(dataSourceName);
     const options: any = {};

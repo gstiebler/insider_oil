@@ -33,7 +33,8 @@ module.exports = function(app: express.Express) {
     app.put('/save_item/',   session.authAdmin,    AdminController.saveItem);
     app.get('/sources_list/',  session.authAdmin,  AdminController.sourcesList);
     app.delete('/delete_item/', session.authAdmin, AdminController.deleteItem);
-    app.get('/combo_values/', session.authAdmin,   AdminController.getComboValues);
+    // Check Project View without admin before adding admin to this item
+    app.get('/combo_values/', AdminController.getComboValues);
     app.post('/db_server/upload_kml', AdminController.uploadKml);
     
     app.post('/db_server/upload_file',             ExcelController.uploadFile);
