@@ -5,7 +5,8 @@ import { IFrontEndProject } from '../../common/Interfaces';
 import Autosuggest = require('react-autosuggest');
 
 interface IAppProps {
-    onItemSelected: any;
+    onItemSelected: (any) => void;
+    onSearchTyped?: (string) => void;
     value?: any[];
 }
 
@@ -35,13 +36,11 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
     }
 
     private onUserTypeChar(event, { newValue, method }) {
-        console.log(method);
         this.state.value = newValue;
         this.setState(this.state);
     }
 
     private onSuggestionSelected(event, { suggestion, suggestionValue, sectionIndex, method }) {
-        console.log(method);
         this.props.onItemSelected(suggestion);
         this.state.value = '';
         this.setState(this.state);
@@ -60,6 +59,15 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
     private renderSuggestion(suggestion:IFrontEndProject) {
         return <span>{suggestion.modelLabel + ': ' + suggestion.name}</span>
     }
+
+    private onFormSubmit(event) {
+        event.preventDefault();
+        if(this.props.onSearchTyped && this.state.value != '') {
+            this.props.onSearchTyped(this.state.value);
+            this.state.value = '';
+            this.setState(this.state);
+        }
+    }
     
     public render(): React.ReactElement<any> {
         const inputProps = {
@@ -68,14 +76,17 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
             onChange: this.onUserTypeChar.bind(this)
         };
         
-        return (      
-            <Autosuggest suggestions={this.state.suggestions}
-                   getSuggestionValue={this.getSuggestionValue}
-                   renderSuggestion={this.renderSuggestion}
-                   onSuggestionSelected={this.onSuggestionSelected.bind(this)}
-                   onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
-                   alwaysRenderSuggestions={true}
-                   inputProps={inputProps} />
+        return (   
+            <form onSubmit={this.onFormSubmit.bind(this)}>
+                <Autosuggest suggestions={this.state.suggestions}
+                    getSuggestionValue={this.getSuggestionValue}
+                    renderSuggestion={this.renderSuggestion}
+                    onSuggestionSelected={this.onSuggestionSelected.bind(this)}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
+                    inputProps={inputProps}
+                    onSuggestionsClearRequested={ () => {} }
+                />
+            </form>   
         );
     }
 }

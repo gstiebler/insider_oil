@@ -16,7 +16,11 @@ export class TopMenu extends React.Component<IAppProps, IAppState> {
     private onProjectSelected(selectedItem:IFrontEndProject) {
         const url = '/app/view_record?source=' + selectedItem.model + '&id=' + selectedItem.id;
         browserHistory.push(url);
-    };
+    };    
+    
+    private onSearchTyped(typedText: string) {
+        browserHistory.replace('/app/search_results' + '?search=' + typedText);
+    }
 
     public render(): React.ReactElement<any> {
 
@@ -51,7 +55,10 @@ export class TopMenu extends React.Component<IAppProps, IAppState> {
         const search = (
             <div className="col-md-3 col-no-padding">
                 <div style={{ padding: 10, width: 150 }}>
-                    <ProjectSearch onItemSelected={ this.onProjectSelected.bind(this) } />
+                    <ProjectSearch 
+                        onItemSelected={ this.onProjectSelected.bind(this) }
+                        onSearchTyped={ this.onSearchTyped.bind(this) } 
+                    />
                 </div>
             </div>
         );
