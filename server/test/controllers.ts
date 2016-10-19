@@ -109,22 +109,24 @@ getRecordViewWell: function(test) {
 },
 
 search: test => {
-	const req = {
-		query: { searchValue: 'guilherme' }
-	}
-    var searchResults = utils.getJsonResponse.sync(null, SearchController.main, req);
-	test.equal(1, searchResults.length);
-    test.equal('Guilherme Stiebler', searchResults[0].name);
-    test.equal('Person', searchResults[0].model);
-    test.equal(1, searchResults[0].id);
+    const query: ni.Search.req = {
+        searchValue: 'guilherme',
+        countLimit: 5 
+    };
+	const req = { query };
+    let searchResults: ni.Search.res = utils.getJsonResponse.sync(null, SearchController.main, { query });
+	test.equal(2, searchResults.values.length);
+    test.equal('Guilherme Stiebler', searchResults.values[0].name);
+    test.equal('Person', searchResults.values[0].model);
+    test.equal(1, searchResults.values[0].id);
     
     req.query.searchValue = 'ba';
     searchResults = utils.getJsonResponse.sync(null, SearchController.main, req);
-	test.equal(5, searchResults.length);
-    test.equal('BM-BAR-1', searchResults[0].name);
-    test.equal('Block', searchResults[0].model);
-    test.equal('Parnaíba Gás Natural', searchResults[2].name);
-    test.equal('Company', searchResults[2].model);
+	test.equal(5, searchResults.values.length);
+    test.equal('BM-BAR-1', searchResults.values[0].name);
+    test.equal('Block', searchResults.values[0].model);
+    test.equal('Parnaíba Gás Natural', searchResults.values[2].name);
+    test.equal('Company', searchResults.values[2].model);
     
     test.done();
 },
@@ -134,7 +136,7 @@ dashboard: test => {
         utils.getJsonResponse.sync(null, dbServerController.getDashboardData, {});
 	test.equal(3, dashboardData.numBids);
 	test.equal(5, dashboardData.numContracts);
-	test.equal(3, dashboardData.numPersons);
+	test.equal(5, dashboardData.numPersons);
 	test.equal(0, dashboardData.numProjects);
     
     test.done();

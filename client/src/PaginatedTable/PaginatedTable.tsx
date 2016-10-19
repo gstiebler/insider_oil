@@ -100,7 +100,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
      * DataTables callback to refresh the data. It's called when the order column change,
      * and when a page on pagination is clicked
      */
-    private ajaxFn(props: IAppProps, data, callback, settings) {
+    private ajaxFn(props: IAppProps, data, callback: (any), settings) {
         var orderColumns = [];
         for(var i = 0; i < data.order.length; i++) {
             var columnIndex = data.order[i].column;
@@ -127,7 +127,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
             .catch(showError.show);
     }
 
-    private onTableData(callback, serverResult:GetTableQueryData.res) {
+    private onTableData(callback: (any), serverResult:GetTableQueryData.res) {
         var result = { 
             aaData: serverResult.records,
             recordsTotal: serverResult.count,

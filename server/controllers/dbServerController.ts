@@ -37,7 +37,7 @@ export function sendErrorReport(req: express.Request, res: express.Response, nex
 export function viewRecord(req: express.Request, res: express.Response, next) {Sync(function(){
     const query:ni.GetViewRecord.req = req.query;
     const dataSourceName = query.dataSource;
-    if(!req.user.admin) {
+    if(req.user && !req.user.admin) {
         const forbidden = {
             "User": true,
             "Association": true,

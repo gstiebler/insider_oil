@@ -120,7 +120,7 @@ importBlocks: test => {
 },
 
 importPersons: test => {
-    var fixtureCount = 3;
+    var fixtureCount = 5;
     test.equal( fixtureCount, await( db.models.Person.findAll() ).length );  
     var excelBuf = fs.readFileSync('./test/data/persons.xlsx');
     const result:IExcelUploadResponse = await(importExcel(excelBuf, 'Person'));
@@ -128,7 +128,7 @@ importPersons: test => {
     const status = result.status;    
     
     var rows = await( dbUtils.findAllCustom(db.models.Person, { order: ['name'] }));
-    test.equal( 4, rows.length );  
+    test.equal( 6, rows.length );  
     var expectedStatus = "Registros criados: 1";
     expectedStatus += "\nRegistros atualizados: 3";
     expectedStatus += "\nRegistros inválidos: 1";
@@ -138,13 +138,13 @@ importPersons: test => {
     ];
     utils.compareArray(test, expectedInvalidStatus, invalidRecordsStatus);
     {
-        const record = rows[0];
+        const record = rows[1];
         test.equal('Carlos Alberto B.Tessarollo', record.name);
         test.equal(1, record.emails.length);
         test.equal('tessarollo@br.com.br', record.emails[0]);
     }  
     {
-        const record = rows[2];
+        const record = rows[3];
         test.equal('Guilherme Stiebler', record.name);
         test.equal(2, record.emails.length);
         test.equal('gstiebler@gmail.com', record.emails[0]);
