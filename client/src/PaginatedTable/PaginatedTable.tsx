@@ -8,6 +8,7 @@ import { TableQueryDataRes } from '../../../common/Interfaces';
 import * as StringUtils from '../lib/StringUtils'; 
 import { genColumns } from '../lib/TableUtils';
 import { IField } from '../../../common/Interfaces';
+import { GetTableQueryData } from '../../../common/NetworkInterfaces';
 
 export interface ITableParams {
     label: string;
@@ -110,7 +111,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
             orderColumns.push( orderObj );
         }
         
-        var options = {
+        var req: GetTableQueryData.req = {
             queryName: props.tableParams.source,
             queryParams: {
                 pagination: {
@@ -121,12 +122,12 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
                 filters: this.state.filters
             }
         };
-        server.getTableData(options)
+        server.getTableData(req)
             .then(this.onTableData.bind(this, callback))
             .catch(showError.show);
     }
 
-    private onTableData(callback, serverResult:TableQueryDataRes) {
+    private onTableData(callback, serverResult:GetTableQueryData.res) {
         var result = { 
             aaData: serverResult.records,
             recordsTotal: serverResult.count,
