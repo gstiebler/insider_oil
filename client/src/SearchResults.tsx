@@ -50,9 +50,9 @@ export class SearchResults extends React.Component<IAppProps, IAppState> {
  
     public render(): React.ReactElement<any> {
 
-        const resultsHTML = this.state.results.map((r) => {
+        const resultsHTML = this.state.results.map((r, i) => {
             const url = '/app/view_record?source=' + r.model + '&id=' + r.id;
-            return <p>{ r.modelLabel + ': ' }<Link to={url}>{ r.name }</Link></p>
+            return <p key={'l' + i} >{ r.modelLabel + ': ' }<Link to={url}>{ r.name }</Link></p>
         });
 
         return (
