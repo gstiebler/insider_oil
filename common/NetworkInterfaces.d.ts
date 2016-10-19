@@ -250,3 +250,14 @@ export namespace ComboValues {
         values: IValue[];
     }
 }
+
+export namespace Search {
+
+    export interface req {
+        searchValue: string;
+    }
+    
+    export interface res {
+        values: Interfaces.IFrontEndProject[];
+    }
+}

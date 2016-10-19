@@ -3,6 +3,7 @@ import * as server from './lib/Server';
 import * as showError from './lib/ShowError';
 import { IFrontEndProject } from '../../common/Interfaces';
 import { Link } from 'react-router';
+import { Search } from '../../common/NetworkInterfaces';
 
 interface IAppProps {
     location: any;
@@ -15,7 +16,6 @@ interface IAppState {
 export class SearchResults extends React.Component<IAppProps, IAppState> {
 
     public state: IAppState;
-    //private searchStr;
 
     constructor(props: IAppProps) {
         super(props);
@@ -23,7 +23,6 @@ export class SearchResults extends React.Component<IAppProps, IAppState> {
         this.state = {
             results: []
         };
-        //this.searchStr = props.location.query.search;
     }   
 
     private componentDidMount() {
@@ -34,14 +33,17 @@ export class SearchResults extends React.Component<IAppProps, IAppState> {
         this.fetchServerResults(nextProps.location.query.search);
     }
 
-    private fetchServerResults(searchStr) {
-        server.getSearchResult(searchStr)
+    private fetchServerResults(searchStr: string) {
+        const req: Search.req = {
+            searchValue: searchStr
+        } 
+        server.getP('/search', req)
             .then(this.onServerSearchResult.bind(this))
             .catch(showError.show);
     }
 
-    private onServerSearchResult(results:IFrontEndProject[]) {
-        this.state.results = results;
+    private onServerSearchResult(res: Search.res) {
+        this.state.results = res.values;
         this.setState(this.state);
     }
  

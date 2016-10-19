@@ -4,10 +4,12 @@ import winston = require('winston');
 import search = require('../lib/search');
 import dsParams = require('../lib/DataSourcesParams');
 import { IFrontEndProject } from '../../common/Interfaces'
+import { Search } from '../../common/NetworkInterfaces'
 
 export function main(req, res) {
 	const MAX_NUM_RESULTS = 5;
-    const searchValue = req.query.searchValue;
+	const query:Search.req = req.query;
+    const searchValue = query.searchValue;
    
     search.searchLike(searchValue, MAX_NUM_RESULTS).then(onResults).catch(function(error){
         winston.error(error.stack);
@@ -24,7 +26,8 @@ export function main(req, res) {
 				id: result.id,
 			});
 		}
-        res.json(results);
+		const result: Search.res = { values: results }
+        res.json(result);
         return null;
     }
 };

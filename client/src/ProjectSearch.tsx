@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as showError from './lib/ShowError';
 import * as server from './lib/Server';
 import { IFrontEndProject } from '../../common/Interfaces';
+import { Search } from '../../common/NetworkInterfaces';
 import Autosuggest = require('react-autosuggest');
 
 interface IAppProps {
@@ -27,13 +28,16 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
     }
 
     private onSuggestionsFetchRequested({ value }) {
-        server.getSearchResult(value)
+        const req: Search.req = {
+            searchValue: value
+        } 
+        server.getP('/search', req)
             .then(this.onServerSearchResult.bind(this))
             .catch(showError.show);
     }
 
-    private onServerSearchResult(results:IFrontEndProject[]) {
-        this.state.suggestions = results;
+    private onServerSearchResult(res: Search.res) {
+        this.state.suggestions = res.values;
         this.setState(this.state);
     }
 
