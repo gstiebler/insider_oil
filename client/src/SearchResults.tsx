@@ -35,7 +35,8 @@ export class SearchResults extends React.Component<IAppProps, IAppState> {
 
     private fetchServerResults(searchStr: string) {
         const req: Search.req = {
-            searchValue: searchStr
+            searchValue: searchStr,
+            countLimit: 100
         } 
         server.getP('/search', req)
             .then(this.onServerSearchResult.bind(this))

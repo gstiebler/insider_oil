@@ -29,7 +29,8 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
 
     private onSuggestionsFetchRequested({ value }) {
         const req: Search.req = {
-            searchValue: value
+            searchValue: value,
+            countLimit: 5
         } 
         server.getP('/search', req)
             .then(this.onServerSearchResult.bind(this))

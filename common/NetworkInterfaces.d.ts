@@ -255,6 +255,7 @@ export namespace Search {
 
     export interface req {
         searchValue: string;
+        countLimit: number;
     }
     
     export interface res {

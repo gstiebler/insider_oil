@@ -7,11 +7,10 @@ import { IFrontEndProject } from '../../common/Interfaces'
 import { Search } from '../../common/NetworkInterfaces'
 
 export function main(req, res) {
-	const MAX_NUM_RESULTS = 5;
 	const query:Search.req = req.query;
     const searchValue = query.searchValue;
    
-    search.searchLike(searchValue, MAX_NUM_RESULTS).then(onResults).catch(function(error){
+    search.searchLike(searchValue, query.countLimit).then(onResults).catch(function(error){
         winston.error(error.stack);
     });
     function onResults(queryResults) {
