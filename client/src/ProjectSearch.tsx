@@ -27,7 +27,9 @@ export class ProjectSearch extends React.Component<IAppProps, IAppState> {
     }
 
     private onSuggestionsFetchRequested({ value }) {
-        server.getSearchResult(value, this.onServerSearchResult.bind(this), showError.show);
+        server.getSearchResult(value)
+            .then(this.onServerSearchResult.bind(this))
+            .catch(showError.show);
     }
 
     private onServerSearchResult(results:IFrontEndProject[]) {

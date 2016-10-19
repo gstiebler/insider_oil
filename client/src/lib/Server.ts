@@ -112,9 +112,9 @@ export function deleteItem( modelName, id, onDelete, onError ) {
     deleteHTTP('/delete_item/', params, onDelete, onError);
 }
 
-export function getSearchResult(searchValue, okCallback, onError) {
-    var params = { searchValue: searchValue };
-    get('/search', params, okCallback, onError);
+export function getSearchResult(searchValue):Promise<remoteServer.IFrontEndProject[]> {
+    var params = { searchValue };
+    return getP('/search', params);
 }
 
 
