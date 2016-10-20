@@ -133,6 +133,7 @@ export interface IQueryParams {
     order: IOrderOpts[]; 
     filters: IFilter[];
     pagination: IPaginationOpts;
+    searchStr?: string;
 }
 
 

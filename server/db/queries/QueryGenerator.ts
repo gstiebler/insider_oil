@@ -150,6 +150,14 @@ export class QueryGenerator {
         }   
         return '';
     }
+
+    /*public genSearchStrConditions(searchStr: string): string {
+
+    }*/
+
+    public getWhereStr(queryOpts: IQueryOpts, aliasMap) {
+        return queryOpts.where ? this.getFilterStr(queryOpts.where, 'where', aliasMap) : '';
+    }
 }
 
 export function generate(queryOpts: IQueryOpts, queryGenerator?: QueryGenerator):string {
@@ -160,7 +168,7 @@ export function generate(queryOpts: IQueryOpts, queryGenerator?: QueryGenerator)
     const select = queryGenerator.genSelectStr(queryOpts, aliasMap);
     const fromStr = ' from ' + queryOpts.table.name;
     const joins = queryGenerator.genOuterJoins(queryOpts.joinTables);
-    const where = queryOpts.where ? queryGenerator.getFilterStr(queryOpts.where, 'where', aliasMap) : '';
+    const where = queryGenerator.getWhereStr(queryOpts, aliasMap);
     const having = queryOpts.having ? queryGenerator.getFilterStr(queryOpts.having, 'having', aliasMap) : '';
     const orderBy = queryGenerator.getOrderByStr(queryOpts.order);
     return select + fromStr + joins + where + having + orderBy;
