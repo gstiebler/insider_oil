@@ -12,7 +12,7 @@ interface IAppState {
     records: any[];
 }
 
-export class PersonsByCompany extends React.Component<IAppProps, IAppState> {
+export class CompaniesCards extends React.Component<IAppProps, IAppState> {
 
     private queryDataIncrementalLoading: QueryDataIncrementalLoading;
     private timeoutVar;

@@ -25,7 +25,7 @@ import { PaginatedTableView } from './PaginatedTable/PaginatedTableView';
 import { DataList } from './DataList'; 
 import { Insights } from './Insights/Insights'; 
 import { Observatory } from './Observatory'; 
-import { PersonsByCompany } from './PersonsByCompany'; 
+import { CompaniesCards } from './PersonsByCompany'; 
 import { NewsTicker } from './NewsTicker'; 
 import { Analytics } from './Analytics';  
 import { TargetSales } from './TargetSales';  
@@ -157,7 +157,7 @@ ReactDOM.render(
       <Route path="insights" component={Insights}/>
       <Route path="insights_publisher" component={Publisher}/>
       <Route path="observatory" component={Observatory}/>
-      <Route path="persons" component={PersonsByCompany}/>
+      <Route path="companies" component={CompaniesCards}/>
       <Route path="analytics" component={Analytics}/>
       <Route path="target_sales" component={TargetSales}/>
       <Route path="target_sales" component={TargetSales}/>
