@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as showError from './lib/ShowError';
-import * as ModelViewService from './lib/ModelViewUtils';
-import * as server from './lib/Server';
-import * as StringUtils from './lib/StringUtils';
+import * as showError from '../lib/ShowError';
+import * as ModelViewService from '../lib/ModelViewUtils';
+import * as server from '../lib/Server';
+import * as StringUtils from '../lib/StringUtils';
 import { Link } from 'react-router';
 
 

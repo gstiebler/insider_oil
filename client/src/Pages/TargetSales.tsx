@@ -1,9 +1,9 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
-import * as ni from '../../common/NetworkInterfaces';
-import * as Interfaces from '../../common/Interfaces';
-import { ShowQueryData } from './ShowQueryData';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import * as ni from '../../../common/NetworkInterfaces';
+import * as Interfaces from '../../../common/Interfaces';
+import { ShowQueryData } from '../Components/ShowQueryData';
 
 interface IAppProps {
 }

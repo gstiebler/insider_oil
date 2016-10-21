@@ -1,7 +1,7 @@
 import * as React from 'react';
-import * as Flash from './Flash'
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
+import * as Flash from './../Components/Flash'
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
 import { browserHistory } from 'react-router';
 
 interface IAppProps {

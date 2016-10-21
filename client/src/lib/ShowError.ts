@@ -1,4 +1,4 @@
-import * as Flash from '../Flash'
+import * as Flash from '../Components/Flash'
 
 export function show(err) {
     console.log(err);

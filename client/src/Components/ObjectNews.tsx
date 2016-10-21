@@ -1,9 +1,9 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
-import * as StringUtils from './lib/StringUtils';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import * as StringUtils from '../lib/StringUtils';
 import { Link } from 'react-router';
-import * as DateUtils from './lib/DateUtils';
+import * as DateUtils from '../lib/DateUtils';
 
 interface IAppProps {
     location?: any;

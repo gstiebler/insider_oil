@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
-import * as ni from '../../common/NetworkInterfaces';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import * as ni from '../../../common/NetworkInterfaces';
 
 const FIRST_OFFSET = 120;
 const TIME_INTERVAL = 40;

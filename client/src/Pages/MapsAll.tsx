@@ -1,15 +1,15 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
-import { Map, IMapObj } from './Maps/Map';
-import { showBillboard, rioDeJaneiroCoords } from './lib/MapUtils';
-import { googleRef } from './lib/Google';
-import { IGeoPoint } from '../../common/Interfaces';
-import { BaseMapItem } from './Maps/BaseMapItem';
-import * as Polygon from './Maps/Polygon';
-import { Marker } from './Maps/Marker';
-import { HeatMap } from './Maps/HeatMap';
-import { KmlLayer } from './Maps/KmlLayer';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import { Map, IMapObj } from '../Maps/Map';
+import { showBillboard, rioDeJaneiroCoords } from '../lib/MapUtils';
+import { googleRef } from '../lib/Google';
+import { IGeoPoint } from '../../../common/Interfaces';
+import { BaseMapItem } from '../Maps/BaseMapItem';
+import * as Polygon from '../Maps/Polygon';
+import { Marker } from '../Maps/Marker';
+import { HeatMap } from '../Maps/HeatMap';
+import { KmlLayer } from '../Maps/KmlLayer';
 import * as Promise from 'bluebird';
 
 interface IAppProps {

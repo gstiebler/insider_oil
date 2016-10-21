@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as Flash from '../Flash'
+import * as Flash from '../Components/Flash'
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import { getP } from '../lib/Server';

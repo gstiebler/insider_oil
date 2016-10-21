@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import { browserHistory } from 'react-router';
-import { ProjectSearch } from '../ProjectSearch'
-import * as Flash from '../Flash'
+import { ProjectSearch } from '../Components/ProjectSearch'
+import * as Flash from '../Components/Flash'
 import { ImageShow } from './ImageShow';
 import * as ni from '../../../common/NetworkInterfaces';
 const ReactQuill = require('react-quill');

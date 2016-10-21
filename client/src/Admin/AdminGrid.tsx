@@ -4,7 +4,7 @@ import * as showError from '../lib/ShowError';
 import * as ModelOperations from '../lib/ModelOperations';
 import * as ModelViewService from '../lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
-import * as Flash from '../Flash'
+import * as Flash from '../Components/Flash'
 import { ExcelUploadButton } from './ExcelUploadButton'
 import { StrToByteArray } from '../lib/BytesUtils';
 const FileSaver = require('file-saver'); 

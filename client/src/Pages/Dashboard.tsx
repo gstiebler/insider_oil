@@ -1,9 +1,9 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
-import * as ni from '../../common/NetworkInterfaces';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import * as ni from '../../../common/NetworkInterfaces';
 import { Link } from 'react-router';
-import { DashboardCounter } from './DashboardCounter';
+import { DashboardCounter } from '../Components/DashboardCounter';
 
 interface IAppProps {
 }

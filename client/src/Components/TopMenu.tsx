@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as session from './lib/session';
+import * as session from '../lib/session';
 import { Link, browserHistory } from 'react-router';
 import { ProjectSearch } from './ProjectSearch'
-import { IFrontEndProject } from '../../common/Interfaces';
+import { IFrontEndProject } from '../../../common/Interfaces';
 
 interface IAppProps {
     username: string;

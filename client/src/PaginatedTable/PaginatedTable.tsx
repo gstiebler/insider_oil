@@ -10,6 +10,8 @@ import { genColumns } from '../lib/TableUtils';
 import { IField } from '../../../common/Interfaces';
 import { GetTableQueryData } from '../../../common/NetworkInterfaces';
 
+const Multiselect = require('react-bootstrap-multiselect');
+
 export interface ITableParams {
     label: string;
     fields: IField[];
@@ -143,6 +145,10 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         this.state.dataTable.draw();
     } 
 
+    private filterChange(e) {
+        console.log(e);
+    }
+
     public render(): React.ReactElement<any> {
         if(!this.state.headerParams) {
             return <div></div>;
@@ -156,6 +162,15 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
 
         return (
             <div className="main-table table-responsive bootstrap-table">
+                <Multiselect 
+                    data={[{value:'One',selected:true},{value:'Two'}]}
+                    multiple
+                    includeSelectAllOption
+                    onChange={this.filterChange.bind(this)}
+                    onSelectAll={ (e) => { console.log(e) } }
+                    selectAllName={'select-all-name'}
+                    allSelectedText={'todos sel'}
+                />
                 { tableHeader }
                 <table id="mainTable" className="table" cellSpacing="0" width="100%"></table>
             </div>

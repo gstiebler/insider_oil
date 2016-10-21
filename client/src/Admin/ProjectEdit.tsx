@@ -6,7 +6,7 @@ import * as ModelViewService from '../lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
 import { editLineHTML } from './AdminRecordFields';
 import { IField, IProjectJsonField } from '../../../common/Interfaces';
-import * as Flash from '../Flash'
+import * as Flash from '../Components/Flash'
 import * as ni from '../../../common/NetworkInterfaces';
 import * as AdminEdit from './AdminEdit';
 import { ManyToMany } from './ManyToMany';

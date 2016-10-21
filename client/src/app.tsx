@@ -3,8 +3,8 @@ import * as ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import * as server from './lib/Server';
 import * as session from './lib/session';
-import { TopMenu } from './TopMenu'
-import { SecondMenuBar } from './SecondMenuBar'
+import { TopMenu } from './Components/TopMenu'
+import { SecondMenuBar } from './Components/SecondMenuBar'
 import { AdminList } from './Admin/AdminList';
 import { AdminGrid } from './Admin/AdminGrid';
 import { AdminEdit } from './Admin/AdminEdit';
@@ -16,20 +16,20 @@ import { ViewRecord } from './ViewRecord/ViewRecord';
 import { OilFieldView } from './ViewRecord/OilFieldView';
 import { BlockView } from './ViewRecord/BlockView';
 import { ProjectView } from './ViewRecord/ProjectView';
-import { Flash } from './Flash';
-import { ChangePassword } from './ChangePassword';
-import { MapsAll } from './MapsAll';
-import { Dashboard } from './Dashboard';
-import { NewsSingle } from './NewsSingle';
+import { Flash } from './Components/Flash';
+import { ChangePassword } from './Pages/ChangePassword';
+import { MapsAll } from './Pages/MapsAll';
+import { Dashboard } from './Pages/Dashboard';
+import { NewsSingle } from './Pages/NewsSingle';
 import { PaginatedTableView } from './PaginatedTable/PaginatedTableView'; 
-import { DataList } from './DataList'; 
+import { DataList } from './Pages/DataList'; 
 import { Insights } from './Insights/Insights'; 
-import { Observatory } from './Observatory'; 
-import { CompaniesCards } from './PersonsByCompany'; 
-import { NewsTicker } from './NewsTicker'; 
-import { Analytics } from './Analytics';  
-import { TargetSales } from './TargetSales';  
-import { SearchResults } from './SearchResults';  
+import { Observatory } from './Pages/Observatory'; 
+import { CompaniesCards } from './Pages/PersonsByCompany'; 
+import { NewsTicker } from './Components/NewsTicker'; 
+import { Analytics } from './Pages/Analytics';  
+import { TargetSales } from './Pages/TargetSales';  
+import { SearchResults } from './Pages/SearchResults';  
 
 const ReactGA = require('react-ga');
 ReactGA.initialize('UA-80990869-2');

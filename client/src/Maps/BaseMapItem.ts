@@ -1,6 +1,6 @@
 import { IMapObj } from './Map';
 import * as Promise from 'bluebird';
-import * as Flash from '../Flash'
+import * as Flash from '../Components/Flash'
 
 interface IBillboardFunction {
     (): Promise<string>;

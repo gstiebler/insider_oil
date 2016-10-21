@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as showError from '../lib/ShowError';
-import { ProjectSearch } from '../ProjectSearch'
+import { ProjectSearch } from '../Components/ProjectSearch'
 import { IFrontEndProject } from '../../../common/Interfaces';
 
 interface IAppProps {

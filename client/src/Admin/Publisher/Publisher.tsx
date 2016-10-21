@@ -8,7 +8,7 @@ import { Link } from 'react-router';
 import { InsightsReorderableList, removeById, allowDrop } from './InsightsReorderableList';
 import { InsightsGrid } from './InsightsGrid';
 import { browserHistory } from 'react-router';
-import * as Flash from '../../Flash'
+import * as Flash from '../../Components/Flash'
 
 interface IAppProps {
 }

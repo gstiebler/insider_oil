@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as showError from './lib/ShowError';
-import * as server from './lib/Server';
-import { IFrontEndProject } from '../../common/Interfaces';
-import { Search } from '../../common/NetworkInterfaces';
+import * as showError from '../lib/ShowError';
+import * as server from '../lib/Server';
+import { IFrontEndProject } from '../../../common/Interfaces';
+import { Search } from '../../../common/NetworkInterfaces';
 import Autosuggest = require('react-autosuggest');
 
 interface IAppProps {

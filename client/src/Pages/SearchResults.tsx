@@ -1,9 +1,9 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
-import { IFrontEndProject } from '../../common/Interfaces';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import { IFrontEndProject } from '../../../common/Interfaces';
 import { Link } from 'react-router';
-import { Search } from '../../common/NetworkInterfaces';
+import { Search } from '../../../common/NetworkInterfaces';
 
 interface IAppProps {
     location: any;

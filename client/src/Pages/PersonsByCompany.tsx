@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Card } from './Card'
-import { QueryDataIncrementalLoading } from './lib/QueryDataIncrementalLoading';
-import * as ni from '../../common/NetworkInterfaces';
-import * as showError from './lib/ShowError';
-import { IFilter } from '../../common/Interfaces';
+import { Card } from '../Components/Card'
+import { QueryDataIncrementalLoading } from '../lib/QueryDataIncrementalLoading';
+import * as ni from '../../../common/NetworkInterfaces';
+import * as showError from '../lib/ShowError';
+import { IFilter } from '../../../common/Interfaces';
 
 interface IAppProps {
 }

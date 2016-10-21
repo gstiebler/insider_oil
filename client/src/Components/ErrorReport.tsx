@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as Modal from 'react-modal';
-import { postP } from './lib/Server';
-import * as showError from './lib/ShowError';
+import { postP } from '../lib/Server';
+import * as showError from '../lib/ShowError';
 import * as Flash from './Flash'
-import { SendErrorReport } from '../../common/NetworkInterfaces'
+import { SendErrorReport } from '../../../common/NetworkInterfaces'
 
 interface IAppProps {
     objectLabel: string;

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
-import * as ni from '../../common/NetworkInterfaces';
-import * as Interfaces from '../../common/Interfaces';
-import * as ArrayUtils from './lib/ArrayUtils';
-import { BarChart } from './Charts/BarChart';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
+import * as ni from '../../../common/NetworkInterfaces';
+import * as Interfaces from '../../../common/Interfaces';
+import * as ArrayUtils from './../lib/ArrayUtils';
+import { BarChart } from './../Charts/BarChart';
 
 interface IAppProps {
 }

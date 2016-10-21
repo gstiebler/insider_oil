@@ -4,7 +4,7 @@ import * as showError from '../lib/ShowError';
 import * as ni from '../../../common/NetworkInterfaces';
 import { PaginatedTable, ITableParams } from './PaginatedTable';
 import { IField } from '../../../common/Interfaces';
-import { Tableau } from '../Tableau'; 
+import { Tableau } from '../Components/Tableau'; 
 
 interface IAppProps {
     location: any;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tableau } from './Tableau'; 
+import { Tableau } from '../Components/Tableau'; 
 
 interface IAppProps {
     location?: any;

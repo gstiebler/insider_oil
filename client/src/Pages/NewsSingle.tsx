@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as server from './lib/Server';
-import * as showError from './lib/ShowError';
+import * as server from '../lib/Server';
+import * as showError from '../lib/ShowError';
 import * as moment from 'moment';
-import * as ni from '../../common/NetworkInterfaces';
-import * as DateUtils from './lib/DateUtils';
-import { Tableau } from './Tableau'; 
+import * as ni from '../../../common/NetworkInterfaces';
+import * as DateUtils from '../lib/DateUtils';
+import { Tableau } from '../Components/Tableau'; 
 
 interface IAppProps {
     location: any;

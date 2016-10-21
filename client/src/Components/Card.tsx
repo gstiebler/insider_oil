@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router';
-import { paths } from './lib/Server';
+import { paths } from '../lib/Server';
 
 interface ICompanyCard {
     company_name: string;

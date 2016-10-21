@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import { Link } from 'react-router';
-import * as Flash from '../Flash'
+import * as Flash from '../Components/Flash'
 import { ExcelUploadButton } from './ExcelUploadButton'
 import { ButtonUploadFile } from './ButtonUploadFile';
 

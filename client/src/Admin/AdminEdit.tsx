@@ -6,7 +6,7 @@ import * as ModelViewService from '../lib/ModelViewUtils';
 import { browserHistory } from 'react-router';
 import { AdminRecordFields } from './AdminRecordFields';
 import { IField } from '../../../common/Interfaces';
-import * as Flash from '../Flash'
+import * as Flash from '../Components/Flash'
 import * as ni from '../../../common/NetworkInterfaces';
 
 function arrayToLines(array:string[]):string {
