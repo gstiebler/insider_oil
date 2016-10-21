@@ -41,10 +41,14 @@ export class Filter extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): React.ReactElement<any> {
+        const data = this.state.data.map((v) => {
+            return { value: v.value + ' (' + v.qtt + ')' };
+        });
+
 		return (
             <div>
                 <Multiselect 
-                    data={this.state.data}
+                    data={data}
                     multiple
                     includeSelectAllOption
                     onChange={ (e) => { console.log(e) } }

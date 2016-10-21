@@ -78,11 +78,11 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
         return (
             <div>
                 { tableau }
+                { this.state.tableParams ? <PaginatedTable tableParams={ this.state.tableParams } /> : null }
                 <Filter
                     queryName="DrillingRigs"
                     fieldName="contractor_name"
                 />
-                { this.state.tableParams ? <PaginatedTable tableParams={ this.state.tableParams } /> : null }
             </div>
         );
     }
