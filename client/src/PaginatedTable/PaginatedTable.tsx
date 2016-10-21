@@ -24,7 +24,7 @@ interface IAppProps {
 interface IAppState {
     headerParams: HeaderParams;
     dataTable: any;
-    filters: any[];
+    searchStr: string;
 }
 
 export class PaginatedTable extends React.Component<IAppProps, IAppState> {
@@ -35,7 +35,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         this.state = { 
             headerParams: null,
             dataTable: null,
-            filters: []
+            searchStr: ''
         };
         window['paginatedTableRef'] = this;
     }
@@ -119,7 +119,8 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
                     itemsPerPage: data.length 
                 },
                 order: orderColumns,
-                filters: this.state.filters
+                filters: [],
+                searchStr: this.state.searchStr
             }
         };
         server.getTableData(req)
@@ -137,8 +138,8 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         return null;
     }
 
-    private filterChanged(newFilter) {
-        this.state.filters = newFilter;
+    private filterChanged(searchStr: string) {
+        this.state.searchStr = searchStr;
         this.state.dataTable.draw();
     } 
 
@@ -146,7 +147,12 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         if(!this.state.headerParams) {
             return <div></div>;
         }
-        const tableHeader = <PaginatedTableHeader headerParams={ this.state.headerParams } filterChanged={ this.filterChanged.bind(this) }></PaginatedTableHeader>;
+        const tableHeader = (
+            <PaginatedTableHeader 
+                headerParams={ this.state.headerParams } 
+                filterChanged={ this.filterChanged.bind(this) } 
+            />
+        )
 
         return (
             <div className="main-table table-responsive bootstrap-table">

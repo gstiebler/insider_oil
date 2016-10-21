@@ -15,13 +15,12 @@ export interface HeaderParams {
 
 interface IAppProps {
     headerParams: HeaderParams;
-    filterChanged: any;
+    filterChanged: (string) => void;
 }
 
 interface IAppState {
     delayTimer: any;
     searchText: string;
-    selectedField: string;
 }
 
 export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> {
@@ -32,29 +31,19 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
         this.state = { 
             delayTimer: {},
             searchText: '',
-            selectedField: ''
         };
     }
     
     private componentDidMount() {
-        this.state.selectedField = this.props.headerParams.filterFields[0].data;
+        
     }
     
     private componentWillReceiveProps(nextProps:IAppProps) {
-        this.state.selectedField = nextProps.headerParams.filterFields[0].data;
+        
     }
 
     private filterChanged() {
-        var filterOpts:IFilter[] = [
-            {
-                field: this.state.selectedField,
-                like: this.state.searchText
-            }
-        ]
-        if(this.state.searchText == '')
-            filterOpts = [];
-          
-        this.props.filterChanged(filterOpts);
+        this.props.filterChanged(this.state.searchText);
     }
 
     private searchTextChanged(event) {
@@ -64,13 +53,6 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
         this.state.delayTimer = setTimeout(this.filterChanged.bind(this), 400);
         event.persist();
     };
-
-    private selectedFieldChanged(event) {
-        this.state.searchText = '';
-        this.setState(this.state);
-        this.state.selectedField = event.target.value;
-        this.filterChanged();
-    }
 
     public render(): React.ReactElement<any> {
         var filterComboOptions = this.props.headerParams.filterFields.map((filterField) => {
@@ -86,12 +68,13 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
                 </div>
                 <div className="col-md-8 col-sm-6">
                     <div className="table-options-pages">
-                        Filtrar por:
-                        <select onChange={this.selectedFieldChanged.bind(this)}
-                            style={{ marginLeft: 15, marginRight: 15 }}>
-                            { filterComboOptions }
-                        </select>
-                        <input className="header-input" type="text" value={this.state.searchText} onChange={ this.searchTextChanged.bind(this) } ></input>
+                        Busca:
+                        <input className="header-input" 
+                               style={{ marginLeft: 15, marginRight: 15 }}
+                               type="text" 
+                               value={this.state.searchText} 
+                               onChange={ this.searchTextChanged.bind(this) } >
+                        </input>
                     </div>
                 </div>
             </div>
