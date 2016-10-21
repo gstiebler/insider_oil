@@ -4,12 +4,12 @@ import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import { browserHistory } from 'react-router';
 import { ViewRecordFields } from './ViewRecordFields';
-import { ShowQueryData } from '../ShowQueryData';
-import { ObjectNews } from '../ObjectNews';
-import { ErrorReport } from '../ErrorReport';
+import { ShowQueryData } from '../Components/ShowQueryData';
+import { ObjectNews } from '../Components/ObjectNews';
+import { ErrorReport } from '../Components/ErrorReport';
 import * as ni from '../../../common/NetworkInterfaces';
 import { IRefObjectsOnView } from '../../../common/Interfaces';
-import { Tableau } from '../Tableau'; 
+import { Tableau } from '../Components/Tableau'; 
 import * as moment from 'moment';
 
 interface IAppProps {

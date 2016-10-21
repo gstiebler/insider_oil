@@ -4,10 +4,10 @@ import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import { Link, browserHistory } from 'react-router';
 import { ViewRecordFields } from './ViewRecordFields';
-import { ShowQueryData } from '../ShowQueryData';
-import { ObjectNews } from '../ObjectNews';
+import { ShowQueryData } from '../Components/ShowQueryData';
+import { ObjectNews } from '../Components/ObjectNews';
 import { TimeSeriesChart, IChartParams } from '../Charts/TimeSeriesChart';
-import { ErrorReport } from '../ErrorReport';
+import { ErrorReport } from '../Components/ErrorReport';
 import * as ViewRecord from './ViewRecord';
 import { Map, IMapObj } from '../Maps/Map';
 import { showBillboard, rioDeJaneiroCoords } from '../lib/MapUtils';
@@ -16,7 +16,7 @@ import * as ni from '../../../common/NetworkInterfaces';
 import { IGeoPoint } from '../../../common/Interfaces';
 import * as Polygon from '../Maps/Polygon';
 import { find } from '../lib/ArrayUtils';
-import { Tableau } from '../Tableau'; 
+import { Tableau } from '../Components/Tableau'; 
 
 interface IAppProps {
     location: any;
