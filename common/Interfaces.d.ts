@@ -136,7 +136,6 @@ export interface IQueryParams {
     searchStr?: string;
 }
 
-
 export interface IAnalyticsGroup {
     fieldName: string;
     label: string;

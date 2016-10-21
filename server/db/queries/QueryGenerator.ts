@@ -1,6 +1,11 @@
 'use strict';
 
-import { IFilter, IOrderOpts, IPaginationOpts } from '../../../common/Interfaces';
+import {
+    IFilter, 
+    IOrderOpts,
+    IPaginationOpts,
+    IBaseQueryField
+} from '../../../common/Interfaces';
 
 type Field = string | string[];
 
@@ -66,6 +71,28 @@ function getInFilter(filter: IFilter, field: string, filterArray: string[]):stri
         const idsStr = filterArray.join(', ');
         return field + ' in (' + idsStr + ')';
     }    
+}
+
+function genSearchStrConditions(searchStr: string, fields: IBaseQueryField[]): string {
+    const fieldConditions:string[] = [];
+    for(let field of fields) {
+        let fieldName;
+        if (field.fieldName) {
+            if(field.type != 'VARCHAR') continue;
+            fieldName = field.fieldName;
+        } else if(field.ref.valueField) {
+            fieldName = field.ref.valueField;
+        } else {
+            throw 'Sem field.fieldName nem field.ref.valueField';
+        }
+        fieldConditions.push(fieldName + ' like "%' + searchStr + '%" ');
+    }
+    return fieldConditions.join(' or ');
+}
+
+export function addSearchStrConditions(query: string, searchStr: string, fields: IBaseQueryField[]): string {
+    const conditions = genSearchStrConditions(searchStr, fields);
+    return 'select * from (' + query + ') as tb where ' + conditions;
 }
 
 export class QueryGenerator {
@@ -150,10 +177,6 @@ export class QueryGenerator {
         }   
         return '';
     }
-
-    /*public genSearchStrConditions(searchStr: string): string {
-
-    }*/
 
     public getWhereStr(queryOpts: IQueryOpts, aliasMap) {
         return queryOpts.where ? this.getFilterStr(queryOpts.where, 'where', aliasMap) : '';

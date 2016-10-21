@@ -2,7 +2,7 @@
 
 import { await } from '../../lib/await';
 import db = require('../models');
-import QueryGenerator = require('./QueryGenerator');
+import * as QueryGenerator from './QueryGenerator';
 import { IQueryParams, IBaseQueryField } from '../../../common/Interfaces';
 import * as RequestLogTranslator from '../../lib/RequestLogTranslator';
 import { syncifyES7 } from '../../lib/PromiseUtils';
@@ -1186,7 +1186,12 @@ export const queries:ITableQueries = {
 
 export function getQueryResult(queryName: string, queryParams: IQueryParams): Promise<any[]> {
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
-    const queryStr = queries[queryName].queryStrFn(queryParams);
+    let queryStr = queries[queryName].queryStrFn(queryParams);
+    if(queryParams.searchStr) {
+        queryStr = QueryGenerator.addSearchStrConditions(queryStr, 
+                        queryParams.searchStr, 
+                        queries[queryName].fields);
+    }
     const pagination = QueryGenerator.getPaginationStr(queryParams.pagination);
     const completeQueryStr = queryStr + pagination;
     const recordsPromise = db.sequelize.query(completeQueryStr, simpleQueryType);

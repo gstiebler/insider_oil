@@ -253,6 +253,37 @@ requestLog:  (test: nodeunit.Test) => {
     test.done();
 },
 
+searchStr:  (test: nodeunit.Test) => {
+    const queryParams:IQueryParams = {
+        order: [
+            {
+                fieldName: 'name',
+                dir: 'asc'
+            }
+        ],
+        filters: [],
+        pagination: {
+            first: 0,
+            itemsPerPage: 100
+        },
+        searchStr: 'brasil'
+    }
+
+    const query: ni.GetTableQueryData.req = {
+        queryName: 'Companies',
+        queryParams: queryParams
+    }
+    
+    const resQueryValues:ni.GetTableQueryData.res = 
+            utils.getJsonResponse.sync(null, dbServerController.getTableQueryData, { query });
+
+    test.equal(14, resQueryValues.records.length);
+    test.equal('BG Brasil', resQueryValues.records[0].name);
+    test.equal('Chevron Frade', resQueryValues.records[3].name);
+    test.equal('Total E&P do Brasil', resQueryValues.records[13].name);
+    test.done();
+},
+
 all: (test: nodeunit.Test) => {
     for(var queryName in queries) {
         try {

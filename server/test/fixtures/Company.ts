@@ -5,7 +5,8 @@ module.exports = function(db) {
             address: "Rua no Centro"
         },
         {
-            name: "Eni Oil"
+            name: "Eni Oil",
+            address: "Rua do petróleo"
         },
         {
             name: "Recôncavo E&P"
@@ -60,7 +61,8 @@ module.exports = function(db) {
             name: 'Anadarko'
         },
         {
-            name: 'Chevron Frade'
+            name: 'Chevron Frade',
+            address: "Brasil"
         },
         {
             name: 'ExxonMobil Brasil'
