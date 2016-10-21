@@ -2,7 +2,7 @@
 
 function beforeUpdate(user) {
     if(!user.dataValues.active) {
-        user.token = '';
+        user.token = null;
     }
 }
 
