@@ -5,6 +5,7 @@ import * as ni from '../../../common/NetworkInterfaces';
 import { PaginatedTable, ITableParams } from './PaginatedTable';
 import { IField } from '../../../common/Interfaces';
 import { Tableau } from '../Components/Tableau'; 
+import { Filter } from '../Components/Filter'; 
 
 interface IAppProps {
     location: any;
@@ -77,6 +78,10 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
         return (
             <div>
                 { tableau }
+                <Filter
+                    queryName="DrillingRigs"
+                    fieldName="contractor_name"
+                />
                 { this.state.tableParams ? <PaginatedTable tableParams={ this.state.tableParams } /> : null }
             </div>
         );
