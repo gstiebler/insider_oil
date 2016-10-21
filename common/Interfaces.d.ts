@@ -16,6 +16,7 @@ export interface IBaseQueryField {
     fieldName?: string;
     type?: string;
     ref?: IRef;
+    hasFilter?: boolean;
 }
 
 export interface IField {

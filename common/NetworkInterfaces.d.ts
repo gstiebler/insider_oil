@@ -128,7 +128,7 @@ export namespace GetTableQueriesFields {
     }
 
     export interface res {
-        fields: Interfaces.IField[];
+        fields: Interfaces.IBaseQueryField[];
         title: string;
         tableauUrl: string;
     }

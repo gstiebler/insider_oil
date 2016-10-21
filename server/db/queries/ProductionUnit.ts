@@ -79,7 +79,8 @@ const productionUnit:TableQueries.ITableQuery = {
                 modelField: 'of_model',
                 idField: 'of_id',
                 valueField: 'of_name'
-            }
+            },
+            hasFilter: true
         },
         {
             label: 'Bloco',
@@ -92,7 +93,8 @@ const productionUnit:TableQueries.ITableQuery = {
         {
             label: 'Status',
             fieldName: 'status',
-            type: 'VARCHAR'
+            type: 'VARCHAR',
+            hasFilter: true
         },
         {
             label: 'Empresa proprietária',
@@ -108,12 +110,14 @@ const productionUnit:TableQueries.ITableQuery = {
                 modelField: 'op_model',
                 idField: 'op_id',
                 valueField: 'op_name'
-            }
+            },
+            hasFilter: true
         },
         {
             label: 'Situação',
             fieldName: 'situation',
-            type: 'VARCHAR'
+            type: 'VARCHAR',
+            hasFilter: true
         },
     ]
 };

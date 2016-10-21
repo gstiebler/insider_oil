@@ -5,7 +5,7 @@ import * as ni from '../../../common/NetworkInterfaces';
 import { PaginatedTable, ITableParams } from './PaginatedTable';
 import { IField } from '../../../common/Interfaces';
 import { Tableau } from '../Components/Tableau'; 
-import { Filter } from '../Components/Filter'; 
+import * as Filter from '../Components/Filter'; 
 
 interface IAppProps {
     location: any;
@@ -14,6 +14,7 @@ interface IAppProps {
 interface IAppState {
     tableParams: ITableParams;
     show: boolean; // it's only here to compensate a Datatables bug
+    filters: Filter.IAppProps[];
 }
 
 export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
@@ -27,7 +28,8 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
 
         this.state = {
             tableParams: null,
-            show: false
+            show: false,
+            filters: []
         };
     }
 
@@ -57,6 +59,21 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
             label: res.title,
             source: this.source
         };
+
+        this.state.filters = [];
+        for(let field of fields) {
+            if(!field.hasFilter) continue;
+            let filter:Filter.IAppProps = {
+                label: field.label,
+                fieldName: field.fieldName,
+                queryName: this.state.tableParams.source
+            };
+            if(!field.fieldName) {
+                filter.fieldName = field.ref.valueField;
+            }
+            this.state.filters.push(filter);
+        }
+
         this.setState(this.state);
         return null;
     }
@@ -75,14 +92,23 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
                 </div>
             );
         }
+
+        const filtersHTML = this.state.filters.map((f, i) => {
+            return (
+                <Filter.Filter
+                    key={'f' + i}
+                    queryName={f.queryName}
+                    fieldName={f.fieldName}
+                    label={f.label}
+                />
+            );
+        });
+
         return (
             <div>
                 { tableau }
+                { filtersHTML }
                 { this.state.tableParams ? <PaginatedTable tableParams={ this.state.tableParams } /> : null }
-                <Filter
-                    queryName="DrillingRigs"
-                    fieldName="contractor_name"
-                />
             </div>
         );
     }

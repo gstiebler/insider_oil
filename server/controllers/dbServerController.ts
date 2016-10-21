@@ -169,9 +169,7 @@ export function getTableQueriesFields(req: express.Request, res: express.Respons
         title: query.title,
         tableauUrl: query.tableauUrl
     };
-    //for(var queryName in TableQueries.queries) {
-        result.fields = query.fields;
-    //}
+    result.fields = query.fields;
     res.json(result);
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 

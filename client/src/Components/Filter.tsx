@@ -6,9 +6,10 @@ import * as showError from '../lib/ShowError';
 
 const Multiselect = require('react-bootstrap-multiselect');
 
-interface IAppProps {
+export interface IAppProps {
     queryName: string;
     fieldName: string;
+    label: string;
 }
 
 interface IAppState {
@@ -47,6 +48,7 @@ export class Filter extends React.Component<IAppProps, IAppState> {
 
 		return (
             <div>
+                {this.props.label}:
                 <Multiselect 
                     data={data}
                     multiple
@@ -56,6 +58,7 @@ export class Filter extends React.Component<IAppProps, IAppState> {
                     allSelectedText={"Tudo"}
                     selectAllText={"Selecionar todos"}
                     nonSelectedText={"Nenhum selecionado"}
+                    style={{ marginLeft: 15, marginRight: 15 }}
                 />
             </div>
 		);

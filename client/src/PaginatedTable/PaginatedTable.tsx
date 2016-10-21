@@ -4,7 +4,10 @@ import * as showError from '../lib/ShowError';
 import * as ModelViewService from '../lib/ModelViewUtils';
 import { Link, browserHistory } from 'react-router';
 import { PaginatedTableHeader, HeaderParams, FilterField } from './PaginatedTableHeader';
-import { TableQueryDataRes } from '../../../common/Interfaces';
+import { 
+    TableQueryDataRes, 
+    IBaseQueryField 
+} from '../../../common/Interfaces';
 import * as StringUtils from '../lib/StringUtils'; 
 import { genColumns } from '../lib/TableUtils';
 import { IField } from '../../../common/Interfaces';
@@ -12,7 +15,7 @@ import { GetTableQueryData } from '../../../common/NetworkInterfaces';
 
 export interface ITableParams {
     label: string;
-    fields: IField[];
+    fields: IBaseQueryField[];
     source: string;
     tableauUrl: string;  
 }
