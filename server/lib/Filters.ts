@@ -1,14 +1,8 @@
 import { queries } from  '../db/queries/TableQueries';
-import { IQueryParams } from '../../common/Interfaces';
-import * as libAwait from '../lib/await';
+import { IQueryParams, FilterResult } from '../../common/Interfaces';
 import db = require('../db/models');
 
-export class FilterResult {
-    value: string;
-    qtt: number;
-}
-
-export function getFilterResult(qryName: string, fieldName: string):FilterResult[] {
+export async function getFilterResult(qryName: string, fieldName: string):Promise<FilterResult[]> {
     const queryParams: IQueryParams = {
         order: [], 
         filters: [],
@@ -25,6 +19,6 @@ export function getFilterResult(qryName: string, fieldName: string):FilterResult
     const order = ' order by value ';
     const queryStr = select + fromStr + group + order;
     const recordsPromise = db.sequelize.query(queryStr, simpleQueryType);
-    const records = libAwait.await(recordsPromise);
+    const records = await recordsPromise;
     return records;
 }

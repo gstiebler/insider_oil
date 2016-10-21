@@ -19,6 +19,7 @@ import Sequelize = require('sequelize');
 import * as interfaces from '../../common/Interfaces';
 import * as ni from '../../common/NetworkInterfaces';
 import { IQueryParams } from '../../common/Interfaces';
+import * as Filters from '../lib/Filters';
 
 export function sendErrorReport(req: express.Request, res: express.Response, next) {
     const body:ni.SendErrorReport.req = req.body;
@@ -173,3 +174,11 @@ export function getTableQueriesFields(req: express.Request, res: express.Respons
     //}
     res.json(result);
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
+
+export async function getFilterSource(req: express.Request, res: express.Response) { try {
+    const query:ni.FilterSource.req = req.query;
+    const values = await Filters.getFilterResult(query.queryName, query.fieldName);
+    const result:ni.FilterSource.res = { values };
+    res.json(result);
+} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err); } }
+

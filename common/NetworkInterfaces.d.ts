@@ -262,3 +262,15 @@ export namespace Search {
         values: Interfaces.IFrontEndProject[];
     }
 }
+
+export namespace FilterSource {
+
+    export interface req {
+        queryName: string;
+        fieldName: string;
+    }
+    
+    export interface res {
+        values: Interfaces.FilterResult[];
+    }
+}

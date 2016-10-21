@@ -161,3 +161,8 @@ export interface IProjectJsonField {
     }[];
     owner_persons_id: string[];
 }
+
+export class FilterResult {
+    value: string;
+    qtt: number;
+}
