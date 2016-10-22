@@ -3,9 +3,10 @@ import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import * as ni from '../../../common/NetworkInterfaces';
 import { PaginatedTable, ITableParams } from './PaginatedTable';
-import { IField } from '../../../common/Interfaces';
+import { IField, IFilter } from '../../../common/Interfaces';
 import { Tableau } from '../Components/Tableau'; 
 import * as Filter from '../Components/Filter'; 
+import { FiltersGroup } from '../Components/FiltersGroup'; 
 
 interface IAppProps {
     location: any;
@@ -14,7 +15,6 @@ interface IAppProps {
 interface IAppState {
     tableParams: ITableParams;
     show: boolean; // it's only here to compensate a Datatables bug
-    filters: Filter.FilterParams[];
 }
 
 export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
@@ -28,8 +28,7 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
 
         this.state = {
             tableParams: null,
-            show: false,
-            filters: []
+            show: false
         };
     }
 
@@ -60,22 +59,12 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
             source: this.source
         };
 
-        this.state.filters = [];
-        for(let field of fields) {
-            if(!field.hasFilter) continue;
-            let filter:Filter.FilterParams = {
-                label: field.label,
-                fieldName: field.fieldName,
-                queryName: this.state.tableParams.source
-            };
-            if(!field.fieldName) {
-                filter.fieldName = field.ref.valueField;
-            }
-            this.state.filters.push(filter);
-        }
-
         this.setState(this.state);
         return null;
+    }
+
+    private onFiltersChange(filters: IFilter[]) {
+        console.log(filters);
     }
 
     public render(): React.ReactElement<any> {
@@ -93,25 +82,13 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
             );
         }
 
-        const filtersHTML = this.state.filters.map((f, i) => {
-            return (
-                <div className="col-md-2" key={'f' + i} >
-                    <Filter.Filter
-                        queryName={f.queryName}
-                        fieldName={f.fieldName}
-                        label={f.label}
-                        onFilterChange={(f2) => { console.log(f.fieldName, f2) }}
-                    />
-                </div>
-            );
-        });
-
         return (
             <div>
                 { tableau }
-                <div className="row">
-                    { filtersHTML }
-                </div>
+                <FiltersGroup 
+                    tableParams={this.state.tableParams}
+                    onChange={this.onFiltersChange.bind(this)} 
+                />
                 <br/>
                 { this.state.tableParams ? <PaginatedTable tableParams={ this.state.tableParams } /> : null }
             </div>
