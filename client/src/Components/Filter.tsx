@@ -54,14 +54,24 @@ export class Filter extends React.Component<IAppProps, IAppState> {
 
     private genFilter():IFilter {
         const selectedValues:string[] = [];
+        const deselectedValues:string[] = [];
         for(let key in this.selectedObjs) {
             if(this.selectedObjs[key]) {
                 selectedValues.push(key);
+            } else {
+                deselectedValues.push(key);
             }
         }
-        return {
-            field: this.props.fieldName,
-            in: selectedValues
+        if(selectedValues.length < deselectedValues.length) {
+            return {
+                field: this.props.fieldName,
+                in: selectedValues
+            }
+        } else {
+            return {
+                field: this.props.fieldName,
+                notIn: deselectedValues
+            }
         }
     }
 
