@@ -137,20 +137,31 @@ export interface IQueryParams {
     searchStr?: string;
 }
 
-export interface IAnalyticsGroup {
-    fieldName: string;
-    label: string;
-}
+export namespace Analytics {
+   
+    export interface ISource {
+        sourceName: string;
+        groupFields: string[];
+        valueFields: string[];
+    }
 
-export interface IAnalyticsSource {
-    sourceName: string;
-    title: string;
-    possibleGroups: IAnalyticsGroup[];
-}
+    export interface IAField {
+        name: string;
+        label: string;
+    }
 
-export interface IAnalyticsCount {
-    label: string;
-    count_value: number;
+    export interface IFrontendSource {
+        sourceName: string;
+        label: string;
+        groupFields: IAField[];
+        valueFields: IAField[];
+    }
+
+    export interface IResult {
+        label: string;
+        value: number;
+    }
+
 }
 
 export interface IProjectJsonField {

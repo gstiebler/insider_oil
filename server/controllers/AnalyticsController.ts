@@ -16,9 +16,9 @@ export function getSources(req: express.Request, res: express.Response, next) {S
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}
 
 export function getCountValues(req: express.Request, res: express.Response, next) {Sync(function(){
-    const query:ni.AnalyticsCount.req = req.query;
+    const query:ni.AnalyticsResults.req = req.query;
     const countResult:Interfaces.IAnalyticsCount[] = 
             await( Analytics.getCount(query.source, query.field) );
-    const resObj:ni.AnalyticsCount.res = { countResult };
+    const resObj:ni.AnalyticsResults.res = { results };
     res.json(resObj);
 }, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados."))}

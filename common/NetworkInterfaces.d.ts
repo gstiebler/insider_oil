@@ -183,18 +183,18 @@ export namespace AnalyticsSources {
     export interface req {}
 
     export interface res {
-        sources: Interfaces.IAnalyticsSource[];
+        sources: Interfaces.Analytics.IFrontendSource[];
     }
 }
 
-export namespace AnalyticsCount {
+export namespace AnalyticsResults {
     export interface req {
         source: string;
         field: string;
     }
 
     export interface res {
-        countResult: Interfaces.IAnalyticsCount[];
+        results: Interfaces.Analytics.IResult[];
     }
 }
 

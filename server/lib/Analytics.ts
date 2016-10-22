@@ -2,140 +2,164 @@
 
 import db = require('../db/models');
 import dsParams = require('../lib/DataSourcesParams');
-import * as Interfaces from '../../common/Interfaces';
+import { Analytics, IBaseQueryField } from '../../common/Interfaces';
 import { fieldTypeStr } from './ModelUtils';
+import * as TableQueries from '../db/queries/TableQueries';
 
-const sources:Interfaces.IAnalyticsSource[] = [
+const sources:Analytics.ISource[] = [
     {
-        sourceName: 'Well',
-        title: 'Poços',
-        possibleGroups: [
-            {
-                fieldName: 'operator_id',
-                label: 'Operador'
-            },
-            {
-                fieldName: 'block_id',
-                label: 'Bloco'
-            },
-            {
-                fieldName: 'oil_field_id',
-                label: 'Campo'
-            },
-            {
-                fieldName: 'production_unit_id',
-                label: 'Unidade de produção'
-            },
-            {
-                fieldName: 'drilling_rig_offshore_id',
-                label: 'Sonda offshore'
-            },
-            {
-                fieldName: 'drilling_rig_onshore_id',
-                label: 'Sonda onshore'
-            },
+        sourceName: 'Wells',
+        groupFields: [
+            'operator_name',
+            'block_name',
+            'dr_name',
+            'type',
+            'category',
+            'situation',
+        ],
+        valueFields: []
+    },
+    {
+        sourceName: 'DrillingRigs',
+        groupFields: [
+            'contractor_name',
+            'operator_name',
+            'land_sea',
+            'status',
+        ],
+        valueFields: [
+            'day_rate'
         ]
     },
     {
-        sourceName: 'DrillingRigOffshore',
-        title: 'Sondas offshore',
-        possibleGroups: [
-            {
-                fieldName: 'operator_id',
-                label: 'Operador'
-            },
-            {
-                fieldName: 'contractor_id',
-                label: 'Contratante'
-            },
+        sourceName: 'Blocks',
+        groupFields: [
+            'basin_name',
+            'operator_name',
+            'status',
+        ],
+        valueFields: []
+    },
+    {
+        sourceName: 'FPSOs',
+        groupFields: [
+            'of_name',
+            'b_name',
+            'pu_status',
+            'ow_name',
+            'op_name',
+            'situation',
+        ],
+        valueFields: []
+    },    
+    {
+        sourceName: 'FixedProductionUnits',
+        groupFields: [
+            'of_name',
+            'b_name',
+            'pu_status',
+            'ow_name',
+            'op_name',
+            'situation',
+        ],
+        valueFields: []
+    },    
+    {
+        sourceName: 'SemiSubmersibleProductionUnits',
+        groupFields: [
+            'of_name',
+            'b_name',
+            'pu_status',
+            'ow_name',
+            'op_name',
+            'situation',
+        ],
+        valueFields: []
+    },
+    {
+        sourceName: 'oilFielsdProduction',
+        groupFields: [
+            'b_name',
+            'state',
+            'land_sea',
+        ],
+        valueFields: []
+    },
+    {
+        sourceName: 'oilFieldsDevelopment',
+        groupFields: [
+            'b_name',
+            'state',
+            'land_sea',
+        ],
+        valueFields: []
+    },
+    {
+        sourceName: 'Seismics',
+        groupFields: [
+            'authorized_company',
+            'block_name',
+            'basin_name',
+        ],
+        valueFields: []
+    },
+    {
+        sourceName: 'Contracts',
+        groupFields: [
+            'supplier',
+            'c_situation',
+            'type',
+        ],
+        valueFields: [
+            'day_rate',
+            'value'
         ]
     },
     {
-        sourceName: 'DrillingRigOnshore',
-        title: 'Sondas onshore',
-        possibleGroups: [
-            {
-                fieldName: 'operator_id',
-                label: 'Operador'
-            },
-            {
-                fieldName: 'contractor_id',
-                label: 'Contratante'
-            },
-        ]
-    },
-    {
-        sourceName: 'Block',
-        title: 'Blocos',
-        possibleGroups: [
-            {
-                fieldName: 'status',
-                label: 'Status'
-            },
-            {
-                fieldName: 'operator_id',
-                label: 'Operador'
-            },
-        ]
-    },
-    {
-        sourceName: 'ProductionUnit',
-        title: 'Unidades de produção',
-        possibleGroups: [
-            {
-                fieldName: 'status',
-                label: 'Status'
-            },
-            {
-                fieldName: 'owner_id',
-                label: 'Proprietário'
-            },
-            {
-                fieldName: 'situation',
-                label: 'Situação'
-            },
-            {
-                fieldName: 'oil_field_id',
-                label: 'Campo'
-            },
-            {
-                fieldName: 'block_id',
-                label: 'Bloco'
-            },
-            {
-                fieldName: 'type',
-                label: 'Tipo'
-            },
-        ]
-    },
-    {
-        sourceName: 'OilField',
-        title: 'Campos',
-        possibleGroups: [
-            {
-                fieldName: 'state',
-                label: 'Estado'
-            },
-            {
-                fieldName: 'stage',
-                label: 'Estágio'
-            },
-            {
-                fieldName: 'basin_id',
-                label: 'Bacia'
-            },
-            {
-                fieldName: 'operator_id',
-                label: 'Operador'
-            },
-        ]
+        sourceName: 'Boats',
+        groupFields: [
+            'type',
+            'ow_name',
+            'op_name',
+        ],
+        valueFields: []
     },
 ];
 
-export function getSources():Interfaces.IAnalyticsSource[] {
-    return sources;
+function getAFields(fieldsList: string[], fieldsMap: { [s: string]:  IBaseQueryField }):Analytics.IAField[] {
+    return fieldsList.map((fieldName) => {
+        return {
+            name: fieldName,
+            label: fieldsMap[fieldName].label
+        };
+    });
 }
 
+export function getSources():Analytics.IFrontendSource[] {
+    const result:Analytics.IFrontendSource[] = sources.map((source) => {
+        const tableParams = TableQueries.queries[source.sourceName];
+
+        const fieldsMap: { [s: string]:  IBaseQueryField } = {};
+        for(let bqf of tableParams.fields) {
+            if(bqf.fieldName) {
+                fieldsMap[bqf.fieldName] = bqf;
+            } else {
+                fieldsMap[bqf.ref.valueField] = bqf;
+            }
+        }
+
+        const fs = {
+            sourceName: source.sourceName,
+            label: tableParams.title,
+            groupFields: getAFields(source.groupFields, fieldsMap),
+            valueFields: getAFields(source.valueFields, fieldsMap),
+        }
+        return fs;
+    });
+
+    return result;
+}
+/*
 function getAssociationByField(associations, fieldName: string):any {
     for(let key in associations) {
         let association = associations[key];
@@ -201,3 +225,5 @@ export function getCount(sourceName: string, fieldName: string):Promise<Interfac
     }
     throw 'Tipo da análise não definido: ' + typeStr;
 }
+
+*/
