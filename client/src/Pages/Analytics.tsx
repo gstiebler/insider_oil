@@ -110,7 +110,13 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             return null;
         }
         const options = fields.map((gfield, index) => {
-            return <option value={gfield.name} key={index}>{gfield.label}</option>;
+            return (
+                <option value={gfield.name}
+                        selected={gfield.name == this.state[propName]} 
+                        key={index}>
+                    {gfield.label}
+                </option>
+            );
         });
 
         return (
