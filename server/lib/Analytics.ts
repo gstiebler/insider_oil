@@ -164,8 +164,9 @@ export function getSources():Analytics.IFrontendSource[] {
     return result;
 }
 
-export async function getCountResult(sourceName: string, 
-                               groupField: string):Promise<Analytics.IResult> {
+export async function getResult(sourceName: string, 
+                                     groupField: string,
+                                     valueField: string):Promise<Analytics.IResult> {
     const queryParams: IQueryParams = {
         order: [], 
         filters: [],
@@ -176,7 +177,8 @@ export async function getCountResult(sourceName: string,
     };
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const baseQueryStr = TableQueries.queries[sourceName].queryStrFn(queryParams);
-    const select = 'select count(*) as value, tb.' + groupField + ' as label ';
+    const selectValueStr = valueField == 'qtt*' ? 'count(*)' : 'sum(' + valueField+ ')';
+    const select = 'select ' + selectValueStr + ' as value, tb.' + groupField + ' as label ';
     const fromStr = ' from (' + baseQueryStr + ') as tb ';
     const group = ' group by tb.' + groupField;
     const order = ' order by value desc ';
