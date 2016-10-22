@@ -15,6 +15,12 @@ getSources: (test: nodeunit.Test) => {
     test.equal(11, sources.length);
     test.equal('Sondas', sources[0].label);
     test.equal('Contratante', sources[0].groupFields[0].label);
+
+    test.equal('Contratos', sources[9].label);
+    test.equal('Quantidade', sources[9].valueFields[0].label);
+    test.equal('qtt*', sources[9].valueFields[0].name);
+    test.equal('Day rate', sources[9].valueFields[1].label);
+    test.equal('day_rate', sources[9].valueFields[1].name);
     test.done();
 },
 
