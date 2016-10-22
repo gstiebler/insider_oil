@@ -12,7 +12,9 @@ var notModGroup: nodeunit.ITestGroup = {
 
 getSources: (test: nodeunit.Test) => {
     const sources = Analytics.getSources();
-    console.log(sources);
+    test.equal(11, sources.length);
+    test.equal('Sondas', sources[0].label);
+    test.equal('Contratante', sources[0].groupFields[0].label);
     test.done();
 },
 

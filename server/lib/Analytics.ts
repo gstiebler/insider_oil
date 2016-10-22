@@ -8,18 +8,6 @@ import * as TableQueries from '../db/queries/TableQueries';
 
 const sources:Analytics.ISource[] = [
     {
-        sourceName: 'Wells',
-        groupFields: [
-            'operator_name',
-            'block_name',
-            'dr_name',
-            'type',
-            'category',
-            'situation',
-        ],
-        valueFields: []
-    },
-    {
         sourceName: 'DrillingRigs',
         groupFields: [
             'contractor_name',
@@ -30,6 +18,18 @@ const sources:Analytics.ISource[] = [
         valueFields: [
             'day_rate'
         ]
+    },
+    {
+        sourceName: 'Wells',
+        groupFields: [
+            'operator_name',
+            'block_name',
+            'dr_name',
+            'type',
+            'category',
+            'situation',
+        ],
+        valueFields: []
     },
     {
         sourceName: 'Blocks',
