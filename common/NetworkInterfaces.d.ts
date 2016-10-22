@@ -183,18 +183,20 @@ export namespace AnalyticsSources {
     export interface req {}
 
     export interface res {
-        sources: Interfaces.Analytics.IFrontendSource[];
+        sources: Interfaces.NSAnalytics.IFrontendSource[];
     }
 }
 
 export namespace AnalyticsResults {
     export interface req {
         source: string;
-        field: string;
+        groupField: string;
+        valueField: string;
+        maxNumItems: number;
     }
 
     export interface res {
-        result: Interfaces.Analytics.IResult;
+        result: Interfaces.NSAnalytics.IResult;
     }
 }
 

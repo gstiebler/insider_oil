@@ -3,14 +3,14 @@
 import db = require('../db/models');
 import dsParams = require('../lib/DataSourcesParams');
 import { 
-    Analytics, 
+    NSAnalytics, 
     IBaseQueryField, 
     IQueryParams 
 } from '../../common/Interfaces';
 import { fieldTypeStr } from './ModelUtils';
 import * as TableQueries from '../db/queries/TableQueries';
 
-const sources:Analytics.ISource[] = [
+const sources:NSAnalytics.ISource[] = [
     {
         sourceName: 'DrillingRigs',
         groupFields: [
@@ -130,7 +130,7 @@ const sources:Analytics.ISource[] = [
     },
 ];
 
-function getAFields(fieldsList: string[], fieldsMap: { [s: string]:  IBaseQueryField }):Analytics.IAField[] {
+function getAFields(fieldsList: string[], fieldsMap: { [s: string]:  IBaseQueryField }):NSAnalytics.IAField[] {
     return fieldsList.map((fieldName) => {
         return {
             name: fieldName,
@@ -139,8 +139,8 @@ function getAFields(fieldsList: string[], fieldsMap: { [s: string]:  IBaseQueryF
     });
 }
 
-export function getSources():Analytics.IFrontendSource[] {
-    const result:Analytics.IFrontendSource[] = sources.map((source) => {
+export function getSources():NSAnalytics.IFrontendSource[] {
+    const result:NSAnalytics.IFrontendSource[] = sources.map((source) => {
         const tableParams = TableQueries.queries[source.sourceName];
 
         const fieldsMap: { [s: string]:  IBaseQueryField } = {};
@@ -167,7 +167,7 @@ export function getSources():Analytics.IFrontendSource[] {
 export async function getResult(sourceName: string, 
                                 groupField: string,
                                 valueField: string,
-                                maxNumItems: number):Promise<Analytics.IResult> {
+                                maxNumItems: number):Promise<NSAnalytics.IResult> {
     const queryParams: IQueryParams = {
         order: [], 
         filters: [],
@@ -184,7 +184,7 @@ export async function getResult(sourceName: string,
     const group = ' group by tb.' + groupField;
     const order = ' order by value desc ';
     const limit = ' limit 0, ' + maxNumItems;
-    const queryStr = select + fromStr + group + order;
+    const queryStr = select + fromStr + group + order + limit;
     const recordsPromise = db.sequelize.query(queryStr, simpleQueryType);
     const records = await recordsPromise;
     return {
@@ -192,62 +192,3 @@ export async function getResult(sourceName: string,
         othersValue: 0
     };   
 }
-
-/*
-function getCountAssociationField(sourceName: string, fieldName: string):Promise<Interfaces.IAnalyticsCount[]> {
-    const model = db.models[sourceName];
-    const params = dsParams[sourceName];
-    const table = model.tableName;
-    const association = getAssociationByField(model.associations, fieldName);
-    const targetModel = association.target;
-    const associationTable = targetModel.tableName;
-
-    const select = 'SELECT COUNT('+ table +'.id) AS count_value, '+ associationTable +'.name as label ';
-    const fromStr = ' from ' + table;
-    const join = ' left outer join ' + associationTable + ' on ' + 
-            table + '.' + fieldName + ' = ' + associationTable + '.id '; 
-    const where = ' where ' + fieldName + ' IS NOT NULL ';
-    const group = ' group by ' + fieldName;
-    const order = ' order by count_value desc ';
-    const limit = ' limit 10 ';    
-    const query = select + fromStr + join + where + group + order + limit;
-    
-    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
-    return db.sequelize.query(query, simpleQueryType);
-}
-
-function getCountTextField(sourceName: string, fieldName: string):Promise<Interfaces.IAnalyticsCount[]> {
-    const model = db.models[sourceName];
-    const params = dsParams[sourceName];
-    const table = model.tableName;
-
-    const select = 'SELECT COUNT(id) AS count_value, '+ fieldName +' as label ';
-    const fromStr = ' from ' + table;
-    const where = ' where ' + fieldName + ' IS NOT NULL ' +
-                  ' and ' + fieldName + ' != "" ';
-    const group = ' group by ' + fieldName;
-    const order = ' order by count_value desc ';
-    const limit = ' limit 10 ';    
-    const query = select + fromStr + where + group + order + limit;
-    
-    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
-    return db.sequelize.query(query, simpleQueryType);
-}
-
-export function getCount(sourceName: string, fieldName: string):Promise<Interfaces.IAnalyticsCount[]> {
-    const model = db.models[sourceName];
-    const field = model.attributes[fieldName];
-    const typeStr = fieldTypeStr(field);
-    if(typeStr.includes('VARCHAR')) {
-        return getCountTextField(sourceName, fieldName);
-    } else if (typeStr == 'ENUM') {
-        return getCountTextField(sourceName, fieldName);
-    }
-    const association = getAssociationByField(model.associations, fieldName);
-    if(association) {
-        return getCountAssociationField(sourceName, fieldName);
-    }
-    throw 'Tipo da análise não definido: ' + typeStr;
-}
-
-*/

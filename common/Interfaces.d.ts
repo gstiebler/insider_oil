@@ -137,7 +137,7 @@ export interface IQueryParams {
     searchStr?: string;
 }
 
-export namespace Analytics {
+export namespace NSAnalytics {
    
     export interface ISource {
         sourceName: string;

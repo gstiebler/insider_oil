@@ -1,9 +1,9 @@
 import * as React from 'react';
-import * as Interfaces from '../../../common/Interfaces';
+import { NSAnalytics } from '../../../common/Interfaces';
 import { googleRef, loadBarChart } from '../lib/Google';
 
 interface IAppProps {
-    countData: Interfaces.IAnalyticsCount[];
+    analyticsData: NSAnalytics.IResult;
     axisName?: string;
 }
 
@@ -29,7 +29,7 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
     private onGoogleLoad() {
         this.chartsLoaded = true;
         this.initChart();
-        this.showChart(this.props.countData);
+        this.showChart(this.props.analyticsData);
     }
 
     private initChart() {
@@ -39,18 +39,18 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
     private componentWillReceiveProps(nextProps:IAppProps) {
         if(!this.chartsLoaded)
             return;
-        this.showChart(nextProps.countData);
+        this.showChart(nextProps.analyticsData);
     }
 
-    private showChart(analyticsCount: Interfaces.IAnalyticsCount[]) {
+    private showChart(analyticsCount: NSAnalytics.IResult) {
         var dataTable = new googleRef.visualization.DataTable();
 
         // Declare columns
         dataTable.addColumn('string', 'Item');
         dataTable.addColumn('number', 'quantidade');
 
-        const arrayData = analyticsCount.map(item => {
-            return [item.label, item.count_value];
+        const arrayData = analyticsCount.items.map(item => {
+            return [item.label, item.value];
         });
         if(arrayData.length == 0) {
             arrayData.push(['vazio', 0]);

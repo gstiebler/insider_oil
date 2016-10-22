@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import * as ni from '../../../common/NetworkInterfaces';
-import * as Interfaces from '../../../common/Interfaces';
+import { NSAnalytics } from '../../../common/Interfaces';
 import * as ArrayUtils from './../lib/ArrayUtils';
 import { BarChart } from './../Charts/BarChart';
 
@@ -10,10 +10,10 @@ interface IAppProps {
 }
 
 interface IAppState {
-    sources: Interfaces.IAnalyticsSource[];
+    sources: NSAnalytics.IFrontendSource[];
     selectedSourceName: string;
     groupField: string;
-    countData: Interfaces.IAnalyticsCount[];
+    result: NSAnalytics.IResult;
 }
 
 export class Analytics extends React.Component<IAppProps, IAppState> {
@@ -25,7 +25,10 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             sources: [],
             selectedSourceName: null,
             groupField: null,
-            countData: []
+            result: {
+                items: [],
+                othersValue: 0 
+            }
         };
     }
 
@@ -48,33 +51,35 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         if(!selectedSource) {
             return null;
         }
-        this.state.groupField = selectedSource.possibleGroups[0].fieldName;
-        this.getCountData();
+        this.state.groupField = selectedSource.groupFields[0].name;
+        this.getResult();
     }
 
     private groupFieldChanged(event) {
         this.state.groupField = event.target.value;
-        this.getCountData();
+        this.getResult();
     }
 
-    private getCountData() {
-        const req:ni.AnalyticsCount.req = {
+    private getResult() {
+        const req:ni.AnalyticsResults.req = {
             source: this.state.selectedSourceName,
-            field: this.state.groupField
+            groupField: this.state.groupField,
+            valueField: this.state.valueField,
+            maxNumItems: 10
         };
         server.getP('/analytics/count_values', req)
             .then(this.onCountData.bind(this))
             .catch(showError.show);
     } 
 
-    private onCountData(res: ni.AnalyticsCount.res) {
-        this.state.countData = res.countResult;
+    private onCountData(res: ni.AnalyticsResults.res) {
+        this.state.result = res.result;
         this.setState(this.state);
     }
 
     private getSourcesCombo(): React.ReactElement<any> {
         const sourcesOptions = this.state.sources.map((source, index) => {
-            return <option value={source.sourceName} key={index}>{source.title}</option>;
+            return <option value={source.sourceName} key={index}>{source.label}</option>;
         });
 
         return (
@@ -85,7 +90,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         );
     }
 
-    private getSelectedSource():Interfaces.IAnalyticsSource {
+    private getSelectedSource():NSAnalytics.IFrontendSource {
        return ArrayUtils.find(this.state.sources, val => {
             return val.sourceName == this.state.selectedSourceName;
         });
@@ -96,8 +101,8 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         if(!selectedSource) {
             return null;
         }
-        const groupsOptions = selectedSource.possibleGroups.map((group, index) => {
-            return <option value={group.fieldName} key={index}>{group.label}</option>;
+        const groupsOptions = selectedSource.groupFields.map((gfield, index) => {
+            return <option value={gfield.name} key={index}>{gfield.label}</option>;
         });
 
         return (
@@ -118,7 +123,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
                     Agrupar por: { this.getGroupFieldCombo() }
                 </div>
                 <div className="col-lg-9 col-md-9">
-                    <BarChart countData={this.state.countData}/>
+                    <BarChart analyticsData={this.state.result}/>
                 </div>
             </div> 
 		);
