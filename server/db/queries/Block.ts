@@ -63,7 +63,8 @@ export const Blocks:TableQueries.ITableQuery = {
                 modelField: 'basin_model',
                 idField: 'basin_id',
                 valueField: 'basin_name'
-            }
+            },
+            hasFilter: true
         },
         {
             label: 'Operador',
@@ -71,12 +72,14 @@ export const Blocks:TableQueries.ITableQuery = {
                 modelField: 'operator_model',
                 idField: 'operator_id',
                 valueField: 'operator_name'
-            }
+            },
+            hasFilter: true
         },
         {
             label: 'Status',
             fieldName: 'status',
-            type: 'VARCHAR'
+            type: 'VARCHAR',
+            hasFilter: true
         }
     ],
     tableauUrl: 'https://public.tableau.com/views/Blocos/Painel1?:embed=y&:display_count=yes&:toolbar=no'

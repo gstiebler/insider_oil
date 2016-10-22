@@ -29,7 +29,11 @@ export class Tableau extends React.Component<IAppProps, IAppState> {
 	private componentDidUpdate() {
         this.viz.dispose();
         this.initViz();
-	}
+	}    
+    
+    private shouldComponentUpdate(nextProps: IAppProps) {
+        return this.props.vizUrl != nextProps.vizUrl;
+    }
 
     private initViz() {
         const options = { hideTabs: true };

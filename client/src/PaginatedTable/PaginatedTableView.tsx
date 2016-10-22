@@ -15,6 +15,7 @@ interface IAppProps {
 interface IAppState {
     tableParams: ITableParams;
     show: boolean; // it's only here to compensate a Datatables bug
+    filters: IFilter[];
 }
 
 export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
@@ -28,7 +29,8 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
 
         this.state = {
             tableParams: null,
-            show: false
+            show: false,
+            filters: []
         };
     }
 
@@ -64,7 +66,8 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
     }
 
     private onFiltersChange(filters: IFilter[]) {
-        console.log(filters);
+        this.state.filters = filters;
+        this.setState(this.state);
     }
 
     public render(): React.ReactElement<any> {
@@ -72,7 +75,8 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
             this.state.show = true;
             return <div></div>;
         }
-        var tableau = null;
+
+        let tableau = null;
         if(this.state.tableParams.tableauUrl) {
             tableau = (
                 <div>
@@ -80,6 +84,16 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
                     <br/>
                 </div>
             );
+        }
+
+        let paginatedTableHTML = null;
+        if(this.state.tableParams) {
+            paginatedTableHTML = (
+                <PaginatedTable 
+                    tableParams={ this.state.tableParams }
+                    filters={this.state.filters} 
+                />
+            )
         }
 
         return (
@@ -90,7 +104,7 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
                     onChange={this.onFiltersChange.bind(this)} 
                 />
                 <br/>
-                { this.state.tableParams ? <PaginatedTable tableParams={ this.state.tableParams } /> : null }
+                { paginatedTableHTML }
             </div>
         );
     }

@@ -3,14 +3,18 @@ import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import * as ModelViewService from '../lib/ModelViewUtils';
 import { Link, browserHistory } from 'react-router';
-import { PaginatedTableHeader, HeaderParams, FilterField } from './PaginatedTableHeader';
+import { 
+    PaginatedTableHeader, 
+    HeaderParams, 
+    FilterField 
+} from './PaginatedTableHeader';
 import { 
     TableQueryDataRes, 
     IBaseQueryField 
 } from '../../../common/Interfaces';
 import * as StringUtils from '../lib/StringUtils'; 
 import { genColumns } from '../lib/TableUtils';
-import { IField } from '../../../common/Interfaces';
+import { IField, IFilter } from '../../../common/Interfaces';
 import { GetTableQueryData } from '../../../common/NetworkInterfaces';
 
 export interface ITableParams {
@@ -22,6 +26,7 @@ export interface ITableParams {
 
 interface IAppProps {
     tableParams: ITableParams;
+    filters: IFilter[];
 }
 
 interface IAppState {
@@ -32,6 +37,10 @@ interface IAppState {
 
 export class PaginatedTable extends React.Component<IAppProps, IAppState> {
 
+    private updated: boolean;
+    /** this variable is used because props are not updated before ajaxFn */
+    private filtersInAjax: IFilter[];
+
     constructor(props: IAppProps) {
         super(props);
 
@@ -41,14 +50,24 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
             searchStr: ''
         };
         window['paginatedTableRef'] = this;
+
+        this.updated = false;
+        this.filtersInAjax = [];
     }
 
     private componentWillReceiveProps(nextProps: IAppProps) {
         if(!nextProps.tableParams) {
             return;
         }
-        this.initHeader(nextProps);
-        this.setState(this.state);
+        this.filtersInAjax = nextProps.filters;
+        this.state.dataTable.draw();
+        console.log('componentWillReceiveProps', this.props.filters, nextProps.filters);
+    }
+
+    private shouldComponentUpdate(nextProps: IAppProps) {
+        const result = !this.updated;
+        this.updated = true;
+        return result;
     }
 
     private componentDidMount() {
@@ -122,10 +141,11 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
                     itemsPerPage: data.length 
                 },
                 order: orderColumns,
-                filters: [],
+                filters: this.filtersInAjax,
                 searchStr: this.state.searchStr
             }
         };
+        console.log('ajaxFn', this.props.filters);
         server.getTableData(req)
             .then(this.onTableData.bind(this, callback))
             .catch(showError.show);
@@ -145,10 +165,6 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         this.state.searchStr = searchStr;
         this.state.dataTable.draw();
     } 
-
-    private filterChange(e) {
-        console.log(e);
-    }
 
     public render(): React.ReactElement<any> {
         if(!this.state.headerParams) {

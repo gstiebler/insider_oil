@@ -56,10 +56,11 @@ export class Filter extends React.Component<IAppProps, IAppState> {
         const selectedValues:string[] = [];
         const deselectedValues:string[] = [];
         for(let key in this.selectedObjs) {
+            const formattedKey = '"' + key + '"';
             if(this.selectedObjs[key]) {
-                selectedValues.push(key);
+                selectedValues.push(formattedKey);
             } else {
-                deselectedValues.push(key);
+                deselectedValues.push(formattedKey);
             }
         }
         if(selectedValues.length < deselectedValues.length) {
@@ -96,7 +97,7 @@ export class Filter extends React.Component<IAppProps, IAppState> {
         }
         this.props.onFilterChange({
             field: this.props.fieldName,
-            equal: '***'
+            equal: '"***"'
         });
     }
 
@@ -104,7 +105,7 @@ export class Filter extends React.Component<IAppProps, IAppState> {
         const data = this.state.data.map((v) => {
             return { 
                 value: v.value + ' (' + v.qtt + ')',
-                selected: true 
+                selected: this.selectedObjs[v.value] 
             };
         });
 
