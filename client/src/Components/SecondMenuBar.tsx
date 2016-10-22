@@ -26,7 +26,7 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
     </li>;
 
     var analyticsLink = <li className="nav-item" >
-      <Link to="/app/analytics"><b>Analytics</b></Link>
+      <Link to="/app/charts"><b>Gráficos</b></Link>
     </li>;
 
     var logo = (

@@ -158,7 +158,7 @@ ReactDOM.render(
       <Route path="insights_publisher" component={Publisher}/>
       <Route path="observatory" component={Observatory}/>
       <Route path="companies" component={CompaniesCards}/>
-      <Route path="analytics" component={Analytics}/>
+      <Route path="charts" component={Analytics}/>
       <Route path="target_sales" component={TargetSales}/>
       <Route path="target_sales" component={TargetSales}/>
       <Route path="search_results" component={SearchResults}/>

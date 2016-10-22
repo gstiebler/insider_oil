@@ -49,6 +49,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         this.state.groupField = selectedSource.groupFields[0].name;
         this.state.valueField = selectedSource.valueFields[0].name;
         this.setState(this.state);
+        this.getResult();
     }
 
     private sourceChange(event) {
