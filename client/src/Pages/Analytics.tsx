@@ -141,7 +141,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         if(!selectedSource) {
             return null;
         }
-        return this.getFieldCombo(selectedSource.valueFields, 'valueFields');
+        return this.getFieldCombo(selectedSource.valueFields, 'valueField');
     }
 
     public render(): React.ReactElement<any> {
