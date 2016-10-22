@@ -9,7 +9,6 @@ export interface FilterField {
 }
 
 export interface HeaderParams {
-    filterFields: FilterField[];
     label: string;
 }
 
@@ -55,10 +54,6 @@ export class PaginatedTableHeader extends React.Component<IAppProps, IAppState> 
     };
 
     public render(): React.ReactElement<any> {
-        var filterComboOptions = this.props.headerParams.filterFields.map((filterField) => {
-            return <option key={filterField.title} value={filterField.data} >{filterField.title}</option>;
-        });
-
         return (
             <div className="table-options">
                 <div className="col-md-4 col-sm-6">

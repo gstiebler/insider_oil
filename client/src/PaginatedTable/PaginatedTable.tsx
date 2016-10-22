@@ -61,7 +61,6 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         }
         this.filtersInAjax = nextProps.filters;
         this.state.dataTable.draw();
-        console.log('componentWillReceiveProps', this.props.filters, nextProps.filters);
     }
 
     private shouldComponentUpdate(nextProps: IAppProps) {
@@ -82,9 +81,7 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
 
     private initHeader(props) {
         var { tableParams } = props;
-        var {columns, currencyColumnsIndexes} = genColumns(tableParams);
         this.state.headerParams = { 
-            filterFields: columns,
             label: tableParams.label
         };
     }
@@ -145,7 +142,6 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
                 searchStr: this.state.searchStr
             }
         };
-        console.log('ajaxFn', this.props.filters);
         server.getTableData(req)
             .then(this.onTableData.bind(this, callback))
             .catch(showError.show);
