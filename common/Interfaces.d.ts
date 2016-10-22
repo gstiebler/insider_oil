@@ -157,9 +157,14 @@ export namespace Analytics {
         valueFields: IAField[];
     }
 
-    export interface IResult {
+    export interface IItemResult {
         label: string;
         value: number;
+    }
+
+    export interface IResult {
+        items: IItemResult[];
+        othersValue: number;
     }
 
 }

@@ -2,7 +2,11 @@
 
 import db = require('../db/models');
 import dsParams = require('../lib/DataSourcesParams');
-import { Analytics, IBaseQueryField } from '../../common/Interfaces';
+import { 
+    Analytics, 
+    IBaseQueryField, 
+    IQueryParams 
+} from '../../common/Interfaces';
 import { fieldTypeStr } from './ModelUtils';
 import * as TableQueries from '../db/queries/TableQueries';
 
@@ -159,17 +163,33 @@ export function getSources():Analytics.IFrontendSource[] {
 
     return result;
 }
-/*
-function getAssociationByField(associations, fieldName: string):any {
-    for(let key in associations) {
-        let association = associations[key];
-        if(association.identifierField == fieldName) {
-            return association;
-        }
-    }
-    return null;
+
+export async function getCountResult(sourceName: string, 
+                               groupField: string):Promise<Analytics.IResult> {
+    const queryParams: IQueryParams = {
+        order: [], 
+        filters: [],
+        pagination: {
+            first: 0,
+            itemsPerPage: 300
+        } 
+    };
+    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
+    const baseQueryStr = TableQueries.queries[sourceName].queryStrFn(queryParams);
+    const select = 'select count(*) as value, tb.' + groupField + ' as label ';
+    const fromStr = ' from (' + baseQueryStr + ') as tb ';
+    const group = ' group by tb.' + groupField;
+    const order = ' order by value desc ';
+    const queryStr = select + fromStr + group + order;
+    const recordsPromise = db.sequelize.query(queryStr, simpleQueryType);
+    const records = await recordsPromise;
+    return {
+        items: records,
+        othersValue: 0
+    };   
 }
 
+/*
 function getCountAssociationField(sourceName: string, fieldName: string):Promise<Interfaces.IAnalyticsCount[]> {
     const model = db.models[sourceName];
     const params = dsParams[sourceName];

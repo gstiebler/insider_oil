@@ -18,6 +18,16 @@ getSources: (test: nodeunit.Test) => {
     test.done();
 },
 
+getCount: async function(test: nodeunit.Test) {
+    const result = await Analytics.getCountResult('FPSOs', 'op_name');
+    console.log(result);
+    test.equal(2, result.items.length);
+    test.equal('Petrobras', result.items[0].label);
+    test.equal(4, result.items[0].value);
+    test.equal(0, result.othersValue);
+    test.done();
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModGroup, true );

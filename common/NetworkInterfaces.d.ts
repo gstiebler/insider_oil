@@ -194,7 +194,7 @@ export namespace AnalyticsResults {
     }
 
     export interface res {
-        results: Interfaces.Analytics.IResult[];
+        result: Interfaces.Analytics.IResult;
     }
 }
 
