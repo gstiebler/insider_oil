@@ -14,7 +14,7 @@ interface IAppProps {
 interface IAppState {
     tableParams: ITableParams;
     show: boolean; // it's only here to compensate a Datatables bug
-    filters: Filter.IAppProps[];
+    filters: Filter.FilterParams[];
 }
 
 export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
@@ -63,7 +63,7 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
         this.state.filters = [];
         for(let field of fields) {
             if(!field.hasFilter) continue;
-            let filter:Filter.IAppProps = {
+            let filter:Filter.FilterParams = {
                 label: field.label,
                 fieldName: field.fieldName,
                 queryName: this.state.tableParams.source
@@ -100,6 +100,7 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
                         queryName={f.queryName}
                         fieldName={f.fieldName}
                         label={f.label}
+                        onFilterChange={(f2) => { console.log(f.fieldName, f2) }}
                     />
                 </div>
             );

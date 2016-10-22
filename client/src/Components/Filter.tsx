@@ -1,15 +1,19 @@
 import * as React from 'react';
 import { getP } from '../lib/Server';
 import { FilterSource } from '../../../common/NetworkInterfaces';
-import { FilterResult } from '../../../common/Interfaces';
+import { FilterResult, IFilter } from '../../../common/Interfaces';
 import * as showError from '../lib/ShowError';
 
 const Multiselect = require('react-bootstrap-multiselect');
 
-export interface IAppProps {
+export interface FilterParams {
     queryName: string;
     fieldName: string;
     label: string;
+}
+
+export interface IAppProps extends FilterParams {
+    onFilterChange: (IFilter) => void;
 }
 
 interface IAppState {
@@ -48,24 +52,42 @@ export class Filter extends React.Component<IAppProps, IAppState> {
         this.setState(this.state);
     }
 
+    private genFilter():IFilter {
+        const selectedValues:string[] = [];
+        for(let key in this.selectedObjs) {
+            if(this.selectedObjs[key]) {
+                selectedValues.push(key);
+            }
+        }
+        return {
+            field: this.props.fieldName,
+            in: selectedValues
+        }
+    }
+
     private onChange(option, checked) {
         const rawValueStr:string = $(option).val();
         const index = rawValueStr.lastIndexOf('(');
         const valueStr = rawValueStr.substring(0, index - 1);
         this.selectedObjs[valueStr] = checked;
-        console.log(option, checked, valueStr );
+        this.props.onFilterChange(this.genFilter());
     }
 
     private onSelectAll() {
         for(let key in this.selectedObjs) {
             this.selectedObjs[key] = true;
         }
+        this.props.onFilterChange(null);
     }
 
     private onDeselectAll() {
         for(let key in this.selectedObjs) {
             this.selectedObjs[key] = false;
         }
+        this.props.onFilterChange({
+            field: this.props.fieldName,
+            equal: '***'
+        });
     }
 
     public render(): React.ReactElement<any> {
@@ -84,8 +106,8 @@ export class Filter extends React.Component<IAppProps, IAppState> {
                     multiple
                     includeSelectAllOption
                     onChange={this.onChange.bind(this)}
-                    onSelectAll={ (e) => { console.log(e) } }
-                    onDeselectAll={ (e) => { console.log(e) } }
+                    onSelectAll={ this.onSelectAll.bind(this) }
+                    onDeselectAll={ this.onDeselectAll.bind(this) }
                     allSelectedText={"Tudo"}
                     selectAllText={"Selecionar todos"}
                     nonSelectedText={"Nenhum selecionado"}
