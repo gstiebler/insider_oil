@@ -13,6 +13,7 @@ interface IAppState {
     sources: NSAnalytics.IFrontendSource[];
     selectedSourceName: string;
     groupField: string;
+    valueField: string;
     result: NSAnalytics.IResult;
 }
 
@@ -25,6 +26,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             sources: [],
             selectedSourceName: null,
             groupField: null,
+            valueField: null,
             result: {
                 items: [],
                 othersValue: 0 
@@ -42,6 +44,10 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
     private onSources(res: ni.AnalyticsSources.res) {
         this.state.sources = res.sources;
         this.state.selectedSourceName = this.state.sources[0].sourceName;
+        
+        let selectedSource = this.getSelectedSource(); 
+        this.state.groupField = selectedSource.groupFields[0].name;
+        this.state.valueField = selectedSource.valueFields[0].name;
         this.setState(this.state);
     }
 
@@ -52,11 +58,13 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             return null;
         }
         this.state.groupField = selectedSource.groupFields[0].name;
+        this.state.valueField = selectedSource.valueFields[0].name;
         this.getResult();
+        this.setState(this.state);
     }
 
-    private groupFieldChanged(event) {
-        this.state.groupField = event.target.value;
+    private selectedFieldChanged(propName: string, event) {
+        this.state[propName] = event.target.value;
         this.getResult();
     }
 
@@ -68,11 +76,11 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             maxNumItems: 10
         };
         server.getP('/analytics/count_values', req)
-            .then(this.onCountData.bind(this))
+            .then(this.onResult.bind(this))
             .catch(showError.show);
     } 
 
-    private onCountData(res: ni.AnalyticsResults.res) {
+    private onResult(res: ni.AnalyticsResults.res) {
         this.state.result = res.result;
         this.setState(this.state);
     }
@@ -96,22 +104,38 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         });
     }
 
-    private getGroupFieldCombo():React.ReactElement<any> {
+    private getFieldCombo(fields: NSAnalytics.IAField[], propName: string):React.ReactElement<any> {
         let selectedSource = this.getSelectedSource(); 
         if(!selectedSource) {
             return null;
         }
-        const groupsOptions = selectedSource.groupFields.map((gfield, index) => {
+        const options = fields.map((gfield, index) => {
             return <option value={gfield.name} key={index}>{gfield.label}</option>;
         });
 
         return (
             <select className="form-control"
-                    onChange={this.groupFieldChanged.bind(this)}
+                    onChange={this.selectedFieldChanged.bind(this, propName)}
                     defaultValue={this.state.selectedSourceName}>
-                { groupsOptions }
+                { options }
             </select>
         );
+    }
+
+    private getGroupFieldsCombo() {
+        let selectedSource = this.getSelectedSource(); 
+        if(!selectedSource) {
+            return null;
+        }
+        return this.getFieldCombo(selectedSource.groupFields, 'groupField');
+    }
+
+    private getValueFieldsCombo() {
+        let selectedSource = this.getSelectedSource(); 
+        if(!selectedSource) {
+            return null;
+        }
+        return this.getFieldCombo(selectedSource.valueFields, 'valueFields');
     }
 
     public render(): React.ReactElement<any> {
@@ -120,7 +144,9 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
                 <div className="col-lg-3 col-md-3">
                     Fonte: { this.getSourcesCombo() }
                     <br/>
-                    Agrupar por: { this.getGroupFieldCombo() }
+                    Agrupar por: { this.getGroupFieldsCombo() }
+                    <br/>
+                    Propriedade: { this.getValueFieldsCombo() }
                 </div>
                 <div className="col-lg-9 col-md-9">
                     <BarChart analyticsData={this.state.result}/>

@@ -10,6 +10,8 @@ import {
 import { fieldTypeStr } from './ModelUtils';
 import * as TableQueries from '../db/queries/TableQueries';
 
+const QTT_SPECIAL_NAME = 'qtt*';
+
 const sources:NSAnalytics.ISource[] = [
     {
         sourceName: 'DrillingRigs',
@@ -151,12 +153,20 @@ export function getSources():NSAnalytics.IFrontendSource[] {
                 fieldsMap[bqf.ref.valueField] = bqf;
             }
         }
+        let valueFields:NSAnalytics.IAField[] = [
+            {
+                name: QTT_SPECIAL_NAME,
+                label: 'Quantidade'
+            }
+        ] 
+        
+        valueFields = valueFields.concat(getAFields(source.valueFields, fieldsMap));
 
         const fs = {
             sourceName: source.sourceName,
             label: tableParams.title,
             groupFields: getAFields(source.groupFields, fieldsMap),
-            valueFields: getAFields(source.valueFields, fieldsMap),
+            valueFields: valueFields,
         }
         return fs;
     });
@@ -178,7 +188,7 @@ export async function getResult(sourceName: string,
     };
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const baseQueryStr = TableQueries.queries[sourceName].queryStrFn(queryParams);
-    const selectValueStr = valueField == 'qtt*' ? 'count(*)' : 'sum(' + valueField+ ')';
+    const selectValueStr = valueField == QTT_SPECIAL_NAME ? 'count(*)' : 'sum(' + valueField+ ')';
     const select = 'select ' + selectValueStr + ' as value, tb.' + groupField + ' as label ';
     const fromStr = ' from (' + baseQueryStr + ') as tb ';
     const group = ' group by tb.' + groupField;
