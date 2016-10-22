@@ -19,7 +19,7 @@ getSources: (test: nodeunit.Test) => {
 },
 
 getCount: async function(test: nodeunit.Test) {
-    const result = await Analytics.getResult('FPSOs', 'op_name', 'qtt*');
+    const result = await Analytics.getResult('FPSOs', 'op_name', 'qtt*', 10);
     test.equal(2, result.items.length);
     test.equal('Petrobras', result.items[0].label);
     test.equal(4, result.items[0].value);
@@ -28,7 +28,7 @@ getCount: async function(test: nodeunit.Test) {
 },
 
 getSum: async function(test: nodeunit.Test) {
-    const result = await Analytics.getResult('Contracts', 'type', 'value');
+    const result = await Analytics.getResult('Contracts', 'type', 'value', 10);
     test.equal(4, result.items.length);
     test.equal('CAPEX', result.items[1].label);
     test.equal(43707266.86, result.items[1].value);

@@ -165,8 +165,9 @@ export function getSources():Analytics.IFrontendSource[] {
 }
 
 export async function getResult(sourceName: string, 
-                                     groupField: string,
-                                     valueField: string):Promise<Analytics.IResult> {
+                                groupField: string,
+                                valueField: string,
+                                maxNumItems: number):Promise<Analytics.IResult> {
     const queryParams: IQueryParams = {
         order: [], 
         filters: [],
@@ -182,6 +183,7 @@ export async function getResult(sourceName: string,
     const fromStr = ' from (' + baseQueryStr + ') as tb ';
     const group = ' group by tb.' + groupField;
     const order = ' order by value desc ';
+    const limit = ' limit 0, ' + maxNumItems;
     const queryStr = select + fromStr + group + order;
     const recordsPromise = db.sequelize.query(queryStr, simpleQueryType);
     const records = await recordsPromise;
