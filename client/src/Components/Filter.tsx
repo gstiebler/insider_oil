@@ -43,12 +43,15 @@ export class Filter extends React.Component<IAppProps, IAppState> {
 
     public render(): React.ReactElement<any> {
         const data = this.state.data.map((v) => {
-            return { value: v.value + ' (' + v.qtt + ')' };
+            return { 
+                value: v.value + ' (' + v.qtt + ')',
+                selected: true 
+            };
         });
 
 		return (
             <div>
-                {this.props.label}:
+                {this.props.label}:<br/>
                 <Multiselect 
                     data={data}
                     multiple
@@ -58,7 +61,8 @@ export class Filter extends React.Component<IAppProps, IAppState> {
                     allSelectedText={"Tudo"}
                     selectAllText={"Selecionar todos"}
                     nonSelectedText={"Nenhum selecionado"}
-                    style={{ marginLeft: 15, marginRight: 15 }}
+                    nSelectedText={"selecionados"}
+                    numberDisplayed={1}
                 />
             </div>
 		);

@@ -95,19 +95,23 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
 
         const filtersHTML = this.state.filters.map((f, i) => {
             return (
-                <Filter.Filter
-                    key={'f' + i}
-                    queryName={f.queryName}
-                    fieldName={f.fieldName}
-                    label={f.label}
-                />
+                <div className="col-md-2" key={'f' + i} >
+                    <Filter.Filter
+                        queryName={f.queryName}
+                        fieldName={f.fieldName}
+                        label={f.label}
+                    />
+                </div>
             );
         });
 
         return (
             <div>
                 { tableau }
-                { filtersHTML }
+                <div className="row">
+                    { filtersHTML }
+                </div>
+                <br/>
                 { this.state.tableParams ? <PaginatedTable tableParams={ this.state.tableParams } /> : null }
             </div>
         );

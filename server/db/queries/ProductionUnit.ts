@@ -88,7 +88,8 @@ const productionUnit:TableQueries.ITableQuery = {
                 modelField: 'b_model',
                 idField: 'b_id',
                 valueField: 'b_name'
-            }
+            },
+            hasFilter: true
         },
         {
             label: 'Status',
@@ -102,7 +103,8 @@ const productionUnit:TableQueries.ITableQuery = {
                 modelField: 'ow_model',
                 idField: 'ow_id',
                 valueField: 'ow_name'
-            }
+            },
+            hasFilter: true
         },
         {
             label: 'Operador',
