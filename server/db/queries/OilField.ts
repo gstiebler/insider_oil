@@ -57,17 +57,20 @@ const oilField:TableQueries.ITableQuery = {
                 modelField: 'b_model',
                 idField: 'b_id',
                 valueField: 'b_name'
-            }
+            },
+            hasFilter: true
         },
         {
             label: 'Estado',
             fieldName: 'state',
-            type: 'VARCHAR'
+            type: 'VARCHAR',
+            hasFilter: true
         },
         {
             label: 'Terra/Mar',
             fieldName: 'land_sea',
-            type: 'VARCHAR'
+            type: 'VARCHAR',
+            hasFilter: true
         },
     ]
 };

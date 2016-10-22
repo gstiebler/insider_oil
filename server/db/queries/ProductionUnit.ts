@@ -15,7 +15,7 @@ const productionUnit:TableQueries.ITableQuery = {
                 fields: [
                     ['id', 'pu_id'],
                     ['name', 'pu_name'],
-                    'status',
+                    ['status', 'pu_status'],
                     'situation'
                 ]
             },
@@ -93,7 +93,7 @@ const productionUnit:TableQueries.ITableQuery = {
         },
         {
             label: 'Status',
-            fieldName: 'status',
+            fieldName: 'pu_status',
             type: 'VARCHAR',
             hasFilter: true
         },

@@ -43,7 +43,7 @@ export const contracts:TableQueries.ITableQuery = {
                     'end',
                     'value',
                     'contractor_id',
-                    'situation',
+                    ['situation', 'c_situation'],
                     'type',
                     'supplier',
                 ]
@@ -79,7 +79,7 @@ export const contracts:TableQueries.ITableQuery = {
                     'end',
                     'value',
                     'contractor_id',
-                    'situation',
+                    ['situation', 'c_situation'],
                     'type'
                 ]
             },
@@ -138,13 +138,15 @@ export const contracts:TableQueries.ITableQuery = {
         },
         {
             label: 'Situação',
-            fieldName: 'situation',
-            type: 'VARCHAR'
+            fieldName: 'c_situation',
+            type: 'VARCHAR',
+            hasFilter: true
         },
         {
             label: 'Tipo',
             fieldName: 'type',
-            type: 'VARCHAR'
+            type: 'VARCHAR',
+            hasFilter: true
         },
         {
             label: 'Licitação',

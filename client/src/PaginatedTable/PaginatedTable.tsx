@@ -174,7 +174,9 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         )
 
         return (
-            <div className="main-table table-responsive bootstrap-table">
+            <div className="main-table table-responsive bootstrap-table"
+                style={{ height: 600 }}
+            >
                 { tableHeader }
                 <table id="mainTable" className="table" cellSpacing="0" width="100%"></table>
             </div>

@@ -250,7 +250,8 @@ export const queries:ITableQueries = {
                     modelField: 'company_model',
                     idField: 'company_id',
                     valueField: 'company_name'
-                }
+                },
+                hasFilter: true
             },
             {
                 label: 'Cargo',
@@ -330,7 +331,8 @@ export const queries:ITableQueries = {
                     modelField: 'contractor_model',
                     idField: 'contractor_id',
                     valueField: 'contractor_name'
-                }
+                },
+                hasFilter: true,
             },
             {
                 label: 'Operator',
@@ -338,12 +340,14 @@ export const queries:ITableQueries = {
                     modelField: 'operator_model',
                     idField: 'operator_id',
                     valueField: 'operator_name'
-                }
+                },
+                hasFilter: true,
             },
             {
                 label: 'Terra/Mar',
                 fieldName: 'land_sea',
-                type: 'VARCHAR'
+                type: 'VARCHAR',
+                hasFilter: true,
             },
             {
                 label: 'Início contrato',
@@ -358,7 +362,8 @@ export const queries:ITableQueries = {
             {
                 label: 'Status',
                 fieldName: 'status',
-                type: 'VARCHAR'
+                type: 'VARCHAR',
+                hasFilter: true,
             },
             {
                 label: 'Day rate (US$)',
@@ -426,7 +431,8 @@ export const queries:ITableQueries = {
             {
                 label: 'Empresa autorizada',
                 fieldName: 'authorized_company',
-                type: 'VARCHAR'
+                type: 'VARCHAR',
+                hasFilter: true,
             },
             {
                 label: 'Publicação no DOU',
@@ -444,7 +450,8 @@ export const queries:ITableQueries = {
                     modelField: 'block_model',
                     idField: 'block_id',
                     valueField: 'block_name'
-                }
+                },
+                hasFilter: true,
             },
             {
                 label: 'Bacia',
@@ -452,7 +459,8 @@ export const queries:ITableQueries = {
                     modelField: 'basin_model',
                     idField: 'basin_id',
                     valueField: 'basin_name'
-                }
+                },
+                hasFilter: true,
             }
         ],
         tableauUrl: 'https://public.tableau.com/views/Ssmica/Painel1?:embed=y&:display_count=yes&:toolbar=no'
@@ -552,7 +560,8 @@ export const queries:ITableQueries = {
                         joinField: 'wells.block_id'
                     }
                 ],
-                where: queryParams.filters,
+                where: [],
+                having: queryParams.filters,
                 order: queryParams.order
             }
             
@@ -573,7 +582,8 @@ export const queries:ITableQueries = {
                     modelField: 'model_operator',
                     idField: 'operator_id',
                     valueField: 'operator_name'
-                }
+                },
+                hasFilter: true,
             },
             {
                 label: 'Nome operador', 
@@ -586,7 +596,8 @@ export const queries:ITableQueries = {
                     modelField: 'model_block',
                     idField: 'block_id',
                     valueField: 'block_name'
-                }
+                },
+                hasFilter: true,
             },
             {
                 label: 'Sonda',
@@ -594,17 +605,20 @@ export const queries:ITableQueries = {
                     modelField: 'dr_model',
                     idField: 'dr_id',
                     valueField: 'dr_name'
-                }
+                },
+                hasFilter: true,
             },
             {
                 label: 'Tipo',
                 fieldName: 'type',
-                type: 'VARCHAR'
+                type: 'VARCHAR',
+                hasFilter: true,
             },
             {
                 label: 'Categoria',
                 fieldName: 'category',
-                type: 'VARCHAR'
+                type: 'VARCHAR',
+                hasFilter: true,
             },
             {
                 label: 'Reclassificação',
@@ -614,7 +628,8 @@ export const queries:ITableQueries = {
             {
                 label: 'Situação',
                 fieldName: 'situation',
-                type: 'VARCHAR'
+                type: 'VARCHAR',
+                hasFilter: true,
             },
             {
                 label: 'Início',
@@ -854,7 +869,8 @@ export const queries:ITableQueries = {
             {
                 label: 'Tipo',
                 fieldName: 'type',
-                type: 'VARCHAR'
+                type: 'VARCHAR',
+                hasFilter: true,
             },
             {
                 label: 'Empresa proprietária',
@@ -862,7 +878,8 @@ export const queries:ITableQueries = {
                     modelField: 'c_model',
                     idField: 'ow_id',
                     valueField: 'ow_name'
-                }
+                },
+                hasFilter: true
             },
             {
                 label: 'Operador',
@@ -870,7 +887,8 @@ export const queries:ITableQueries = {
                     modelField: 'c_model',
                     idField: 'op_id',
                     valueField: 'op_name'
-                }
+                },
+                hasFilter: true
             },
         ]
     },
