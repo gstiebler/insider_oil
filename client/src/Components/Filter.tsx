@@ -18,12 +18,16 @@ interface IAppState {
 
 export class Filter extends React.Component<IAppProps, IAppState> {
 
+    private selectedObjs;
+
     constructor(props: IAppProps) {
         super(props);
 
         this.state = {
             data: []
         };
+
+        this.selectedObjs = {};
     }
 
     private componentDidMount() {
@@ -38,7 +42,30 @@ export class Filter extends React.Component<IAppProps, IAppState> {
 
     private onFilterSourceData(res: FilterSource.res) {
         this.state.data = res.values;
+        for(let value of res.values) {
+            this.selectedObjs[value.value] = true;
+        }
         this.setState(this.state);
+    }
+
+    private onChange(option, checked) {
+        const rawValueStr:string = $(option).val();
+        const index = rawValueStr.lastIndexOf('(');
+        const valueStr = rawValueStr.substring(0, index - 1);
+        this.selectedObjs[valueStr] = checked;
+        console.log(option, checked, valueStr );
+    }
+
+    private onSelectAll() {
+        for(let key in this.selectedObjs) {
+            this.selectedObjs[key] = true;
+        }
+    }
+
+    private onDeselectAll() {
+        for(let key in this.selectedObjs) {
+            this.selectedObjs[key] = false;
+        }
     }
 
     public render(): React.ReactElement<any> {
@@ -52,12 +79,13 @@ export class Filter extends React.Component<IAppProps, IAppState> {
 		return (
             <div>
                 {this.props.label}:<br/>
-                <Multiselect 
+                <Multiselect
                     data={data}
                     multiple
                     includeSelectAllOption
-                    onChange={ (e) => { console.log(e) } }
+                    onChange={this.onChange.bind(this)}
                     onSelectAll={ (e) => { console.log(e) } }
+                    onDeselectAll={ (e) => { console.log(e) } }
                     allSelectedText={"Tudo"}
                     selectAllText={"Selecionar todos"}
                     nonSelectedText={"Nenhum selecionado"}
