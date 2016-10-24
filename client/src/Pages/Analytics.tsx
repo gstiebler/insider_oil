@@ -5,6 +5,18 @@ import * as ni from '../../../common/NetworkInterfaces';
 import { NSAnalytics } from '../../../common/Interfaces';
 import * as ArrayUtils from './../lib/ArrayUtils';
 import { BarChart } from './../Charts/BarChart';
+import { PieChart } from './../Charts/PieChart';
+
+const chartTypes = [
+    {
+        name: 'bar',
+        label: 'Barras'
+    },
+    {
+        name: 'pie',
+        label: 'Pizza'
+    }
+];
 
 interface IAppProps {
 }
@@ -15,6 +27,7 @@ interface IAppState {
     groupField: string;
     valueField: string;
     result: NSAnalytics.IResult;
+    chartType: string;
 }
 
 export class Analytics extends React.Component<IAppProps, IAppState> {
@@ -30,7 +43,8 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             result: {
                 items: [],
                 othersValue: 0 
-            }
+            },
+            chartType: chartTypes[0].name
         };
     }
 
@@ -83,6 +97,11 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
     private onResult(res: ni.AnalyticsResults.res) {
         this.state.result = res.result;
+        this.setState(this.state);
+    }
+
+    private onChartTypeChange(event) {
+        this.state.chartType = event.target.value;
         this.setState(this.state);
     }
 
@@ -145,6 +164,33 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         return this.getFieldCombo(selectedSource.valueFields, 'valueField');
     }
 
+    private getChartTypesCombo(): React.ReactElement<any> {
+        const sourcesOptions = chartTypes.map((type, index) => {
+            return (
+                <option value={type.name} 
+                    key={index}
+                    selected={type.name == this.state.chartType}>
+                        {type.label}
+                </option>
+            );
+        });
+
+        return (
+            <select className="form-control"
+                    onChange={this.onChartTypeChange.bind(this)}>
+                { sourcesOptions }
+            </select>
+        );
+    }
+
+    private getChart(): React.ReactElement<any> {
+        if(this.state.chartType == chartTypes[0].name) {
+            return <BarChart analyticsData={this.state.result}/>
+        } else if(this.state.chartType == chartTypes[1].name) {
+            return <PieChart analyticsData={this.state.result}/>
+        }
+    }
+
     public render(): React.ReactElement<any> {
 		return (
             <div className="row">
@@ -154,9 +200,11 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
                     Agrupar por: { this.getGroupFieldsCombo() }
                     <br/>
                     Propriedade: { this.getValueFieldsCombo() }
+                    <br/>
+                    Tipo: { this.getChartTypesCombo() }
                 </div>
                 <div className="col-lg-9 col-md-9">
-                    <BarChart analyticsData={this.state.result}/>
+                    { this.getChart() }
                 </div>
             </div> 
 		);
