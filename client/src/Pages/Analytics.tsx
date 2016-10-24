@@ -6,6 +6,7 @@ import { NSAnalytics } from '../../../common/Interfaces';
 import * as ArrayUtils from './../lib/ArrayUtils';
 import { BarChart } from './../Charts/BarChart';
 import { PieChart } from './../Charts/PieChart';
+import { LineChart } from './../Charts/LineChart';
 
 const chartTypes = [
     {
@@ -15,6 +16,10 @@ const chartTypes = [
     {
         name: 'pie',
         label: 'Pizza'
+    },
+    {
+        name: 'line',
+        label: 'Linha'
     }
 ];
 
@@ -188,6 +193,8 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             return <BarChart analyticsData={this.state.result}/>
         } else if(this.state.chartType == chartTypes[1].name) {
             return <PieChart analyticsData={this.state.result}/>
+        } else if(this.state.chartType == chartTypes[2].name) {
+            return <LineChart analyticsData={this.state.result}/>
         }
     }
 
