@@ -27,7 +27,7 @@ module.exports = function(db) {
             operator_id: utils.idByName('Company', 'Etesco'),
             end: "2016-03-10",
             coordinates: '{"lat":-20.23799528,"lng":-40.96288806}',
-            day_rate: '82000'
+            day_rate: '482000'
         }
     ]);
 }

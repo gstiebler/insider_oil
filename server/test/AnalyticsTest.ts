@@ -63,9 +63,15 @@ groupByDate: async function(test: nodeunit.Test) { try {
 groupByCurrency: async function(test: nodeunit.Test) { try {
     const result = await Analytics.getResult('DrillingRigs', 'day_rate', 'qtt*', 10);
     test.equal(4, result.items.length);
-    test.equal(80000, result.items[0].label);
-    test.equal(1, result.items[0].value);
-    test.equal(120000, result.items[3].label);
+
+    test.equal(100000, result.items[0].label);
+    test.equal(200000, result.items[1].label);
+    test.equal(300000, result.items[2].label);
+    test.equal(400000, result.items[3].label);
+
+    test.equal(3, result.items[0].value);
+    test.equal(0, result.items[1].value);
+    test.equal(1, result.items[2].value);
     test.equal(2, result.items[3].value);
     test.done();
 } catch(err) { winston.error(err.stack) } },

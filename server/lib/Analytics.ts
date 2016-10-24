@@ -23,6 +23,7 @@ const sources:NSAnalytics.ISource[] = [
             'status',
             'start',
             'end',
+            'day_rate'
         ],
         valueFields: [
             'day_rate'
@@ -134,7 +135,8 @@ const sources:NSAnalytics.ISource[] = [
             'type',
             'start',
             'end',
-            'is_name'
+            'is_name',
+            'value'
         ],
         valueFields: [
             'day_rate',
@@ -237,7 +239,7 @@ async function getCurrencyRangeValues(baseQueryStr: string,
     const max = minMax[0].maxv;
     const exp10 = Math.log(max) / Math.log(10);
     const truncExp10 = Math.floor(exp10);
-    const power10 = Math.pow(10, truncExp10 - 1); 
+    const power10 = Math.pow(10, truncExp10); 
 
     /*const minFactor = Math.floor(min / power10);
     const maxFactor = Math.floor(max / power10);
@@ -248,19 +250,42 @@ async function getCurrencyRangeValues(baseQueryStr: string,
     return power10;
 }
 
+function normalizeLabelAxis(rawItems: NSAnalytics.IItemResult[], 
+                            max: number): NSAnalytics.IItemResult[] {
+    const result: NSAnalytics.IItemResult[] = [];
+    const minFactor = parseInt(rawItems[0].label) / max;
+    const maxFactor = parseInt(rawItems[rawItems.length - 1].label) / max;
+    for(let i = minFactor; i <= maxFactor; i++ ) {
+        const currValue = i * max;
+        if(currValue == parseInt(rawItems[0].label)) {
+            result.push(rawItems[0]);
+            rawItems.shift();
+        } else {
+            result.push({
+                label: currValue.toString(),
+                value: 0
+            });
+        }
+    }
+    return result;
+}
+
 async function getCurrencyBasedQuery(baseQueryStr: string, 
                     groupField: string,
                     valueField: string,
-                    maxNumItems: number):Promise<string> {
+                    maxNumItems: number):Promise<NSAnalytics.IItemResult[]> {
     const max = await getCurrencyRangeValues(baseQueryStr, groupField);
     const groupFieldStr = ' floor(' + groupField + ' / ' + max + ') * ' + max;
     const selectValueStr = getValueSelectStr(valueField);
     const select = 'select ' + selectValueStr + ' as value, ' + groupFieldStr + ' as label ';
     const fromStr = ' from (' + baseQueryStr + ') as tb ';
+    const where = ' where ' + groupField + ' is not null ';
     const group = ' group by label ';
     const order = ' order by label ';
-    const queryStr = select + fromStr + group + order;
-    return queryStr;
+    const queryStr = select + fromStr + where + group + order;
+
+    const rawItems = await db.sequelize.query(queryStr, simpleQueryType);
+    return normalizeLabelAxis(rawItems, max);
 }
 
 function getTotalQuery(baseQueryStr: string, valueField: string):string {
@@ -306,8 +331,7 @@ export async function getResult(sourceName: string,
         const itemsQuery = getDateBasedQuery(baseQueryStr, groupField, valueField, maxNumItems);
         items = await db.sequelize.query(itemsQuery, simpleQueryType);
     } else if(groupFieldInfo && groupFieldInfo.type == 'CURRENCY') {
-        const itemsQuery = await getCurrencyBasedQuery(baseQueryStr, groupField, valueField, maxNumItems);
-        items = await db.sequelize.query(itemsQuery, simpleQueryType);
+        items = await getCurrencyBasedQuery(baseQueryStr, groupField, valueField, maxNumItems);
     } else {
         const itemsQuery = getItemsQuery(baseQueryStr, groupField, valueField, maxNumItems);
         items = await db.sequelize.query(itemsQuery, simpleQueryType);

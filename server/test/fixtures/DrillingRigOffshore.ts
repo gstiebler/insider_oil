@@ -12,7 +12,7 @@ module.exports = function(db) {
             start: "2011-06-05",
             end: "2016-06-02",
             coordinates: '{"lat":-23.23799528,"lng":-40.96288806}',
-            day_rate: '95020'
+            day_rate: '495020'
         },
         {
             name: "S.C. Lancer",
@@ -36,7 +36,7 @@ module.exports = function(db) {
             start: "2005-04-13",
             end: "2016-03-10",
             coordinates: '{"lat":-22.99528,"lng":-38.288806}',
-            day_rate: '110000'
+            day_rate: '310000'
         }
     ]);
 }
