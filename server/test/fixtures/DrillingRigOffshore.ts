@@ -7,7 +7,7 @@ module.exports = function(db) {
             type: "NS",
             contractor_id: utils.idByName('Company', 'Statoil'),
             operator_id: utils.idByName('Company', 'Petrobras'),
-            status: "Em operação",
+            status: "Desativada",
             lda: 1900,
             start: "2011-06-05",
             end: "2016-06-02",

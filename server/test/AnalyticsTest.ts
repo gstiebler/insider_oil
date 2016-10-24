@@ -3,7 +3,7 @@
 import fiberTests = require('./lib/fiberTests');
 import nodeunit = require('nodeunit');
 import * as Analytics from '../lib/Analytics';
-import * as Interfaces from '../../common/Interfaces';
+import { IFilter } from '../../common/Interfaces';
 import * as libAwait from '../lib/await';
 import * as utils from './lib/utils';
 import winston = require('winston');
@@ -73,6 +73,23 @@ groupByCurrency: async function(test: nodeunit.Test) { try {
     test.equal(0, result.items[1].value);
     test.equal(1, result.items[2].value);
     test.equal(2, result.items[3].value);
+    test.done();
+} catch(err) { winston.error(err.stack) } },
+
+filters: async function(test: nodeunit.Test) { try {
+    const filters:IFilter[] = [
+        {
+            field: 'status',
+            in: [
+                '"Em operação"'
+            ]
+        }
+    ];
+    const result = await Analytics.getResult('DrillingRigs', 'type', 'qtt*', 10, filters);
+    test.equal(2, result.items.length);
+    test.equal('NS', result.items[0].label);
+    test.equal(2, result.items[0].value);
+    test.equal(0, result.othersValue);
     test.done();
 } catch(err) { winston.error(err.stack) } },
 
