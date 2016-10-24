@@ -193,6 +193,7 @@ export namespace AnalyticsResults {
         groupField: string;
         valueField: string;
         maxNumItems: number;
+        filters: Interfaces.IFilter[];
     }
 
     export interface res {

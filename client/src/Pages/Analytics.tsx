@@ -93,7 +93,8 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             source: this.state.selectedSourceName,
             groupField: this.state.groupField,
             valueField: this.state.valueField,
-            maxNumItems: 10
+            maxNumItems: 10,
+            filters: []
         };
         server.getP('/analytics/count_values', req)
             .then(this.onResult.bind(this))
