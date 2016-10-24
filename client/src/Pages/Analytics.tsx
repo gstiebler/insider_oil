@@ -2,8 +2,10 @@ import * as React from 'react';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import * as ni from '../../../common/NetworkInterfaces';
-import { NSAnalytics } from '../../../common/Interfaces';
+import { NSAnalytics, IFilter } from '../../../common/Interfaces';
 import * as ArrayUtils from './../lib/ArrayUtils';
+import { ITableParams } from '../PaginatedTable/PaginatedTable';
+import { FiltersGroup } from '../Components/FiltersGroup'; 
 import { BarChart } from './../Charts/BarChart';
 import { PieChart } from './../Charts/PieChart';
 import { LineChart } from './../Charts/LineChart';
@@ -33,6 +35,8 @@ interface IAppState {
     valueField: string;
     result: NSAnalytics.IResult;
     chartType: string;
+    filters: IFilter[];
+    tableParams: ITableParams;
 }
 
 export class Analytics extends React.Component<IAppProps, IAppState> {
@@ -49,7 +53,9 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
                 items: [],
                 othersValue: 0 
             },
-            chartType: chartTypes[0].name
+            chartType: chartTypes[0].name,
+            filters: [],
+            tableParams: null,
         };
     }
 
@@ -69,6 +75,29 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         this.state.valueField = selectedSource.valueFields[0].name;
         this.setState(this.state);
         this.getResult();
+        this.getParamsForFilters();
+    }
+
+    private getParamsForFilters() {
+        const req:ni.GetTableQueriesFields.req = { 
+            queryName: this.state.selectedSourceName 
+        };
+        server.getP('/queries_fields', req)
+            .then(this.onTableParamFieldsForFilters.bind(this))
+            .catch(showError.show);
+    }
+
+    private onTableParamFieldsForFilters(res:ni.GetTableQueriesFields.res) {
+        const fields = res.fields;
+        this.state.tableParams = {
+            fields,
+            tableauUrl: res.tableauUrl,
+            label: res.title,
+            source: this.state.selectedSourceName
+        };
+
+        this.setState(this.state);
+        return null;
     }
 
     private sourceChange(event) {
@@ -80,6 +109,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         this.state.groupField = selectedSource.groupFields[0].name;
         this.state.valueField = selectedSource.valueFields[0].name;
         this.getResult();
+        this.getParamsForFilters();
         this.setState(this.state);
     }
 
@@ -199,20 +229,42 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         }
     }
 
+    private onFiltersChange(filters: IFilter[]) {
+        this.state.filters = filters;
+        this.setState(this.state);
+    }
+
     public render(): React.ReactElement<any> {
-		return (
-            <div className="row">
-                <div className="col-lg-3 col-md-3">
-                    Fonte: { this.getSourcesCombo() }
-                    <br/>
-                    Agrupar por: { this.getGroupFieldsCombo() }
-                    <br/>
-                    Propriedade: { this.getValueFieldsCombo() }
-                    <br/>
-                    Tipo: { this.getChartTypesCombo() }
+        let filtersGroupHTML = null;
+        if(this.state.tableParams) {
+            filtersGroupHTML = (
+                <div className="panel panel-default">
+                    <div className="panel-body">
+                        <FiltersGroup 
+                            tableParams={this.state.tableParams}
+                            onChange={this.onFiltersChange.bind(this)} >
+                        </FiltersGroup>
+                    </div>
                 </div>
-                <div className="col-lg-9 col-md-9">
-                    { this.getChart() }
+            );
+        }
+
+		return (
+            <div>
+                { filtersGroupHTML }
+                <div className="row">
+                    <div className="col-lg-3 col-md-3">
+                        Fonte: { this.getSourcesCombo() }
+                        <br/>
+                        Agrupar por: { this.getGroupFieldsCombo() }
+                        <br/>
+                        Propriedade: { this.getValueFieldsCombo() }
+                        <br/>
+                        Tipo: { this.getChartTypesCombo() }
+                    </div>
+                    <div className="col-lg-9 col-md-9">
+                        { this.getChart() }
+                    </div>
                 </div>
             </div> 
 		);

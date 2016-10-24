@@ -5,7 +5,6 @@ import * as ni from '../../../common/NetworkInterfaces';
 import { PaginatedTable, ITableParams } from './PaginatedTable';
 import { IField, IFilter } from '../../../common/Interfaces';
 import { Tableau } from '../Components/Tableau'; 
-import * as Filter from '../Components/Filter'; 
 import { FiltersGroup } from '../Components/FiltersGroup'; 
 
 interface IAppProps {
@@ -101,8 +100,8 @@ export class PaginatedTableView extends React.Component<IAppProps, IAppState> {
                 { tableau }
                 <FiltersGroup 
                     tableParams={this.state.tableParams}
-                    onChange={this.onFiltersChange.bind(this)} 
-                />
+                    onChange={this.onFiltersChange.bind(this)} >
+                </FiltersGroup>
                 <br/>
                 { paginatedTableHTML }
             </div>
