@@ -34,6 +34,7 @@ const sources:NSAnalytics.ISource[] = [
             'type',
             'category',
             'situation',
+            'conclusion'
         ],
         valueFields: []
     },
@@ -174,11 +175,15 @@ export function getSources():NSAnalytics.IFrontendSource[] {
     return result;
 }
 
+function getValueSelectStr(valueField: string):string {
+    return valueField == QTT_SPECIAL_NAME ? 'count(*)' : 'sum(' + valueField+ ')';
+}
+
 function getItemsQuery(baseQueryStr: string, 
                     groupField: string,
                     valueField: string,
                     maxNumItems: number):string {
-    const selectValueStr = valueField == QTT_SPECIAL_NAME ? 'count(*)' : 'sum(' + valueField+ ')';
+    const selectValueStr = getValueSelectStr(valueField);
     const select = 'select ' + selectValueStr + ' as value, tb.' + groupField + ' as label ';
     const fromStr = ' from (' + baseQueryStr + ') as tb ';
     const group = ' group by tb.' + groupField;
@@ -188,8 +193,23 @@ function getItemsQuery(baseQueryStr: string,
     return queryStr;
 }
 
+function getDateBasedQuery(baseQueryStr: string, 
+                    groupField: string,
+                    valueField: string,
+                    maxNumItems: number):string {
+    const selectValueStr = getValueSelectStr(valueField);
+    const yearStr = ' year(tb.' + groupField + ') ';
+    const select = 'select ' + selectValueStr + ' as value, ' + yearStr + ' as label ';
+    const fromStr = ' from (' + baseQueryStr + ') as tb ';
+    const where = ' where ' + groupField + ' is not null ';
+    const group = ' group by ' + yearStr;
+    const order = ' order by label ';
+    const queryStr = select + fromStr + where + group + order;
+    return queryStr;
+}
+
 function getTotalQuery(baseQueryStr: string, valueField: string):string {
-    const selectValueStr = valueField == QTT_SPECIAL_NAME ? 'count(*)' : 'sum(' + valueField+ ')';
+    const selectValueStr = getValueSelectStr(valueField);
     const select = 'select ' + selectValueStr + ' as value ';
     const fromStr = ' from (' + baseQueryStr + ') as tb ';
     const queryStr = select + fromStr;
@@ -217,9 +237,23 @@ export async function getResult(sourceName: string,
         } 
     };
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
-    const baseQueryStr = TableQueries.queries[sourceName].queryStrFn(queryParams);
-    const itemsQuery = getItemsQuery(baseQueryStr, groupField, valueField, maxNumItems);
-    const items = await db.sequelize.query(itemsQuery, simpleQueryType);
+    const tQuery = TableQueries.queries[sourceName];
+    const baseQueryStr = tQuery.queryStrFn(queryParams);
+    const groupFieldInfo = tQuery.fields.find((f) => { 
+        if(f.fieldName) {
+            return f.fieldName == groupField;
+        } else {
+            return f.ref.valueField == groupField;
+        }
+    });
+    let items = null;
+    if(groupFieldInfo && groupFieldInfo.type == 'DATE') {
+        const itemsQuery = getDateBasedQuery(baseQueryStr, groupField, valueField, maxNumItems);
+        items = await db.sequelize.query(itemsQuery, simpleQueryType);
+    } else {
+        const itemsQuery = getItemsQuery(baseQueryStr, groupField, valueField, maxNumItems);
+        items = await db.sequelize.query(itemsQuery, simpleQueryType);
+    }
     const totalQuery = getTotalQuery(baseQueryStr, valueField);
     const total = (await db.sequelize.query(totalQuery, simpleQueryType))[0].value;
     return {

@@ -25,23 +25,23 @@ getSources: (test: nodeunit.Test) => {
     test.done();
 },
 
-getCount: async function(test: nodeunit.Test) {
+getCount: async function(test: nodeunit.Test) {try {
     const result = await Analytics.getResult('FPSOs', 'op_name', 'qtt*', 10);
     test.equal(2, result.items.length);
     test.equal('Petrobras', result.items[0].label);
     test.equal(4, result.items[0].value);
     test.equal(0, result.othersValue);
     test.done();
-},
+} catch(err) { winston.error(err.stack) } },
 
-getSum: async function(test: nodeunit.Test) {
+getSum: async function(test: nodeunit.Test) { try {
     const result = await Analytics.getResult('Contracts', 'type', 'value', 3);
     test.equal(3, result.items.length);
     test.equal('CAPEX', result.items[1].label);
     test.equal(43707266.86, result.items[1].value);
     test.equal(17554089.75999999, result.othersValue);
     test.done();
-},
+} catch(err) { winston.error(err.stack) } },
 
 others: async function(test: nodeunit.Test) { try {
     const result = await Analytics.getResult('DrillingRigs', 'type', 'qtt*', 2);
@@ -49,6 +49,14 @@ others: async function(test: nodeunit.Test) { try {
     test.equal('NS', result.items[0].label);
     test.equal(3, result.items[0].value);
     test.equal(1, result.othersValue);
+    test.done();
+} catch(err) { winston.error(err.stack) } },
+
+groupByDate: async function(test: nodeunit.Test) { try {
+    const result = await Analytics.getResult('Wells', 'start', 'qtt*', 10);
+    test.equal(3, result.items.length);
+    test.equal(2012, result.items[0].label);
+    test.equal(1, result.items[0].value);
     test.done();
 } catch(err) { winston.error(err.stack) } },
 
