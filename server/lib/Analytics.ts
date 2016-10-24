@@ -11,6 +11,7 @@ import { fieldTypeStr } from './ModelUtils';
 import * as TableQueries from '../db/queries/TableQueries';
 
 const QTT_SPECIAL_NAME = 'qtt*';
+const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
 
 const sources:NSAnalytics.ISource[] = [
     {
@@ -226,6 +227,42 @@ function getDateBasedQuery(baseQueryStr: string,
     return queryStr;
 }
 
+async function getCurrencyRangeValues(baseQueryStr: string, 
+                                      groupField: string):Promise<number> {
+    const selectMinMax = 'select max(' + groupField + ') as maxv, min(' + groupField + ') as minv ';
+    const fromStr = ' from (' + baseQueryStr + ') as tb ';
+    const minMaxQry = selectMinMax + fromStr;
+    const minMax = await db.sequelize.query(minMaxQry, simpleQueryType);
+    const min = minMax[0].minv;
+    const max = minMax[0].maxv;
+    const exp10 = Math.log(max) / Math.log(10);
+    const truncExp10 = Math.floor(exp10);
+    const power10 = Math.pow(10, truncExp10 - 1); 
+
+    /*const minFactor = Math.floor(min / power10);
+    const maxFactor = Math.floor(max / power10);
+    const inValues:number[] = [];
+    for(let i = minFactor; i <= maxFactor; i++) {
+        inValues.push(i * power10);
+    }*/
+    return power10;
+}
+
+async function getCurrencyBasedQuery(baseQueryStr: string, 
+                    groupField: string,
+                    valueField: string,
+                    maxNumItems: number):Promise<string> {
+    const max = await getCurrencyRangeValues(baseQueryStr, groupField);
+    const groupFieldStr = ' floor(' + groupField + ' / ' + max + ') * ' + max;
+    const selectValueStr = getValueSelectStr(valueField);
+    const select = 'select ' + selectValueStr + ' as value, ' + groupFieldStr + ' as label ';
+    const fromStr = ' from (' + baseQueryStr + ') as tb ';
+    const group = ' group by label ';
+    const order = ' order by label ';
+    const queryStr = select + fromStr + group + order;
+    return queryStr;
+}
+
 function getTotalQuery(baseQueryStr: string, valueField: string):string {
     const selectValueStr = getValueSelectStr(valueField);
     const select = 'select ' + selectValueStr + ' as value ';
@@ -254,7 +291,6 @@ export async function getResult(sourceName: string,
             itemsPerPage: 300
         } 
     };
-    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const tQuery = TableQueries.queries[sourceName];
     const baseQueryStr = tQuery.queryStrFn(queryParams);
     const groupFieldInfo = tQuery.fields.find((f) => { 
@@ -268,6 +304,9 @@ export async function getResult(sourceName: string,
     let othersValue = 0;
     if(groupFieldInfo && groupFieldInfo.type == 'DATE') {
         const itemsQuery = getDateBasedQuery(baseQueryStr, groupField, valueField, maxNumItems);
+        items = await db.sequelize.query(itemsQuery, simpleQueryType);
+    } else if(groupFieldInfo && groupFieldInfo.type == 'CURRENCY') {
+        const itemsQuery = await getCurrencyBasedQuery(baseQueryStr, groupField, valueField, maxNumItems);
         items = await db.sequelize.query(itemsQuery, simpleQueryType);
     } else {
         const itemsQuery = getItemsQuery(baseQueryStr, groupField, valueField, maxNumItems);

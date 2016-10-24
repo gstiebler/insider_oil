@@ -60,6 +60,16 @@ groupByDate: async function(test: nodeunit.Test) { try {
     test.done();
 } catch(err) { winston.error(err.stack) } },
 
+groupByCurrency: async function(test: nodeunit.Test) { try {
+    const result = await Analytics.getResult('DrillingRigs', 'day_rate', 'qtt*', 10);
+    test.equal(4, result.items.length);
+    test.equal(80000, result.items[0].label);
+    test.equal(1, result.items[0].value);
+    test.equal(120000, result.items[3].label);
+    test.equal(2, result.items[3].value);
+    test.done();
+} catch(err) { winston.error(err.stack) } },
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModGroup, true );
