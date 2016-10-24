@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as server from '../lib/Server';
+import { getP } from '../lib/Server';
 import * as showError from '../lib/ShowError';
 import * as ni from '../../../common/NetworkInterfaces';
 import { NSAnalytics, IFilter } from '../../../common/Interfaces';
@@ -61,7 +61,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
     private componentDidMount() {
         const req:ni.AnalyticsSources.req = {};
-        server.getP('/analytics/sources', req)
+        getP('/analytics/sources', req)
             .then(this.onSources.bind(this))
             .catch(showError.show);
     }    
@@ -82,7 +82,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         const req:ni.GetTableQueriesFields.req = { 
             queryName: this.state.selectedSourceName 
         };
-        server.getP('/queries_fields', req)
+        getP('/queries_fields', req)
             .then(this.onTableParamFieldsForFilters.bind(this))
             .catch(showError.show);
     }
@@ -127,7 +127,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             maxNumItems: 10,
             filters: this.state.filters
         };
-        server.getP('/analytics/count_values', req)
+        getP('/analytics/count_values', { data: JSON.stringify(req) })
             .then(this.onResult.bind(this))
             .catch(showError.show);
     } 

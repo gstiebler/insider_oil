@@ -14,8 +14,9 @@ export function getSources(req: express.Request, res: express.Response, next) { 
 } catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err); } }
 
 export async function getCountValues(req: express.Request, res: express.Response, next) { try {
-    const query:ni.AnalyticsResults.req = req.query;
-    query.filters = query.filters ? query.filters : [];
+    const query:ni.AnalyticsResults.req = JSON.parse(req.query.data);
+    //query.filters = query.filters ? query.filters : [];
+    console.log(query.filters);
     const result:Interfaces.NSAnalytics.IResult = 
         await Analytics.getResult(query.source, 
                                   query.groupField, 
