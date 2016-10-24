@@ -132,12 +132,13 @@ const sources:NSAnalytics.ISource[] = [
         sourceName: 'Contracts',
         groupFields: [
             'supplier',
+            'co_name',
             'c_situation',
             'type',
             'start',
             'end',
             'is_name',
-            'value'
+            'value',
         ],
         valueFields: [
             'day_rate',

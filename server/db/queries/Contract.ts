@@ -12,6 +12,7 @@ export const contracts:TableQueries.ITableQuery = {
         const extraFields = [
             ['"Contract"', 'model'],
             ['"Bid"', 'bid_model'],
+            ['"Company"', 'co_model'],
             ['datediff(contracts.end, contracts.start) + 1', 'duration'],
             ['if(show_day_rate, value / (datediff(contracts.end, contracts.start) + 1), NULL)', 'day_rate']
         ];
@@ -32,6 +33,14 @@ export const contracts:TableQueries.ITableQuery = {
                     ['name', 'is_name'],
                 ],
                 joinField: 'contracts.segment_id'
+            },
+            {
+                name: ['companies', 'co'],
+                fields: [
+                    ['id', 'co_id'],
+                    ['name', 'co_name'],
+                ],
+                joinField: 'contracts.contractor_id'
             },
         ];
 
@@ -118,6 +127,15 @@ export const contracts:TableQueries.ITableQuery = {
             label: 'Fornecedor',
             fieldName: 'supplier',
             type: 'VARCHAR'
+        },
+        {
+            label: 'Contratante',
+            ref: {
+                modelField: 'co_model',
+                idField: 'co_id',
+                valueField: 'co_name'
+            },
+            hasFilter: true
         },
         {
             label: 'Início da vigência',
