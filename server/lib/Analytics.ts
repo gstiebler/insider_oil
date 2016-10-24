@@ -174,6 +174,36 @@ export function getSources():NSAnalytics.IFrontendSource[] {
     return result;
 }
 
+function getItemsQuery(baseQueryStr: string, 
+                    groupField: string,
+                    valueField: string,
+                    maxNumItems: number):string {
+    const selectValueStr = valueField == QTT_SPECIAL_NAME ? 'count(*)' : 'sum(' + valueField+ ')';
+    const select = 'select ' + selectValueStr + ' as value, tb.' + groupField + ' as label ';
+    const fromStr = ' from (' + baseQueryStr + ') as tb ';
+    const group = ' group by tb.' + groupField;
+    const order = ' order by value desc ';
+    const limit = ' limit 0, ' + maxNumItems;
+    const queryStr = select + fromStr + group + order + limit;
+    return queryStr;
+}
+
+function getTotalQuery(baseQueryStr: string, valueField: string):string {
+    const selectValueStr = valueField == QTT_SPECIAL_NAME ? 'count(*)' : 'sum(' + valueField+ ')';
+    const select = 'select ' + selectValueStr + ' as value ';
+    const fromStr = ' from (' + baseQueryStr + ') as tb ';
+    const queryStr = select + fromStr;
+    return queryStr;
+}
+
+function sumItems(items: NSAnalytics.IItemResult[]):number {
+    let result = 0;
+    for(let item of items) {
+        result += item.value;
+    }
+    return result;
+}
+
 export async function getResult(sourceName: string, 
                                 groupField: string,
                                 valueField: string,
@@ -188,17 +218,12 @@ export async function getResult(sourceName: string,
     };
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const baseQueryStr = TableQueries.queries[sourceName].queryStrFn(queryParams);
-    const selectValueStr = valueField == QTT_SPECIAL_NAME ? 'count(*)' : 'sum(' + valueField+ ')';
-    const select = 'select ' + selectValueStr + ' as value, tb.' + groupField + ' as label ';
-    const fromStr = ' from (' + baseQueryStr + ') as tb ';
-    const group = ' group by tb.' + groupField;
-    const order = ' order by value desc ';
-    const limit = ' limit 0, ' + maxNumItems;
-    const queryStr = select + fromStr + group + order + limit;
-    const recordsPromise = db.sequelize.query(queryStr, simpleQueryType);
-    const records = await recordsPromise;
+    const itemsQuery = getItemsQuery(baseQueryStr, groupField, valueField, maxNumItems);
+    const items = await db.sequelize.query(itemsQuery, simpleQueryType);
+    const totalQuery = getTotalQuery(baseQueryStr, valueField);
+    const total = (await db.sequelize.query(totalQuery, simpleQueryType))[0].value;
     return {
-        items: records,
-        othersValue: 0
+        items,
+        othersValue: total - sumItems(items)
     };   
 }
