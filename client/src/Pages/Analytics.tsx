@@ -109,6 +109,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         }
         this.state.groupField = selectedSource.groupFields[0].name;
         this.state.valueField = selectedSource.valueFields[0].name;
+        this.state.filters = [];
         this.getResult();
         this.getParamsForFilters();
         this.setState(this.state);
@@ -231,6 +232,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
     }
 
     private onFiltersChange(filters: IFilter[]) {
+        console.log('onFiltersChange', filters);
         this.state.filters = filters;
         this.getResult();
         this.setState(this.state);

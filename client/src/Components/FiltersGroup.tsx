@@ -32,6 +32,9 @@ export class FiltersGroup extends React.Component<IAppProps, IAppState> {
 
     private componentWillReceiveProps(nextProps:IAppProps) {
         this.genFilterParams(nextProps);
+        if(nextProps.tableParams.source != this.props.tableParams.source) {
+            this.filters = {};
+        }
         this.setState(this.state);
     }
 
