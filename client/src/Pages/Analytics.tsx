@@ -89,6 +89,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
     private onTableParamFieldsForFilters(res:ni.GetTableQueriesFields.res) {
         const fields = res.fields;
+        this.state.filters = [];
         this.state.tableParams = {
             fields,
             tableauUrl: res.tableauUrl,
@@ -100,7 +101,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
         return null;
     }
 
-    private sourceChange(event) {
+    private onSourceChange(event) {
         this.state.selectedSourceName = event.target.value;
         let selectedSource = this.getSelectedSource(); 
         if(!selectedSource) {
@@ -124,7 +125,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
             groupField: this.state.groupField,
             valueField: this.state.valueField,
             maxNumItems: 10,
-            filters: []
+            filters: this.state.filters
         };
         server.getP('/analytics/count_values', req)
             .then(this.onResult.bind(this))
@@ -148,7 +149,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
         return (
             <select className="form-control"
-                    onChange={this.sourceChange.bind(this)}>
+                    onChange={this.onSourceChange.bind(this)}>
                 { sourcesOptions }
             </select>
         );
@@ -231,6 +232,7 @@ export class Analytics extends React.Component<IAppProps, IAppState> {
 
     private onFiltersChange(filters: IFilter[]) {
         this.state.filters = filters;
+        this.getResult();
         this.setState(this.state);
     }
 
