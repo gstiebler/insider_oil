@@ -25,6 +25,14 @@ export const contracts:TableQueries.ITableQuery = {
                 ],
                 joinField: 'contracts.bid_id'
             },
+            {
+                name: 'industry_segments',
+                fields: [
+                    ['id', 'is_id'],
+                    ['name', 'is_name'],
+                ],
+                joinField: 'contracts.segment_id'
+            },
         ];
 
         const filters = queryParams.filters;
@@ -149,12 +157,10 @@ export const contracts:TableQueries.ITableQuery = {
             hasFilter: true
         },
         {
-            label: 'Licitação',
-            ref: {
-                modelField: 'bid_model',
-                idField: 'bid_id',
-                valueField: 'bid_process_number'
-            }
+            label: 'Segmento',
+            fieldName: 'is_name',
+            type: 'VARCHAR',
+            hasFilter: true
         },
     ],
     tableauUrl: 'https://public.tableau.com/views/Contratos_2/Painel1?:embed=y&:display_count=yes&:toolbar=no'

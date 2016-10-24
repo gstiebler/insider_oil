@@ -132,7 +132,8 @@ const sources:NSAnalytics.ISource[] = [
             'c_situation',
             'type',
             'start',
-            'end'
+            'end',
+            'is_name'
         ],
         valueFields: [
             'day_rate',
