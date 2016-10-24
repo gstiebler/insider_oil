@@ -34,6 +34,8 @@ const sources:NSAnalytics.ISource[] = [
             'type',
             'category',
             'situation',
+            'start',
+            'end',
             'conclusion'
         ],
         valueFields: []
@@ -247,17 +249,19 @@ export async function getResult(sourceName: string,
         }
     });
     let items = null;
+    let othersValue = 0;
     if(groupFieldInfo && groupFieldInfo.type == 'DATE') {
         const itemsQuery = getDateBasedQuery(baseQueryStr, groupField, valueField, maxNumItems);
         items = await db.sequelize.query(itemsQuery, simpleQueryType);
     } else {
         const itemsQuery = getItemsQuery(baseQueryStr, groupField, valueField, maxNumItems);
         items = await db.sequelize.query(itemsQuery, simpleQueryType);
+        const totalQuery = getTotalQuery(baseQueryStr, valueField);
+        const total = (await db.sequelize.query(totalQuery, simpleQueryType))[0].value;
+        othersValue = total - sumItems(items);
     }
-    const totalQuery = getTotalQuery(baseQueryStr, valueField);
-    const total = (await db.sequelize.query(totalQuery, simpleQueryType))[0].value;
     return {
         items,
-        othersValue: total - sumItems(items)
+        othersValue
     };   
 }
