@@ -5,7 +5,8 @@ import dsParams = require('../lib/DataSourcesParams');
 import { 
     NSAnalytics, 
     IBaseQueryField, 
-    IQueryParams 
+    IQueryParams,
+    IFilter
 } from '../../common/Interfaces';
 import { fieldTypeStr } from './ModelUtils';
 import * as TableQueries from '../db/queries/TableQueries';
@@ -307,10 +308,11 @@ function sumItems(items: NSAnalytics.IItemResult[]):number {
 export async function getResult(sourceName: string, 
                                 groupField: string,
                                 valueField: string,
-                                maxNumItems: number):Promise<NSAnalytics.IResult> {
+                                maxNumItems: number,
+                                filters: IFilter[]):Promise<NSAnalytics.IResult> {
     const queryParams: IQueryParams = {
         order: [], 
-        filters: [],
+        filters,
         pagination: {
             first: 0,
             itemsPerPage: 300

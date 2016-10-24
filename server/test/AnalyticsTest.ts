@@ -26,7 +26,7 @@ getSources: (test: nodeunit.Test) => {
 },
 
 getCount: async function(test: nodeunit.Test) {try {
-    const result = await Analytics.getResult('FPSOs', 'op_name', 'qtt*', 10);
+    const result = await Analytics.getResult('FPSOs', 'op_name', 'qtt*', 10, []);
     test.equal(2, result.items.length);
     test.equal('Petrobras', result.items[0].label);
     test.equal(4, result.items[0].value);
@@ -35,7 +35,7 @@ getCount: async function(test: nodeunit.Test) {try {
 } catch(err) { winston.error(err.stack) } },
 
 getSum: async function(test: nodeunit.Test) { try {
-    const result = await Analytics.getResult('Contracts', 'type', 'value', 3);
+    const result = await Analytics.getResult('Contracts', 'type', 'value', 3, []);
     test.equal(3, result.items.length);
     test.equal('CAPEX', result.items[1].label);
     test.equal(43707266.86, result.items[1].value);
@@ -44,7 +44,7 @@ getSum: async function(test: nodeunit.Test) { try {
 } catch(err) { winston.error(err.stack) } },
 
 others: async function(test: nodeunit.Test) { try {
-    const result = await Analytics.getResult('DrillingRigs', 'type', 'qtt*', 2);
+    const result = await Analytics.getResult('DrillingRigs', 'type', 'qtt*', 2, []);
     test.equal(2, result.items.length);
     test.equal('NS', result.items[0].label);
     test.equal(3, result.items[0].value);
@@ -53,7 +53,7 @@ others: async function(test: nodeunit.Test) { try {
 } catch(err) { winston.error(err.stack) } },
 
 groupByDate: async function(test: nodeunit.Test) { try {
-    const result = await Analytics.getResult('Wells', 'start', 'qtt*', 10);
+    const result = await Analytics.getResult('Wells', 'start', 'qtt*', 10, []);
     test.equal(3, result.items.length);
     test.equal(2012, result.items[0].label);
     test.equal(1, result.items[0].value);
@@ -61,7 +61,7 @@ groupByDate: async function(test: nodeunit.Test) { try {
 } catch(err) { winston.error(err.stack) } },
 
 groupByCurrency: async function(test: nodeunit.Test) { try {
-    const result = await Analytics.getResult('DrillingRigs', 'day_rate', 'qtt*', 10);
+    const result = await Analytics.getResult('DrillingRigs', 'day_rate', 'qtt*', 10, []);
     test.equal(4, result.items.length);
 
     test.equal(100000, result.items[0].label);
