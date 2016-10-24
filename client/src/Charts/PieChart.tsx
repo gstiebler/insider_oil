@@ -18,6 +18,7 @@ export class PieChart extends React.Component<IAppProps, IAppState> {
         const chartOptions = {
             chartArea: {width: '50%'},
             height: 500,
+            pieSliceText: 'value-and-percentage'
         }        
         return (
             <DiscreteChart 

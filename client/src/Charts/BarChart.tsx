@@ -26,7 +26,8 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
                 minValue: 0
             },
             vAxis: {
-                title: this.props.axisName
+                title: this.props.axisName,
+                format: '0'
             }
         };   
         return (
