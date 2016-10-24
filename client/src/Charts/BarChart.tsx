@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NSAnalytics } from '../../../common/Interfaces';
-import { googleRef, loadCharts } from '../lib/Google';
+import { DiscreteChart } from './DiscreteChart'
+import { googleRef } from '../lib/Google';
 
 interface IAppProps {
     analyticsData: NSAnalytics.IResult;
@@ -12,52 +13,8 @@ interface IAppState {
 
 export class BarChart extends React.Component<IAppProps, IAppState> {
 
-    private chartsLoaded:boolean;
-    private chart;
-
-    constructor(props: IAppProps) {
-        super(props);
-
-        this.state = {};
-        this.chartsLoaded = false;
-    }
-
-    private componentDidMount() {
-        loadCharts().then(this.onGoogleLoad.bind(this));
-    }
-
-    private onGoogleLoad() {
-        this.chartsLoaded = true;
-        this.initChart();
-        this.showChart(this.props.analyticsData);
-    }
-
-    private initChart() {
-        this.chart = new googleRef.visualization.BarChart(document.getElementById('chart_div'));
-    }
-
-    private componentWillReceiveProps(nextProps:IAppProps) {
-        if(!this.chartsLoaded)
-            return;
-        this.showChart(nextProps.analyticsData);
-    }
-
-    private showChart(analyticsCount: NSAnalytics.IResult) {
-        var dataTable = new googleRef.visualization.DataTable();
-
-        // Declare columns
-        dataTable.addColumn('string', 'Item');
-        dataTable.addColumn('number', 'quantidade');
-
-        const arrayData = analyticsCount.items.map(item => {
-            return [item.label, item.value];
-        });
-        if(arrayData.length == 0) {
-            arrayData.push(['vazio', 0]);
-        }
-        dataTable.addRows(arrayData);
-
-        var options = {
+    public render(): React.ReactElement<any> {
+        const chartOptions = {
             chartArea: {width: '50%'},
             height: 500,
             animation:{
@@ -71,12 +28,13 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
             vAxis: {
                 title: this.props.axisName
             }
-        };
-
-        this.chart.draw(dataTable, options);
-    }
-
-    public render(): React.ReactElement<any> {
-        return <div id="chart_div"></div>;
+        };   
+        return (
+            <DiscreteChart 
+                analyticsData={this.props.analyticsData}
+                gConstrutorFunctionName={'BarChart'}
+                chartOptions={chartOptions}>
+            </DiscreteChart>
+        );
     }
 }
