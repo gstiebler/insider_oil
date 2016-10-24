@@ -56,6 +56,8 @@ export class DiscreteChart extends React.Component<IAppProps, IAppState> {
         });
         if(arrayData.length == 0) {
             arrayData.push(['vazio', 0]);
+        } else if(analyticsCount.othersValue > 0.1) {
+            arrayData.push(['Outros', analyticsCount.othersValue]);
         }
         dataTable.addRows(arrayData);
 
