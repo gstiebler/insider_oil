@@ -46,9 +46,10 @@ export class Filter extends React.Component<IAppProps, IAppState> {
         this.state.selectedObjs = {};
 
         const req: FilterSource.req = {
-            queryName: this.props.queryName,
-            fieldName: this.props.fieldName
+            queryName: props.queryName,
+            fieldName: props.fieldName
         }
+        console.log(props);
         getP('/filter_source', req)
             .then(this.onFilterSourceData.bind(this))
             .catch(showError.show);
@@ -56,6 +57,7 @@ export class Filter extends React.Component<IAppProps, IAppState> {
 
     private onFilterSourceData(res: FilterSource.res) {
         this.state.data = res.values;
+        console.log(this.props.queryName, this.props.fieldName, res.values);
         for(let value of res.values) {
             this.state.selectedObjs[value.value] = true;
         }
