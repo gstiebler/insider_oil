@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as server from '../lib/Server';
 import * as showError from '../lib/ShowError';
-import { googleRef, loadLineChart } from '../lib/Google';
+import { googleRef, loadCharts } from '../lib/Google';
 
 interface IyAxis {
     fieldName: string;
@@ -36,7 +36,7 @@ export class TimeSeriesChart extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
-        loadLineChart().then(this.onGoogleLoad.bind(this));
+        loadCharts().then(this.onGoogleLoad.bind(this));
     }
 
     private onGoogleLoad() {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NSAnalytics } from '../../../common/Interfaces';
-import { googleRef, loadBarChart } from '../lib/Google';
+import { googleRef, loadCharts } from '../lib/Google';
 
 interface IAppProps {
     analyticsData: NSAnalytics.IResult;
@@ -23,7 +23,7 @@ export class BarChart extends React.Component<IAppProps, IAppState> {
     }
 
     private componentDidMount() {
-        loadBarChart().then(this.onGoogleLoad.bind(this));
+        loadCharts().then(this.onGoogleLoad.bind(this));
     }
 
     private onGoogleLoad() {
