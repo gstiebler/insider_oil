@@ -16,7 +16,10 @@ const productionUnit:TableQueries.ITableQuery = {
                     ['id', 'pu_id'],
                     ['name', 'pu_name'],
                     ['status', 'pu_status'],
-                    'situation'
+                    'situation',
+                    'start',
+                    'end',
+                    'first_oil',
                 ]
             },
             joinTables: [

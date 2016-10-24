@@ -52,7 +52,7 @@ export class DiscreteChart extends React.Component<IAppProps, IAppState> {
         dataTable.addColumn('number', 'quantidade');
 
         const arrayData = analyticsCount.items.map(item => {
-            const label = item.label ? item.label.toString() : null;
+            let label = item.label ? item.label.toString() : null;
             return [label, item.value];
         });
         if(arrayData.length == 0) {

@@ -20,6 +20,8 @@ const sources:NSAnalytics.ISource[] = [
             'operator_name',
             'land_sea',
             'status',
+            'start',
+            'end',
         ],
         valueFields: [
             'day_rate'
@@ -58,6 +60,9 @@ const sources:NSAnalytics.ISource[] = [
             'ow_name',
             'op_name',
             'situation',
+            //'start',
+            //'end',
+            //'first_oil',
         ],
         valueFields: []
     },    
@@ -70,6 +75,9 @@ const sources:NSAnalytics.ISource[] = [
             'ow_name',
             'op_name',
             'situation',
+            //'start',
+            //'end',
+            //'first_oil',
         ],
         valueFields: []
     },    
@@ -82,6 +90,9 @@ const sources:NSAnalytics.ISource[] = [
             'ow_name',
             'op_name',
             'situation',
+            //'start',
+            //'end',
+            //'first_oil',
         ],
         valueFields: []
     },
@@ -109,6 +120,8 @@ const sources:NSAnalytics.ISource[] = [
             'authorized_company',
             'block_name',
             'basin_name',
+            'dou_publi_date',
+            'end_date'
         ],
         valueFields: []
     },
@@ -118,6 +131,8 @@ const sources:NSAnalytics.ISource[] = [
             'supplier',
             'c_situation',
             'type',
+            'start',
+            'end'
         ],
         valueFields: [
             'day_rate',
