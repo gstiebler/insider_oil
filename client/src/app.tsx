@@ -160,7 +160,7 @@ ReactDOM.render(
       <Route path="companies" component={CompaniesCards}/>
       <Route path="charts" component={Analytics}/>
       <Route path="target_sales" component={TargetSales}/>
-      <Route path="target_sales" component={TargetSales}/>
+      <Route path="requests_viewer" component={RequestsViewer}/>
       <Route path="search_results" component={SearchResults}/>
     </Route>
     <Route path="/app/index.html" component={InsiderOilApp}/>
