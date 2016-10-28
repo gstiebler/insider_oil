@@ -4,6 +4,8 @@ import dsParams = require('./DataSourcesParams');
 import * as ni from '../../common/NetworkInterfaces';
 import Sequelize = require('sequelize');
 import QueryGenerator = require('../db/queries/QueryGenerator');
+import { IQueryParams } from '../../common/Interfaces';
+import * as TableQueries from '../db/queries/TableQueries';
 
 export interface ioDataSource {
     name: string;
@@ -187,4 +189,26 @@ export function simpleQuery(table: string, fieldNames: string[]):Promise<any[]> 
         order: []
     };
     return execQuery(options);
+}
+
+export async function getTableQueryData(reqQuery:ni.GetTableQueryData.req):Promise<ni.GetTableQueryData.res> {
+    const queryParams:IQueryParams = reqQuery.queryParams;
+    queryParams.filters = queryParams.filters ? queryParams.filters : [];
+    const queryName:string = reqQuery.queryName;
+    const query = TableQueries.queries[queryName];
+    const fields = query.fields;
+
+    const results = await TableQueries.getQueryResult(queryName, queryParams);
+    const records = results[0];
+    if(query.recordProcessor) {
+        for(var record of records) {
+            await query.recordProcessor(record);
+        }
+    }
+    const result:ni.GetTableQueryData.res = {
+        fields,
+        records,
+        count: results[1][0].count
+    };
+    return result;
 }

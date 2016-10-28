@@ -107,28 +107,11 @@ export function getQueryData(req: express.Request, res: express.Response) {Sync(
  * Get the list of all the objects of a type, with pagination and
  * custom user filters
  */
-export function getTableQueryData(req: express.Request, res: express.Response):void {Sync(function(){
+export async function getTableQueryData(req: express.Request, res: express.Response) { try {
     const reqQuery:ni.GetTableQueryData.req = req.query;
-    const queryParams:IQueryParams = reqQuery.queryParams;
-    queryParams.filters = queryParams.filters ? queryParams.filters : [];
-    const queryName:string = reqQuery.queryName;
-    const query = TableQueries.queries[queryName];
-    const fields = query.fields;
-
-    const results = libAwait.await( TableQueries.getQueryResult(queryName, queryParams) );
-    const records = results[0];
-    if(query.recordProcessor) {
-        for(var record of records) {
-            query.recordProcessor(record);
-        }
-    }
-    const result:ni.GetTableQueryData.res = {
-        fields,
-        records,
-        count: results[1][0].count
-    };
+    const result = await dbUtils.getTableQueryData(reqQuery);
     res.json(result);
-}, ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os registros."))}
+} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err); } }
  
 export function getTimeSeries(req: express.Request, res: express.Response):void {Sync(function(){
     const queryParams = req.query.queryParams;

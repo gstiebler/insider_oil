@@ -1,6 +1,6 @@
 
 export interface TableQueryDataRes {
-    fields: any[];
+    fields: IBaseQueryField[];
     records: any[];
     count: number;
 }

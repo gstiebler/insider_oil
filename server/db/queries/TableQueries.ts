@@ -1,6 +1,6 @@
 'use strict';
 
-import { await } from '../../lib/await';
+import * as libAwait from '../../lib/await';
 import db = require('../models');
 import * as QueryGenerator from './QueryGenerator';
 import { IQueryParams, IBaseQueryField } from '../../../common/Interfaces';
@@ -21,7 +21,7 @@ export interface ITableQuery {
     queryStrFn: IQueryStrFn;
     fields: IBaseQueryField[];
     title: string;
-    recordProcessor?: (any) => any;
+    recordProcessor?: (any) => Promise<any>;
     tableauUrl?: string;
 }
 
@@ -140,7 +140,7 @@ export const queries:ITableQueries = {
                 type: 'VARCHAR'
             },
         ],
-        recordProcessor: record => {
+        recordProcessor: async function(record):Promise<any> {
             const segments = JSON.parse(record.segments_text);
             record.segments_text = segments ? segments.join(', ') : '';
         }
@@ -194,7 +194,7 @@ export const queries:ITableQueries = {
                 type: 'VARCHAR'
             },
         ],
-        recordProcessor: record => {
+        recordProcessor: async function(record):Promise<any> {
             const segments = JSON.parse(record.segments_text);
             record.segments_text = segments ? segments.join(', ') : '';
         }
@@ -1181,8 +1181,8 @@ export const queries:ITableQueries = {
             return QueryGenerator.generate(options);
         },
         fields: [],
-        recordProcessor: record => {
-            record.translation = await(syncifyES7(RequestLogTranslator.translate.bind(this, record)));
+        recordProcessor: async function(record):Promise<any> {
+            record.translation = await syncifyES7(RequestLogTranslator.translate.bind(this, record));
         }
     },
 

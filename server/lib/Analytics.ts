@@ -314,10 +314,7 @@ export async function getResult(sourceName: string,
     const queryParams: IQueryParams = {
         order: [], 
         filters,
-        pagination: {
-            first: 0,
-            itemsPerPage: 300
-        } 
+        pagination: null
     };
     const tQuery = TableQueries.queries[sourceName];
     const baseQueryStr = tQuery.queryStrFn(queryParams);
