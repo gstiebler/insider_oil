@@ -14,15 +14,22 @@ export function exportToExcel(records: any[], fields: IBaseQueryField[]):any {
 	const ws = {};
 	const range = {
         s: { c: 0, r: 0 },
-        e: { c: fields.length, r: records.length }
+        e: { c: fields.length, r: records.length + 1 }
     };
-	for(let R = 0; R < records.length; ++R) {
-        const row = records[R];
-        for(let C = 0; C < fields.length; C++) {
-			var cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
-            let fieldName = fields[C].fieldName;
+
+    for(let c = 0; c < fields.length; c++) {
+		const cell_ref = XLSX.utils.encode_cell({ c, r: 0 });
+        const cell = { v: fields[c].label };
+        ws[cell_ref] = cell;
+    }
+
+	for(let r = 0; r < records.length; ++r) {
+        const row = records[r];
+        for(let c = 0; c < fields.length; c++) {
+			const cell_ref = XLSX.utils.encode_cell({ c, r: r + 1 });
+            let fieldName = fields[c].fieldName;
             if(!fieldName) {
-                fieldName = fields[C].ref.valueField;
+                fieldName = fields[c].ref.valueField;
             }
             const value = row[fieldName];
 			const cell = { v: value };
