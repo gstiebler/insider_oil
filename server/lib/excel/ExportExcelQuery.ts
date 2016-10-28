@@ -8,13 +8,15 @@ function Workbook():void {
 	this.Sheets = {};
 }
 
-export function exportToExcel(records: any[], fields: IBaseQueryField[]):any {
+export function exportToExcel(records: any[], 
+                              fields: IBaseQueryField[], 
+                              complete: boolean):any {
     const wb = new Workbook();
 
 	const ws = {};
 	const range = {
         s: { c: 0, r: 0 },
-        e: { c: fields.length, r: records.length + 1 }
+        e: { c: fields.length, r: records.length + 2 }
     };
 
     for(let c = 0; c < fields.length; c++) {
@@ -23,7 +25,8 @@ export function exportToExcel(records: any[], fields: IBaseQueryField[]):any {
         ws[cell_ref] = cell;
     }
 
-	for(let r = 0; r < records.length; ++r) {
+    const numRows = complete ? records.length : 10;
+	for(let r = 0; r < numRows; ++r) {
         const row = records[r];
         for(let c = 0; c < fields.length; c++) {
 			const cell_ref = XLSX.utils.encode_cell({ c, r: r + 1 });
@@ -36,6 +39,13 @@ export function exportToExcel(records: any[], fields: IBaseQueryField[]):any {
 			ws[cell_ref] = cell;
         }
 	}
+
+    if(!complete) {
+		const cell_ref = XLSX.utils.encode_cell({ c: 0, r: numRows + 2 });
+        const cell = { v: 'Para não assinantes, são exportados os primeiros 10 itens' };
+        ws[cell_ref] = cell;
+    }
+
 	if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
 
     const ws_name = 'Pasta principal';

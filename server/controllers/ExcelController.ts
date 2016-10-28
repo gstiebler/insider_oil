@@ -74,7 +74,7 @@ export async function downloadExcelFromQuery(req: express.Request, res: express.
     reqQuery.queryParams.pagination = null;
     const result = await dbUtils.getTableQueryData(reqQuery);
 
-    const binaryWorkbook = ExportExcelQuery.exportToExcel(result.records, result.fields);
+    const binaryWorkbook = ExportExcelQuery.exportToExcel(result.records, result.fields, req.user.paying);
     res.set({"Content-Disposition":'attachment; filename="arquivo.xlsx"'});
     res.set('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.send(binaryWorkbook);
