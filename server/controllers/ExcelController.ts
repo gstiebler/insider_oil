@@ -1,7 +1,6 @@
 "use strict";
 import db = require('../db/models');
 var Sync = require('sync');	
-import { await } from '../lib/await';
 var request = require('request');
 import ControllerUtils = require('../lib/ControllerUtils');
 import dbUtils = require('../lib/dbUtils');
@@ -11,6 +10,8 @@ import dsParams = require('../lib/DataSourcesParams');
 import express = require("express");
 import { IExcelUploadResponse } from '../lib/excel/ImportExcelClass';
 import winston = require('winston');
+import * as ni from '../../common/NetworkInterfaces';
+import * as ExportExcelQuery from '../lib/excel/ExportExcelQuery';
 
 
 export function downloadExcel(req: express.Request, res: express.Response, next) { Sync(function() {
@@ -67,3 +68,14 @@ export function uploadFile(req: express.Request, res: express.Response, next) {
     	winston.info('Done parsing form!');
     };
 }
+
+export async function downloadExcelFromQuery(req: express.Request, res: express.Response) { try {
+    const reqQuery:ni.GetExcelQuery.req = req.query;
+    reqQuery.queryParams.pagination = null;
+    const result = await dbUtils.getTableQueryData(reqQuery);
+
+    const binaryWorkbook = ExportExcelQuery.exportToExcel(result.records, result.fields);
+    res.set({"Content-Disposition":'attachment; filename="arquivo.xlsx"'});
+    res.set('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.send(binaryWorkbook);
+} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err); } }

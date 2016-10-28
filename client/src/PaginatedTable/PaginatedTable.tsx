@@ -15,7 +15,12 @@ import {
 import * as StringUtils from '../lib/StringUtils'; 
 import { genColumns } from '../lib/TableUtils';
 import { IField, IFilter } from '../../../common/Interfaces';
-import { GetTableQueryData } from '../../../common/NetworkInterfaces';
+import { 
+    GetTableQueryData, 
+    GetExcelQuery 
+} from '../../../common/NetworkInterfaces';
+import { StrToByteArray } from '../lib/BytesUtils';
+const FileSaver = require('file-saver'); 
 
 export interface ITableParams {
     label: string;
@@ -40,6 +45,8 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
     private updated: boolean;
     /** this variable is used because props are not updated before ajaxFn */
     private filtersInAjax: IFilter[];
+
+    private dataQueryData: any;
 
     constructor(props: IAppProps) {
         super(props);
@@ -115,32 +122,37 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         browserHistory.push(queryStr);
     }
 
+    getQueryParams() {
+        let orderColumns = [];
+        for(let i = 0; i < this.dataQueryData.order.length; i++) {
+            let columnIndex = this.dataQueryData.order[i].column;
+            let orderObj = {
+                fieldName: this.dataQueryData.columns[columnIndex].data,
+                dir: this.dataQueryData.order[i].dir
+            };
+            orderColumns.push( orderObj );
+        }
+
+        return {
+            pagination: {
+                first: this.dataQueryData.start,
+                itemsPerPage: this.dataQueryData.length 
+            },
+            order: orderColumns,
+            filters: this.filtersInAjax,
+            searchStr: this.state.searchStr
+        }
+    }
+
     /**
      * DataTables callback to refresh the data. It's called when the order column change,
      * and when a page on pagination is clicked
      */
     private ajaxFn(props: IAppProps, data, callback: (any), settings) {
-        var orderColumns = [];
-        for(var i = 0; i < data.order.length; i++) {
-            var columnIndex = data.order[i].column;
-            var orderObj = {
-                fieldName: data.columns[columnIndex].data,
-                dir: data.order[i].dir
-            };
-            orderColumns.push( orderObj );
-        }
-        
+        this.dataQueryData = data;
         var req: GetTableQueryData.req = {
             queryName: props.tableParams.source,
-            queryParams: {
-                pagination: {
-                    first: data.start,
-                    itemsPerPage: data.length 
-                },
-                order: orderColumns,
-                filters: this.filtersInAjax,
-                searchStr: this.state.searchStr
-            }
+            queryParams: this.getQueryParams()
         };
         server.getTableData(req)
             .then(this.onTableData.bind(this, callback))
@@ -162,6 +174,20 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
         this.state.dataTable.draw();
     } 
 
+    private getExcelFile() {
+        const req:GetExcelQuery.req = {
+            queryName: this.props.tableParams.source,
+            queryParams: this.getQueryParams()
+        };
+    	server.getP('/get_query_excel', req)
+            .then((xlsxBinary) => {
+                var ba = StrToByteArray(xlsxBinary);
+                var blob = new Blob([ba], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+                FileSaver.saveAs(blob, "arquivo.xlsx");             
+            })
+            .catch(showError.show);
+    }
+
     public render(): React.ReactElement<any> {
         if(!this.state.headerParams) {
             return <div></div>;
@@ -179,6 +205,10 @@ export class PaginatedTable extends React.Component<IAppProps, IAppState> {
             >
                 { tableHeader }
                 <table id="mainTable" className="table" cellSpacing="0" width="100%"></table>
+                <button className="btn btn-default" 
+                        onClick={ this.getExcelFile.bind(this) } >
+                    Exportar para Excel
+                </button>
             </div>
         );
     }

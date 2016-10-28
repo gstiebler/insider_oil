@@ -40,6 +40,7 @@ module.exports = function(app: express.Express) {
     app.post('/db_server/upload_file',             ExcelController.uploadFile);
     app.get('/download_excel', session.authUser,  ExcelController.downloadExcel);
     app.put('/import_from_url', session.authUser,  ExcelController.importExcelFromURL);
+    app.get('/get_query_excel', session.authUser,  ExcelController.downloadExcelFromQuery);
 
     app.post('/send_error_report', session.authUser, dbServerController.sendErrorReport);
     app.get('/get_query_data', session.authUser,  dbServerController.getQueryData);

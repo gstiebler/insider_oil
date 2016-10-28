@@ -52,6 +52,15 @@ export namespace GetTableQueryData {
     }
 }
 
+export namespace GetExcelQuery {
+
+    export interface req {
+        queryName: string;
+        queryParams: Interfaces.IQueryParams;
+    }
+    
+}
+
 export interface IExtraRecordData {
     tableauUrls: string[];
     embedStrs: string[];
