@@ -159,10 +159,10 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 
         const tags = null;
 
-		const explorationArticles = this.getArticle('Exploração', insights.section1Articles);
-		const productionArticles = this.getArticle('Produção', insights.section2Articles);
-		const marketArticles = this.getArticle('Mercado', insights.section3Articles);
-		const strategyArticles = this.getArticle('Estratégia', insights.section4Articles);
+		const lastArticles = this.getArticle('Últimas', insights.section1Articles);
+		const analysisArticles = this.getArticle('Análises', insights.section2Articles);
+		//const marketArticles = this.getArticle('Mercado', insights.section3Articles);
+		//const strategyArticles = this.getArticle('Estratégia', insights.section4Articles);
 
 		const popularTab = this.getTab('popular-tab', insights.popular);
 		const recentTab = this.getTab('recent-tab', insights.recent);
@@ -193,12 +193,8 @@ export class Insights extends React.Component<IAppProps, IAppState> {
 						<section id="content" className="eight column row pull-left">
 							<FlexSlider data={insights.flexSlider} />
 							<section className="row">
-								{ explorationArticles }
-								{ productionArticles }
-							</section>
-							<section className="row">
-								{ marketArticles }
-								{ strategyArticles }
+								{ lastArticles }
+								{ analysisArticles }
 							</section>
 						</section>
 						{ sideBar }
