@@ -3,7 +3,7 @@
 import fiberTests = require('./lib/fiberTests');
 import nodeunit = require('nodeunit');
 import * as MapsController from '../controllers/MapsController';
-import * as ni from '../../common/NetworkInterfaces';
+import { GetItemsInsideMap } from '../../common/NetworkInterfaces';
 var utils = require('./lib/utils');
 
 
@@ -23,7 +23,7 @@ getOilFields: function(test) {
 
 getProductionUnits: function(test) {
     const res = utils.getJsonResponse.sync(null, MapsController.getProductionUnits, {});
-    test.equal(1, res.productionUnits.length, 'Tam. do vetor ' + res.productionUnits.length);
+    test.equal(9, res.productionUnits.length, 'Tam. do vetor ' + res.productionUnits.length);
     test.done();
 },
 
@@ -40,7 +40,14 @@ getDrillingRigs: function(test) {
 },
 
 getItemsInsideMap: function(test: nodeunit.Test) {
-    const res = utils.getJsonResponse.sync(null, MapsController.getItemsInsideMap, {});
+    const query: GetItemsInsideMap.req = {
+        latMin: -42,
+        latMax: -19,
+        lngMin: -42,
+        lngMax: -19
+    };
+    const res: GetItemsInsideMap.res = 
+        utils.getJsonResponse.sync(null, MapsController.getItemsInsideMap, { query });
     test.equal(4, res.items.length);
     test.equal('Capixaba', res.items[0].name);
     test.equal('Pioneer', res.items[3].name);

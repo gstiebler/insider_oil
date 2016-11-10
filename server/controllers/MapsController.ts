@@ -2,7 +2,7 @@
 import db = require('../db/models');
 import express = require("express");
 import * as ControllerUtils from '../lib/ControllerUtils';
-import * as ni from '../../common/NetworkInterfaces';
+import { GetItemsInsideMap } from '../../common/NetworkInterfaces';
 import QueryGenerator = require('../db/queries/QueryGenerator');
 import { execQuery, simpleQuery } from '../lib/dbUtils';
 
@@ -141,10 +141,7 @@ export async function getDrillingRigs(req: express.Request, res: express.Respons
 } catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err) }}
 
 export async function getItemsInsideMap(req: express.Request, res: express.Response) { try {
-    const latMin = -42;
-    const latMax = -19;
-    const lngMin = -42;
-    const lngMax = -19;
+    const query: GetItemsInsideMap.req = req.query;
     const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
     const options:QueryGenerator.IQueryOpts = {
         table: {
@@ -161,14 +158,15 @@ export async function getItemsInsideMap(req: express.Request, res: express.Respo
         ],
         joinTables: [],
         where: [
-            { customFilter: 'JSON_EXTRACT(coordinates, "$.lat") >= ' + latMin },
-            { customFilter: 'JSON_EXTRACT(coordinates, "$.lat") <= ' + latMax },
-            { customFilter: 'JSON_EXTRACT(coordinates, "$.lng") >= ' + lngMin },
-            { customFilter: 'JSON_EXTRACT(coordinates, "$.lng") <= ' + lngMax }
+            { customFilter: 'JSON_EXTRACT(coordinates, "$.lat") >= ' + query.latMin },
+            { customFilter: 'JSON_EXTRACT(coordinates, "$.lat") <= ' + query.latMax },
+            { customFilter: 'JSON_EXTRACT(coordinates, "$.lng") >= ' + query.lngMin },
+            { customFilter: 'JSON_EXTRACT(coordinates, "$.lng") <= ' + query.lngMax }
         ],
         order: []
     };
     const puQueryStr = QueryGenerator.generate(options);
     const items = await db.sequelize.query(puQueryStr, simpleQueryType);
-    res.json( { items } );
+    const result: GetItemsInsideMap.res = { items };
+    res.json( result );
 } catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err) }}

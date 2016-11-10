@@ -286,3 +286,24 @@ export namespace FilterSource {
         values: Interfaces.FilterResult[];
     }
 }
+
+export namespace GetItemsInsideMap {
+
+    export interface req {
+        latMin: number;
+        latMax: number;
+        lngMin: number;
+        lngMax: number;
+    }
+    
+    interface IMapItem {
+        id: number;
+        name: string;
+        model: string;
+    }
+
+    export interface res {
+        items: IMapItem[];
+    }
+
+}
