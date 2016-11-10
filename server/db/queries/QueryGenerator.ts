@@ -130,6 +130,10 @@ export class QueryGenerator {
     public getFilterStr(filters: IFilter[], filterKeyword: string, aliasMap?): string {
         const filterStrs = [];
         for(var filter of filters) {
+            if(filter.customFilter) {
+                filterStrs.push(filter.customFilter);
+                continue;
+            }
             let field = filter.field;
             
             if(aliasMap && aliasMap[field])

@@ -42,7 +42,7 @@ export interface IField {
 }
 
 interface IFilter {
-    field: string;
+    field?: string;
     like?: string;
     in?: any[];
     notIn?: any[];
@@ -52,6 +52,7 @@ interface IFilter {
     gte?: string;
     lte?: string;
     isNotNull?: boolean;
+    customFilter?: string;
 }
 
 interface IExcelFieldMap {

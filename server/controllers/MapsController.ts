@@ -139,3 +139,36 @@ export async function getDrillingRigs(req: express.Request, res: express.Respons
 
     res.json( { drillingRigs: allDrillingRigs } );
 } catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err) }}
+
+export async function getItemsInsideMap(req: express.Request, res: express.Response) { try {
+    const latMin = -42;
+    const latMax = -19;
+    const lngMin = -42;
+    const lngMax = -19;
+    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
+    const options:QueryGenerator.IQueryOpts = {
+        table: {
+            name: 'production_units',
+            fields: [
+                'id', 
+                'name',
+            ]
+        },
+        extraFields: [
+            ['"ProductionUnit"', 'model'],
+            ['JSON_EXTRACT(coordinates, "$.lat")', 'lat'],
+            ['JSON_EXTRACT(coordinates, "$.lng")', 'lng']
+        ],
+        joinTables: [],
+        where: [
+            { customFilter: 'JSON_EXTRACT(coordinates, "$.lat") >= ' + latMin },
+            { customFilter: 'JSON_EXTRACT(coordinates, "$.lat") <= ' + latMax },
+            { customFilter: 'JSON_EXTRACT(coordinates, "$.lng") >= ' + lngMin },
+            { customFilter: 'JSON_EXTRACT(coordinates, "$.lng") <= ' + lngMax }
+        ],
+        order: []
+    };
+    const puQueryStr = QueryGenerator.generate(options);
+    const items = await db.sequelize.query(puQueryStr, simpleQueryType);
+    res.json( { items } );
+} catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err) }}

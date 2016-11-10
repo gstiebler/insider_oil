@@ -39,6 +39,14 @@ getDrillingRigs: function(test) {
     test.done();
 },
 
+getItemsInsideMap: function(test: nodeunit.Test) {
+    const res = utils.getJsonResponse.sync(null, MapsController.getItemsInsideMap, {});
+    test.equal(4, res.items.length);
+    test.equal('Capixaba', res.items[0].name);
+    test.equal('Pioneer', res.items[3].name);
+    test.done();
+},
+
 }
 
 exports.notModDBGroup = fiberTests.convertTests( notModDBGroup, true );
