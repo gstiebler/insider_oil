@@ -5,6 +5,7 @@ import * as ControllerUtils from '../lib/ControllerUtils';
 import { GetItemsInsideMap } from '../../common/NetworkInterfaces';
 import QueryGenerator = require('../db/queries/QueryGenerator');
 import { execQuery, simpleQuery } from '../lib/dbUtils';
+import { getItemsInsideArea } from '../lib/Maps';
 
 /**
  * Get blocks map data
@@ -142,31 +143,7 @@ export async function getDrillingRigs(req: express.Request, res: express.Respons
 
 export async function getItemsInsideMap(req: express.Request, res: express.Response) { try {
     const query: GetItemsInsideMap.req = req.query;
-    const simpleQueryType = { type: db.sequelize.QueryTypes.SELECT};
-    const options:QueryGenerator.IQueryOpts = {
-        table: {
-            name: 'production_units',
-            fields: [
-                'id', 
-                'name',
-            ]
-        },
-        extraFields: [
-            ['"ProductionUnit"', 'model'],
-            ['JSON_EXTRACT(coordinates, "$.lat")', 'lat'],
-            ['JSON_EXTRACT(coordinates, "$.lng")', 'lng']
-        ],
-        joinTables: [],
-        where: [
-            { customFilter: 'JSON_EXTRACT(coordinates, "$.lat") >= ' + query.latMin },
-            { customFilter: 'JSON_EXTRACT(coordinates, "$.lat") <= ' + query.latMax },
-            { customFilter: 'JSON_EXTRACT(coordinates, "$.lng") >= ' + query.lngMin },
-            { customFilter: 'JSON_EXTRACT(coordinates, "$.lng") <= ' + query.lngMax }
-        ],
-        order: []
-    };
-    const puQueryStr = QueryGenerator.generate(options);
-    const items = await db.sequelize.query(puQueryStr, simpleQueryType);
+    const items = await getItemsInsideArea(query.geoLimits);
     const result: GetItemsInsideMap.res = { items };
     res.json( result );
 } catch(err) { ControllerUtils.getErrorFunc(res, 500, "Não foi possível recuperar os dados.")(err) }}

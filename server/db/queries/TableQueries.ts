@@ -275,7 +275,8 @@ export const queries:ITableQueries = {
                         'end',
                         'status',
                         'day_rate',
-                        'type'
+                        'type',
+                        'coordinates'
                     ]
                 },
                 joinTables: [

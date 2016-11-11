@@ -40,17 +40,27 @@ getDrillingRigs: function(test) {
 },
 
 getItemsInsideMap: function(test: nodeunit.Test) {
-    const query: GetItemsInsideMap.req = {
+    const geoLimits: GetItemsInsideMap.IGeoLimits = {
         latMin: -42,
         latMax: -19,
         lngMin: -42,
         lngMax: -19
-    };
+    }
+
+    const query: GetItemsInsideMap.req = { geoLimits };
     const res: GetItemsInsideMap.res = 
         utils.getJsonResponse.sync(null, MapsController.getItemsInsideMap, { query });
-    test.equal(4, res.items.length);
-    test.equal('Capixaba', res.items[0].name);
-    test.equal('Pioneer', res.items[3].name);
+    test.equal(10, res.items.length);
+    {
+        const item = res.items[0];
+        test.equal('Capixaba', item.name);
+        test.equal('ProductionUnit', item.model);
+    }
+    {
+        const item = res.items[9];
+        test.equal('Paragon DPDS3', item.name);
+        test.equal('DrillingRigOffshore', item.model);
+    }
     test.done();
 },
 

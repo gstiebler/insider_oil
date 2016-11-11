@@ -288,18 +288,22 @@ export namespace FilterSource {
 }
 
 export namespace GetItemsInsideMap {
+    
+    export interface IMapItem {
+        id: number;
+        name: string;
+        model: string;
+    }
 
-    export interface req {
+    export interface IGeoLimits {
         latMin: number;
         latMax: number;
         lngMin: number;
         lngMax: number;
     }
-    
-    interface IMapItem {
-        id: number;
-        name: string;
-        model: string;
+
+    export interface req {
+        geoLimits: IGeoLimits; 
     }
 
     export interface res {
