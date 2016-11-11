@@ -52,10 +52,11 @@ function geDrillingRigsInsideAreaQuery(geoLimits: GetItemsInsideMap.IGeoLimits):
 }
 
 export async function getItemsInsideArea(geoLimits: GetItemsInsideMap.IGeoLimits): Promise<GetItemsInsideMap.IMapItem[]> {
-    const puQueryStr = getProductionUnitsInsideAreaQuery(geoLimits);
-    const drQueryStr = geDrillingRigsInsideAreaQuery(geoLimits);
+    const subQueries: string[] = [];
+    subQueries.push( getProductionUnitsInsideAreaQuery(geoLimits) );
+    subQueries.push( geDrillingRigsInsideAreaQuery(geoLimits) );
 
-    const query = '(' + puQueryStr + ') union (' + drQueryStr + ')';
+    const query = '(' + subQueries.join(') union (') + ')';
 
     const items = await db.sequelize.query(query, simpleQueryType);
     return items;
