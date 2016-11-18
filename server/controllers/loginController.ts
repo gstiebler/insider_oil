@@ -1,4 +1,5 @@
 import * as session from '../lib/session';
+import * as express from "express";
    
 function loginOk(res, token) {
     res.redirect('/app/index.html?token=' + token);
@@ -20,24 +21,21 @@ export function loginPage(req, res, next) {
 };
 
 
-export function makeLogin(req, res, next) {
-    session.login( req.body.username, req.body.password, 
-            loginOk.bind(this, res), loginError );
-    
-    function loginError(errorMsg) {
-        res.render('login', { title: 'Login', errorMsg: errorMsg });
+export async function makeLogin(req, res, next) {
+    try {
+        let token = await session.login(req.body.username, req.body.password);
+        loginOk(res, token);
+    } catch(err) {
+        res.render('login', { title: 'Login', errorMsg: err });
     }
 };
 
 
-export function makeLoginREST(req, res, next) {
-    session.login( req.body.username, req.body.password, loginOk, loginError );
-    
-    function loginOk(token) {
+export async function makeLoginREST(req: express.Request, res: express.Response) {
+    try {
+        let token = await session.login(req.body.username, req.body.password);
         res.json( { token: token } );
-    }
-    
-    function loginError() {
+    } catch(err) {
         res.status(404).json( { msg: 'Erro no login' } );
     }
 };

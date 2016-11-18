@@ -9,19 +9,21 @@ export function userFromToken( token ):Promise<any> {
     return db.models.User.findOne({ where: { token: token } });
 }
 
-
-export function login( username, password, loginOk, loginError ) {
-    db.models.User.findOne({ where: { 
-                        login: username} 
-    }).then( function(user) {
-        if( user && user.active )  {  
-            if( user.password == password )
-                user.generateToken( loginOk );
-            else
-                loginError('A senha está incorreta');
-        } else
-            loginError('Usuário não existe');
-    });
+/**
+ * Returns the token from the user, 
+ * or throws an error if the login is unsucessful 
+ */
+export async function login(username: string, password: string):Promise<string> {
+    const user = await db.models.User.findOne({ where: { login: username} });
+    if( user && user.active )  {  
+        if( user.password == password ) {
+            return await user.generateToken();
+        } else {
+            throw 'A senha está incorreta';
+        }
+    } else {
+        throw 'Usuário não existe';
+    }
 }
 
 

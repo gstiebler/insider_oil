@@ -6,6 +6,18 @@ function beforeUpdate(user) {
     }
 }
 
+function generateToken(): Promise<string> {
+    return new Promise((resolve, reject) => {
+        let user = this;
+        require('crypto').randomBytes(48, function(ex, buf) {
+            user.token = buf.toString('hex');
+            user.save().then( function() {
+                resolve( user.token );
+            });
+        });
+    });
+}
+
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
     login: {
@@ -43,20 +55,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       unique: true
     }
-  }, {
+  }, 
+  {
     underscored: true,
     tableName: 'users',
-    instanceMethods: {
-        generateToken: function( callback ) {
-            let user = this;
-            require('crypto').randomBytes(48, function(ex, buf) {
-                user.token = buf.toString('hex');
-                user.save().then( function() {
-                    callback( user.token );
-                });
-            });
-        }
-      },
+    instanceMethods: { generateToken },
 		classMethods: {
 			  defineHooks: function(db) {
 	        db.User.hook('beforeUpdate', beforeUpdate);
