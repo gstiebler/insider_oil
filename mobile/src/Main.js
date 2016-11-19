@@ -12,34 +12,9 @@ import {
   ListView
 } from 'react-native';
  
-async function postJson(url, params) {
-    let opts = {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(params)
-    };
-    let response = await fetch(url, opts);
-    return await response.json();
-}
- 
-async function getJson(url, queryParams) {
-    const queryStrs = [];
-    for(let queryParam in queryParams) {
-        queryStrs.push(queryParam + '=' + queryParams[queryParam]);
-    }
-    let completeUrl = url;
-    if(queryStrs.length > 0) {
-        const queryStr = queryStrs.join('&');
-        completeUrl += '?' + queryStr;
-    }
-    console.log('complete url: ' + completeUrl);
-    let response = await fetch(completeUrl);
-    return await response.json();
-}
- 
+import { postJson, getJson } from './lib/network'
+import { login } from './lib/session';
+
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export class MainClass extends Component {
@@ -56,14 +31,9 @@ export class MainClass extends Component {
  
     async testFetch() {
         try {
-            let responseJson = await postJson('http://app.insideroil.com/login_rest', {
-                username: 'gstiebler',
-                password: 'aloalo35'
-              });
-            console.log(responseJson);
-            this.token = responseJson.token;
+            await login('gstiebler', 'aloalo35');
  
-            let resInsights = await getJson('http://app.insideroil.com/insights', { token: this.token });
+            let resInsights = await getJson('http://app.insideroil.com/insights', {});
             const titles = resInsights.recent.map(r => { return r.title });
             this.setState({ titles: ds.cloneWithRows(titles) });
             console.log(titles);      
