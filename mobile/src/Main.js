@@ -6,7 +6,7 @@ import {
     View
 } from 'react-native';
 import { Insights } from './Insights';
-import { login } from './lib/session';
+import { Login } from './Login';
 
 const routes = [
     {title: 'First Scene', index: 0},
@@ -23,21 +23,15 @@ export class MainClass extends Component {
     componentDidMount() {
     }
 
-    async onLoginClicked(navigator) {
-        console.log('***    onLoginClicked');
-        await login('gstiebler', 'aloalo35');
+    onLogin(navigator) {
+        console.log('onLogin');
         navigator.replace(routes[1]);
     }
 
     renderScene(route, navigator) {
-        console.log('renderScene', route);
         if(route.index == 0) {
             return (
-                <View style={{padding: 100}} >
-                    <TouchableHighlight onPress={ this.onLoginClicked.bind(this, navigator) } >
-                        <Text>Hello {route.title}!</Text>
-                    </TouchableHighlight>
-                </View>
+                <Login onLogin={ this.onLogin.bind(this, navigator) } />
             );
         } else {
             return <Insights />
