@@ -3,34 +3,92 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
+ 
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  ListView
 } from 'react-native';
+ 
+async function postJson(url, params) {
+    let opts = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params)
+    };
+    let response = await fetch(url, opts);
+    return await response.json();
+}
+ 
+async function getJson(url, queryParams) {
+    const queryStrs = [];
+    for(let queryParam in queryParams) {
+        queryStrs.push(queryParam + '=' + queryParams[queryParam]);
+    }
+    let completeUrl = url;
+    if(queryStrs.length > 0) {
+        const queryStr = queryStrs.join('&');
+        completeUrl += '?' + queryStr;
+    }
+    console.log('complete url: ' + completeUrl);
+    let response = await fetch(completeUrl);
+    return await response.json();
+}
+ 
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-export default class InsiderOil extends Component {
+export default class AwesomeProject extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            titles: ds.cloneWithRows([])
+        };
+    }
+
+    componentDidMount() {
+        this.testFetch();
+    }
+ 
+    async testFetch() {
+        try {
+            let responseJson = await postJson('http://app.insideroil.com/login_rest', {
+                username: 'gstiebler',
+                password: 'aloalo35'
+              });
+            console.log(responseJson);
+            this.token = responseJson.token;
+ 
+            let resInsights = await getJson('http://app.insideroil.com/insights', { token: this.token });
+            const titles = resInsights.recent.map(r => { return r.title });
+            this.setState({ titles: ds.cloneWithRows(titles) });
+            console.log(titles);      
+        } catch(error) {
+            console.error(error);
+        }
+    }
+ 
   render() {
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Welcome to React Native!
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+        <ListView
+          dataSource={this.state.titles}
+          renderRow={(title) => <Text style={styles.welcome}>{title}</Text>}
+        />
       </View>
     );
   }
 }
-
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -40,7 +98,6 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
     margin: 10,
   },
   instructions: {
@@ -49,5 +106,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
-
-AppRegistry.registerComponent('InsiderOil', () => InsiderOil);
+ 
+AppRegistry.registerComponent('InsiderOil', () => AwesomeProject);
