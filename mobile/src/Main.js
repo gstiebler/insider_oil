@@ -7,10 +7,12 @@ import {
 } from 'react-native';
 import { Insights } from './Insights';
 import { Login } from './Login';
+import { ViewInsight } from './ViewInsight';
 
 const routes = [
-    {title: 'First Scene', index: 0},
-    {title: 'Second Scene', index: 1},
+    {title: 'Login', index: 0},
+    {title: 'Insights', index: 1},
+    {title: 'View Insight', index: 2},
 ];
 
 export class MainClass extends Component {
@@ -24,23 +26,21 @@ export class MainClass extends Component {
     }
 
     onLogin(navigator) {
-        console.log('onLogin');
         navigator.replace(routes[1]);
     }
 
     renderScene(route, navigator) {
-        if(route.index == 0) {
-            return (
-                <Login onLogin={ this.onLogin.bind(this, navigator) } />
-            );
-        } else {
-            return <Insights />
+        switch (route.index) {
+            case 0:
+                return  <Login onLogin={ this.onLogin.bind(this, navigator) } />
+            case 1:
+                return <Insights onInsightSelected={ id => { navigator.push({index: 2, id}); } } />
+            case 2: 
+                return <ViewInsight id={route.id} />
         }
-
     }
  
     render() {
-
         return (
             <Navigator
               initialRoute={routes[0]}
