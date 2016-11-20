@@ -17,9 +17,13 @@ export class Login extends Component {
     }
 
     async onLoginClicked(navigator) {
-        console.log('onLoginClicked');
-        await login('gstiebler', 'aloalo35');
-        this.props.onLogin();
+        console.log('onLoginClicked')
+        try {
+            await login('gstiebler', 'aloalo35');
+            this.props.onLogin();
+        } catch(err) {
+            console.log('erro: ', err);
+        }
     }
  
     render() {
