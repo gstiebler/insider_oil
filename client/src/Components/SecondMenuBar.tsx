@@ -48,10 +48,7 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul className="nav navbar-nav navbar-nav-full">
             <li className="nav-item">
-              <Link to="/app/target_sales">Target Sales</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/app/insights">Insights</Link>
+              <Link to="/app/target_sales">Oportunidades</Link>
             </li>
             <li className="nav-item dropdown">
               <a aria-haspopup="true" aria-expanded="false">Exploração<span className="caret"></span></a>
@@ -90,14 +87,6 @@ export class SecondMenuBar extends React.Component<IAppProps, IAppState> {
             </li>
             <li className="nav-item">
               <Link to="/app/maps_all">Mapas</Link>
-            </li>
-            <li className="nav-item dropdown">
-              <a aria-haspopup="true" aria-expanded="false">Observatório<span className="caret"></span></a>
-              <ul className="dropdown-menu">
-                <li><Link to="/app/observatory?id=investments">Investimentos</Link></li>
-                <li><Link to="/app/observatory?id=wells">Poços</Link></li>
-                <li><Link to="/app/observatory?id=presalt">Pré-sal</Link></li>
-              </ul>
             </li>
             { this.props.isAdmin ? adminLink : '' }
             { this.props.isAdmin ? analyticsLink : '' }
